@@ -18,6 +18,6 @@ module Seed
             def post_with_custom_auth
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
-        end
+
     end
 end

@@ -1,6 +1,5 @@
 
 module Seed
     module Service
-        class OptionalArgsRequest; end
-    end
+        class OptionalArgsRequest; endend
 end

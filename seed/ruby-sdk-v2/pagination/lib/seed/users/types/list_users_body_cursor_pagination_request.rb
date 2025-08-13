@@ -1,6 +1,5 @@
 
 module Seed
     module Users
-        class ListUsersBodyCursorPaginationRequest; end
-    end
+        class ListUsersBodyCursorPaginationRequest; endend
 end

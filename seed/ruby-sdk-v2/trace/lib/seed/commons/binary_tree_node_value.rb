@@ -6,6 +6,6 @@ module Seed
             field :val, Integer, optional: false, nullable: false
             field :right, String, optional: true, nullable: false
             field :left, String, optional: true, nullable: false
-        end
+
     end
 end

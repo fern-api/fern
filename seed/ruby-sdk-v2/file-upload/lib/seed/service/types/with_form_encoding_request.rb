@@ -1,6 +1,5 @@
 
 module Seed
     module Service
-        class WithFormEncodingRequest; end
-    end
+        class WithFormEncodingRequest; endend
 end

@@ -43,6 +43,6 @@ module Seed
             def get_optional_movie_name
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
-        end
+
     end
 end

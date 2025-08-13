@@ -6,6 +6,6 @@ module Seed
             field :pages, Seed::complex::CursorPages, optional: true, nullable: false
             field :total_count, Integer, optional: false, nullable: false
             field :type, String, optional: false, nullable: false
-        end
+
     end
 end

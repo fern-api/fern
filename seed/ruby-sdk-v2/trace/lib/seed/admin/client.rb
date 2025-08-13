@@ -48,6 +48,6 @@ module Seed
             def store_traced_workspace_v_2
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
-        end
+
     end
 end

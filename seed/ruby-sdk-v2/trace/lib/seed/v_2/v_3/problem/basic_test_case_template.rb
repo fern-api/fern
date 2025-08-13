@@ -6,6 +6,6 @@ module Seed
             field :name, String, optional: false, nullable: false
             field :description, Seed::v_2::v_3::problem::TestCaseImplementationDescription, optional: false, nullable: false
             field :expected_value_parameter_id, String, optional: false, nullable: false
-        end
+
     end
 end

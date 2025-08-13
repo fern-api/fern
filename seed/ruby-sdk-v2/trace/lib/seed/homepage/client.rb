@@ -18,6 +18,6 @@ module Seed
             def set_homepage_problems
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
-        end
+
     end
 end

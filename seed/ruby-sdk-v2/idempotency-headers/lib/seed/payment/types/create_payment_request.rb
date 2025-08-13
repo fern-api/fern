@@ -1,6 +1,5 @@
 
 module Seed
     module Payment
-        class CreatePaymentRequest; end
-    end
+        class CreatePaymentRequest; endend
 end

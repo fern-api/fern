@@ -1,6 +1,5 @@
 
 module Seed
     module S3
-        class GetPresignedUrlRequest; end
-    end
+        class GetPresignedUrlRequest; endend
 end

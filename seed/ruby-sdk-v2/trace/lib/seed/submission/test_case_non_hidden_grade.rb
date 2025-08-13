@@ -6,6 +6,6 @@ module Seed
             field :actual_result, Seed::commons::VariableValue, optional: true, nullable: false
             field :exception, Seed::submission::ExceptionV2, optional: true, nullable: false
             field :stdout, String, optional: false, nullable: false
-        end
+
     end
 end

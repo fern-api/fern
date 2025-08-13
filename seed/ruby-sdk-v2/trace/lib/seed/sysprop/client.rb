@@ -18,6 +18,6 @@ module Seed
             def get_num_warm_instances
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
-        end
+
     end
 end

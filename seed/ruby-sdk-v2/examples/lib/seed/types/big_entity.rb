@@ -15,6 +15,6 @@ module Seed
             field :node, Seed::types::Node, optional: true, nullable: false
             field :directory, Seed::types::Directory, optional: true, nullable: false
             field :moment, Seed::types::Moment, optional: true, nullable: false
-        end
+
     end
 end

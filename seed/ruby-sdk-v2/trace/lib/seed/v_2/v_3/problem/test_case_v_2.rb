@@ -6,6 +6,6 @@ module Seed
             field :implementation, Seed::v_2::v_3::problem::TestCaseImplementationReference, optional: false, nullable: false
             field :arguments, Internal::Types::Hash[String, Seed::commons::VariableValue], optional: false, nullable: false
             field :expects, Seed::v_2::v_3::problem::TestCaseExpects, optional: true, nullable: false
-        end
+
     end
 end

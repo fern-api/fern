@@ -28,6 +28,6 @@ module Seed
             def get_execution_sessions_state
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
-        end
+
     end
 end
