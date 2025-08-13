@@ -24,8 +24,8 @@ import { SwiftProject } from "../project";
  * and handle nested type collisions within their specific context.
  */
 export interface LocalTypeRegistry {
-    getSwiftTypeForStringLiteral?: (literalValue: string) => swift.Type;
-    hasNestedTypeWithName?: (symbolName: string) => boolean;
+    getSwiftTypeForStringLiteral(literalValue: string): swift.Type;
+    hasNestedTypeWithName(symbolName: string): boolean;
 }
 
 export abstract class AbstractSwiftGeneratorContext<
@@ -143,8 +143,7 @@ export abstract class AbstractSwiftGeneratorContext<
                         literal._visit({
                             boolean: () => swift.Type.jsonValue(), // TODO(kafkas): Implement boolean literals
                             string: (literalValue) =>
-                                localTypeRegistry?.getSwiftTypeForStringLiteral?.(literalValue) ??
-                                swift.Type.jsonValue(),
+                                localTypeRegistry?.getSwiftTypeForStringLiteral(literalValue) ?? swift.Type.jsonValue(),
                             _other: () => swift.Type.jsonValue()
                         }),
                     map: (type) =>

@@ -1,11 +1,8 @@
-import { noop } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
 import { TypeReference } from "@fern-fern/ir-sdk/api";
-import { camelCase } from "lodash-es";
 
-import { StringEnumGenerator } from "../../enum";
 import { ModelGeneratorContext } from "../../ModelGeneratorContext";
-import { LocalSymbolRegistry } from "./LocalSymbolRegistry";
+import { LocalContext } from "./LocalContext";
 
 export declare namespace StructGenerator {
     interface ConstantPropertyDefinition {
@@ -21,18 +18,6 @@ export declare namespace StructGenerator {
         rawName: string;
         type: TypeReference;
         docsContent?: string;
-    }
-
-    interface LocalContext {
-        readonly additionalPropertiesMetadata?: {
-            /**
-             * The name of the property that will be used to store additional properties that are not explicitly defined in the schema.
-             */
-            propertyName: string;
-            swiftType: swift.Type;
-        };
-        readonly stringLiteralEnums: Map<string, swift.EnumWithRawValues>;
-        readonly symbolRegistry: LocalSymbolRegistry;
     }
 
     interface Args {
@@ -51,114 +36,16 @@ export class StructGenerator {
     private readonly dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[];
     private readonly docsContent?: string;
     private readonly generatorContext: ModelGeneratorContext;
-    private readonly localContext: StructGenerator.LocalContext;
+    private readonly localContext: LocalContext;
 
-    public constructor({
-        name,
-        constantPropertyDefinitions,
-        dataPropertyDefinitions,
-        additionalProperties,
-        docsContent,
-        context
-    }: StructGenerator.Args) {
+    public constructor(args: StructGenerator.Args) {
+        const { name, constantPropertyDefinitions, dataPropertyDefinitions, docsContent, context } = args;
         this.name = name;
         this.constantPropertyDefinitions = constantPropertyDefinitions;
         this.dataPropertyDefinitions = dataPropertyDefinitions;
         this.docsContent = docsContent;
         this.generatorContext = context;
-        this.localContext = this.buildLocalContext(additionalProperties);
-    }
-
-    private buildLocalContext(hasAdditionalProperties: boolean): StructGenerator.LocalContext {
-        const symbolRegistry = LocalSymbolRegistry.create();
-
-        const computeAdditionalPropertiesMetadata = () => {
-            const otherPropertyNames = [
-                ...this.constantPropertyDefinitions.map((p) => p.unsafeName),
-                ...this.dataPropertyDefinitions.map((p) => p.unsafeName)
-            ];
-            const otherPropertyNamesSet = new Set(otherPropertyNames);
-            let propertyName = "additionalProperties";
-            while (otherPropertyNamesSet.has(propertyName)) {
-                propertyName = "_" + propertyName;
-            }
-            return {
-                propertyName,
-                swiftType: swift.Type.dictionary(swift.Type.string(), swift.Type.jsonValue())
-            };
-        };
-
-        const generateStringLiteralEnums = (): Map<string, swift.EnumWithRawValues> => {
-            const enumsByLiteralValue = new Map<string, swift.EnumWithRawValues>();
-
-            const generateStringLiteralEnumsForTypeReference = (typeReference: TypeReference) => {
-                typeReference._visit({
-                    container: (container) => {
-                        container._visit({
-                            literal: (literal) => {
-                                literal._visit({
-                                    string: (literalValue) => {
-                                        const enumName =
-                                            symbolRegistry.registerStringLiteralSymbolIfNotExists(literalValue);
-                                        const stringEnumGenerator = new StringEnumGenerator({
-                                            name: enumName,
-                                            source: {
-                                                type: "custom",
-                                                values: [
-                                                    {
-                                                        unsafeName: camelCase(literalValue),
-                                                        rawValue: literalValue
-                                                    }
-                                                ]
-                                            }
-                                        });
-                                        enumsByLiteralValue.set(literalValue, stringEnumGenerator.generate());
-                                    },
-                                    boolean: noop,
-                                    _other: noop
-                                });
-                            },
-                            map: (mapType) => {
-                                generateStringLiteralEnumsForTypeReference(mapType.keyType);
-                                generateStringLiteralEnumsForTypeReference(mapType.valueType);
-                            },
-                            set: (ref) => {
-                                generateStringLiteralEnumsForTypeReference(ref);
-                            },
-                            nullable: (ref) => {
-                                generateStringLiteralEnumsForTypeReference(ref);
-                            },
-                            optional: (ref) => {
-                                generateStringLiteralEnumsForTypeReference(ref);
-                            },
-                            list: (ref) => {
-                                generateStringLiteralEnumsForTypeReference(ref);
-                            },
-                            _other: noop
-                        });
-                    },
-                    primitive: noop,
-                    unknown: noop,
-                    named: noop,
-                    _other: noop
-                });
-            };
-
-            for (const def of [...this.constantPropertyDefinitions, ...this.dataPropertyDefinitions]) {
-                if (def.type instanceof swift.Type) {
-                    continue;
-                }
-                generateStringLiteralEnumsForTypeReference(def.type);
-            }
-
-            return enumsByLiteralValue;
-        };
-
-        return {
-            additionalPropertiesMetadata: hasAdditionalProperties ? computeAdditionalPropertiesMetadata() : undefined,
-            stringLiteralEnums: generateStringLiteralEnums(),
-            symbolRegistry
-        };
+        this.localContext = LocalContext.buildForStructGenerator(args);
     }
 
     public generate(): swift.Struct {
@@ -221,17 +108,7 @@ export class StructGenerator {
         if (definition.type instanceof swift.Type) {
             return definition.type;
         }
-        return this.generatorContext.getSwiftTypeForTypeReference(definition.type, {
-            getSwiftTypeForStringLiteral: (literalValue) => {
-                const enumName = this.localContext.symbolRegistry.getStringLiteralSymbolOrThrow(literalValue);
-                return swift.Type.custom(enumName);
-            },
-            hasNestedTypeWithName: (symbolName) => {
-                return Array.from(this.localContext.stringLiteralEnums.values()).some(
-                    (enum_) => enum_.name === symbolName
-                );
-            }
-        });
+        return this.generatorContext.getSwiftTypeForTypeReference(definition.type, this.localContext);
     }
 
     private generateInitializers(dataProperties: swift.Property[]): swift.Initializer[] {
