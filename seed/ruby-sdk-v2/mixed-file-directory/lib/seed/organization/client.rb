@@ -17,6 +17,13 @@ module Seed
                     method: POST,
                     path: "/organizations/"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Organization::Types::Organization.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
     end

@@ -14,7 +14,14 @@ module Seed
             #
             # @return [untyped]
             def get_user(request_options: {}, **params)
-                raise NotImplementedError, 'This method is not yet implemented.'
+                _request = params
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return
+
+                else
+                    raise _response.body
             end
 
             # Create a new user.
@@ -22,7 +29,14 @@ module Seed
             #
             # @return [Seed::User::User]
             def create_user(request_options: {}, **params)
-                raise NotImplementedError, 'This method is not yet implemented.'
+                _request = params
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::User::Types::User.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
     end

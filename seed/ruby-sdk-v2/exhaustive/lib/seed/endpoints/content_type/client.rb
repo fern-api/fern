@@ -16,6 +16,13 @@ module Seed
                         method: POST,
                         path: "/foo/bar"
                     )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return
+
+                    else
+                        raise _response.body
                 end
 
                 # @return [untyped]
@@ -24,6 +31,13 @@ module Seed
                         method: POST,
                         path: "/foo/baz"
                     )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return
+
+                    else
+                        raise _response.body
                 end
 
         end

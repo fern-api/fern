@@ -1,9 +1,9 @@
 import { ruby } from "@fern-api/ruby-ast";
-import { HttpEndpoint, PathParameter, ServiceId } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, PathParameter, ServiceId, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { getEndpointRequest } from "../utils/getEndpointRequest";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType";
-import { RawClient } from "./RawClient";
+import { RAW_CLIENT_REQUEST_VARIABLE_NAME, RawClient } from "./RawClient";
 
 export declare namespace HttpEndpointGenerator {
     export interface GenerateArgs {
@@ -11,6 +11,8 @@ export declare namespace HttpEndpointGenerator {
         serviceId: ServiceId;
     }
 }
+
+export const HTTP_RESPONSE_VARIABLE_NAME = "_response";
 
 export class HttpEndpointGenerator {
     private context: SdkGeneratorContext;
@@ -56,10 +58,48 @@ export class HttpEndpointGenerator {
         } else {
             statements.push(
                 ruby.codeblock((writer) => {
-                    writer.writeLine("raise NotImplementedError, 'This method is not yet implemented.'");
+                    writer.writeLine(`_request = params`);
                 })
             );
         }
+
+        statements.push(
+            ruby.codeblock((writer) => {
+                writer.writeLine(`${HTTP_RESPONSE_VARIABLE_NAME} = @client.send(${RAW_CLIENT_REQUEST_VARIABLE_NAME})`);
+                writer.writeLine(
+                    `if ${HTTP_RESPONSE_VARIABLE_NAME}.code >= "200" && ${HTTP_RESPONSE_VARIABLE_NAME}.code < "300"`
+                );
+
+                writer.indent();
+
+                if (endpoint.response?.body == null) {
+                    writer.writeLine(`return`);
+                } else {
+                    switch (endpoint.response.body.type) {
+                        case "json":
+                            writer.write(`return `);
+                            this.loadResponseBodyFromJson({
+                                writer,
+                                typeReference: endpoint.response.body.value.responseBodyType
+                            });
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                writer.dedent();
+            })
+        );
+
+        statements.push(
+            ruby.codeblock((writer) => {
+                writer.writeLine("else");
+                writer.indent();
+                writer.writeLine(`raise ${HTTP_RESPONSE_VARIABLE_NAME}.body`);
+                writer.dedent();
+            })
+        );
 
         return ruby.method({
             name: endpoint.name.snakeCase.safeName,
@@ -80,7 +120,7 @@ export class HttpEndpointGenerator {
         });
     }
 
-    protected getPathParameterReferences({ endpoint }: { endpoint: HttpEndpoint }): Record<string, string> {
+    private getPathParameterReferences({ endpoint }: { endpoint: HttpEndpoint }): Record<string, string> {
         const pathParameterReferences: Record<string, string> = {};
         for (const pathParam of endpoint.allPathParameters) {
             const parameterName = this.getPathParameterName({
@@ -93,5 +133,23 @@ export class HttpEndpointGenerator {
 
     private getPathParameterName({ pathParameter }: { pathParameter: PathParameter }): string {
         return pathParameter.name.originalName;
+    }
+
+    private loadResponseBodyFromJson({
+        writer,
+        typeReference
+    }: {
+        writer: ruby.Writer;
+        typeReference: TypeReference;
+    }): void {
+        switch (typeReference.type) {
+            case "named":
+                writer.writeLine(
+                    `${this.context.getReferenceToTypeId(typeReference.typeId)}.load(${HTTP_RESPONSE_VARIABLE_NAME}.body)`
+                );
+                break;
+            default:
+                break;
+        }
     }
 }

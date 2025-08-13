@@ -13,21 +13,41 @@ module Seed
             #
             # @return [Seed::Playlist::Playlist]
             def create_playlist(request_options: {}, **params)
-                raise NotImplementedError, 'This method is not yet implemented.'
+                _request = params
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Playlist::Types::Playlist.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
             # Returns the user's playlists
             #
             # @return [Array[Seed::Playlist::Playlist]]
             def get_playlists(request_options: {}, **params)
-                raise NotImplementedError, 'This method is not yet implemented.'
+                _request = params
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return 
+                else
+                    raise _response.body
             end
 
             # Returns a playlist
             #
             # @return [Seed::Playlist::Playlist]
             def get_playlist(request_options: {}, **params)
-                raise NotImplementedError, 'This method is not yet implemented.'
+                _request = params
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Playlist::Types::Playlist.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
             # Updates a playlist
@@ -38,13 +58,26 @@ module Seed
                     method: PUT,
                     path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlistId]}"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return 
+                else
+                    raise _response.body
             end
 
             # Deletes a playlist
             #
             # @return [untyped]
             def delete_playlist(request_options: {}, **params)
-                raise NotImplementedError, 'This method is not yet implemented.'
+                _request = params
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return
+
+                else
+                    raise _response.body
             end
 
     end

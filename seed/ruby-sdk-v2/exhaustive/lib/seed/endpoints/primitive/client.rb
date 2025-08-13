@@ -16,6 +16,12 @@ module Seed
                         method: POST,
                         path: "/primitive/string"
                     )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
                 end
 
                 # @return [Integer]
@@ -24,6 +30,12 @@ module Seed
                         method: POST,
                         path: "/primitive/integer"
                     )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
                 end
 
                 # @return [Integer]
@@ -32,6 +44,12 @@ module Seed
                         method: POST,
                         path: "/primitive/long"
                     )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
                 end
 
                 # @return [Integer]
@@ -40,6 +58,12 @@ module Seed
                         method: POST,
                         path: "/primitive/double"
                     )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
                 end
 
                 # @return [bool]
@@ -48,6 +72,12 @@ module Seed
                         method: POST,
                         path: "/primitive/boolean"
                     )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
                 end
 
                 # @return [String]
@@ -56,6 +86,12 @@ module Seed
                         method: POST,
                         path: "/primitive/datetime"
                     )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
                 end
 
                 # @return [String]
@@ -64,6 +100,12 @@ module Seed
                         method: POST,
                         path: "/primitive/date"
                     )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
                 end
 
                 # @return [String]
@@ -72,6 +114,12 @@ module Seed
                         method: POST,
                         path: "/primitive/uuid"
                     )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
                 end
 
                 # @return [String]
@@ -80,6 +128,12 @@ module Seed
                         method: POST,
                         path: "/primitive/base64"
                     )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
                 end
 
         end

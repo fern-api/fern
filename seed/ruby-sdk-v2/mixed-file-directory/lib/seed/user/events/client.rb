@@ -14,7 +14,13 @@ module Seed
                 #
                 # @return [Array[Seed::User::Events::Event]]
                 def list_events(request_options: {}, **params)
-                    raise NotImplementedError, 'This method is not yet implemented.'
+                    _request = params
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
                 end
 
         end

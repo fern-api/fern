@@ -16,6 +16,12 @@ module Seed
                         method: POST,
                         path: "/container/list-of-primitives"
                     )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
                 end
 
                 # @return [Array[Seed::Types::Object_::ObjectWithRequiredField]]
@@ -24,6 +30,12 @@ module Seed
                         method: POST,
                         path: "/container/list-of-objects"
                     )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
                 end
 
                 # @return [Array[String]]
@@ -32,6 +44,12 @@ module Seed
                         method: POST,
                         path: "/container/set-of-primitives"
                     )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
                 end
 
                 # @return [Array[Seed::Types::Object_::ObjectWithRequiredField]]
@@ -40,6 +58,12 @@ module Seed
                         method: POST,
                         path: "/container/set-of-objects"
                     )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
                 end
 
                 # @return [Hash[String, String]]
@@ -48,6 +72,12 @@ module Seed
                         method: POST,
                         path: "/container/map-prim-to-prim"
                     )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
                 end
 
                 # @return [Hash[String, Seed::Types::Object_::ObjectWithRequiredField]]
@@ -56,6 +86,12 @@ module Seed
                         method: POST,
                         path: "/container/map-prim-to-object"
                     )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
                 end
 
                 # @return [Seed::Types::Object_::ObjectWithRequiredField | nil]
@@ -64,6 +100,12 @@ module Seed
                         method: POST,
                         path: "/container/opt-objects"
                     )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
                 end
 
         end
