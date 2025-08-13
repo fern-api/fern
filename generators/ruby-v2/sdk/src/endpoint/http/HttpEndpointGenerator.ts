@@ -25,7 +25,19 @@ export class HttpEndpointGenerator {
 
         return ruby.method({
             name: endpoint.name.snakeCase.safeName,
+            docstring: endpoint.docs,
             returnType,
+            parameters: {
+                keyword: [
+                    ruby.parameters.keyword({
+                        name: "request_options",
+                        initializer: ruby.TypeLiteral.hash([]),
+                    })
+                ],
+                keywordSplat: ruby.parameters.keywordSplat({
+                    name: "params"
+                })
+            },
             statements: [
                 ruby.codeblock((writer) => {
                     writer.writeLine("raise NotImplementedError, 'This method is not yet implemented.'");
