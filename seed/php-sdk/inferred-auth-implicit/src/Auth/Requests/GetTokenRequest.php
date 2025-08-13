@@ -8,6 +8,11 @@ use Seed\Core\Json\JsonProperty;
 class GetTokenRequest extends JsonSerializableType
 {
     /**
+     * @var string $xApiKey
+     */
+    public string $xApiKey;
+
+    /**
      * @var string $clientId
      */
     #[JsonProperty('client_id')]
@@ -39,6 +44,7 @@ class GetTokenRequest extends JsonSerializableType
 
     /**
      * @param array{
+     *   xApiKey: string,
      *   clientId: string,
      *   clientSecret: string,
      *   audience: 'https://api.example.com',
@@ -49,6 +55,7 @@ class GetTokenRequest extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
+        $this->xApiKey = $values['xApiKey'];
         $this->clientId = $values['clientId'];
         $this->clientSecret = $values['clientSecret'];
         $this->audience = $values['audience'];

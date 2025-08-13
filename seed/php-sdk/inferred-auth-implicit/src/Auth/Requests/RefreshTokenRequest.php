@@ -8,6 +8,11 @@ use Seed\Core\Json\JsonProperty;
 class RefreshTokenRequest extends JsonSerializableType
 {
     /**
+     * @var string $xApiKey
+     */
+    public string $xApiKey;
+
+    /**
      * @var string $clientId
      */
     #[JsonProperty('client_id')]
@@ -45,6 +50,7 @@ class RefreshTokenRequest extends JsonSerializableType
 
     /**
      * @param array{
+     *   xApiKey: string,
      *   clientId: string,
      *   clientSecret: string,
      *   refreshToken: string,
@@ -56,6 +62,7 @@ class RefreshTokenRequest extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
+        $this->xApiKey = $values['xApiKey'];
         $this->clientId = $values['clientId'];
         $this->clientSecret = $values['clientSecret'];
         $this->refreshToken = $values['refreshToken'];

@@ -12,6 +12,7 @@ $client = new SeedClient(
 );
 $client->auth->getTokenWithClientCredentials(
     new GetTokenRequest([
+        'xApiKey' => 'X-Api-Key',
         'clientId' => 'client_id',
         'clientSecret' => 'client_secret',
         'audience' => 'https://api.example.com',
