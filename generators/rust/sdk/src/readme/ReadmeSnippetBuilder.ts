@@ -196,30 +196,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private buildErrorHandlingBody(endpoint: EndpointWithFilepath): Statement[] {
         // Build client using ClientConfig pattern
-        const configFields = [
-            {
-                name: "base_url",
-                value: Expression.methodCall({
-                    target: Expression.stringLiteral("https://api.example.com"),
-                    method: "to_string",
-                    args: []
-                })
-            },
-            {
-                name: "api_key",
-                value: Expression.functionCall("Some", [
-                    Expression.methodCall({
-                        target: Expression.stringLiteral("your-api-key"),
-                        method: "to_string",
-                        args: []
-                    })
-                ])
-            }
-        ];
-
         const configVar = Statement.let({
             name: "config",
-            value: Expression.structLiteral("ClientConfig", configFields)
+            value: this.getClientConfigStruct("error", endpoint)
         });
 
         const clientBuild = Expression.raw(`${this.getClientName(endpoint)}::new(config)`);
@@ -229,23 +208,16 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             value: Expression.try(clientBuild)
         });
 
-        // Method call with match - parse the method chain
-        const methodCallParts = this.getMethodCall(endpoint).split(".");
-        let methodTarget = Expression.reference(methodCallParts[0] || "client");
-
-        for (let i = 1; i < methodCallParts.length - 1; i++) {
-            methodTarget = Expression.fieldAccess(methodTarget, methodCallParts[i] || "");
-        }
-
-        const methodCall = Expression.await(
+        // Add a simple dummy method call to show error handling pattern
+        const dummyMethodCall = Expression.await(
             Expression.methodCall({
-                target: methodTarget,
-                method: methodCallParts[methodCallParts.length - 1] || "call",
+                target: Expression.reference("client"),
+                method: "some_method",
                 args: []
             })
         );
 
-        const matchStatement = Statement.match(methodCall, [
+        const matchStatement = Statement.match(dummyMethodCall, [
             {
                 pattern: "Ok(response)",
                 body: [Statement.expression(Expression.raw('println!("Success: {:?}", response)'))]
@@ -278,6 +250,58 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return `${pascalCase}Client`;
     }
 
+    private getClientConfigStruct(
+        sectionType: "error" | "retry" | "timeout",
+        endpoint?: EndpointWithFilepath
+    ): Expression {
+        const fields: Array<{ name: string; value: Expression }> = [];
+
+        // Add base_url - use hardcoded example for README sections
+        fields.push({
+            name: "base_url",
+            value: Expression.methodCall({
+                target: Expression.stringLiteral(""),
+                method: "to_string",
+                args: []
+            })
+        });
+
+        // Always add api_key for consistency across all README sections
+        // This provides a simple, consistent example regardless of actual auth type
+        fields.push({
+            name: "api_key",
+            value: Expression.functionCall("Some", [
+                Expression.methodCall({
+                    target: Expression.stringLiteral("your-api-key"),
+                    method: "to_string",
+                    args: []
+                })
+            ])
+        });
+
+        // Add section-specific fields
+        switch (sectionType) {
+            case "retry":
+                fields.push({
+                    name: "max_retries",
+                    value: Expression.raw("3")
+                });
+                break;
+            case "timeout":
+                fields.push({
+                    name: "timeout",
+                    value: Expression.raw("Duration::from_secs(30)")
+                });
+                break;
+            // error section doesn't need additional fields
+        }
+
+        return Expression.structConstruction(
+            "ClientConfig",
+            fields.map((field) => ({ name: field.name, value: field.value }))
+        );
+    }
+
     private buildRetryCode(endpoint: EndpointWithFilepath): string {
         const writer = new Writer();
 
@@ -306,31 +330,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private buildRetryBody(endpoint: EndpointWithFilepath): Statement[] {
         // Build client using ClientConfig pattern
-        const configFields = [
-            {
-                name: "base_url",
-                value: Expression.methodCall({
-                    target: Expression.stringLiteral("https://api.example.com"),
-                    method: "to_string",
-                    args: []
-                })
-            },
-            {
-                name: "api_key",
-                value: Expression.functionCall("Some", [
-                    Expression.methodCall({
-                        target: Expression.stringLiteral("your-api-key"),
-                        method: "to_string",
-                        args: []
-                    })
-                ])
-            },
-            { name: "max_retries", value: Expression.numberLiteral(3) }
-        ];
-
         const configVar = Statement.let({
             name: "config",
-            value: Expression.structLiteral("ClientConfig", configFields)
+            value: this.getClientConfigStruct("retry", endpoint)
         });
 
         const clientBuild = Expression.methodCall({
@@ -344,30 +346,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             value: clientBuild
         });
 
-        // Method call
-        const methodCallParts = this.getMethodCall(endpoint).split(".");
-        let methodTarget = Expression.reference(methodCallParts[0] || "client");
-
-        for (let i = 1; i < methodCallParts.length - 1; i++) {
-            methodTarget = Expression.fieldAccess(methodTarget, methodCallParts[i] || "");
-        }
-
-        const responseVar = Statement.let({
-            name: "response",
-            value: Expression.methodCall({
-                target: Expression.await(
-                    Expression.methodCall({
-                        target: methodTarget,
-                        method: methodCallParts[methodCallParts.length - 1] || "call",
-                        args: []
-                    })
-                ),
-                method: "expect",
-                args: [Expression.stringLiteral("API call failed")]
-            })
-        });
-
-        return [configVar, clientVar, responseVar];
+        // Just show client initialization - no complex method calls
+        return [configVar, clientVar];
     }
 
     private buildTimeoutCode(endpoint: EndpointWithFilepath): string {
@@ -399,34 +379,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private buildTimeoutBody(endpoint: EndpointWithFilepath): Statement[] {
         // Build client using ClientConfig pattern
-        const configFields = [
-            {
-                name: "base_url",
-                value: Expression.methodCall({
-                    target: Expression.stringLiteral("https://api.example.com"),
-                    method: "to_string",
-                    args: []
-                })
-            },
-            {
-                name: "api_key",
-                value: Expression.functionCall("Some", [
-                    Expression.methodCall({
-                        target: Expression.stringLiteral("your-api-key"),
-                        method: "to_string",
-                        args: []
-                    })
-                ])
-            },
-            {
-                name: "timeout",
-                value: Expression.functionCall("Duration::from_secs", [Expression.numberLiteral(30)])
-            }
-        ];
-
         const configVar = Statement.let({
             name: "config",
-            value: Expression.structLiteral("ClientConfig", configFields)
+            value: this.getClientConfigStruct("timeout", endpoint)
         });
 
         const clientBuild = Expression.methodCall({
@@ -440,30 +395,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             value: clientBuild
         });
 
-        // Method call
-        const methodCallParts = this.getMethodCall(endpoint).split(".");
-        let methodTarget = Expression.reference(methodCallParts[0] || "client");
-
-        for (let i = 1; i < methodCallParts.length - 1; i++) {
-            methodTarget = Expression.fieldAccess(methodTarget, methodCallParts[i] || "");
-        }
-
-        const responseVar = Statement.let({
-            name: "response",
-            value: Expression.methodCall({
-                target: Expression.await(
-                    Expression.methodCall({
-                        target: methodTarget,
-                        method: methodCallParts[methodCallParts.length - 1] || "call",
-                        args: []
-                    })
-                ),
-                method: "expect",
-                args: [Expression.stringLiteral("API call failed")]
-            })
-        });
-
-        return [configVar, clientVar, responseVar];
+        // Just show client initialization - no complex method calls
+        return [configVar, clientVar];
     }
 
     private writeCode(code: string): string {

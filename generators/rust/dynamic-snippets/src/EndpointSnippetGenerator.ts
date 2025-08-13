@@ -64,16 +64,7 @@ export class EndpointSnippetGenerator {
                     method: "expect",
                     args: [rust.Expression.stringLiteral("Failed to build client")]
                 })
-            }),
-            // API method call
-            rust.Statement.expression(
-                rust.Expression.methodCall({
-                    target: rust.Expression.reference(CLIENT_VAR_NAME),
-                    method: this.getMethodName({ endpoint }),
-                    args: this.getMethodArgs({ endpoint, snippet }),
-                    isAsync: true
-                })
-            )
+            })
         ]);
 
         // Create the standalone function
@@ -120,16 +111,7 @@ export class EndpointSnippetGenerator {
                     method: "expect",
                     args: [rust.Expression.stringLiteral("Failed to build client")]
                 })
-            }),
-            // API method call
-            rust.Statement.expression(
-                rust.Expression.methodCall({
-                    target: rust.Expression.reference(CLIENT_VAR_NAME),
-                    method: this.getMethodName({ endpoint }),
-                    args: this.getMethodArgs({ endpoint, snippet }),
-                    isAsync: true
-                })
-            )
+            })
         ]);
 
         // Create the standalone function
@@ -206,7 +188,7 @@ export class EndpointSnippetGenerator {
                 case "bearer":
                     if (snippet.auth.type === "bearer") {
                         fields.push({
-                            name: "bearer_token",
+                            name: "api_key",
                             value: rust.Expression.functionCall("Some", [
                                 rust.Expression.methodCall({
                                     target: rust.Expression.stringLiteral(snippet.auth.token),
@@ -258,7 +240,10 @@ export class EndpointSnippetGenerator {
             }
         }
 
-        return rust.Expression.structLiteral("ClientConfig", fields);
+        return rust.Expression.structConstruction(
+            "ClientConfig",
+            fields.map((field) => ({ name: field.name, value: field.value }))
+        );
     }
 
     private getClientName({ endpoint }: { endpoint?: FernIr.dynamic.Endpoint } = {}): string {

@@ -25,13 +25,12 @@ cargo add seed_oauth_client_credentials
 Instantiate and use the client with the following:
 
 ```rust
-use seed_oauth_client_credentials::{ClientConfig, AuthClient};
+use seed_oauth_client_credentials::{ClientConfig, OauthClientCredentialsClient};
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {  };
-    let client = AuthClient::new(config).expect("Failed to build client");
-    client.auth_get_token_with_client_credentials(GetTokenRequest { client_id: "client_id", client_secret: "client_secret", audience: "https://api.example.com", grant_type: "client_credentials", scope: todo!("Unhandled type reference") }).await;
+    let config = ClientConfig {};
+    let client = OauthClientCredentialsClient::new(config).expect("Failed to build client");
 }
 ```
 
@@ -40,13 +39,16 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-use seed_oauth_client_credentials::{ClientError, ClientConfig, AuthClient};
+use seed_oauth_client_credentials::{ClientError, ClientConfig, OauthClientCredentialsClient};
 
 #[tokio::main]
 async fn main() -> Result<(), ClientError> {
-    let config = ClientConfig { base_url: "https://api.example.com".to_string(), api_key: Some("your-api-key".to_string()) };
-    let client = AuthClient::new(config)?;
-    match client.auth.get_token_with_client_credentials().await {
+    let config = ClientConfig {
+        base_url: "https://api.example.com".to_string(),
+        api_key: Some("your-api-key".to_string())
+    };
+    let client = OauthClientCredentialsClient::new(config)?;
+    match client.some_method().await {
         Ok(response) => {
             println!("Success: {:?}", response);
         },
@@ -78,13 +80,16 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-use seed_oauth_client_credentials::{ClientConfig, AuthClient};
+use seed_oauth_client_credentials::{ClientConfig, OauthClientCredentialsClient};
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig { base_url: "https://api.example.com".to_string(), api_key: Some("your-api-key".to_string()), max_retries: 3 };
-    let client = AuthClient::new(config).expect("Failed to build client");
-    let response = client.auth.get_token_with_client_credentials().await.expect("API call failed");
+    let config = ClientConfig {
+        base_url: "https://api.example.com".to_string(),
+        api_key: Some("your-api-key".to_string()),
+        max_retries: 3
+    };
+    let client = OauthClientCredentialsClient::new(config).expect("Failed to build client");
 }
 ```
 
@@ -93,14 +98,17 @@ async fn main() {
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-use seed_oauth_client_credentials::{ClientConfig, AuthClient};
+use seed_oauth_client_credentials::{ClientConfig, OauthClientCredentialsClient};
 use std::time::{Duration};
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig { base_url: "https://api.example.com".to_string(), api_key: Some("your-api-key".to_string()), timeout: Duration::from_secs(30) };
-    let client = AuthClient::new(config).expect("Failed to build client");
-    let response = client.auth.get_token_with_client_credentials().await.expect("API call failed");
+    let config = ClientConfig {
+        base_url: "https://api.example.com".to_string(),
+        api_key: Some("your-api-key".to_string()),
+        timeout: Duration::from_secs(30)
+    };
+    let client = OauthClientCredentialsClient::new(config).expect("Failed to build client");
 }
 ```
 
