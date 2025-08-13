@@ -23,9 +23,9 @@ Instantiate and use the client with the following:
 using SeedOauthClientCredentials.Auth;
 using SeedOauthClientCredentials;
 
-var client = new SeedOauthClientCredentialsClient("CLIENT_ID", "CLIENT_SECRET");
+var client = new SeedOauthClientCredentials.SeedOauthClientCredentialsClient("CLIENT_ID", "CLIENT_SECRET");
 await client.Auth.GetTokenAsync(
-    new GetTokenRequest
+    new SeedOauthClientCredentials.Auth.GetTokenRequest
     {
         ClientId = "client_id",
         ClientSecret = "client_secret",

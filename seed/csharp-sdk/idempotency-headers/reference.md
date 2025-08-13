@@ -1,6 +1,6 @@
 # Reference
 ## Payment
-<details><summary><code>client.Payment.<a href="/src/SeedIdempotencyHeaders/Payment/PaymentClient.cs">CreateAsync</a>(CreatePaymentRequest { ... }) -> string</code></summary>
+<details><summary><code>client.Payment.<a href="/src/SeedIdempotencyHeaders/Payment/PaymentClient.cs">CreateAsync</a>(SeedIdempotencyHeaders.CreatePaymentRequest { ... }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,13 @@
 <dd>
 
 ```csharp
-await client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd });
+await client.Payment.CreateAsync(
+    new SeedIdempotencyHeaders.CreatePaymentRequest
+    {
+        Amount = 1,
+        Currency = SeedIdempotencyHeaders.Currency.Usd,
+    }
+);
 ```
 </dd>
 </dl>
@@ -28,7 +34,7 @@ await client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency
 <dl>
 <dd>
 
-**request:** `CreatePaymentRequest` 
+**request:** `SeedIdempotencyHeaders.CreatePaymentRequest` 
     
 </dd>
 </dl>

@@ -8,7 +8,7 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-[JsonConverter(typeof(BigUnion.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record BigUnion
 {
@@ -19,261 +19,261 @@ public record BigUnion
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.NormalSweet"/>.
+    /// Create an instance of BigUnion with <see cref="NormalSweet"/>.
     /// </summary>
-    public BigUnion(BigUnion.NormalSweet value)
+    public BigUnion(NormalSweet value)
     {
         Type = "normalSweet";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.ThankfulFactor"/>.
+    /// Create an instance of BigUnion with <see cref="ThankfulFactor"/>.
     /// </summary>
-    public BigUnion(BigUnion.ThankfulFactor value)
+    public BigUnion(ThankfulFactor value)
     {
         Type = "thankfulFactor";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.JumboEnd"/>.
+    /// Create an instance of BigUnion with <see cref="JumboEnd"/>.
     /// </summary>
-    public BigUnion(BigUnion.JumboEnd value)
+    public BigUnion(JumboEnd value)
     {
         Type = "jumboEnd";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.HastyPain"/>.
+    /// Create an instance of BigUnion with <see cref="HastyPain"/>.
     /// </summary>
-    public BigUnion(BigUnion.HastyPain value)
+    public BigUnion(HastyPain value)
     {
         Type = "hastyPain";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.MistySnow"/>.
+    /// Create an instance of BigUnion with <see cref="MistySnow"/>.
     /// </summary>
-    public BigUnion(BigUnion.MistySnow value)
+    public BigUnion(MistySnow value)
     {
         Type = "mistySnow";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.DistinctFailure"/>.
+    /// Create an instance of BigUnion with <see cref="DistinctFailure"/>.
     /// </summary>
-    public BigUnion(BigUnion.DistinctFailure value)
+    public BigUnion(DistinctFailure value)
     {
         Type = "distinctFailure";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.PracticalPrinciple"/>.
+    /// Create an instance of BigUnion with <see cref="PracticalPrinciple"/>.
     /// </summary>
-    public BigUnion(BigUnion.PracticalPrinciple value)
+    public BigUnion(PracticalPrinciple value)
     {
         Type = "practicalPrinciple";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.LimpingStep"/>.
+    /// Create an instance of BigUnion with <see cref="LimpingStep"/>.
     /// </summary>
-    public BigUnion(BigUnion.LimpingStep value)
+    public BigUnion(LimpingStep value)
     {
         Type = "limpingStep";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.VibrantExcitement"/>.
+    /// Create an instance of BigUnion with <see cref="VibrantExcitement"/>.
     /// </summary>
-    public BigUnion(BigUnion.VibrantExcitement value)
+    public BigUnion(VibrantExcitement value)
     {
         Type = "vibrantExcitement";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.ActiveDiamond"/>.
+    /// Create an instance of BigUnion with <see cref="ActiveDiamond"/>.
     /// </summary>
-    public BigUnion(BigUnion.ActiveDiamond value)
+    public BigUnion(ActiveDiamond value)
     {
         Type = "activeDiamond";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.PopularLimit"/>.
+    /// Create an instance of BigUnion with <see cref="PopularLimit"/>.
     /// </summary>
-    public BigUnion(BigUnion.PopularLimit value)
+    public BigUnion(PopularLimit value)
     {
         Type = "popularLimit";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.FalseMirror"/>.
+    /// Create an instance of BigUnion with <see cref="FalseMirror"/>.
     /// </summary>
-    public BigUnion(BigUnion.FalseMirror value)
+    public BigUnion(FalseMirror value)
     {
         Type = "falseMirror";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.PrimaryBlock"/>.
+    /// Create an instance of BigUnion with <see cref="PrimaryBlock"/>.
     /// </summary>
-    public BigUnion(BigUnion.PrimaryBlock value)
+    public BigUnion(PrimaryBlock value)
     {
         Type = "primaryBlock";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.RotatingRatio"/>.
+    /// Create an instance of BigUnion with <see cref="RotatingRatio"/>.
     /// </summary>
-    public BigUnion(BigUnion.RotatingRatio value)
+    public BigUnion(RotatingRatio value)
     {
         Type = "rotatingRatio";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.ColorfulCover"/>.
+    /// Create an instance of BigUnion with <see cref="ColorfulCover"/>.
     /// </summary>
-    public BigUnion(BigUnion.ColorfulCover value)
+    public BigUnion(ColorfulCover value)
     {
         Type = "colorfulCover";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.DisloyalValue"/>.
+    /// Create an instance of BigUnion with <see cref="DisloyalValue"/>.
     /// </summary>
-    public BigUnion(BigUnion.DisloyalValue value)
+    public BigUnion(DisloyalValue value)
     {
         Type = "disloyalValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.GruesomeCoach"/>.
+    /// Create an instance of BigUnion with <see cref="GruesomeCoach"/>.
     /// </summary>
-    public BigUnion(BigUnion.GruesomeCoach value)
+    public BigUnion(GruesomeCoach value)
     {
         Type = "gruesomeCoach";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.TotalWork"/>.
+    /// Create an instance of BigUnion with <see cref="TotalWork"/>.
     /// </summary>
-    public BigUnion(BigUnion.TotalWork value)
+    public BigUnion(TotalWork value)
     {
         Type = "totalWork";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.HarmoniousPlay"/>.
+    /// Create an instance of BigUnion with <see cref="HarmoniousPlay"/>.
     /// </summary>
-    public BigUnion(BigUnion.HarmoniousPlay value)
+    public BigUnion(HarmoniousPlay value)
     {
         Type = "harmoniousPlay";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.UniqueStress"/>.
+    /// Create an instance of BigUnion with <see cref="UniqueStress"/>.
     /// </summary>
-    public BigUnion(BigUnion.UniqueStress value)
+    public BigUnion(UniqueStress value)
     {
         Type = "uniqueStress";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.UnwillingSmoke"/>.
+    /// Create an instance of BigUnion with <see cref="UnwillingSmoke"/>.
     /// </summary>
-    public BigUnion(BigUnion.UnwillingSmoke value)
+    public BigUnion(UnwillingSmoke value)
     {
         Type = "unwillingSmoke";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.FrozenSleep"/>.
+    /// Create an instance of BigUnion with <see cref="FrozenSleep"/>.
     /// </summary>
-    public BigUnion(BigUnion.FrozenSleep value)
+    public BigUnion(FrozenSleep value)
     {
         Type = "frozenSleep";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.DiligentDeal"/>.
+    /// Create an instance of BigUnion with <see cref="DiligentDeal"/>.
     /// </summary>
-    public BigUnion(BigUnion.DiligentDeal value)
+    public BigUnion(DiligentDeal value)
     {
         Type = "diligentDeal";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.AttractiveScript"/>.
+    /// Create an instance of BigUnion with <see cref="AttractiveScript"/>.
     /// </summary>
-    public BigUnion(BigUnion.AttractiveScript value)
+    public BigUnion(AttractiveScript value)
     {
         Type = "attractiveScript";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.HoarseMouse"/>.
+    /// Create an instance of BigUnion with <see cref="HoarseMouse"/>.
     /// </summary>
-    public BigUnion(BigUnion.HoarseMouse value)
+    public BigUnion(HoarseMouse value)
     {
         Type = "hoarseMouse";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.CircularCard"/>.
+    /// Create an instance of BigUnion with <see cref="CircularCard"/>.
     /// </summary>
-    public BigUnion(BigUnion.CircularCard value)
+    public BigUnion(CircularCard value)
     {
         Type = "circularCard";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.PotableBad"/>.
+    /// Create an instance of BigUnion with <see cref="PotableBad"/>.
     /// </summary>
-    public BigUnion(BigUnion.PotableBad value)
+    public BigUnion(PotableBad value)
     {
         Type = "potableBad";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.TriangularRepair"/>.
+    /// Create an instance of BigUnion with <see cref="TriangularRepair"/>.
     /// </summary>
-    public BigUnion(BigUnion.TriangularRepair value)
+    public BigUnion(TriangularRepair value)
     {
         Type = "triangularRepair";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of BigUnion with <see cref="BigUnion.GaseousRoad"/>.
+    /// Create an instance of BigUnion with <see cref="GaseousRoad"/>.
     /// </summary>
-    public BigUnion(BigUnion.GaseousRoad value)
+    public BigUnion(GaseousRoad value)
     {
         Type = "gaseousRoad";
         Value = value.Value;
@@ -451,7 +451,7 @@ public record BigUnion
     public SeedUnions.NormalSweet AsNormalSweet() =>
         IsNormalSweet
             ? (SeedUnions.NormalSweet)Value!
-            : throw new Exception("BigUnion.Type is not 'normalSweet'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'normalSweet'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.ThankfulFactor"/> if <see cref="Type"/> is 'thankfulFactor', otherwise throws an exception.
@@ -460,7 +460,7 @@ public record BigUnion
     public SeedUnions.ThankfulFactor AsThankfulFactor() =>
         IsThankfulFactor
             ? (SeedUnions.ThankfulFactor)Value!
-            : throw new Exception("BigUnion.Type is not 'thankfulFactor'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'thankfulFactor'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.JumboEnd"/> if <see cref="Type"/> is 'jumboEnd', otherwise throws an exception.
@@ -469,7 +469,7 @@ public record BigUnion
     public SeedUnions.JumboEnd AsJumboEnd() =>
         IsJumboEnd
             ? (SeedUnions.JumboEnd)Value!
-            : throw new Exception("BigUnion.Type is not 'jumboEnd'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'jumboEnd'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.HastyPain"/> if <see cref="Type"/> is 'hastyPain', otherwise throws an exception.
@@ -478,7 +478,7 @@ public record BigUnion
     public SeedUnions.HastyPain AsHastyPain() =>
         IsHastyPain
             ? (SeedUnions.HastyPain)Value!
-            : throw new Exception("BigUnion.Type is not 'hastyPain'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'hastyPain'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.MistySnow"/> if <see cref="Type"/> is 'mistySnow', otherwise throws an exception.
@@ -487,7 +487,7 @@ public record BigUnion
     public SeedUnions.MistySnow AsMistySnow() =>
         IsMistySnow
             ? (SeedUnions.MistySnow)Value!
-            : throw new Exception("BigUnion.Type is not 'mistySnow'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'mistySnow'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.DistinctFailure"/> if <see cref="Type"/> is 'distinctFailure', otherwise throws an exception.
@@ -496,7 +496,7 @@ public record BigUnion
     public SeedUnions.DistinctFailure AsDistinctFailure() =>
         IsDistinctFailure
             ? (SeedUnions.DistinctFailure)Value!
-            : throw new Exception("BigUnion.Type is not 'distinctFailure'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'distinctFailure'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.PracticalPrinciple"/> if <see cref="Type"/> is 'practicalPrinciple', otherwise throws an exception.
@@ -505,7 +505,7 @@ public record BigUnion
     public SeedUnions.PracticalPrinciple AsPracticalPrinciple() =>
         IsPracticalPrinciple
             ? (SeedUnions.PracticalPrinciple)Value!
-            : throw new Exception("BigUnion.Type is not 'practicalPrinciple'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'practicalPrinciple'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.LimpingStep"/> if <see cref="Type"/> is 'limpingStep', otherwise throws an exception.
@@ -514,7 +514,7 @@ public record BigUnion
     public SeedUnions.LimpingStep AsLimpingStep() =>
         IsLimpingStep
             ? (SeedUnions.LimpingStep)Value!
-            : throw new Exception("BigUnion.Type is not 'limpingStep'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'limpingStep'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.VibrantExcitement"/> if <see cref="Type"/> is 'vibrantExcitement', otherwise throws an exception.
@@ -523,7 +523,7 @@ public record BigUnion
     public SeedUnions.VibrantExcitement AsVibrantExcitement() =>
         IsVibrantExcitement
             ? (SeedUnions.VibrantExcitement)Value!
-            : throw new Exception("BigUnion.Type is not 'vibrantExcitement'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'vibrantExcitement'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.ActiveDiamond"/> if <see cref="Type"/> is 'activeDiamond', otherwise throws an exception.
@@ -532,7 +532,7 @@ public record BigUnion
     public SeedUnions.ActiveDiamond AsActiveDiamond() =>
         IsActiveDiamond
             ? (SeedUnions.ActiveDiamond)Value!
-            : throw new Exception("BigUnion.Type is not 'activeDiamond'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'activeDiamond'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.PopularLimit"/> if <see cref="Type"/> is 'popularLimit', otherwise throws an exception.
@@ -541,7 +541,7 @@ public record BigUnion
     public SeedUnions.PopularLimit AsPopularLimit() =>
         IsPopularLimit
             ? (SeedUnions.PopularLimit)Value!
-            : throw new Exception("BigUnion.Type is not 'popularLimit'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'popularLimit'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.FalseMirror"/> if <see cref="Type"/> is 'falseMirror', otherwise throws an exception.
@@ -550,7 +550,7 @@ public record BigUnion
     public SeedUnions.FalseMirror AsFalseMirror() =>
         IsFalseMirror
             ? (SeedUnions.FalseMirror)Value!
-            : throw new Exception("BigUnion.Type is not 'falseMirror'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'falseMirror'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.PrimaryBlock"/> if <see cref="Type"/> is 'primaryBlock', otherwise throws an exception.
@@ -559,7 +559,7 @@ public record BigUnion
     public SeedUnions.PrimaryBlock AsPrimaryBlock() =>
         IsPrimaryBlock
             ? (SeedUnions.PrimaryBlock)Value!
-            : throw new Exception("BigUnion.Type is not 'primaryBlock'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'primaryBlock'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.RotatingRatio"/> if <see cref="Type"/> is 'rotatingRatio', otherwise throws an exception.
@@ -568,7 +568,7 @@ public record BigUnion
     public SeedUnions.RotatingRatio AsRotatingRatio() =>
         IsRotatingRatio
             ? (SeedUnions.RotatingRatio)Value!
-            : throw new Exception("BigUnion.Type is not 'rotatingRatio'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'rotatingRatio'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.ColorfulCover"/> if <see cref="Type"/> is 'colorfulCover', otherwise throws an exception.
@@ -577,7 +577,7 @@ public record BigUnion
     public SeedUnions.ColorfulCover AsColorfulCover() =>
         IsColorfulCover
             ? (SeedUnions.ColorfulCover)Value!
-            : throw new Exception("BigUnion.Type is not 'colorfulCover'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'colorfulCover'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.DisloyalValue"/> if <see cref="Type"/> is 'disloyalValue', otherwise throws an exception.
@@ -586,7 +586,7 @@ public record BigUnion
     public SeedUnions.DisloyalValue AsDisloyalValue() =>
         IsDisloyalValue
             ? (SeedUnions.DisloyalValue)Value!
-            : throw new Exception("BigUnion.Type is not 'disloyalValue'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'disloyalValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.GruesomeCoach"/> if <see cref="Type"/> is 'gruesomeCoach', otherwise throws an exception.
@@ -595,7 +595,7 @@ public record BigUnion
     public SeedUnions.GruesomeCoach AsGruesomeCoach() =>
         IsGruesomeCoach
             ? (SeedUnions.GruesomeCoach)Value!
-            : throw new Exception("BigUnion.Type is not 'gruesomeCoach'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'gruesomeCoach'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.TotalWork"/> if <see cref="Type"/> is 'totalWork', otherwise throws an exception.
@@ -604,7 +604,7 @@ public record BigUnion
     public SeedUnions.TotalWork AsTotalWork() =>
         IsTotalWork
             ? (SeedUnions.TotalWork)Value!
-            : throw new Exception("BigUnion.Type is not 'totalWork'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'totalWork'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.HarmoniousPlay"/> if <see cref="Type"/> is 'harmoniousPlay', otherwise throws an exception.
@@ -613,7 +613,7 @@ public record BigUnion
     public SeedUnions.HarmoniousPlay AsHarmoniousPlay() =>
         IsHarmoniousPlay
             ? (SeedUnions.HarmoniousPlay)Value!
-            : throw new Exception("BigUnion.Type is not 'harmoniousPlay'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'harmoniousPlay'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.UniqueStress"/> if <see cref="Type"/> is 'uniqueStress', otherwise throws an exception.
@@ -622,7 +622,7 @@ public record BigUnion
     public SeedUnions.UniqueStress AsUniqueStress() =>
         IsUniqueStress
             ? (SeedUnions.UniqueStress)Value!
-            : throw new Exception("BigUnion.Type is not 'uniqueStress'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'uniqueStress'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.UnwillingSmoke"/> if <see cref="Type"/> is 'unwillingSmoke', otherwise throws an exception.
@@ -631,7 +631,7 @@ public record BigUnion
     public SeedUnions.UnwillingSmoke AsUnwillingSmoke() =>
         IsUnwillingSmoke
             ? (SeedUnions.UnwillingSmoke)Value!
-            : throw new Exception("BigUnion.Type is not 'unwillingSmoke'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'unwillingSmoke'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.FrozenSleep"/> if <see cref="Type"/> is 'frozenSleep', otherwise throws an exception.
@@ -640,7 +640,7 @@ public record BigUnion
     public SeedUnions.FrozenSleep AsFrozenSleep() =>
         IsFrozenSleep
             ? (SeedUnions.FrozenSleep)Value!
-            : throw new Exception("BigUnion.Type is not 'frozenSleep'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'frozenSleep'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.DiligentDeal"/> if <see cref="Type"/> is 'diligentDeal', otherwise throws an exception.
@@ -649,7 +649,7 @@ public record BigUnion
     public SeedUnions.DiligentDeal AsDiligentDeal() =>
         IsDiligentDeal
             ? (SeedUnions.DiligentDeal)Value!
-            : throw new Exception("BigUnion.Type is not 'diligentDeal'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'diligentDeal'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.AttractiveScript"/> if <see cref="Type"/> is 'attractiveScript', otherwise throws an exception.
@@ -658,7 +658,7 @@ public record BigUnion
     public SeedUnions.AttractiveScript AsAttractiveScript() =>
         IsAttractiveScript
             ? (SeedUnions.AttractiveScript)Value!
-            : throw new Exception("BigUnion.Type is not 'attractiveScript'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'attractiveScript'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.HoarseMouse"/> if <see cref="Type"/> is 'hoarseMouse', otherwise throws an exception.
@@ -667,7 +667,7 @@ public record BigUnion
     public SeedUnions.HoarseMouse AsHoarseMouse() =>
         IsHoarseMouse
             ? (SeedUnions.HoarseMouse)Value!
-            : throw new Exception("BigUnion.Type is not 'hoarseMouse'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'hoarseMouse'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.CircularCard"/> if <see cref="Type"/> is 'circularCard', otherwise throws an exception.
@@ -676,7 +676,7 @@ public record BigUnion
     public SeedUnions.CircularCard AsCircularCard() =>
         IsCircularCard
             ? (SeedUnions.CircularCard)Value!
-            : throw new Exception("BigUnion.Type is not 'circularCard'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'circularCard'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.PotableBad"/> if <see cref="Type"/> is 'potableBad', otherwise throws an exception.
@@ -685,7 +685,7 @@ public record BigUnion
     public SeedUnions.PotableBad AsPotableBad() =>
         IsPotableBad
             ? (SeedUnions.PotableBad)Value!
-            : throw new Exception("BigUnion.Type is not 'potableBad'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'potableBad'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.TriangularRepair"/> if <see cref="Type"/> is 'triangularRepair', otherwise throws an exception.
@@ -694,7 +694,7 @@ public record BigUnion
     public SeedUnions.TriangularRepair AsTriangularRepair() =>
         IsTriangularRepair
             ? (SeedUnions.TriangularRepair)Value!
-            : throw new Exception("BigUnion.Type is not 'triangularRepair'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'triangularRepair'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.GaseousRoad"/> if <see cref="Type"/> is 'gaseousRoad', otherwise throws an exception.
@@ -703,7 +703,7 @@ public record BigUnion
     public SeedUnions.GaseousRoad AsGaseousRoad() =>
         IsGaseousRoad
             ? (SeedUnions.GaseousRoad)Value!
-            : throw new Exception("BigUnion.Type is not 'gaseousRoad'");
+            : throw new Exception("SeedUnions.BigUnion.Type is not 'gaseousRoad'");
 
     public T Match<T>(
         Func<SeedUnions.NormalSweet, T> onNormalSweet,
@@ -1328,12 +1328,12 @@ public record BigUnion
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<BigUnion>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(BigUnion).IsAssignableFrom(typeToConvert);
 
         public override BigUnion Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -1425,8 +1425,10 @@ public record BigUnion
                 _ => json.Deserialize<object?>(options),
             };
             var baseProperties =
-                json.Deserialize<BigUnion.BaseProperties>(options)
-                ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
+                json.Deserialize<BaseProperties>(options)
+                ?? throw new JsonException(
+                    "Failed to deserialize SeedUnions.BigUnion.BaseProperties"
+                );
             return new BigUnion(discriminator, value)
             {
                 Id = baseProperties.Id,
@@ -1478,14 +1480,17 @@ public record BigUnion
             json["type"] = value.Type;
             var basePropertiesJson =
                 JsonSerializer.SerializeToNode(
-                    new BigUnion.BaseProperties
+                    new BaseProperties
                     {
                         Id = value.Id,
                         CreatedAt = value.CreatedAt,
                         ArchivedAt = value.ArchivedAt,
                     },
                     options
-                ) ?? throw new JsonException("Failed to serialize BigUnion.BaseProperties");
+                )
+                ?? throw new JsonException(
+                    "Failed to serialize SeedUnions.BigUnion.BaseProperties"
+                );
             foreach (var property in basePropertiesJson.AsObject())
             {
                 json[property.Key] = property.Value;

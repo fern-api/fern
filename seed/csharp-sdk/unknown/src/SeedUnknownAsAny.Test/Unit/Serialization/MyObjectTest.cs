@@ -1,6 +1,5 @@
 using System.Text.Json;
 using NUnit.Framework;
-using SeedUnknownAsAny;
 using SeedUnknownAsAny.Core;
 
 namespace SeedUnknownAsAny.Test;

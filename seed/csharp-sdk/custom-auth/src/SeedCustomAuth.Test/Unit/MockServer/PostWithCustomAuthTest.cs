@@ -1,4 +1,3 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedCustomAuth.Core;
 
@@ -8,7 +7,7 @@ namespace SeedCustomAuth.Test.Unit.MockServer;
 public class PostWithCustomAuthTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {

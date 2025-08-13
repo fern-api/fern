@@ -70,6 +70,7 @@ export class DynamicSnippetsCsharpTestGenerator {
                 );
             }
         }
+
         this.context.logger.debug("Done generating dynamic snippet tests");
     }
 

@@ -1,5 +1,3 @@
-using SeedOauthClientCredentialsEnvironmentVariables;
-
 namespace SeedOauthClientCredentialsEnvironmentVariables.Core;
 
 public partial class OAuthTokenProvider

@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using SeedOauthClientCredentials;
 using SeedOauthClientCredentials.Core;
 
 namespace SeedOauthClientCredentials.Auth;
@@ -17,7 +16,7 @@ public partial class AuthClient
 
     /// <example><code>
     /// await client.Auth.GetTokenAsync(
-    ///     new GetTokenRequest
+    ///     new SeedOauthClientCredentials.Auth.GetTokenRequest
     ///     {
     ///         ClientId = "client_id",
     ///         ClientSecret = "client_secret",

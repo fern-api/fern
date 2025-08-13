@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponsePropertyClient();\nawait client.Service.GetMovieAsync(\"string\");\n"
+                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponseProperty.SeedResponsePropertyClient();\nawait client.Service.GetMovieAsync(\"string\");\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponsePropertyClient();\nawait client.Service.GetMovieDocsAsync(\"string\");\n"
+                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponseProperty.SeedResponsePropertyClient();\nawait client.Service.GetMovieDocsAsync(\"string\");\n"
             }
         },
         {
@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponsePropertyClient();\nawait client.Service.GetMovieNameAsync(\"string\");\n"
+                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponseProperty.SeedResponsePropertyClient();\nawait client.Service.GetMovieNameAsync(\"string\");\n"
             }
         },
         {
@@ -46,7 +46,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponsePropertyClient();\nawait client.Service.GetMovieMetadataAsync(\"string\");\n"
+                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponseProperty.SeedResponsePropertyClient();\nawait client.Service.GetMovieMetadataAsync(\"string\");\n"
             }
         },
         {
@@ -58,7 +58,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponsePropertyClient();\nawait client.Service.GetOptionalMovieAsync(\"string\");\n"
+                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponseProperty.SeedResponsePropertyClient();\nawait client.Service.GetOptionalMovieAsync(\"string\");\n"
             }
         },
         {
@@ -70,7 +70,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponsePropertyClient();\nawait client.Service.GetOptionalMovieDocsAsync(\"string\");\n"
+                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponseProperty.SeedResponsePropertyClient();\nawait client.Service.GetOptionalMovieDocsAsync(\"string\");\n"
             }
         },
         {
@@ -82,7 +82,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponsePropertyClient();\nawait client.Service.GetOptionalMovieNameAsync(\"string\");\n"
+                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponseProperty.SeedResponsePropertyClient();\nawait client.Service.GetOptionalMovieNameAsync(\"string\");\n"
             }
         }
     ]

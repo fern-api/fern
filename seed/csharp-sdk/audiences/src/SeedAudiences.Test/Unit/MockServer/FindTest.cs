@@ -1,6 +1,4 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
-using SeedAudiences;
 using SeedAudiences.Core;
 
 namespace SeedAudiences.Test.Unit.MockServer;
@@ -9,7 +7,7 @@ namespace SeedAudiences.Test.Unit.MockServer;
 public class FindTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {

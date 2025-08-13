@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2;
 
-[JsonConverter(typeof(TestCaseImplementationReference.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record TestCaseImplementationReference
 {
@@ -19,18 +19,18 @@ public record TestCaseImplementationReference
     }
 
     /// <summary>
-    /// Create an instance of TestCaseImplementationReference with <see cref="TestCaseImplementationReference.TemplateId"/>.
+    /// Create an instance of TestCaseImplementationReference with <see cref="TemplateId"/>.
     /// </summary>
-    public TestCaseImplementationReference(TestCaseImplementationReference.TemplateId value)
+    public TestCaseImplementationReference(TemplateId value)
     {
         Type = "templateId";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of TestCaseImplementationReference with <see cref="TestCaseImplementationReference.Implementation"/>.
+    /// Create an instance of TestCaseImplementationReference with <see cref="Implementation"/>.
     /// </summary>
-    public TestCaseImplementationReference(TestCaseImplementationReference.Implementation value)
+    public TestCaseImplementationReference(Implementation value)
     {
         Type = "implementation";
         Value = value.Value;
@@ -64,20 +64,24 @@ public record TestCaseImplementationReference
     public string AsTemplateId() =>
         IsTemplateId
             ? (string)Value!
-            : throw new Exception("TestCaseImplementationReference.Type is not 'templateId'");
+            : throw new Exception(
+                "SeedTrace.V2.TestCaseImplementationReference.Type is not 'templateId'"
+            );
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedTrace.V2.TestCaseImplementation"/> if <see cref="Type"/> is 'implementation', otherwise throws an exception.
+    /// Returns the value as a <see cref="TestCaseImplementation"/> if <see cref="Type"/> is 'implementation', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'implementation'.</exception>
-    public SeedTrace.V2.TestCaseImplementation AsImplementation() =>
+    public TestCaseImplementation AsImplementation() =>
         IsImplementation
-            ? (SeedTrace.V2.TestCaseImplementation)Value!
-            : throw new Exception("TestCaseImplementationReference.Type is not 'implementation'");
+            ? (TestCaseImplementation)Value!
+            : throw new Exception(
+                "SeedTrace.V2.TestCaseImplementationReference.Type is not 'implementation'"
+            );
 
     public T Match<T>(
         Func<string, T> onTemplateId,
-        Func<SeedTrace.V2.TestCaseImplementation, T> onImplementation,
+        Func<TestCaseImplementation, T> onImplementation,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -91,7 +95,7 @@ public record TestCaseImplementationReference
 
     public void Visit(
         Action<string> onTemplateId,
-        Action<SeedTrace.V2.TestCaseImplementation> onImplementation,
+        Action<TestCaseImplementation> onImplementation,
         Action<string, object?> onUnknown_
     )
     {
@@ -124,13 +128,13 @@ public record TestCaseImplementationReference
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedTrace.V2.TestCaseImplementation"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="TestCaseImplementation"/> and returns true if successful.
     /// </summary>
-    public bool TryAsImplementation(out SeedTrace.V2.TestCaseImplementation? value)
+    public bool TryAsImplementation(out TestCaseImplementation? value)
     {
         if (Type == "implementation")
         {
-            value = (SeedTrace.V2.TestCaseImplementation)Value!;
+            value = (TestCaseImplementation)Value!;
             return true;
         }
         value = null;
@@ -139,23 +143,20 @@ public record TestCaseImplementationReference
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator TestCaseImplementationReference(
-        TestCaseImplementationReference.TemplateId value
-    ) => new(value);
+    public static implicit operator TestCaseImplementationReference(TemplateId value) => new(value);
 
-    public static implicit operator TestCaseImplementationReference(
-        TestCaseImplementationReference.Implementation value
-    ) => new(value);
+    public static implicit operator TestCaseImplementationReference(Implementation value) =>
+        new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<TestCaseImplementationReference>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(TestCaseImplementationReference).IsAssignableFrom(typeToConvert);
 
         public override TestCaseImplementationReference Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -184,7 +185,7 @@ public record TestCaseImplementationReference
             {
                 "templateId" => json.GetProperty("value").Deserialize<string>(options)
                     ?? throw new JsonException("Failed to deserialize string"),
-                "implementation" => json.Deserialize<SeedTrace.V2.TestCaseImplementation>(options)
+                "implementation" => json.Deserialize<TestCaseImplementation>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.V2.TestCaseImplementation"
                     ),
@@ -238,16 +239,15 @@ public record TestCaseImplementationReference
     [Serializable]
     public struct Implementation
     {
-        public Implementation(SeedTrace.V2.TestCaseImplementation value)
+        public Implementation(TestCaseImplementation value)
         {
             Value = value;
         }
 
-        internal SeedTrace.V2.TestCaseImplementation Value { get; set; }
+        internal TestCaseImplementation Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Implementation(SeedTrace.V2.TestCaseImplementation value) =>
-            new(value);
+        public static implicit operator Implementation(TestCaseImplementation value) => new(value);
     }
 }

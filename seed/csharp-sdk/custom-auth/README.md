@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedCustomAuth;
 
-var client = new SeedCustomAuthClient("CUSTOM_AUTH_SCHEME");
+var client = new SeedCustomAuth.SeedCustomAuthClient("CUSTOM_AUTH_SCHEME");
 await client.CustomAuth.PostWithCustomAuthAsync(
     new Dictionary<object, object?>() { { "key", "value" } }
 );

@@ -3,7 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using OneOf;
 using SeedExamples.Core;
-using SeedExamples.File;
 using SeedExamples.Health;
 
 namespace SeedExamples;
@@ -33,12 +32,12 @@ public partial class SeedExamplesClient
             }
         }
         _client = new RawClient(clientOptions);
-        File = new FileClient(_client);
+        File = new SeedExamples.File.FileClient(_client);
         Health = new HealthClient(_client);
         Service = new ServiceClient(_client);
     }
 
-    public FileClient File { get; }
+    public SeedExamples.File.FileClient File { get; }
 
     public HealthClient Health { get; }
 
@@ -90,7 +89,7 @@ public partial class SeedExamplesClient
     }
 
     /// <example><code>
-    /// await client.CreateTypeAsync(BasicType.Primitive);
+    /// await client.CreateTypeAsync(SeedExamples.BasicType.Primitive);
     /// </code></example>
     public async Task<Identifier> CreateTypeAsync(
         OneOf<BasicType, ComplexType> request,

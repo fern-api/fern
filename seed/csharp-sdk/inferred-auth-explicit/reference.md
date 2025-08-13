@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.<a href="/src/SeedInferredAuthExplicit/Auth/AuthClient.cs">GetTokenWithClientCredentialsAsync</a>(GetTokenRequest { ... }) -> TokenResponse</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedInferredAuthExplicit/Auth/AuthClient.cs">GetTokenWithClientCredentialsAsync</a>(SeedInferredAuthExplicit.GetTokenRequest { ... }) -> SeedInferredAuthExplicit.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,7 @@
 
 ```csharp
 await client.Auth.GetTokenWithClientCredentialsAsync(
-    new GetTokenRequest
+    new SeedInferredAuthExplicit.GetTokenRequest
     {
         XApiKey = "X-Api-Key",
         ClientId = "client_id",
@@ -38,7 +38,7 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 <dl>
 <dd>
 
-**request:** `GetTokenRequest` 
+**request:** `SeedInferredAuthExplicit.GetTokenRequest` 
     
 </dd>
 </dl>
@@ -50,7 +50,7 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Auth.<a href="/src/SeedInferredAuthExplicit/Auth/AuthClient.cs">RefreshTokenAsync</a>(RefreshTokenRequest { ... }) -> TokenResponse</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedInferredAuthExplicit/Auth/AuthClient.cs">RefreshTokenAsync</a>(SeedInferredAuthExplicit.RefreshTokenRequest { ... }) -> SeedInferredAuthExplicit.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -64,7 +64,7 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 
 ```csharp
 await client.Auth.RefreshTokenAsync(
-    new RefreshTokenRequest
+    new SeedInferredAuthExplicit.RefreshTokenRequest
     {
         XApiKey = "X-Api-Key",
         ClientId = "client_id",
@@ -89,7 +89,7 @@ await client.Auth.RefreshTokenAsync(
 <dl>
 <dd>
 
-**request:** `RefreshTokenRequest` 
+**request:** `SeedInferredAuthExplicit.RefreshTokenRequest` 
     
 </dd>
 </dl>

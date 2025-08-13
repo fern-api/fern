@@ -1,6 +1,5 @@
 using System.Text.Json;
 using NUnit.Framework;
-using SeedExamples;
 using SeedExamples.Core;
 
 namespace SeedExamples.Test;
@@ -8,7 +7,7 @@ namespace SeedExamples.Test;
 [TestFixture]
 public class ExceptionInfoTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization()
     {
         var json = """
@@ -28,7 +27,7 @@ public class ExceptionInfoTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization()
     {
         var expectedJson = """

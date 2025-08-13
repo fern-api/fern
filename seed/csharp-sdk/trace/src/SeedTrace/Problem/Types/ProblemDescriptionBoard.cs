@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(ProblemDescriptionBoard.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record ProblemDescriptionBoard
 {
@@ -19,27 +19,27 @@ public record ProblemDescriptionBoard
     }
 
     /// <summary>
-    /// Create an instance of ProblemDescriptionBoard with <see cref="ProblemDescriptionBoard.Html"/>.
+    /// Create an instance of ProblemDescriptionBoard with <see cref="Html"/>.
     /// </summary>
-    public ProblemDescriptionBoard(ProblemDescriptionBoard.Html value)
+    public ProblemDescriptionBoard(Html value)
     {
         Type = "html";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of ProblemDescriptionBoard with <see cref="ProblemDescriptionBoard.Variable"/>.
+    /// Create an instance of ProblemDescriptionBoard with <see cref="Variable"/>.
     /// </summary>
-    public ProblemDescriptionBoard(ProblemDescriptionBoard.Variable value)
+    public ProblemDescriptionBoard(Variable value)
     {
         Type = "variable";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of ProblemDescriptionBoard with <see cref="ProblemDescriptionBoard.TestCaseId"/>.
+    /// Create an instance of ProblemDescriptionBoard with <see cref="TestCaseId"/>.
     /// </summary>
-    public ProblemDescriptionBoard(ProblemDescriptionBoard.TestCaseId value)
+    public ProblemDescriptionBoard(TestCaseId value)
     {
         Type = "testCaseId";
         Value = value.Value;
@@ -76,16 +76,18 @@ public record ProblemDescriptionBoard
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'html'.</exception>
     public string AsHtml() =>
-        IsHtml ? (string)Value! : throw new Exception("ProblemDescriptionBoard.Type is not 'html'");
+        IsHtml
+            ? (string)Value!
+            : throw new Exception("SeedTrace.ProblemDescriptionBoard.Type is not 'html'");
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedTrace.VariableValue"/> if <see cref="Type"/> is 'variable', otherwise throws an exception.
+    /// Returns the value as a <see cref="VariableValue"/> if <see cref="Type"/> is 'variable', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'variable'.</exception>
-    public SeedTrace.VariableValue AsVariable() =>
+    public VariableValue AsVariable() =>
         IsVariable
-            ? (SeedTrace.VariableValue)Value!
-            : throw new Exception("ProblemDescriptionBoard.Type is not 'variable'");
+            ? (VariableValue)Value!
+            : throw new Exception("SeedTrace.ProblemDescriptionBoard.Type is not 'variable'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'testCaseId', otherwise throws an exception.
@@ -94,11 +96,11 @@ public record ProblemDescriptionBoard
     public string AsTestCaseId() =>
         IsTestCaseId
             ? (string)Value!
-            : throw new Exception("ProblemDescriptionBoard.Type is not 'testCaseId'");
+            : throw new Exception("SeedTrace.ProblemDescriptionBoard.Type is not 'testCaseId'");
 
     public T Match<T>(
         Func<string, T> onHtml,
-        Func<SeedTrace.VariableValue, T> onVariable,
+        Func<VariableValue, T> onVariable,
         Func<string, T> onTestCaseId,
         Func<string, object?, T> onUnknown_
     )
@@ -114,7 +116,7 @@ public record ProblemDescriptionBoard
 
     public void Visit(
         Action<string> onHtml,
-        Action<SeedTrace.VariableValue> onVariable,
+        Action<VariableValue> onVariable,
         Action<string> onTestCaseId,
         Action<string, object?> onUnknown_
     )
@@ -151,13 +153,13 @@ public record ProblemDescriptionBoard
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedTrace.VariableValue"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="VariableValue"/> and returns true if successful.
     /// </summary>
-    public bool TryAsVariable(out SeedTrace.VariableValue? value)
+    public bool TryAsVariable(out VariableValue? value)
     {
         if (Type == "variable")
         {
-            value = (SeedTrace.VariableValue)Value!;
+            value = (VariableValue)Value!;
             return true;
         }
         value = null;
@@ -180,26 +182,21 @@ public record ProblemDescriptionBoard
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator ProblemDescriptionBoard(ProblemDescriptionBoard.Html value) =>
-        new(value);
+    public static implicit operator ProblemDescriptionBoard(Html value) => new(value);
 
-    public static implicit operator ProblemDescriptionBoard(
-        ProblemDescriptionBoard.Variable value
-    ) => new(value);
+    public static implicit operator ProblemDescriptionBoard(Variable value) => new(value);
 
-    public static implicit operator ProblemDescriptionBoard(
-        ProblemDescriptionBoard.TestCaseId value
-    ) => new(value);
+    public static implicit operator ProblemDescriptionBoard(TestCaseId value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<ProblemDescriptionBoard>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(ProblemDescriptionBoard).IsAssignableFrom(typeToConvert);
 
         public override ProblemDescriptionBoard Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -228,8 +225,7 @@ public record ProblemDescriptionBoard
             {
                 "html" => json.GetProperty("value").Deserialize<string>(options)
                     ?? throw new JsonException("Failed to deserialize string"),
-                "variable" => json.GetProperty("value")
-                    .Deserialize<SeedTrace.VariableValue>(options)
+                "variable" => json.GetProperty("value").Deserialize<VariableValue>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.VariableValue"),
                 "testCaseId" => json.GetProperty("value").Deserialize<string>(options)
                     ?? throw new JsonException("Failed to deserialize string"),
@@ -290,16 +286,16 @@ public record ProblemDescriptionBoard
     [Serializable]
     public struct Variable
     {
-        public Variable(SeedTrace.VariableValue value)
+        public Variable(VariableValue value)
         {
             Value = value;
         }
 
-        internal SeedTrace.VariableValue Value { get; set; }
+        internal VariableValue Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Variable(SeedTrace.VariableValue value) => new(value);
+        public static implicit operator Variable(VariableValue value) => new(value);
     }
 
     /// <summary>

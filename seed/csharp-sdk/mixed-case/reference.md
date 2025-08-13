@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedMixedCase/Service/ServiceClient.cs">GetResourceAsync</a>(resourceId) -> Resource</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedMixedCase/Service/ServiceClient.cs">GetResourceAsync</a>(resourceId) -> SeedMixedCase.Resource</code></summary>
 <dl>
 <dd>
 
@@ -40,7 +40,7 @@ await client.Service.GetResourceAsync("rsc-xyz");
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedMixedCase/Service/ServiceClient.cs">ListResourcesAsync</a>(ListResourcesRequest { ... }) -> IEnumerable<Resource></code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedMixedCase/Service/ServiceClient.cs">ListResourcesAsync</a>(SeedMixedCase.ListResourcesRequest { ... }) -> IEnumerable<SeedMixedCase.Resource></code></summary>
 <dl>
 <dd>
 
@@ -54,7 +54,7 @@ await client.Service.GetResourceAsync("rsc-xyz");
 
 ```csharp
 await client.Service.ListResourcesAsync(
-    new ListResourcesRequest { PageLimit = 10, BeforeDate = new DateOnly(2023, 1, 1) }
+    new SeedMixedCase.ListResourcesRequest { PageLimit = 10, BeforeDate = new DateOnly(2023, 1, 1) }
 );
 ```
 </dd>
@@ -70,7 +70,7 @@ await client.Service.ListResourcesAsync(
 <dl>
 <dd>
 
-**request:** `ListResourcesRequest` 
+**request:** `SeedMixedCase.ListResourcesRequest` 
     
 </dd>
 </dl>

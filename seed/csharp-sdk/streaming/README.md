@@ -22,8 +22,10 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedStreaming;
 
-var client = new SeedStreamingClient();
-var items = await client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });
+var client = new SeedStreaming.SeedStreamingClient();
+var items = await client.Dummy.GenerateStreamAsync(
+    new SeedStreaming.GenerateStreamRequest { Stream = true, NumEvents = 1 }
+);
 
 await foreach (var item in items)
 {

@@ -8,7 +8,7 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-[JsonConverter(typeof(UnionWithoutKey.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record UnionWithoutKey
 {
@@ -19,18 +19,18 @@ public record UnionWithoutKey
     }
 
     /// <summary>
-    /// Create an instance of UnionWithoutKey with <see cref="UnionWithoutKey.Foo"/>.
+    /// Create an instance of UnionWithoutKey with <see cref="Foo"/>.
     /// </summary>
-    public UnionWithoutKey(UnionWithoutKey.Foo value)
+    public UnionWithoutKey(Foo value)
     {
         Type = "foo";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithoutKey with <see cref="UnionWithoutKey.Bar"/>.
+    /// Create an instance of UnionWithoutKey with <see cref="Bar"/>.
     /// </summary>
-    public UnionWithoutKey(UnionWithoutKey.Bar value)
+    public UnionWithoutKey(Bar value)
     {
         Type = "bar";
         Value = value.Value;
@@ -62,14 +62,18 @@ public record UnionWithoutKey
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo'.</exception>
     public SeedUnions.Foo AsFoo() =>
-        IsFoo ? (SeedUnions.Foo)Value! : throw new Exception("UnionWithoutKey.Type is not 'foo'");
+        IsFoo
+            ? (SeedUnions.Foo)Value!
+            : throw new Exception("SeedUnions.UnionWithoutKey.Type is not 'foo'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Bar"/> if <see cref="Type"/> is 'bar', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'bar'.</exception>
     public SeedUnions.Bar AsBar() =>
-        IsBar ? (SeedUnions.Bar)Value! : throw new Exception("UnionWithoutKey.Type is not 'bar'");
+        IsBar
+            ? (SeedUnions.Bar)Value!
+            : throw new Exception("SeedUnions.UnionWithoutKey.Type is not 'bar'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
@@ -135,19 +139,19 @@ public record UnionWithoutKey
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator UnionWithoutKey(UnionWithoutKey.Foo value) => new(value);
+    public static implicit operator UnionWithoutKey(Foo value) => new(value);
 
-    public static implicit operator UnionWithoutKey(UnionWithoutKey.Bar value) => new(value);
+    public static implicit operator UnionWithoutKey(Bar value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithoutKey>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(UnionWithoutKey).IsAssignableFrom(typeToConvert);
 
         public override UnionWithoutKey Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {

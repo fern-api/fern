@@ -22,9 +22,9 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedAliasExtends;
 
-var client = new SeedAliasExtendsClient();
+var client = new SeedAliasExtends.SeedAliasExtendsClient();
 await client.ExtendedInlineRequestBodyAsync(
-    new InlinedChildRequest { Child = "child", Parent = "parent" }
+    new SeedAliasExtends.InlinedChildRequest { Child = "child", Parent = "parent" }
 );
 ```
 

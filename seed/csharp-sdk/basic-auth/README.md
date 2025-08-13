@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedBasicAuth;
 
-var client = new SeedBasicAuthClient("USERNAME", "PASSWORD");
+var client = new SeedBasicAuth.SeedBasicAuthClient("USERNAME", "PASSWORD");
 await client.BasicAuth.PostWithBasicAuthAsync(
     new Dictionary<object, object?>() { { "key", "value" } }
 );

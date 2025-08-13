@@ -8,7 +8,7 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-[JsonConverter(typeof(ContainerValue.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record ContainerValue
 {
@@ -19,18 +19,18 @@ public record ContainerValue
     }
 
     /// <summary>
-    /// Create an instance of ContainerValue with <see cref="ContainerValue.List"/>.
+    /// Create an instance of ContainerValue with <see cref="List"/>.
     /// </summary>
-    public ContainerValue(ContainerValue.List value)
+    public ContainerValue(List value)
     {
         Type = "list";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of ContainerValue with <see cref="ContainerValue.Optional"/>.
+    /// Create an instance of ContainerValue with <see cref="Optional"/>.
     /// </summary>
-    public ContainerValue(ContainerValue.Optional value)
+    public ContainerValue(Optional value)
     {
         Type = "optional";
         Value = value.Value;
@@ -58,13 +58,13 @@ public record ContainerValue
     public bool IsOptional => Type == "optional";
 
     /// <summary>
-    /// Returns the value as a <see cref="IEnumerable<FieldValue>"/> if <see cref="Type"/> is 'list', otherwise throws an exception.
+    /// Returns the value as a <see cref="IEnumerable<SeedApi.FieldValue>"/> if <see cref="Type"/> is 'list', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'list'.</exception>
     public IEnumerable<FieldValue> AsList() =>
         IsList
             ? (IEnumerable<FieldValue>)Value!
-            : throw new Exception("ContainerValue.Type is not 'list'");
+            : throw new Exception("SeedApi.ContainerValue.Type is not 'list'");
 
     /// <summary>
     /// Returns the value as a <see cref="FieldValue?"/> if <see cref="Type"/> is 'optional', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record ContainerValue
     public FieldValue? AsOptional() =>
         IsOptional
             ? (FieldValue?)Value!
-            : throw new Exception("ContainerValue.Type is not 'optional'");
+            : throw new Exception("SeedApi.ContainerValue.Type is not 'optional'");
 
     public T Match<T>(
         Func<IEnumerable<FieldValue>, T> onList,
@@ -110,7 +110,7 @@ public record ContainerValue
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="IEnumerable<FieldValue>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="IEnumerable<SeedApi.FieldValue>"/> and returns true if successful.
     /// </summary>
     public bool TryAsList(out IEnumerable<FieldValue>? value)
     {
@@ -139,19 +139,19 @@ public record ContainerValue
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator ContainerValue(ContainerValue.List value) => new(value);
+    public static implicit operator ContainerValue(List value) => new(value);
 
-    public static implicit operator ContainerValue(ContainerValue.Optional value) => new(value);
+    public static implicit operator ContainerValue(Optional value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<ContainerValue>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(ContainerValue).IsAssignableFrom(typeToConvert);
 
         public override ContainerValue Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -179,7 +179,9 @@ public record ContainerValue
             var value = discriminator switch
             {
                 "list" => json.GetProperty("value").Deserialize<IEnumerable<FieldValue>>(options)
-                    ?? throw new JsonException("Failed to deserialize IEnumerable<FieldValue>"),
+                    ?? throw new JsonException(
+                        "Failed to deserialize IEnumerable<SeedApi.FieldValue>"
+                    ),
                 "optional" => json.GetProperty("value").Deserialize<FieldValue?>(options),
                 _ => json.Deserialize<object?>(options),
             };

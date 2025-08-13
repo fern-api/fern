@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(CreateProblemError.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record CreateProblemError
 {
@@ -19,9 +19,9 @@ public record CreateProblemError
     }
 
     /// <summary>
-    /// Create an instance of CreateProblemError with <see cref="CreateProblemError.Generic"/>.
+    /// Create an instance of CreateProblemError with <see cref="Generic"/>.
     /// </summary>
-    public CreateProblemError(CreateProblemError.Generic value)
+    public CreateProblemError(Generic value)
     {
         ErrorType = "generic";
         Value = value.Value;
@@ -44,16 +44,16 @@ public record CreateProblemError
     public bool IsGeneric => ErrorType == "generic";
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedTrace.GenericCreateProblemError"/> if <see cref="ErrorType"/> is 'generic', otherwise throws an exception.
+    /// Returns the value as a <see cref="GenericCreateProblemError"/> if <see cref="ErrorType"/> is 'generic', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="ErrorType"/> is not 'generic'.</exception>
-    public SeedTrace.GenericCreateProblemError AsGeneric() =>
+    public GenericCreateProblemError AsGeneric() =>
         IsGeneric
-            ? (SeedTrace.GenericCreateProblemError)Value!
-            : throw new Exception("CreateProblemError.ErrorType is not 'generic'");
+            ? (GenericCreateProblemError)Value!
+            : throw new Exception("SeedTrace.CreateProblemError.ErrorType is not 'generic'");
 
     public T Match<T>(
-        Func<SeedTrace.GenericCreateProblemError, T> onGeneric,
+        Func<GenericCreateProblemError, T> onGeneric,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -65,7 +65,7 @@ public record CreateProblemError
     }
 
     public void Visit(
-        Action<SeedTrace.GenericCreateProblemError> onGeneric,
+        Action<GenericCreateProblemError> onGeneric,
         Action<string, object?> onUnknown_
     )
     {
@@ -81,13 +81,13 @@ public record CreateProblemError
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedTrace.GenericCreateProblemError"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="GenericCreateProblemError"/> and returns true if successful.
     /// </summary>
-    public bool TryAsGeneric(out SeedTrace.GenericCreateProblemError? value)
+    public bool TryAsGeneric(out GenericCreateProblemError? value)
     {
         if (ErrorType == "generic")
         {
-            value = (SeedTrace.GenericCreateProblemError)Value!;
+            value = (GenericCreateProblemError)Value!;
             return true;
         }
         value = null;
@@ -96,18 +96,17 @@ public record CreateProblemError
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator CreateProblemError(CreateProblemError.Generic value) =>
-        new(value);
+    public static implicit operator CreateProblemError(Generic value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<CreateProblemError>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(CreateProblemError).IsAssignableFrom(typeToConvert);
 
         public override CreateProblemError Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -134,7 +133,7 @@ public record CreateProblemError
 
             var value = discriminator switch
             {
-                "generic" => json.Deserialize<SeedTrace.GenericCreateProblemError>(options)
+                "generic" => json.Deserialize<GenericCreateProblemError>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.GenericCreateProblemError"
                     ),
@@ -166,16 +165,15 @@ public record CreateProblemError
     [Serializable]
     public struct Generic
     {
-        public Generic(SeedTrace.GenericCreateProblemError value)
+        public Generic(GenericCreateProblemError value)
         {
             Value = value;
         }
 
-        internal SeedTrace.GenericCreateProblemError Value { get; set; }
+        internal GenericCreateProblemError Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Generic(SeedTrace.GenericCreateProblemError value) =>
-            new(value);
+        public static implicit operator Generic(GenericCreateProblemError value) => new(value);
     }
 }

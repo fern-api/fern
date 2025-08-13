@@ -16,7 +16,9 @@ public partial class DummyClient
     }
 
     /// <example><code>
-    /// await client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });
+    /// await client.Dummy.GenerateStreamAsync(
+    ///     new SeedStreaming.GenerateStreamRequest { Stream = true, NumEvents = 1 }
+    /// );
     /// </code></example>
     public async IAsyncEnumerable<StreamResponse> GenerateStreamAsync(
         GenerateStreamRequest request,
@@ -48,7 +50,7 @@ public partial class DummyClient
                 {
                     chunk = JsonUtils.Deserialize<StreamResponse>(line);
                 }
-                catch (System.Text.Json.JsonException)
+                catch (JsonException)
                 {
                     throw new SeedStreamingException(
                         $"Unable to deserialize JSON response '{line}'"
@@ -72,7 +74,9 @@ public partial class DummyClient
     }
 
     /// <example><code>
-    /// await client.Dummy.GenerateAsync(new Generateequest { Stream = false, NumEvents = 5 });
+    /// await client.Dummy.GenerateAsync(
+    ///     new SeedStreaming.Generateequest { Stream = false, NumEvents = 5 }
+    /// );
     /// </code></example>
     public async Task<StreamResponse> GenerateAsync(
         Generateequest request,

@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentialsDefault/Auth/AuthClient.cs">GetTokenAsync</a>(GetTokenRequest { ... }) -> TokenResponse</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentialsDefault/Auth/AuthClient.cs">GetTokenAsync</a>(SeedOauthClientCredentialsDefault.GetTokenRequest { ... }) -> SeedOauthClientCredentialsDefault.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,7 @@
 
 ```csharp
 await client.Auth.GetTokenAsync(
-    new GetTokenRequest
+    new SeedOauthClientCredentialsDefault.GetTokenRequest
     {
         ClientId = "client_id",
         ClientSecret = "client_secret",
@@ -35,7 +35,7 @@ await client.Auth.GetTokenAsync(
 <dl>
 <dd>
 
-**request:** `GetTokenRequest` 
+**request:** `SeedOauthClientCredentialsDefault.GetTokenRequest` 
     
 </dd>
 </dl>
