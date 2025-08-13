@@ -127,13 +127,18 @@ export abstract class AbstractSwiftGeneratorContext<
         switch (typeReference.type) {
             case "container":
                 return typeReference.container._visit({
-                    // TODO(kafkas): Handle these cases
-                    literal: () => swift.Type.jsonValue(),
+                    literal: (literal) =>
+                        literal._visit({
+                            boolean: () => swift.Type.jsonValue(), // TODO(kafkas): Handle this
+                            string: () => swift.Type.jsonValue(),
+                            _other: () => swift.Type.jsonValue()
+                        }),
                     map: (type) =>
                         swift.Type.dictionary(
                             this.getSwiftTypeForTypeReference(type.keyType),
                             this.getSwiftTypeForTypeReference(type.valueType)
                         ),
+                    // TODO(kafkas): Handle these cases
                     set: () => swift.Type.jsonValue(),
                     nullable: () => swift.Type.jsonValue(),
                     optional: (ref) => swift.Type.optional(this.getSwiftTypeForTypeReference(ref)),

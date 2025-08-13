@@ -40,11 +40,12 @@ export class ObjectGenerator {
             dataPropertyDefinitions: [...this.extendedProperties, ...this.properties].map((p) => ({
                 unsafeName: p.name.name.camelCase.unsafeName,
                 rawName: p.name.wireValue,
-                type: this.context.getSwiftTypeForTypeReference(p.valueType),
+                type: p.valueType,
                 docsContent: p.docs
             })),
             additionalProperties: true,
-            docsContent: this.docsContent
+            docsContent: this.docsContent,
+            context: this.context
         }).generate();
     }
 }

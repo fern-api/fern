@@ -233,7 +233,6 @@ export class DiscriminatedUnionGenerator {
             const dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[] = [];
 
             if (singleUnionType.shape.propertiesType === "singleProperty") {
-                const swiftType = this.context.getSwiftTypeForTypeReference(singleUnionType.shape.type);
                 constantPropertyDefinitions.push({
                     unsafeName: this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName,
                     rawName: this.unionTypeDeclaration.discriminant.wireValue,
@@ -243,7 +242,7 @@ export class DiscriminatedUnionGenerator {
                 dataPropertyDefinitions.push({
                     unsafeName: singleUnionType.shape.name.name.camelCase.unsafeName,
                     rawName: singleUnionType.shape.name.wireValue,
-                    type: swiftType
+                    type: singleUnionType.shape.type
                 });
             } else if (singleUnionType.shape.propertiesType === "samePropertiesAsObject") {
                 const variantProperties = this.getPropertiesOfVariant(singleUnionType.shape.typeId);
@@ -257,7 +256,7 @@ export class DiscriminatedUnionGenerator {
                     ...variantProperties.map((p) => ({
                         unsafeName: p.name.name.camelCase.unsafeName,
                         rawName: p.name.wireValue,
-                        type: this.context.getSwiftTypeForTypeReference(p.valueType),
+                        type: p.valueType,
                         docsContent: p.docs
                     }))
                 );
@@ -272,7 +271,8 @@ export class DiscriminatedUnionGenerator {
                 constantPropertyDefinitions,
                 dataPropertyDefinitions,
                 additionalProperties: true,
-                docsContent: singleUnionType.docs
+                docsContent: singleUnionType.docs,
+                context: this.context
             }).generate();
         });
 

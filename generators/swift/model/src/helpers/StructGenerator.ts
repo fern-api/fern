@@ -1,10 +1,17 @@
+import { assertDefined } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
+import { TypeReference } from "@fern-fern/ir-sdk/api";
+import { camelCase } from "lodash-es";
+
+import { StringEnumGenerator } from "../enum";
+import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { pascalCase } from "./pascal-case";
 
 export declare namespace StructGenerator {
     interface ConstantPropertyDefinition {
         unsafeName: string;
         rawName: string;
-        type: swift.Type;
+        type: swift.Type | TypeReference;
         value: swift.Expression;
         docsContent?: string;
     }
@@ -12,7 +19,7 @@ export declare namespace StructGenerator {
     interface DataPropertyDefinition {
         unsafeName: string;
         rawName: string;
-        type: swift.Type;
+        type: TypeReference;
         docsContent?: string;
     }
 
@@ -22,6 +29,7 @@ export declare namespace StructGenerator {
         dataPropertyDefinitions: DataPropertyDefinition[];
         additionalProperties: boolean;
         docsContent?: string;
+        context: ModelGeneratorContext;
     }
 }
 
@@ -30,20 +38,25 @@ export class StructGenerator {
     private readonly constantPropertyDefinitions: StructGenerator.ConstantPropertyDefinition[];
     private readonly dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[];
     private readonly additionalPropertiesInfo;
+    private readonly inlineStringLiteralEnums;
     private readonly docsContent?: string;
+    private readonly context: ModelGeneratorContext;
 
     public constructor({
         name,
         constantPropertyDefinitions,
         dataPropertyDefinitions,
         additionalProperties,
-        docsContent
+        docsContent,
+        context
     }: StructGenerator.Args) {
         this.name = name;
         this.constantPropertyDefinitions = constantPropertyDefinitions;
         this.dataPropertyDefinitions = dataPropertyDefinitions;
         this.additionalPropertiesInfo = additionalProperties ? this.getAdditionalPropertiesInfo() : undefined;
+        this.inlineStringLiteralEnums = this.getInlineStringLiteralEnums();
         this.docsContent = docsContent;
+        this.context = context;
     }
 
     private getAdditionalPropertiesInfo = () => {
@@ -61,6 +74,41 @@ export class StructGenerator {
             swiftType: swift.Type.dictionary(swift.Type.string(), swift.Type.jsonValue())
         };
     };
+
+    private getInlineStringLiteralEnums = () => {
+        const enumsByLiteralValue = new Map<string, swift.EnumWithRawValues>();
+        for (const def of [...this.constantPropertyDefinitions, ...this.dataPropertyDefinitions]) {
+            if (def.type instanceof swift.Type) {
+                continue;
+            }
+            if (
+                def.type.type === "container" &&
+                def.type.container.type === "literal" &&
+                def.type.container.literal.type === "string"
+            ) {
+                const literalValue = def.type.container.literal.string;
+                const enum_ = this.generateInlineStringLiteralEnum(literalValue);
+                enumsByLiteralValue.set(literalValue, enum_);
+            }
+        }
+        return enumsByLiteralValue;
+    };
+
+    private generateInlineStringLiteralEnum(literalValue: string) {
+        const stringEnumGenerator = new StringEnumGenerator({
+            name: pascalCase(literalValue),
+            source: {
+                type: "custom",
+                values: [
+                    {
+                        unsafeName: camelCase(literalValue),
+                        rawValue: literalValue
+                    }
+                ]
+            }
+        });
+        return stringEnumGenerator.generate();
+    }
 
     public generate(): swift.Struct {
         const constantProperties = this.generateConstantProperties();
@@ -97,7 +145,7 @@ export class StructGenerator {
                 unsafeName: p.unsafeName,
                 accessLevel: swift.AccessLevel.Public,
                 declarationType: swift.DeclarationType.Let,
-                type: p.type,
+                type: this.getSwiftTypeForProperty(p),
                 defaultValue: p.value,
                 docs: p.docsContent ? swift.docComment({ summary: p.docsContent }) : undefined
             })
@@ -110,10 +158,29 @@ export class StructGenerator {
                 unsafeName: p.unsafeName,
                 accessLevel: swift.AccessLevel.Public,
                 declarationType: swift.DeclarationType.Let,
-                type: p.type,
+                type: this.getSwiftTypeForProperty(p),
                 docs: p.docsContent ? swift.docComment({ summary: p.docsContent }) : undefined
             })
         );
+    }
+
+    private getSwiftTypeForProperty(
+        definition: StructGenerator.ConstantPropertyDefinition | StructGenerator.DataPropertyDefinition
+    ) {
+        if (definition.type instanceof swift.Type) {
+            return definition.type;
+        }
+        if (
+            definition.type.type === "container" &&
+            definition.type.container.type === "literal" &&
+            definition.type.container.literal.type === "string"
+        ) {
+            const literalValue = definition.type.container.literal.string;
+            const enum_ = this.inlineStringLiteralEnums.get(literalValue);
+            assertDefined(enum_, `Enum for literal value "${literalValue}" not found.`);
+            return swift.Type.custom(enum_.name);
+        }
+        return this.context.getSwiftTypeForTypeReference(definition.type);
     }
 
     private generateInitializers(dataProperties: swift.Property[]): swift.Initializer[] {
@@ -342,6 +409,9 @@ export class StructGenerator {
 
     private generateNestedTypes(dataProperties: swift.Property[]) {
         const nestedTypes: (swift.Struct | swift.EnumWithRawValues)[] = [];
+        this.inlineStringLiteralEnums.forEach((enum_) => {
+            nestedTypes.push(enum_);
+        });
         if (dataProperties.length > 0) {
             nestedTypes.push(this.generateCodingKeysEnum());
         }
