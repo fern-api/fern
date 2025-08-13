@@ -101,11 +101,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         type: ruby.Type.string(),
                         initializer:
                             scheme.tokenEnvVar != null
-                                ? undefined
-                                : ruby.codeblock((writer) => {
+                                ? ruby.codeblock((writer) => {
                                       writer.write(`ENV.fetch("${scheme.tokenEnvVar}", nil)`);
-                                  }),
-                        optional: scheme.tokenEnvVar == null,
+                                  })
+                                : undefined,
                         docs: undefined
                     });
                 default:
