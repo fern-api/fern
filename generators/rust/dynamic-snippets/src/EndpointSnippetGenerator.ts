@@ -60,7 +60,7 @@ export class EndpointSnippetGenerator {
             rust.Statement.let({
                 name: CLIENT_VAR_NAME,
                 value: rust.Expression.methodCall({
-                    target: rust.Expression.raw(`${this.getClientName()}::new(config)`),
+                    target: rust.Expression.raw(`${this.getClientName({ endpoint })}::new(config)`),
                     method: "expect",
                     args: [rust.Expression.stringLiteral("Failed to build client")]
                 })
@@ -116,7 +116,7 @@ export class EndpointSnippetGenerator {
             rust.Statement.let({
                 name: CLIENT_VAR_NAME,
                 value: rust.Expression.methodCall({
-                    target: rust.Expression.raw(`${this.getClientName()}::new(config)`),
+                    target: rust.Expression.raw(`${this.getClientName({ endpoint })}::new(config)`),
                     method: "expect",
                     args: [rust.Expression.stringLiteral("Failed to build client")]
                 })
@@ -168,7 +168,7 @@ export class EndpointSnippetGenerator {
         const imports = [
             new rust.UseStatement({
                 path: this.context.getPackageName(),
-                items: ["ClientConfig", this.getClientName()]
+                items: ["ClientConfig", this.getClientName({ endpoint })]
             })
         ];
 
@@ -261,10 +261,14 @@ export class EndpointSnippetGenerator {
         return rust.Expression.structLiteral("ClientConfig", fields);
     }
 
-    private getClientName(): string {
-        // Convert package name to client name (e.g., "my_package" -> "MyPackageClient")
-        const packageName = this.context.getPackageName();
-        const pascalCase = packageName
+    private getClientName({ endpoint }: { endpoint?: FernIr.dynamic.Endpoint } = {}): string {
+        // Always use the main client name derived from workspace name
+        // This ensures we show the root client (e.g., OauthClientCredentialsClient)
+        // rather than individual service clients (e.g., AuthClient)
+
+        // Use workspace name for client name
+        const workspaceName = this.context.config.workspaceName?.replace(/-/g, "_") || "Api";
+        const pascalCase = workspaceName
             .split("_")
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
             .join("");

@@ -110,7 +110,26 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getPackageName(): string {
-        return this.customConfig?.packageName ?? "api";
+        // Try to get package name from custom config first
+        if (this.customConfig?.packageName) {
+            return this.customConfig.packageName;
+        }
+
+        // Generate default package name from organization and workspace name to match SDK generator
+        const orgName = this.config.organization;
+        const workspaceName = this.config.workspaceName;
+
+        if (orgName && workspaceName) {
+            return `${orgName}_${workspaceName}`.toLowerCase().replace(/-/g, "_");
+        }
+
+        // Try to get it from workspace name only, converting hyphens to underscores for Rust
+        if (workspaceName) {
+            return workspaceName.replace(/-/g, "_");
+        }
+
+        // Fallback to "api" - this should be improved once we have access to the actual API name
+        return "api";
     }
 
     public hasAuth(): boolean {
