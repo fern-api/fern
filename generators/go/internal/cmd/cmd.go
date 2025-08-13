@@ -71,6 +71,7 @@ type Config struct {
 	ImportPath                   string
 	ExportedClientName           string
 	PackageName                  string
+	PackagePath                  string
 	PackageLayout                string
 	UnionVersion                 string
 	Module                       *generator.ModuleConfig
@@ -224,6 +225,7 @@ func newConfig(configFilename string) (*Config, error) {
 		ClientConstructorName:        customConfig.ClientConstructorName,
 		ImportPath:                   customConfig.ImportPath,
 		PackageName:                  customConfig.PackageName,
+		PackagePath:                  customConfig.PackagePath,
 		ExportedClientName:           customConfig.ExportedClientName,
 		PackageLayout:                customConfig.PackageLayout,
 		UnionVersion:                 customConfig.UnionVersion,
@@ -277,6 +279,7 @@ type customConfig struct {
 	ClientConstructorName        string        `json:"clientConstructorName,omitempty"`
 	ImportPath                   string        `json:"importPath,omitempty"`
 	PackageName                  string        `json:"packageName,omitempty"`
+	PackagePath                  string        `json:"packagePath,omitempty"`
 	ExportedClientName           string        `json:"exportedClientName,omitempty"`
 	PackageLayout                string        `json:"packageLayout,omitempty"`
 	UnionVersion                 string        `json:"union,omitempty"`
