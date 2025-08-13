@@ -108,7 +108,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         List<DeclaredTypeName> extendedInterfaces = new ArrayList<>();
         httpService.getHeaders().forEach(httpHeader -> {
             TypeReference valueType = httpHeader.getValueType();
-            // If the header has a default value, make it optional
             if (defaultValueExtractor.hasDefaultValue(valueType)) {
                 valueType = TypeReference.container(ContainerType.optional(valueType));
             }
@@ -120,7 +119,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         });
         httpEndpoint.getHeaders().forEach(httpHeader -> {
             TypeReference valueType = httpHeader.getValueType();
-            // If the header has a default value, make it optional
             if (defaultValueExtractor.hasDefaultValue(valueType)) {
                 valueType = TypeReference.container(ContainerType.optional(valueType));
             }
@@ -132,7 +130,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         });
         httpEndpoint.getQueryParameters().forEach(queryParameter -> {
             TypeReference valueType = queryParameter.getValueType();
-            // If the query parameter has a default value, make it optional
             boolean hasDefault = defaultValueExtractor.hasDefaultValue(valueType);
             if (hasDefault) {
                 valueType = TypeReference.container(ContainerType.optional(valueType));
@@ -157,7 +154,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                     .filter(param -> param.getLocation().equals(PathParameterLocation.ENDPOINT))
                     .forEach(pathParameter -> {
                         TypeReference valueType = pathParameter.getValueType();
-                        // If the path parameter has a default value, make it optional
                         if (defaultValueExtractor.hasDefaultValue(valueType)) {
                             valueType = TypeReference.container(ContainerType.optional(valueType));
                         }

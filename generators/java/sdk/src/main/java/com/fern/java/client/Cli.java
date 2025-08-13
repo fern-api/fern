@@ -140,6 +140,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .baseApiExceptionClassName(customConfig.baseApiExceptionClassName())
                 .baseExceptionClassName(customConfig.baseExceptionClassName())
                 .customDependencies(customConfig.customDependencies())
+                .useDefaultRequestParameterValues(customConfig.useDefaultRequestParameterValues())
                 .build();
 
         Boolean generateFullProject = ir.getPublishConfig()

@@ -46,6 +46,7 @@ fixtures:
       outputFolder: no-custom-config
     - customConfig:
         package-layout: flat
+        use-default-request-parameter-values: true
       outputFolder: flat-package-layout
     - customConfig:
         inline-path-parameters: true
@@ -130,6 +131,10 @@ fixtures:
     - outputFolder: java-pagination-deep-cursor-path
   accept-header:
     - outputFolder: accept-header
+  client-side-params:
+    - customConfig:
+        use-default-request-parameter-values: true
+      outputFolder: default
   file-upload:
     - customConfig:
         wrapped-aliases: true
@@ -185,6 +190,7 @@ allowedFailures:
   # required list of query parameters is not actually required by the builder.
   - any-auth
   - api-wide-base-path
+  - client-side-params
   - extra-properties
   - java-inline-types:inline
   - java-inline-types:no-inline

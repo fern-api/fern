@@ -36,7 +36,6 @@ public final class DefaultValueExtractor {
         if (!context.getCustomConfig().useDefaultRequestParameterValues()) {
             return false;
         }
-        
         return hasDefaultValueInternal(typeReference);
     }
     
