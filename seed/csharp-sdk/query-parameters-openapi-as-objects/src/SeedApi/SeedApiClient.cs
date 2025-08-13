@@ -33,21 +33,21 @@ public partial class SeedApiClient
 
     /// <example><code>
     /// await client.SearchAsync(
-    ///     new SeedApi.SearchRequest
+    ///     new SearchRequest
     ///     {
     ///         Limit = 1,
     ///         Id = "id",
     ///         Date = "date",
     ///         Deadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///         Bytes = "bytes",
-    ///         User = new SeedApi.User
+    ///         User = new User
     ///         {
     ///             Name = "name",
     ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
     ///         },
     ///         UserList =
     ///         [
-    ///             new SeedApi.User
+    ///             new User
     ///             {
     ///                 Name = "name",
     ///                 Tags = new List&lt;string&gt;() { "tags", "tags" },
@@ -56,35 +56,35 @@ public partial class SeedApiClient
     ///         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///         KeyValue = new Dictionary&lt;string, string?&gt;() { { "keyValue", "keyValue" } },
     ///         OptionalString = "optionalString",
-    ///         NestedUser = new SeedApi.NestedUser
+    ///         NestedUser = new NestedUser
     ///         {
     ///             Name = "name",
-    ///             User = new SeedApi.User
+    ///             User = new User
     ///             {
     ///                 Name = "name",
     ///                 Tags = new List&lt;string&gt;() { "tags", "tags" },
     ///             },
     ///         },
-    ///         OptionalUser = new SeedApi.User
+    ///         OptionalUser = new User
     ///         {
     ///             Name = "name",
     ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
     ///         },
     ///         ExcludeUser =
     ///         [
-    ///             new SeedApi.User
+    ///             new User
     ///             {
     ///                 Name = "name",
     ///                 Tags = new List&lt;string&gt;() { "tags", "tags" },
     ///             },
     ///         ],
     ///         Filter = ["filter"],
-    ///         Neighbor = new SeedApi.User
+    ///         Neighbor = new User
     ///         {
     ///             Name = "name",
     ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
     ///         },
-    ///         NeighborRequired = new SeedApi.User
+    ///         NeighborRequired = new User
     ///         {
     ///             Name = "name",
     ///             Tags = new List&lt;string&gt;() { "tags", "tags" },

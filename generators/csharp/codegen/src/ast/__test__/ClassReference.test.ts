@@ -25,6 +25,6 @@ describe("class reference", () => {
                 rootNamespace: "",
                 customConfig: {}
             })
-        ).toContain("OneOf<string, bool, System.List<string>>");
+        ).toContain("OneOf<string, bool, List<string>>");
     });
 });

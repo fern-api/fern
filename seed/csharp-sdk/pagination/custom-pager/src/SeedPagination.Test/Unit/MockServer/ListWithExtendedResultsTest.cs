@@ -1,4 +1,6 @@
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using SeedPagination;
 
 namespace SeedPagination.Test.Unit.MockServer;
 
@@ -6,7 +8,7 @@ namespace SeedPagination.Test.Unit.MockServer;
 public class ListWithExtendedResultsTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             {

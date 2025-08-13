@@ -1,5 +1,7 @@
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedTrace.Core;
+using SeedTrace.Test.Unit.MockServer;
 using SeedTrace.V2;
 
 namespace SeedTrace.Test.Unit.MockServer.V2;
@@ -7,8 +9,8 @@ namespace SeedTrace.Test.Unit.MockServer.V2;
 [TestFixture]
 public class GetProblemsTest : BaseMockServerTest
 {
-    [Test]
-    public async Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             [

@@ -1,3 +1,4 @@
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedSingleUrlEnvironmentDefault.Core;
 
@@ -7,7 +8,7 @@ namespace SeedSingleUrlEnvironmentDefault.Test.Unit.MockServer;
 public class GetDummyTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             "string"

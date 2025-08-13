@@ -33,12 +33,12 @@ public partial class SeedValidationClient
 
     /// <example><code>
     /// await client.CreateAsync(
-    ///     new SeedValidation.CreateRequest
+    ///     new CreateRequest
     ///     {
     ///         Decimal = 2.2,
     ///         Even = 100,
     ///         Name = "fern",
-    ///         Shape = SeedValidation.Shape.Square,
+    ///         Shape = Shape.Square,
     ///     }
     /// );
     /// </code></example>
@@ -86,7 +86,7 @@ public partial class SeedValidationClient
 
     /// <example><code>
     /// await client.GetAsync(
-    ///     new SeedValidation.GetRequest
+    ///     new GetRequest
     ///     {
     ///         Decimal = 2.2,
     ///         Even = 100,

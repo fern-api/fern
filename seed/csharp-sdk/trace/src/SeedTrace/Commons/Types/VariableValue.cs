@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(VariableValue.JsonConverter))]
 [Serializable]
 public record VariableValue
 {
@@ -19,99 +19,99 @@ public record VariableValue
     }
 
     /// <summary>
-    /// Create an instance of VariableValue with <see cref="IntegerValue"/>.
+    /// Create an instance of VariableValue with <see cref="VariableValue.IntegerValue"/>.
     /// </summary>
-    public VariableValue(IntegerValue value)
+    public VariableValue(VariableValue.IntegerValue value)
     {
         Type = "integerValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of VariableValue with <see cref="BooleanValue"/>.
+    /// Create an instance of VariableValue with <see cref="VariableValue.BooleanValue"/>.
     /// </summary>
-    public VariableValue(BooleanValue value)
+    public VariableValue(VariableValue.BooleanValue value)
     {
         Type = "booleanValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of VariableValue with <see cref="DoubleValue"/>.
+    /// Create an instance of VariableValue with <see cref="VariableValue.DoubleValue"/>.
     /// </summary>
-    public VariableValue(DoubleValue value)
+    public VariableValue(VariableValue.DoubleValue value)
     {
         Type = "doubleValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of VariableValue with <see cref="StringValue"/>.
+    /// Create an instance of VariableValue with <see cref="VariableValue.StringValue"/>.
     /// </summary>
-    public VariableValue(StringValue value)
+    public VariableValue(VariableValue.StringValue value)
     {
         Type = "stringValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of VariableValue with <see cref="CharValue"/>.
+    /// Create an instance of VariableValue with <see cref="VariableValue.CharValue"/>.
     /// </summary>
-    public VariableValue(CharValue value)
+    public VariableValue(VariableValue.CharValue value)
     {
         Type = "charValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of VariableValue with <see cref="MapValue"/>.
+    /// Create an instance of VariableValue with <see cref="VariableValue.MapValue"/>.
     /// </summary>
-    public VariableValue(MapValue value)
+    public VariableValue(VariableValue.MapValue value)
     {
         Type = "mapValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of VariableValue with <see cref="ListValue"/>.
+    /// Create an instance of VariableValue with <see cref="VariableValue.ListValue"/>.
     /// </summary>
-    public VariableValue(ListValue value)
+    public VariableValue(VariableValue.ListValue value)
     {
         Type = "listValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of VariableValue with <see cref="BinaryTreeValue"/>.
+    /// Create an instance of VariableValue with <see cref="VariableValue.BinaryTreeValue"/>.
     /// </summary>
-    public VariableValue(BinaryTreeValue value)
+    public VariableValue(VariableValue.BinaryTreeValue value)
     {
         Type = "binaryTreeValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of VariableValue with <see cref="SinglyLinkedListValue"/>.
+    /// Create an instance of VariableValue with <see cref="VariableValue.SinglyLinkedListValue"/>.
     /// </summary>
-    public VariableValue(SinglyLinkedListValue value)
+    public VariableValue(VariableValue.SinglyLinkedListValue value)
     {
         Type = "singlyLinkedListValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of VariableValue with <see cref="DoublyLinkedListValue"/>.
+    /// Create an instance of VariableValue with <see cref="VariableValue.DoublyLinkedListValue"/>.
     /// </summary>
-    public VariableValue(DoublyLinkedListValue value)
+    public VariableValue(VariableValue.DoublyLinkedListValue value)
     {
         Type = "doublyLinkedListValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of VariableValue with <see cref="NullValue"/>.
+    /// Create an instance of VariableValue with <see cref="VariableValue.NullValue"/>.
     /// </summary>
-    public VariableValue(NullValue value)
+    public VariableValue(VariableValue.NullValue value)
     {
         Type = "nullValue";
         Value = value.Value;
@@ -190,7 +190,7 @@ public record VariableValue
     public int AsIntegerValue() =>
         IsIntegerValue
             ? (int)Value!
-            : throw new Exception("SeedTrace.VariableValue.Type is not 'integerValue'");
+            : throw new Exception("VariableValue.Type is not 'integerValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="bool"/> if <see cref="Type"/> is 'booleanValue', otherwise throws an exception.
@@ -199,7 +199,7 @@ public record VariableValue
     public bool AsBooleanValue() =>
         IsBooleanValue
             ? (bool)Value!
-            : throw new Exception("SeedTrace.VariableValue.Type is not 'booleanValue'");
+            : throw new Exception("VariableValue.Type is not 'booleanValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="double"/> if <see cref="Type"/> is 'doubleValue', otherwise throws an exception.
@@ -208,7 +208,7 @@ public record VariableValue
     public double AsDoubleValue() =>
         IsDoubleValue
             ? (double)Value!
-            : throw new Exception("SeedTrace.VariableValue.Type is not 'doubleValue'");
+            : throw new Exception("VariableValue.Type is not 'doubleValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'stringValue', otherwise throws an exception.
@@ -217,16 +217,14 @@ public record VariableValue
     public string AsStringValue() =>
         IsStringValue
             ? (string)Value!
-            : throw new Exception("SeedTrace.VariableValue.Type is not 'stringValue'");
+            : throw new Exception("VariableValue.Type is not 'stringValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'charValue', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'charValue'.</exception>
     public string AsCharValue() =>
-        IsCharValue
-            ? (string)Value!
-            : throw new Exception("SeedTrace.VariableValue.Type is not 'charValue'");
+        IsCharValue ? (string)Value! : throw new Exception("VariableValue.Type is not 'charValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.MapValue"/> if <see cref="Type"/> is 'mapValue', otherwise throws an exception.
@@ -235,16 +233,16 @@ public record VariableValue
     public SeedTrace.MapValue AsMapValue() =>
         IsMapValue
             ? (SeedTrace.MapValue)Value!
-            : throw new Exception("SeedTrace.VariableValue.Type is not 'mapValue'");
+            : throw new Exception("VariableValue.Type is not 'mapValue'");
 
     /// <summary>
-    /// Returns the value as a <see cref="IEnumerable<SeedTrace.VariableValue>"/> if <see cref="Type"/> is 'listValue', otherwise throws an exception.
+    /// Returns the value as a <see cref="IEnumerable<VariableValue>"/> if <see cref="Type"/> is 'listValue', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'listValue'.</exception>
     public IEnumerable<VariableValue> AsListValue() =>
         IsListValue
             ? (IEnumerable<VariableValue>)Value!
-            : throw new Exception("SeedTrace.VariableValue.Type is not 'listValue'");
+            : throw new Exception("VariableValue.Type is not 'listValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.BinaryTreeValue"/> if <see cref="Type"/> is 'binaryTreeValue', otherwise throws an exception.
@@ -253,7 +251,7 @@ public record VariableValue
     public SeedTrace.BinaryTreeValue AsBinaryTreeValue() =>
         IsBinaryTreeValue
             ? (SeedTrace.BinaryTreeValue)Value!
-            : throw new Exception("SeedTrace.VariableValue.Type is not 'binaryTreeValue'");
+            : throw new Exception("VariableValue.Type is not 'binaryTreeValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.SinglyLinkedListValue"/> if <see cref="Type"/> is 'singlyLinkedListValue', otherwise throws an exception.
@@ -262,7 +260,7 @@ public record VariableValue
     public SeedTrace.SinglyLinkedListValue AsSinglyLinkedListValue() =>
         IsSinglyLinkedListValue
             ? (SeedTrace.SinglyLinkedListValue)Value!
-            : throw new Exception("SeedTrace.VariableValue.Type is not 'singlyLinkedListValue'");
+            : throw new Exception("VariableValue.Type is not 'singlyLinkedListValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.DoublyLinkedListValue"/> if <see cref="Type"/> is 'doublyLinkedListValue', otherwise throws an exception.
@@ -271,16 +269,14 @@ public record VariableValue
     public SeedTrace.DoublyLinkedListValue AsDoublyLinkedListValue() =>
         IsDoublyLinkedListValue
             ? (SeedTrace.DoublyLinkedListValue)Value!
-            : throw new Exception("SeedTrace.VariableValue.Type is not 'doublyLinkedListValue'");
+            : throw new Exception("VariableValue.Type is not 'doublyLinkedListValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'nullValue', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'nullValue'.</exception>
     public object AsNullValue() =>
-        IsNullValue
-            ? Value!
-            : throw new Exception("SeedTrace.VariableValue.Type is not 'nullValue'");
+        IsNullValue ? Value! : throw new Exception("VariableValue.Type is not 'nullValue'");
 
     public T Match<T>(
         Func<int, T> onIntegerValue,
@@ -455,7 +451,7 @@ public record VariableValue
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="IEnumerable<SeedTrace.VariableValue>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="IEnumerable<VariableValue>"/> and returns true if successful.
     /// </summary>
     public bool TryAsListValue(out IEnumerable<VariableValue>? value)
     {
@@ -526,35 +522,38 @@ public record VariableValue
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator VariableValue(IntegerValue value) => new(value);
+    public static implicit operator VariableValue(VariableValue.IntegerValue value) => new(value);
 
-    public static implicit operator VariableValue(BooleanValue value) => new(value);
+    public static implicit operator VariableValue(VariableValue.BooleanValue value) => new(value);
 
-    public static implicit operator VariableValue(DoubleValue value) => new(value);
+    public static implicit operator VariableValue(VariableValue.DoubleValue value) => new(value);
 
-    public static implicit operator VariableValue(StringValue value) => new(value);
+    public static implicit operator VariableValue(VariableValue.StringValue value) => new(value);
 
-    public static implicit operator VariableValue(CharValue value) => new(value);
+    public static implicit operator VariableValue(VariableValue.CharValue value) => new(value);
 
-    public static implicit operator VariableValue(MapValue value) => new(value);
+    public static implicit operator VariableValue(VariableValue.MapValue value) => new(value);
 
-    public static implicit operator VariableValue(ListValue value) => new(value);
+    public static implicit operator VariableValue(VariableValue.ListValue value) => new(value);
 
-    public static implicit operator VariableValue(BinaryTreeValue value) => new(value);
+    public static implicit operator VariableValue(VariableValue.BinaryTreeValue value) =>
+        new(value);
 
-    public static implicit operator VariableValue(SinglyLinkedListValue value) => new(value);
+    public static implicit operator VariableValue(VariableValue.SinglyLinkedListValue value) =>
+        new(value);
 
-    public static implicit operator VariableValue(DoublyLinkedListValue value) => new(value);
+    public static implicit operator VariableValue(VariableValue.DoublyLinkedListValue value) =>
+        new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<VariableValue>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(VariableValue).IsAssignableFrom(typeToConvert);
 
         public override VariableValue Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -592,9 +591,7 @@ public record VariableValue
                     ?? throw new JsonException("Failed to deserialize SeedTrace.MapValue"),
                 "listValue" => json.GetProperty("value")
                     .Deserialize<IEnumerable<VariableValue>>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize IEnumerable<SeedTrace.VariableValue>"
-                    ),
+                    ?? throw new JsonException("Failed to deserialize IEnumerable<VariableValue>"),
                 "binaryTreeValue" => json.Deserialize<SeedTrace.BinaryTreeValue>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.BinaryTreeValue"),
                 "singlyLinkedListValue" => json.Deserialize<SeedTrace.SinglyLinkedListValue>(

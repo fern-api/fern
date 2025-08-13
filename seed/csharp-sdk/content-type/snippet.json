@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedContentTypes;\n\nvar client = new SeedContentTypes.SeedContentTypesClient();\nawait client.Service.PatchAsync(\n    new SeedContentTypes.PatchProxyRequest { Application = \"application\", RequireAuth = true }\n);\n"
+                "client": "using SeedContentTypes;\n\nvar client = new SeedContentTypesClient();\nawait client.Service.PatchAsync(\n    new PatchProxyRequest { Application = \"application\", RequireAuth = true }\n);\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedContentTypes;\n\nvar client = new SeedContentTypes.SeedContentTypesClient();\nawait client.Service.PatchComplexAsync(\n    \"id\",\n    new SeedContentTypes.PatchComplexRequest\n    {\n        Name = \"name\",\n        Age = 1,\n        Active = true,\n        Metadata = new Dictionary<string, object>()\n        {\n            {\n                \"metadata\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n        Tags = new List<string>() { \"tags\", \"tags\" },\n        Email = \"email\",\n        Nickname = \"nickname\",\n        Bio = \"bio\",\n        ProfileImageUrl = \"profileImageUrl\",\n        Settings = new Dictionary<string, object>()\n        {\n            {\n                \"settings\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n    }\n);\n"
+                "client": "using SeedContentTypes;\n\nvar client = new SeedContentTypesClient();\nawait client.Service.PatchComplexAsync(\n    \"id\",\n    new PatchComplexRequest\n    {\n        Name = \"name\",\n        Age = 1,\n        Active = true,\n        Metadata = new Dictionary<string, object>()\n        {\n            {\n                \"metadata\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n        Tags = new List<string>() { \"tags\", \"tags\" },\n        Email = \"email\",\n        Nickname = \"nickname\",\n        Bio = \"bio\",\n        ProfileImageUrl = \"profileImageUrl\",\n        Settings = new Dictionary<string, object>()\n        {\n            {\n                \"settings\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n    }\n);\n"
             }
         },
         {
@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedContentTypes;\n\nvar client = new SeedContentTypes.SeedContentTypesClient();\nawait client.Service.RegularPatchAsync(\n    \"id\",\n    new SeedContentTypes.RegularPatchRequest { Field1 = \"field1\", Field2 = 1 }\n);\n"
+                "client": "using SeedContentTypes;\n\nvar client = new SeedContentTypesClient();\nawait client.Service.RegularPatchAsync(\n    \"id\",\n    new RegularPatchRequest { Field1 = \"field1\", Field2 = 1 }\n);\n"
             }
         }
     ]

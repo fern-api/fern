@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
+using SeedOauthClientCredentials;
 using SeedOauthClientCredentials.Core;
 
 namespace SeedOauthClientCredentials.NestedNoAuth;
@@ -17,7 +18,7 @@ public partial class ApiClient
     /// <example><code>
     /// await client.NestedNoAuth.Api.GetSomethingAsync();
     /// </code></example>
-    public async Task GetSomethingAsync(
+    public async global::System.Threading.Tasks.Task GetSomethingAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

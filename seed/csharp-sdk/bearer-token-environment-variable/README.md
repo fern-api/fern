@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedBearerTokenEnvironmentVariable;
 
-var client = new SeedBearerTokenEnvironmentVariable.SeedBearerTokenEnvironmentVariableClient();
+var client = new SeedBearerTokenEnvironmentVariableClient();
 await client.Service.GetWithBearerTokenAsync();
 ```
 

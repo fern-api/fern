@@ -1,3 +1,4 @@
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedBearerTokenEnvironmentVariable.Core;
 
@@ -7,7 +8,7 @@ namespace SeedBearerTokenEnvironmentVariable.Test.Unit.MockServer;
 public class GetWithBearerTokenTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             "string"

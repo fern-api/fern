@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUnions;\n\nvar client = new SeedUnions.SeedUnionsClient();\nawait client.Bigunion.GetAsync(\"id\");\n"
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Bigunion.GetAsync(\"id\");\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUnions;\n\nvar client = new SeedUnions.SeedUnionsClient();\nawait client.Bigunion.UpdateAsync(\n    new SeedUnions.BigUnion(\n        new SeedUnions.BigUnion.NormalSweet(new SeedUnions.NormalSweet { Value = \"value\" })\n    )\n);\n"
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Bigunion.UpdateAsync(\n    new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = \"value\" }))\n);\n"
             }
         },
         {
@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUnions;\n\nvar client = new SeedUnions.SeedUnionsClient();\nawait client.Bigunion.UpdateManyAsync(\n    new List<SeedUnions.BigUnion>()\n    {\n        new SeedUnions.BigUnion(\n            new SeedUnions.BigUnion.NormalSweet(new SeedUnions.NormalSweet { Value = \"value\" })\n        ),\n        new SeedUnions.BigUnion(\n            new SeedUnions.BigUnion.NormalSweet(new SeedUnions.NormalSweet { Value = \"value\" })\n        ),\n    }\n);\n"
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Bigunion.UpdateManyAsync(\n    new List<BigUnion>()\n    {\n        new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = \"value\" })),\n        new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = \"value\" })),\n    }\n);\n"
             }
         },
         {
@@ -46,7 +46,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUnions;\n\nvar client = new SeedUnions.SeedUnionsClient();\nawait client.Union.GetAsync(\"id\");\n"
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Union.GetAsync(\"id\");\n"
             }
         },
         {
@@ -58,7 +58,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUnions;\n\nvar client = new SeedUnions.SeedUnionsClient();\nawait client.Union.UpdateAsync(\n    new SeedUnions.Shape(new SeedUnions.Shape.Circle(new SeedUnions.Circle { Radius = 1.1 }))\n);\n"
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Union.UpdateAsync(new Shape(new Shape.Circle(new Circle { Radius = 1.1 })));\n"
             }
         }
     ]

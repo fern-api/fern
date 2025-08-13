@@ -18,9 +18,7 @@ public partial class ImdbClient
     /// Add a movie to the database using the movies/* /... path.
     /// </summary>
     /// <example><code>
-    /// await client.Imdb.CreateMovieAsync(
-    ///     new SeedApi.CreateMovieRequest { Title = "title", Rating = 1.1 }
-    /// );
+    /// await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rating = 1.1 });
     /// </code></example>
     public async Task<string> CreateMovieAsync(
         CreateMovieRequest request,

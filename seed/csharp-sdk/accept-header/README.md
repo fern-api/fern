@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedAccept;
 
-var client = new SeedAccept.SeedAcceptClient("TOKEN");
+var client = new SeedAcceptClient("TOKEN");
 await client.Service.EndpointAsync();
 ```
 

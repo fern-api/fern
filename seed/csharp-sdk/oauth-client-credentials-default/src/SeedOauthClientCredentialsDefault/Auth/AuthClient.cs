@@ -16,7 +16,7 @@ public partial class AuthClient
 
     /// <example><code>
     /// await client.Auth.GetTokenAsync(
-    ///     new SeedOauthClientCredentialsDefault.GetTokenRequest
+    ///     new GetTokenRequest
     ///     {
     ///         ClientId = "client_id",
     ///         ClientSecret = "client_secret",

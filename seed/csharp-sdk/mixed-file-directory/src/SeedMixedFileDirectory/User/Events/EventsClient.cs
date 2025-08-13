@@ -1,7 +1,9 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using SeedMixedFileDirectory;
 using SeedMixedFileDirectory.Core;
+using SeedMixedFileDirectory.User.Events;
 
 namespace SeedMixedFileDirectory.User;
 
@@ -12,21 +14,19 @@ public partial class EventsClient
     internal EventsClient(RawClient client)
     {
         _client = client;
-        Metadata = new SeedMixedFileDirectory.User.Events.MetadataClient(_client);
+        Metadata = new MetadataClient(_client);
     }
 
-    public SeedMixedFileDirectory.User.Events.MetadataClient Metadata { get; }
+    public MetadataClient Metadata { get; }
 
     /// <summary>
     /// List all user events.
     /// </summary>
     /// <example><code>
-    /// await client.User.Events.ListEventsAsync(
-    ///     new SeedMixedFileDirectory.User.ListUserEventsRequest { Limit = 1 }
-    /// );
+    /// await client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 });
     /// </code></example>
-    public async Task<IEnumerable<SeedMixedFileDirectory.User.Event>> ListEventsAsync(
-        SeedMixedFileDirectory.User.ListUserEventsRequest request,
+    public async Task<IEnumerable<Event>> ListEventsAsync(
+        ListUserEventsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -54,9 +54,7 @@ public partial class EventsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<SeedMixedFileDirectory.User.Event>>(
-                    responseBody
-                )!;
+                return JsonUtils.Deserialize<IEnumerable<Event>>(responseBody)!;
             }
             catch (JsonException e)
             {

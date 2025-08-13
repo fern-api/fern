@@ -1,0 +1,44 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/api/resources",
+                "method": "GET",
+                "identifier_override": "endpoint_service.listResources"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedClientSideParams\n\nclient = SeedClientSideParams(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.list_resources(\n    page=1,\n    per_page=1,\n    sort=\"created_at\",\n    order=\"desc\",\n    include_totals=True,\n    fields=\"fields\",\n    search=\"search\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedClientSideParams\n\nclient = AsyncSeedClientSideParams(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.list_resources(\n        page=1,\n        per_page=1,\n        sort=\"created_at\",\n        order=\"desc\",\n        include_totals=True,\n        fields=\"fields\",\n        search=\"search\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/api/resources/{resourceId}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getResource"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedClientSideParams\n\nclient = SeedClientSideParams(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.get_resource(\n    resource_id=\"resourceId\",\n    include_metadata=True,\n    format=\"json\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedClientSideParams\n\nclient = AsyncSeedClientSideParams(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.get_resource(\n        resource_id=\"resourceId\",\n        include_metadata=True,\n        format=\"json\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/api/resources/search",
+                "method": "POST",
+                "identifier_override": "endpoint_service.searchResources"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedClientSideParams\n\nclient = SeedClientSideParams(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.search_resources(\n    limit=1,\n    offset=1,\n    query=\"query\",\n    filters={\"filters\": {\"key\": \"value\"}},\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedClientSideParams\n\nclient = AsyncSeedClientSideParams(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.search_resources(\n        limit=1,\n        offset=1,\n        query=\"query\",\n        filters={\"filters\": {\"key\": \"value\"}},\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

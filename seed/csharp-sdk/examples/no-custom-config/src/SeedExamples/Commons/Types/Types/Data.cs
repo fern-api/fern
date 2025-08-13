@@ -8,7 +8,7 @@ using SeedExamples.Core;
 
 namespace SeedExamples.Commons;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(Data.JsonConverter))]
 [Serializable]
 public record Data
 {
@@ -19,18 +19,18 @@ public record Data
     }
 
     /// <summary>
-    /// Create an instance of Data with <see cref="String"/>.
+    /// Create an instance of Data with <see cref="Data.String"/>.
     /// </summary>
-    public Data(String value)
+    public Data(Data.String value)
     {
         Type = "string";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of Data with <see cref="Base64"/>.
+    /// Create an instance of Data with <see cref="Data.Base64"/>.
     /// </summary>
-    public Data(Base64 value)
+    public Data(Data.Base64 value)
     {
         Type = "base64";
         Value = value.Value;
@@ -62,18 +62,14 @@ public record Data
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'string'.</exception>
     public string AsString() =>
-        IsString
-            ? (string)Value!
-            : throw new Exception("SeedExamples.Commons.Data.Type is not 'string'");
+        IsString ? (string)Value! : throw new Exception("Data.Type is not 'string'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'base64', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'base64'.</exception>
     public string AsBase64() =>
-        IsBase64
-            ? (string)Value!
-            : throw new Exception("SeedExamples.Commons.Data.Type is not 'base64'");
+        IsBase64 ? (string)Value! : throw new Exception("Data.Type is not 'base64'");
 
     public T Match<T>(
         Func<string, T> onString,
@@ -139,19 +135,19 @@ public record Data
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator Data(String value) => new(value);
+    public static implicit operator Data(Data.String value) => new(value);
 
-    public static implicit operator Data(Base64 value) => new(value);
+    public static implicit operator Data(Data.Base64 value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Data>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(Data).IsAssignableFrom(typeToConvert);
 
         public override Data Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

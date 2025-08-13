@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using SeedObjectsWithImports;
 using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports.Commons;

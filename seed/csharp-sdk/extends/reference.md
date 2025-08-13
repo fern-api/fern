@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedExtends/SeedExtendsClient.cs">ExtendedInlineRequestBodyAsync</a>(SeedExtends.Inlined { ... })</code></summary>
+<details><summary><code>client.<a href="/src/SeedExtends/SeedExtendsClient.cs">ExtendedInlineRequestBodyAsync</a>(Inlined { ... })</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 
 ```csharp
 await client.ExtendedInlineRequestBodyAsync(
-    new SeedExtends.Inlined
+    new Inlined
     {
         Unique = "unique",
         Name = "name",
@@ -34,7 +34,7 @@ await client.ExtendedInlineRequestBodyAsync(
 <dl>
 <dd>
 
-**request:** `SeedExtends.Inlined` 
+**request:** `Inlined` 
     
 </dd>
 </dl>

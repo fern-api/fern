@@ -39,7 +39,10 @@ public partial class RequestOptions : IRequestOptions
     /// Additional headers to be sent with the request.
     /// Headers previously set with matching keys will be overwritten.
     /// </summary>
-    public IEnumerable<KeyValuePair<string, string?>> AdditionalHeaders { get;
+    public IEnumerable<System.Collections.Generic.KeyValuePair<
+        string,
+        string?
+    >> AdditionalHeaders { get;
 #if NET5_0_OR_GREATER
         init;
 #else
@@ -72,13 +75,16 @@ public partial class RequestOptions : IRequestOptions
     /// <summary>
     /// Additional query parameters sent with the request.
     /// </summary>
-    public IEnumerable<KeyValuePair<string, string>> AdditionalQueryParameters { get;
+    public IEnumerable<System.Collections.Generic.KeyValuePair<
+        string,
+        string
+    >> AdditionalQueryParameters { get;
 #if NET5_0_OR_GREATER
         init;
 #else
         set;
 #endif
-    } = Enumerable.Empty<KeyValuePair<string, string>>();
+    } = Enumerable.Empty<System.Collections.Generic.KeyValuePair<string, string>>();
 
     /// <summary>
     /// Additional body properties sent with the request.

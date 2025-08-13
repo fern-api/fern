@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(CodeExecutionUpdate.JsonConverter))]
 [Serializable]
 public record CodeExecutionUpdate
 {
@@ -19,99 +19,99 @@ public record CodeExecutionUpdate
     }
 
     /// <summary>
-    /// Create an instance of CodeExecutionUpdate with <see cref="BuildingExecutor"/>.
+    /// Create an instance of CodeExecutionUpdate with <see cref="CodeExecutionUpdate.BuildingExecutor"/>.
     /// </summary>
-    public CodeExecutionUpdate(BuildingExecutor value)
+    public CodeExecutionUpdate(CodeExecutionUpdate.BuildingExecutor value)
     {
         Type = "buildingExecutor";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of CodeExecutionUpdate with <see cref="Running"/>.
+    /// Create an instance of CodeExecutionUpdate with <see cref="CodeExecutionUpdate.Running"/>.
     /// </summary>
-    public CodeExecutionUpdate(Running value)
+    public CodeExecutionUpdate(CodeExecutionUpdate.Running value)
     {
         Type = "running";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of CodeExecutionUpdate with <see cref="Errored"/>.
+    /// Create an instance of CodeExecutionUpdate with <see cref="CodeExecutionUpdate.Errored"/>.
     /// </summary>
-    public CodeExecutionUpdate(Errored value)
+    public CodeExecutionUpdate(CodeExecutionUpdate.Errored value)
     {
         Type = "errored";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of CodeExecutionUpdate with <see cref="Stopped"/>.
+    /// Create an instance of CodeExecutionUpdate with <see cref="CodeExecutionUpdate.Stopped"/>.
     /// </summary>
-    public CodeExecutionUpdate(Stopped value)
+    public CodeExecutionUpdate(CodeExecutionUpdate.Stopped value)
     {
         Type = "stopped";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of CodeExecutionUpdate with <see cref="Graded"/>.
+    /// Create an instance of CodeExecutionUpdate with <see cref="CodeExecutionUpdate.Graded"/>.
     /// </summary>
-    public CodeExecutionUpdate(Graded value)
+    public CodeExecutionUpdate(CodeExecutionUpdate.Graded value)
     {
         Type = "graded";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of CodeExecutionUpdate with <see cref="GradedV2"/>.
+    /// Create an instance of CodeExecutionUpdate with <see cref="CodeExecutionUpdate.GradedV2"/>.
     /// </summary>
-    public CodeExecutionUpdate(GradedV2 value)
+    public CodeExecutionUpdate(CodeExecutionUpdate.GradedV2 value)
     {
         Type = "gradedV2";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of CodeExecutionUpdate with <see cref="WorkspaceRan"/>.
+    /// Create an instance of CodeExecutionUpdate with <see cref="CodeExecutionUpdate.WorkspaceRan"/>.
     /// </summary>
-    public CodeExecutionUpdate(WorkspaceRan value)
+    public CodeExecutionUpdate(CodeExecutionUpdate.WorkspaceRan value)
     {
         Type = "workspaceRan";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of CodeExecutionUpdate with <see cref="Recording"/>.
+    /// Create an instance of CodeExecutionUpdate with <see cref="CodeExecutionUpdate.Recording"/>.
     /// </summary>
-    public CodeExecutionUpdate(Recording value)
+    public CodeExecutionUpdate(CodeExecutionUpdate.Recording value)
     {
         Type = "recording";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of CodeExecutionUpdate with <see cref="Recorded"/>.
+    /// Create an instance of CodeExecutionUpdate with <see cref="CodeExecutionUpdate.Recorded"/>.
     /// </summary>
-    public CodeExecutionUpdate(Recorded value)
+    public CodeExecutionUpdate(CodeExecutionUpdate.Recorded value)
     {
         Type = "recorded";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of CodeExecutionUpdate with <see cref="InvalidRequest"/>.
+    /// Create an instance of CodeExecutionUpdate with <see cref="CodeExecutionUpdate.InvalidRequest"/>.
     /// </summary>
-    public CodeExecutionUpdate(InvalidRequest value)
+    public CodeExecutionUpdate(CodeExecutionUpdate.InvalidRequest value)
     {
         Type = "invalidRequest";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of CodeExecutionUpdate with <see cref="Finished"/>.
+    /// Create an instance of CodeExecutionUpdate with <see cref="CodeExecutionUpdate.Finished"/>.
     /// </summary>
-    public CodeExecutionUpdate(Finished value)
+    public CodeExecutionUpdate(CodeExecutionUpdate.Finished value)
     {
         Type = "finished";
         Value = value.Value;
@@ -184,116 +184,116 @@ public record CodeExecutionUpdate
     public bool IsFinished => Type == "finished";
 
     /// <summary>
-    /// Returns the value as a <see cref="BuildingExecutorResponse"/> if <see cref="Type"/> is 'buildingExecutor', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.BuildingExecutorResponse"/> if <see cref="Type"/> is 'buildingExecutor', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'buildingExecutor'.</exception>
-    public BuildingExecutorResponse AsBuildingExecutor() =>
+    public SeedTrace.BuildingExecutorResponse AsBuildingExecutor() =>
         IsBuildingExecutor
-            ? (BuildingExecutorResponse)Value!
-            : throw new Exception("SeedTrace.CodeExecutionUpdate.Type is not 'buildingExecutor'");
+            ? (SeedTrace.BuildingExecutorResponse)Value!
+            : throw new Exception("CodeExecutionUpdate.Type is not 'buildingExecutor'");
 
     /// <summary>
-    /// Returns the value as a <see cref="RunningResponse"/> if <see cref="Type"/> is 'running', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.RunningResponse"/> if <see cref="Type"/> is 'running', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'running'.</exception>
-    public RunningResponse AsRunning() =>
+    public SeedTrace.RunningResponse AsRunning() =>
         IsRunning
-            ? (RunningResponse)Value!
-            : throw new Exception("SeedTrace.CodeExecutionUpdate.Type is not 'running'");
+            ? (SeedTrace.RunningResponse)Value!
+            : throw new Exception("CodeExecutionUpdate.Type is not 'running'");
 
     /// <summary>
-    /// Returns the value as a <see cref="ErroredResponse"/> if <see cref="Type"/> is 'errored', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.ErroredResponse"/> if <see cref="Type"/> is 'errored', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'errored'.</exception>
-    public ErroredResponse AsErrored() =>
+    public SeedTrace.ErroredResponse AsErrored() =>
         IsErrored
-            ? (ErroredResponse)Value!
-            : throw new Exception("SeedTrace.CodeExecutionUpdate.Type is not 'errored'");
+            ? (SeedTrace.ErroredResponse)Value!
+            : throw new Exception("CodeExecutionUpdate.Type is not 'errored'");
 
     /// <summary>
-    /// Returns the value as a <see cref="StoppedResponse"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.StoppedResponse"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'stopped'.</exception>
-    public StoppedResponse AsStopped() =>
+    public SeedTrace.StoppedResponse AsStopped() =>
         IsStopped
-            ? (StoppedResponse)Value!
-            : throw new Exception("SeedTrace.CodeExecutionUpdate.Type is not 'stopped'");
+            ? (SeedTrace.StoppedResponse)Value!
+            : throw new Exception("CodeExecutionUpdate.Type is not 'stopped'");
 
     /// <summary>
-    /// Returns the value as a <see cref="GradedResponse"/> if <see cref="Type"/> is 'graded', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.GradedResponse"/> if <see cref="Type"/> is 'graded', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'graded'.</exception>
-    public GradedResponse AsGraded() =>
+    public SeedTrace.GradedResponse AsGraded() =>
         IsGraded
-            ? (GradedResponse)Value!
-            : throw new Exception("SeedTrace.CodeExecutionUpdate.Type is not 'graded'");
+            ? (SeedTrace.GradedResponse)Value!
+            : throw new Exception("CodeExecutionUpdate.Type is not 'graded'");
 
     /// <summary>
-    /// Returns the value as a <see cref="GradedResponseV2"/> if <see cref="Type"/> is 'gradedV2', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.GradedResponseV2"/> if <see cref="Type"/> is 'gradedV2', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'gradedV2'.</exception>
-    public GradedResponseV2 AsGradedV2() =>
+    public SeedTrace.GradedResponseV2 AsGradedV2() =>
         IsGradedV2
-            ? (GradedResponseV2)Value!
-            : throw new Exception("SeedTrace.CodeExecutionUpdate.Type is not 'gradedV2'");
+            ? (SeedTrace.GradedResponseV2)Value!
+            : throw new Exception("CodeExecutionUpdate.Type is not 'gradedV2'");
 
     /// <summary>
-    /// Returns the value as a <see cref="WorkspaceRanResponse"/> if <see cref="Type"/> is 'workspaceRan', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.WorkspaceRanResponse"/> if <see cref="Type"/> is 'workspaceRan', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'workspaceRan'.</exception>
-    public WorkspaceRanResponse AsWorkspaceRan() =>
+    public SeedTrace.WorkspaceRanResponse AsWorkspaceRan() =>
         IsWorkspaceRan
-            ? (WorkspaceRanResponse)Value!
-            : throw new Exception("SeedTrace.CodeExecutionUpdate.Type is not 'workspaceRan'");
+            ? (SeedTrace.WorkspaceRanResponse)Value!
+            : throw new Exception("CodeExecutionUpdate.Type is not 'workspaceRan'");
 
     /// <summary>
-    /// Returns the value as a <see cref="RecordingResponseNotification"/> if <see cref="Type"/> is 'recording', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.RecordingResponseNotification"/> if <see cref="Type"/> is 'recording', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'recording'.</exception>
-    public RecordingResponseNotification AsRecording() =>
+    public SeedTrace.RecordingResponseNotification AsRecording() =>
         IsRecording
-            ? (RecordingResponseNotification)Value!
-            : throw new Exception("SeedTrace.CodeExecutionUpdate.Type is not 'recording'");
+            ? (SeedTrace.RecordingResponseNotification)Value!
+            : throw new Exception("CodeExecutionUpdate.Type is not 'recording'");
 
     /// <summary>
-    /// Returns the value as a <see cref="RecordedResponseNotification"/> if <see cref="Type"/> is 'recorded', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.RecordedResponseNotification"/> if <see cref="Type"/> is 'recorded', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'recorded'.</exception>
-    public RecordedResponseNotification AsRecorded() =>
+    public SeedTrace.RecordedResponseNotification AsRecorded() =>
         IsRecorded
-            ? (RecordedResponseNotification)Value!
-            : throw new Exception("SeedTrace.CodeExecutionUpdate.Type is not 'recorded'");
+            ? (SeedTrace.RecordedResponseNotification)Value!
+            : throw new Exception("CodeExecutionUpdate.Type is not 'recorded'");
 
     /// <summary>
-    /// Returns the value as a <see cref="InvalidRequestResponse"/> if <see cref="Type"/> is 'invalidRequest', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.InvalidRequestResponse"/> if <see cref="Type"/> is 'invalidRequest', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'invalidRequest'.</exception>
-    public InvalidRequestResponse AsInvalidRequest() =>
+    public SeedTrace.InvalidRequestResponse AsInvalidRequest() =>
         IsInvalidRequest
-            ? (InvalidRequestResponse)Value!
-            : throw new Exception("SeedTrace.CodeExecutionUpdate.Type is not 'invalidRequest'");
+            ? (SeedTrace.InvalidRequestResponse)Value!
+            : throw new Exception("CodeExecutionUpdate.Type is not 'invalidRequest'");
 
     /// <summary>
-    /// Returns the value as a <see cref="FinishedResponse"/> if <see cref="Type"/> is 'finished', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.FinishedResponse"/> if <see cref="Type"/> is 'finished', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'finished'.</exception>
-    public FinishedResponse AsFinished() =>
+    public SeedTrace.FinishedResponse AsFinished() =>
         IsFinished
-            ? (FinishedResponse)Value!
-            : throw new Exception("SeedTrace.CodeExecutionUpdate.Type is not 'finished'");
+            ? (SeedTrace.FinishedResponse)Value!
+            : throw new Exception("CodeExecutionUpdate.Type is not 'finished'");
 
     public T Match<T>(
-        Func<BuildingExecutorResponse, T> onBuildingExecutor,
-        Func<RunningResponse, T> onRunning,
-        Func<ErroredResponse, T> onErrored,
-        Func<StoppedResponse, T> onStopped,
-        Func<GradedResponse, T> onGraded,
-        Func<GradedResponseV2, T> onGradedV2,
-        Func<WorkspaceRanResponse, T> onWorkspaceRan,
-        Func<RecordingResponseNotification, T> onRecording,
-        Func<RecordedResponseNotification, T> onRecorded,
-        Func<InvalidRequestResponse, T> onInvalidRequest,
-        Func<FinishedResponse, T> onFinished,
+        Func<SeedTrace.BuildingExecutorResponse, T> onBuildingExecutor,
+        Func<SeedTrace.RunningResponse, T> onRunning,
+        Func<SeedTrace.ErroredResponse, T> onErrored,
+        Func<SeedTrace.StoppedResponse, T> onStopped,
+        Func<SeedTrace.GradedResponse, T> onGraded,
+        Func<SeedTrace.GradedResponseV2, T> onGradedV2,
+        Func<SeedTrace.WorkspaceRanResponse, T> onWorkspaceRan,
+        Func<SeedTrace.RecordingResponseNotification, T> onRecording,
+        Func<SeedTrace.RecordedResponseNotification, T> onRecorded,
+        Func<SeedTrace.InvalidRequestResponse, T> onInvalidRequest,
+        Func<SeedTrace.FinishedResponse, T> onFinished,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -315,17 +315,17 @@ public record CodeExecutionUpdate
     }
 
     public void Visit(
-        Action<BuildingExecutorResponse> onBuildingExecutor,
-        Action<RunningResponse> onRunning,
-        Action<ErroredResponse> onErrored,
-        Action<StoppedResponse> onStopped,
-        Action<GradedResponse> onGraded,
-        Action<GradedResponseV2> onGradedV2,
-        Action<WorkspaceRanResponse> onWorkspaceRan,
-        Action<RecordingResponseNotification> onRecording,
-        Action<RecordedResponseNotification> onRecorded,
-        Action<InvalidRequestResponse> onInvalidRequest,
-        Action<FinishedResponse> onFinished,
+        Action<SeedTrace.BuildingExecutorResponse> onBuildingExecutor,
+        Action<SeedTrace.RunningResponse> onRunning,
+        Action<SeedTrace.ErroredResponse> onErrored,
+        Action<SeedTrace.StoppedResponse> onStopped,
+        Action<SeedTrace.GradedResponse> onGraded,
+        Action<SeedTrace.GradedResponseV2> onGradedV2,
+        Action<SeedTrace.WorkspaceRanResponse> onWorkspaceRan,
+        Action<SeedTrace.RecordingResponseNotification> onRecording,
+        Action<SeedTrace.RecordedResponseNotification> onRecorded,
+        Action<SeedTrace.InvalidRequestResponse> onInvalidRequest,
+        Action<SeedTrace.FinishedResponse> onFinished,
         Action<string, object?> onUnknown_
     )
     {
@@ -371,13 +371,13 @@ public record CodeExecutionUpdate
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="BuildingExecutorResponse"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.BuildingExecutorResponse"/> and returns true if successful.
     /// </summary>
-    public bool TryAsBuildingExecutor(out BuildingExecutorResponse? value)
+    public bool TryAsBuildingExecutor(out SeedTrace.BuildingExecutorResponse? value)
     {
         if (Type == "buildingExecutor")
         {
-            value = (BuildingExecutorResponse)Value!;
+            value = (SeedTrace.BuildingExecutorResponse)Value!;
             return true;
         }
         value = null;
@@ -385,13 +385,13 @@ public record CodeExecutionUpdate
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="RunningResponse"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.RunningResponse"/> and returns true if successful.
     /// </summary>
-    public bool TryAsRunning(out RunningResponse? value)
+    public bool TryAsRunning(out SeedTrace.RunningResponse? value)
     {
         if (Type == "running")
         {
-            value = (RunningResponse)Value!;
+            value = (SeedTrace.RunningResponse)Value!;
             return true;
         }
         value = null;
@@ -399,13 +399,13 @@ public record CodeExecutionUpdate
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="ErroredResponse"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.ErroredResponse"/> and returns true if successful.
     /// </summary>
-    public bool TryAsErrored(out ErroredResponse? value)
+    public bool TryAsErrored(out SeedTrace.ErroredResponse? value)
     {
         if (Type == "errored")
         {
-            value = (ErroredResponse)Value!;
+            value = (SeedTrace.ErroredResponse)Value!;
             return true;
         }
         value = null;
@@ -413,13 +413,13 @@ public record CodeExecutionUpdate
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="StoppedResponse"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.StoppedResponse"/> and returns true if successful.
     /// </summary>
-    public bool TryAsStopped(out StoppedResponse? value)
+    public bool TryAsStopped(out SeedTrace.StoppedResponse? value)
     {
         if (Type == "stopped")
         {
-            value = (StoppedResponse)Value!;
+            value = (SeedTrace.StoppedResponse)Value!;
             return true;
         }
         value = null;
@@ -427,13 +427,13 @@ public record CodeExecutionUpdate
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="GradedResponse"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.GradedResponse"/> and returns true if successful.
     /// </summary>
-    public bool TryAsGraded(out GradedResponse? value)
+    public bool TryAsGraded(out SeedTrace.GradedResponse? value)
     {
         if (Type == "graded")
         {
-            value = (GradedResponse)Value!;
+            value = (SeedTrace.GradedResponse)Value!;
             return true;
         }
         value = null;
@@ -441,13 +441,13 @@ public record CodeExecutionUpdate
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="GradedResponseV2"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.GradedResponseV2"/> and returns true if successful.
     /// </summary>
-    public bool TryAsGradedV2(out GradedResponseV2? value)
+    public bool TryAsGradedV2(out SeedTrace.GradedResponseV2? value)
     {
         if (Type == "gradedV2")
         {
-            value = (GradedResponseV2)Value!;
+            value = (SeedTrace.GradedResponseV2)Value!;
             return true;
         }
         value = null;
@@ -455,13 +455,13 @@ public record CodeExecutionUpdate
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="WorkspaceRanResponse"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.WorkspaceRanResponse"/> and returns true if successful.
     /// </summary>
-    public bool TryAsWorkspaceRan(out WorkspaceRanResponse? value)
+    public bool TryAsWorkspaceRan(out SeedTrace.WorkspaceRanResponse? value)
     {
         if (Type == "workspaceRan")
         {
-            value = (WorkspaceRanResponse)Value!;
+            value = (SeedTrace.WorkspaceRanResponse)Value!;
             return true;
         }
         value = null;
@@ -469,13 +469,13 @@ public record CodeExecutionUpdate
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="RecordingResponseNotification"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.RecordingResponseNotification"/> and returns true if successful.
     /// </summary>
-    public bool TryAsRecording(out RecordingResponseNotification? value)
+    public bool TryAsRecording(out SeedTrace.RecordingResponseNotification? value)
     {
         if (Type == "recording")
         {
-            value = (RecordingResponseNotification)Value!;
+            value = (SeedTrace.RecordingResponseNotification)Value!;
             return true;
         }
         value = null;
@@ -483,13 +483,13 @@ public record CodeExecutionUpdate
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="RecordedResponseNotification"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.RecordedResponseNotification"/> and returns true if successful.
     /// </summary>
-    public bool TryAsRecorded(out RecordedResponseNotification? value)
+    public bool TryAsRecorded(out SeedTrace.RecordedResponseNotification? value)
     {
         if (Type == "recorded")
         {
-            value = (RecordedResponseNotification)Value!;
+            value = (SeedTrace.RecordedResponseNotification)Value!;
             return true;
         }
         value = null;
@@ -497,13 +497,13 @@ public record CodeExecutionUpdate
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="InvalidRequestResponse"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.InvalidRequestResponse"/> and returns true if successful.
     /// </summary>
-    public bool TryAsInvalidRequest(out InvalidRequestResponse? value)
+    public bool TryAsInvalidRequest(out SeedTrace.InvalidRequestResponse? value)
     {
         if (Type == "invalidRequest")
         {
-            value = (InvalidRequestResponse)Value!;
+            value = (SeedTrace.InvalidRequestResponse)Value!;
             return true;
         }
         value = null;
@@ -511,13 +511,13 @@ public record CodeExecutionUpdate
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="FinishedResponse"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.FinishedResponse"/> and returns true if successful.
     /// </summary>
-    public bool TryAsFinished(out FinishedResponse? value)
+    public bool TryAsFinished(out SeedTrace.FinishedResponse? value)
     {
         if (Type == "finished")
         {
-            value = (FinishedResponse)Value!;
+            value = (SeedTrace.FinishedResponse)Value!;
             return true;
         }
         value = null;
@@ -526,37 +526,49 @@ public record CodeExecutionUpdate
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator CodeExecutionUpdate(BuildingExecutor value) => new(value);
+    public static implicit operator CodeExecutionUpdate(
+        CodeExecutionUpdate.BuildingExecutor value
+    ) => new(value);
 
-    public static implicit operator CodeExecutionUpdate(Running value) => new(value);
+    public static implicit operator CodeExecutionUpdate(CodeExecutionUpdate.Running value) =>
+        new(value);
 
-    public static implicit operator CodeExecutionUpdate(Errored value) => new(value);
+    public static implicit operator CodeExecutionUpdate(CodeExecutionUpdate.Errored value) =>
+        new(value);
 
-    public static implicit operator CodeExecutionUpdate(Stopped value) => new(value);
+    public static implicit operator CodeExecutionUpdate(CodeExecutionUpdate.Stopped value) =>
+        new(value);
 
-    public static implicit operator CodeExecutionUpdate(Graded value) => new(value);
+    public static implicit operator CodeExecutionUpdate(CodeExecutionUpdate.Graded value) =>
+        new(value);
 
-    public static implicit operator CodeExecutionUpdate(GradedV2 value) => new(value);
+    public static implicit operator CodeExecutionUpdate(CodeExecutionUpdate.GradedV2 value) =>
+        new(value);
 
-    public static implicit operator CodeExecutionUpdate(WorkspaceRan value) => new(value);
+    public static implicit operator CodeExecutionUpdate(CodeExecutionUpdate.WorkspaceRan value) =>
+        new(value);
 
-    public static implicit operator CodeExecutionUpdate(Recording value) => new(value);
+    public static implicit operator CodeExecutionUpdate(CodeExecutionUpdate.Recording value) =>
+        new(value);
 
-    public static implicit operator CodeExecutionUpdate(Recorded value) => new(value);
+    public static implicit operator CodeExecutionUpdate(CodeExecutionUpdate.Recorded value) =>
+        new(value);
 
-    public static implicit operator CodeExecutionUpdate(InvalidRequest value) => new(value);
+    public static implicit operator CodeExecutionUpdate(CodeExecutionUpdate.InvalidRequest value) =>
+        new(value);
 
-    public static implicit operator CodeExecutionUpdate(Finished value) => new(value);
+    public static implicit operator CodeExecutionUpdate(CodeExecutionUpdate.Finished value) =>
+        new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<CodeExecutionUpdate>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(CodeExecutionUpdate).IsAssignableFrom(typeToConvert);
 
         public override CodeExecutionUpdate Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -583,37 +595,37 @@ public record CodeExecutionUpdate
 
             var value = discriminator switch
             {
-                "buildingExecutor" => json.Deserialize<BuildingExecutorResponse>(options)
+                "buildingExecutor" => json.Deserialize<SeedTrace.BuildingExecutorResponse>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.BuildingExecutorResponse"
                     ),
-                "running" => json.Deserialize<RunningResponse>(options)
+                "running" => json.Deserialize<SeedTrace.RunningResponse>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.RunningResponse"),
-                "errored" => json.Deserialize<ErroredResponse>(options)
+                "errored" => json.Deserialize<SeedTrace.ErroredResponse>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.ErroredResponse"),
-                "stopped" => json.Deserialize<StoppedResponse>(options)
+                "stopped" => json.Deserialize<SeedTrace.StoppedResponse>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.StoppedResponse"),
-                "graded" => json.Deserialize<GradedResponse>(options)
+                "graded" => json.Deserialize<SeedTrace.GradedResponse>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.GradedResponse"),
-                "gradedV2" => json.Deserialize<GradedResponseV2>(options)
+                "gradedV2" => json.Deserialize<SeedTrace.GradedResponseV2>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.GradedResponseV2"),
-                "workspaceRan" => json.Deserialize<WorkspaceRanResponse>(options)
+                "workspaceRan" => json.Deserialize<SeedTrace.WorkspaceRanResponse>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.WorkspaceRanResponse"
                     ),
-                "recording" => json.Deserialize<RecordingResponseNotification>(options)
+                "recording" => json.Deserialize<SeedTrace.RecordingResponseNotification>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.RecordingResponseNotification"
                     ),
-                "recorded" => json.Deserialize<RecordedResponseNotification>(options)
+                "recorded" => json.Deserialize<SeedTrace.RecordedResponseNotification>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.RecordedResponseNotification"
                     ),
-                "invalidRequest" => json.Deserialize<InvalidRequestResponse>(options)
+                "invalidRequest" => json.Deserialize<SeedTrace.InvalidRequestResponse>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.InvalidRequestResponse"
                     ),
-                "finished" => json.Deserialize<FinishedResponse>(options)
+                "finished" => json.Deserialize<SeedTrace.FinishedResponse>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.FinishedResponse"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -653,17 +665,18 @@ public record CodeExecutionUpdate
     [Serializable]
     public struct BuildingExecutor
     {
-        public BuildingExecutor(BuildingExecutorResponse value)
+        public BuildingExecutor(SeedTrace.BuildingExecutorResponse value)
         {
             Value = value;
         }
 
-        internal BuildingExecutorResponse Value { get; set; }
+        internal SeedTrace.BuildingExecutorResponse Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator BuildingExecutor(BuildingExecutorResponse value) =>
-            new(value);
+        public static implicit operator BuildingExecutor(
+            SeedTrace.BuildingExecutorResponse value
+        ) => new(value);
     }
 
     /// <summary>
@@ -672,16 +685,16 @@ public record CodeExecutionUpdate
     [Serializable]
     public struct Running
     {
-        public Running(RunningResponse value)
+        public Running(SeedTrace.RunningResponse value)
         {
             Value = value;
         }
 
-        internal RunningResponse Value { get; set; }
+        internal SeedTrace.RunningResponse Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Running(RunningResponse value) => new(value);
+        public static implicit operator Running(SeedTrace.RunningResponse value) => new(value);
     }
 
     /// <summary>
@@ -690,16 +703,16 @@ public record CodeExecutionUpdate
     [Serializable]
     public struct Errored
     {
-        public Errored(ErroredResponse value)
+        public Errored(SeedTrace.ErroredResponse value)
         {
             Value = value;
         }
 
-        internal ErroredResponse Value { get; set; }
+        internal SeedTrace.ErroredResponse Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Errored(ErroredResponse value) => new(value);
+        public static implicit operator Errored(SeedTrace.ErroredResponse value) => new(value);
     }
 
     /// <summary>
@@ -708,16 +721,16 @@ public record CodeExecutionUpdate
     [Serializable]
     public struct Stopped
     {
-        public Stopped(StoppedResponse value)
+        public Stopped(SeedTrace.StoppedResponse value)
         {
             Value = value;
         }
 
-        internal StoppedResponse Value { get; set; }
+        internal SeedTrace.StoppedResponse Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Stopped(StoppedResponse value) => new(value);
+        public static implicit operator Stopped(SeedTrace.StoppedResponse value) => new(value);
     }
 
     /// <summary>
@@ -726,16 +739,16 @@ public record CodeExecutionUpdate
     [Serializable]
     public struct Graded
     {
-        public Graded(GradedResponse value)
+        public Graded(SeedTrace.GradedResponse value)
         {
             Value = value;
         }
 
-        internal GradedResponse Value { get; set; }
+        internal SeedTrace.GradedResponse Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Graded(GradedResponse value) => new(value);
+        public static implicit operator Graded(SeedTrace.GradedResponse value) => new(value);
     }
 
     /// <summary>
@@ -744,16 +757,16 @@ public record CodeExecutionUpdate
     [Serializable]
     public struct GradedV2
     {
-        public GradedV2(GradedResponseV2 value)
+        public GradedV2(SeedTrace.GradedResponseV2 value)
         {
             Value = value;
         }
 
-        internal GradedResponseV2 Value { get; set; }
+        internal SeedTrace.GradedResponseV2 Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator GradedV2(GradedResponseV2 value) => new(value);
+        public static implicit operator GradedV2(SeedTrace.GradedResponseV2 value) => new(value);
     }
 
     /// <summary>
@@ -762,16 +775,17 @@ public record CodeExecutionUpdate
     [Serializable]
     public struct WorkspaceRan
     {
-        public WorkspaceRan(WorkspaceRanResponse value)
+        public WorkspaceRan(SeedTrace.WorkspaceRanResponse value)
         {
             Value = value;
         }
 
-        internal WorkspaceRanResponse Value { get; set; }
+        internal SeedTrace.WorkspaceRanResponse Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator WorkspaceRan(WorkspaceRanResponse value) => new(value);
+        public static implicit operator WorkspaceRan(SeedTrace.WorkspaceRanResponse value) =>
+            new(value);
     }
 
     /// <summary>
@@ -780,16 +794,16 @@ public record CodeExecutionUpdate
     [Serializable]
     public struct Recording
     {
-        public Recording(RecordingResponseNotification value)
+        public Recording(SeedTrace.RecordingResponseNotification value)
         {
             Value = value;
         }
 
-        internal RecordingResponseNotification Value { get; set; }
+        internal SeedTrace.RecordingResponseNotification Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Recording(RecordingResponseNotification value) =>
+        public static implicit operator Recording(SeedTrace.RecordingResponseNotification value) =>
             new(value);
     }
 
@@ -799,16 +813,17 @@ public record CodeExecutionUpdate
     [Serializable]
     public struct Recorded
     {
-        public Recorded(RecordedResponseNotification value)
+        public Recorded(SeedTrace.RecordedResponseNotification value)
         {
             Value = value;
         }
 
-        internal RecordedResponseNotification Value { get; set; }
+        internal SeedTrace.RecordedResponseNotification Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Recorded(RecordedResponseNotification value) => new(value);
+        public static implicit operator Recorded(SeedTrace.RecordedResponseNotification value) =>
+            new(value);
     }
 
     /// <summary>
@@ -817,16 +832,17 @@ public record CodeExecutionUpdate
     [Serializable]
     public struct InvalidRequest
     {
-        public InvalidRequest(InvalidRequestResponse value)
+        public InvalidRequest(SeedTrace.InvalidRequestResponse value)
         {
             Value = value;
         }
 
-        internal InvalidRequestResponse Value { get; set; }
+        internal SeedTrace.InvalidRequestResponse Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator InvalidRequest(InvalidRequestResponse value) => new(value);
+        public static implicit operator InvalidRequest(SeedTrace.InvalidRequestResponse value) =>
+            new(value);
     }
 
     /// <summary>
@@ -835,15 +851,15 @@ public record CodeExecutionUpdate
     [Serializable]
     public struct Finished
     {
-        public Finished(FinishedResponse value)
+        public Finished(SeedTrace.FinishedResponse value)
         {
             Value = value;
         }
 
-        internal FinishedResponse Value { get; set; }
+        internal SeedTrace.FinishedResponse Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Finished(FinishedResponse value) => new(value);
+        public static implicit operator Finished(SeedTrace.FinishedResponse value) => new(value);
     }
 }

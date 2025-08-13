@@ -8,7 +8,7 @@ internal class StringEnumSerializer<T> : JsonConverter<T>
 {
     public override T? Read(
         ref Utf8JsonReader reader,
-        System.Type typeToConvert,
+        global::System.Type typeToConvert,
         JsonSerializerOptions options
     )
     {

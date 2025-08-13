@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using WireMock.Logging;
 using WireMock.Server;

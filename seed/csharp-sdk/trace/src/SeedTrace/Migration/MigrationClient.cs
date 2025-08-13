@@ -16,7 +16,7 @@ public partial class MigrationClient
 
     /// <example><code>
     /// await client.Migration.GetAttemptedMigrationsAsync(
-    ///     new SeedTrace.GetAttemptedMigrationsRequest { AdminKeyHeader = "admin-key-header" }
+    ///     new GetAttemptedMigrationsRequest { AdminKeyHeader = "admin-key-header" }
     /// );
     /// </code></example>
     public async Task<IEnumerable<Migration>> GetAttemptedMigrationsAsync(

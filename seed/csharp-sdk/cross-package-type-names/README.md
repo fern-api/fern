@@ -22,9 +22,9 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedCrossPackageTypeNames;
 
-var client = new SeedCrossPackageTypeNames.SeedCrossPackageTypeNamesClient();
+var client = new SeedCrossPackageTypeNamesClient();
 await client.Foo.FindAsync(
-    new SeedCrossPackageTypeNames.FindRequest
+    new FindRequest
     {
         OptionalString = "optionalString",
         PublicProperty = "publicProperty",

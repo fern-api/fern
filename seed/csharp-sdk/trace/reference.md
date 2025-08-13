@@ -26,7 +26,7 @@ await client.V2.TestAsync();
 </details>
 
 ## Admin
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">UpdateTestSubmissionStatusAsync</a>(submissionId, SeedTrace.TestSubmissionStatus { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">UpdateTestSubmissionStatusAsync</a>(submissionId, TestSubmissionStatus { ... })</code></summary>
 <dl>
 <dd>
 
@@ -41,7 +41,7 @@ await client.V2.TestAsync();
 ```csharp
 await client.Admin.UpdateTestSubmissionStatusAsync(
     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    new SeedTrace.TestSubmissionStatus(new SeedTrace.TestSubmissionStatus.Stopped())
+    new TestSubmissionStatus(new TestSubmissionStatus.Stopped())
 );
 ```
 </dd>
@@ -65,7 +65,7 @@ await client.Admin.UpdateTestSubmissionStatusAsync(
 <dl>
 <dd>
 
-**request:** `SeedTrace.TestSubmissionStatus` 
+**request:** `TestSubmissionStatus` 
     
 </dd>
 </dl>
@@ -77,7 +77,7 @@ await client.Admin.UpdateTestSubmissionStatusAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">SendTestSubmissionUpdateAsync</a>(submissionId, SeedTrace.TestSubmissionUpdate { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">SendTestSubmissionUpdateAsync</a>(submissionId, TestSubmissionUpdate { ... })</code></summary>
 <dl>
 <dd>
 
@@ -92,13 +92,11 @@ await client.Admin.UpdateTestSubmissionStatusAsync(
 ```csharp
 await client.Admin.SendTestSubmissionUpdateAsync(
     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    new SeedTrace.TestSubmissionUpdate
+    new TestSubmissionUpdate
     {
         UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-        UpdateInfo = new SeedTrace.TestSubmissionUpdateInfo(
-            new SeedTrace.TestSubmissionUpdateInfo.Running(
-                SeedTrace.RunningSubmissionState.QueueingSubmission
-            )
+        UpdateInfo = new TestSubmissionUpdateInfo(
+            new TestSubmissionUpdateInfo.Running(RunningSubmissionState.QueueingSubmission)
         ),
     }
 );
@@ -124,7 +122,7 @@ await client.Admin.SendTestSubmissionUpdateAsync(
 <dl>
 <dd>
 
-**request:** `SeedTrace.TestSubmissionUpdate` 
+**request:** `TestSubmissionUpdate` 
     
 </dd>
 </dl>
@@ -136,7 +134,7 @@ await client.Admin.SendTestSubmissionUpdateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">UpdateWorkspaceSubmissionStatusAsync</a>(submissionId, SeedTrace.WorkspaceSubmissionStatus { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">UpdateWorkspaceSubmissionStatusAsync</a>(submissionId, WorkspaceSubmissionStatus { ... })</code></summary>
 <dl>
 <dd>
 
@@ -151,7 +149,7 @@ await client.Admin.SendTestSubmissionUpdateAsync(
 ```csharp
 await client.Admin.UpdateWorkspaceSubmissionStatusAsync(
     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    new SeedTrace.WorkspaceSubmissionStatus(new SeedTrace.WorkspaceSubmissionStatus.Stopped())
+    new WorkspaceSubmissionStatus(new WorkspaceSubmissionStatus.Stopped())
 );
 ```
 </dd>
@@ -175,7 +173,7 @@ await client.Admin.UpdateWorkspaceSubmissionStatusAsync(
 <dl>
 <dd>
 
-**request:** `SeedTrace.WorkspaceSubmissionStatus` 
+**request:** `WorkspaceSubmissionStatus` 
     
 </dd>
 </dl>
@@ -187,7 +185,7 @@ await client.Admin.UpdateWorkspaceSubmissionStatusAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">SendWorkspaceSubmissionUpdateAsync</a>(submissionId, SeedTrace.WorkspaceSubmissionUpdate { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">SendWorkspaceSubmissionUpdateAsync</a>(submissionId, WorkspaceSubmissionUpdate { ... })</code></summary>
 <dl>
 <dd>
 
@@ -202,13 +200,11 @@ await client.Admin.UpdateWorkspaceSubmissionStatusAsync(
 ```csharp
 await client.Admin.SendWorkspaceSubmissionUpdateAsync(
     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    new SeedTrace.WorkspaceSubmissionUpdate
+    new WorkspaceSubmissionUpdate
     {
         UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-        UpdateInfo = new SeedTrace.WorkspaceSubmissionUpdateInfo(
-            new SeedTrace.WorkspaceSubmissionUpdateInfo.Running(
-                SeedTrace.RunningSubmissionState.QueueingSubmission
-            )
+        UpdateInfo = new WorkspaceSubmissionUpdateInfo(
+            new WorkspaceSubmissionUpdateInfo.Running(RunningSubmissionState.QueueingSubmission)
         ),
     }
 );
@@ -234,7 +230,7 @@ await client.Admin.SendWorkspaceSubmissionUpdateAsync(
 <dl>
 <dd>
 
-**request:** `SeedTrace.WorkspaceSubmissionUpdate` 
+**request:** `WorkspaceSubmissionUpdate` 
     
 </dd>
 </dl>
@@ -246,7 +242,7 @@ await client.Admin.SendWorkspaceSubmissionUpdateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedTestCaseAsync</a>(submissionId, testCaseId, SeedTrace.StoreTracedTestCaseRequest { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedTestCaseAsync</a>(submissionId, testCaseId, StoreTracedTestCaseRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -262,63 +258,59 @@ await client.Admin.SendWorkspaceSubmissionUpdateAsync(
 await client.Admin.StoreTracedTestCaseAsync(
     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     "testCaseId",
-    new SeedTrace.StoreTracedTestCaseRequest
+    new StoreTracedTestCaseRequest
     {
-        Result = new SeedTrace.TestCaseResultWithStdout
+        Result = new TestCaseResultWithStdout
         {
-            Result = new SeedTrace.TestCaseResult
+            Result = new TestCaseResult
             {
-                ExpectedResult = new SeedTrace.VariableValue(
-                    new SeedTrace.VariableValue.IntegerValue(1)
-                ),
-                ActualResult = new SeedTrace.ActualResult(
-                    new SeedTrace.ActualResult.ValueInner(
-                        new SeedTrace.VariableValue(new SeedTrace.VariableValue.IntegerValue(1))
+                ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
+                ActualResult = new ActualResult(
+                    new ActualResult.ValueInner(
+                        new VariableValue(new VariableValue.IntegerValue(1))
                     )
                 ),
                 Passed = true,
             },
             Stdout = "stdout",
         },
-        TraceResponses = new List<SeedTrace.TraceResponse>()
+        TraceResponses = new List<TraceResponse>()
         {
-            new SeedTrace.TraceResponse
+            new TraceResponse
             {
                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 LineNumber = 1,
-                ReturnValue = new SeedTrace.DebugVariableValue(
-                    new SeedTrace.DebugVariableValue.IntegerValue(1)
-                ),
-                ExpressionLocation = new SeedTrace.ExpressionLocation { Start = 1, Offset = 1 },
-                Stack = new SeedTrace.StackInformation
+                ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
+                ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+                Stack = new StackInformation
                 {
                     NumStackFrames = 1,
-                    TopStackFrame = new SeedTrace.StackFrame
+                    TopStackFrame = new StackFrame
                     {
                         MethodName = "methodName",
                         LineNumber = 1,
-                        Scopes = new List<SeedTrace.Scope>()
+                        Scopes = new List<Scope>()
                         {
-                            new SeedTrace.Scope
+                            new Scope
                             {
-                                Variables = new Dictionary<string, SeedTrace.DebugVariableValue>()
+                                Variables = new Dictionary<string, DebugVariableValue>()
                                 {
                                     {
                                         "variables",
-                                        new SeedTrace.DebugVariableValue(
-                                            new SeedTrace.DebugVariableValue.IntegerValue(1)
+                                        new DebugVariableValue(
+                                            new DebugVariableValue.IntegerValue(1)
                                         )
                                     },
                                 },
                             },
-                            new SeedTrace.Scope
+                            new Scope
                             {
-                                Variables = new Dictionary<string, SeedTrace.DebugVariableValue>()
+                                Variables = new Dictionary<string, DebugVariableValue>()
                                 {
                                     {
                                         "variables",
-                                        new SeedTrace.DebugVariableValue(
-                                            new SeedTrace.DebugVariableValue.IntegerValue(1)
+                                        new DebugVariableValue(
+                                            new DebugVariableValue.IntegerValue(1)
                                         )
                                     },
                                 },
@@ -328,43 +320,41 @@ await client.Admin.StoreTracedTestCaseAsync(
                 },
                 Stdout = "stdout",
             },
-            new SeedTrace.TraceResponse
+            new TraceResponse
             {
                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 LineNumber = 1,
-                ReturnValue = new SeedTrace.DebugVariableValue(
-                    new SeedTrace.DebugVariableValue.IntegerValue(1)
-                ),
-                ExpressionLocation = new SeedTrace.ExpressionLocation { Start = 1, Offset = 1 },
-                Stack = new SeedTrace.StackInformation
+                ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
+                ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+                Stack = new StackInformation
                 {
                     NumStackFrames = 1,
-                    TopStackFrame = new SeedTrace.StackFrame
+                    TopStackFrame = new StackFrame
                     {
                         MethodName = "methodName",
                         LineNumber = 1,
-                        Scopes = new List<SeedTrace.Scope>()
+                        Scopes = new List<Scope>()
                         {
-                            new SeedTrace.Scope
+                            new Scope
                             {
-                                Variables = new Dictionary<string, SeedTrace.DebugVariableValue>()
+                                Variables = new Dictionary<string, DebugVariableValue>()
                                 {
                                     {
                                         "variables",
-                                        new SeedTrace.DebugVariableValue(
-                                            new SeedTrace.DebugVariableValue.IntegerValue(1)
+                                        new DebugVariableValue(
+                                            new DebugVariableValue.IntegerValue(1)
                                         )
                                     },
                                 },
                             },
-                            new SeedTrace.Scope
+                            new Scope
                             {
-                                Variables = new Dictionary<string, SeedTrace.DebugVariableValue>()
+                                Variables = new Dictionary<string, DebugVariableValue>()
                                 {
                                     {
                                         "variables",
-                                        new SeedTrace.DebugVariableValue(
-                                            new SeedTrace.DebugVariableValue.IntegerValue(1)
+                                        new DebugVariableValue(
+                                            new DebugVariableValue.IntegerValue(1)
                                         )
                                     },
                                 },
@@ -407,7 +397,7 @@ await client.Admin.StoreTracedTestCaseAsync(
 <dl>
 <dd>
 
-**request:** `SeedTrace.StoreTracedTestCaseRequest` 
+**request:** `StoreTracedTestCaseRequest` 
     
 </dd>
 </dl>
@@ -419,7 +409,7 @@ await client.Admin.StoreTracedTestCaseAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedTestCaseV2Async</a>(submissionId, testCaseId, IEnumerable<SeedTrace.TraceResponseV2> { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedTestCaseV2Async</a>(submissionId, testCaseId, IEnumerable<TraceResponseV2> { ... })</code></summary>
 <dl>
 <dd>
 
@@ -435,47 +425,41 @@ await client.Admin.StoreTracedTestCaseAsync(
 await client.Admin.StoreTracedTestCaseV2Async(
     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     "testCaseId",
-    new List<SeedTrace.TraceResponseV2>()
+    new List<TraceResponseV2>()
     {
-        new SeedTrace.TraceResponseV2
+        new TraceResponseV2
         {
             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             LineNumber = 1,
-            File = new SeedTrace.TracedFile { Filename = "filename", Directory = "directory" },
-            ReturnValue = new SeedTrace.DebugVariableValue(
-                new SeedTrace.DebugVariableValue.IntegerValue(1)
-            ),
-            ExpressionLocation = new SeedTrace.ExpressionLocation { Start = 1, Offset = 1 },
-            Stack = new SeedTrace.StackInformation
+            File = new TracedFile { Filename = "filename", Directory = "directory" },
+            ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
+            ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+            Stack = new StackInformation
             {
                 NumStackFrames = 1,
-                TopStackFrame = new SeedTrace.StackFrame
+                TopStackFrame = new StackFrame
                 {
                     MethodName = "methodName",
                     LineNumber = 1,
-                    Scopes = new List<SeedTrace.Scope>()
+                    Scopes = new List<Scope>()
                     {
-                        new SeedTrace.Scope
+                        new Scope
                         {
-                            Variables = new Dictionary<string, SeedTrace.DebugVariableValue>()
+                            Variables = new Dictionary<string, DebugVariableValue>()
                             {
                                 {
                                     "variables",
-                                    new SeedTrace.DebugVariableValue(
-                                        new SeedTrace.DebugVariableValue.IntegerValue(1)
-                                    )
+                                    new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
                                 },
                             },
                         },
-                        new SeedTrace.Scope
+                        new Scope
                         {
-                            Variables = new Dictionary<string, SeedTrace.DebugVariableValue>()
+                            Variables = new Dictionary<string, DebugVariableValue>()
                             {
                                 {
                                     "variables",
-                                    new SeedTrace.DebugVariableValue(
-                                        new SeedTrace.DebugVariableValue.IntegerValue(1)
-                                    )
+                                    new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
                                 },
                             },
                         },
@@ -484,45 +468,39 @@ await client.Admin.StoreTracedTestCaseV2Async(
             },
             Stdout = "stdout",
         },
-        new SeedTrace.TraceResponseV2
+        new TraceResponseV2
         {
             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             LineNumber = 1,
-            File = new SeedTrace.TracedFile { Filename = "filename", Directory = "directory" },
-            ReturnValue = new SeedTrace.DebugVariableValue(
-                new SeedTrace.DebugVariableValue.IntegerValue(1)
-            ),
-            ExpressionLocation = new SeedTrace.ExpressionLocation { Start = 1, Offset = 1 },
-            Stack = new SeedTrace.StackInformation
+            File = new TracedFile { Filename = "filename", Directory = "directory" },
+            ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
+            ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+            Stack = new StackInformation
             {
                 NumStackFrames = 1,
-                TopStackFrame = new SeedTrace.StackFrame
+                TopStackFrame = new StackFrame
                 {
                     MethodName = "methodName",
                     LineNumber = 1,
-                    Scopes = new List<SeedTrace.Scope>()
+                    Scopes = new List<Scope>()
                     {
-                        new SeedTrace.Scope
+                        new Scope
                         {
-                            Variables = new Dictionary<string, SeedTrace.DebugVariableValue>()
+                            Variables = new Dictionary<string, DebugVariableValue>()
                             {
                                 {
                                     "variables",
-                                    new SeedTrace.DebugVariableValue(
-                                        new SeedTrace.DebugVariableValue.IntegerValue(1)
-                                    )
+                                    new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
                                 },
                             },
                         },
-                        new SeedTrace.Scope
+                        new Scope
                         {
-                            Variables = new Dictionary<string, SeedTrace.DebugVariableValue>()
+                            Variables = new Dictionary<string, DebugVariableValue>()
                             {
                                 {
                                     "variables",
-                                    new SeedTrace.DebugVariableValue(
-                                        new SeedTrace.DebugVariableValue.IntegerValue(1)
-                                    )
+                                    new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
                                 },
                             },
                         },
@@ -563,7 +541,7 @@ await client.Admin.StoreTracedTestCaseV2Async(
 <dl>
 <dd>
 
-**request:** `IEnumerable<SeedTrace.TraceResponseV2>` 
+**request:** `IEnumerable<TraceResponseV2>` 
     
 </dd>
 </dl>
@@ -575,7 +553,7 @@ await client.Admin.StoreTracedTestCaseV2Async(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedWorkspaceAsync</a>(submissionId, SeedTrace.StoreTracedWorkspaceRequest { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedWorkspaceAsync</a>(submissionId, StoreTracedWorkspaceRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -590,13 +568,13 @@ await client.Admin.StoreTracedTestCaseV2Async(
 ```csharp
 await client.Admin.StoreTracedWorkspaceAsync(
     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    new SeedTrace.StoreTracedWorkspaceRequest
+    new StoreTracedWorkspaceRequest
     {
-        WorkspaceRunDetails = new SeedTrace.WorkspaceRunDetails
+        WorkspaceRunDetails = new WorkspaceRunDetails
         {
-            ExceptionV2 = new SeedTrace.ExceptionV2(
-                new SeedTrace.ExceptionV2.Generic(
-                    new SeedTrace.ExceptionInfo
+            ExceptionV2 = new ExceptionV2(
+                new ExceptionV2.Generic(
+                    new ExceptionInfo
                     {
                         ExceptionType = "exceptionType",
                         ExceptionMessage = "exceptionMessage",
@@ -604,7 +582,7 @@ await client.Admin.StoreTracedWorkspaceAsync(
                     }
                 )
             ),
-            Exception = new SeedTrace.ExceptionInfo
+            Exception = new ExceptionInfo
             {
                 ExceptionType = "exceptionType",
                 ExceptionMessage = "exceptionMessage",
@@ -612,45 +590,43 @@ await client.Admin.StoreTracedWorkspaceAsync(
             },
             Stdout = "stdout",
         },
-        TraceResponses = new List<SeedTrace.TraceResponse>()
+        TraceResponses = new List<TraceResponse>()
         {
-            new SeedTrace.TraceResponse
+            new TraceResponse
             {
                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 LineNumber = 1,
-                ReturnValue = new SeedTrace.DebugVariableValue(
-                    new SeedTrace.DebugVariableValue.IntegerValue(1)
-                ),
-                ExpressionLocation = new SeedTrace.ExpressionLocation { Start = 1, Offset = 1 },
-                Stack = new SeedTrace.StackInformation
+                ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
+                ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+                Stack = new StackInformation
                 {
                     NumStackFrames = 1,
-                    TopStackFrame = new SeedTrace.StackFrame
+                    TopStackFrame = new StackFrame
                     {
                         MethodName = "methodName",
                         LineNumber = 1,
-                        Scopes = new List<SeedTrace.Scope>()
+                        Scopes = new List<Scope>()
                         {
-                            new SeedTrace.Scope
+                            new Scope
                             {
-                                Variables = new Dictionary<string, SeedTrace.DebugVariableValue>()
+                                Variables = new Dictionary<string, DebugVariableValue>()
                                 {
                                     {
                                         "variables",
-                                        new SeedTrace.DebugVariableValue(
-                                            new SeedTrace.DebugVariableValue.IntegerValue(1)
+                                        new DebugVariableValue(
+                                            new DebugVariableValue.IntegerValue(1)
                                         )
                                     },
                                 },
                             },
-                            new SeedTrace.Scope
+                            new Scope
                             {
-                                Variables = new Dictionary<string, SeedTrace.DebugVariableValue>()
+                                Variables = new Dictionary<string, DebugVariableValue>()
                                 {
                                     {
                                         "variables",
-                                        new SeedTrace.DebugVariableValue(
-                                            new SeedTrace.DebugVariableValue.IntegerValue(1)
+                                        new DebugVariableValue(
+                                            new DebugVariableValue.IntegerValue(1)
                                         )
                                     },
                                 },
@@ -660,43 +636,41 @@ await client.Admin.StoreTracedWorkspaceAsync(
                 },
                 Stdout = "stdout",
             },
-            new SeedTrace.TraceResponse
+            new TraceResponse
             {
                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 LineNumber = 1,
-                ReturnValue = new SeedTrace.DebugVariableValue(
-                    new SeedTrace.DebugVariableValue.IntegerValue(1)
-                ),
-                ExpressionLocation = new SeedTrace.ExpressionLocation { Start = 1, Offset = 1 },
-                Stack = new SeedTrace.StackInformation
+                ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
+                ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+                Stack = new StackInformation
                 {
                     NumStackFrames = 1,
-                    TopStackFrame = new SeedTrace.StackFrame
+                    TopStackFrame = new StackFrame
                     {
                         MethodName = "methodName",
                         LineNumber = 1,
-                        Scopes = new List<SeedTrace.Scope>()
+                        Scopes = new List<Scope>()
                         {
-                            new SeedTrace.Scope
+                            new Scope
                             {
-                                Variables = new Dictionary<string, SeedTrace.DebugVariableValue>()
+                                Variables = new Dictionary<string, DebugVariableValue>()
                                 {
                                     {
                                         "variables",
-                                        new SeedTrace.DebugVariableValue(
-                                            new SeedTrace.DebugVariableValue.IntegerValue(1)
+                                        new DebugVariableValue(
+                                            new DebugVariableValue.IntegerValue(1)
                                         )
                                     },
                                 },
                             },
-                            new SeedTrace.Scope
+                            new Scope
                             {
-                                Variables = new Dictionary<string, SeedTrace.DebugVariableValue>()
+                                Variables = new Dictionary<string, DebugVariableValue>()
                                 {
                                     {
                                         "variables",
-                                        new SeedTrace.DebugVariableValue(
-                                            new SeedTrace.DebugVariableValue.IntegerValue(1)
+                                        new DebugVariableValue(
+                                            new DebugVariableValue.IntegerValue(1)
                                         )
                                     },
                                 },
@@ -731,7 +705,7 @@ await client.Admin.StoreTracedWorkspaceAsync(
 <dl>
 <dd>
 
-**request:** `SeedTrace.StoreTracedWorkspaceRequest` 
+**request:** `StoreTracedWorkspaceRequest` 
     
 </dd>
 </dl>
@@ -743,7 +717,7 @@ await client.Admin.StoreTracedWorkspaceAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedWorkspaceV2Async</a>(submissionId, IEnumerable<SeedTrace.TraceResponseV2> { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedWorkspaceV2Async</a>(submissionId, IEnumerable<TraceResponseV2> { ... })</code></summary>
 <dl>
 <dd>
 
@@ -758,47 +732,41 @@ await client.Admin.StoreTracedWorkspaceAsync(
 ```csharp
 await client.Admin.StoreTracedWorkspaceV2Async(
     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    new List<SeedTrace.TraceResponseV2>()
+    new List<TraceResponseV2>()
     {
-        new SeedTrace.TraceResponseV2
+        new TraceResponseV2
         {
             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             LineNumber = 1,
-            File = new SeedTrace.TracedFile { Filename = "filename", Directory = "directory" },
-            ReturnValue = new SeedTrace.DebugVariableValue(
-                new SeedTrace.DebugVariableValue.IntegerValue(1)
-            ),
-            ExpressionLocation = new SeedTrace.ExpressionLocation { Start = 1, Offset = 1 },
-            Stack = new SeedTrace.StackInformation
+            File = new TracedFile { Filename = "filename", Directory = "directory" },
+            ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
+            ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+            Stack = new StackInformation
             {
                 NumStackFrames = 1,
-                TopStackFrame = new SeedTrace.StackFrame
+                TopStackFrame = new StackFrame
                 {
                     MethodName = "methodName",
                     LineNumber = 1,
-                    Scopes = new List<SeedTrace.Scope>()
+                    Scopes = new List<Scope>()
                     {
-                        new SeedTrace.Scope
+                        new Scope
                         {
-                            Variables = new Dictionary<string, SeedTrace.DebugVariableValue>()
+                            Variables = new Dictionary<string, DebugVariableValue>()
                             {
                                 {
                                     "variables",
-                                    new SeedTrace.DebugVariableValue(
-                                        new SeedTrace.DebugVariableValue.IntegerValue(1)
-                                    )
+                                    new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
                                 },
                             },
                         },
-                        new SeedTrace.Scope
+                        new Scope
                         {
-                            Variables = new Dictionary<string, SeedTrace.DebugVariableValue>()
+                            Variables = new Dictionary<string, DebugVariableValue>()
                             {
                                 {
                                     "variables",
-                                    new SeedTrace.DebugVariableValue(
-                                        new SeedTrace.DebugVariableValue.IntegerValue(1)
-                                    )
+                                    new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
                                 },
                             },
                         },
@@ -807,45 +775,39 @@ await client.Admin.StoreTracedWorkspaceV2Async(
             },
             Stdout = "stdout",
         },
-        new SeedTrace.TraceResponseV2
+        new TraceResponseV2
         {
             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             LineNumber = 1,
-            File = new SeedTrace.TracedFile { Filename = "filename", Directory = "directory" },
-            ReturnValue = new SeedTrace.DebugVariableValue(
-                new SeedTrace.DebugVariableValue.IntegerValue(1)
-            ),
-            ExpressionLocation = new SeedTrace.ExpressionLocation { Start = 1, Offset = 1 },
-            Stack = new SeedTrace.StackInformation
+            File = new TracedFile { Filename = "filename", Directory = "directory" },
+            ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
+            ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+            Stack = new StackInformation
             {
                 NumStackFrames = 1,
-                TopStackFrame = new SeedTrace.StackFrame
+                TopStackFrame = new StackFrame
                 {
                     MethodName = "methodName",
                     LineNumber = 1,
-                    Scopes = new List<SeedTrace.Scope>()
+                    Scopes = new List<Scope>()
                     {
-                        new SeedTrace.Scope
+                        new Scope
                         {
-                            Variables = new Dictionary<string, SeedTrace.DebugVariableValue>()
+                            Variables = new Dictionary<string, DebugVariableValue>()
                             {
                                 {
                                     "variables",
-                                    new SeedTrace.DebugVariableValue(
-                                        new SeedTrace.DebugVariableValue.IntegerValue(1)
-                                    )
+                                    new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
                                 },
                             },
                         },
-                        new SeedTrace.Scope
+                        new Scope
                         {
-                            Variables = new Dictionary<string, SeedTrace.DebugVariableValue>()
+                            Variables = new Dictionary<string, DebugVariableValue>()
                             {
                                 {
                                     "variables",
-                                    new SeedTrace.DebugVariableValue(
-                                        new SeedTrace.DebugVariableValue.IntegerValue(1)
-                                    )
+                                    new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
                                 },
                             },
                         },
@@ -878,7 +840,7 @@ await client.Admin.StoreTracedWorkspaceV2Async(
 <dl>
 <dd>
 
-**request:** `IEnumerable<SeedTrace.TraceResponseV2>` 
+**request:** `IEnumerable<TraceResponseV2>` 
     
 </dd>
 </dl>
@@ -957,7 +919,7 @@ await client.Homepage.SetHomepageProblemsAsync(new List<string>() { "string", "s
 </details>
 
 ## Migration
-<details><summary><code>client.Migration.<a href="/src/SeedTrace/Migration/MigrationClient.cs">GetAttemptedMigrationsAsync</a>(SeedTrace.GetAttemptedMigrationsRequest { ... }) -> IEnumerable<SeedTrace.Migration></code></summary>
+<details><summary><code>client.Migration.<a href="/src/SeedTrace/Migration/MigrationClient.cs">GetAttemptedMigrationsAsync</a>(GetAttemptedMigrationsRequest { ... }) -> IEnumerable<Migration></code></summary>
 <dl>
 <dd>
 
@@ -971,7 +933,7 @@ await client.Homepage.SetHomepageProblemsAsync(new List<string>() { "string", "s
 
 ```csharp
 await client.Migration.GetAttemptedMigrationsAsync(
-    new SeedTrace.GetAttemptedMigrationsRequest { AdminKeyHeader = "admin-key-header" }
+    new GetAttemptedMigrationsRequest { AdminKeyHeader = "admin-key-header" }
 );
 ```
 </dd>
@@ -987,7 +949,7 @@ await client.Migration.GetAttemptedMigrationsAsync(
 <dl>
 <dd>
 
-**request:** `SeedTrace.GetAttemptedMigrationsRequest` 
+**request:** `GetAttemptedMigrationsRequest` 
     
 </dd>
 </dl>
@@ -1000,7 +962,7 @@ await client.Migration.GetAttemptedMigrationsAsync(
 </details>
 
 ## Playlist
-<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">CreatePlaylistAsync</a>(serviceParam, SeedTrace.CreatePlaylistRequest { ... }) -> SeedTrace.Playlist</code></summary>
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">CreatePlaylistAsync</a>(serviceParam, CreatePlaylistRequest { ... }) -> Playlist</code></summary>
 <dl>
 <dd>
 
@@ -1029,11 +991,11 @@ Create a new playlist
 ```csharp
 await client.Playlist.CreatePlaylistAsync(
     1,
-    new SeedTrace.CreatePlaylistRequest
+    new CreatePlaylistRequest
     {
         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
         OptionalDatetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-        Body = new SeedTrace.PlaylistCreateRequest
+        Body = new PlaylistCreateRequest
         {
             Name = "name",
             Problems = new List<string>() { "problems", "problems" },
@@ -1062,7 +1024,7 @@ await client.Playlist.CreatePlaylistAsync(
 <dl>
 <dd>
 
-**request:** `SeedTrace.CreatePlaylistRequest` 
+**request:** `CreatePlaylistRequest` 
     
 </dd>
 </dl>
@@ -1074,7 +1036,7 @@ await client.Playlist.CreatePlaylistAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">GetPlaylistsAsync</a>(serviceParam, SeedTrace.GetPlaylistsRequest { ... }) -> IEnumerable<SeedTrace.Playlist></code></summary>
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">GetPlaylistsAsync</a>(serviceParam, GetPlaylistsRequest { ... }) -> IEnumerable<Playlist></code></summary>
 <dl>
 <dd>
 
@@ -1103,7 +1065,7 @@ Returns the user's playlists
 ```csharp
 await client.Playlist.GetPlaylistsAsync(
     1,
-    new SeedTrace.GetPlaylistsRequest
+    new GetPlaylistsRequest
     {
         Limit = 1,
         OtherField = "otherField",
@@ -1134,7 +1096,7 @@ await client.Playlist.GetPlaylistsAsync(
 <dl>
 <dd>
 
-**request:** `SeedTrace.GetPlaylistsRequest` 
+**request:** `GetPlaylistsRequest` 
     
 </dd>
 </dl>
@@ -1146,7 +1108,7 @@ await client.Playlist.GetPlaylistsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">GetPlaylistAsync</a>(serviceParam, playlistId) -> SeedTrace.Playlist</code></summary>
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">GetPlaylistAsync</a>(serviceParam, playlistId) -> Playlist</code></summary>
 <dl>
 <dd>
 
@@ -1208,7 +1170,7 @@ await client.Playlist.GetPlaylistAsync(1, "playlistId");
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">UpdatePlaylistAsync</a>(serviceParam, playlistId, SeedTrace.UpdatePlaylistRequest? { ... }) -> SeedTrace.Playlist?</code></summary>
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">UpdatePlaylistAsync</a>(serviceParam, playlistId, UpdatePlaylistRequest? { ... }) -> Playlist?</code></summary>
 <dl>
 <dd>
 
@@ -1238,7 +1200,7 @@ Updates a playlist
 await client.Playlist.UpdatePlaylistAsync(
     1,
     "playlistId",
-    new SeedTrace.UpdatePlaylistRequest
+    new UpdatePlaylistRequest
     {
         Name = "name",
         Problems = new List<string>() { "problems", "problems" },
@@ -1274,7 +1236,7 @@ await client.Playlist.UpdatePlaylistAsync(
 <dl>
 <dd>
 
-**request:** `SeedTrace.UpdatePlaylistRequest?` 
+**request:** `UpdatePlaylistRequest?` 
     
 </dd>
 </dl>
@@ -1349,7 +1311,7 @@ await client.Playlist.DeletePlaylistAsync(1, "playlist_id");
 </details>
 
 ## Problem
-<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">CreateProblemAsync</a>(SeedTrace.CreateProblemRequest { ... }) -> SeedTrace.CreateProblemResponse</code></summary>
+<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">CreateProblemAsync</a>(CreateProblemRequest { ... }) -> CreateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1377,85 +1339,73 @@ Creates a problem
 
 ```csharp
 await client.Problem.CreateProblemAsync(
-    new SeedTrace.CreateProblemRequest
+    new CreateProblemRequest
     {
         ProblemName = "problemName",
-        ProblemDescription = new SeedTrace.ProblemDescription
+        ProblemDescription = new ProblemDescription
         {
-            Boards = new List<SeedTrace.ProblemDescriptionBoard>()
+            Boards = new List<ProblemDescriptionBoard>()
             {
-                new SeedTrace.ProblemDescriptionBoard(
-                    new SeedTrace.ProblemDescriptionBoard.Html("boards")
-                ),
-                new SeedTrace.ProblemDescriptionBoard(
-                    new SeedTrace.ProblemDescriptionBoard.Html("boards")
-                ),
+                new ProblemDescriptionBoard(new ProblemDescriptionBoard.Html("boards")),
+                new ProblemDescriptionBoard(new ProblemDescriptionBoard.Html("boards")),
             },
         },
-        Files = new Dictionary<SeedTrace.Language, SeedTrace.ProblemFiles>()
+        Files = new Dictionary<Language, ProblemFiles>()
         {
             {
-                SeedTrace.Language.Java,
-                new SeedTrace.ProblemFiles
+                Language.Java,
+                new ProblemFiles
                 {
-                    SolutionFile = new SeedTrace.FileInfo
+                    SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
+                    ReadOnlyFiles = new List<FileInfo>()
                     {
-                        Filename = "filename",
-                        Contents = "contents",
-                    },
-                    ReadOnlyFiles = new List<SeedTrace.FileInfo>()
-                    {
-                        new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
-                        new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
+                        new FileInfo { Filename = "filename", Contents = "contents" },
+                        new FileInfo { Filename = "filename", Contents = "contents" },
                     },
                 }
             },
         },
-        InputParams = new List<SeedTrace.VariableTypeAndName>()
+        InputParams = new List<VariableTypeAndName>()
         {
-            new SeedTrace.VariableTypeAndName
+            new VariableTypeAndName
             {
-                VariableType = new SeedTrace.VariableType(new SeedTrace.VariableType.IntegerType()),
+                VariableType = new VariableType(new VariableType.IntegerType()),
                 Name = "name",
             },
-            new SeedTrace.VariableTypeAndName
+            new VariableTypeAndName
             {
-                VariableType = new SeedTrace.VariableType(new SeedTrace.VariableType.IntegerType()),
+                VariableType = new VariableType(new VariableType.IntegerType()),
                 Name = "name",
             },
         },
-        OutputType = new SeedTrace.VariableType(new SeedTrace.VariableType.IntegerType()),
-        Testcases = new List<SeedTrace.TestCaseWithExpectedResult>()
+        OutputType = new VariableType(new VariableType.IntegerType()),
+        Testcases = new List<TestCaseWithExpectedResult>()
         {
-            new SeedTrace.TestCaseWithExpectedResult
+            new TestCaseWithExpectedResult
             {
-                TestCase = new SeedTrace.TestCase
+                TestCase = new TestCase
                 {
                     Id = "id",
-                    Params = new List<SeedTrace.VariableValue>()
+                    Params = new List<VariableValue>()
                     {
-                        new SeedTrace.VariableValue(new SeedTrace.VariableValue.IntegerValue(1)),
-                        new SeedTrace.VariableValue(new SeedTrace.VariableValue.IntegerValue(1)),
+                        new VariableValue(new VariableValue.IntegerValue(1)),
+                        new VariableValue(new VariableValue.IntegerValue(1)),
                     },
                 },
-                ExpectedResult = new SeedTrace.VariableValue(
-                    new SeedTrace.VariableValue.IntegerValue(1)
-                ),
+                ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
             },
-            new SeedTrace.TestCaseWithExpectedResult
+            new TestCaseWithExpectedResult
             {
-                TestCase = new SeedTrace.TestCase
+                TestCase = new TestCase
                 {
                     Id = "id",
-                    Params = new List<SeedTrace.VariableValue>()
+                    Params = new List<VariableValue>()
                     {
-                        new SeedTrace.VariableValue(new SeedTrace.VariableValue.IntegerValue(1)),
-                        new SeedTrace.VariableValue(new SeedTrace.VariableValue.IntegerValue(1)),
+                        new VariableValue(new VariableValue.IntegerValue(1)),
+                        new VariableValue(new VariableValue.IntegerValue(1)),
                     },
                 },
-                ExpectedResult = new SeedTrace.VariableValue(
-                    new SeedTrace.VariableValue.IntegerValue(1)
-                ),
+                ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
             },
         },
         MethodName = "methodName",
@@ -1475,7 +1425,7 @@ await client.Problem.CreateProblemAsync(
 <dl>
 <dd>
 
-**request:** `SeedTrace.CreateProblemRequest` 
+**request:** `CreateProblemRequest` 
     
 </dd>
 </dl>
@@ -1487,7 +1437,7 @@ await client.Problem.CreateProblemAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">UpdateProblemAsync</a>(problemId, SeedTrace.CreateProblemRequest { ... }) -> SeedTrace.UpdateProblemResponse</code></summary>
+<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">UpdateProblemAsync</a>(problemId, CreateProblemRequest { ... }) -> UpdateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1516,85 +1466,73 @@ Updates a problem
 ```csharp
 await client.Problem.UpdateProblemAsync(
     "problemId",
-    new SeedTrace.CreateProblemRequest
+    new CreateProblemRequest
     {
         ProblemName = "problemName",
-        ProblemDescription = new SeedTrace.ProblemDescription
+        ProblemDescription = new ProblemDescription
         {
-            Boards = new List<SeedTrace.ProblemDescriptionBoard>()
+            Boards = new List<ProblemDescriptionBoard>()
             {
-                new SeedTrace.ProblemDescriptionBoard(
-                    new SeedTrace.ProblemDescriptionBoard.Html("boards")
-                ),
-                new SeedTrace.ProblemDescriptionBoard(
-                    new SeedTrace.ProblemDescriptionBoard.Html("boards")
-                ),
+                new ProblemDescriptionBoard(new ProblemDescriptionBoard.Html("boards")),
+                new ProblemDescriptionBoard(new ProblemDescriptionBoard.Html("boards")),
             },
         },
-        Files = new Dictionary<SeedTrace.Language, SeedTrace.ProblemFiles>()
+        Files = new Dictionary<Language, ProblemFiles>()
         {
             {
-                SeedTrace.Language.Java,
-                new SeedTrace.ProblemFiles
+                Language.Java,
+                new ProblemFiles
                 {
-                    SolutionFile = new SeedTrace.FileInfo
+                    SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
+                    ReadOnlyFiles = new List<FileInfo>()
                     {
-                        Filename = "filename",
-                        Contents = "contents",
-                    },
-                    ReadOnlyFiles = new List<SeedTrace.FileInfo>()
-                    {
-                        new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
-                        new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
+                        new FileInfo { Filename = "filename", Contents = "contents" },
+                        new FileInfo { Filename = "filename", Contents = "contents" },
                     },
                 }
             },
         },
-        InputParams = new List<SeedTrace.VariableTypeAndName>()
+        InputParams = new List<VariableTypeAndName>()
         {
-            new SeedTrace.VariableTypeAndName
+            new VariableTypeAndName
             {
-                VariableType = new SeedTrace.VariableType(new SeedTrace.VariableType.IntegerType()),
+                VariableType = new VariableType(new VariableType.IntegerType()),
                 Name = "name",
             },
-            new SeedTrace.VariableTypeAndName
+            new VariableTypeAndName
             {
-                VariableType = new SeedTrace.VariableType(new SeedTrace.VariableType.IntegerType()),
+                VariableType = new VariableType(new VariableType.IntegerType()),
                 Name = "name",
             },
         },
-        OutputType = new SeedTrace.VariableType(new SeedTrace.VariableType.IntegerType()),
-        Testcases = new List<SeedTrace.TestCaseWithExpectedResult>()
+        OutputType = new VariableType(new VariableType.IntegerType()),
+        Testcases = new List<TestCaseWithExpectedResult>()
         {
-            new SeedTrace.TestCaseWithExpectedResult
+            new TestCaseWithExpectedResult
             {
-                TestCase = new SeedTrace.TestCase
+                TestCase = new TestCase
                 {
                     Id = "id",
-                    Params = new List<SeedTrace.VariableValue>()
+                    Params = new List<VariableValue>()
                     {
-                        new SeedTrace.VariableValue(new SeedTrace.VariableValue.IntegerValue(1)),
-                        new SeedTrace.VariableValue(new SeedTrace.VariableValue.IntegerValue(1)),
+                        new VariableValue(new VariableValue.IntegerValue(1)),
+                        new VariableValue(new VariableValue.IntegerValue(1)),
                     },
                 },
-                ExpectedResult = new SeedTrace.VariableValue(
-                    new SeedTrace.VariableValue.IntegerValue(1)
-                ),
+                ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
             },
-            new SeedTrace.TestCaseWithExpectedResult
+            new TestCaseWithExpectedResult
             {
-                TestCase = new SeedTrace.TestCase
+                TestCase = new TestCase
                 {
                     Id = "id",
-                    Params = new List<SeedTrace.VariableValue>()
+                    Params = new List<VariableValue>()
                     {
-                        new SeedTrace.VariableValue(new SeedTrace.VariableValue.IntegerValue(1)),
-                        new SeedTrace.VariableValue(new SeedTrace.VariableValue.IntegerValue(1)),
+                        new VariableValue(new VariableValue.IntegerValue(1)),
+                        new VariableValue(new VariableValue.IntegerValue(1)),
                     },
                 },
-                ExpectedResult = new SeedTrace.VariableValue(
-                    new SeedTrace.VariableValue.IntegerValue(1)
-                ),
+                ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
             },
         },
         MethodName = "methodName",
@@ -1622,7 +1560,7 @@ await client.Problem.UpdateProblemAsync(
 <dl>
 <dd>
 
-**request:** `SeedTrace.CreateProblemRequest` 
+**request:** `CreateProblemRequest` 
     
 </dd>
 </dl>
@@ -1688,7 +1626,7 @@ await client.Problem.DeleteProblemAsync("problemId");
 </dl>
 </details>
 
-<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">GetDefaultStarterFilesAsync</a>(SeedTrace.GetDefaultStarterFilesRequest { ... }) -> SeedTrace.GetDefaultStarterFilesResponse</code></summary>
+<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">GetDefaultStarterFilesAsync</a>(GetDefaultStarterFilesRequest { ... }) -> GetDefaultStarterFilesResponse</code></summary>
 <dl>
 <dd>
 
@@ -1716,22 +1654,22 @@ Returns default starter files for problem
 
 ```csharp
 await client.Problem.GetDefaultStarterFilesAsync(
-    new SeedTrace.GetDefaultStarterFilesRequest
+    new GetDefaultStarterFilesRequest
     {
-        InputParams = new List<SeedTrace.VariableTypeAndName>()
+        InputParams = new List<VariableTypeAndName>()
         {
-            new SeedTrace.VariableTypeAndName
+            new VariableTypeAndName
             {
-                VariableType = new SeedTrace.VariableType(new SeedTrace.VariableType.IntegerType()),
+                VariableType = new VariableType(new VariableType.IntegerType()),
                 Name = "name",
             },
-            new SeedTrace.VariableTypeAndName
+            new VariableTypeAndName
             {
-                VariableType = new SeedTrace.VariableType(new SeedTrace.VariableType.IntegerType()),
+                VariableType = new VariableType(new VariableType.IntegerType()),
                 Name = "name",
             },
         },
-        OutputType = new SeedTrace.VariableType(new SeedTrace.VariableType.IntegerType()),
+        OutputType = new VariableType(new VariableType.IntegerType()),
         MethodName = "methodName",
     }
 );
@@ -1749,7 +1687,7 @@ await client.Problem.GetDefaultStarterFilesAsync(
 <dl>
 <dd>
 
-**request:** `SeedTrace.GetDefaultStarterFilesRequest` 
+**request:** `GetDefaultStarterFilesRequest` 
     
 </dd>
 </dl>
@@ -1762,7 +1700,7 @@ await client.Problem.GetDefaultStarterFilesAsync(
 </details>
 
 ## Submission
-<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">CreateExecutionSessionAsync</a>(language) -> SeedTrace.ExecutionSessionResponse</code></summary>
+<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">CreateExecutionSessionAsync</a>(language) -> ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -1789,7 +1727,7 @@ Returns sessionId and execution server URL for session. Spins up server.
 <dd>
 
 ```csharp
-await client.Submission.CreateExecutionSessionAsync(SeedTrace.Language.Java);
+await client.Submission.CreateExecutionSessionAsync(Language.Java);
 ```
 </dd>
 </dl>
@@ -1804,7 +1742,7 @@ await client.Submission.CreateExecutionSessionAsync(SeedTrace.Language.Java);
 <dl>
 <dd>
 
-**language:** `SeedTrace.Language` 
+**language:** `Language` 
     
 </dd>
 </dl>
@@ -1816,7 +1754,7 @@ await client.Submission.CreateExecutionSessionAsync(SeedTrace.Language.Java);
 </dl>
 </details>
 
-<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">GetExecutionSessionAsync</a>(sessionId) -> SeedTrace.ExecutionSessionResponse?</code></summary>
+<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">GetExecutionSessionAsync</a>(sessionId) -> ExecutionSessionResponse?</code></summary>
 <dl>
 <dd>
 
@@ -1924,7 +1862,7 @@ await client.Submission.StopExecutionSessionAsync("sessionId");
 </dl>
 </details>
 
-<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">GetExecutionSessionsStateAsync</a>() -> SeedTrace.GetExecutionSessionStateResponse</code></summary>
+<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">GetExecutionSessionsStateAsync</a>() -> GetExecutionSessionStateResponse</code></summary>
 <dl>
 <dd>
 
@@ -1963,7 +1901,7 @@ await client.Submission.GetExecutionSessionsStateAsync();
 <dd>
 
 ```csharp
-await client.Sysprop.SetNumWarmInstancesAsync(SeedTrace.Language.Java, 1);
+await client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1);
 ```
 </dd>
 </dl>
@@ -1978,7 +1916,7 @@ await client.Sysprop.SetNumWarmInstancesAsync(SeedTrace.Language.Java, 1);
 <dl>
 <dd>
 
-**language:** `SeedTrace.Language` 
+**language:** `Language` 
     
 </dd>
 </dl>
@@ -1998,7 +1936,7 @@ await client.Sysprop.SetNumWarmInstancesAsync(SeedTrace.Language.Java, 1);
 </dl>
 </details>
 
-<details><summary><code>client.Sysprop.<a href="/src/SeedTrace/Sysprop/SyspropClient.cs">GetNumWarmInstancesAsync</a>() -> Dictionary<SeedTrace.Language, int></code></summary>
+<details><summary><code>client.Sysprop.<a href="/src/SeedTrace/Sysprop/SyspropClient.cs">GetNumWarmInstancesAsync</a>() -> Dictionary<Language, int></code></summary>
 <dl>
 <dd>
 
@@ -2024,7 +1962,7 @@ await client.Sysprop.GetNumWarmInstancesAsync();
 </details>
 
 ## V2 Problem
-<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> IEnumerable<SeedTrace.V2.LightweightProblemInfoV2></code></summary>
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> IEnumerable<V2.LightweightProblemInfoV2></code></summary>
 <dl>
 <dd>
 
@@ -2063,7 +2001,7 @@ await client.V2.Problem.GetLightweightProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> IEnumerable<SeedTrace.V2.ProblemInfoV2></code></summary>
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> IEnumerable<V2.ProblemInfoV2></code></summary>
 <dl>
 <dd>
 
@@ -2102,7 +2040,7 @@ await client.V2.Problem.GetProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetLatestProblemAsync</a>(problemId) -> SeedTrace.V2.ProblemInfoV2</code></summary>
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetLatestProblemAsync</a>(problemId) -> V2.ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2156,7 +2094,7 @@ await client.V2.Problem.GetLatestProblemAsync("problemId");
 </dl>
 </details>
 
-<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetProblemVersionAsync</a>(problemId, problemVersion) -> SeedTrace.V2.ProblemInfoV2</code></summary>
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetProblemVersionAsync</a>(problemId, problemVersion) -> V2.ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2219,7 +2157,7 @@ await client.V2.Problem.GetProblemVersionAsync("problemId", 1);
 </details>
 
 ## V2 V3 Problem
-<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> IEnumerable<SeedTrace.V2.V3.LightweightProblemInfoV2></code></summary>
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> IEnumerable<V2.V3.LightweightProblemInfoV2></code></summary>
 <dl>
 <dd>
 
@@ -2258,7 +2196,7 @@ await client.V2.V3.Problem.GetLightweightProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> IEnumerable<SeedTrace.V2.V3.ProblemInfoV2></code></summary>
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> IEnumerable<V2.V3.ProblemInfoV2></code></summary>
 <dl>
 <dd>
 
@@ -2297,7 +2235,7 @@ await client.V2.V3.Problem.GetProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetLatestProblemAsync</a>(problemId) -> SeedTrace.V2.V3.ProblemInfoV2</code></summary>
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetLatestProblemAsync</a>(problemId) -> V2.V3.ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2351,7 +2289,7 @@ await client.V2.V3.Problem.GetLatestProblemAsync("problemId");
 </dl>
 </details>
 
-<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetProblemVersionAsync</a>(problemId, problemVersion) -> SeedTrace.V2.V3.ProblemInfoV2</code></summary>
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetProblemVersionAsync</a>(problemId, problemVersion) -> V2.V3.ProblemInfoV2</code></summary>
 <dl>
 <dd>
 

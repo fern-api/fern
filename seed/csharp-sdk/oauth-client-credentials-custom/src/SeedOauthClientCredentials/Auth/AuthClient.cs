@@ -16,7 +16,7 @@ public partial class AuthClient
 
     /// <example><code>
     /// await client.Auth.GetTokenWithClientCredentialsAsync(
-    ///     new SeedOauthClientCredentials.GetTokenRequest
+    ///     new GetTokenRequest
     ///     {
     ///         Cid = "cid",
     ///         Csr = "csr",
@@ -72,7 +72,7 @@ public partial class AuthClient
 
     /// <example><code>
     /// await client.Auth.RefreshTokenAsync(
-    ///     new SeedOauthClientCredentials.RefreshTokenRequest
+    ///     new RefreshTokenRequest
     ///     {
     ///         ClientId = "client_id",
     ///         ClientSecret = "client_secret",

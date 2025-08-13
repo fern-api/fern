@@ -1,4 +1,6 @@
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using SeedAnyAuth;
 using SeedAnyAuth.Core;
 
 namespace SeedAnyAuth.Test.Unit.MockServer;
@@ -7,7 +9,7 @@ namespace SeedAnyAuth.Test.Unit.MockServer;
 public class GetTokenTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {

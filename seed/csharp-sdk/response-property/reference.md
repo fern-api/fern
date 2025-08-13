@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetMovieAsync</a>(string { ... }) -> SeedResponseProperty.Response</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetMovieAsync</a>(string { ... }) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -40,7 +40,7 @@ await client.Service.GetMovieAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetMovieDocsAsync</a>(string { ... }) -> SeedResponseProperty.Response</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetMovieDocsAsync</a>(string { ... }) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -80,7 +80,7 @@ await client.Service.GetMovieDocsAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetMovieNameAsync</a>(string { ... }) -> SeedResponseProperty.StringResponse</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetMovieNameAsync</a>(string { ... }) -> StringResponse</code></summary>
 <dl>
 <dd>
 
@@ -120,7 +120,7 @@ await client.Service.GetMovieNameAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetMovieMetadataAsync</a>(string { ... }) -> SeedResponseProperty.Response</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetMovieMetadataAsync</a>(string { ... }) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -160,7 +160,7 @@ await client.Service.GetMovieMetadataAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetOptionalMovieAsync</a>(string { ... }) -> SeedResponseProperty.Response?</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetOptionalMovieAsync</a>(string { ... }) -> Response?</code></summary>
 <dl>
 <dd>
 
@@ -200,7 +200,7 @@ await client.Service.GetOptionalMovieAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetOptionalMovieDocsAsync</a>(string { ... }) -> SeedResponseProperty.WithDocs?</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetOptionalMovieDocsAsync</a>(string { ... }) -> WithDocs?</code></summary>
 <dl>
 <dd>
 
@@ -240,7 +240,7 @@ await client.Service.GetOptionalMovieDocsAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetOptionalMovieNameAsync</a>(string { ... }) -> SeedResponseProperty.StringResponse?</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetOptionalMovieNameAsync</a>(string { ... }) -> StringResponse?</code></summary>
 <dl>
 <dd>
 

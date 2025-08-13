@@ -39,7 +39,7 @@ await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedExamples/SeedExamplesClient.cs">CreateTypeAsync</a>(OneOf<SeedExamples.BasicType, SeedExamples.ComplexType> { ... }) -> SeedExamples.Identifier</code></summary>
+<details><summary><code>client.<a href="/src/SeedExamples/SeedExamplesClient.cs">CreateTypeAsync</a>(OneOf<BasicType, ComplexType> { ... }) -> Identifier</code></summary>
 <dl>
 <dd>
 
@@ -52,7 +52,7 @@ await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
 <dd>
 
 ```csharp
-await client.CreateTypeAsync(SeedExamples.BasicType.Primitive);
+await client.CreateTypeAsync(BasicType.Primitive);
 ```
 </dd>
 </dl>
@@ -67,7 +67,7 @@ await client.CreateTypeAsync(SeedExamples.BasicType.Primitive);
 <dl>
 <dd>
 
-**request:** `OneOf<SeedExamples.BasicType, SeedExamples.ComplexType>` 
+**request:** `OneOf<BasicType, ComplexType>` 
     
 </dd>
 </dl>
@@ -80,7 +80,7 @@ await client.CreateTypeAsync(SeedExamples.BasicType.Primitive);
 </details>
 
 ## File Notification Service
-<details><summary><code>client.File.Notification.Service.<a href="/src/SeedExamples/File/Notification/Service/ServiceClient.cs">GetExceptionAsync</a>(notificationId) -> SeedExamples.Exception</code></summary>
+<details><summary><code>client.File.Notification.Service.<a href="/src/SeedExamples/File/Notification/Service/ServiceClient.cs">GetExceptionAsync</a>(notificationId) -> Exception</code></summary>
 <dl>
 <dd>
 
@@ -121,7 +121,7 @@ await client.File.Notification.Service.GetExceptionAsync("notification-hsy129x")
 </details>
 
 ## File Service
-<details><summary><code>client.File.Service.<a href="/src/SeedExamples/File/Service/ServiceClient.cs">GetFileAsync</a>(filename, SeedExamples.File.GetFileRequest { ... }) -> SeedExamples.File</code></summary>
+<details><summary><code>client.File.Service.<a href="/src/SeedExamples/File/Service/ServiceClient.cs">GetFileAsync</a>(filename, File.GetFileRequest { ... }) -> File</code></summary>
 <dl>
 <dd>
 
@@ -150,7 +150,7 @@ This endpoint returns a file by its name.
 ```csharp
 await client.File.Service.GetFileAsync(
     "file.txt",
-    new SeedExamples.File.GetFileRequest { XFileApiVersion = "0.0.2" }
+    new GetFileRequest { XFileApiVersion = "0.0.2" }
 );
 ```
 </dd>
@@ -174,7 +174,7 @@ await client.File.Service.GetFileAsync(
 <dl>
 <dd>
 
-**request:** `SeedExamples.File.GetFileRequest` 
+**request:** `File.GetFileRequest` 
     
 </dd>
 </dl>
@@ -281,7 +281,7 @@ await client.Health.Service.PingAsync();
 </details>
 
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">GetMovieAsync</a>(movieId) -> SeedExamples.Movie</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">GetMovieAsync</a>(movieId) -> Movie</code></summary>
 <dl>
 <dd>
 
@@ -321,7 +321,7 @@ await client.Service.GetMovieAsync("movie-c06a4ad7");
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">CreateMovieAsync</a>(SeedExamples.Movie { ... }) -> string</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">CreateMovieAsync</a>(Movie { ... }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -335,7 +335,7 @@ await client.Service.GetMovieAsync("movie-c06a4ad7");
 
 ```csharp
 await client.Service.CreateMovieAsync(
-    new SeedExamples.Movie
+    new Movie
     {
         Id = "movie-c06a4ad7",
         Prequel = "movie-cv9b914f",
@@ -373,7 +373,7 @@ await client.Service.CreateMovieAsync(
 <dl>
 <dd>
 
-**request:** `SeedExamples.Movie` 
+**request:** `Movie` 
     
 </dd>
 </dl>
@@ -385,7 +385,7 @@ await client.Service.CreateMovieAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">GetMetadataAsync</a>(SeedExamples.GetMetadataRequest { ... }) -> SeedExamples.Metadata</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">GetMetadataAsync</a>(GetMetadataRequest { ... }) -> Metadata</code></summary>
 <dl>
 <dd>
 
@@ -399,7 +399,7 @@ await client.Service.CreateMovieAsync(
 
 ```csharp
 await client.Service.GetMetadataAsync(
-    new SeedExamples.GetMetadataRequest
+    new GetMetadataRequest
     {
         Shallow = false,
         Tag = ["development"],
@@ -420,7 +420,7 @@ await client.Service.GetMetadataAsync(
 <dl>
 <dd>
 
-**request:** `SeedExamples.GetMetadataRequest` 
+**request:** `GetMetadataRequest` 
     
 </dd>
 </dl>
@@ -432,7 +432,7 @@ await client.Service.GetMetadataAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">CreateBigEntityAsync</a>(SeedExamples.BigEntity { ... }) -> SeedExamples.Response</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">CreateBigEntityAsync</a>(BigEntity { ... }) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -446,10 +446,10 @@ await client.Service.GetMetadataAsync(
 
 ```csharp
 await client.Service.CreateBigEntityAsync(
-    new SeedExamples.BigEntity
+    new BigEntity
     {
-        CastMember = new SeedExamples.Actor { Name = "name", Id = "id" },
-        ExtendedMovie = new SeedExamples.ExtendedMovie
+        CastMember = new Actor { Name = "name", Id = "id" },
+        ExtendedMovie = new ExtendedMovie
         {
             Cast = new List<string>() { "cast", "cast" },
             Id = "id",
@@ -469,17 +469,17 @@ await client.Service.CreateBigEntityAsync(
             },
             Revenue = 1000000,
         },
-        Entity = new SeedExamples.Entity { Type = SeedExamples.BasicType.Primitive, Name = "name" },
-        Metadata = new SeedExamples.Metadata(new SeedExamples.Metadata.Html("metadata")),
-        CommonMetadata = new SeedExamples.Commons.Metadata
+        Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
+        Metadata = new Metadata(new Metadata.Html("metadata")),
+        CommonMetadata = new Metadata
         {
             Id = "id",
             Data = new Dictionary<string, string>() { { "data", "data" } },
             JsonString = "jsonString",
         },
-        EventInfo = new SeedExamples.Commons.EventInfo(
-            new SeedExamples.Commons.EventInfo.Metadata(
-                new SeedExamples.Commons.Metadata
+        EventInfo = new EventInfo(
+            new EventInfo.Metadata(
+                new Metadata
                 {
                     Id = "id",
                     Data = new Dictionary<string, string>() { { "data", "data" } },
@@ -487,15 +487,11 @@ await client.Service.CreateBigEntityAsync(
                 }
             )
         ),
-        Data = new SeedExamples.Commons.Data(new SeedExamples.Commons.Data.String("data")),
-        Migration = new SeedExamples.Migration
-        {
-            Name = "name",
-            Status = SeedExamples.MigrationStatus.Running,
-        },
-        Exception = new SeedExamples.Exception(
-            new SeedExamples.Exception.Generic(
-                new SeedExamples.ExceptionInfo
+        Data = new Data(new Data.String("data")),
+        Migration = new Migration { Name = "name", Status = MigrationStatus.Running },
+        Exception = new Exception(
+            new Exception.Generic(
+                new ExceptionInfo
                 {
                     ExceptionType = "exceptionType",
                     ExceptionMessage = "exceptionMessage",
@@ -503,102 +499,102 @@ await client.Service.CreateBigEntityAsync(
                 }
             )
         ),
-        Test = new SeedExamples.Test(new SeedExamples.Test.And(true)),
-        Node = new SeedExamples.Node
+        Test = new Test(new Test.And(true)),
+        Node = new Node
         {
             Name = "name",
-            Nodes = new List<SeedExamples.Node>()
+            Nodes = new List<Node>()
             {
-                new SeedExamples.Node
+                new Node
                 {
                     Name = "name",
-                    Nodes = new List<SeedExamples.Node>()
+                    Nodes = new List<Node>()
                     {
-                        new SeedExamples.Node
+                        new Node
                         {
                             Name = "name",
-                            Nodes = new List<SeedExamples.Node>() { },
-                            Trees = new List<SeedExamples.Tree>() { },
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
                         },
-                        new SeedExamples.Node
+                        new Node
                         {
                             Name = "name",
-                            Nodes = new List<SeedExamples.Node>() { },
-                            Trees = new List<SeedExamples.Tree>() { },
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
                         },
                     },
-                    Trees = new List<SeedExamples.Tree>()
+                    Trees = new List<Tree>()
                     {
-                        new SeedExamples.Tree { Nodes = new List<SeedExamples.Node>() { } },
-                        new SeedExamples.Tree { Nodes = new List<SeedExamples.Node>() { } },
+                        new Tree { Nodes = new List<Node>() { } },
+                        new Tree { Nodes = new List<Node>() { } },
                     },
                 },
-                new SeedExamples.Node
+                new Node
                 {
                     Name = "name",
-                    Nodes = new List<SeedExamples.Node>()
+                    Nodes = new List<Node>()
                     {
-                        new SeedExamples.Node
+                        new Node
                         {
                             Name = "name",
-                            Nodes = new List<SeedExamples.Node>() { },
-                            Trees = new List<SeedExamples.Tree>() { },
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
                         },
-                        new SeedExamples.Node
+                        new Node
                         {
                             Name = "name",
-                            Nodes = new List<SeedExamples.Node>() { },
-                            Trees = new List<SeedExamples.Tree>() { },
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
                         },
                     },
-                    Trees = new List<SeedExamples.Tree>()
+                    Trees = new List<Tree>()
                     {
-                        new SeedExamples.Tree { Nodes = new List<SeedExamples.Node>() { } },
-                        new SeedExamples.Tree { Nodes = new List<SeedExamples.Node>() { } },
+                        new Tree { Nodes = new List<Node>() { } },
+                        new Tree { Nodes = new List<Node>() { } },
                     },
                 },
             },
-            Trees = new List<SeedExamples.Tree>()
+            Trees = new List<Tree>()
             {
-                new SeedExamples.Tree
+                new Tree
                 {
-                    Nodes = new List<SeedExamples.Node>()
+                    Nodes = new List<Node>()
                     {
-                        new SeedExamples.Node
+                        new Node
                         {
                             Name = "name",
-                            Nodes = new List<SeedExamples.Node>() { },
-                            Trees = new List<SeedExamples.Tree>() { },
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
                         },
-                        new SeedExamples.Node
+                        new Node
                         {
                             Name = "name",
-                            Nodes = new List<SeedExamples.Node>() { },
-                            Trees = new List<SeedExamples.Tree>() { },
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
                         },
                     },
                 },
-                new SeedExamples.Tree
+                new Tree
                 {
-                    Nodes = new List<SeedExamples.Node>()
+                    Nodes = new List<Node>()
                     {
-                        new SeedExamples.Node
+                        new Node
                         {
                             Name = "name",
-                            Nodes = new List<SeedExamples.Node>() { },
-                            Trees = new List<SeedExamples.Tree>() { },
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
                         },
-                        new SeedExamples.Node
+                        new Node
                         {
                             Name = "name",
-                            Nodes = new List<SeedExamples.Node>() { },
-                            Trees = new List<SeedExamples.Tree>() { },
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
                         },
                     },
                 },
             },
         },
-        Directory = new SeedExamples.Directory
+        Directory = new Directory
         {
             Name = "name",
             Files = new List<SeedExamples.File>()
@@ -606,9 +602,9 @@ await client.Service.CreateBigEntityAsync(
                 new SeedExamples.File { Name = "name", Contents = "contents" },
                 new SeedExamples.File { Name = "name", Contents = "contents" },
             },
-            Directories = new List<SeedExamples.Directory>()
+            Directories = new List<Directory>()
             {
-                new SeedExamples.Directory
+                new Directory
                 {
                     Name = "name",
                     Files = new List<SeedExamples.File>()
@@ -616,23 +612,23 @@ await client.Service.CreateBigEntityAsync(
                         new SeedExamples.File { Name = "name", Contents = "contents" },
                         new SeedExamples.File { Name = "name", Contents = "contents" },
                     },
-                    Directories = new List<SeedExamples.Directory>()
+                    Directories = new List<Directory>()
                     {
-                        new SeedExamples.Directory
+                        new Directory
                         {
                             Name = "name",
                             Files = new List<SeedExamples.File>() { },
-                            Directories = new List<SeedExamples.Directory>() { },
+                            Directories = new List<Directory>() { },
                         },
-                        new SeedExamples.Directory
+                        new Directory
                         {
                             Name = "name",
                             Files = new List<SeedExamples.File>() { },
-                            Directories = new List<SeedExamples.Directory>() { },
+                            Directories = new List<Directory>() { },
                         },
                     },
                 },
-                new SeedExamples.Directory
+                new Directory
                 {
                     Name = "name",
                     Files = new List<SeedExamples.File>()
@@ -640,25 +636,25 @@ await client.Service.CreateBigEntityAsync(
                         new SeedExamples.File { Name = "name", Contents = "contents" },
                         new SeedExamples.File { Name = "name", Contents = "contents" },
                     },
-                    Directories = new List<SeedExamples.Directory>()
+                    Directories = new List<Directory>()
                     {
-                        new SeedExamples.Directory
+                        new Directory
                         {
                             Name = "name",
                             Files = new List<SeedExamples.File>() { },
-                            Directories = new List<SeedExamples.Directory>() { },
+                            Directories = new List<Directory>() { },
                         },
-                        new SeedExamples.Directory
+                        new Directory
                         {
                             Name = "name",
                             Files = new List<SeedExamples.File>() { },
-                            Directories = new List<SeedExamples.Directory>() { },
+                            Directories = new List<Directory>() { },
                         },
                     },
                 },
             },
         },
-        Moment = new SeedExamples.Moment
+        Moment = new Moment
         {
             Id = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             Date = new DateOnly(2023, 1, 15),
@@ -680,7 +676,7 @@ await client.Service.CreateBigEntityAsync(
 <dl>
 <dd>
 
-**request:** `SeedExamples.BigEntity` 
+**request:** `BigEntity` 
     
 </dd>
 </dl>
@@ -692,7 +688,7 @@ await client.Service.CreateBigEntityAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">RefreshTokenAsync</a>(SeedExamples.RefreshTokenRequest? { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">RefreshTokenAsync</a>(RefreshTokenRequest? { ... })</code></summary>
 <dl>
 <dd>
 
@@ -720,7 +716,7 @@ await client.Service.RefreshTokenAsync(null);
 <dl>
 <dd>
 
-**request:** `SeedExamples.RefreshTokenRequest?` 
+**request:** `RefreshTokenRequest?` 
     
 </dd>
 </dl>

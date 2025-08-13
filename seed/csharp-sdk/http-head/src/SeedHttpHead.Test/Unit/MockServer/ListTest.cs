@@ -1,4 +1,6 @@
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using SeedHttpHead;
 using SeedHttpHead.Core;
 
 namespace SeedHttpHead.Test.Unit.MockServer;
@@ -7,7 +9,7 @@ namespace SeedHttpHead.Test.Unit.MockServer;
 public class ListTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             [

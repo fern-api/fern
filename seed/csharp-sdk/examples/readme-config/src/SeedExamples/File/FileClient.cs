@@ -1,4 +1,5 @@
 using SeedExamples.Core;
+using SeedExamples.File.Notification;
 
 namespace SeedExamples.File;
 
@@ -9,11 +10,11 @@ public partial class FileClient
     internal FileClient(RawClient client)
     {
         _client = client;
-        Notification = new SeedExamples.File.Notification.NotificationClient(_client);
-        Service = new SeedExamples.File.ServiceClient(_client);
+        Notification = new NotificationClient(_client);
+        Service = new ServiceClient(_client);
     }
 
-    public SeedExamples.File.Notification.NotificationClient Notification { get; }
+    public NotificationClient Notification { get; }
 
-    public SeedExamples.File.ServiceClient Service { get; }
+    public ServiceClient Service { get; }
 }

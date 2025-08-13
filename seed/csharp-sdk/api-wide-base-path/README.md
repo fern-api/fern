@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedApiWideBasePath;
 
-var client = new SeedApiWideBasePath.SeedApiWideBasePathClient();
+var client = new SeedApiWideBasePathClient();
 await client.Service.PostAsync("pathParam", "serviceParam", "resourceParam", 1);
 ```
 

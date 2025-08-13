@@ -22,8 +22,8 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedNurseryApi;
 
-var client = new SeedNurseryApi.SeedNurseryApiClient();
-await client.Package.TestAsync(new SeedNurseryApi.TestRequest { For = "for" });
+var client = new SeedNurseryApiClient();
+await client.Package.TestAsync(new TestRequest { For = "for" });
 ```
 
 ## Exception Handling

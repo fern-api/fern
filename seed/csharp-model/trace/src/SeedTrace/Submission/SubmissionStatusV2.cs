@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(SubmissionStatusV2.JsonConverter))]
 [Serializable]
 public record SubmissionStatusV2
 {
@@ -19,18 +19,18 @@ public record SubmissionStatusV2
     }
 
     /// <summary>
-    /// Create an instance of SubmissionStatusV2 with <see cref="Test"/>.
+    /// Create an instance of SubmissionStatusV2 with <see cref="SubmissionStatusV2.Test"/>.
     /// </summary>
-    public SubmissionStatusV2(Test value)
+    public SubmissionStatusV2(SubmissionStatusV2.Test value)
     {
         Type = "test";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of SubmissionStatusV2 with <see cref="Workspace"/>.
+    /// Create an instance of SubmissionStatusV2 with <see cref="SubmissionStatusV2.Workspace"/>.
     /// </summary>
-    public SubmissionStatusV2(Workspace value)
+    public SubmissionStatusV2(SubmissionStatusV2.Workspace value)
     {
         Type = "workspace";
         Value = value.Value;
@@ -58,26 +58,26 @@ public record SubmissionStatusV2
     public bool IsWorkspace => Type == "workspace";
 
     /// <summary>
-    /// Returns the value as a <see cref="TestSubmissionStatusV2"/> if <see cref="Type"/> is 'test', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.TestSubmissionStatusV2"/> if <see cref="Type"/> is 'test', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'test'.</exception>
-    public TestSubmissionStatusV2 AsTest() =>
+    public SeedTrace.TestSubmissionStatusV2 AsTest() =>
         IsTest
-            ? (TestSubmissionStatusV2)Value!
-            : throw new Exception("SeedTrace.SubmissionStatusV2.Type is not 'test'");
+            ? (SeedTrace.TestSubmissionStatusV2)Value!
+            : throw new Exception("SubmissionStatusV2.Type is not 'test'");
 
     /// <summary>
-    /// Returns the value as a <see cref="WorkspaceSubmissionStatusV2"/> if <see cref="Type"/> is 'workspace', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.WorkspaceSubmissionStatusV2"/> if <see cref="Type"/> is 'workspace', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'workspace'.</exception>
-    public WorkspaceSubmissionStatusV2 AsWorkspace() =>
+    public SeedTrace.WorkspaceSubmissionStatusV2 AsWorkspace() =>
         IsWorkspace
-            ? (WorkspaceSubmissionStatusV2)Value!
-            : throw new Exception("SeedTrace.SubmissionStatusV2.Type is not 'workspace'");
+            ? (SeedTrace.WorkspaceSubmissionStatusV2)Value!
+            : throw new Exception("SubmissionStatusV2.Type is not 'workspace'");
 
     public T Match<T>(
-        Func<TestSubmissionStatusV2, T> onTest,
-        Func<WorkspaceSubmissionStatusV2, T> onWorkspace,
+        Func<SeedTrace.TestSubmissionStatusV2, T> onTest,
+        Func<SeedTrace.WorkspaceSubmissionStatusV2, T> onWorkspace,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -90,8 +90,8 @@ public record SubmissionStatusV2
     }
 
     public void Visit(
-        Action<TestSubmissionStatusV2> onTest,
-        Action<WorkspaceSubmissionStatusV2> onWorkspace,
+        Action<SeedTrace.TestSubmissionStatusV2> onTest,
+        Action<SeedTrace.WorkspaceSubmissionStatusV2> onWorkspace,
         Action<string, object?> onUnknown_
     )
     {
@@ -110,13 +110,13 @@ public record SubmissionStatusV2
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="TestSubmissionStatusV2"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.TestSubmissionStatusV2"/> and returns true if successful.
     /// </summary>
-    public bool TryAsTest(out TestSubmissionStatusV2? value)
+    public bool TryAsTest(out SeedTrace.TestSubmissionStatusV2? value)
     {
         if (Type == "test")
         {
-            value = (TestSubmissionStatusV2)Value!;
+            value = (SeedTrace.TestSubmissionStatusV2)Value!;
             return true;
         }
         value = null;
@@ -124,13 +124,13 @@ public record SubmissionStatusV2
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="WorkspaceSubmissionStatusV2"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.WorkspaceSubmissionStatusV2"/> and returns true if successful.
     /// </summary>
-    public bool TryAsWorkspace(out WorkspaceSubmissionStatusV2? value)
+    public bool TryAsWorkspace(out SeedTrace.WorkspaceSubmissionStatusV2? value)
     {
         if (Type == "workspace")
         {
-            value = (WorkspaceSubmissionStatusV2)Value!;
+            value = (SeedTrace.WorkspaceSubmissionStatusV2)Value!;
             return true;
         }
         value = null;
@@ -139,19 +139,20 @@ public record SubmissionStatusV2
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator SubmissionStatusV2(Test value) => new(value);
+    public static implicit operator SubmissionStatusV2(SubmissionStatusV2.Test value) => new(value);
 
-    public static implicit operator SubmissionStatusV2(Workspace value) => new(value);
+    public static implicit operator SubmissionStatusV2(SubmissionStatusV2.Workspace value) =>
+        new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SubmissionStatusV2>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(SubmissionStatusV2).IsAssignableFrom(typeToConvert);
 
         public override SubmissionStatusV2 Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -178,11 +179,11 @@ public record SubmissionStatusV2
 
             var value = discriminator switch
             {
-                "test" => json.Deserialize<TestSubmissionStatusV2>(options)
+                "test" => json.Deserialize<SeedTrace.TestSubmissionStatusV2>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.TestSubmissionStatusV2"
                     ),
-                "workspace" => json.Deserialize<WorkspaceSubmissionStatusV2>(options)
+                "workspace" => json.Deserialize<SeedTrace.WorkspaceSubmissionStatusV2>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.WorkspaceSubmissionStatusV2"
                     ),
@@ -215,16 +216,16 @@ public record SubmissionStatusV2
     [Serializable]
     public struct Test
     {
-        public Test(TestSubmissionStatusV2 value)
+        public Test(SeedTrace.TestSubmissionStatusV2 value)
         {
             Value = value;
         }
 
-        internal TestSubmissionStatusV2 Value { get; set; }
+        internal SeedTrace.TestSubmissionStatusV2 Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Test(TestSubmissionStatusV2 value) => new(value);
+        public static implicit operator Test(SeedTrace.TestSubmissionStatusV2 value) => new(value);
     }
 
     /// <summary>
@@ -233,15 +234,16 @@ public record SubmissionStatusV2
     [Serializable]
     public struct Workspace
     {
-        public Workspace(WorkspaceSubmissionStatusV2 value)
+        public Workspace(SeedTrace.WorkspaceSubmissionStatusV2 value)
         {
             Value = value;
         }
 
-        internal WorkspaceSubmissionStatusV2 Value { get; set; }
+        internal SeedTrace.WorkspaceSubmissionStatusV2 Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Workspace(WorkspaceSubmissionStatusV2 value) => new(value);
+        public static implicit operator Workspace(SeedTrace.WorkspaceSubmissionStatusV2 value) =>
+            new(value);
     }
 }

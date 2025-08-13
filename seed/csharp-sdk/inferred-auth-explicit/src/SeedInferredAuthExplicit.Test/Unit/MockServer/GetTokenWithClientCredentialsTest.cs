@@ -1,4 +1,6 @@
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using SeedInferredAuthExplicit;
 using SeedInferredAuthExplicit.Core;
 
 namespace SeedInferredAuthExplicit.Test.Unit.MockServer;
@@ -7,7 +9,7 @@ namespace SeedInferredAuthExplicit.Test.Unit.MockServer;
 public class GetTokenWithClientCredentialsTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {

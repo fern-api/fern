@@ -1,3 +1,5 @@
+using SeedExhaustive;
+
 namespace SeedExhaustive.Types;
 
 /// <summary>

@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedEnum.Core;
 
 namespace SeedEnum;
@@ -16,14 +16,10 @@ public partial class QueryParamClient
 
     /// <example><code>
     /// await client.QueryParam.SendAsync(
-    ///     new SeedEnum.SendEnumAsQueryParamRequest
-    ///     {
-    ///         Operand = SeedEnum.Operand.GreaterThan,
-    ///         OperandOrColor = SeedEnum.Color.Red,
-    ///     }
+    ///     new SendEnumAsQueryParamRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
     /// );
     /// </code></example>
-    public async Task SendAsync(
+    public async global::System.Threading.Tasks.Task SendAsync(
         SendEnumAsQueryParamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -69,16 +65,16 @@ public partial class QueryParamClient
 
     /// <example><code>
     /// await client.QueryParam.SendListAsync(
-    ///     new SeedEnum.SendEnumListAsQueryParamRequest
+    ///     new SendEnumListAsQueryParamRequest
     ///     {
-    ///         Operand = [SeedEnum.Operand.GreaterThan],
-    ///         MaybeOperand = [SeedEnum.Operand.GreaterThan],
-    ///         OperandOrColor = [SeedEnum.Color.Red],
-    ///         MaybeOperandOrColor = [SeedEnum.Color.Red],
+    ///         Operand = [Operand.GreaterThan],
+    ///         MaybeOperand = [Operand.GreaterThan],
+    ///         OperandOrColor = [Color.Red],
+    ///         MaybeOperandOrColor = [Color.Red],
     ///     }
     /// );
     /// </code></example>
-    public async Task SendListAsync(
+    public async global::System.Threading.Tasks.Task SendListAsync(
         SendEnumListAsQueryParamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

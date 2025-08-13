@@ -1,6 +1,11 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using NUnit.Framework;
 using SeedIdempotencyHeaders.Core;
+using WireMock.Matchers;
 using WireMock.Server;
+using SystemTask = global::System.Threading.Tasks.Task;
 using WireMockRequest = WireMock.RequestBuilders.Request;
 using WireMockResponse = WireMock.ResponseBuilders.Response;
 

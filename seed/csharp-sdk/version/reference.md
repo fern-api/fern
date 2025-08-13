@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="/src/SeedVersion/User/UserClient.cs">GetUserAsync</a>(userId) -> SeedVersion.User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedVersion/User/UserClient.cs">GetUserAsync</a>(userId) -> User</code></summary>
 <dl>
 <dd>
 

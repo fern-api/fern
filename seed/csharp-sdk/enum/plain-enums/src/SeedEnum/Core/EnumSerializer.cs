@@ -36,7 +36,7 @@ internal class EnumSerializer<TEnum> : JsonConverter<TEnum>
 
     public override TEnum Read(
         ref Utf8JsonReader reader,
-        Type typeToConvert,
+        global::System.Type typeToConvert,
         JsonSerializerOptions options
     )
     {

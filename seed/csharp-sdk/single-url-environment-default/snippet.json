@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedSingleUrlEnvironmentDefault;\n\nvar client = new SeedSingleUrlEnvironmentDefault.SeedSingleUrlEnvironmentDefaultClient(\"TOKEN\");\nawait client.Dummy.GetDummyAsync();\n"
+                "client": "using SeedSingleUrlEnvironmentDefault;\n\nvar client = new SeedSingleUrlEnvironmentDefaultClient(\"TOKEN\");\nawait client.Dummy.GetDummyAsync();\n"
             }
         }
     ]

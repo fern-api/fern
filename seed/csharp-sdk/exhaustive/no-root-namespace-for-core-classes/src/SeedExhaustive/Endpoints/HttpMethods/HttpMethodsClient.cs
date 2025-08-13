@@ -63,9 +63,7 @@ public partial class HttpMethodsClient
     }
 
     /// <example><code>
-    /// await client.Endpoints.HttpMethods.TestPostAsync(
-    ///     new SeedExhaustive.Types.ObjectWithRequiredField { String = "string" }
-    /// );
+    /// await client.Endpoints.HttpMethods.TestPostAsync(new ObjectWithRequiredField { String = "string" });
     /// </code></example>
     public async Task<ObjectWithOptionalField> TestPostAsync(
         ObjectWithRequiredField request,
@@ -112,7 +110,7 @@ public partial class HttpMethodsClient
     /// <example><code>
     /// await client.Endpoints.HttpMethods.TestPutAsync(
     ///     "id",
-    ///     new SeedExhaustive.Types.ObjectWithRequiredField { String = "string" }
+    ///     new ObjectWithRequiredField { String = "string" }
     /// );
     /// </code></example>
     public async Task<ObjectWithOptionalField> TestPutAsync(
@@ -164,7 +162,7 @@ public partial class HttpMethodsClient
     /// <example><code>
     /// await client.Endpoints.HttpMethods.TestPatchAsync(
     ///     "id",
-    ///     new SeedExhaustive.Types.ObjectWithOptionalField
+    ///     new ObjectWithOptionalField
     ///     {
     ///         String = "string",
     ///         Integer = 1,

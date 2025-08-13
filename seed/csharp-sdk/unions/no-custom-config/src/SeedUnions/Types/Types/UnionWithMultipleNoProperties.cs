@@ -8,7 +8,7 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(UnionWithMultipleNoProperties.JsonConverter))]
 [Serializable]
 public record UnionWithMultipleNoProperties
 {
@@ -19,27 +19,27 @@ public record UnionWithMultipleNoProperties
     }
 
     /// <summary>
-    /// Create an instance of UnionWithMultipleNoProperties with <see cref="Foo"/>.
+    /// Create an instance of UnionWithMultipleNoProperties with <see cref="UnionWithMultipleNoProperties.Foo"/>.
     /// </summary>
-    public UnionWithMultipleNoProperties(Foo value)
+    public UnionWithMultipleNoProperties(UnionWithMultipleNoProperties.Foo value)
     {
         Type = "foo";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithMultipleNoProperties with <see cref="Empty1"/>.
+    /// Create an instance of UnionWithMultipleNoProperties with <see cref="UnionWithMultipleNoProperties.Empty1"/>.
     /// </summary>
-    public UnionWithMultipleNoProperties(Empty1 value)
+    public UnionWithMultipleNoProperties(UnionWithMultipleNoProperties.Empty1 value)
     {
         Type = "empty1";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithMultipleNoProperties with <see cref="Empty2"/>.
+    /// Create an instance of UnionWithMultipleNoProperties with <see cref="UnionWithMultipleNoProperties.Empty2"/>.
     /// </summary>
-    public UnionWithMultipleNoProperties(Empty2 value)
+    public UnionWithMultipleNoProperties(UnionWithMultipleNoProperties.Empty2 value)
     {
         Type = "empty2";
         Value = value.Value;
@@ -78,7 +78,7 @@ public record UnionWithMultipleNoProperties
     public SeedUnions.Foo AsFoo() =>
         IsFoo
             ? (SeedUnions.Foo)Value!
-            : throw new Exception("SeedUnions.UnionWithMultipleNoProperties.Type is not 'foo'");
+            : throw new Exception("UnionWithMultipleNoProperties.Type is not 'foo'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty1', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record UnionWithMultipleNoProperties
     public object AsEmpty1() =>
         IsEmpty1
             ? Value!
-            : throw new Exception("SeedUnions.UnionWithMultipleNoProperties.Type is not 'empty1'");
+            : throw new Exception("UnionWithMultipleNoProperties.Type is not 'empty1'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty2', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record UnionWithMultipleNoProperties
     public object AsEmpty2() =>
         IsEmpty2
             ? Value!
-            : throw new Exception("SeedUnions.UnionWithMultipleNoProperties.Type is not 'empty2'");
+            : throw new Exception("UnionWithMultipleNoProperties.Type is not 'empty2'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
@@ -182,17 +182,19 @@ public record UnionWithMultipleNoProperties
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator UnionWithMultipleNoProperties(Foo value) => new(value);
+    public static implicit operator UnionWithMultipleNoProperties(
+        UnionWithMultipleNoProperties.Foo value
+    ) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithMultipleNoProperties>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithMultipleNoProperties).IsAssignableFrom(typeToConvert);
 
         public override UnionWithMultipleNoProperties Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedInferredAuthImplicit.Core;
 
 namespace SeedInferredAuthImplicit;
@@ -17,7 +17,7 @@ public partial class SimpleClient
     /// <example><code>
     /// await client.Simple.GetSomethingAsync();
     /// </code></example>
-    public async Task GetSomethingAsync(
+    public async global::System.Threading.Tasks.Task GetSomethingAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

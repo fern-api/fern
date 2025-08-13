@@ -59,9 +59,7 @@ public partial class UnionClient
     }
 
     /// <example><code>
-    /// await client.Union.UpdateAsync(
-    ///     new SeedUnions.Shape(new SeedUnions.Shape.Circle(new SeedUnions.Circle { Radius = 1.1 }))
-    /// );
+    /// await client.Union.UpdateAsync(new Shape(new Shape.Circle(new Circle { Radius = 1.1 })));
     /// </code></example>
     public async Task<bool> UpdateAsync(
         Shape request,

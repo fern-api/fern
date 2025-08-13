@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="/src/SeedSimpleApi/User/UserClient.cs">GetAsync</a>(id) -> SeedSimpleApi.User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedSimpleApi/User/UserClient.cs">GetAsync</a>(id) -> User</code></summary>
 <dl>
 <dd>
 

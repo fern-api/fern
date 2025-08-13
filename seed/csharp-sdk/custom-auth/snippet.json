@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedCustomAuth;\n\nvar client = new SeedCustomAuth.SeedCustomAuthClient(\"CUSTOM_AUTH_SCHEME\");\nawait client.CustomAuth.GetWithCustomAuthAsync();\n"
+                "client": "using SeedCustomAuth;\n\nvar client = new SeedCustomAuthClient(\"CUSTOM_AUTH_SCHEME\");\nawait client.CustomAuth.GetWithCustomAuthAsync();\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedCustomAuth;\n\nvar client = new SeedCustomAuth.SeedCustomAuthClient(\"CUSTOM_AUTH_SCHEME\");\nawait client.CustomAuth.PostWithCustomAuthAsync(\n    new Dictionary<object, object?>() { { \"key\", \"value\" } }\n);\n"
+                "client": "using SeedCustomAuth;\n\nvar client = new SeedCustomAuthClient(\"CUSTOM_AUTH_SCHEME\");\nawait client.CustomAuth.PostWithCustomAuthAsync(\n    new Dictionary<object, object?>() { { \"key\", \"value\" } }\n);\n"
             }
         }
     ]

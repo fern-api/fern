@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedVariables;
 
-var client = new SeedVariables.SeedVariablesClient();
+var client = new SeedVariablesClient();
 await client.Service.PostAsync("endpointParam");
 ```
 
