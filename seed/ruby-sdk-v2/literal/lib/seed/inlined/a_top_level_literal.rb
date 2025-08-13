@@ -2,7 +2,7 @@
 module Seed
     module Types
         class ATopLevelLiteral < Internal::Types::Model
-            field :nested_literal, , optional: false, nullable: false
+            field :nested_literal, Seed::inlined::ANestedLiteral, optional: false, nullable: false
         end
     end
 end

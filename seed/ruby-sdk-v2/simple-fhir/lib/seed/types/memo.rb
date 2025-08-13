@@ -2,8 +2,8 @@
 module Seed
     module Types
         class Memo < Internal::Types::Model
-            field :description, , optional: false, nullable: false
-            field :account, , optional: true, nullable: false
+            field :description, String, optional: false, nullable: false
+            field :account, Seed::Account, optional: true, nullable: false
         end
     end
 end

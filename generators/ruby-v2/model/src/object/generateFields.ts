@@ -17,7 +17,9 @@ export function generateFields({
         const isNullable = prop.valueType.type === "container" && prop.valueType.container.type === "nullable";
 
         return ruby.codeblock((writer) => {
-            writer.write(`field :${fieldName}, ${rubyType}, optional: ${isOptional}, nullable: ${isNullable}`);
+            writer.write(`field :${fieldName}, `);
+            rubyType.write(writer);
+            writer.write(`, optional: ${isOptional}, nullable: ${isNullable}`);
             // Only add newline for the last statement to ensure 'end' appears on its own line
             if (index === properties.length - 1) {
                 writer.newLine();

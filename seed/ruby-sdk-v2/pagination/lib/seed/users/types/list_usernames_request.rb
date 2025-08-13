@@ -2,7 +2,7 @@
 module Seed
     module Users
         class ListUsernamesRequest
-            field :starting_after, , optional: true, nullable: false
+            field :starting_after, String, optional: true, nullable: false
         end
     end
 end

@@ -2,11 +2,11 @@
 module Seed
     module Types
         class CursorPages < Internal::Types::Model
-            field :next_, , optional: true, nullable: false
-            field :page, , optional: true, nullable: false
-            field :per_page, , optional: true, nullable: false
-            field :total_pages, , optional: true, nullable: false
-            field :type, , optional: false, nullable: false
+            field :next_, Seed::complex::StartingAfterPaging, optional: true, nullable: false
+            field :page, Integer, optional: true, nullable: false
+            field :per_page, Integer, optional: true, nullable: false
+            field :total_pages, Integer, optional: true, nullable: false
+            field :type, String, optional: false, nullable: false
         end
     end
 end

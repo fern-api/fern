@@ -151,10 +151,8 @@ export class RubyTypeMapper {
             case "object":
                 return ruby.Type.class_(classReference);
             case "union":
-                // Ruby doesn't have discriminated unions, so we can use object or class_
                 return ruby.Type.class_(classReference);
             case "undiscriminatedUnion": {
-                // Ruby doesn't have oneOf, so we can fallback to object or class_
                 return ruby.Type.class_(classReference);
             }
             default:

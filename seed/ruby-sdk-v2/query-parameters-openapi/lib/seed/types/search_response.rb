@@ -2,7 +2,7 @@
 module Seed
     module Types
         class SearchResponse < Internal::Types::Model
-            field :results, , optional: true, nullable: false
+            field :results, Internal::Types::Array[String], optional: true, nullable: false
         end
     end
 end

@@ -2,8 +2,8 @@
 module Seed
     module Types
         class File < Internal::Types::Model
-            field :name, , optional: false, nullable: false
-            field :contents, , optional: false, nullable: false
+            field :name, String, optional: false, nullable: false
+            field :contents, String, optional: false, nullable: false
         end
     end
 end

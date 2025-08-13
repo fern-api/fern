@@ -2,9 +2,9 @@
 module Seed
     module Users
         class ListUsersOffsetStepPaginationRequest
-            field :page, , optional: true, nullable: false
-            field :limit, , optional: true, nullable: false
-            field :order, , optional: true, nullable: false
+            field :page, Integer, optional: true, nullable: false
+            field :limit, Integer, optional: true, nullable: false
+            field :order, Seed::users::Order, optional: true, nullable: false
         end
     end
 end

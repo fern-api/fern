@@ -2,9 +2,9 @@
 module Seed
     module Types
         class Movie < Internal::Types::Model
-            field :id, , optional: false, nullable: false
-            field :title, , optional: false, nullable: false
-            field :rating, , optional: false, nullable: false
+            field :id, String, optional: false, nullable: false
+            field :title, String, optional: false, nullable: false
+            field :rating, Integer, optional: false, nullable: false
         end
     end
 end

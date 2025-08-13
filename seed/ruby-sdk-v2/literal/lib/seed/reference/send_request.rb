@@ -2,13 +2,13 @@
 module Seed
     module Types
         class SendRequest < Internal::Types::Model
-            field :prompt, , optional: false, nullable: false
-            field :query, , optional: false, nullable: false
-            field :stream, , optional: false, nullable: false
-            field :ending, , optional: false, nullable: false
-            field :context, , optional: false, nullable: false
-            field :maybe_context, , optional: true, nullable: false
-            field :container_object, , optional: false, nullable: false
+            field :prompt, String, optional: false, nullable: false
+            field :query, String, optional: false, nullable: false
+            field :stream, Internal::Types::Boolean, optional: false, nullable: false
+            field :ending, String, optional: false, nullable: false
+            field :context, String, optional: false, nullable: false
+            field :maybe_context, String, optional: true, nullable: false
+            field :container_object, Seed::reference::ContainerObject, optional: false, nullable: false
         end
     end
 end
