@@ -8,6 +8,6 @@ module Seed
             field :problem_id, String, optional: false, nullable: false
             field :problem_version, Integer, optional: true, nullable: false
             field :user_id, String, optional: true, nullable: false
-        end
+
     end
 end

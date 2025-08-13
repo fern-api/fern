@@ -6,6 +6,6 @@ module Seed
             field :next_, Seed::users::NextPage, optional: true, nullable: false
             field :per_page, Integer, optional: false, nullable: false
             field :total_page, Integer, optional: false, nullable: false
-        end
+
     end
 end

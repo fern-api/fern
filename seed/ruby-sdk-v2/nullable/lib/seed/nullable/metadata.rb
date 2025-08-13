@@ -8,6 +8,6 @@ module Seed
             field :activated, Internal::Types::Boolean, optional: true, nullable: false
             field :status, Seed::nullable::Status, optional: false, nullable: false
             field :values, Internal::Types::Hash[String, String], optional: true, nullable: false
-        end
+
     end
 end

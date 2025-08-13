@@ -18,6 +18,8 @@ import {
     YieldParameter
 } from "./ast";
 
+import * as TypeLiteral from "./ast/TypeLiteral";
+
 export {
     Class_,
     ClassInstantiation,
@@ -25,17 +27,20 @@ export {
     CodeBlock,
     Field,
     KeywordArgument,
+    KeywordParameter,
     Method,
     MethodInvocation,
     MethodKind,
     Module_,
     Parameter,
     Type,
+    Type,
     TypeLiteral,
     TypeParameter,
     Writer
 } from "./ast";
 export { AstNode } from "./ast/core/AstNode";
+export type { HashEntry } from "./ast/TypeLiteral";
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg);

@@ -5,6 +5,6 @@ module Seed
             field :type, Seed::Type, optional: false, nullable: false
             field :value, String, optional: false, nullable: false
             field :label, String, optional: false, nullable: false
-        end
+
     end
 end

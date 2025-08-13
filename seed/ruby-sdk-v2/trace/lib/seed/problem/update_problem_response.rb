@@ -3,6 +3,6 @@ module Seed
     module Types
         class UpdateProblemResponse < Internal::Types::Model
             field :problem_version, Integer, optional: false, nullable: false
-        end
+
     end
 end

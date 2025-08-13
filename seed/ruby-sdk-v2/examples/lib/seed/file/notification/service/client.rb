@@ -15,7 +15,7 @@ module Seed
                     def get_exception
                         raise NotImplementedError, 'This method is not yet implemented.'
                     end
-                end
+
             end
         end
     end

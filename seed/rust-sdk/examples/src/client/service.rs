@@ -12,21 +12,60 @@ impl ServiceClient {
         Ok(Self { http_client })
     }
 
-    pub async fn check(&self, id: &String, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn get_movie(&self, movie_id: &MovieId, options: Option<RequestOptions>) -> Result<Movie, ClientError> {
         self.http_client.execute_request(
             Method::GET,
-            &format!("/check/{}", id),
+            &format!("/movie/{}", movie_id.0),
             None,
             None,
             options,
         ).await
     }
 
-    pub async fn ping(&self, options: Option<RequestOptions>) -> Result<bool, ClientError> {
+    pub async fn create_movie(&self, request: &Movie, options: Option<RequestOptions>) -> Result<MovieId, ClientError> {
+        self.http_client.execute_request(
+            Method::POST,
+            "/movie",
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
+    }
+
+    pub async fn get_metadata(&self, shallow: Option<Option<bool>>, tag: Option<Option<String>>, options: Option<RequestOptions>) -> Result<Metadata, ClientError> {
         self.http_client.execute_request(
             Method::GET,
-            "/ping",
+            "/metadata",
             None,
+            {
+            let mut query_params = Vec::new();
+            if let Some(Some(value)) = shallow {
+                query_params.push(("shallow".to_string(), value.to_string()));
+            }
+            if let Some(Some(value)) = tag {
+                query_params.push(("tag".to_string(), value.to_string()));
+            }
+            Some(query_params)
+        },
+            options,
+        ).await
+    }
+
+    pub async fn create_big_entity(&self, request: &BigEntity, options: Option<RequestOptions>) -> Result<Response, ClientError> {
+        self.http_client.execute_request(
+            Method::POST,
+            "/big-entity",
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
+    }
+
+    pub async fn refresh_token(&self, request: &Option<RefreshTokenRequest>, options: Option<RequestOptions>) -> Result<(), ClientError> {
+        self.http_client.execute_request(
+            Method::POST,
+            "/refresh-token",
+            Some(serde_json::to_value(request).unwrap_or_default()),
             None,
             options,
         ).await

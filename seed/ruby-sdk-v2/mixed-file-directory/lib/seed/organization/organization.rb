@@ -5,6 +5,6 @@ module Seed
             field :id, String, optional: false, nullable: false
             field :name, String, optional: false, nullable: false
             field :users, Internal::Types::Array[Seed::user::User], optional: false, nullable: false
-        end
+
     end
 end

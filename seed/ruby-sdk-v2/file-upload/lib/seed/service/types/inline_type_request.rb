@@ -1,6 +1,5 @@
 
 module Seed
     module Service
-        class InlineTypeRequest; end
-    end
+        class InlineTypeRequest; endend
 end

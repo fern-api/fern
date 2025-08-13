@@ -1,6 +1,5 @@
 
 module Seed
     module Dummy
-        class GenerateStreamRequest; end
-    end
+        class GenerateStreamRequest; endend
 end

@@ -1,6 +1,5 @@
 
 module Seed
     module Service
-        class MyOtherRequest; end
-    end
+        class MyOtherRequest; endend
 end

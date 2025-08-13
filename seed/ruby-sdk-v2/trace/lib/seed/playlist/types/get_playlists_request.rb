@@ -8,6 +8,6 @@ module Seed
             field :multi_line_docs, String, optional: false, nullable: false
             field :optional_multiple_field, String, optional: true, nullable: false
             field :multiple_field, String, optional: false, nullable: false
-        end
+
     end
 end

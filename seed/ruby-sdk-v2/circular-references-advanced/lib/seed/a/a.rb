@@ -1,6 +1,5 @@
 
 module Seed
     module Types
-        class A < Internal::Types::Model; end
-    end
+        class A < Internal::Types::Model; endend
 end

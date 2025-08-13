@@ -6,6 +6,6 @@ module Seed
             field :page, Seed::users::Page, optional: true, nullable: false
             field :total_count, Integer, optional: false, nullable: false
             field :data, Internal::Types::Array[Seed::users::User], optional: false, nullable: false
-        end
+
     end
 end

@@ -33,6 +33,6 @@ module Seed
             def delete_playlist
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
-        end
+
     end
 end

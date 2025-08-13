@@ -9,6 +9,6 @@ module Seed
             field :expression_location, Seed::submission::ExpressionLocation, optional: true, nullable: false
             field :stack, Seed::submission::StackInformation, optional: false, nullable: false
             field :stdout, String, optional: true, nullable: false
-        end
+
     end
 end

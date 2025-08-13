@@ -14,7 +14,7 @@ module Seed
                 def list_events
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
-            end
+
         end
     end
 end

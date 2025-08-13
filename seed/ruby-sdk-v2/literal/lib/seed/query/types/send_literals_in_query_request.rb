@@ -11,6 +11,6 @@ module Seed
             field :optional_stream, Internal::Types::Boolean, optional: true, nullable: false
             field :alias_stream, Internal::Types::Boolean, optional: false, nullable: false
             field :alias_optional_stream, Internal::Types::Boolean, optional: true, nullable: false
-        end
+
     end
 end

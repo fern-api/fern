@@ -17,6 +17,9 @@
       "path": "../base"
     },
     {
+      "path": "../dynamic-snippets"
+    },
+    {
       "path": "../../../packages/cli/logger"
     },
     {

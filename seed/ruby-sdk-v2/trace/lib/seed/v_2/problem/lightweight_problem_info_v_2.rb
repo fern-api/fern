@@ -6,6 +6,6 @@ module Seed
             field :problem_name, String, optional: false, nullable: false
             field :problem_version, Integer, optional: false, nullable: false
             field :variable_types, Internal::Types::Array[Seed::commons::VariableType], optional: false, nullable: false
-        end
+
     end
 end

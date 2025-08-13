@@ -18,6 +18,6 @@ module Seed
             def update
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
-        end
+
     end
 end
