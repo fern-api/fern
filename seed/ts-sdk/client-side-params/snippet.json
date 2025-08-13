@@ -1,0 +1,38 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/api/resources",
+                "method": "GET",
+                "identifier_override": "endpoint_service.listResources"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.listResources({\n    page: 1,\n    per_page: 1,\n    sort: \"created_at\",\n    order: \"desc\",\n    include_totals: true,\n    fields: \"fields\",\n    search: \"search\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/resources/{resourceId}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getResource"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getResource(\"resourceId\", {\n    include_metadata: true,\n    format: \"json\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/resources/search",
+                "method": "POST",
+                "identifier_override": "endpoint_service.searchResources"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.searchResources({\n    limit: 1,\n    offset: 1,\n    query: \"query\",\n    filters: {\n        \"filters\": {\n            \"key\": \"value\"\n        }\n    }\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}
