@@ -1,3 +1,5 @@
 import Foundation
 
-public typealias AliasToPrompt = JSONValue
+public enum AliasToPrompt: String, Codable, Hashable, CaseIterable, Sendable {
+    case youAreAHelpfulAssistant = "You are a helpful assistant"
+}

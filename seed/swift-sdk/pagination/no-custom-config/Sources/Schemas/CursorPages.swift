@@ -5,7 +5,7 @@ public struct CursorPages: Codable, Hashable, Sendable {
     public let page: Int?
     public let perPage: Int?
     public let totalPages: Int?
-    public let type: JSONValue
+    public let type: Pages
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -14,7 +14,7 @@ public struct CursorPages: Codable, Hashable, Sendable {
         page: Int? = nil,
         perPage: Int? = nil,
         totalPages: Int? = nil,
-        type: JSONValue,
+        type: Pages,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.next = next
@@ -31,7 +31,7 @@ public struct CursorPages: Codable, Hashable, Sendable {
         self.page = try container.decodeIfPresent(Int.self, forKey: .page)
         self.perPage = try container.decodeIfPresent(Int.self, forKey: .perPage)
         self.totalPages = try container.decodeIfPresent(Int.self, forKey: .totalPages)
-        self.type = try container.decode(JSONValue.self, forKey: .type)
+        self.type = try container.decode(Pages.self, forKey: .type)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -43,6 +43,10 @@ public struct CursorPages: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.perPage, forKey: .perPage)
         try container.encodeIfPresent(self.totalPages, forKey: .totalPages)
         try container.encode(self.type, forKey: .type)
+    }
+
+    public enum Pages: String, Codable, Hashable, CaseIterable, Sendable {
+        case pages
     }
 
     /// Keys for encoding/decoding struct properties.
