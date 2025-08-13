@@ -17,6 +17,13 @@ module Seed
                     method: POST,
                     path: "/problem-crud/create"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Problem::Types::CreateProblemResponse.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
             # Updates a problem
@@ -27,20 +34,41 @@ module Seed
                     method: POST,
                     path: "/problem-crud/update/#{params[:problemId]}"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Problem::Types::UpdateProblemResponse.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
             # Soft deletes a problem
             #
             # @return [untyped]
             def delete_problem(request_options: {}, **params)
-                raise NotImplementedError, 'This method is not yet implemented.'
+                _request = params
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return
+
+                else
+                    raise _response.body
             end
 
             # Returns default starter files for problem
             #
             # @return [Seed::Problem::GetDefaultStarterFilesResponse]
             def get_default_starter_files(request_options: {}, **params)
-                raise NotImplementedError, 'This method is not yet implemented.'
+                _request = params
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Problem::Types::GetDefaultStarterFilesResponse.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
     end

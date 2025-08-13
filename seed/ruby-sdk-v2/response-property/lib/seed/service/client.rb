@@ -15,6 +15,13 @@ module Seed
                     method: POST,
                     path: "movie"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Service::Types::Response.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
             # @return [Seed::Service::Response]
@@ -23,6 +30,13 @@ module Seed
                     method: POST,
                     path: "movie"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Service::Types::Response.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
             # @return [Seed::StringResponse]
@@ -31,6 +45,13 @@ module Seed
                     method: POST,
                     path: "movie"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Types::StringResponse.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
             # @return [Seed::Service::Response]
@@ -39,6 +60,13 @@ module Seed
                     method: POST,
                     path: "movie"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Service::Types::Response.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
             # @return [Seed::Service::Response | nil]
@@ -47,6 +75,12 @@ module Seed
                     method: POST,
                     path: "movie"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return 
+                else
+                    raise _response.body
             end
 
             # @return [Seed::Service::WithDocs | nil]
@@ -55,6 +89,13 @@ module Seed
                     method: POST,
                     path: "movie"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Service::Types::OptionalWithDocs.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
             # @return [Seed::StringResponse | nil]
@@ -63,6 +104,13 @@ module Seed
                     method: POST,
                     path: "movie"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Types::OptionalStringResponse.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
     end

@@ -11,17 +11,36 @@ module Seed
 
             # @return [Array[Seed::Nullable::User]]
             def get_users(request_options: {}, **params)
-                raise NotImplementedError, 'This method is not yet implemented.'
+                _request = params
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return 
+                else
+                    raise _response.body
             end
 
             # @return [Seed::Nullable::User]
             def create_user(request_options: {}, **params)
-                raise NotImplementedError, 'This method is not yet implemented.'
+                _request = params
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Nullable::Types::User.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
             # @return [bool]
             def delete_user(request_options: {}, **params)
-                raise NotImplementedError, 'This method is not yet implemented.'
+                _request = params
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return 
+                else
+                    raise _response.body
             end
 
     end

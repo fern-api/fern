@@ -15,6 +15,13 @@ module Seed
                     method: POST,
                     path: "#{params[:index]}/conversations/search"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Complex::Types::PaginatedConversationResponse.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
     end

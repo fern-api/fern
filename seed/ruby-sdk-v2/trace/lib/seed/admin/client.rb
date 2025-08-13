@@ -15,6 +15,13 @@ module Seed
                     method: POST,
                     path: "/admin/store-test-submission-status/#{params[:submissionId]}"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return
+
+                else
+                    raise _response.body
             end
 
             # @return [untyped]
@@ -23,6 +30,13 @@ module Seed
                     method: POST,
                     path: "/admin/store-test-submission-status-v2/#{params[:submissionId]}"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return
+
+                else
+                    raise _response.body
             end
 
             # @return [untyped]
@@ -31,6 +45,13 @@ module Seed
                     method: POST,
                     path: "/admin/store-workspace-submission-status/#{params[:submissionId]}"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return
+
+                else
+                    raise _response.body
             end
 
             # @return [untyped]
@@ -39,11 +60,25 @@ module Seed
                     method: POST,
                     path: "/admin/store-workspace-submission-status-v2/#{params[:submissionId]}"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return
+
+                else
+                    raise _response.body
             end
 
             # @return [untyped]
             def store_traced_test_case(request_options: {}, **params)
-                raise NotImplementedError, 'This method is not yet implemented.'
+                _request = params
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return
+
+                else
+                    raise _response.body
             end
 
             # @return [untyped]
@@ -52,11 +87,25 @@ module Seed
                     method: POST,
                     path: "/admin/store-test-trace-v2/submission/#{params[:submissionId]}/testCase/#{params[:testCaseId]}"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return
+
+                else
+                    raise _response.body
             end
 
             # @return [untyped]
             def store_traced_workspace(request_options: {}, **params)
-                raise NotImplementedError, 'This method is not yet implemented.'
+                _request = params
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return
+
+                else
+                    raise _response.body
             end
 
             # @return [untyped]
@@ -65,6 +114,13 @@ module Seed
                     method: POST,
                     path: "/admin/store-workspace-trace-v2/submission/#{params[:submissionId]}"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return
+
+                else
+                    raise _response.body
             end
 
     end

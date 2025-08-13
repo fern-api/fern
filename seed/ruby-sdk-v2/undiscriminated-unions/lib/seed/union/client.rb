@@ -15,11 +15,25 @@ module Seed
                     method: POST,
                     path: ""
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Union::Types::MyUnion.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
             # @return [Hash[Seed::Union::Key, String]]
             def get_metadata(request_options: {}, **params)
-                raise NotImplementedError, 'This method is not yet implemented.'
+                _request = params
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Union::Types::Metadata.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
             # @return [bool]
@@ -28,6 +42,12 @@ module Seed
                     method: PUT,
                     path: "/metadata"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return 
+                else
+                    raise _response.body
             end
 
             # @return [bool]
@@ -36,6 +56,12 @@ module Seed
                     method: POST,
                     path: "/call"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return 
+                else
+                    raise _response.body
             end
 
             # @return [Seed::Union::UnionWithDuplicateTypes]
@@ -44,6 +70,13 @@ module Seed
                     method: POST,
                     path: "/duplicate"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Union::Types::UnionWithDuplicateTypes.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
             # @return [String]
@@ -52,6 +85,12 @@ module Seed
                     method: POST,
                     path: "/nested"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return 
+                else
+                    raise _response.body
             end
 
     end

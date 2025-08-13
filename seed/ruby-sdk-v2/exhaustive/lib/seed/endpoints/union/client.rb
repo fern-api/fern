@@ -16,6 +16,13 @@ module Seed
                         method: POST,
                         path: "/union"
                     )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return Seed::Types::Union::Types::Animal.load(_response.body)
+
+                    else
+                        raise _response.body
                 end
 
         end

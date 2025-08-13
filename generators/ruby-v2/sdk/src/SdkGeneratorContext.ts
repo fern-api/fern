@@ -12,7 +12,6 @@ import {
     SubpackageId,
     TypeId
 } from "@fern-fern/ir-sdk/api";
-import { camelCase, upperFirst } from "lodash-es";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
@@ -130,6 +129,14 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return ruby.classReference({
             name: "JSONRequest",
             modules: [this.getRootModule().name, "Internal", "Http"]
+        });
+    }
+
+    public getReferenceToTypeId(typeId: TypeId): ruby.ClassReference {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return ruby.classReference({
+            name: typeDeclaration.name.name.pascalCase.safeName,
+            modules: [this.getRootModule().name, ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName), "Types"]
         });
     }
 

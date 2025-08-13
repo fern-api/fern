@@ -2,6 +2,7 @@ import { ruby } from "@fern-api/ruby-ast";
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
+export const RAW_CLIENT_REQUEST_VARIABLE_NAME = "_request";
 export declare namespace RawClient {
     export interface CreateHttpRequestWrapperArgs {
         baseUrl: ruby.CodeBlock;
@@ -41,7 +42,9 @@ export class RawClient {
         switch (requestType) {
             case "json":
                 return ruby.codeblock((writer) => {
-                    writer.writeLine(`_request = ${this.context.getReferenceToInternalJSONRequest()}.new(`);
+                    writer.writeLine(
+                        `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalJSONRequest()}.new(`
+                    );
                     writer.indent();
                     writer.writeLine(`method: ${endpoint.method.toUpperCase()},`);
                     writer.write(`path: `);

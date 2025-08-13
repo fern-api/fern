@@ -13,14 +13,26 @@ module Seed
             #
             # @return [String]
             def get_with_api_key(request_options: {}, **params)
-                raise NotImplementedError, 'This method is not yet implemented.'
+                _request = params
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return 
+                else
+                    raise _response.body
             end
 
             # GET request with custom api key
             #
             # @return [String]
             def get_with_header(request_options: {}, **params)
-                raise NotImplementedError, 'This method is not yet implemented.'
+                _request = params
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return 
+                else
+                    raise _response.body
             end
 
     end

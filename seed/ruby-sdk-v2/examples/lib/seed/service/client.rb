@@ -11,7 +11,14 @@ module Seed
 
             # @return [Seed::Types::Movie]
             def get_movie(request_options: {}, **params)
-                raise NotImplementedError, 'This method is not yet implemented.'
+                _request = params
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Types::Types::Movie.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
             # @return [String]
@@ -20,11 +27,25 @@ module Seed
                     method: POST,
                     path: "/movie"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Types::Types::MovieId.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
             # @return [Seed::Types::Metadata]
             def get_metadata(request_options: {}, **params)
-                raise NotImplementedError, 'This method is not yet implemented.'
+                _request = params
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Types::Types::Metadata.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
             # @return [Seed::Types::Response]
@@ -33,6 +54,13 @@ module Seed
                     method: POST,
                     path: "/big-entity"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Types::Types::Response.load(_response.body)
+
+                else
+                    raise _response.body
             end
 
             # @return [untyped]
@@ -41,6 +69,13 @@ module Seed
                     method: POST,
                     path: "/refresh-token"
                 )
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return
+
+                else
+                    raise _response.body
             end
 
     end
