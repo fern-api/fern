@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Specify the earliest Swift generator version for IR v58.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-13"
+  version: 0.66.14
+
+- changelogEntry:
     - summary: Upload dynamic IR JSON instead of upload URL.
       type: fix
   irVersion: 59
