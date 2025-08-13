@@ -1,8 +1,6 @@
 using NUnit.Framework;
 using SeedMultiLineDocs.Core;
-using WireMock.Matchers;
 using WireMock.Server;
-using SystemTask = global::System.Threading.Tasks.Task;
 using WireMockRequest = WireMock.RequestBuilders.Request;
 using WireMockResponse = WireMock.ResponseBuilders.Response;
 

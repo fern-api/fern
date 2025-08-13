@@ -1,4 +1,4 @@
-using global::System.Text.Json;
+using System.Text.Json;
 
 namespace SeedAuthEnvironmentVariables.Core;
 

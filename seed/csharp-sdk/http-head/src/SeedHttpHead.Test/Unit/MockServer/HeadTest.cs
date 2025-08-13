@@ -1,5 +1,4 @@
 using System.Net.Http.Headers;
-using global::System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace SeedHttpHead.Test.Unit.MockServer;
@@ -8,7 +7,7 @@ namespace SeedHttpHead.Test.Unit.MockServer;
 public class HeadTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         Server
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingHead())

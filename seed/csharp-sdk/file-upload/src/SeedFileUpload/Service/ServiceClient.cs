@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedFileUpload.Core;
 
 namespace SeedFileUpload;
@@ -15,7 +15,7 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async global::System.Threading.Tasks.Task PostAsync(
+    public async Task PostAsync(
         MyRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -63,7 +63,7 @@ public partial class ServiceClient
         }
     }
 
-    public async global::System.Threading.Tasks.Task JustFileAsync(
+    public async Task JustFileAsync(
         JustFileRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -94,7 +94,7 @@ public partial class ServiceClient
         }
     }
 
-    public async global::System.Threading.Tasks.Task JustFileWithQueryParamsAsync(
+    public async Task JustFileWithQueryParamsAsync(
         JustFileWithQueryParamsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -138,7 +138,7 @@ public partial class ServiceClient
         }
     }
 
-    public async global::System.Threading.Tasks.Task WithContentTypeAsync(
+    public async Task WithContentTypeAsync(
         WithContentTypeRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -176,7 +176,7 @@ public partial class ServiceClient
         }
     }
 
-    public async global::System.Threading.Tasks.Task WithFormEncodingAsync(
+    public async Task WithFormEncodingAsync(
         WithFormEncodingRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -213,7 +213,7 @@ public partial class ServiceClient
         }
     }
 
-    public async global::System.Threading.Tasks.Task WithFormEncodedContainersAsync(
+    public async Task WithFormEncodedContainersAsync(
         MyOtherRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -363,7 +363,7 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.Service.SimpleAsync();
     /// </code></example>
-    public async global::System.Threading.Tasks.Task SimpleAsync(
+    public async Task SimpleAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

@@ -1,6 +1,5 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using SeedCsharpNamespaceConflict;
 using SeedCsharpNamespaceConflict.Core;
 
 namespace SeedCsharpNamespaceConflict.B;
@@ -16,7 +15,7 @@ public record TestType : IJsonOnDeserialized
     public required A.Aa.A A { get; set; }
 
     [JsonPropertyName("b")]
-    public required SeedCsharpNamespaceConflict.A.Aa.B B { get; set; }
+    public required A.Aa.B B { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

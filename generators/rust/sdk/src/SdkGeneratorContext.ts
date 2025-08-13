@@ -42,6 +42,12 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         }
     }
 
+    public getClientBuilderName(): string {
+        // For README snippets, we need the client builder name (e.g., ImdbClientBuilder)
+        const clientName = this.getApiClientBuilderClientName();
+        return `${clientName}Builder`;
+    }
+
     public getCoreAsIsFiles(): AsIsFileDefinition[] {
         return Object.values(AsIsFiles);
     }

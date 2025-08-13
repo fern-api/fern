@@ -1,0 +1,9 @@
+
+module Seed
+    module Types
+        class SendSnakeCase < Internal::Types::Model
+            field :send_text, String, optional: false, nullable: false
+            field :send_param, Integer, optional: false, nullable: false
+
+    end
+end

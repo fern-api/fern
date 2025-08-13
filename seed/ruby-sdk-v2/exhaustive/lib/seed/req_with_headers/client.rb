@@ -13,6 +13,6 @@ module Seed
             def get_with_custom_header
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
-        end
+
     end
 end

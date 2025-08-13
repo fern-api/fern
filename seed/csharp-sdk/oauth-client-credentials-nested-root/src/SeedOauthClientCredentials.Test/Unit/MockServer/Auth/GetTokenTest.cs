@@ -1,8 +1,6 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedOauthClientCredentials.Auth;
 using SeedOauthClientCredentials.Core;
-using SeedOauthClientCredentials.Test.Unit.MockServer;
 
 namespace SeedOauthClientCredentials.Test.Unit.MockServer.Auth;
 
@@ -10,7 +8,7 @@ namespace SeedOauthClientCredentials.Test.Unit.MockServer.Auth;
 public class GetTokenTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {

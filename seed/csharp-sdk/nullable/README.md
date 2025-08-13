@@ -22,19 +22,19 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedNullable;
 
-var client = new SeedNullableClient();
+var client = new SeedNullable.SeedNullableClient();
 await client.Nullable.CreateUserAsync(
-    new CreateUserRequest
+    new SeedNullable.CreateUserRequest
     {
         Username = "username",
         Tags = new List<string>() { "tags", "tags" },
-        Metadata = new Metadata
+        Metadata = new SeedNullable.Metadata
         {
             CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
             UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
             Avatar = "avatar",
             Activated = true,
-            Status = new Status(new Status.Active()),
+            Status = new SeedNullable.Status(new SeedNullable.Status.Active()),
             Values = new Dictionary<string, string?>() { { "values", "values" } },
         },
         Avatar = "avatar",

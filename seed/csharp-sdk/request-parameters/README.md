@@ -22,9 +22,9 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedRequestParameters;
 
-var client = new SeedRequestParametersClient();
+var client = new SeedRequestParameters.SeedRequestParametersClient();
 await client.User.CreateUsernameAsync(
-    new CreateUsernameRequest
+    new SeedRequestParameters.CreateUsernameRequest
     {
         Username = "username",
         Password = "password",

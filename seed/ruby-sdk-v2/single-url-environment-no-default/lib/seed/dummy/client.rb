@@ -9,8 +9,10 @@ module Seed
                 @client = client
             end
 
-            # @return [void]
-            def get_dummy; end
-        end
+            # @return [String]
+            def get_dummy
+                raise NotImplementedError, 'This method is not yet implemented.'
+            end
+
     end
 end

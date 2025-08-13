@@ -1,6 +1,4 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
-using SeedMultiUrlEnvironment;
 using SeedMultiUrlEnvironment.Core;
 
 namespace SeedMultiUrlEnvironment.Test.Unit.MockServer;
@@ -9,7 +7,7 @@ namespace SeedMultiUrlEnvironment.Test.Unit.MockServer;
 public class GetPresignedUrlTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {

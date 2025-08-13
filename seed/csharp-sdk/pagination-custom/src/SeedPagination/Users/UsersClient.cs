@@ -15,7 +15,7 @@ public partial class UsersClient
 
     /// <example><code>
     /// await client.Users.ListUsernamesCustomAsync(
-    ///     new ListUsernamesRequestCustom { StartingAfter = "starting_after" }
+    ///     new SeedPagination.ListUsernamesRequestCustom { StartingAfter = "starting_after" }
     /// );
     /// </code></example>
     public async Task<SeedPaginationPager<string>> ListUsernamesCustomAsync(

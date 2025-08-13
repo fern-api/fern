@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedMultiLineDocs;\n\nvar client = new SeedMultiLineDocsClient();\nawait client.User.GetUserAsync(\"userId\");\n"
+                "client": "using SeedMultiLineDocs;\n\nvar client = new SeedMultiLineDocs.SeedMultiLineDocsClient();\nawait client.User.GetUserAsync(\"userId\");\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedMultiLineDocs;\n\nvar client = new SeedMultiLineDocsClient();\nawait client.User.CreateUserAsync(new CreateUserRequest { Name = \"name\", Age = 1 });\n"
+                "client": "using SeedMultiLineDocs;\n\nvar client = new SeedMultiLineDocs.SeedMultiLineDocsClient();\nawait client.User.CreateUserAsync(\n    new SeedMultiLineDocs.CreateUserRequest { Name = \"name\", Age = 1 }\n);\n"
             }
         }
     ]

@@ -22,8 +22,10 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedMixedFileDirectory;
 
-var client = new SeedMixedFileDirectoryClient();
-await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "name" });
+var client = new SeedMixedFileDirectory.SeedMixedFileDirectoryClient();
+await client.Organization.CreateAsync(
+    new SeedMixedFileDirectory.CreateOrganizationRequest { Name = "name" }
+);
 ```
 
 ## Exception Handling

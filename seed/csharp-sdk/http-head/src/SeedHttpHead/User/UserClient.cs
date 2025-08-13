@@ -50,7 +50,7 @@ public partial class UserClient
     }
 
     /// <example><code>
-    /// await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
+    /// await client.User.ListAsync(new SeedHttpHead.ListUsersRequest { Limit = 1 });
     /// </code></example>
     public async Task<IEnumerable<User>> ListAsync(
         ListUsersRequest request,

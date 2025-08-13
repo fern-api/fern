@@ -2,7 +2,6 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using SeedMixedFileDirectory.Core;
-using SeedMixedFileDirectory.User;
 
 namespace SeedMixedFileDirectory;
 
@@ -13,18 +12,18 @@ public partial class UserClient
     internal UserClient(RawClient client)
     {
         _client = client;
-        Events = new EventsClient(_client);
+        Events = new SeedMixedFileDirectory.User.EventsClient(_client);
     }
 
-    public EventsClient Events { get; }
+    public SeedMixedFileDirectory.User.EventsClient Events { get; }
 
     /// <summary>
     /// List all users.
     /// </summary>
     /// <example><code>
-    /// await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
+    /// await client.User.ListAsync(new SeedMixedFileDirectory.ListUsersRequest { Limit = 1 });
     /// </code></example>
-    public async Task<IEnumerable<User>> ListAsync(
+    public async Task<IEnumerable<SeedMixedFileDirectory.User>> ListAsync(
         ListUsersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -53,7 +52,9 @@ public partial class UserClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
+                return JsonUtils.Deserialize<IEnumerable<SeedMixedFileDirectory.User>>(
+                    responseBody
+                )!;
             }
             catch (JsonException e)
             {

@@ -16,7 +16,7 @@ public partial class AuthClient
 
     /// <example><code>
     /// await client.Auth.GetTokenWithClientCredentialsAsync(
-    ///     new GetTokenRequest
+    ///     new SeedInferredAuthImplicitNoExpiry.GetTokenRequest
     ///     {
     ///         XApiKey = "X-Api-Key",
     ///         ClientId = "client_id",
@@ -78,7 +78,7 @@ public partial class AuthClient
 
     /// <example><code>
     /// await client.Auth.RefreshTokenAsync(
-    ///     new RefreshTokenRequest
+    ///     new SeedInferredAuthImplicitNoExpiry.RefreshTokenRequest
     ///     {
     ///         XApiKey = "X-Api-Key",
     ///         ClientId = "client_id",

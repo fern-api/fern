@@ -1,6 +1,4 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
-using SeedSimpleApi;
 using SeedSimpleApi.Core;
 
 namespace SeedSimpleApi.Test.Unit.MockServer;
@@ -9,7 +7,7 @@ namespace SeedSimpleApi.Test.Unit.MockServer;
 public class GetTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             {

@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedStreaming;\n\nvar client = new SeedStreamingClient();\nvar items = await client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+                "client": "using SeedStreaming;\n\nvar client = new SeedStreaming.SeedStreamingClient();\nvar items = await client.Dummy.GenerateStreamAsync(\n    new SeedStreaming.GenerateStreamRequest { Stream = true, NumEvents = 1 }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedStreaming;\n\nvar client = new SeedStreamingClient();\nawait client.Dummy.GenerateAsync(new Generateequest { Stream = false, NumEvents = 5 });\n"
+                "client": "using SeedStreaming;\n\nvar client = new SeedStreaming.SeedStreamingClient();\nawait client.Dummy.GenerateAsync(\n    new SeedStreaming.Generateequest { Stream = false, NumEvents = 5 }\n);\n"
             }
         }
     ]

@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.Imdb.<a href="/src/SeedApi/Imdb/ImdbClient.cs">CreateMovieAsync</a>(CreateMovieRequest { ... }) -> string</code></summary>
+<details><summary><code>client.Imdb.<a href="/src/SeedApi/Imdb/ImdbClient.cs">CreateMovieAsync</a>(SeedApi.CreateMovieRequest { ... }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,9 @@ Add a movie to the database using the movies/* /... path.
 <dd>
 
 ```csharp
-await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rating = 1.1 });
+await client.Imdb.CreateMovieAsync(
+    new SeedApi.CreateMovieRequest { Title = "title", Rating = 1.1 }
+);
 ```
 </dd>
 </dl>
@@ -42,7 +44,7 @@ await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rat
 <dl>
 <dd>
 
-**request:** `CreateMovieRequest` 
+**request:** `SeedApi.CreateMovieRequest` 
     
 </dd>
 </dl>
@@ -54,7 +56,7 @@ await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rat
 </dl>
 </details>
 
-<details><summary><code>client.Imdb.<a href="/src/SeedApi/Imdb/ImdbClient.cs">GetMovieAsync</a>(movieId) -> Movie</code></summary>
+<details><summary><code>client.Imdb.<a href="/src/SeedApi/Imdb/ImdbClient.cs">GetMovieAsync</a>(movieId) -> SeedApi.Movie</code></summary>
 <dl>
 <dd>
 

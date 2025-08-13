@@ -1,6 +1,8 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { RelativeFilePath } from "@fern-api/path-utils";
+import { ruby } from "@fern-api/ruby-ast";
+import { ClassReference } from "@fern-api/ruby-ast/src/ast/ClassReference";
 import { AbstractRubyGeneratorContext, AsIsFiles, RubyProject } from "@fern-api/ruby-base";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     HttpService,
@@ -10,12 +12,9 @@ import {
     SubpackageId,
     TypeId
 } from "@fern-fern/ir-sdk/api";
-
-import { RelativeFilePath } from "@fern-api/path-utils";
-import { ruby } from "@fern-api/ruby-ast";
-import { ClassReference } from "@fern-api/ruby-ast/src/ast/ClassReference";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { camelCase, upperFirst } from "lodash-es";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 const ROOT_TYPES_FOLDER = "types";
 
@@ -29,7 +28,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         public readonly customConfig: SdkCustomConfigSchema,
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
-        super(ir, config, customConfig, generatorNotificationService);
+        super(ir, config, customConfig ?? {}, generatorNotificationService);
         this.project = new RubyProject({ context: this });
         this.endpointGenerator = new EndpointGenerator({ context: this });
     }
@@ -121,6 +120,10 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             name: "Environment",
             modules: [this.getRootModule().name]
         });
+    }
+
+    public getRootClientClassName(): string {
+        return `Client`;
     }
 
     public getCoreAsIsFiles(): string[] {

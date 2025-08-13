@@ -9,13 +9,17 @@ import {
     KeywordSplatParameter,
     Method,
     MethodInvocation,
+    MethodKind,
     Module_,
     PositionalArgument,
     PositionalParameter,
     PositionalSplatParameter,
     TypeParameter,
+    Writer,
     YieldParameter
 } from "./ast";
+
+import * as TypeLiteral from "./ast/TypeLiteral";
 
 export {
     ClassInstantiation,
@@ -25,12 +29,16 @@ export {
     KeywordArgument,
     Method,
     MethodInvocation,
+    MethodKind,
     Module_,
     Parameter,
     TypeLiteral,
     TypeParameter,
-    Type
+    Type,
+    Writer,
+    KeywordParameter
 } from "./ast";
+export type { HashEntry } from "./ast/TypeLiteral";
 export { AstNode } from "./ast/core/AstNode";
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {

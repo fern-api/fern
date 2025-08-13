@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedPlainText;
 
-var client = new SeedPlainTextClient();
+var client = new SeedPlainText.SeedPlainTextClient();
 await client.Service.GetTextAsync();
 ```
 

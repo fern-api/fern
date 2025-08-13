@@ -1,0 +1,8 @@
+
+module Seed
+    module Types
+        class ExampleType < Internal::Types::Model
+            field :name, String, optional: false, nullable: false
+
+    end
+end

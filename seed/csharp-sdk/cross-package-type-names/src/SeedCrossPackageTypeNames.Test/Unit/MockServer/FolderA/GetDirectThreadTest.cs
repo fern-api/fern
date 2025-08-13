@@ -1,8 +1,6 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedCrossPackageTypeNames.Core;
 using SeedCrossPackageTypeNames.FolderA;
-using SeedCrossPackageTypeNames.Test.Unit.MockServer;
 
 namespace SeedCrossPackageTypeNames.Test.Unit.MockServer.FolderA;
 
@@ -10,7 +8,7 @@ namespace SeedCrossPackageTypeNames.Test.Unit.MockServer.FolderA;
 public class GetDirectThreadTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             {
