@@ -25,7 +25,6 @@ import com.fern.ir.model.http.PathParameterLocation;
 import com.fern.ir.model.variables.VariableId;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
-import com.fern.java.client.generators.endpoint.DefaultValueExtractor;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.squareup.javapoet.ClassName;
@@ -150,11 +149,11 @@ public final class HttpUrlBuilder {
         }
         queryParamProperties.forEach(queryParamProperty -> {
             boolean isOptional = isTypeNameOptional(queryParamProperty.poetTypeName());
-            
+
             // Check if this parameter has a default value
             Optional<CodeBlock> defaultValue = defaultValueExtractor.extractDefaultValue(
                     queryParamProperty.objectProperty().getValueType());
-            
+
             if (isOptional) {
                 if (defaultValue.isPresent()) {
                     // If optional and has default, use the value if present, otherwise use default
@@ -176,8 +175,7 @@ public final class HttpUrlBuilder {
                             context.getPoetClassNameFactory().getQueryStringMapperClassName(),
                             httpUrlname,
                             queryParamProperty.wireKey().get(),
-                            CodeBlock.of(
-                                    "$L.$N().get()", requestName, queryParamProperty.getterProperty()),
+                            CodeBlock.of("$L.$N().get()", requestName, queryParamProperty.getterProperty()),
                             queryParamProperty.allowMultiple());
                     codeBlock.endControlFlow();
                 }
@@ -188,8 +186,7 @@ public final class HttpUrlBuilder {
                         context.getPoetClassNameFactory().getQueryStringMapperClassName(),
                         httpUrlname,
                         queryParamProperty.wireKey().get(),
-                        CodeBlock.of(
-                                "$L.$N()", requestName, queryParamProperty.getterProperty()),
+                        CodeBlock.of("$L.$N()", requestName, queryParamProperty.getterProperty()),
                         queryParamProperty.allowMultiple());
             }
         });
