@@ -25,7 +25,7 @@ export class SwiftFile extends File {
         });
     }
 
-    private static getRawContents(components: swift.FileComponent[]) {
+    public static getRawContents(components: swift.FileComponent[]) {
         return components.map((component) => component.toString()).join("");
     }
 
