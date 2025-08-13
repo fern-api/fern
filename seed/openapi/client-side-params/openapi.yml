@@ -1,0 +1,182 @@
+openapi: 3.0.1
+info:
+  title: client-side-params
+  version: ''
+paths:
+  /api/resources:
+    get:
+      description: List resources with pagination
+      operationId: service_listResources
+      tags:
+        - Service
+      parameters:
+        - name: page
+          in: query
+          description: Zero-indexed page number
+          required: true
+          schema:
+            type: integer
+        - name: per_page
+          in: query
+          description: Number of items per page
+          required: true
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          description: Sort field
+          required: true
+          schema:
+            type: string
+        - name: order
+          in: query
+          description: Sort order (asc or desc)
+          required: true
+          schema:
+            type: string
+        - name: include_totals
+          in: query
+          description: Whether to include total count
+          required: true
+          schema:
+            type: boolean
+        - name: fields
+          in: query
+          description: Comma-separated list of fields to include
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: search
+          in: query
+          description: Search query
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Resource'
+  /api/resources/{resourceId}:
+    get:
+      description: Get a single resource
+      operationId: service_getResource
+      tags:
+        - Service
+      parameters:
+        - name: resourceId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: include_metadata
+          in: query
+          description: Include metadata in response
+          required: true
+          schema:
+            type: boolean
+        - name: format
+          in: query
+          description: Response format
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+  /api/resources/search:
+    post:
+      description: Search resources with complex parameters
+      operationId: service_searchResources
+      tags:
+        - Service
+      parameters:
+        - name: limit
+          in: query
+          description: Maximum results to return
+          required: true
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          description: Offset for pagination
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                filters:
+                  type: object
+                  additionalProperties: true
+                  nullable: true
+              required:
+                - query
+components:
+  schemas:
+    Resource:
+      title: Resource
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        metadata:
+          type: object
+          additionalProperties: true
+          nullable: true
+      required:
+        - id
+        - name
+        - created_at
+        - updated_at
+    SearchResponse:
+      title: SearchResponse
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+        total:
+          type: integer
+          nullable: true
+        next_offset:
+          type: integer
+          nullable: true
+      required:
+        - results
+  securitySchemes: {}
