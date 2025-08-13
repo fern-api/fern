@@ -22,20 +22,16 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedPagination;
 
-var client = new SeedPagination.SeedPaginationClient("TOKEN");
+var client = new SeedPaginationClient("TOKEN");
 var items = await client.Complex.SearchAsync(
     "index",
-    new SeedPagination.SearchRequest
+    new SearchRequest
     {
-        Pagination = new SeedPagination.StartingAfterPaging
-        {
-            PerPage = 1,
-            StartingAfter = "starting_after",
-        },
-        Query = new SeedPagination.SingleFilterSearchRequest
+        Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = "starting_after" },
+        Query = new SingleFilterSearchRequest
         {
             Field = "field",
-            Operator = SeedPagination.SingleFilterSearchRequestOperator.Equals,
+            Operator = SingleFilterSearchRequestOperator.Equals,
             Value = "value",
         },
     }
@@ -70,20 +66,16 @@ List endpoints are paginated. The SDK provides an async enumerable so that you c
 ```csharp
 using SeedPagination;
 
-var client = new SeedPagination.SeedPaginationClient("TOKEN");
+var client = new SeedPaginationClient("TOKEN");
 var items = await client.Complex.SearchAsync(
     "index",
-    new SeedPagination.SearchRequest
+    new SearchRequest
     {
-        Pagination = new SeedPagination.StartingAfterPaging
-        {
-            PerPage = 1,
-            StartingAfter = "starting_after",
-        },
-        Query = new SeedPagination.SingleFilterSearchRequest
+        Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = "starting_after" },
+        Query = new SingleFilterSearchRequest
         {
             Field = "field",
-            Operator = SeedPagination.SingleFilterSearchRequestOperator.Equals,
+            Operator = SingleFilterSearchRequestOperator.Equals,
             Value = "value",
         },
     }

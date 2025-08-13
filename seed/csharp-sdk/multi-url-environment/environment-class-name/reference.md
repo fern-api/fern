@@ -1,6 +1,6 @@
 # Reference
 ## Ec2
-<details><summary><code>client.Ec2.<a href="/src/SeedMultiUrlEnvironment/Ec2/Ec2Client.cs">BootInstanceAsync</a>(SeedMultiUrlEnvironment.BootInstanceRequest { ... })</code></summary>
+<details><summary><code>client.Ec2.<a href="/src/SeedMultiUrlEnvironment/Ec2/Ec2Client.cs">BootInstanceAsync</a>(BootInstanceRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -13,9 +13,7 @@
 <dd>
 
 ```csharp
-await client.Ec2.BootInstanceAsync(
-    new SeedMultiUrlEnvironment.BootInstanceRequest { Size = "size" }
-);
+await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "size" });
 ```
 </dd>
 </dl>
@@ -30,7 +28,7 @@ await client.Ec2.BootInstanceAsync(
 <dl>
 <dd>
 
-**request:** `SeedMultiUrlEnvironment.BootInstanceRequest` 
+**request:** `BootInstanceRequest` 
     
 </dd>
 </dl>
@@ -43,7 +41,7 @@ await client.Ec2.BootInstanceAsync(
 </details>
 
 ## S3
-<details><summary><code>client.S3.<a href="/src/SeedMultiUrlEnvironment/S3/S3Client.cs">GetPresignedUrlAsync</a>(SeedMultiUrlEnvironment.GetPresignedUrlRequest { ... }) -> string</code></summary>
+<details><summary><code>client.S3.<a href="/src/SeedMultiUrlEnvironment/S3/S3Client.cs">GetPresignedUrlAsync</a>(GetPresignedUrlRequest { ... }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -56,9 +54,7 @@ await client.Ec2.BootInstanceAsync(
 <dd>
 
 ```csharp
-await client.S3.GetPresignedUrlAsync(
-    new SeedMultiUrlEnvironment.GetPresignedUrlRequest { S3Key = "s3Key" }
-);
+await client.S3.GetPresignedUrlAsync(new GetPresignedUrlRequest { S3Key = "s3Key" });
 ```
 </dd>
 </dl>
@@ -73,7 +69,7 @@ await client.S3.GetPresignedUrlAsync(
 <dl>
 <dd>
 
-**request:** `SeedMultiUrlEnvironment.GetPresignedUrlRequest` 
+**request:** `GetPresignedUrlRequest` 
     
 </dd>
 </dl>

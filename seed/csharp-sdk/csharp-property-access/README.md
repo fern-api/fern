@@ -22,9 +22,9 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedCsharpAccess;
 
-var client = new SeedCsharpAccess.SeedCsharpAccessClient();
+var client = new SeedCsharpAccessClient();
 await client.CreateUserAsync(
-    new SeedCsharpAccess.User
+    new User
     {
         Id = "id",
         Name = "name",

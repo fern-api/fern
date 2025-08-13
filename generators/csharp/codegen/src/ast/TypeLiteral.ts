@@ -248,14 +248,14 @@ export class TypeLiteral extends AstNode {
     }
 
     private writeDateTime({ writer, value }: { writer: Writer; value: string }): void {
-        writer.write(`DateTime.Parse("${value}", null, `);
+        writer.write(`DateTime.Parse("${value}", null, DateTimeStyles.`);
         writer.writeNode(
             new ClassReference({
-                name: "DateTimeStyles",
+                name: "AdjustToUniversal",
                 namespace: "System.Globalization"
             })
         );
-        writer.write(".AdjustToUniversal)");
+        writer.write(")");
     }
 
     private writeList({ writer, list }: { writer: Writer; list: List }): void {

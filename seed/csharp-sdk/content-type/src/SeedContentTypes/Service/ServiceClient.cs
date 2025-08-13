@@ -1,5 +1,5 @@
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedContentTypes.Core;
 
 namespace SeedContentTypes;
@@ -15,10 +15,10 @@ public partial class ServiceClient
 
     /// <example><code>
     /// await client.Service.PatchAsync(
-    ///     new SeedContentTypes.PatchProxyRequest { Application = "application", RequireAuth = true }
+    ///     new PatchProxyRequest { Application = "application", RequireAuth = true }
     /// );
     /// </code></example>
-    public async Task PatchAsync(
+    public async global::System.Threading.Tasks.Task PatchAsync(
         PatchProxyRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -61,7 +61,7 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.Service.PatchComplexAsync(
     ///     "id",
-    ///     new SeedContentTypes.PatchComplexRequest
+    ///     new PatchComplexRequest
     ///     {
     ///         Name = "name",
     ///         Age = 1,
@@ -88,7 +88,7 @@ public partial class ServiceClient
     ///     }
     /// );
     /// </code></example>
-    public async Task PatchComplexAsync(
+    public async global::System.Threading.Tasks.Task PatchComplexAsync(
         string id,
         PatchComplexRequest request,
         RequestOptions? options = null,
@@ -129,10 +129,10 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.Service.RegularPatchAsync(
     ///     "id",
-    ///     new SeedContentTypes.RegularPatchRequest { Field1 = "field1", Field2 = 1 }
+    ///     new RegularPatchRequest { Field1 = "field1", Field2 = 1 }
     /// );
     /// </code></example>
-    public async Task RegularPatchAsync(
+    public async global::System.Threading.Tasks.Task RegularPatchAsync(
         string id,
         RegularPatchRequest request,
         RequestOptions? options = null,

@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(ExceptionV2.JsonConverter))]
 [Serializable]
 public record ExceptionV2
 {
@@ -19,18 +19,18 @@ public record ExceptionV2
     }
 
     /// <summary>
-    /// Create an instance of ExceptionV2 with <see cref="Generic"/>.
+    /// Create an instance of ExceptionV2 with <see cref="ExceptionV2.Generic"/>.
     /// </summary>
-    public ExceptionV2(Generic value)
+    public ExceptionV2(ExceptionV2.Generic value)
     {
         Type = "generic";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of ExceptionV2 with <see cref="Timeout"/>.
+    /// Create an instance of ExceptionV2 with <see cref="ExceptionV2.Timeout"/>.
     /// </summary>
-    public ExceptionV2(Timeout value)
+    public ExceptionV2(ExceptionV2.Timeout value)
     {
         Type = "timeout";
         Value = value.Value;
@@ -58,23 +58,23 @@ public record ExceptionV2
     public bool IsTimeout => Type == "timeout";
 
     /// <summary>
-    /// Returns the value as a <see cref="ExceptionInfo"/> if <see cref="Type"/> is 'generic', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.ExceptionInfo"/> if <see cref="Type"/> is 'generic', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'generic'.</exception>
-    public ExceptionInfo AsGeneric() =>
+    public SeedTrace.ExceptionInfo AsGeneric() =>
         IsGeneric
-            ? (ExceptionInfo)Value!
-            : throw new Exception("SeedTrace.ExceptionV2.Type is not 'generic'");
+            ? (SeedTrace.ExceptionInfo)Value!
+            : throw new Exception("ExceptionV2.Type is not 'generic'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'timeout', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'timeout'.</exception>
     public object AsTimeout() =>
-        IsTimeout ? Value! : throw new Exception("SeedTrace.ExceptionV2.Type is not 'timeout'");
+        IsTimeout ? Value! : throw new Exception("ExceptionV2.Type is not 'timeout'");
 
     public T Match<T>(
-        Func<ExceptionInfo, T> onGeneric,
+        Func<SeedTrace.ExceptionInfo, T> onGeneric,
         Func<object, T> onTimeout,
         Func<string, object?, T> onUnknown_
     )
@@ -88,7 +88,7 @@ public record ExceptionV2
     }
 
     public void Visit(
-        Action<ExceptionInfo> onGeneric,
+        Action<SeedTrace.ExceptionInfo> onGeneric,
         Action<object> onTimeout,
         Action<string, object?> onUnknown_
     )
@@ -108,13 +108,13 @@ public record ExceptionV2
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="ExceptionInfo"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.ExceptionInfo"/> and returns true if successful.
     /// </summary>
-    public bool TryAsGeneric(out ExceptionInfo? value)
+    public bool TryAsGeneric(out SeedTrace.ExceptionInfo? value)
     {
         if (Type == "generic")
         {
-            value = (ExceptionInfo)Value!;
+            value = (SeedTrace.ExceptionInfo)Value!;
             return true;
         }
         value = null;
@@ -137,17 +137,17 @@ public record ExceptionV2
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator ExceptionV2(Generic value) => new(value);
+    public static implicit operator ExceptionV2(ExceptionV2.Generic value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<ExceptionV2>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(ExceptionV2).IsAssignableFrom(typeToConvert);
 
         public override ExceptionV2 Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -174,7 +174,7 @@ public record ExceptionV2
 
             var value = discriminator switch
             {
-                "generic" => json.Deserialize<ExceptionInfo>(options)
+                "generic" => json.Deserialize<SeedTrace.ExceptionInfo>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionInfo"),
                 "timeout" => new { },
                 _ => json.Deserialize<object?>(options),
@@ -206,16 +206,16 @@ public record ExceptionV2
     [Serializable]
     public struct Generic
     {
-        public Generic(ExceptionInfo value)
+        public Generic(SeedTrace.ExceptionInfo value)
         {
             Value = value;
         }
 
-        internal ExceptionInfo Value { get; set; }
+        internal SeedTrace.ExceptionInfo Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Generic(ExceptionInfo value) => new(value);
+        public static implicit operator Generic(SeedTrace.ExceptionInfo value) => new(value);
     }
 
     /// <summary>

@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -20,85 +20,73 @@ public partial class ProblemClient
     /// </summary>
     /// <example><code>
     /// await client.Problem.CreateProblemAsync(
-    ///     new SeedTrace.CreateProblemRequest
+    ///     new CreateProblemRequest
     ///     {
     ///         ProblemName = "problemName",
-    ///         ProblemDescription = new SeedTrace.ProblemDescription
+    ///         ProblemDescription = new ProblemDescription
     ///         {
-    ///             Boards = new List&lt;SeedTrace.ProblemDescriptionBoard&gt;()
+    ///             Boards = new List&lt;ProblemDescriptionBoard&gt;()
     ///             {
-    ///                 new SeedTrace.ProblemDescriptionBoard(
-    ///                     new SeedTrace.ProblemDescriptionBoard.Html("boards")
-    ///                 ),
-    ///                 new SeedTrace.ProblemDescriptionBoard(
-    ///                     new SeedTrace.ProblemDescriptionBoard.Html("boards")
-    ///                 ),
+    ///                 new ProblemDescriptionBoard(new ProblemDescriptionBoard.Html("boards")),
+    ///                 new ProblemDescriptionBoard(new ProblemDescriptionBoard.Html("boards")),
     ///             },
     ///         },
-    ///         Files = new Dictionary&lt;SeedTrace.Language, SeedTrace.ProblemFiles&gt;()
+    ///         Files = new Dictionary&lt;Language, ProblemFiles&gt;()
     ///         {
     ///             {
-    ///                 SeedTrace.Language.Java,
-    ///                 new SeedTrace.ProblemFiles
+    ///                 Language.Java,
+    ///                 new ProblemFiles
     ///                 {
-    ///                     SolutionFile = new SeedTrace.FileInfo
+    ///                     SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
+    ///                     ReadOnlyFiles = new List&lt;FileInfo&gt;()
     ///                     {
-    ///                         Filename = "filename",
-    ///                         Contents = "contents",
-    ///                     },
-    ///                     ReadOnlyFiles = new List&lt;SeedTrace.FileInfo&gt;()
-    ///                     {
-    ///                         new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
-    ///                         new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
+    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
+    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
     ///                     },
     ///                 }
     ///             },
     ///         },
-    ///         InputParams = new List&lt;SeedTrace.VariableTypeAndName&gt;()
+    ///         InputParams = new List&lt;VariableTypeAndName&gt;()
     ///         {
-    ///             new SeedTrace.VariableTypeAndName
+    ///             new VariableTypeAndName
     ///             {
-    ///                 VariableType = new SeedTrace.VariableType(new SeedTrace.VariableType.IntegerType()),
+    ///                 VariableType = new VariableType(new VariableType.IntegerType()),
     ///                 Name = "name",
     ///             },
-    ///             new SeedTrace.VariableTypeAndName
+    ///             new VariableTypeAndName
     ///             {
-    ///                 VariableType = new SeedTrace.VariableType(new SeedTrace.VariableType.IntegerType()),
+    ///                 VariableType = new VariableType(new VariableType.IntegerType()),
     ///                 Name = "name",
     ///             },
     ///         },
-    ///         OutputType = new SeedTrace.VariableType(new SeedTrace.VariableType.IntegerType()),
-    ///         Testcases = new List&lt;SeedTrace.TestCaseWithExpectedResult&gt;()
+    ///         OutputType = new VariableType(new VariableType.IntegerType()),
+    ///         Testcases = new List&lt;TestCaseWithExpectedResult&gt;()
     ///         {
-    ///             new SeedTrace.TestCaseWithExpectedResult
+    ///             new TestCaseWithExpectedResult
     ///             {
-    ///                 TestCase = new SeedTrace.TestCase
+    ///                 TestCase = new TestCase
     ///                 {
     ///                     Id = "id",
-    ///                     Params = new List&lt;SeedTrace.VariableValue&gt;()
+    ///                     Params = new List&lt;VariableValue&gt;()
     ///                     {
-    ///                         new SeedTrace.VariableValue(new SeedTrace.VariableValue.IntegerValue(1)),
-    ///                         new SeedTrace.VariableValue(new SeedTrace.VariableValue.IntegerValue(1)),
+    ///                         new VariableValue(new VariableValue.IntegerValue(1)),
+    ///                         new VariableValue(new VariableValue.IntegerValue(1)),
     ///                     },
     ///                 },
-    ///                 ExpectedResult = new SeedTrace.VariableValue(
-    ///                     new SeedTrace.VariableValue.IntegerValue(1)
-    ///                 ),
+    ///                 ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
     ///             },
-    ///             new SeedTrace.TestCaseWithExpectedResult
+    ///             new TestCaseWithExpectedResult
     ///             {
-    ///                 TestCase = new SeedTrace.TestCase
+    ///                 TestCase = new TestCase
     ///                 {
     ///                     Id = "id",
-    ///                     Params = new List&lt;SeedTrace.VariableValue&gt;()
+    ///                     Params = new List&lt;VariableValue&gt;()
     ///                     {
-    ///                         new SeedTrace.VariableValue(new SeedTrace.VariableValue.IntegerValue(1)),
-    ///                         new SeedTrace.VariableValue(new SeedTrace.VariableValue.IntegerValue(1)),
+    ///                         new VariableValue(new VariableValue.IntegerValue(1)),
+    ///                         new VariableValue(new VariableValue.IntegerValue(1)),
     ///                     },
     ///                 },
-    ///                 ExpectedResult = new SeedTrace.VariableValue(
-    ///                     new SeedTrace.VariableValue.IntegerValue(1)
-    ///                 ),
+    ///                 ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
     ///             },
     ///         },
     ///         MethodName = "methodName",
@@ -153,85 +141,73 @@ public partial class ProblemClient
     /// <example><code>
     /// await client.Problem.UpdateProblemAsync(
     ///     "problemId",
-    ///     new SeedTrace.CreateProblemRequest
+    ///     new CreateProblemRequest
     ///     {
     ///         ProblemName = "problemName",
-    ///         ProblemDescription = new SeedTrace.ProblemDescription
+    ///         ProblemDescription = new ProblemDescription
     ///         {
-    ///             Boards = new List&lt;SeedTrace.ProblemDescriptionBoard&gt;()
+    ///             Boards = new List&lt;ProblemDescriptionBoard&gt;()
     ///             {
-    ///                 new SeedTrace.ProblemDescriptionBoard(
-    ///                     new SeedTrace.ProblemDescriptionBoard.Html("boards")
-    ///                 ),
-    ///                 new SeedTrace.ProblemDescriptionBoard(
-    ///                     new SeedTrace.ProblemDescriptionBoard.Html("boards")
-    ///                 ),
+    ///                 new ProblemDescriptionBoard(new ProblemDescriptionBoard.Html("boards")),
+    ///                 new ProblemDescriptionBoard(new ProblemDescriptionBoard.Html("boards")),
     ///             },
     ///         },
-    ///         Files = new Dictionary&lt;SeedTrace.Language, SeedTrace.ProblemFiles&gt;()
+    ///         Files = new Dictionary&lt;Language, ProblemFiles&gt;()
     ///         {
     ///             {
-    ///                 SeedTrace.Language.Java,
-    ///                 new SeedTrace.ProblemFiles
+    ///                 Language.Java,
+    ///                 new ProblemFiles
     ///                 {
-    ///                     SolutionFile = new SeedTrace.FileInfo
+    ///                     SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
+    ///                     ReadOnlyFiles = new List&lt;FileInfo&gt;()
     ///                     {
-    ///                         Filename = "filename",
-    ///                         Contents = "contents",
-    ///                     },
-    ///                     ReadOnlyFiles = new List&lt;SeedTrace.FileInfo&gt;()
-    ///                     {
-    ///                         new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
-    ///                         new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
+    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
+    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
     ///                     },
     ///                 }
     ///             },
     ///         },
-    ///         InputParams = new List&lt;SeedTrace.VariableTypeAndName&gt;()
+    ///         InputParams = new List&lt;VariableTypeAndName&gt;()
     ///         {
-    ///             new SeedTrace.VariableTypeAndName
+    ///             new VariableTypeAndName
     ///             {
-    ///                 VariableType = new SeedTrace.VariableType(new SeedTrace.VariableType.IntegerType()),
+    ///                 VariableType = new VariableType(new VariableType.IntegerType()),
     ///                 Name = "name",
     ///             },
-    ///             new SeedTrace.VariableTypeAndName
+    ///             new VariableTypeAndName
     ///             {
-    ///                 VariableType = new SeedTrace.VariableType(new SeedTrace.VariableType.IntegerType()),
+    ///                 VariableType = new VariableType(new VariableType.IntegerType()),
     ///                 Name = "name",
     ///             },
     ///         },
-    ///         OutputType = new SeedTrace.VariableType(new SeedTrace.VariableType.IntegerType()),
-    ///         Testcases = new List&lt;SeedTrace.TestCaseWithExpectedResult&gt;()
+    ///         OutputType = new VariableType(new VariableType.IntegerType()),
+    ///         Testcases = new List&lt;TestCaseWithExpectedResult&gt;()
     ///         {
-    ///             new SeedTrace.TestCaseWithExpectedResult
+    ///             new TestCaseWithExpectedResult
     ///             {
-    ///                 TestCase = new SeedTrace.TestCase
+    ///                 TestCase = new TestCase
     ///                 {
     ///                     Id = "id",
-    ///                     Params = new List&lt;SeedTrace.VariableValue&gt;()
+    ///                     Params = new List&lt;VariableValue&gt;()
     ///                     {
-    ///                         new SeedTrace.VariableValue(new SeedTrace.VariableValue.IntegerValue(1)),
-    ///                         new SeedTrace.VariableValue(new SeedTrace.VariableValue.IntegerValue(1)),
+    ///                         new VariableValue(new VariableValue.IntegerValue(1)),
+    ///                         new VariableValue(new VariableValue.IntegerValue(1)),
     ///                     },
     ///                 },
-    ///                 ExpectedResult = new SeedTrace.VariableValue(
-    ///                     new SeedTrace.VariableValue.IntegerValue(1)
-    ///                 ),
+    ///                 ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
     ///             },
-    ///             new SeedTrace.TestCaseWithExpectedResult
+    ///             new TestCaseWithExpectedResult
     ///             {
-    ///                 TestCase = new SeedTrace.TestCase
+    ///                 TestCase = new TestCase
     ///                 {
     ///                     Id = "id",
-    ///                     Params = new List&lt;SeedTrace.VariableValue&gt;()
+    ///                     Params = new List&lt;VariableValue&gt;()
     ///                     {
-    ///                         new SeedTrace.VariableValue(new SeedTrace.VariableValue.IntegerValue(1)),
-    ///                         new SeedTrace.VariableValue(new SeedTrace.VariableValue.IntegerValue(1)),
+    ///                         new VariableValue(new VariableValue.IntegerValue(1)),
+    ///                         new VariableValue(new VariableValue.IntegerValue(1)),
     ///                     },
     ///                 },
-    ///                 ExpectedResult = new SeedTrace.VariableValue(
-    ///                     new SeedTrace.VariableValue.IntegerValue(1)
-    ///                 ),
+    ///                 ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
     ///             },
     ///         },
     ///         MethodName = "methodName",
@@ -290,7 +266,7 @@ public partial class ProblemClient
     /// <example><code>
     /// await client.Problem.DeleteProblemAsync("problemId");
     /// </code></example>
-    public async Task DeleteProblemAsync(
+    public async global::System.Threading.Tasks.Task DeleteProblemAsync(
         string problemId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -330,22 +306,22 @@ public partial class ProblemClient
     /// </summary>
     /// <example><code>
     /// await client.Problem.GetDefaultStarterFilesAsync(
-    ///     new SeedTrace.GetDefaultStarterFilesRequest
+    ///     new GetDefaultStarterFilesRequest
     ///     {
-    ///         InputParams = new List&lt;SeedTrace.VariableTypeAndName&gt;()
+    ///         InputParams = new List&lt;VariableTypeAndName&gt;()
     ///         {
-    ///             new SeedTrace.VariableTypeAndName
+    ///             new VariableTypeAndName
     ///             {
-    ///                 VariableType = new SeedTrace.VariableType(new SeedTrace.VariableType.IntegerType()),
+    ///                 VariableType = new VariableType(new VariableType.IntegerType()),
     ///                 Name = "name",
     ///             },
-    ///             new SeedTrace.VariableTypeAndName
+    ///             new VariableTypeAndName
     ///             {
-    ///                 VariableType = new SeedTrace.VariableType(new SeedTrace.VariableType.IntegerType()),
+    ///                 VariableType = new VariableType(new VariableType.IntegerType()),
     ///                 Name = "name",
     ///             },
     ///         },
-    ///         OutputType = new SeedTrace.VariableType(new SeedTrace.VariableType.IntegerType()),
+    ///         OutputType = new VariableType(new VariableType.IntegerType()),
     ///         MethodName = "methodName",
     ///     }
     /// );

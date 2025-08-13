@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SeedRequestParameters;
 
 namespace SeedRequestParameters.Test.Unit.MockServer;
 

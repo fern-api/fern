@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using SeedMixedFileDirectory;
 using SeedMixedFileDirectory.Core;
 
 namespace SeedMixedFileDirectory.User.Events;

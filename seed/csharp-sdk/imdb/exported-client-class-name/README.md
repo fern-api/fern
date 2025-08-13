@@ -22,10 +22,8 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedApi;
 
-var client = new SeedApi.CustomClient("TOKEN");
-await client.Imdb.CreateMovieAsync(
-    new SeedApi.CreateMovieRequest { Title = "title", Rating = 1.1 }
-);
+var client = new CustomClient("TOKEN");
+await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rating = 1.1 });
 ```
 
 ## Exception Handling

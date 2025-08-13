@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedErrorProperty;
 
-var client = new SeedErrorProperty.SeedErrorPropertyClient();
+var client = new SeedErrorPropertyClient();
 await client.PropertyBasedError.ThrowErrorAsync();
 ```
 

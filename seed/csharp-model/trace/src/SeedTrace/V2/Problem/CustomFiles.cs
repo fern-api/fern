@@ -4,11 +4,12 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using SeedTrace;
 using SeedTrace.Core;
 
 namespace SeedTrace.V2;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(CustomFiles.JsonConverter))]
 [Serializable]
 public record CustomFiles
 {
@@ -19,18 +20,18 @@ public record CustomFiles
     }
 
     /// <summary>
-    /// Create an instance of CustomFiles with <see cref="Basic"/>.
+    /// Create an instance of CustomFiles with <see cref="CustomFiles.Basic"/>.
     /// </summary>
-    public CustomFiles(Basic value)
+    public CustomFiles(CustomFiles.Basic value)
     {
         Type = "basic";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of CustomFiles with <see cref="Custom"/>.
+    /// Create an instance of CustomFiles with <see cref="CustomFiles.Custom"/>.
     /// </summary>
-    public CustomFiles(Custom value)
+    public CustomFiles(CustomFiles.Custom value)
     {
         Type = "custom";
         Value = value.Value;
@@ -58,25 +59,25 @@ public record CustomFiles
     public bool IsCustom => Type == "custom";
 
     /// <summary>
-    /// Returns the value as a <see cref="BasicCustomFiles"/> if <see cref="Type"/> is 'basic', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.V2.BasicCustomFiles"/> if <see cref="Type"/> is 'basic', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'basic'.</exception>
-    public BasicCustomFiles AsBasic() =>
+    public SeedTrace.V2.BasicCustomFiles AsBasic() =>
         IsBasic
-            ? (BasicCustomFiles)Value!
-            : throw new Exception("SeedTrace.V2.CustomFiles.Type is not 'basic'");
+            ? (SeedTrace.V2.BasicCustomFiles)Value!
+            : throw new Exception("CustomFiles.Type is not 'basic'");
 
     /// <summary>
-    /// Returns the value as a <see cref="Dictionary<SeedTrace.Language, SeedTrace.V2.Files>"/> if <see cref="Type"/> is 'custom', otherwise throws an exception.
+    /// Returns the value as a <see cref="Dictionary<Language, Files>"/> if <see cref="Type"/> is 'custom', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'custom'.</exception>
     public Dictionary<Language, Files> AsCustom() =>
         IsCustom
             ? (Dictionary<Language, Files>)Value!
-            : throw new Exception("SeedTrace.V2.CustomFiles.Type is not 'custom'");
+            : throw new Exception("CustomFiles.Type is not 'custom'");
 
     public T Match<T>(
-        Func<BasicCustomFiles, T> onBasic,
+        Func<SeedTrace.V2.BasicCustomFiles, T> onBasic,
         Func<Dictionary<Language, Files>, T> onCustom,
         Func<string, object?, T> onUnknown_
     )
@@ -90,7 +91,7 @@ public record CustomFiles
     }
 
     public void Visit(
-        Action<BasicCustomFiles> onBasic,
+        Action<SeedTrace.V2.BasicCustomFiles> onBasic,
         Action<Dictionary<Language, Files>> onCustom,
         Action<string, object?> onUnknown_
     )
@@ -110,13 +111,13 @@ public record CustomFiles
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="BasicCustomFiles"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.V2.BasicCustomFiles"/> and returns true if successful.
     /// </summary>
-    public bool TryAsBasic(out BasicCustomFiles? value)
+    public bool TryAsBasic(out SeedTrace.V2.BasicCustomFiles? value)
     {
         if (Type == "basic")
         {
-            value = (BasicCustomFiles)Value!;
+            value = (SeedTrace.V2.BasicCustomFiles)Value!;
             return true;
         }
         value = null;
@@ -124,7 +125,7 @@ public record CustomFiles
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="Dictionary<SeedTrace.Language, SeedTrace.V2.Files>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="Dictionary<Language, Files>"/> and returns true if successful.
     /// </summary>
     public bool TryAsCustom(out Dictionary<Language, Files>? value)
     {
@@ -139,19 +140,19 @@ public record CustomFiles
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator CustomFiles(Basic value) => new(value);
+    public static implicit operator CustomFiles(CustomFiles.Basic value) => new(value);
 
-    public static implicit operator CustomFiles(Custom value) => new(value);
+    public static implicit operator CustomFiles(CustomFiles.Custom value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<CustomFiles>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(CustomFiles).IsAssignableFrom(typeToConvert);
 
         public override CustomFiles Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -178,15 +179,13 @@ public record CustomFiles
 
             var value = discriminator switch
             {
-                "basic" => json.Deserialize<BasicCustomFiles>(options)
+                "basic" => json.Deserialize<SeedTrace.V2.BasicCustomFiles>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.V2.BasicCustomFiles"
                     ),
                 "custom" => json.GetProperty("value")
                     .Deserialize<Dictionary<Language, Files>>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize Dictionary<SeedTrace.Language, SeedTrace.V2.Files>"
-                    ),
+                    ?? throw new JsonException("Failed to deserialize Dictionary<Language, Files>"),
                 _ => json.Deserialize<object?>(options),
             };
             return new CustomFiles(discriminator, value);
@@ -219,16 +218,16 @@ public record CustomFiles
     [Serializable]
     public struct Basic
     {
-        public Basic(BasicCustomFiles value)
+        public Basic(SeedTrace.V2.BasicCustomFiles value)
         {
             Value = value;
         }
 
-        internal BasicCustomFiles Value { get; set; }
+        internal SeedTrace.V2.BasicCustomFiles Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Basic(BasicCustomFiles value) => new(value);
+        public static implicit operator Basic(SeedTrace.V2.BasicCustomFiles value) => new(value);
     }
 
     /// <summary>

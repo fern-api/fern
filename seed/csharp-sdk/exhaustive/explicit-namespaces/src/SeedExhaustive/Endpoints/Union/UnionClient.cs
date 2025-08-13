@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types.Union;
 
@@ -17,11 +18,7 @@ public partial class UnionClient
 
     /// <example><code>
     /// await client.Endpoints.Union.GetAndReturnUnionAsync(
-    ///     new SeedExhaustive.Types.Union.Animal(
-    ///         new SeedExhaustive.Types.Union.Animal.Dog(
-    ///             new SeedExhaustive.Types.Union.Dog { Name = "name", LikesToWoof = true }
-    ///         )
-    ///     )
+    ///     new Animal(new Animal.Dog(new Dog { Name = "name", LikesToWoof = true }))
     /// );
     /// </code></example>
     public async Task<Animal> GetAndReturnUnionAsync(

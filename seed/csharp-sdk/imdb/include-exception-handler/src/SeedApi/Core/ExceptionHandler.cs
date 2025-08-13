@@ -1,4 +1,4 @@
-using SystemTask = System.Threading.Tasks.Task;
+using SystemTask = global::System.Threading.Tasks.Task;
 
 namespace SeedApi.Core;
 

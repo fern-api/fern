@@ -1,4 +1,4 @@
-using System.Text.Json;
+using global::System.Text.Json;
 
 namespace SeedCsharpAccess.Core;
 

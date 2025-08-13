@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedExamples;
 
-var client = new SeedExamples.SeedExamplesClient("TOKEN");
+var client = new SeedExamplesClient("TOKEN");
 await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
 ```
 

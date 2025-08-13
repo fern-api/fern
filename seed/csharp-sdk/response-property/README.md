@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedResponseProperty;
 
-var client = new SeedResponseProperty.SeedResponsePropertyClient();
+var client = new SeedResponsePropertyClient();
 await client.Service.GetMovieAsync("string");
 ```
 

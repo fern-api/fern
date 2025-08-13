@@ -8,7 +8,7 @@ using SeedExamples.Core;
 
 namespace SeedExamples;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(Metadata.JsonConverter))]
 [Serializable]
 public record Metadata
 {
@@ -19,18 +19,18 @@ public record Metadata
     }
 
     /// <summary>
-    /// Create an instance of Metadata with <see cref="Html"/>.
+    /// Create an instance of Metadata with <see cref="Metadata.Html"/>.
     /// </summary>
-    public Metadata(Html value)
+    public Metadata(Metadata.Html value)
     {
         Type = "html";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of Metadata with <see cref="Markdown"/>.
+    /// Create an instance of Metadata with <see cref="Metadata.Markdown"/>.
     /// </summary>
-    public Metadata(Markdown value)
+    public Metadata(Metadata.Markdown value)
     {
         Type = "markdown";
         Value = value.Value;
@@ -68,16 +68,14 @@ public record Metadata
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'html'.</exception>
     public string AsHtml() =>
-        IsHtml ? (string)Value! : throw new Exception("SeedExamples.Metadata.Type is not 'html'");
+        IsHtml ? (string)Value! : throw new Exception("Metadata.Type is not 'html'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'markdown', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'markdown'.</exception>
     public string AsMarkdown() =>
-        IsMarkdown
-            ? (string)Value!
-            : throw new Exception("SeedExamples.Metadata.Type is not 'markdown'");
+        IsMarkdown ? (string)Value! : throw new Exception("Metadata.Type is not 'markdown'");
 
     public T Match<T>(
         Func<string, T> onHtml,
@@ -159,12 +157,12 @@ public record Metadata
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Metadata>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(Metadata).IsAssignableFrom(typeToConvert);
 
         public override Metadata Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -198,10 +196,8 @@ public record Metadata
                 _ => json.Deserialize<object?>(options),
             };
             var baseProperties =
-                json.Deserialize<BaseProperties>(options)
-                ?? throw new JsonException(
-                    "Failed to deserialize SeedExamples.Metadata.BaseProperties"
-                );
+                json.Deserialize<Metadata.BaseProperties>(options)
+                ?? throw new JsonException("Failed to deserialize Metadata.BaseProperties");
             return new Metadata(discriminator, value)
             {
                 Extra = baseProperties.Extra,
@@ -231,12 +227,9 @@ public record Metadata
             json["type"] = value.Type;
             var basePropertiesJson =
                 JsonSerializer.SerializeToNode(
-                    new BaseProperties { Extra = value.Extra, Tags = value.Tags },
+                    new Metadata.BaseProperties { Extra = value.Extra, Tags = value.Tags },
                     options
-                )
-                ?? throw new JsonException(
-                    "Failed to serialize SeedExamples.Metadata.BaseProperties"
-                );
+                ) ?? throw new JsonException("Failed to serialize Metadata.BaseProperties");
             foreach (var property in basePropertiesJson.AsObject())
             {
                 json[property.Key] = property.Value;

@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="/src/SeedQueryParameters/User/UserClient.cs">GetUsernameAsync</a>(SeedQueryParameters.GetUsersRequest { ... }) -> SeedQueryParameters.User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedQueryParameters/User/UserClient.cs">GetUsernameAsync</a>(GetUsersRequest { ... }) -> User</code></summary>
 <dl>
 <dd>
 
@@ -14,26 +14,26 @@
 
 ```csharp
 await client.User.GetUsernameAsync(
-    new SeedQueryParameters.GetUsersRequest
+    new GetUsersRequest
     {
         Limit = 1,
         Id = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         Date = new DateOnly(2023, 1, 15),
         Deadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
         Bytes = "SGVsbG8gd29ybGQh",
-        User = new SeedQueryParameters.User
+        User = new User
         {
             Name = "name",
             Tags = new List<string>() { "tags", "tags" },
         },
-        UserList = new List<SeedQueryParameters.User>()
+        UserList = new List<User>()
         {
-            new SeedQueryParameters.User
+            new User
             {
                 Name = "name",
                 Tags = new List<string>() { "tags", "tags" },
             },
-            new SeedQueryParameters.User
+            new User
             {
                 Name = "name",
                 Tags = new List<string>() { "tags", "tags" },
@@ -42,23 +42,23 @@ await client.User.GetUsernameAsync(
         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
         KeyValue = new Dictionary<string, string>() { { "keyValue", "keyValue" } },
         OptionalString = "optionalString",
-        NestedUser = new SeedQueryParameters.NestedUser
+        NestedUser = new NestedUser
         {
             Name = "name",
-            User = new SeedQueryParameters.User
+            User = new User
             {
                 Name = "name",
                 Tags = new List<string>() { "tags", "tags" },
             },
         },
-        OptionalUser = new SeedQueryParameters.User
+        OptionalUser = new User
         {
             Name = "name",
             Tags = new List<string>() { "tags", "tags" },
         },
         ExcludeUser =
         [
-            new SeedQueryParameters.User
+            new User
             {
                 Name = "name",
                 Tags = new List<string>() { "tags", "tags" },
@@ -81,7 +81,7 @@ await client.User.GetUsernameAsync(
 <dl>
 <dd>
 
-**request:** `SeedQueryParameters.GetUsersRequest` 
+**request:** `GetUsersRequest` 
     
 </dd>
 </dl>

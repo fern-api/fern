@@ -18,9 +18,7 @@ public partial class OrganizationClient
     /// Create a new organization.
     /// </summary>
     /// <example><code>
-    /// await client.Organization.CreateAsync(
-    ///     new SeedMixedFileDirectory.CreateOrganizationRequest { Name = "name" }
-    /// );
+    /// await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "name" });
     /// </code></example>
     public async Task<Organization> CreateAsync(
         CreateOrganizationRequest request,

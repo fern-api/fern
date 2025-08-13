@@ -1,6 +1,8 @@
 using System.Globalization;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
+using SeedExhaustive.Test.Unit.MockServer;
 using SeedExhaustive.Types;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints;
@@ -9,7 +11,7 @@ namespace SeedExhaustive.Test.Unit.MockServer.Endpoints;
 public class TestPatchTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {

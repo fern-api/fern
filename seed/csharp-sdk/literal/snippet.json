@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedLiteral;\n\nvar client = new SeedLiteral.SeedLiteralClient();\nawait client.Headers.SendAsync(\n    new SeedLiteral.SendLiteralsInHeadersRequest\n    {\n        EndpointVersion = \"02-12-2024\",\n        Async = true,\n        Query = \"What is the weather today\",\n    }\n);\n"
+                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Headers.SendAsync(\n    new SendLiteralsInHeadersRequest\n    {\n        EndpointVersion = \"02-12-2024\",\n        Async = true,\n        Query = \"What is the weather today\",\n    }\n);\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedLiteral;\n\nvar client = new SeedLiteral.SeedLiteralClient();\nawait client.Inlined.SendAsync(\n    new SeedLiteral.SendLiteralsInlinedRequest\n    {\n        Temperature = 10.1,\n        Prompt = \"You are a helpful assistant\",\n        Context = \"You're super wise\",\n        AliasedContext = \"You're super wise\",\n        MaybeContext = \"You're super wise\",\n        ObjectWithLiteral = new SeedLiteral.ATopLevelLiteral\n        {\n            NestedLiteral = new SeedLiteral.ANestedLiteral { MyLiteral = \"How super cool\" },\n        },\n        Stream = false,\n        Query = \"What is the weather today\",\n    }\n);\n"
+                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Inlined.SendAsync(\n    new SendLiteralsInlinedRequest\n    {\n        Temperature = 10.1,\n        Prompt = \"You are a helpful assistant\",\n        Context = \"You're super wise\",\n        AliasedContext = \"You're super wise\",\n        MaybeContext = \"You're super wise\",\n        ObjectWithLiteral = new ATopLevelLiteral\n        {\n            NestedLiteral = new ANestedLiteral { MyLiteral = \"How super cool\" },\n        },\n        Stream = false,\n        Query = \"What is the weather today\",\n    }\n);\n"
             }
         },
         {
@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedLiteral;\n\nvar client = new SeedLiteral.SeedLiteralClient();\nawait client.Path.SendAsync(\"123\");\n"
+                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Path.SendAsync(\"123\");\n"
             }
         },
         {
@@ -46,7 +46,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedLiteral;\n\nvar client = new SeedLiteral.SeedLiteralClient();\nawait client.Query.SendAsync(\n    new SeedLiteral.SendLiteralsInQueryRequest\n    {\n        Prompt = \"You are a helpful assistant\",\n        OptionalPrompt = \"You are a helpful assistant\",\n        AliasPrompt = \"You are a helpful assistant\",\n        AliasOptionalPrompt = \"You are a helpful assistant\",\n        Stream = false,\n        OptionalStream = false,\n        AliasStream = false,\n        AliasOptionalStream = false,\n        Query = \"What is the weather today\",\n    }\n);\n"
+                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Query.SendAsync(\n    new SendLiteralsInQueryRequest\n    {\n        Prompt = \"You are a helpful assistant\",\n        OptionalPrompt = \"You are a helpful assistant\",\n        AliasPrompt = \"You are a helpful assistant\",\n        AliasOptionalPrompt = \"You are a helpful assistant\",\n        Stream = false,\n        OptionalStream = false,\n        AliasStream = false,\n        AliasOptionalStream = false,\n        Query = \"What is the weather today\",\n    }\n);\n"
             }
         },
         {
@@ -58,7 +58,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedLiteral;\n\nvar client = new SeedLiteral.SeedLiteralClient();\nawait client.Reference.SendAsync(\n    new SeedLiteral.SendRequest\n    {\n        Prompt = \"You are a helpful assistant\",\n        Stream = false,\n        Context = \"You're super wise\",\n        Query = \"What is the weather today\",\n        ContainerObject = new SeedLiteral.ContainerObject\n        {\n            NestedObjects = new List<SeedLiteral.NestedObjectWithLiterals>()\n            {\n                new SeedLiteral.NestedObjectWithLiterals\n                {\n                    Literal1 = \"literal1\",\n                    Literal2 = \"literal2\",\n                    StrProp = \"strProp\",\n                },\n            },\n        },\n    }\n);\n"
+                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Reference.SendAsync(\n    new SendRequest\n    {\n        Prompt = \"You are a helpful assistant\",\n        Stream = false,\n        Context = \"You're super wise\",\n        Query = \"What is the weather today\",\n        ContainerObject = new ContainerObject\n        {\n            NestedObjects = new List<NestedObjectWithLiterals>()\n            {\n                new NestedObjectWithLiterals\n                {\n                    Literal1 = \"literal1\",\n                    Literal2 = \"literal2\",\n                    StrProp = \"strProp\",\n                },\n            },\n        },\n    }\n);\n"
             }
         }
     ]

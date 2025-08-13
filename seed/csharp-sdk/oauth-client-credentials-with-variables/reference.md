@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentialsWithVariables/Auth/AuthClient.cs">GetTokenWithClientCredentialsAsync</a>(SeedOauthClientCredentialsWithVariables.GetTokenRequest { ... }) -> SeedOauthClientCredentialsWithVariables.TokenResponse</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentialsWithVariables/Auth/AuthClient.cs">GetTokenWithClientCredentialsAsync</a>(GetTokenRequest { ... }) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,7 @@
 
 ```csharp
 await client.Auth.GetTokenWithClientCredentialsAsync(
-    new SeedOauthClientCredentialsWithVariables.GetTokenRequest
+    new GetTokenRequest
     {
         ClientId = "client_id",
         ClientSecret = "client_secret",
@@ -37,7 +37,7 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 <dl>
 <dd>
 
-**request:** `SeedOauthClientCredentialsWithVariables.GetTokenRequest` 
+**request:** `GetTokenRequest` 
     
 </dd>
 </dl>
@@ -49,7 +49,7 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentialsWithVariables/Auth/AuthClient.cs">RefreshTokenAsync</a>(SeedOauthClientCredentialsWithVariables.RefreshTokenRequest { ... }) -> SeedOauthClientCredentialsWithVariables.TokenResponse</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentialsWithVariables/Auth/AuthClient.cs">RefreshTokenAsync</a>(RefreshTokenRequest { ... }) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -63,7 +63,7 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 
 ```csharp
 await client.Auth.RefreshTokenAsync(
-    new SeedOauthClientCredentialsWithVariables.RefreshTokenRequest
+    new RefreshTokenRequest
     {
         ClientId = "client_id",
         ClientSecret = "client_secret",
@@ -87,7 +87,7 @@ await client.Auth.RefreshTokenAsync(
 <dl>
 <dd>
 
-**request:** `SeedOauthClientCredentialsWithVariables.RefreshTokenRequest` 
+**request:** `RefreshTokenRequest` 
     
 </dd>
 </dl>

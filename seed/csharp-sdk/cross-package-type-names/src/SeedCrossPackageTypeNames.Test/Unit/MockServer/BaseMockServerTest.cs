@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SeedCrossPackageTypeNames;
 using WireMock.Logging;
 using WireMock.Server;
 using WireMock.Settings;

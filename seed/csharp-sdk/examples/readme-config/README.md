@@ -28,9 +28,9 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedExamples;
 
-var client = new SeedExamples.SeedExamplesClient("TOKEN");
+var client = new SeedExamplesClient("TOKEN");
 await client.Service.CreateMovieAsync(
-    new SeedExamples.Movie
+    new Movie
     {
         Id = "movie-c06a4ad7",
         Prequel = "movie-cv9b914f",

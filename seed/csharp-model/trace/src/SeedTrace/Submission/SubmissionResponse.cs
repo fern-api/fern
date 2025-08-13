@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(SubmissionResponse.JsonConverter))]
 [Serializable]
 public record SubmissionResponse
 {
@@ -19,54 +19,54 @@ public record SubmissionResponse
     }
 
     /// <summary>
-    /// Create an instance of SubmissionResponse with <see cref="ServerInitialized"/>.
+    /// Create an instance of SubmissionResponse with <see cref="SubmissionResponse.ServerInitialized"/>.
     /// </summary>
-    public SubmissionResponse(ServerInitialized value)
+    public SubmissionResponse(SubmissionResponse.ServerInitialized value)
     {
         Type = "serverInitialized";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of SubmissionResponse with <see cref="ProblemInitialized"/>.
+    /// Create an instance of SubmissionResponse with <see cref="SubmissionResponse.ProblemInitialized"/>.
     /// </summary>
-    public SubmissionResponse(ProblemInitialized value)
+    public SubmissionResponse(SubmissionResponse.ProblemInitialized value)
     {
         Type = "problemInitialized";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of SubmissionResponse with <see cref="WorkspaceInitialized"/>.
+    /// Create an instance of SubmissionResponse with <see cref="SubmissionResponse.WorkspaceInitialized"/>.
     /// </summary>
-    public SubmissionResponse(WorkspaceInitialized value)
+    public SubmissionResponse(SubmissionResponse.WorkspaceInitialized value)
     {
         Type = "workspaceInitialized";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of SubmissionResponse with <see cref="ServerErrored"/>.
+    /// Create an instance of SubmissionResponse with <see cref="SubmissionResponse.ServerErrored"/>.
     /// </summary>
-    public SubmissionResponse(ServerErrored value)
+    public SubmissionResponse(SubmissionResponse.ServerErrored value)
     {
         Type = "serverErrored";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of SubmissionResponse with <see cref="CodeExecutionUpdate"/>.
+    /// Create an instance of SubmissionResponse with <see cref="SubmissionResponse.CodeExecutionUpdate"/>.
     /// </summary>
-    public SubmissionResponse(CodeExecutionUpdate value)
+    public SubmissionResponse(SubmissionResponse.CodeExecutionUpdate value)
     {
         Type = "codeExecutionUpdate";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of SubmissionResponse with <see cref="Terminated"/>.
+    /// Create an instance of SubmissionResponse with <see cref="SubmissionResponse.Terminated"/>.
     /// </summary>
-    public SubmissionResponse(Terminated value)
+    public SubmissionResponse(SubmissionResponse.Terminated value)
     {
         Type = "terminated";
         Value = value.Value;
@@ -120,7 +120,7 @@ public record SubmissionResponse
     public object AsServerInitialized() =>
         IsServerInitialized
             ? Value!
-            : throw new Exception("SeedTrace.SubmissionResponse.Type is not 'serverInitialized'");
+            : throw new Exception("SubmissionResponse.Type is not 'serverInitialized'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'problemInitialized', otherwise throws an exception.
@@ -129,7 +129,7 @@ public record SubmissionResponse
     public string AsProblemInitialized() =>
         IsProblemInitialized
             ? (string)Value!
-            : throw new Exception("SeedTrace.SubmissionResponse.Type is not 'problemInitialized'");
+            : throw new Exception("SubmissionResponse.Type is not 'problemInitialized'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'workspaceInitialized', otherwise throws an exception.
@@ -138,18 +138,16 @@ public record SubmissionResponse
     public object AsWorkspaceInitialized() =>
         IsWorkspaceInitialized
             ? Value!
-            : throw new Exception(
-                "SeedTrace.SubmissionResponse.Type is not 'workspaceInitialized'"
-            );
+            : throw new Exception("SubmissionResponse.Type is not 'workspaceInitialized'");
 
     /// <summary>
-    /// Returns the value as a <see cref="ExceptionInfo"/> if <see cref="Type"/> is 'serverErrored', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.ExceptionInfo"/> if <see cref="Type"/> is 'serverErrored', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'serverErrored'.</exception>
-    public ExceptionInfo AsServerErrored() =>
+    public SeedTrace.ExceptionInfo AsServerErrored() =>
         IsServerErrored
-            ? (ExceptionInfo)Value!
-            : throw new Exception("SeedTrace.SubmissionResponse.Type is not 'serverErrored'");
+            ? (SeedTrace.ExceptionInfo)Value!
+            : throw new Exception("SubmissionResponse.Type is not 'serverErrored'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.CodeExecutionUpdate"/> if <see cref="Type"/> is 'codeExecutionUpdate', otherwise throws an exception.
@@ -158,24 +156,24 @@ public record SubmissionResponse
     public SeedTrace.CodeExecutionUpdate AsCodeExecutionUpdate() =>
         IsCodeExecutionUpdate
             ? (SeedTrace.CodeExecutionUpdate)Value!
-            : throw new Exception("SeedTrace.SubmissionResponse.Type is not 'codeExecutionUpdate'");
+            : throw new Exception("SubmissionResponse.Type is not 'codeExecutionUpdate'");
 
     /// <summary>
-    /// Returns the value as a <see cref="TerminatedResponse"/> if <see cref="Type"/> is 'terminated', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.TerminatedResponse"/> if <see cref="Type"/> is 'terminated', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'terminated'.</exception>
-    public TerminatedResponse AsTerminated() =>
+    public SeedTrace.TerminatedResponse AsTerminated() =>
         IsTerminated
-            ? (TerminatedResponse)Value!
-            : throw new Exception("SeedTrace.SubmissionResponse.Type is not 'terminated'");
+            ? (SeedTrace.TerminatedResponse)Value!
+            : throw new Exception("SubmissionResponse.Type is not 'terminated'");
 
     public T Match<T>(
         Func<object, T> onServerInitialized,
         Func<string, T> onProblemInitialized,
         Func<object, T> onWorkspaceInitialized,
-        Func<ExceptionInfo, T> onServerErrored,
+        Func<SeedTrace.ExceptionInfo, T> onServerErrored,
         Func<SeedTrace.CodeExecutionUpdate, T> onCodeExecutionUpdate,
-        Func<TerminatedResponse, T> onTerminated,
+        Func<SeedTrace.TerminatedResponse, T> onTerminated,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -195,9 +193,9 @@ public record SubmissionResponse
         Action<object> onServerInitialized,
         Action<string> onProblemInitialized,
         Action<object> onWorkspaceInitialized,
-        Action<ExceptionInfo> onServerErrored,
+        Action<SeedTrace.ExceptionInfo> onServerErrored,
         Action<SeedTrace.CodeExecutionUpdate> onCodeExecutionUpdate,
-        Action<TerminatedResponse> onTerminated,
+        Action<SeedTrace.TerminatedResponse> onTerminated,
         Action<string, object?> onUnknown_
     )
     {
@@ -270,13 +268,13 @@ public record SubmissionResponse
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="ExceptionInfo"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.ExceptionInfo"/> and returns true if successful.
     /// </summary>
-    public bool TryAsServerErrored(out ExceptionInfo? value)
+    public bool TryAsServerErrored(out SeedTrace.ExceptionInfo? value)
     {
         if (Type == "serverErrored")
         {
-            value = (ExceptionInfo)Value!;
+            value = (SeedTrace.ExceptionInfo)Value!;
             return true;
         }
         value = null;
@@ -298,13 +296,13 @@ public record SubmissionResponse
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="TerminatedResponse"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.TerminatedResponse"/> and returns true if successful.
     /// </summary>
-    public bool TryAsTerminated(out TerminatedResponse? value)
+    public bool TryAsTerminated(out SeedTrace.TerminatedResponse? value)
     {
         if (Type == "terminated")
         {
-            value = (TerminatedResponse)Value!;
+            value = (SeedTrace.TerminatedResponse)Value!;
             return true;
         }
         value = null;
@@ -313,23 +311,29 @@ public record SubmissionResponse
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator SubmissionResponse(ProblemInitialized value) => new(value);
+    public static implicit operator SubmissionResponse(
+        SubmissionResponse.ProblemInitialized value
+    ) => new(value);
 
-    public static implicit operator SubmissionResponse(ServerErrored value) => new(value);
+    public static implicit operator SubmissionResponse(SubmissionResponse.ServerErrored value) =>
+        new(value);
 
-    public static implicit operator SubmissionResponse(CodeExecutionUpdate value) => new(value);
+    public static implicit operator SubmissionResponse(
+        SubmissionResponse.CodeExecutionUpdate value
+    ) => new(value);
 
-    public static implicit operator SubmissionResponse(Terminated value) => new(value);
+    public static implicit operator SubmissionResponse(SubmissionResponse.Terminated value) =>
+        new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SubmissionResponse>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(SubmissionResponse).IsAssignableFrom(typeToConvert);
 
         public override SubmissionResponse Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -360,14 +364,14 @@ public record SubmissionResponse
                 "problemInitialized" => json.GetProperty("value").Deserialize<string>(options)
                     ?? throw new JsonException("Failed to deserialize string"),
                 "workspaceInitialized" => new { },
-                "serverErrored" => json.Deserialize<ExceptionInfo>(options)
+                "serverErrored" => json.Deserialize<SeedTrace.ExceptionInfo>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionInfo"),
                 "codeExecutionUpdate" => json.GetProperty("value")
                     .Deserialize<SeedTrace.CodeExecutionUpdate>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.CodeExecutionUpdate"
                     ),
-                "terminated" => json.Deserialize<TerminatedResponse>(options)
+                "terminated" => json.Deserialize<SeedTrace.TerminatedResponse>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.TerminatedResponse"
                     ),
@@ -450,16 +454,16 @@ public record SubmissionResponse
     [Serializable]
     public struct ServerErrored
     {
-        public ServerErrored(ExceptionInfo value)
+        public ServerErrored(SeedTrace.ExceptionInfo value)
         {
             Value = value;
         }
 
-        internal ExceptionInfo Value { get; set; }
+        internal SeedTrace.ExceptionInfo Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator ServerErrored(ExceptionInfo value) => new(value);
+        public static implicit operator ServerErrored(SeedTrace.ExceptionInfo value) => new(value);
     }
 
     /// <summary>
@@ -487,15 +491,16 @@ public record SubmissionResponse
     [Serializable]
     public struct Terminated
     {
-        public Terminated(TerminatedResponse value)
+        public Terminated(SeedTrace.TerminatedResponse value)
         {
             Value = value;
         }
 
-        internal TerminatedResponse Value { get; set; }
+        internal SeedTrace.TerminatedResponse Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Terminated(TerminatedResponse value) => new(value);
+        public static implicit operator Terminated(SeedTrace.TerminatedResponse value) =>
+            new(value);
     }
 }

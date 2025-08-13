@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="/src/SeedRequestParameters/User/UserClient.cs">CreateUsernameAsync</a>(SeedRequestParameters.CreateUsernameRequest { ... })</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedRequestParameters/User/UserClient.cs">CreateUsernameAsync</a>(CreateUsernameRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,7 @@
 
 ```csharp
 await client.User.CreateUsernameAsync(
-    new SeedRequestParameters.CreateUsernameRequest
+    new CreateUsernameRequest
     {
         Username = "username",
         Password = "password",
@@ -35,7 +35,7 @@ await client.User.CreateUsernameAsync(
 <dl>
 <dd>
 
-**request:** `SeedRequestParameters.CreateUsernameRequest` 
+**request:** `CreateUsernameRequest` 
     
 </dd>
 </dl>
@@ -47,7 +47,7 @@ await client.User.CreateUsernameAsync(
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedRequestParameters/User/UserClient.cs">GetUsernameAsync</a>(SeedRequestParameters.GetUsersRequest { ... }) -> SeedRequestParameters.User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedRequestParameters/User/UserClient.cs">GetUsernameAsync</a>(GetUsersRequest { ... }) -> User</code></summary>
 <dl>
 <dd>
 
@@ -61,26 +61,26 @@ await client.User.CreateUsernameAsync(
 
 ```csharp
 await client.User.GetUsernameAsync(
-    new SeedRequestParameters.GetUsersRequest
+    new GetUsersRequest
     {
         Limit = 1,
         Id = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         Date = new DateOnly(2023, 1, 15),
         Deadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
         Bytes = "SGVsbG8gd29ybGQh",
-        User = new SeedRequestParameters.User
+        User = new User
         {
             Name = "name",
             Tags = new List<string>() { "tags", "tags" },
         },
-        UserList = new List<SeedRequestParameters.User>()
+        UserList = new List<User>()
         {
-            new SeedRequestParameters.User
+            new User
             {
                 Name = "name",
                 Tags = new List<string>() { "tags", "tags" },
             },
-            new SeedRequestParameters.User
+            new User
             {
                 Name = "name",
                 Tags = new List<string>() { "tags", "tags" },
@@ -89,23 +89,23 @@ await client.User.GetUsernameAsync(
         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
         KeyValue = new Dictionary<string, string>() { { "keyValue", "keyValue" } },
         OptionalString = "optionalString",
-        NestedUser = new SeedRequestParameters.NestedUser
+        NestedUser = new NestedUser
         {
             Name = "name",
-            User = new SeedRequestParameters.User
+            User = new User
             {
                 Name = "name",
                 Tags = new List<string>() { "tags", "tags" },
             },
         },
-        OptionalUser = new SeedRequestParameters.User
+        OptionalUser = new User
         {
             Name = "name",
             Tags = new List<string>() { "tags", "tags" },
         },
         ExcludeUser =
         [
-            new SeedRequestParameters.User
+            new User
             {
                 Name = "name",
                 Tags = new List<string>() { "tags", "tags" },
@@ -130,7 +130,7 @@ await client.User.GetUsernameAsync(
 <dl>
 <dd>
 
-**request:** `SeedRequestParameters.GetUsersRequest` 
+**request:** `GetUsersRequest` 
     
 </dd>
 </dl>

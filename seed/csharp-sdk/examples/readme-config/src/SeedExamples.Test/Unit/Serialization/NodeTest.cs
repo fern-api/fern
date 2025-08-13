@@ -1,5 +1,6 @@
 using System.Text.Json;
 using NUnit.Framework;
+using SeedExamples;
 using SeedExamples.Core;
 
 namespace SeedExamples.Test;
@@ -7,7 +8,7 @@ namespace SeedExamples.Test;
 [TestFixture]
 public class NodeTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization_1()
     {
         var json = """
@@ -59,7 +60,7 @@ public class NodeTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization_1()
     {
         var expectedJson = """
@@ -112,7 +113,7 @@ public class NodeTest
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -125,7 +126,7 @@ public class NodeTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization_2()
     {
         var expectedJson = """
@@ -139,7 +140,7 @@ public class NodeTest
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization_3()
     {
         var json = """
@@ -152,7 +153,7 @@ public class NodeTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization_3()
     {
         var expectedJson = """

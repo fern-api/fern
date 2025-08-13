@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(AssertCorrectnessCheck.JsonConverter))]
 [Serializable]
 public record AssertCorrectnessCheck
 {
@@ -19,18 +19,18 @@ public record AssertCorrectnessCheck
     }
 
     /// <summary>
-    /// Create an instance of AssertCorrectnessCheck with <see cref="DeepEquality"/>.
+    /// Create an instance of AssertCorrectnessCheck with <see cref="AssertCorrectnessCheck.DeepEquality"/>.
     /// </summary>
-    public AssertCorrectnessCheck(DeepEquality value)
+    public AssertCorrectnessCheck(AssertCorrectnessCheck.DeepEquality value)
     {
         Type = "deepEquality";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of AssertCorrectnessCheck with <see cref="Custom"/>.
+    /// Create an instance of AssertCorrectnessCheck with <see cref="AssertCorrectnessCheck.Custom"/>.
     /// </summary>
-    public AssertCorrectnessCheck(Custom value)
+    public AssertCorrectnessCheck(AssertCorrectnessCheck.Custom value)
     {
         Type = "custom";
         Value = value.Value;
@@ -58,28 +58,26 @@ public record AssertCorrectnessCheck
     public bool IsCustom => Type == "custom";
 
     /// <summary>
-    /// Returns the value as a <see cref="DeepEqualityCorrectnessCheck"/> if <see cref="Type"/> is 'deepEquality', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.V2.V3.DeepEqualityCorrectnessCheck"/> if <see cref="Type"/> is 'deepEquality', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'deepEquality'.</exception>
-    public DeepEqualityCorrectnessCheck AsDeepEquality() =>
+    public SeedTrace.V2.V3.DeepEqualityCorrectnessCheck AsDeepEquality() =>
         IsDeepEquality
-            ? (DeepEqualityCorrectnessCheck)Value!
-            : throw new Exception(
-                "SeedTrace.V2.V3.AssertCorrectnessCheck.Type is not 'deepEquality'"
-            );
+            ? (SeedTrace.V2.V3.DeepEqualityCorrectnessCheck)Value!
+            : throw new Exception("AssertCorrectnessCheck.Type is not 'deepEquality'");
 
     /// <summary>
-    /// Returns the value as a <see cref="VoidFunctionDefinitionThatTakesActualResult"/> if <see cref="Type"/> is 'custom', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult"/> if <see cref="Type"/> is 'custom', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'custom'.</exception>
-    public VoidFunctionDefinitionThatTakesActualResult AsCustom() =>
+    public SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult AsCustom() =>
         IsCustom
-            ? (VoidFunctionDefinitionThatTakesActualResult)Value!
-            : throw new Exception("SeedTrace.V2.V3.AssertCorrectnessCheck.Type is not 'custom'");
+            ? (SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult)Value!
+            : throw new Exception("AssertCorrectnessCheck.Type is not 'custom'");
 
     public T Match<T>(
-        Func<DeepEqualityCorrectnessCheck, T> onDeepEquality,
-        Func<VoidFunctionDefinitionThatTakesActualResult, T> onCustom,
+        Func<SeedTrace.V2.V3.DeepEqualityCorrectnessCheck, T> onDeepEquality,
+        Func<SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult, T> onCustom,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -92,8 +90,8 @@ public record AssertCorrectnessCheck
     }
 
     public void Visit(
-        Action<DeepEqualityCorrectnessCheck> onDeepEquality,
-        Action<VoidFunctionDefinitionThatTakesActualResult> onCustom,
+        Action<SeedTrace.V2.V3.DeepEqualityCorrectnessCheck> onDeepEquality,
+        Action<SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult> onCustom,
         Action<string, object?> onUnknown_
     )
     {
@@ -112,13 +110,13 @@ public record AssertCorrectnessCheck
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="DeepEqualityCorrectnessCheck"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.V2.V3.DeepEqualityCorrectnessCheck"/> and returns true if successful.
     /// </summary>
-    public bool TryAsDeepEquality(out DeepEqualityCorrectnessCheck? value)
+    public bool TryAsDeepEquality(out SeedTrace.V2.V3.DeepEqualityCorrectnessCheck? value)
     {
         if (Type == "deepEquality")
         {
-            value = (DeepEqualityCorrectnessCheck)Value!;
+            value = (SeedTrace.V2.V3.DeepEqualityCorrectnessCheck)Value!;
             return true;
         }
         value = null;
@@ -126,13 +124,13 @@ public record AssertCorrectnessCheck
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="VoidFunctionDefinitionThatTakesActualResult"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult"/> and returns true if successful.
     /// </summary>
-    public bool TryAsCustom(out VoidFunctionDefinitionThatTakesActualResult? value)
+    public bool TryAsCustom(out SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult? value)
     {
         if (Type == "custom")
         {
-            value = (VoidFunctionDefinitionThatTakesActualResult)Value!;
+            value = (SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult)Value!;
             return true;
         }
         value = null;
@@ -141,19 +139,22 @@ public record AssertCorrectnessCheck
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator AssertCorrectnessCheck(DeepEquality value) => new(value);
+    public static implicit operator AssertCorrectnessCheck(
+        AssertCorrectnessCheck.DeepEquality value
+    ) => new(value);
 
-    public static implicit operator AssertCorrectnessCheck(Custom value) => new(value);
+    public static implicit operator AssertCorrectnessCheck(AssertCorrectnessCheck.Custom value) =>
+        new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<AssertCorrectnessCheck>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(AssertCorrectnessCheck).IsAssignableFrom(typeToConvert);
 
         public override AssertCorrectnessCheck Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -180,14 +181,19 @@ public record AssertCorrectnessCheck
 
             var value = discriminator switch
             {
-                "deepEquality" => json.Deserialize<DeepEqualityCorrectnessCheck>(options)
+                "deepEquality" => json.Deserialize<SeedTrace.V2.V3.DeepEqualityCorrectnessCheck>(
+                    options
+                )
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.V2.V3.DeepEqualityCorrectnessCheck"
                     ),
-                "custom" => json.Deserialize<VoidFunctionDefinitionThatTakesActualResult>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult"
-                    ),
+                "custom" =>
+                    json.Deserialize<SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult"
+                        ),
                 _ => json.Deserialize<object?>(options),
             };
             return new AssertCorrectnessCheck(discriminator, value);
@@ -217,17 +223,18 @@ public record AssertCorrectnessCheck
     [Serializable]
     public struct DeepEquality
     {
-        public DeepEquality(DeepEqualityCorrectnessCheck value)
+        public DeepEquality(SeedTrace.V2.V3.DeepEqualityCorrectnessCheck value)
         {
             Value = value;
         }
 
-        internal DeepEqualityCorrectnessCheck Value { get; set; }
+        internal SeedTrace.V2.V3.DeepEqualityCorrectnessCheck Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator DeepEquality(DeepEqualityCorrectnessCheck value) =>
-            new(value);
+        public static implicit operator DeepEquality(
+            SeedTrace.V2.V3.DeepEqualityCorrectnessCheck value
+        ) => new(value);
     }
 
     /// <summary>
@@ -236,16 +243,17 @@ public record AssertCorrectnessCheck
     [Serializable]
     public struct Custom
     {
-        public Custom(VoidFunctionDefinitionThatTakesActualResult value)
+        public Custom(SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult value)
         {
             Value = value;
         }
 
-        internal VoidFunctionDefinitionThatTakesActualResult Value { get; set; }
+        internal SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Custom(VoidFunctionDefinitionThatTakesActualResult value) =>
-            new(value);
+        public static implicit operator Custom(
+            SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult value
+        ) => new(value);
     }
 }

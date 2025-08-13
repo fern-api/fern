@@ -61,10 +61,7 @@ public partial class UnknownClient
 
     /// <example><code>
     /// await client.Unknown.PostObjectAsync(
-    ///     new SeedUnknownAsAny.MyObject
-    ///     {
-    ///         Unknown = new Dictionary&lt;object, object?&gt;() { { "key", "value" } },
-    ///     }
+    ///     new MyObject { Unknown = new Dictionary&lt;object, object?&gt;() { { "key", "value" } } }
     /// );
     /// </code></example>
     public async Task<IEnumerable<object>> PostObjectAsync(

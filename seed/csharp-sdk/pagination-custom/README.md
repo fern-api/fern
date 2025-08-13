@@ -22,9 +22,9 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedPagination;
 
-var client = new SeedPagination.SeedPaginationClient("TOKEN");
+var client = new SeedPaginationClient("TOKEN");
 var items = await client.Users.ListUsernamesCustomAsync(
-    new SeedPagination.ListUsernamesRequestCustom { StartingAfter = "starting_after" }
+    new ListUsernamesRequestCustom { StartingAfter = "starting_after" }
 );
 
 await foreach (var item in items)
@@ -56,9 +56,9 @@ List endpoints are paginated. The SDK provides an async enumerable so that you c
 ```csharp
 using SeedPagination;
 
-var client = new SeedPagination.SeedPaginationClient("TOKEN");
+var client = new SeedPaginationClient("TOKEN");
 var items = await client.Users.ListUsernamesCustomAsync(
-    new SeedPagination.ListUsernamesRequestCustom { StartingAfter = "starting_after" }
+    new ListUsernamesRequestCustom { StartingAfter = "starting_after" }
 );
 
 await foreach (var item in items)

@@ -1,5 +1,7 @@
 using System.Globalization;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
@@ -9,7 +11,7 @@ namespace SeedExhaustive.Test.Unit.MockServer;
 public class PostWithObjectBodyandResponseTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {

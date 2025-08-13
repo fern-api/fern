@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types.Enum;
 
@@ -16,7 +17,7 @@ public partial class EnumClient
     }
 
     /// <example><code>
-    /// await client.Endpoints.Enum.GetAndReturnEnumAsync(SeedExhaustive.Types.Enum.WeatherReport.Sunny);
+    /// await client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny);
     /// </code></example>
     public async Task<WeatherReport> GetAndReturnEnumAsync(
         WeatherReport request,

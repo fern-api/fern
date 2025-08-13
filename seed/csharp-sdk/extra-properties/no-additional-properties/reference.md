@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="/src/SeedExtraProperties/User/UserClient.cs">CreateUserAsync</a>(SeedExtraProperties.CreateUserRequest { ... }) -> SeedExtraProperties.User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedExtraProperties/User/UserClient.cs">CreateUserAsync</a>(CreateUserRequest { ... }) -> User</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,7 @@
 
 ```csharp
 await client.User.CreateUserAsync(
-    new SeedExtraProperties.CreateUserRequest
+    new CreateUserRequest
     {
         Type = "CreateUserRequest",
         Version = "v1",
@@ -35,7 +35,7 @@ await client.User.CreateUserAsync(
 <dl>
 <dd>
 
-**request:** `SeedExtraProperties.CreateUserRequest` 
+**request:** `CreateUserRequest` 
     
 </dd>
 </dl>

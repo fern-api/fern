@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SeedUndiscriminatedUnions;
 using WireMock.Logging;
 using WireMock.Server;
 using WireMock.Settings;

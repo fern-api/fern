@@ -1,6 +1,8 @@
 using System.Text.Json;
 using NUnit.Framework;
+using SeedObjectsWithImports;
 using SeedObjectsWithImports.Core;
+using SeedObjectsWithImports.File;
 
 namespace SeedObjectsWithImports.Test;
 
@@ -34,7 +36,7 @@ public class DirectoryTest
               ]
             }
             """;
-        var expectedObject = new SeedObjectsWithImports.File.Directory
+        var expectedObject = new Directory
         {
             Name = "root",
             Files = new List<SeedObjectsWithImports.File>()
@@ -46,9 +48,9 @@ public class DirectoryTest
                     Info = FileInfo.Regular,
                 },
             },
-            Directories = new List<SeedObjectsWithImports.File.Directory>()
+            Directories = new List<Directory>()
             {
-                new SeedObjectsWithImports.File.Directory
+                new Directory
                 {
                     Name = "tmp",
                     Files = new List<SeedObjectsWithImports.File>()
@@ -63,7 +65,7 @@ public class DirectoryTest
                 },
             },
         };
-        var deserializedObject = JsonUtils.Deserialize<SeedObjectsWithImports.File.Directory>(json);
+        var deserializedObject = JsonUtils.Deserialize<Directory>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -94,7 +96,7 @@ public class DirectoryTest
               ]
             }
             """;
-        var actualObj = new SeedObjectsWithImports.File.Directory
+        var actualObj = new Directory
         {
             Name = "root",
             Files = new List<SeedObjectsWithImports.File>()
@@ -106,9 +108,9 @@ public class DirectoryTest
                     Info = FileInfo.Regular,
                 },
             },
-            Directories = new List<SeedObjectsWithImports.File.Directory>()
+            Directories = new List<Directory>()
             {
-                new SeedObjectsWithImports.File.Directory
+                new Directory
                 {
                     Name = "tmp",
                     Files = new List<SeedObjectsWithImports.File>()

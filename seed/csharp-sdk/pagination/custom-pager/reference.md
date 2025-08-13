@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.Complex.<a href="/src/SeedPagination/Complex/ComplexClient.cs">SearchAsync</a>(index, SeedPagination.SearchRequest { ... }) -> SeedPagination.Core.Pager<SeedPagination.Conversation></code></summary>
+<details><summary><code>client.Complex.<a href="/src/SeedPagination/Complex/ComplexClient.cs">SearchAsync</a>(index, SearchRequest { ... }) -> Core.Pager<Conversation></code></summary>
 <dl>
 <dd>
 
@@ -15,17 +15,13 @@
 ```csharp
 await client.Complex.SearchAsync(
     "index",
-    new SeedPagination.SearchRequest
+    new SearchRequest
     {
-        Pagination = new SeedPagination.StartingAfterPaging
-        {
-            PerPage = 1,
-            StartingAfter = "starting_after",
-        },
-        Query = new SeedPagination.SingleFilterSearchRequest
+        Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = "starting_after" },
+        Query = new SingleFilterSearchRequest
         {
             Field = "field",
-            Operator = SeedPagination.SingleFilterSearchRequestOperator.Equals,
+            Operator = SingleFilterSearchRequestOperator.Equals,
             Value = "value",
         },
     }
@@ -52,7 +48,7 @@ await client.Complex.SearchAsync(
 <dl>
 <dd>
 
-**request:** `SeedPagination.SearchRequest` 
+**request:** `SearchRequest` 
     
 </dd>
 </dl>
@@ -65,7 +61,7 @@ await client.Complex.SearchAsync(
 </details>
 
 ## Users
-<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithCursorPaginationAsync</a>(SeedPagination.ListUsersCursorPaginationRequest { ... }) -> SeedPagination.Core.Pager<SeedPagination.User></code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithCursorPaginationAsync</a>(ListUsersCursorPaginationRequest { ... }) -> Core.Pager<User></code></summary>
 <dl>
 <dd>
 
@@ -79,11 +75,11 @@ await client.Complex.SearchAsync(
 
 ```csharp
 await client.Users.ListWithCursorPaginationAsync(
-    new SeedPagination.ListUsersCursorPaginationRequest
+    new ListUsersCursorPaginationRequest
     {
         Page = 1,
         PerPage = 1,
-        Order = SeedPagination.Order.Asc,
+        Order = Order.Asc,
         StartingAfter = "starting_after",
     }
 );
@@ -101,7 +97,7 @@ await client.Users.ListWithCursorPaginationAsync(
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersCursorPaginationRequest` 
+**request:** `ListUsersCursorPaginationRequest` 
     
 </dd>
 </dl>
@@ -113,7 +109,7 @@ await client.Users.ListWithCursorPaginationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithMixedTypeCursorPaginationAsync</a>(SeedPagination.ListUsersMixedTypeCursorPaginationRequest { ... }) -> SeedPagination.Core.Pager<SeedPagination.User></code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithMixedTypeCursorPaginationAsync</a>(ListUsersMixedTypeCursorPaginationRequest { ... }) -> Core.Pager<User></code></summary>
 <dl>
 <dd>
 
@@ -127,7 +123,7 @@ await client.Users.ListWithCursorPaginationAsync(
 
 ```csharp
 await client.Users.ListWithMixedTypeCursorPaginationAsync(
-    new SeedPagination.ListUsersMixedTypeCursorPaginationRequest { Cursor = "cursor" }
+    new ListUsersMixedTypeCursorPaginationRequest { Cursor = "cursor" }
 );
 ```
 </dd>
@@ -143,7 +139,7 @@ await client.Users.ListWithMixedTypeCursorPaginationAsync(
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersMixedTypeCursorPaginationRequest` 
+**request:** `ListUsersMixedTypeCursorPaginationRequest` 
     
 </dd>
 </dl>
@@ -155,7 +151,7 @@ await client.Users.ListWithMixedTypeCursorPaginationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithBodyCursorPaginationAsync</a>(SeedPagination.ListUsersBodyCursorPaginationRequest { ... }) -> SeedPagination.Core.Pager<SeedPagination.User></code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithBodyCursorPaginationAsync</a>(ListUsersBodyCursorPaginationRequest { ... }) -> Core.Pager<User></code></summary>
 <dl>
 <dd>
 
@@ -169,10 +165,7 @@ await client.Users.ListWithMixedTypeCursorPaginationAsync(
 
 ```csharp
 await client.Users.ListWithBodyCursorPaginationAsync(
-    new SeedPagination.ListUsersBodyCursorPaginationRequest
-    {
-        Pagination = new SeedPagination.WithCursor { Cursor = "cursor" },
-    }
+    new ListUsersBodyCursorPaginationRequest { Pagination = new WithCursor { Cursor = "cursor" } }
 );
 ```
 </dd>
@@ -188,7 +181,7 @@ await client.Users.ListWithBodyCursorPaginationAsync(
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersBodyCursorPaginationRequest` 
+**request:** `ListUsersBodyCursorPaginationRequest` 
     
 </dd>
 </dl>
@@ -200,7 +193,7 @@ await client.Users.ListWithBodyCursorPaginationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithOffsetPaginationAsync</a>(SeedPagination.ListUsersOffsetPaginationRequest { ... }) -> SeedPagination.Core.Pager<SeedPagination.User></code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithOffsetPaginationAsync</a>(ListUsersOffsetPaginationRequest { ... }) -> Core.Pager<User></code></summary>
 <dl>
 <dd>
 
@@ -214,11 +207,11 @@ await client.Users.ListWithBodyCursorPaginationAsync(
 
 ```csharp
 await client.Users.ListWithOffsetPaginationAsync(
-    new SeedPagination.ListUsersOffsetPaginationRequest
+    new ListUsersOffsetPaginationRequest
     {
         Page = 1,
         PerPage = 1,
-        Order = SeedPagination.Order.Asc,
+        Order = Order.Asc,
         StartingAfter = "starting_after",
     }
 );
@@ -236,7 +229,7 @@ await client.Users.ListWithOffsetPaginationAsync(
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersOffsetPaginationRequest` 
+**request:** `ListUsersOffsetPaginationRequest` 
     
 </dd>
 </dl>
@@ -248,7 +241,7 @@ await client.Users.ListWithOffsetPaginationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithDoubleOffsetPaginationAsync</a>(SeedPagination.ListUsersDoubleOffsetPaginationRequest { ... }) -> SeedPagination.Core.Pager<SeedPagination.User></code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithDoubleOffsetPaginationAsync</a>(ListUsersDoubleOffsetPaginationRequest { ... }) -> Core.Pager<User></code></summary>
 <dl>
 <dd>
 
@@ -262,11 +255,11 @@ await client.Users.ListWithOffsetPaginationAsync(
 
 ```csharp
 await client.Users.ListWithDoubleOffsetPaginationAsync(
-    new SeedPagination.ListUsersDoubleOffsetPaginationRequest
+    new ListUsersDoubleOffsetPaginationRequest
     {
         Page = 1.1,
         PerPage = 1.1,
-        Order = SeedPagination.Order.Asc,
+        Order = Order.Asc,
         StartingAfter = "starting_after",
     }
 );
@@ -284,7 +277,7 @@ await client.Users.ListWithDoubleOffsetPaginationAsync(
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersDoubleOffsetPaginationRequest` 
+**request:** `ListUsersDoubleOffsetPaginationRequest` 
     
 </dd>
 </dl>
@@ -296,7 +289,7 @@ await client.Users.ListWithDoubleOffsetPaginationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithBodyOffsetPaginationAsync</a>(SeedPagination.ListUsersBodyOffsetPaginationRequest { ... }) -> SeedPagination.Core.Pager<SeedPagination.User></code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithBodyOffsetPaginationAsync</a>(ListUsersBodyOffsetPaginationRequest { ... }) -> Core.Pager<User></code></summary>
 <dl>
 <dd>
 
@@ -310,10 +303,7 @@ await client.Users.ListWithDoubleOffsetPaginationAsync(
 
 ```csharp
 await client.Users.ListWithBodyOffsetPaginationAsync(
-    new SeedPagination.ListUsersBodyOffsetPaginationRequest
-    {
-        Pagination = new SeedPagination.WithPage { Page = 1 },
-    }
+    new ListUsersBodyOffsetPaginationRequest { Pagination = new WithPage { Page = 1 } }
 );
 ```
 </dd>
@@ -329,7 +319,7 @@ await client.Users.ListWithBodyOffsetPaginationAsync(
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersBodyOffsetPaginationRequest` 
+**request:** `ListUsersBodyOffsetPaginationRequest` 
     
 </dd>
 </dl>
@@ -341,7 +331,7 @@ await client.Users.ListWithBodyOffsetPaginationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithOffsetStepPaginationAsync</a>(SeedPagination.ListUsersOffsetStepPaginationRequest { ... }) -> SeedPagination.Core.Pager<SeedPagination.User></code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithOffsetStepPaginationAsync</a>(ListUsersOffsetStepPaginationRequest { ... }) -> Core.Pager<User></code></summary>
 <dl>
 <dd>
 
@@ -355,11 +345,11 @@ await client.Users.ListWithBodyOffsetPaginationAsync(
 
 ```csharp
 await client.Users.ListWithOffsetStepPaginationAsync(
-    new SeedPagination.ListUsersOffsetStepPaginationRequest
+    new ListUsersOffsetStepPaginationRequest
     {
         Page = 1,
         Limit = 1,
-        Order = SeedPagination.Order.Asc,
+        Order = Order.Asc,
     }
 );
 ```
@@ -376,7 +366,7 @@ await client.Users.ListWithOffsetStepPaginationAsync(
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersOffsetStepPaginationRequest` 
+**request:** `ListUsersOffsetStepPaginationRequest` 
     
 </dd>
 </dl>
@@ -388,7 +378,7 @@ await client.Users.ListWithOffsetStepPaginationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithOffsetPaginationHasNextPageAsync</a>(SeedPagination.ListWithOffsetPaginationHasNextPageRequest { ... }) -> SeedPagination.Core.Pager<SeedPagination.User></code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithOffsetPaginationHasNextPageAsync</a>(ListWithOffsetPaginationHasNextPageRequest { ... }) -> Core.Pager<User></code></summary>
 <dl>
 <dd>
 
@@ -402,11 +392,11 @@ await client.Users.ListWithOffsetStepPaginationAsync(
 
 ```csharp
 await client.Users.ListWithOffsetPaginationHasNextPageAsync(
-    new SeedPagination.ListWithOffsetPaginationHasNextPageRequest
+    new ListWithOffsetPaginationHasNextPageRequest
     {
         Page = 1,
         Limit = 1,
-        Order = SeedPagination.Order.Asc,
+        Order = Order.Asc,
     }
 );
 ```
@@ -423,7 +413,7 @@ await client.Users.ListWithOffsetPaginationHasNextPageAsync(
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListWithOffsetPaginationHasNextPageRequest` 
+**request:** `ListWithOffsetPaginationHasNextPageRequest` 
     
 </dd>
 </dl>
@@ -435,7 +425,7 @@ await client.Users.ListWithOffsetPaginationHasNextPageAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithExtendedResultsAsync</a>(SeedPagination.ListUsersExtendedRequest { ... }) -> SeedPagination.Core.Pager<SeedPagination.User></code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithExtendedResultsAsync</a>(ListUsersExtendedRequest { ... }) -> Core.Pager<User></code></summary>
 <dl>
 <dd>
 
@@ -449,7 +439,7 @@ await client.Users.ListWithOffsetPaginationHasNextPageAsync(
 
 ```csharp
 await client.Users.ListWithExtendedResultsAsync(
-    new SeedPagination.ListUsersExtendedRequest { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
+    new ListUsersExtendedRequest { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
 );
 ```
 </dd>
@@ -465,7 +455,7 @@ await client.Users.ListWithExtendedResultsAsync(
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersExtendedRequest` 
+**request:** `ListUsersExtendedRequest` 
     
 </dd>
 </dl>
@@ -477,7 +467,7 @@ await client.Users.ListWithExtendedResultsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithExtendedResultsAndOptionalDataAsync</a>(SeedPagination.ListUsersExtendedRequestForOptionalData { ... }) -> SeedPagination.Core.Pager<SeedPagination.User></code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithExtendedResultsAndOptionalDataAsync</a>(ListUsersExtendedRequestForOptionalData { ... }) -> Core.Pager<User></code></summary>
 <dl>
 <dd>
 
@@ -491,10 +481,7 @@ await client.Users.ListWithExtendedResultsAsync(
 
 ```csharp
 await client.Users.ListWithExtendedResultsAndOptionalDataAsync(
-    new SeedPagination.ListUsersExtendedRequestForOptionalData
-    {
-        Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    }
+    new ListUsersExtendedRequestForOptionalData { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
 );
 ```
 </dd>
@@ -510,7 +497,7 @@ await client.Users.ListWithExtendedResultsAndOptionalDataAsync(
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersExtendedRequestForOptionalData` 
+**request:** `ListUsersExtendedRequestForOptionalData` 
     
 </dd>
 </dl>
@@ -522,7 +509,7 @@ await client.Users.ListWithExtendedResultsAndOptionalDataAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListUsernamesAsync</a>(SeedPagination.ListUsernamesRequest { ... }) -> SeedPagination.Core.Pager<string></code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListUsernamesAsync</a>(ListUsernamesRequest { ... }) -> Core.Pager<string></code></summary>
 <dl>
 <dd>
 
@@ -536,7 +523,7 @@ await client.Users.ListWithExtendedResultsAndOptionalDataAsync(
 
 ```csharp
 await client.Users.ListUsernamesAsync(
-    new SeedPagination.ListUsernamesRequest { StartingAfter = "starting_after" }
+    new ListUsernamesRequest { StartingAfter = "starting_after" }
 );
 ```
 </dd>
@@ -552,7 +539,7 @@ await client.Users.ListUsernamesAsync(
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsernamesRequest` 
+**request:** `ListUsernamesRequest` 
     
 </dd>
 </dl>
@@ -564,7 +551,7 @@ await client.Users.ListUsernamesAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithGlobalConfigAsync</a>(SeedPagination.ListWithGlobalConfigRequest { ... }) -> SeedPagination.Core.Pager<string></code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithGlobalConfigAsync</a>(ListWithGlobalConfigRequest { ... }) -> Core.Pager<string></code></summary>
 <dl>
 <dd>
 
@@ -577,9 +564,7 @@ await client.Users.ListUsernamesAsync(
 <dd>
 
 ```csharp
-await client.Users.ListWithGlobalConfigAsync(
-    new SeedPagination.ListWithGlobalConfigRequest { Offset = 1 }
-);
+await client.Users.ListWithGlobalConfigAsync(new ListWithGlobalConfigRequest { Offset = 1 });
 ```
 </dd>
 </dl>
@@ -594,7 +579,7 @@ await client.Users.ListWithGlobalConfigAsync(
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListWithGlobalConfigRequest` 
+**request:** `ListWithGlobalConfigRequest` 
     
 </dd>
 </dl>

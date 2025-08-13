@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedNoEnvironment;\n\nvar client = new SeedNoEnvironment.SeedNoEnvironmentClient(\"TOKEN\");\nawait client.Dummy.GetDummyAsync();\n"
+                "client": "using SeedNoEnvironment;\n\nvar client = new SeedNoEnvironmentClient(\"TOKEN\");\nawait client.Dummy.GetDummyAsync();\n"
             }
         }
     ]

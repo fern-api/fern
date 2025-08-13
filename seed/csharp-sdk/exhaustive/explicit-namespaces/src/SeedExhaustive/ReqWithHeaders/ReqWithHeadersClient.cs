@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 
 namespace SeedExhaustive.ReqWithHeaders;
@@ -16,7 +17,7 @@ public partial class ReqWithHeadersClient
 
     /// <example><code>
     /// await client.ReqWithHeaders.GetWithCustomHeaderAsync(
-    ///     new SeedExhaustive.ReqWithHeaders.ReqWithHeaders
+    ///     new ReqWithHeaders
     ///     {
     ///         XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
     ///         XTestServiceHeader = "X-TEST-SERVICE-HEADER",
@@ -24,7 +25,7 @@ public partial class ReqWithHeadersClient
     ///     }
     /// );
     /// </code></example>
-    public async Task GetWithCustomHeaderAsync(
+    public async global::System.Threading.Tasks.Task GetWithCustomHeaderAsync(
         ReqWithHeaders request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

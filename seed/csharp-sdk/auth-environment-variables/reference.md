@@ -39,7 +39,7 @@ await client.Service.GetWithApiKeyAsync();
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedAuthEnvironmentVariables/Service/ServiceClient.cs">GetWithHeaderAsync</a>(SeedAuthEnvironmentVariables.HeaderAuthRequest { ... }) -> string</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedAuthEnvironmentVariables/Service/ServiceClient.cs">GetWithHeaderAsync</a>(HeaderAuthRequest { ... }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -67,7 +67,7 @@ GET request with custom api key
 
 ```csharp
 await client.Service.GetWithHeaderAsync(
-    new SeedAuthEnvironmentVariables.HeaderAuthRequest { XEndpointHeader = "X-Endpoint-Header" }
+    new HeaderAuthRequest { XEndpointHeader = "X-Endpoint-Header" }
 );
 ```
 </dd>
@@ -83,7 +83,7 @@ await client.Service.GetWithHeaderAsync(
 <dl>
 <dd>
 
-**request:** `SeedAuthEnvironmentVariables.HeaderAuthRequest` 
+**request:** `HeaderAuthRequest` 
     
 </dd>
 </dl>

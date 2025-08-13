@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedBearerTokenEnvironmentVariable;\n\nvar client = new SeedBearerTokenEnvironmentVariable.SeedBearerTokenEnvironmentVariableClient();\nawait client.Service.GetWithBearerTokenAsync();\n"
+                "client": "using SeedBearerTokenEnvironmentVariable;\n\nvar client = new SeedBearerTokenEnvironmentVariableClient();\nawait client.Service.GetWithBearerTokenAsync();\n"
             }
         }
     ]

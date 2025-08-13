@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedIdempotencyHeaders.Core;
 
 namespace SeedIdempotencyHeaders;
@@ -16,13 +16,7 @@ public partial class PaymentClient
     }
 
     /// <example><code>
-    /// await client.Payment.CreateAsync(
-    ///     new SeedIdempotencyHeaders.CreatePaymentRequest
-    ///     {
-    ///         Amount = 1,
-    ///         Currency = SeedIdempotencyHeaders.Currency.Usd,
-    ///     }
-    /// );
+    /// await client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd });
     /// </code></example>
     public async Task<string> CreateAsync(
         CreatePaymentRequest request,
@@ -69,7 +63,7 @@ public partial class PaymentClient
     /// <example><code>
     /// await client.Payment.DeleteAsync("paymentId");
     /// </code></example>
-    public async Task DeleteAsync(
+    public async global::System.Threading.Tasks.Task DeleteAsync(
         string paymentId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

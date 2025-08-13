@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedMultiUrlEnvironment.Core;
 
 namespace SeedMultiUrlEnvironment;
@@ -15,11 +15,9 @@ public partial class Ec2Client
     }
 
     /// <example><code>
-    /// await client.Ec2.BootInstanceAsync(
-    ///     new SeedMultiUrlEnvironment.BootInstanceRequest { Size = "size" }
-    /// );
+    /// await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "size" });
     /// </code></example>
-    public async Task BootInstanceAsync(
+    public async global::System.Threading.Tasks.Task BootInstanceAsync(
         BootInstanceRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

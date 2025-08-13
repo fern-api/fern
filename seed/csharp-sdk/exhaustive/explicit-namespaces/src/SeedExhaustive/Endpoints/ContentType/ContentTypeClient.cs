@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types.Object;
 
@@ -17,7 +18,7 @@ public partial class ContentTypeClient
 
     /// <example><code>
     /// await client.Endpoints.ContentType.PostJsonPatchContentTypeAsync(
-    ///     new SeedExhaustive.Types.Object.ObjectWithOptionalField
+    ///     new ObjectWithOptionalField
     ///     {
     ///         String = "string",
     ///         Integer = 1,
@@ -35,7 +36,7 @@ public partial class ContentTypeClient
     ///     }
     /// );
     /// </code></example>
-    public async Task PostJsonPatchContentTypeAsync(
+    public async global::System.Threading.Tasks.Task PostJsonPatchContentTypeAsync(
         ObjectWithOptionalField request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -71,7 +72,7 @@ public partial class ContentTypeClient
 
     /// <example><code>
     /// await client.Endpoints.ContentType.PostJsonPatchContentWithCharsetTypeAsync(
-    ///     new SeedExhaustive.Types.Object.ObjectWithOptionalField
+    ///     new ObjectWithOptionalField
     ///     {
     ///         String = "string",
     ///         Integer = 1,
@@ -89,7 +90,7 @@ public partial class ContentTypeClient
     ///     }
     /// );
     /// </code></example>
-    public async Task PostJsonPatchContentWithCharsetTypeAsync(
+    public async global::System.Threading.Tasks.Task PostJsonPatchContentWithCharsetTypeAsync(
         ObjectWithOptionalField request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

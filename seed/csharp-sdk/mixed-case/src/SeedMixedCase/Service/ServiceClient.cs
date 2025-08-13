@@ -63,7 +63,7 @@ public partial class ServiceClient
 
     /// <example><code>
     /// await client.Service.ListResourcesAsync(
-    ///     new SeedMixedCase.ListResourcesRequest { PageLimit = 10, BeforeDate = new DateOnly(2023, 1, 1) }
+    ///     new ListResourcesRequest { PageLimit = 10, BeforeDate = new DateOnly(2023, 1, 1) }
     /// );
     /// </code></example>
     public async Task<IEnumerable<Resource>> ListResourcesAsync(

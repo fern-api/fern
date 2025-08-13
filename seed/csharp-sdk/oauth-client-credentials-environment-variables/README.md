@@ -22,12 +22,9 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedOauthClientCredentialsEnvironmentVariables;
 
-var client = new SeedOauthClientCredentialsEnvironmentVariables.SeedOauthClientCredentialsEnvironmentVariablesClient(
-    "CLIENT_ID",
-    "CLIENT_SECRET"
-);
+var client = new SeedOauthClientCredentialsEnvironmentVariablesClient("CLIENT_ID", "CLIENT_SECRET");
 await client.Auth.GetTokenWithClientCredentialsAsync(
-    new SeedOauthClientCredentialsEnvironmentVariables.GetTokenRequest
+    new GetTokenRequest
     {
         ClientId = "client_id",
         ClientSecret = "client_secret",

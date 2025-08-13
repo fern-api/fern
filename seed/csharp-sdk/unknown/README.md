@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedUnknownAsAny;
 
-var client = new SeedUnknownAsAny.SeedUnknownAsAnyClient();
+var client = new SeedUnknownAsAnyClient();
 await client.Unknown.PostAsync(new Dictionary<object, object?>() { { "key", "value" } });
 ```
 

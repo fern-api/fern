@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.Headers.<a href="/src/SeedLiteral/Headers/HeadersClient.cs">SendAsync</a>(SeedLiteral.SendLiteralsInHeadersRequest { ... }) -> SeedLiteral.SendResponse</code></summary>
+<details><summary><code>client.Headers.<a href="/src/SeedLiteral/Headers/HeadersClient.cs">SendAsync</a>(SendLiteralsInHeadersRequest { ... }) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,7 @@
 
 ```csharp
 await client.Headers.SendAsync(
-    new SeedLiteral.SendLiteralsInHeadersRequest
+    new SendLiteralsInHeadersRequest
     {
         EndpointVersion = "02-12-2024",
         Async = true,
@@ -35,7 +35,7 @@ await client.Headers.SendAsync(
 <dl>
 <dd>
 
-**request:** `SeedLiteral.SendLiteralsInHeadersRequest` 
+**request:** `SendLiteralsInHeadersRequest` 
     
 </dd>
 </dl>
@@ -48,7 +48,7 @@ await client.Headers.SendAsync(
 </details>
 
 ## Inlined
-<details><summary><code>client.Inlined.<a href="/src/SeedLiteral/Inlined/InlinedClient.cs">SendAsync</a>(SeedLiteral.SendLiteralsInlinedRequest { ... }) -> SeedLiteral.SendResponse</code></summary>
+<details><summary><code>client.Inlined.<a href="/src/SeedLiteral/Inlined/InlinedClient.cs">SendAsync</a>(SendLiteralsInlinedRequest { ... }) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -62,16 +62,16 @@ await client.Headers.SendAsync(
 
 ```csharp
 await client.Inlined.SendAsync(
-    new SeedLiteral.SendLiteralsInlinedRequest
+    new SendLiteralsInlinedRequest
     {
         Temperature = 10.1,
         Prompt = "You are a helpful assistant",
         Context = "You're super wise",
         AliasedContext = "You're super wise",
         MaybeContext = "You're super wise",
-        ObjectWithLiteral = new SeedLiteral.ATopLevelLiteral
+        ObjectWithLiteral = new ATopLevelLiteral
         {
-            NestedLiteral = new SeedLiteral.ANestedLiteral { MyLiteral = "How super cool" },
+            NestedLiteral = new ANestedLiteral { MyLiteral = "How super cool" },
         },
         Stream = false,
         Query = "What is the weather today",
@@ -91,7 +91,7 @@ await client.Inlined.SendAsync(
 <dl>
 <dd>
 
-**request:** `SeedLiteral.SendLiteralsInlinedRequest` 
+**request:** `SendLiteralsInlinedRequest` 
     
 </dd>
 </dl>
@@ -104,7 +104,7 @@ await client.Inlined.SendAsync(
 </details>
 
 ## Path
-<details><summary><code>client.Path.<a href="/src/SeedLiteral/Path/PathClient.cs">SendAsync</a>(id) -> SeedLiteral.SendResponse</code></summary>
+<details><summary><code>client.Path.<a href="/src/SeedLiteral/Path/PathClient.cs">SendAsync</a>(id) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -145,7 +145,7 @@ await client.Path.SendAsync("123");
 </details>
 
 ## Query
-<details><summary><code>client.Query.<a href="/src/SeedLiteral/Query/QueryClient.cs">SendAsync</a>(SeedLiteral.SendLiteralsInQueryRequest { ... }) -> SeedLiteral.SendResponse</code></summary>
+<details><summary><code>client.Query.<a href="/src/SeedLiteral/Query/QueryClient.cs">SendAsync</a>(SendLiteralsInQueryRequest { ... }) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -159,7 +159,7 @@ await client.Path.SendAsync("123");
 
 ```csharp
 await client.Query.SendAsync(
-    new SeedLiteral.SendLiteralsInQueryRequest
+    new SendLiteralsInQueryRequest
     {
         Prompt = "You are a helpful assistant",
         OptionalPrompt = "You are a helpful assistant",
@@ -186,7 +186,7 @@ await client.Query.SendAsync(
 <dl>
 <dd>
 
-**request:** `SeedLiteral.SendLiteralsInQueryRequest` 
+**request:** `SendLiteralsInQueryRequest` 
     
 </dd>
 </dl>
@@ -199,7 +199,7 @@ await client.Query.SendAsync(
 </details>
 
 ## Reference
-<details><summary><code>client.Reference.<a href="/src/SeedLiteral/Reference/ReferenceClient.cs">SendAsync</a>(SeedLiteral.SendRequest { ... }) -> SeedLiteral.SendResponse</code></summary>
+<details><summary><code>client.Reference.<a href="/src/SeedLiteral/Reference/ReferenceClient.cs">SendAsync</a>(SendRequest { ... }) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -213,17 +213,17 @@ await client.Query.SendAsync(
 
 ```csharp
 await client.Reference.SendAsync(
-    new SeedLiteral.SendRequest
+    new SendRequest
     {
         Prompt = "You are a helpful assistant",
         Stream = false,
         Context = "You're super wise",
         Query = "What is the weather today",
-        ContainerObject = new SeedLiteral.ContainerObject
+        ContainerObject = new ContainerObject
         {
-            NestedObjects = new List<SeedLiteral.NestedObjectWithLiterals>()
+            NestedObjects = new List<NestedObjectWithLiterals>()
             {
-                new SeedLiteral.NestedObjectWithLiterals
+                new NestedObjectWithLiterals
                 {
                     Literal1 = "literal1",
                     Literal2 = "literal2",
@@ -247,7 +247,7 @@ await client.Reference.SendAsync(
 <dl>
 <dd>
 
-**request:** `SeedLiteral.SendRequest` 
+**request:** `SendRequest` 
     
 </dd>
 </dl>

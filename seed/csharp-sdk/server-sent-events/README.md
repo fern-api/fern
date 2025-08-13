@@ -22,10 +22,8 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedServerSentEvents;
 
-var client = new SeedServerSentEvents.SeedServerSentEventsClient();
-var items = await client.Completions.StreamAsync(
-    new SeedServerSentEvents.StreamCompletionRequest { Query = "query" }
-);
+var client = new SeedServerSentEventsClient();
+var items = await client.Completions.StreamAsync(new StreamCompletionRequest { Query = "query" });
 
 await foreach (var item in items)
 {

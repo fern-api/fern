@@ -1,3 +1,4 @@
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedErrorProperty.Core;
 
@@ -7,7 +8,7 @@ namespace SeedErrorProperty.Test.Unit.MockServer;
 public class ThrowErrorTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             "string"

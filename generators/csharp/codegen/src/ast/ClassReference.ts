@@ -1,4 +1,3 @@
-import { isContext } from "vm";
 import { csharp } from "..";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -11,8 +10,6 @@ export declare namespace ClassReference {
         namespace: string;
         /* The namespace alias for C# class */
         namespaceAlias?: string;
-        /* The enclosing type of the C# class */
-        enclosingType?: ClassReference;
         /* Any generics used in the class reference */
         generics?: (csharp.Type | csharp.TypeParameter)[];
         /* Whether or not the class reference should be fully-qualified */
@@ -24,17 +21,15 @@ export class ClassReference extends AstNode {
     public readonly name: string;
     public readonly namespace: string;
     public readonly namespaceAlias: string | undefined;
-    public readonly enclosingType: ClassReference | undefined;
     public readonly generics: (csharp.Type | csharp.TypeParameter)[];
     public readonly fullyQualified: boolean;
     private readonly namespaceSegments: string[];
 
-    constructor({ name, namespace, namespaceAlias, enclosingType, generics, fullyQualified }: ClassReference.Args) {
+    constructor({ name, namespace, namespaceAlias, generics, fullyQualified }: ClassReference.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.namespaceAlias = namespaceAlias;
-        this.enclosingType = enclosingType;
         this.generics = generics ?? [];
         this.fullyQualified = fullyQualified ?? false;
         this.namespaceSegments = namespace.split(".");
@@ -52,39 +47,26 @@ export class ClassReference extends AstNode {
         if (this.namespaceAlias != null) {
             const alias = writer.addNamespaceAlias(this.namespaceAlias, this.namespace);
             writer.write(`${alias}.${this.name}`);
+        } else if (this.fullyQualified) {
+            writer.addReference(this);
+            writer.write(`${this.namespace}.${this.name}`);
+        } else if (this.qualifiedTypeNameRequired(writer, isAttribute)) {
+            const typeQualification = this.getTypeQualification({
+                classReferenceNamespace: this.namespace,
+                namespaceToBeWrittenTo: writer.getNamespace(),
+                isAttribute
+            });
+            writer.write(`${typeQualification}${this.name}`);
+        } else if (writer.skipImports) {
+            const typeQualification = this.getTypeQualification({
+                classReferenceNamespace: this.namespace,
+                namespaceToBeWrittenTo: writer.getNamespace(),
+                isAttribute
+            });
+            writer.write(`${typeQualification}${this.name}`);
         } else {
-            if (writer.getCustomConfig()["skip-dotnet-format"] === true) {
-                // use the original logic, relying on explictly declaring namespaces 'fully-qualified'
-                if (this.fullyQualified) {
-                    writer.addReference(this);
-                    writer.write(`${this.namespace}.${this.name}`);
-                } else if (this.qualifiedTypeNameRequired(writer, isAttribute)) {
-                    const typeQualification = this.getTypeQualification({
-                        classReferenceNamespace: this.namespace,
-                        namespaceToBeWrittenTo: writer.getNamespace(),
-                        isAttribute
-                    });
-                    writer.write(`${typeQualification}${this.name}`);
-                } else if (writer.skipImports) {
-                    const typeQualification = this.getTypeQualification({
-                        classReferenceNamespace: this.namespace,
-                        namespaceToBeWrittenTo: writer.getNamespace(),
-                        isAttribute
-                    });
-                    writer.write(`${typeQualification}${this.name}`);
-                } else {
-                    writer.addReference(this);
-                    writer.write(`${this.name}`);
-                }
-            } else {
-                // explicitly express namespaces, allow dotnet format to reduce them
-                writer.addReference(this);
-                if (this.enclosingType != null) {
-                    writer.write(`${this.enclosingType.namespace}.${this.enclosingType.name}.${this.name}`);
-                } else {
-                    writer.write(`${this.namespace}.${this.name}`);
-                }
-            }
+            writer.addReference(this);
+            writer.write(`${this.name}`);
         }
         if (this.generics != null && this.generics.length > 0) {
             writer.write("<");

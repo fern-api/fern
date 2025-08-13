@@ -22,14 +22,8 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedIdempotencyHeaders;
 
-var client = new SeedIdempotencyHeaders.SeedIdempotencyHeadersClient("TOKEN");
-await client.Payment.CreateAsync(
-    new SeedIdempotencyHeaders.CreatePaymentRequest
-    {
-        Amount = 1,
-        Currency = SeedIdempotencyHeaders.Currency.Usd,
-    }
-);
+var client = new SeedIdempotencyHeadersClient("TOKEN");
+await client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd });
 ```
 
 ## Exception Handling

@@ -1,4 +1,6 @@
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using SeedPathParameters;
 using SeedPathParameters.Core;
 
 namespace SeedPathParameters.Test.Unit.MockServer;
@@ -7,7 +9,7 @@ namespace SeedPathParameters.Test.Unit.MockServer;
 public class GetUserTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             {
