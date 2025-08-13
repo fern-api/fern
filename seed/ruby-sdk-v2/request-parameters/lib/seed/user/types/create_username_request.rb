@@ -1,6 +1,5 @@
 
 module Seed
     module User
-        class CreateUsernameRequest; end
-    end
+        class CreateUsernameRequest; endend
 end

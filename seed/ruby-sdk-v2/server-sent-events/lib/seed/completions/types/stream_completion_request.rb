@@ -1,6 +1,5 @@
 
 module Seed
     module Completions
-        class StreamCompletionRequest; end
-    end
+        class StreamCompletionRequest; endend
 end

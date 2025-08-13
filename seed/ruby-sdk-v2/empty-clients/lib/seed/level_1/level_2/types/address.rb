@@ -8,6 +8,6 @@ module Seed
             field :state, String, optional: false, nullable: false
             field :zip, String, optional: false, nullable: false
             field :country, String, optional: false, nullable: false
-        end
+
     end
 end

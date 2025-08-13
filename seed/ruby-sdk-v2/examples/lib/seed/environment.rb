@@ -4,5 +4,5 @@ module Seed
         PRODUCTION = "https://production.com/api"
         STAGING = "https://staging.com/api"
 
-    end
+
 end

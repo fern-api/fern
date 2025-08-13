@@ -1,6 +1,5 @@
 
 module Seed
     module Service
-        class WithContentTypeRequest; end
-    end
+        class WithContentTypeRequest; endend
 end

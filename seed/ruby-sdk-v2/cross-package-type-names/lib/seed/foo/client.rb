@@ -13,6 +13,6 @@ module Seed
             def find
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
-        end
+
     end
 end

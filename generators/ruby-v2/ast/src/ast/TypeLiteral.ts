@@ -115,7 +115,7 @@ export class TypeLiteral extends AstNode {
         switch (this.internalType.type) {
             case "str": {
                 // For now, just write the string as a Ruby string literal
-                if (this.internalType.value.includes("'")) {
+                if (this.internalType.value.includes("'") || this.internalType.value.includes('#')) {
                     writer.write(`"${this.internalType.value.replaceAll('"', '\\"')}"`);
                 } else {
                     writer.write(`'${this.internalType.value}'`);

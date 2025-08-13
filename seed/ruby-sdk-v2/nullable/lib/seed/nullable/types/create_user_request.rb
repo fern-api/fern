@@ -1,6 +1,5 @@
 
 module Seed
     module Nullable
-        class CreateUserRequest; end
-    end
+        class CreateUserRequest; endend
 end

@@ -18,6 +18,6 @@ module Seed
             def download_file
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
-        end
+
     end
 end

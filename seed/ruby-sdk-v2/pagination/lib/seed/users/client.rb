@@ -68,6 +68,6 @@ module Seed
             def list_with_global_config
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
-        end
+
     end
 end

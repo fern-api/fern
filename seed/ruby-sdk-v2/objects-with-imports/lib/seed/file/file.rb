@@ -5,6 +5,6 @@ module Seed
             field :name, String, optional: false, nullable: false
             field :contents, String, optional: false, nullable: false
             field :info, Seed::file::FileInfo, optional: false, nullable: false
-        end
+
     end
 end

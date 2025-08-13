@@ -7,6 +7,6 @@ module Seed
             field :activated, Internal::Types::Boolean, optional: true, nullable: false
             field :tags, String, optional: true, nullable: false
             field :extra, Internal::Types::Boolean, optional: true, nullable: false
-        end
+
     end
 end

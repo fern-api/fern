@@ -12,6 +12,6 @@ module Seed
             field :custom_test_case_templates, Internal::Types::Array[Seed::v_2::problem::TestCaseTemplate], optional: false, nullable: false
             field :testcases, Internal::Types::Array[Seed::v_2::problem::TestCaseV2], optional: false, nullable: false
             field :is_public, Internal::Types::Boolean, optional: false, nullable: false
-        end
+
     end
 end

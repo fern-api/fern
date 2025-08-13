@@ -1,6 +1,5 @@
 
 module Seed
     module Service
-        class PatchProxyRequest; end
-    end
+        class PatchProxyRequest; endend
 end
