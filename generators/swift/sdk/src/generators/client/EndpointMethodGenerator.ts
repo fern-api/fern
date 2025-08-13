@@ -155,12 +155,12 @@ export class EndpointMethodGenerator {
         }
         return endpoint.response.body._visit({
             json: (resp) => this.sdkGeneratorContext.getSwiftTypeForTypeReference(resp.responseBodyType),
-            fileDownload: () => swift.Type.any(),
-            text: () => swift.Type.any(),
-            bytes: () => swift.Type.any(),
-            streaming: () => swift.Type.any(),
-            streamParameter: () => swift.Type.any(),
-            _other: () => swift.Type.any()
+            fileDownload: () => swift.Type.jsonValue(), // TODO(kafkas): Handle file downloads
+            text: () => swift.Type.jsonValue(), // TODO(kafkas): Handle text responses
+            bytes: () => swift.Type.jsonValue(), // TODO(kafkas): Handle bytes responses
+            streaming: () => swift.Type.jsonValue(), // TODO(kafkas): Handle streaming responses
+            streamParameter: () => swift.Type.jsonValue(), // TODO(kafkas): Handle stream parameter responses
+            _other: () => swift.Type.jsonValue()
         });
     }
 
