@@ -23,10 +23,15 @@ export class HttpEndpointGenerator {
         return [this.generateUnpagedMethod({ endpoint, serviceId })];
     }
 
-    private generateUnpagedMethod({ endpoint, serviceId }: { endpoint: HttpEndpoint; serviceId: ServiceId }): ruby.Method {
-
+    private generateUnpagedMethod({
+        endpoint,
+        serviceId
+    }: {
+        endpoint: HttpEndpoint;
+        serviceId: ServiceId;
+    }): ruby.Method {
         const rawClient = new RawClient(this.context);
-        
+
         const returnType = getEndpointReturnType({ context: this.context, endpoint });
 
         const request = getEndpointRequest({
@@ -49,9 +54,11 @@ export class HttpEndpointGenerator {
         if (sendRequestCodeBlock != null) {
             statements.push(sendRequestCodeBlock);
         } else {
-            statements.push(ruby.codeblock((writer) => {
-                writer.writeLine("raise NotImplementedError, 'This method is not yet implemented.'");
-            }));
+            statements.push(
+                ruby.codeblock((writer) => {
+                    writer.writeLine("raise NotImplementedError, 'This method is not yet implemented.'");
+                })
+            );
         }
 
         return ruby.method({
@@ -62,38 +69,29 @@ export class HttpEndpointGenerator {
                 keyword: [
                     ruby.parameters.keyword({
                         name: "request_options",
-                        initializer: ruby.TypeLiteral.hash([]),
+                        initializer: ruby.TypeLiteral.hash([])
                     })
                 ],
                 keywordSplat: ruby.parameters.keywordSplat({
                     name: "params"
                 })
             },
-            statements,
+            statements
         });
     }
 
-    protected getPathParameterReferences({
-        endpoint,
-    }: {
-        endpoint: HttpEndpoint;
-    }): Record<string, string> {
+    protected getPathParameterReferences({ endpoint }: { endpoint: HttpEndpoint }): Record<string, string> {
         const pathParameterReferences: Record<string, string> = {};
         for (const pathParam of endpoint.allPathParameters) {
             const parameterName = this.getPathParameterName({
-                pathParameter: pathParam,
+                pathParameter: pathParam
             });
             pathParameterReferences[pathParam.name.originalName] = `params[:${parameterName}]`;
         }
         return pathParameterReferences;
     }
 
-    private getPathParameterName({
-        pathParameter
-    }: {
-        pathParameter: PathParameter;
-    }): string {
+    private getPathParameterName({ pathParameter }: { pathParameter: PathParameter }): string {
         return pathParameter.name.originalName;
     }
-
 }
