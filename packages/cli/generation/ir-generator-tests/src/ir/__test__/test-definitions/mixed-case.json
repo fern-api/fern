@@ -4558,7 +4558,7 @@
                                     "v1": "INTEGER",
                                     "v2": {
                                         "type": "integer",
-                                        "default": null,
+                                        "default": 25,
                                         "validation": null
                                     }
                                 }
