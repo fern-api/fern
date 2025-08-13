@@ -1,7 +1,8 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
+using SeedApi;
 using SeedApi.Core;
 
 namespace SeedApi.Folder;
@@ -18,7 +19,7 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.Folder.Service.EndpointAsync();
     /// </code></example>
-    public async Task EndpointAsync(
+    public async global::System.Threading.Tasks.Task EndpointAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -54,7 +55,7 @@ public partial class ServiceClient
     ///     new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
     /// );
     /// </code></example>
-    public async Task UnknownRequestAsync(
+    public async global::System.Threading.Tasks.Task UnknownRequestAsync(
         object request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

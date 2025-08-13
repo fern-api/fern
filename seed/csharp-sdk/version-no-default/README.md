@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedVersion;
 
-var client = new SeedVersion.SeedVersionClient();
+var client = new SeedVersionClient();
 await client.User.GetUserAsync("userId");
 ```
 

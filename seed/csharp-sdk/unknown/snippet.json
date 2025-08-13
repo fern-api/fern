@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUnknownAsAny;\n\nvar client = new SeedUnknownAsAny.SeedUnknownAsAnyClient();\nawait client.Unknown.PostAsync(new Dictionary<object, object?>() { { \"key\", \"value\" } });\n"
+                "client": "using SeedUnknownAsAny;\n\nvar client = new SeedUnknownAsAnyClient();\nawait client.Unknown.PostAsync(new Dictionary<object, object?>() { { \"key\", \"value\" } });\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUnknownAsAny;\n\nvar client = new SeedUnknownAsAny.SeedUnknownAsAnyClient();\nawait client.Unknown.PostObjectAsync(\n    new SeedUnknownAsAny.MyObject\n    {\n        Unknown = new Dictionary<object, object?>() { { \"key\", \"value\" } },\n    }\n);\n"
+                "client": "using SeedUnknownAsAny;\n\nvar client = new SeedUnknownAsAnyClient();\nawait client.Unknown.PostObjectAsync(\n    new MyObject { Unknown = new Dictionary<object, object?>() { { \"key\", \"value\" } } }\n);\n"
             }
         }
     ]

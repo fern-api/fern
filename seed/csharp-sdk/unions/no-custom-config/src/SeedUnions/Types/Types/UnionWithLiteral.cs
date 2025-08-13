@@ -8,7 +8,7 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(UnionWithLiteral.JsonConverter))]
 [Serializable]
 public record UnionWithLiteral
 {
@@ -19,9 +19,9 @@ public record UnionWithLiteral
     }
 
     /// <summary>
-    /// Create an instance of UnionWithLiteral with <see cref="Fern"/>.
+    /// Create an instance of UnionWithLiteral with <see cref="UnionWithLiteral.Fern"/>.
     /// </summary>
-    public UnionWithLiteral(Fern value)
+    public UnionWithLiteral(UnionWithLiteral.Fern value)
     {
         Type = "fern";
         Value = value.Value;
@@ -51,9 +51,7 @@ public record UnionWithLiteral
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'fern'.</exception>
     public string AsFern() =>
-        IsFern
-            ? (string)Value!
-            : throw new Exception("SeedUnions.UnionWithLiteral.Type is not 'fern'");
+        IsFern ? (string)Value! : throw new Exception("UnionWithLiteral.Type is not 'fern'");
 
     public T Match<T>(Func<string, T> onFern, Func<string, object?, T> onUnknown_)
     {
@@ -106,12 +104,12 @@ public record UnionWithLiteral
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithLiteral>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithLiteral).IsAssignableFrom(typeToConvert);
 
         public override UnionWithLiteral Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -143,10 +141,8 @@ public record UnionWithLiteral
                 _ => json.Deserialize<object?>(options),
             };
             var baseProperties =
-                json.Deserialize<BaseProperties>(options)
-                ?? throw new JsonException(
-                    "Failed to deserialize SeedUnions.UnionWithLiteral.BaseProperties"
-                );
+                json.Deserialize<UnionWithLiteral.BaseProperties>(options)
+                ?? throw new JsonException("Failed to deserialize UnionWithLiteral.BaseProperties");
             return new UnionWithLiteral(discriminator, value) { Base = baseProperties.Base };
         }
 
@@ -167,10 +163,10 @@ public record UnionWithLiteral
                 } ?? new JsonObject();
             json["type"] = value.Type;
             var basePropertiesJson =
-                JsonSerializer.SerializeToNode(new BaseProperties { Base = value.Base }, options)
-                ?? throw new JsonException(
-                    "Failed to serialize SeedUnions.UnionWithLiteral.BaseProperties"
-                );
+                JsonSerializer.SerializeToNode(
+                    new UnionWithLiteral.BaseProperties { Base = value.Base },
+                    options
+                ) ?? throw new JsonException("Failed to serialize UnionWithLiteral.BaseProperties");
             foreach (var property in basePropertiesJson.AsObject())
             {
                 json[property.Key] = property.Value;

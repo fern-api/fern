@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
+using SeedApi;
 using SeedApi.Core;
 
 namespace SeedApi.A.B;
@@ -17,7 +18,7 @@ public partial class BClient
     /// <example><code>
     /// await client.A.B.FooAsync();
     /// </code></example>
-    public async Task FooAsync(
+    public async global::System.Threading.Tasks.Task FooAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

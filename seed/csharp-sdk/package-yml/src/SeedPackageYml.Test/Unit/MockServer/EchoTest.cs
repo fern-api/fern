@@ -1,4 +1,6 @@
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using SeedPackageYml;
 using SeedPackageYml.Core;
 
 namespace SeedPackageYml.Test.Unit.MockServer;
@@ -7,7 +9,7 @@ namespace SeedPackageYml.Test.Unit.MockServer;
 public class EchoTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest_1()
+    public async global::System.Threading.Tasks.Task MockServerTest_1()
     {
         const string requestJson = """
             {
@@ -40,7 +42,7 @@ public class EchoTest : BaseMockServerTest
     }
 
     [Test]
-    public async Task MockServerTest_2()
+    public async global::System.Threading.Tasks.Task MockServerTest_2()
     {
         const string requestJson = """
             {

@@ -22,10 +22,8 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedMultiLineDocs;
 
-var client = new SeedMultiLineDocs.SeedMultiLineDocsClient();
-await client.User.CreateUserAsync(
-    new SeedMultiLineDocs.CreateUserRequest { Name = "name", Age = 1 }
-);
+var client = new SeedMultiLineDocsClient();
+await client.User.CreateUserAsync(new CreateUserRequest { Name = "name", Age = 1 });
 ```
 
 ## Exception Handling

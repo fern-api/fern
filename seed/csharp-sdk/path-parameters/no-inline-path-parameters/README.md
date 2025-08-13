@@ -22,10 +22,10 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedPathParameters;
 
-var client = new SeedPathParameters.SeedPathParametersClient();
+var client = new SeedPathParametersClient();
 await client.User.CreateUserAsync(
     "tenant_id",
-    new SeedPathParameters.User
+    new User
     {
         Name = "name",
         Tags = new List<string>() { "tags", "tags" },

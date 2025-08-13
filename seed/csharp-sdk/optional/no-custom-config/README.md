@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedObjectsWithImports;
 
-var client = new SeedObjectsWithImports.SeedObjectsWithImportsClient();
+var client = new SeedObjectsWithImportsClient();
 await client.Optional.SendOptionalBodyAsync(
     new Dictionary<string, object>()
     {

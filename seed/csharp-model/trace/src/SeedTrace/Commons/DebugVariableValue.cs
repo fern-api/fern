@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(DebugVariableValue.JsonConverter))]
 [Serializable]
 public record DebugVariableValue
 {
@@ -19,117 +19,117 @@ public record DebugVariableValue
     }
 
     /// <summary>
-    /// Create an instance of DebugVariableValue with <see cref="IntegerValue"/>.
+    /// Create an instance of DebugVariableValue with <see cref="DebugVariableValue.IntegerValue"/>.
     /// </summary>
-    public DebugVariableValue(IntegerValue value)
+    public DebugVariableValue(DebugVariableValue.IntegerValue value)
     {
         Type = "integerValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of DebugVariableValue with <see cref="BooleanValue"/>.
+    /// Create an instance of DebugVariableValue with <see cref="DebugVariableValue.BooleanValue"/>.
     /// </summary>
-    public DebugVariableValue(BooleanValue value)
+    public DebugVariableValue(DebugVariableValue.BooleanValue value)
     {
         Type = "booleanValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of DebugVariableValue with <see cref="DoubleValue"/>.
+    /// Create an instance of DebugVariableValue with <see cref="DebugVariableValue.DoubleValue"/>.
     /// </summary>
-    public DebugVariableValue(DoubleValue value)
+    public DebugVariableValue(DebugVariableValue.DoubleValue value)
     {
         Type = "doubleValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of DebugVariableValue with <see cref="StringValue"/>.
+    /// Create an instance of DebugVariableValue with <see cref="DebugVariableValue.StringValue"/>.
     /// </summary>
-    public DebugVariableValue(StringValue value)
+    public DebugVariableValue(DebugVariableValue.StringValue value)
     {
         Type = "stringValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of DebugVariableValue with <see cref="CharValue"/>.
+    /// Create an instance of DebugVariableValue with <see cref="DebugVariableValue.CharValue"/>.
     /// </summary>
-    public DebugVariableValue(CharValue value)
+    public DebugVariableValue(DebugVariableValue.CharValue value)
     {
         Type = "charValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of DebugVariableValue with <see cref="MapValue"/>.
+    /// Create an instance of DebugVariableValue with <see cref="DebugVariableValue.MapValue"/>.
     /// </summary>
-    public DebugVariableValue(MapValue value)
+    public DebugVariableValue(DebugVariableValue.MapValue value)
     {
         Type = "mapValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of DebugVariableValue with <see cref="ListValue"/>.
+    /// Create an instance of DebugVariableValue with <see cref="DebugVariableValue.ListValue"/>.
     /// </summary>
-    public DebugVariableValue(ListValue value)
+    public DebugVariableValue(DebugVariableValue.ListValue value)
     {
         Type = "listValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of DebugVariableValue with <see cref="BinaryTreeNodeValue"/>.
+    /// Create an instance of DebugVariableValue with <see cref="DebugVariableValue.BinaryTreeNodeValue"/>.
     /// </summary>
-    public DebugVariableValue(BinaryTreeNodeValue value)
+    public DebugVariableValue(DebugVariableValue.BinaryTreeNodeValue value)
     {
         Type = "binaryTreeNodeValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of DebugVariableValue with <see cref="SinglyLinkedListNodeValue"/>.
+    /// Create an instance of DebugVariableValue with <see cref="DebugVariableValue.SinglyLinkedListNodeValue"/>.
     /// </summary>
-    public DebugVariableValue(SinglyLinkedListNodeValue value)
+    public DebugVariableValue(DebugVariableValue.SinglyLinkedListNodeValue value)
     {
         Type = "singlyLinkedListNodeValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of DebugVariableValue with <see cref="DoublyLinkedListNodeValue"/>.
+    /// Create an instance of DebugVariableValue with <see cref="DebugVariableValue.DoublyLinkedListNodeValue"/>.
     /// </summary>
-    public DebugVariableValue(DoublyLinkedListNodeValue value)
+    public DebugVariableValue(DebugVariableValue.DoublyLinkedListNodeValue value)
     {
         Type = "doublyLinkedListNodeValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of DebugVariableValue with <see cref="UndefinedValue"/>.
+    /// Create an instance of DebugVariableValue with <see cref="DebugVariableValue.UndefinedValue"/>.
     /// </summary>
-    public DebugVariableValue(UndefinedValue value)
+    public DebugVariableValue(DebugVariableValue.UndefinedValue value)
     {
         Type = "undefinedValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of DebugVariableValue with <see cref="NullValue"/>.
+    /// Create an instance of DebugVariableValue with <see cref="DebugVariableValue.NullValue"/>.
     /// </summary>
-    public DebugVariableValue(NullValue value)
+    public DebugVariableValue(DebugVariableValue.NullValue value)
     {
         Type = "nullValue";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of DebugVariableValue with <see cref="GenericValue"/>.
+    /// Create an instance of DebugVariableValue with <see cref="DebugVariableValue.GenericValue"/>.
     /// </summary>
-    public DebugVariableValue(GenericValue value)
+    public DebugVariableValue(DebugVariableValue.GenericValue value)
     {
         Type = "genericValue";
         Value = value.Value;
@@ -218,7 +218,7 @@ public record DebugVariableValue
     public int AsIntegerValue() =>
         IsIntegerValue
             ? (int)Value!
-            : throw new Exception("SeedTrace.DebugVariableValue.Type is not 'integerValue'");
+            : throw new Exception("DebugVariableValue.Type is not 'integerValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="bool"/> if <see cref="Type"/> is 'booleanValue', otherwise throws an exception.
@@ -227,7 +227,7 @@ public record DebugVariableValue
     public bool AsBooleanValue() =>
         IsBooleanValue
             ? (bool)Value!
-            : throw new Exception("SeedTrace.DebugVariableValue.Type is not 'booleanValue'");
+            : throw new Exception("DebugVariableValue.Type is not 'booleanValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="double"/> if <see cref="Type"/> is 'doubleValue', otherwise throws an exception.
@@ -236,7 +236,7 @@ public record DebugVariableValue
     public double AsDoubleValue() =>
         IsDoubleValue
             ? (double)Value!
-            : throw new Exception("SeedTrace.DebugVariableValue.Type is not 'doubleValue'");
+            : throw new Exception("DebugVariableValue.Type is not 'doubleValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'stringValue', otherwise throws an exception.
@@ -245,7 +245,7 @@ public record DebugVariableValue
     public string AsStringValue() =>
         IsStringValue
             ? (string)Value!
-            : throw new Exception("SeedTrace.DebugVariableValue.Type is not 'stringValue'");
+            : throw new Exception("DebugVariableValue.Type is not 'stringValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'charValue', otherwise throws an exception.
@@ -254,56 +254,52 @@ public record DebugVariableValue
     public string AsCharValue() =>
         IsCharValue
             ? (string)Value!
-            : throw new Exception("SeedTrace.DebugVariableValue.Type is not 'charValue'");
+            : throw new Exception("DebugVariableValue.Type is not 'charValue'");
 
     /// <summary>
-    /// Returns the value as a <see cref="DebugMapValue"/> if <see cref="Type"/> is 'mapValue', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.DebugMapValue"/> if <see cref="Type"/> is 'mapValue', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'mapValue'.</exception>
-    public DebugMapValue AsMapValue() =>
+    public SeedTrace.DebugMapValue AsMapValue() =>
         IsMapValue
-            ? (DebugMapValue)Value!
-            : throw new Exception("SeedTrace.DebugVariableValue.Type is not 'mapValue'");
+            ? (SeedTrace.DebugMapValue)Value!
+            : throw new Exception("DebugVariableValue.Type is not 'mapValue'");
 
     /// <summary>
-    /// Returns the value as a <see cref="IEnumerable<SeedTrace.DebugVariableValue>"/> if <see cref="Type"/> is 'listValue', otherwise throws an exception.
+    /// Returns the value as a <see cref="IEnumerable<DebugVariableValue>"/> if <see cref="Type"/> is 'listValue', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'listValue'.</exception>
     public IEnumerable<DebugVariableValue> AsListValue() =>
         IsListValue
             ? (IEnumerable<DebugVariableValue>)Value!
-            : throw new Exception("SeedTrace.DebugVariableValue.Type is not 'listValue'");
+            : throw new Exception("DebugVariableValue.Type is not 'listValue'");
 
     /// <summary>
-    /// Returns the value as a <see cref="BinaryTreeNodeAndTreeValue"/> if <see cref="Type"/> is 'binaryTreeNodeValue', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.BinaryTreeNodeAndTreeValue"/> if <see cref="Type"/> is 'binaryTreeNodeValue', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'binaryTreeNodeValue'.</exception>
-    public BinaryTreeNodeAndTreeValue AsBinaryTreeNodeValue() =>
+    public SeedTrace.BinaryTreeNodeAndTreeValue AsBinaryTreeNodeValue() =>
         IsBinaryTreeNodeValue
-            ? (BinaryTreeNodeAndTreeValue)Value!
-            : throw new Exception("SeedTrace.DebugVariableValue.Type is not 'binaryTreeNodeValue'");
+            ? (SeedTrace.BinaryTreeNodeAndTreeValue)Value!
+            : throw new Exception("DebugVariableValue.Type is not 'binaryTreeNodeValue'");
 
     /// <summary>
-    /// Returns the value as a <see cref="SinglyLinkedListNodeAndListValue"/> if <see cref="Type"/> is 'singlyLinkedListNodeValue', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.SinglyLinkedListNodeAndListValue"/> if <see cref="Type"/> is 'singlyLinkedListNodeValue', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'singlyLinkedListNodeValue'.</exception>
-    public SinglyLinkedListNodeAndListValue AsSinglyLinkedListNodeValue() =>
+    public SeedTrace.SinglyLinkedListNodeAndListValue AsSinglyLinkedListNodeValue() =>
         IsSinglyLinkedListNodeValue
-            ? (SinglyLinkedListNodeAndListValue)Value!
-            : throw new Exception(
-                "SeedTrace.DebugVariableValue.Type is not 'singlyLinkedListNodeValue'"
-            );
+            ? (SeedTrace.SinglyLinkedListNodeAndListValue)Value!
+            : throw new Exception("DebugVariableValue.Type is not 'singlyLinkedListNodeValue'");
 
     /// <summary>
-    /// Returns the value as a <see cref="DoublyLinkedListNodeAndListValue"/> if <see cref="Type"/> is 'doublyLinkedListNodeValue', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.DoublyLinkedListNodeAndListValue"/> if <see cref="Type"/> is 'doublyLinkedListNodeValue', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'doublyLinkedListNodeValue'.</exception>
-    public DoublyLinkedListNodeAndListValue AsDoublyLinkedListNodeValue() =>
+    public SeedTrace.DoublyLinkedListNodeAndListValue AsDoublyLinkedListNodeValue() =>
         IsDoublyLinkedListNodeValue
-            ? (DoublyLinkedListNodeAndListValue)Value!
-            : throw new Exception(
-                "SeedTrace.DebugVariableValue.Type is not 'doublyLinkedListNodeValue'"
-            );
+            ? (SeedTrace.DoublyLinkedListNodeAndListValue)Value!
+            : throw new Exception("DebugVariableValue.Type is not 'doublyLinkedListNodeValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'undefinedValue', otherwise throws an exception.
@@ -312,16 +308,14 @@ public record DebugVariableValue
     public object AsUndefinedValue() =>
         IsUndefinedValue
             ? Value!
-            : throw new Exception("SeedTrace.DebugVariableValue.Type is not 'undefinedValue'");
+            : throw new Exception("DebugVariableValue.Type is not 'undefinedValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'nullValue', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'nullValue'.</exception>
     public object AsNullValue() =>
-        IsNullValue
-            ? Value!
-            : throw new Exception("SeedTrace.DebugVariableValue.Type is not 'nullValue'");
+        IsNullValue ? Value! : throw new Exception("DebugVariableValue.Type is not 'nullValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.GenericValue"/> if <see cref="Type"/> is 'genericValue', otherwise throws an exception.
@@ -330,7 +324,7 @@ public record DebugVariableValue
     public SeedTrace.GenericValue AsGenericValue() =>
         IsGenericValue
             ? (SeedTrace.GenericValue)Value!
-            : throw new Exception("SeedTrace.DebugVariableValue.Type is not 'genericValue'");
+            : throw new Exception("DebugVariableValue.Type is not 'genericValue'");
 
     public T Match<T>(
         Func<int, T> onIntegerValue,
@@ -338,11 +332,11 @@ public record DebugVariableValue
         Func<double, T> onDoubleValue,
         Func<string, T> onStringValue,
         Func<string, T> onCharValue,
-        Func<DebugMapValue, T> onMapValue,
+        Func<SeedTrace.DebugMapValue, T> onMapValue,
         Func<IEnumerable<DebugVariableValue>, T> onListValue,
-        Func<BinaryTreeNodeAndTreeValue, T> onBinaryTreeNodeValue,
-        Func<SinglyLinkedListNodeAndListValue, T> onSinglyLinkedListNodeValue,
-        Func<DoublyLinkedListNodeAndListValue, T> onDoublyLinkedListNodeValue,
+        Func<SeedTrace.BinaryTreeNodeAndTreeValue, T> onBinaryTreeNodeValue,
+        Func<SeedTrace.SinglyLinkedListNodeAndListValue, T> onSinglyLinkedListNodeValue,
+        Func<SeedTrace.DoublyLinkedListNodeAndListValue, T> onDoublyLinkedListNodeValue,
         Func<object, T> onUndefinedValue,
         Func<object, T> onNullValue,
         Func<SeedTrace.GenericValue, T> onGenericValue,
@@ -378,11 +372,11 @@ public record DebugVariableValue
         Action<double> onDoubleValue,
         Action<string> onStringValue,
         Action<string> onCharValue,
-        Action<DebugMapValue> onMapValue,
+        Action<SeedTrace.DebugMapValue> onMapValue,
         Action<IEnumerable<DebugVariableValue>> onListValue,
-        Action<BinaryTreeNodeAndTreeValue> onBinaryTreeNodeValue,
-        Action<SinglyLinkedListNodeAndListValue> onSinglyLinkedListNodeValue,
-        Action<DoublyLinkedListNodeAndListValue> onDoublyLinkedListNodeValue,
+        Action<SeedTrace.BinaryTreeNodeAndTreeValue> onBinaryTreeNodeValue,
+        Action<SeedTrace.SinglyLinkedListNodeAndListValue> onSinglyLinkedListNodeValue,
+        Action<SeedTrace.DoublyLinkedListNodeAndListValue> onDoublyLinkedListNodeValue,
         Action<object> onUndefinedValue,
         Action<object> onNullValue,
         Action<SeedTrace.GenericValue> onGenericValue,
@@ -507,13 +501,13 @@ public record DebugVariableValue
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="DebugMapValue"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.DebugMapValue"/> and returns true if successful.
     /// </summary>
-    public bool TryAsMapValue(out DebugMapValue? value)
+    public bool TryAsMapValue(out SeedTrace.DebugMapValue? value)
     {
         if (Type == "mapValue")
         {
-            value = (DebugMapValue)Value!;
+            value = (SeedTrace.DebugMapValue)Value!;
             return true;
         }
         value = null;
@@ -521,7 +515,7 @@ public record DebugVariableValue
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="IEnumerable<SeedTrace.DebugVariableValue>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="IEnumerable<DebugVariableValue>"/> and returns true if successful.
     /// </summary>
     public bool TryAsListValue(out IEnumerable<DebugVariableValue>? value)
     {
@@ -535,13 +529,13 @@ public record DebugVariableValue
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="BinaryTreeNodeAndTreeValue"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.BinaryTreeNodeAndTreeValue"/> and returns true if successful.
     /// </summary>
-    public bool TryAsBinaryTreeNodeValue(out BinaryTreeNodeAndTreeValue? value)
+    public bool TryAsBinaryTreeNodeValue(out SeedTrace.BinaryTreeNodeAndTreeValue? value)
     {
         if (Type == "binaryTreeNodeValue")
         {
-            value = (BinaryTreeNodeAndTreeValue)Value!;
+            value = (SeedTrace.BinaryTreeNodeAndTreeValue)Value!;
             return true;
         }
         value = null;
@@ -549,13 +543,15 @@ public record DebugVariableValue
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SinglyLinkedListNodeAndListValue"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.SinglyLinkedListNodeAndListValue"/> and returns true if successful.
     /// </summary>
-    public bool TryAsSinglyLinkedListNodeValue(out SinglyLinkedListNodeAndListValue? value)
+    public bool TryAsSinglyLinkedListNodeValue(
+        out SeedTrace.SinglyLinkedListNodeAndListValue? value
+    )
     {
         if (Type == "singlyLinkedListNodeValue")
         {
-            value = (SinglyLinkedListNodeAndListValue)Value!;
+            value = (SeedTrace.SinglyLinkedListNodeAndListValue)Value!;
             return true;
         }
         value = null;
@@ -563,13 +559,15 @@ public record DebugVariableValue
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="DoublyLinkedListNodeAndListValue"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.DoublyLinkedListNodeAndListValue"/> and returns true if successful.
     /// </summary>
-    public bool TryAsDoublyLinkedListNodeValue(out DoublyLinkedListNodeAndListValue? value)
+    public bool TryAsDoublyLinkedListNodeValue(
+        out SeedTrace.DoublyLinkedListNodeAndListValue? value
+    )
     {
         if (Type == "doublyLinkedListNodeValue")
         {
-            value = (DoublyLinkedListNodeAndListValue)Value!;
+            value = (SeedTrace.DoublyLinkedListNodeAndListValue)Value!;
             return true;
         }
         value = null;
@@ -620,39 +618,51 @@ public record DebugVariableValue
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator DebugVariableValue(IntegerValue value) => new(value);
-
-    public static implicit operator DebugVariableValue(BooleanValue value) => new(value);
-
-    public static implicit operator DebugVariableValue(DoubleValue value) => new(value);
-
-    public static implicit operator DebugVariableValue(StringValue value) => new(value);
-
-    public static implicit operator DebugVariableValue(CharValue value) => new(value);
-
-    public static implicit operator DebugVariableValue(MapValue value) => new(value);
-
-    public static implicit operator DebugVariableValue(ListValue value) => new(value);
-
-    public static implicit operator DebugVariableValue(BinaryTreeNodeValue value) => new(value);
-
-    public static implicit operator DebugVariableValue(SinglyLinkedListNodeValue value) =>
+    public static implicit operator DebugVariableValue(DebugVariableValue.IntegerValue value) =>
         new(value);
 
-    public static implicit operator DebugVariableValue(DoublyLinkedListNodeValue value) =>
+    public static implicit operator DebugVariableValue(DebugVariableValue.BooleanValue value) =>
         new(value);
 
-    public static implicit operator DebugVariableValue(GenericValue value) => new(value);
+    public static implicit operator DebugVariableValue(DebugVariableValue.DoubleValue value) =>
+        new(value);
+
+    public static implicit operator DebugVariableValue(DebugVariableValue.StringValue value) =>
+        new(value);
+
+    public static implicit operator DebugVariableValue(DebugVariableValue.CharValue value) =>
+        new(value);
+
+    public static implicit operator DebugVariableValue(DebugVariableValue.MapValue value) =>
+        new(value);
+
+    public static implicit operator DebugVariableValue(DebugVariableValue.ListValue value) =>
+        new(value);
+
+    public static implicit operator DebugVariableValue(
+        DebugVariableValue.BinaryTreeNodeValue value
+    ) => new(value);
+
+    public static implicit operator DebugVariableValue(
+        DebugVariableValue.SinglyLinkedListNodeValue value
+    ) => new(value);
+
+    public static implicit operator DebugVariableValue(
+        DebugVariableValue.DoublyLinkedListNodeValue value
+    ) => new(value);
+
+    public static implicit operator DebugVariableValue(DebugVariableValue.GenericValue value) =>
+        new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<DebugVariableValue>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(DebugVariableValue).IsAssignableFrom(typeToConvert);
 
         public override DebugVariableValue Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -686,29 +696,29 @@ public record DebugVariableValue
                     ?? throw new JsonException("Failed to deserialize string"),
                 "charValue" => json.GetProperty("value").Deserialize<string>(options)
                     ?? throw new JsonException("Failed to deserialize string"),
-                "mapValue" => json.Deserialize<DebugMapValue>(options)
+                "mapValue" => json.Deserialize<SeedTrace.DebugMapValue>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.DebugMapValue"),
                 "listValue" => json.GetProperty("value")
                     .Deserialize<IEnumerable<DebugVariableValue>>(options)
                     ?? throw new JsonException(
-                        "Failed to deserialize IEnumerable<SeedTrace.DebugVariableValue>"
+                        "Failed to deserialize IEnumerable<DebugVariableValue>"
                     ),
-                "binaryTreeNodeValue" => json.Deserialize<BinaryTreeNodeAndTreeValue>(options)
+                "binaryTreeNodeValue" => json.Deserialize<SeedTrace.BinaryTreeNodeAndTreeValue>(
+                    options
+                )
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.BinaryTreeNodeAndTreeValue"
                     ),
-                "singlyLinkedListNodeValue" => json.Deserialize<SinglyLinkedListNodeAndListValue>(
-                    options
-                )
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.SinglyLinkedListNodeAndListValue"
-                    ),
-                "doublyLinkedListNodeValue" => json.Deserialize<DoublyLinkedListNodeAndListValue>(
-                    options
-                )
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.DoublyLinkedListNodeAndListValue"
-                    ),
+                "singlyLinkedListNodeValue" =>
+                    json.Deserialize<SeedTrace.SinglyLinkedListNodeAndListValue>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.SinglyLinkedListNodeAndListValue"
+                        ),
+                "doublyLinkedListNodeValue" =>
+                    json.Deserialize<SeedTrace.DoublyLinkedListNodeAndListValue>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.DoublyLinkedListNodeAndListValue"
+                        ),
                 "undefinedValue" => new { },
                 "nullValue" => new { },
                 "genericValue" => json.Deserialize<SeedTrace.GenericValue>(options)
@@ -867,16 +877,16 @@ public record DebugVariableValue
     [Serializable]
     public struct MapValue
     {
-        public MapValue(DebugMapValue value)
+        public MapValue(SeedTrace.DebugMapValue value)
         {
             Value = value;
         }
 
-        internal DebugMapValue Value { get; set; }
+        internal SeedTrace.DebugMapValue Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator MapValue(DebugMapValue value) => new(value);
+        public static implicit operator MapValue(SeedTrace.DebugMapValue value) => new(value);
     }
 
     /// <summary>
@@ -902,17 +912,18 @@ public record DebugVariableValue
     [Serializable]
     public struct BinaryTreeNodeValue
     {
-        public BinaryTreeNodeValue(BinaryTreeNodeAndTreeValue value)
+        public BinaryTreeNodeValue(SeedTrace.BinaryTreeNodeAndTreeValue value)
         {
             Value = value;
         }
 
-        internal BinaryTreeNodeAndTreeValue Value { get; set; }
+        internal SeedTrace.BinaryTreeNodeAndTreeValue Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator BinaryTreeNodeValue(BinaryTreeNodeAndTreeValue value) =>
-            new(value);
+        public static implicit operator BinaryTreeNodeValue(
+            SeedTrace.BinaryTreeNodeAndTreeValue value
+        ) => new(value);
     }
 
     /// <summary>
@@ -921,17 +932,17 @@ public record DebugVariableValue
     [Serializable]
     public struct SinglyLinkedListNodeValue
     {
-        public SinglyLinkedListNodeValue(SinglyLinkedListNodeAndListValue value)
+        public SinglyLinkedListNodeValue(SeedTrace.SinglyLinkedListNodeAndListValue value)
         {
             Value = value;
         }
 
-        internal SinglyLinkedListNodeAndListValue Value { get; set; }
+        internal SeedTrace.SinglyLinkedListNodeAndListValue Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
         public static implicit operator SinglyLinkedListNodeValue(
-            SinglyLinkedListNodeAndListValue value
+            SeedTrace.SinglyLinkedListNodeAndListValue value
         ) => new(value);
     }
 
@@ -941,17 +952,17 @@ public record DebugVariableValue
     [Serializable]
     public struct DoublyLinkedListNodeValue
     {
-        public DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListValue value)
+        public DoublyLinkedListNodeValue(SeedTrace.DoublyLinkedListNodeAndListValue value)
         {
             Value = value;
         }
 
-        internal DoublyLinkedListNodeAndListValue Value { get; set; }
+        internal SeedTrace.DoublyLinkedListNodeAndListValue Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
         public static implicit operator DoublyLinkedListNodeValue(
-            DoublyLinkedListNodeAndListValue value
+            SeedTrace.DoublyLinkedListNodeAndListValue value
         ) => new(value);
     }
 

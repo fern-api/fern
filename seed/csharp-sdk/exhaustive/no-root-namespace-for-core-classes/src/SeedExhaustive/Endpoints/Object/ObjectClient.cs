@@ -17,7 +17,7 @@ public partial class ObjectClient
 
     /// <example><code>
     /// await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
-    ///     new SeedExhaustive.Types.ObjectWithOptionalField
+    ///     new ObjectWithOptionalField
     ///     {
     ///         String = "string",
     ///         Integer = 1,
@@ -79,7 +79,7 @@ public partial class ObjectClient
 
     /// <example><code>
     /// await client.Endpoints.Object.GetAndReturnWithRequiredFieldAsync(
-    ///     new SeedExhaustive.Types.ObjectWithRequiredField { String = "string" }
+    ///     new ObjectWithRequiredField { String = "string" }
     /// );
     /// </code></example>
     public async Task<ObjectWithRequiredField> GetAndReturnWithRequiredFieldAsync(
@@ -126,7 +126,7 @@ public partial class ObjectClient
 
     /// <example><code>
     /// await client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(
-    ///     new SeedExhaustive.Types.ObjectWithMapOfMap
+    ///     new ObjectWithMapOfMap
     ///     {
     ///         Map = new Dictionary&lt;string, Dictionary&lt;string, string&gt;&gt;()
     ///         {
@@ -182,10 +182,10 @@ public partial class ObjectClient
 
     /// <example><code>
     /// await client.Endpoints.Object.GetAndReturnNestedWithOptionalFieldAsync(
-    ///     new SeedExhaustive.Types.NestedObjectWithOptionalField
+    ///     new NestedObjectWithOptionalField
     ///     {
     ///         String = "string",
-    ///         NestedObject = new SeedExhaustive.Types.ObjectWithOptionalField
+    ///         NestedObject = new ObjectWithOptionalField
     ///         {
     ///             String = "string",
     ///             Integer = 1,
@@ -249,10 +249,10 @@ public partial class ObjectClient
     /// <example><code>
     /// await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsync(
     ///     "string",
-    ///     new SeedExhaustive.Types.NestedObjectWithRequiredField
+    ///     new NestedObjectWithRequiredField
     ///     {
     ///         String = "string",
-    ///         NestedObject = new SeedExhaustive.Types.ObjectWithOptionalField
+    ///         NestedObject = new ObjectWithOptionalField
     ///         {
     ///             String = "string",
     ///             Integer = 1,
@@ -319,12 +319,12 @@ public partial class ObjectClient
 
     /// <example><code>
     /// await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(
-    ///     new List&lt;SeedExhaustive.Types.NestedObjectWithRequiredField&gt;()
+    ///     new List&lt;NestedObjectWithRequiredField&gt;()
     ///     {
-    ///         new SeedExhaustive.Types.NestedObjectWithRequiredField
+    ///         new NestedObjectWithRequiredField
     ///         {
     ///             String = "string",
-    ///             NestedObject = new SeedExhaustive.Types.ObjectWithOptionalField
+    ///             NestedObject = new ObjectWithOptionalField
     ///             {
     ///                 String = "string",
     ///                 Integer = 1,
@@ -341,10 +341,10 @@ public partial class ObjectClient
     ///                 Bigint = "1000000",
     ///             },
     ///         },
-    ///         new SeedExhaustive.Types.NestedObjectWithRequiredField
+    ///         new NestedObjectWithRequiredField
     ///         {
     ///             String = "string",
-    ///             NestedObject = new SeedExhaustive.Types.ObjectWithOptionalField
+    ///             NestedObject = new ObjectWithOptionalField
     ///             {
     ///                 String = "string",
     ///                 Integer = 1,

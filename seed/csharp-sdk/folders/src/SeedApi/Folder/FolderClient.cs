@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
+using SeedApi;
 using SeedApi.Core;
 
 namespace SeedApi.Folder;
@@ -20,7 +21,7 @@ public partial class FolderClient
     /// <example><code>
     /// await client.Folder.FooAsync();
     /// </code></example>
-    public async Task FooAsync(
+    public async global::System.Threading.Tasks.Task FooAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

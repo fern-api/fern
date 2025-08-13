@@ -298,14 +298,14 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public getJsonConverterAttributeReference(): csharp.ClassReference {
         return csharp.classReference({
-            namespace: "System.Text.Json.Serialization",
+            namespace: "System.Text.Json",
             name: "JsonConverter"
         });
     }
 
     public getJsonConverterClassReference(typeToConvert: csharp.Type): csharp.ClassReference {
         return csharp.classReference({
-            namespace: "System.Text.Json.Serialization",
+            namespace: "System.Text.Json",
             name: "JsonConverter",
             generics: [typeToConvert]
         });

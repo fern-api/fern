@@ -8,7 +8,7 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(UnionWithDuplicatePrimitive.JsonConverter))]
 [Serializable]
 public record UnionWithDuplicatePrimitive
 {
@@ -19,36 +19,36 @@ public record UnionWithDuplicatePrimitive
     }
 
     /// <summary>
-    /// Create an instance of UnionWithDuplicatePrimitive with <see cref="Integer1"/>.
+    /// Create an instance of UnionWithDuplicatePrimitive with <see cref="UnionWithDuplicatePrimitive.Integer1"/>.
     /// </summary>
-    public UnionWithDuplicatePrimitive(Integer1 value)
+    public UnionWithDuplicatePrimitive(UnionWithDuplicatePrimitive.Integer1 value)
     {
         Type = "integer1";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithDuplicatePrimitive with <see cref="Integer2"/>.
+    /// Create an instance of UnionWithDuplicatePrimitive with <see cref="UnionWithDuplicatePrimitive.Integer2"/>.
     /// </summary>
-    public UnionWithDuplicatePrimitive(Integer2 value)
+    public UnionWithDuplicatePrimitive(UnionWithDuplicatePrimitive.Integer2 value)
     {
         Type = "integer2";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithDuplicatePrimitive with <see cref="String1"/>.
+    /// Create an instance of UnionWithDuplicatePrimitive with <see cref="UnionWithDuplicatePrimitive.String1"/>.
     /// </summary>
-    public UnionWithDuplicatePrimitive(String1 value)
+    public UnionWithDuplicatePrimitive(UnionWithDuplicatePrimitive.String1 value)
     {
         Type = "string1";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithDuplicatePrimitive with <see cref="String2"/>.
+    /// Create an instance of UnionWithDuplicatePrimitive with <see cref="UnionWithDuplicatePrimitive.String2"/>.
     /// </summary>
-    public UnionWithDuplicatePrimitive(String2 value)
+    public UnionWithDuplicatePrimitive(UnionWithDuplicatePrimitive.String2 value)
     {
         Type = "string2";
         Value = value.Value;
@@ -92,7 +92,7 @@ public record UnionWithDuplicatePrimitive
     public int AsInteger1() =>
         IsInteger1
             ? (int)Value!
-            : throw new Exception("SeedUnions.UnionWithDuplicatePrimitive.Type is not 'integer1'");
+            : throw new Exception("UnionWithDuplicatePrimitive.Type is not 'integer1'");
 
     /// <summary>
     /// Returns the value as a <see cref="int"/> if <see cref="Type"/> is 'integer2', otherwise throws an exception.
@@ -101,7 +101,7 @@ public record UnionWithDuplicatePrimitive
     public int AsInteger2() =>
         IsInteger2
             ? (int)Value!
-            : throw new Exception("SeedUnions.UnionWithDuplicatePrimitive.Type is not 'integer2'");
+            : throw new Exception("UnionWithDuplicatePrimitive.Type is not 'integer2'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string1', otherwise throws an exception.
@@ -110,7 +110,7 @@ public record UnionWithDuplicatePrimitive
     public string AsString1() =>
         IsString1
             ? (string)Value!
-            : throw new Exception("SeedUnions.UnionWithDuplicatePrimitive.Type is not 'string1'");
+            : throw new Exception("UnionWithDuplicatePrimitive.Type is not 'string1'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string2', otherwise throws an exception.
@@ -119,7 +119,7 @@ public record UnionWithDuplicatePrimitive
     public string AsString2() =>
         IsString2
             ? (string)Value!
-            : throw new Exception("SeedUnions.UnionWithDuplicatePrimitive.Type is not 'string2'");
+            : throw new Exception("UnionWithDuplicatePrimitive.Type is not 'string2'");
 
     public T Match<T>(
         Func<int, T> onInteger1,
@@ -225,23 +225,31 @@ public record UnionWithDuplicatePrimitive
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator UnionWithDuplicatePrimitive(Integer1 value) => new(value);
+    public static implicit operator UnionWithDuplicatePrimitive(
+        UnionWithDuplicatePrimitive.Integer1 value
+    ) => new(value);
 
-    public static implicit operator UnionWithDuplicatePrimitive(Integer2 value) => new(value);
+    public static implicit operator UnionWithDuplicatePrimitive(
+        UnionWithDuplicatePrimitive.Integer2 value
+    ) => new(value);
 
-    public static implicit operator UnionWithDuplicatePrimitive(String1 value) => new(value);
+    public static implicit operator UnionWithDuplicatePrimitive(
+        UnionWithDuplicatePrimitive.String1 value
+    ) => new(value);
 
-    public static implicit operator UnionWithDuplicatePrimitive(String2 value) => new(value);
+    public static implicit operator UnionWithDuplicatePrimitive(
+        UnionWithDuplicatePrimitive.String2 value
+    ) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithDuplicatePrimitive>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithDuplicatePrimitive).IsAssignableFrom(typeToConvert);
 
         public override UnionWithDuplicatePrimitive Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

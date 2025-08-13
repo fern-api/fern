@@ -1,5 +1,7 @@
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
+using SeedExhaustive.Test.Unit.MockServer;
 using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Container;
@@ -8,7 +10,7 @@ namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Container;
 public class GetAndReturnMapOfPrimToObjectTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {

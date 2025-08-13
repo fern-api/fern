@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using SeedMixedFileDirectory;
 using SeedMixedFileDirectory.Core;
 
 namespace SeedMixedFileDirectory.User.Events;
@@ -18,12 +19,10 @@ public partial class MetadataClient
     /// Get event metadata.
     /// </summary>
     /// <example><code>
-    /// await client.User.Events.Metadata.GetMetadataAsync(
-    ///     new SeedMixedFileDirectory.User.Events.GetEventMetadataRequest { Id = "id" }
-    /// );
+    /// await client.User.Events.Metadata.GetMetadataAsync(new GetEventMetadataRequest { Id = "id" });
     /// </code></example>
-    public async Task<SeedMixedFileDirectory.User.Events.Metadata> GetMetadataAsync(
-        SeedMixedFileDirectory.User.Events.GetEventMetadataRequest request,
+    public async Task<Metadata> GetMetadataAsync(
+        GetEventMetadataRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -48,9 +47,7 @@ public partial class MetadataClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<SeedMixedFileDirectory.User.Events.Metadata>(
-                    responseBody
-                )!;
+                return JsonUtils.Deserialize<Metadata>(responseBody)!;
             }
             catch (JsonException e)
             {

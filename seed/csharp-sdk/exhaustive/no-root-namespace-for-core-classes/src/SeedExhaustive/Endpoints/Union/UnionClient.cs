@@ -17,11 +17,7 @@ public partial class UnionClient
 
     /// <example><code>
     /// await client.Endpoints.Union.GetAndReturnUnionAsync(
-    ///     new SeedExhaustive.Types.Animal(
-    ///         new SeedExhaustive.Types.Animal.Dog(
-    ///             new SeedExhaustive.Types.Dog { Name = "name", LikesToWoof = true }
-    ///         )
-    ///     )
+    ///     new Animal(new Animal.Dog(new Dog { Name = "name", LikesToWoof = true }))
     /// );
     /// </code></example>
     public async Task<Animal> GetAndReturnUnionAsync(

@@ -8,7 +8,7 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(FieldValue.JsonConverter))]
 [Serializable]
 public record FieldValue
 {
@@ -19,27 +19,27 @@ public record FieldValue
     }
 
     /// <summary>
-    /// Create an instance of FieldValue with <see cref="PrimitiveValue"/>.
+    /// Create an instance of FieldValue with <see cref="FieldValue.PrimitiveValue"/>.
     /// </summary>
-    public FieldValue(PrimitiveValue value)
+    public FieldValue(FieldValue.PrimitiveValue value)
     {
         Type = "primitive_value";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of FieldValue with <see cref="ObjectValue"/>.
+    /// Create an instance of FieldValue with <see cref="FieldValue.ObjectValue"/>.
     /// </summary>
-    public FieldValue(ObjectValue value)
+    public FieldValue(FieldValue.ObjectValue value)
     {
         Type = "object_value";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of FieldValue with <see cref="ContainerValue"/>.
+    /// Create an instance of FieldValue with <see cref="FieldValue.ContainerValue"/>.
     /// </summary>
-    public FieldValue(ContainerValue value)
+    public FieldValue(FieldValue.ContainerValue value)
     {
         Type = "container_value";
         Value = value.Value;
@@ -78,7 +78,7 @@ public record FieldValue
     public SeedApi.PrimitiveValue AsPrimitiveValue() =>
         IsPrimitiveValue
             ? (SeedApi.PrimitiveValue)Value!
-            : throw new Exception("SeedApi.FieldValue.Type is not 'primitive_value'");
+            : throw new Exception("FieldValue.Type is not 'primitive_value'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedApi.ObjectValue"/> if <see cref="Type"/> is 'object_value', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record FieldValue
     public SeedApi.ObjectValue AsObjectValue() =>
         IsObjectValue
             ? (SeedApi.ObjectValue)Value!
-            : throw new Exception("SeedApi.FieldValue.Type is not 'object_value'");
+            : throw new Exception("FieldValue.Type is not 'object_value'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedApi.ContainerValue"/> if <see cref="Type"/> is 'container_value', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record FieldValue
     public SeedApi.ContainerValue AsContainerValue() =>
         IsContainerValue
             ? (SeedApi.ContainerValue)Value!
-            : throw new Exception("SeedApi.FieldValue.Type is not 'container_value'");
+            : throw new Exception("FieldValue.Type is not 'container_value'");
 
     public T Match<T>(
         Func<SeedApi.PrimitiveValue, T> onPrimitiveValue,
@@ -182,21 +182,21 @@ public record FieldValue
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator FieldValue(PrimitiveValue value) => new(value);
+    public static implicit operator FieldValue(FieldValue.PrimitiveValue value) => new(value);
 
-    public static implicit operator FieldValue(ObjectValue value) => new(value);
+    public static implicit operator FieldValue(FieldValue.ObjectValue value) => new(value);
 
-    public static implicit operator FieldValue(ContainerValue value) => new(value);
+    public static implicit operator FieldValue(FieldValue.ContainerValue value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<FieldValue>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(FieldValue).IsAssignableFrom(typeToConvert);
 
         public override FieldValue Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

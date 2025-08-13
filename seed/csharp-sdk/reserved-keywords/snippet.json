@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedNurseryApi;\n\nvar client = new SeedNurseryApi.SeedNurseryApiClient();\nawait client.Package.TestAsync(new SeedNurseryApi.TestRequest { For = \"for\" });\n"
+                "client": "using SeedNurseryApi;\n\nvar client = new SeedNurseryApiClient();\nawait client.Package.TestAsync(new TestRequest { For = \"for\" });\n"
             }
         }
     ]

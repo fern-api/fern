@@ -1,3 +1,4 @@
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
@@ -8,7 +9,7 @@ namespace SeedExhaustive.Test.Unit.MockServer;
 public class GetWithNoRequestBodyTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             {

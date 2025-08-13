@@ -58,7 +58,7 @@ This ID is unique to each user.
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedMultiLineDocs/User/UserClient.cs">CreateUserAsync</a>(SeedMultiLineDocs.CreateUserRequest { ... }) -> SeedMultiLineDocs.User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedMultiLineDocs/User/UserClient.cs">CreateUserAsync</a>(CreateUserRequest { ... }) -> User</code></summary>
 <dl>
 <dd>
 
@@ -86,9 +86,7 @@ This endpoint is used to create a new user.
 <dd>
 
 ```csharp
-await client.User.CreateUserAsync(
-    new SeedMultiLineDocs.CreateUserRequest { Name = "name", Age = 1 }
-);
+await client.User.CreateUserAsync(new CreateUserRequest { Name = "name", Age = 1 });
 ```
 </dd>
 </dl>
@@ -103,7 +101,7 @@ await client.User.CreateUserAsync(
 <dl>
 <dd>
 
-**request:** `SeedMultiLineDocs.CreateUserRequest` 
+**request:** `CreateUserRequest` 
     
 </dd>
 </dl>

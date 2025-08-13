@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
@@ -69,10 +70,10 @@ public partial class ContainerClient
 
     /// <example><code>
     /// await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
-    ///     new List&lt;SeedExhaustive.Types.ObjectWithRequiredField&gt;()
+    ///     new List&lt;ObjectWithRequiredField&gt;()
     ///     {
-    ///         new SeedExhaustive.Types.ObjectWithRequiredField { String = "string" },
-    ///         new SeedExhaustive.Types.ObjectWithRequiredField { String = "string" },
+    ///         new ObjectWithRequiredField { String = "string" },
+    ///         new ObjectWithRequiredField { String = "string" },
     ///     }
     /// );
     /// </code></example>
@@ -179,10 +180,7 @@ public partial class ContainerClient
 
     /// <example><code>
     /// await client.Endpoints.Container.GetAndReturnSetOfObjectsAsync(
-    ///     new HashSet&lt;SeedExhaustive.Types.ObjectWithRequiredField&gt;()
-    ///     {
-    ///         new SeedExhaustive.Types.ObjectWithRequiredField { String = "string" },
-    ///     }
+    ///     new HashSet&lt;ObjectWithRequiredField&gt;() { new ObjectWithRequiredField { String = "string" } }
     /// );
     /// </code></example>
     public async Task<HashSet<ObjectWithRequiredField>> GetAndReturnSetOfObjectsAsync(
@@ -288,11 +286,11 @@ public partial class ContainerClient
 
     /// <example><code>
     /// await client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
-    ///     new Dictionary&lt;string, SeedExhaustive.Types.ObjectWithRequiredField&gt;()
+    ///     new Dictionary&lt;string, ObjectWithRequiredField&gt;()
     ///     {
     ///         {
     ///             "string",
-    ///             new SeedExhaustive.Types.ObjectWithRequiredField { String = "string" }
+    ///             new ObjectWithRequiredField { String = "string" }
     ///         },
     ///     }
     /// );
@@ -350,7 +348,7 @@ public partial class ContainerClient
 
     /// <example><code>
     /// await client.Endpoints.Container.GetAndReturnOptionalAsync(
-    ///     new SeedExhaustive.Types.ObjectWithRequiredField { String = "string" }
+    ///     new ObjectWithRequiredField { String = "string" }
     /// );
     /// </code></example>
     public async Task<ObjectWithRequiredField?> GetAndReturnOptionalAsync(

@@ -22,13 +22,13 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedEnum;
 
-var client = new SeedEnum.SeedEnumClient();
+var client = new SeedEnumClient();
 await client.Headers.SendAsync(
-    new SeedEnum.SendEnumAsHeaderRequest
+    new SendEnumAsHeaderRequest
     {
-        Operand = SeedEnum.Operand.GreaterThan,
-        MaybeOperand = SeedEnum.Operand.GreaterThan,
-        OperandOrColor = SeedEnum.Color.Red,
+        Operand = Operand.GreaterThan,
+        MaybeOperand = Operand.GreaterThan,
+        OperandOrColor = Color.Red,
         MaybeOperandOrColor = null,
     }
 );

@@ -8,7 +8,7 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(UnionWithNoProperties.JsonConverter))]
 [Serializable]
 public record UnionWithNoProperties
 {
@@ -19,18 +19,18 @@ public record UnionWithNoProperties
     }
 
     /// <summary>
-    /// Create an instance of UnionWithNoProperties with <see cref="Foo"/>.
+    /// Create an instance of UnionWithNoProperties with <see cref="UnionWithNoProperties.Foo"/>.
     /// </summary>
-    public UnionWithNoProperties(Foo value)
+    public UnionWithNoProperties(UnionWithNoProperties.Foo value)
     {
         Type = "foo";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithNoProperties with <see cref="Empty"/>.
+    /// Create an instance of UnionWithNoProperties with <see cref="UnionWithNoProperties.Empty"/>.
     /// </summary>
-    public UnionWithNoProperties(Empty value)
+    public UnionWithNoProperties(UnionWithNoProperties.Empty value)
     {
         Type = "empty";
         Value = value.Value;
@@ -64,16 +64,14 @@ public record UnionWithNoProperties
     public SeedUnions.Foo AsFoo() =>
         IsFoo
             ? (SeedUnions.Foo)Value!
-            : throw new Exception("SeedUnions.UnionWithNoProperties.Type is not 'foo'");
+            : throw new Exception("UnionWithNoProperties.Type is not 'foo'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'empty'.</exception>
     public object AsEmpty() =>
-        IsEmpty
-            ? Value!
-            : throw new Exception("SeedUnions.UnionWithNoProperties.Type is not 'empty'");
+        IsEmpty ? Value! : throw new Exception("UnionWithNoProperties.Type is not 'empty'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
@@ -139,17 +137,18 @@ public record UnionWithNoProperties
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator UnionWithNoProperties(Foo value) => new(value);
+    public static implicit operator UnionWithNoProperties(UnionWithNoProperties.Foo value) =>
+        new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithNoProperties>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithNoProperties).IsAssignableFrom(typeToConvert);
 
         public override UnionWithNoProperties Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -1,4 +1,6 @@
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using SeedOauthClientCredentials;
 using SeedOauthClientCredentials.Core;
 
 namespace SeedOauthClientCredentials.Test.Unit.MockServer;
@@ -7,7 +9,7 @@ namespace SeedOauthClientCredentials.Test.Unit.MockServer;
 public class RefreshTokenTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {

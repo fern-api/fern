@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedPlainText;\n\nvar client = new SeedPlainText.SeedPlainTextClient();\nawait client.Service.GetTextAsync();\n"
+                "client": "using SeedPlainText;\n\nvar client = new SeedPlainTextClient();\nawait client.Service.GetTextAsync();\n"
             }
         }
     ]

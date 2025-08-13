@@ -1,6 +1,8 @@
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedAudiences.Core;
 using SeedAudiences.FolderD;
+using SeedAudiences.Test.Unit.MockServer;
 
 namespace SeedAudiences.Test.Unit.MockServer.FolderD;
 
@@ -8,7 +10,7 @@ namespace SeedAudiences.Test.Unit.MockServer.FolderD;
 public class GetDirectThreadTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             {

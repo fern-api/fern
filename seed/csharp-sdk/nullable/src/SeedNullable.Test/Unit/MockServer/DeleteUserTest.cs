@@ -1,4 +1,6 @@
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using SeedNullable;
 using SeedNullable.Core;
 
 namespace SeedNullable.Test.Unit.MockServer;
@@ -7,7 +9,7 @@ namespace SeedNullable.Test.Unit.MockServer;
 public class DeleteUserTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {

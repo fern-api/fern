@@ -1,4 +1,6 @@
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using SeedExtraProperties;
 using SeedExtraProperties.Core;
 
 namespace SeedExtraProperties.Test.Unit.MockServer;
@@ -7,7 +9,7 @@ namespace SeedExtraProperties.Test.Unit.MockServer;
 public class CreateUserTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {

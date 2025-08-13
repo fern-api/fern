@@ -8,7 +8,7 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(Shape.JsonConverter))]
 [Serializable]
 public record Shape
 {
@@ -19,18 +19,18 @@ public record Shape
     }
 
     /// <summary>
-    /// Create an instance of Shape with <see cref="Circle"/>.
+    /// Create an instance of Shape with <see cref="Shape.Circle"/>.
     /// </summary>
-    public Shape(Circle value)
+    public Shape(Shape.Circle value)
     {
         Type = "circle";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of Shape with <see cref="Square"/>.
+    /// Create an instance of Shape with <see cref="Shape.Square"/>.
     /// </summary>
-    public Shape(Square value)
+    public Shape(Shape.Square value)
     {
         Type = "square";
         Value = value.Value;
@@ -65,18 +65,14 @@ public record Shape
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'circle'.</exception>
     public SeedUnions.Circle AsCircle() =>
-        IsCircle
-            ? (SeedUnions.Circle)Value!
-            : throw new Exception("SeedUnions.Shape.Type is not 'circle'");
+        IsCircle ? (SeedUnions.Circle)Value! : throw new Exception("Shape.Type is not 'circle'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Square"/> if <see cref="Type"/> is 'square', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'square'.</exception>
     public SeedUnions.Square AsSquare() =>
-        IsSquare
-            ? (SeedUnions.Square)Value!
-            : throw new Exception("SeedUnions.Shape.Type is not 'square'");
+        IsSquare ? (SeedUnions.Square)Value! : throw new Exception("Shape.Type is not 'square'");
 
     public T Match<T>(
         Func<SeedUnions.Circle, T> onCircle,
@@ -155,12 +151,12 @@ public record Shape
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Shape>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(Shape).IsAssignableFrom(typeToConvert);
 
         public override Shape Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -194,8 +190,8 @@ public record Shape
                 _ => json.Deserialize<object?>(options),
             };
             var baseProperties =
-                json.Deserialize<BaseProperties>(options)
-                ?? throw new JsonException("Failed to deserialize SeedUnions.Shape.BaseProperties");
+                json.Deserialize<Shape.BaseProperties>(options)
+                ?? throw new JsonException("Failed to deserialize Shape.BaseProperties");
             return new Shape(discriminator, value) { Id = baseProperties.Id };
         }
 
@@ -214,8 +210,8 @@ public record Shape
                 } ?? new JsonObject();
             json["type"] = value.Type;
             var basePropertiesJson =
-                JsonSerializer.SerializeToNode(new BaseProperties { Id = value.Id }, options)
-                ?? throw new JsonException("Failed to serialize SeedUnions.Shape.BaseProperties");
+                JsonSerializer.SerializeToNode(new Shape.BaseProperties { Id = value.Id }, options)
+                ?? throw new JsonException("Failed to serialize Shape.BaseProperties");
             foreach (var property in basePropertiesJson.AsObject())
             {
                 json[property.Key] = property.Value;

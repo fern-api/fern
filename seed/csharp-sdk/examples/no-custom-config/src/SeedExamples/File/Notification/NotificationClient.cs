@@ -9,8 +9,8 @@ public partial class NotificationClient
     internal NotificationClient(RawClient client)
     {
         _client = client;
-        Service = new SeedExamples.File.Notification.ServiceClient(_client);
+        Service = new ServiceClient(_client);
     }
 
-    public SeedExamples.File.Notification.ServiceClient Service { get; }
+    public ServiceClient Service { get; }
 }

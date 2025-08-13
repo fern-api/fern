@@ -1,6 +1,8 @@
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
 using SeedExhaustive.Endpoints.Put;
+using SeedExhaustive.Test.Unit.MockServer;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Put;
 
@@ -8,7 +10,7 @@ namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Put;
 public class AddTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             {

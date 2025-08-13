@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedExamples.Core;
 
 namespace SeedExamples;
@@ -61,7 +61,7 @@ public partial class ServiceClient
 
     /// <example><code>
     /// await client.Service.CreateMovieAsync(
-    ///     new SeedExamples.Movie
+    ///     new Movie
     ///     {
     ///         Id = "movie-c06a4ad7",
     ///         Prequel = "movie-cv9b914f",
@@ -130,7 +130,7 @@ public partial class ServiceClient
 
     /// <example><code>
     /// await client.Service.GetMetadataAsync(
-    ///     new SeedExamples.GetMetadataRequest
+    ///     new GetMetadataRequest
     ///     {
     ///         Shallow = false,
     ///         Tag = ["development"],
@@ -192,10 +192,10 @@ public partial class ServiceClient
 
     /// <example><code>
     /// await client.Service.CreateBigEntityAsync(
-    ///     new SeedExamples.BigEntity
+    ///     new BigEntity
     ///     {
-    ///         CastMember = new SeedExamples.Actor { Name = "name", Id = "id" },
-    ///         ExtendedMovie = new SeedExamples.ExtendedMovie
+    ///         CastMember = new Actor { Name = "name", Id = "id" },
+    ///         ExtendedMovie = new ExtendedMovie
     ///         {
     ///             Cast = new List&lt;string&gt;() { "cast", "cast" },
     ///             Id = "id",
@@ -215,17 +215,17 @@ public partial class ServiceClient
     ///             },
     ///             Revenue = 1000000,
     ///         },
-    ///         Entity = new SeedExamples.Entity { Type = SeedExamples.BasicType.Primitive, Name = "name" },
-    ///         Metadata = new SeedExamples.Metadata(new SeedExamples.Metadata.Html("metadata")),
-    ///         CommonMetadata = new SeedExamples.Commons.Metadata
+    ///         Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
+    ///         Metadata = new Metadata(new Metadata.Html("metadata")),
+    ///         CommonMetadata = new Metadata
     ///         {
     ///             Id = "id",
     ///             Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },
     ///             JsonString = "jsonString",
     ///         },
-    ///         EventInfo = new SeedExamples.Commons.EventInfo(
-    ///             new SeedExamples.Commons.EventInfo.Metadata(
-    ///                 new SeedExamples.Commons.Metadata
+    ///         EventInfo = new EventInfo(
+    ///             new EventInfo.Metadata(
+    ///                 new Metadata
     ///                 {
     ///                     Id = "id",
     ///                     Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },
@@ -233,15 +233,11 @@ public partial class ServiceClient
     ///                 }
     ///             )
     ///         ),
-    ///         Data = new SeedExamples.Commons.Data(new SeedExamples.Commons.Data.String("data")),
-    ///         Migration = new SeedExamples.Migration
-    ///         {
-    ///             Name = "name",
-    ///             Status = SeedExamples.MigrationStatus.Running,
-    ///         },
-    ///         Exception = new SeedExamples.Exception(
-    ///             new SeedExamples.Exception.Generic(
-    ///                 new SeedExamples.ExceptionInfo
+    ///         Data = new Data(new Data.String("data")),
+    ///         Migration = new Migration { Name = "name", Status = MigrationStatus.Running },
+    ///         Exception = new Exception(
+    ///             new Exception.Generic(
+    ///                 new ExceptionInfo
     ///                 {
     ///                     ExceptionType = "exceptionType",
     ///                     ExceptionMessage = "exceptionMessage",
@@ -249,102 +245,102 @@ public partial class ServiceClient
     ///                 }
     ///             )
     ///         ),
-    ///         Test = new SeedExamples.Test(new SeedExamples.Test.And(true)),
-    ///         Node = new SeedExamples.Node
+    ///         Test = new Test(new Test.And(true)),
+    ///         Node = new Node
     ///         {
     ///             Name = "name",
-    ///             Nodes = new List&lt;SeedExamples.Node&gt;()
+    ///             Nodes = new List&lt;Node&gt;()
     ///             {
-    ///                 new SeedExamples.Node
+    ///                 new Node
     ///                 {
     ///                     Name = "name",
-    ///                     Nodes = new List&lt;SeedExamples.Node&gt;()
+    ///                     Nodes = new List&lt;Node&gt;()
     ///                     {
-    ///                         new SeedExamples.Node
+    ///                         new Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;SeedExamples.Node&gt;() { },
-    ///                             Trees = new List&lt;SeedExamples.Tree&gt;() { },
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
     ///                         },
-    ///                         new SeedExamples.Node
+    ///                         new Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;SeedExamples.Node&gt;() { },
-    ///                             Trees = new List&lt;SeedExamples.Tree&gt;() { },
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
     ///                         },
     ///                     },
-    ///                     Trees = new List&lt;SeedExamples.Tree&gt;()
+    ///                     Trees = new List&lt;Tree&gt;()
     ///                     {
-    ///                         new SeedExamples.Tree { Nodes = new List&lt;SeedExamples.Node&gt;() { } },
-    ///                         new SeedExamples.Tree { Nodes = new List&lt;SeedExamples.Node&gt;() { } },
+    ///                         new Tree { Nodes = new List&lt;Node&gt;() { } },
+    ///                         new Tree { Nodes = new List&lt;Node&gt;() { } },
     ///                     },
     ///                 },
-    ///                 new SeedExamples.Node
+    ///                 new Node
     ///                 {
     ///                     Name = "name",
-    ///                     Nodes = new List&lt;SeedExamples.Node&gt;()
+    ///                     Nodes = new List&lt;Node&gt;()
     ///                     {
-    ///                         new SeedExamples.Node
+    ///                         new Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;SeedExamples.Node&gt;() { },
-    ///                             Trees = new List&lt;SeedExamples.Tree&gt;() { },
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
     ///                         },
-    ///                         new SeedExamples.Node
+    ///                         new Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;SeedExamples.Node&gt;() { },
-    ///                             Trees = new List&lt;SeedExamples.Tree&gt;() { },
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
     ///                         },
     ///                     },
-    ///                     Trees = new List&lt;SeedExamples.Tree&gt;()
+    ///                     Trees = new List&lt;Tree&gt;()
     ///                     {
-    ///                         new SeedExamples.Tree { Nodes = new List&lt;SeedExamples.Node&gt;() { } },
-    ///                         new SeedExamples.Tree { Nodes = new List&lt;SeedExamples.Node&gt;() { } },
+    ///                         new Tree { Nodes = new List&lt;Node&gt;() { } },
+    ///                         new Tree { Nodes = new List&lt;Node&gt;() { } },
     ///                     },
     ///                 },
     ///             },
-    ///             Trees = new List&lt;SeedExamples.Tree&gt;()
+    ///             Trees = new List&lt;Tree&gt;()
     ///             {
-    ///                 new SeedExamples.Tree
+    ///                 new Tree
     ///                 {
-    ///                     Nodes = new List&lt;SeedExamples.Node&gt;()
+    ///                     Nodes = new List&lt;Node&gt;()
     ///                     {
-    ///                         new SeedExamples.Node
+    ///                         new Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;SeedExamples.Node&gt;() { },
-    ///                             Trees = new List&lt;SeedExamples.Tree&gt;() { },
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
     ///                         },
-    ///                         new SeedExamples.Node
+    ///                         new Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;SeedExamples.Node&gt;() { },
-    ///                             Trees = new List&lt;SeedExamples.Tree&gt;() { },
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
     ///                         },
     ///                     },
     ///                 },
-    ///                 new SeedExamples.Tree
+    ///                 new Tree
     ///                 {
-    ///                     Nodes = new List&lt;SeedExamples.Node&gt;()
+    ///                     Nodes = new List&lt;Node&gt;()
     ///                     {
-    ///                         new SeedExamples.Node
+    ///                         new Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;SeedExamples.Node&gt;() { },
-    ///                             Trees = new List&lt;SeedExamples.Tree&gt;() { },
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
     ///                         },
-    ///                         new SeedExamples.Node
+    ///                         new Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;SeedExamples.Node&gt;() { },
-    ///                             Trees = new List&lt;SeedExamples.Tree&gt;() { },
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
     ///                         },
     ///                     },
     ///                 },
     ///             },
     ///         },
-    ///         Directory = new SeedExamples.Directory
+    ///         Directory = new Directory
     ///         {
     ///             Name = "name",
     ///             Files = new List&lt;SeedExamples.File&gt;()
@@ -352,9 +348,9 @@ public partial class ServiceClient
     ///                 new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                 new SeedExamples.File { Name = "name", Contents = "contents" },
     ///             },
-    ///             Directories = new List&lt;SeedExamples.Directory&gt;()
+    ///             Directories = new List&lt;Directory&gt;()
     ///             {
-    ///                 new SeedExamples.Directory
+    ///                 new Directory
     ///                 {
     ///                     Name = "name",
     ///                     Files = new List&lt;SeedExamples.File&gt;()
@@ -362,23 +358,23 @@ public partial class ServiceClient
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                     },
-    ///                     Directories = new List&lt;SeedExamples.Directory&gt;()
+    ///                     Directories = new List&lt;Directory&gt;()
     ///                     {
-    ///                         new SeedExamples.Directory
+    ///                         new Directory
     ///                         {
     ///                             Name = "name",
     ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
+    ///                             Directories = new List&lt;Directory&gt;() { },
     ///                         },
-    ///                         new SeedExamples.Directory
+    ///                         new Directory
     ///                         {
     ///                             Name = "name",
     ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
+    ///                             Directories = new List&lt;Directory&gt;() { },
     ///                         },
     ///                     },
     ///                 },
-    ///                 new SeedExamples.Directory
+    ///                 new Directory
     ///                 {
     ///                     Name = "name",
     ///                     Files = new List&lt;SeedExamples.File&gt;()
@@ -386,25 +382,25 @@ public partial class ServiceClient
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                     },
-    ///                     Directories = new List&lt;SeedExamples.Directory&gt;()
+    ///                     Directories = new List&lt;Directory&gt;()
     ///                     {
-    ///                         new SeedExamples.Directory
+    ///                         new Directory
     ///                         {
     ///                             Name = "name",
     ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
+    ///                             Directories = new List&lt;Directory&gt;() { },
     ///                         },
-    ///                         new SeedExamples.Directory
+    ///                         new Directory
     ///                         {
     ///                             Name = "name",
     ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
+    ///                             Directories = new List&lt;Directory&gt;() { },
     ///                         },
     ///                     },
     ///                 },
     ///             },
     ///         },
-    ///         Moment = new SeedExamples.Moment
+    ///         Moment = new Moment
     ///         {
     ///             Id = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             Date = new DateOnly(2023, 1, 15),
@@ -458,7 +454,7 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.Service.RefreshTokenAsync(null);
     /// </code></example>
-    public async Task RefreshTokenAsync(
+    public async global::System.Threading.Tasks.Task RefreshTokenAsync(
         RefreshTokenRequest? request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

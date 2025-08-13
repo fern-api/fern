@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedAlias;
 
-var client = new SeedAlias.SeedAliasClient();
+var client = new SeedAliasClient();
 await client.GetAsync("typeId");
 ```
 

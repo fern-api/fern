@@ -8,7 +8,7 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(UnionWithDuplicateTypes.JsonConverter))]
 [Serializable]
 public record UnionWithDuplicateTypes
 {
@@ -19,18 +19,18 @@ public record UnionWithDuplicateTypes
     }
 
     /// <summary>
-    /// Create an instance of UnionWithDuplicateTypes with <see cref="Foo1"/>.
+    /// Create an instance of UnionWithDuplicateTypes with <see cref="UnionWithDuplicateTypes.Foo1"/>.
     /// </summary>
-    public UnionWithDuplicateTypes(Foo1 value)
+    public UnionWithDuplicateTypes(UnionWithDuplicateTypes.Foo1 value)
     {
         Type = "foo1";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithDuplicateTypes with <see cref="Foo2"/>.
+    /// Create an instance of UnionWithDuplicateTypes with <see cref="UnionWithDuplicateTypes.Foo2"/>.
     /// </summary>
-    public UnionWithDuplicateTypes(Foo2 value)
+    public UnionWithDuplicateTypes(UnionWithDuplicateTypes.Foo2 value)
     {
         Type = "foo2";
         Value = value.Value;
@@ -58,24 +58,28 @@ public record UnionWithDuplicateTypes
     public bool IsFoo2 => Type == "foo2";
 
     /// <summary>
-    /// Returns the value as a <see cref="Foo"/> if <see cref="Type"/> is 'foo1', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedUnions.Foo"/> if <see cref="Type"/> is 'foo1', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo1'.</exception>
-    public Foo AsFoo1() =>
+    public SeedUnions.Foo AsFoo1() =>
         IsFoo1
-            ? (Foo)Value!
-            : throw new Exception("SeedUnions.UnionWithDuplicateTypes.Type is not 'foo1'");
+            ? (SeedUnions.Foo)Value!
+            : throw new Exception("UnionWithDuplicateTypes.Type is not 'foo1'");
 
     /// <summary>
-    /// Returns the value as a <see cref="Foo"/> if <see cref="Type"/> is 'foo2', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedUnions.Foo"/> if <see cref="Type"/> is 'foo2', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo2'.</exception>
-    public Foo AsFoo2() =>
+    public SeedUnions.Foo AsFoo2() =>
         IsFoo2
-            ? (Foo)Value!
-            : throw new Exception("SeedUnions.UnionWithDuplicateTypes.Type is not 'foo2'");
+            ? (SeedUnions.Foo)Value!
+            : throw new Exception("UnionWithDuplicateTypes.Type is not 'foo2'");
 
-    public T Match<T>(Func<Foo, T> onFoo1, Func<Foo, T> onFoo2, Func<string, object?, T> onUnknown_)
+    public T Match<T>(
+        Func<SeedUnions.Foo, T> onFoo1,
+        Func<SeedUnions.Foo, T> onFoo2,
+        Func<string, object?, T> onUnknown_
+    )
     {
         return Type switch
         {
@@ -85,7 +89,11 @@ public record UnionWithDuplicateTypes
         };
     }
 
-    public void Visit(Action<Foo> onFoo1, Action<Foo> onFoo2, Action<string, object?> onUnknown_)
+    public void Visit(
+        Action<SeedUnions.Foo> onFoo1,
+        Action<SeedUnions.Foo> onFoo2,
+        Action<string, object?> onUnknown_
+    )
     {
         switch (Type)
         {
@@ -102,13 +110,13 @@ public record UnionWithDuplicateTypes
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="Foo"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedUnions.Foo"/> and returns true if successful.
     /// </summary>
-    public bool TryAsFoo1(out Foo? value)
+    public bool TryAsFoo1(out SeedUnions.Foo? value)
     {
         if (Type == "foo1")
         {
-            value = (Foo)Value!;
+            value = (SeedUnions.Foo)Value!;
             return true;
         }
         value = null;
@@ -116,13 +124,13 @@ public record UnionWithDuplicateTypes
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="Foo"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedUnions.Foo"/> and returns true if successful.
     /// </summary>
-    public bool TryAsFoo2(out Foo? value)
+    public bool TryAsFoo2(out SeedUnions.Foo? value)
     {
         if (Type == "foo2")
         {
-            value = (Foo)Value!;
+            value = (SeedUnions.Foo)Value!;
             return true;
         }
         value = null;
@@ -131,19 +139,21 @@ public record UnionWithDuplicateTypes
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator UnionWithDuplicateTypes(Foo1 value) => new(value);
+    public static implicit operator UnionWithDuplicateTypes(UnionWithDuplicateTypes.Foo1 value) =>
+        new(value);
 
-    public static implicit operator UnionWithDuplicateTypes(Foo2 value) => new(value);
+    public static implicit operator UnionWithDuplicateTypes(UnionWithDuplicateTypes.Foo2 value) =>
+        new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithDuplicateTypes>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithDuplicateTypes).IsAssignableFrom(typeToConvert);
 
         public override UnionWithDuplicateTypes Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -170,9 +180,9 @@ public record UnionWithDuplicateTypes
 
             var value = discriminator switch
             {
-                "foo1" => json.Deserialize<Foo>(options)
+                "foo1" => json.Deserialize<SeedUnions.Foo>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
-                "foo2" => json.Deserialize<Foo>(options)
+                "foo2" => json.Deserialize<SeedUnions.Foo>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -203,16 +213,16 @@ public record UnionWithDuplicateTypes
     [Serializable]
     public struct Foo1
     {
-        public Foo1(Foo value)
+        public Foo1(SeedUnions.Foo value)
         {
             Value = value;
         }
 
-        internal Foo Value { get; set; }
+        internal SeedUnions.Foo Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Foo1(Foo value) => new(value);
+        public static implicit operator Foo1(SeedUnions.Foo value) => new(value);
     }
 
     /// <summary>
@@ -221,15 +231,15 @@ public record UnionWithDuplicateTypes
     [Serializable]
     public struct Foo2
     {
-        public Foo2(Foo value)
+        public Foo2(SeedUnions.Foo value)
         {
             Value = value;
         }
 
-        internal Foo Value { get; set; }
+        internal SeedUnions.Foo Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Foo2(Foo value) => new(value);
+        public static implicit operator Foo2(SeedUnions.Foo value) => new(value);
     }
 }

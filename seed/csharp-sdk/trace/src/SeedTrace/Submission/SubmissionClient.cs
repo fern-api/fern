@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -19,7 +19,7 @@ public partial class SubmissionClient
     /// Returns sessionId and execution server URL for session. Spins up server.
     /// </summary>
     /// <example><code>
-    /// await client.Submission.CreateExecutionSessionAsync(SeedTrace.Language.Java);
+    /// await client.Submission.CreateExecutionSessionAsync(Language.Java);
     /// </code></example>
     public async Task<ExecutionSessionResponse> CreateExecutionSessionAsync(
         Language language,
@@ -121,7 +121,7 @@ public partial class SubmissionClient
     /// <example><code>
     /// await client.Submission.StopExecutionSessionAsync("sessionId");
     /// </code></example>
-    public async Task StopExecutionSessionAsync(
+    public async global::System.Threading.Tasks.Task StopExecutionSessionAsync(
         string sessionId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

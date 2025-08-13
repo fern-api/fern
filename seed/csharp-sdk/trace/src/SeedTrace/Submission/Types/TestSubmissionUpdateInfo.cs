@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(TestSubmissionUpdateInfo.JsonConverter))]
 [Serializable]
 public record TestSubmissionUpdateInfo
 {
@@ -19,54 +19,54 @@ public record TestSubmissionUpdateInfo
     }
 
     /// <summary>
-    /// Create an instance of TestSubmissionUpdateInfo with <see cref="Running"/>.
+    /// Create an instance of TestSubmissionUpdateInfo with <see cref="TestSubmissionUpdateInfo.Running"/>.
     /// </summary>
-    public TestSubmissionUpdateInfo(Running value)
+    public TestSubmissionUpdateInfo(TestSubmissionUpdateInfo.Running value)
     {
         Type = "running";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of TestSubmissionUpdateInfo with <see cref="Stopped"/>.
+    /// Create an instance of TestSubmissionUpdateInfo with <see cref="TestSubmissionUpdateInfo.Stopped"/>.
     /// </summary>
-    public TestSubmissionUpdateInfo(Stopped value)
+    public TestSubmissionUpdateInfo(TestSubmissionUpdateInfo.Stopped value)
     {
         Type = "stopped";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of TestSubmissionUpdateInfo with <see cref="Errored"/>.
+    /// Create an instance of TestSubmissionUpdateInfo with <see cref="TestSubmissionUpdateInfo.Errored"/>.
     /// </summary>
-    public TestSubmissionUpdateInfo(Errored value)
+    public TestSubmissionUpdateInfo(TestSubmissionUpdateInfo.Errored value)
     {
         Type = "errored";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of TestSubmissionUpdateInfo with <see cref="GradedTestCase"/>.
+    /// Create an instance of TestSubmissionUpdateInfo with <see cref="TestSubmissionUpdateInfo.GradedTestCase"/>.
     /// </summary>
-    public TestSubmissionUpdateInfo(GradedTestCase value)
+    public TestSubmissionUpdateInfo(TestSubmissionUpdateInfo.GradedTestCase value)
     {
         Type = "gradedTestCase";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of TestSubmissionUpdateInfo with <see cref="RecordedTestCase"/>.
+    /// Create an instance of TestSubmissionUpdateInfo with <see cref="TestSubmissionUpdateInfo.RecordedTestCase"/>.
     /// </summary>
-    public TestSubmissionUpdateInfo(RecordedTestCase value)
+    public TestSubmissionUpdateInfo(TestSubmissionUpdateInfo.RecordedTestCase value)
     {
         Type = "recordedTestCase";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of TestSubmissionUpdateInfo with <see cref="Finished"/>.
+    /// Create an instance of TestSubmissionUpdateInfo with <see cref="TestSubmissionUpdateInfo.Finished"/>.
     /// </summary>
-    public TestSubmissionUpdateInfo(Finished value)
+    public TestSubmissionUpdateInfo(TestSubmissionUpdateInfo.Finished value)
     {
         Type = "finished";
         Value = value.Value;
@@ -114,53 +114,47 @@ public record TestSubmissionUpdateInfo
     public bool IsFinished => Type == "finished";
 
     /// <summary>
-    /// Returns the value as a <see cref="RunningSubmissionState"/> if <see cref="Type"/> is 'running', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.RunningSubmissionState"/> if <see cref="Type"/> is 'running', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'running'.</exception>
-    public RunningSubmissionState AsRunning() =>
+    public SeedTrace.RunningSubmissionState AsRunning() =>
         IsRunning
-            ? (RunningSubmissionState)Value!
-            : throw new Exception("SeedTrace.TestSubmissionUpdateInfo.Type is not 'running'");
+            ? (SeedTrace.RunningSubmissionState)Value!
+            : throw new Exception("TestSubmissionUpdateInfo.Type is not 'running'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'stopped'.</exception>
     public object AsStopped() =>
-        IsStopped
-            ? Value!
-            : throw new Exception("SeedTrace.TestSubmissionUpdateInfo.Type is not 'stopped'");
+        IsStopped ? Value! : throw new Exception("TestSubmissionUpdateInfo.Type is not 'stopped'");
 
     /// <summary>
-    /// Returns the value as a <see cref="ErrorInfo"/> if <see cref="Type"/> is 'errored', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.ErrorInfo"/> if <see cref="Type"/> is 'errored', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'errored'.</exception>
-    public ErrorInfo AsErrored() =>
+    public SeedTrace.ErrorInfo AsErrored() =>
         IsErrored
-            ? (ErrorInfo)Value!
-            : throw new Exception("SeedTrace.TestSubmissionUpdateInfo.Type is not 'errored'");
+            ? (SeedTrace.ErrorInfo)Value!
+            : throw new Exception("TestSubmissionUpdateInfo.Type is not 'errored'");
 
     /// <summary>
-    /// Returns the value as a <see cref="GradedTestCaseUpdate"/> if <see cref="Type"/> is 'gradedTestCase', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.GradedTestCaseUpdate"/> if <see cref="Type"/> is 'gradedTestCase', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'gradedTestCase'.</exception>
-    public GradedTestCaseUpdate AsGradedTestCase() =>
+    public SeedTrace.GradedTestCaseUpdate AsGradedTestCase() =>
         IsGradedTestCase
-            ? (GradedTestCaseUpdate)Value!
-            : throw new Exception(
-                "SeedTrace.TestSubmissionUpdateInfo.Type is not 'gradedTestCase'"
-            );
+            ? (SeedTrace.GradedTestCaseUpdate)Value!
+            : throw new Exception("TestSubmissionUpdateInfo.Type is not 'gradedTestCase'");
 
     /// <summary>
-    /// Returns the value as a <see cref="RecordedTestCaseUpdate"/> if <see cref="Type"/> is 'recordedTestCase', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.RecordedTestCaseUpdate"/> if <see cref="Type"/> is 'recordedTestCase', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'recordedTestCase'.</exception>
-    public RecordedTestCaseUpdate AsRecordedTestCase() =>
+    public SeedTrace.RecordedTestCaseUpdate AsRecordedTestCase() =>
         IsRecordedTestCase
-            ? (RecordedTestCaseUpdate)Value!
-            : throw new Exception(
-                "SeedTrace.TestSubmissionUpdateInfo.Type is not 'recordedTestCase'"
-            );
+            ? (SeedTrace.RecordedTestCaseUpdate)Value!
+            : throw new Exception("TestSubmissionUpdateInfo.Type is not 'recordedTestCase'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'finished', otherwise throws an exception.
@@ -169,14 +163,14 @@ public record TestSubmissionUpdateInfo
     public object AsFinished() =>
         IsFinished
             ? Value!
-            : throw new Exception("SeedTrace.TestSubmissionUpdateInfo.Type is not 'finished'");
+            : throw new Exception("TestSubmissionUpdateInfo.Type is not 'finished'");
 
     public T Match<T>(
-        Func<RunningSubmissionState, T> onRunning,
+        Func<SeedTrace.RunningSubmissionState, T> onRunning,
         Func<object, T> onStopped,
-        Func<ErrorInfo, T> onErrored,
-        Func<GradedTestCaseUpdate, T> onGradedTestCase,
-        Func<RecordedTestCaseUpdate, T> onRecordedTestCase,
+        Func<SeedTrace.ErrorInfo, T> onErrored,
+        Func<SeedTrace.GradedTestCaseUpdate, T> onGradedTestCase,
+        Func<SeedTrace.RecordedTestCaseUpdate, T> onRecordedTestCase,
         Func<object, T> onFinished,
         Func<string, object?, T> onUnknown_
     )
@@ -194,11 +188,11 @@ public record TestSubmissionUpdateInfo
     }
 
     public void Visit(
-        Action<RunningSubmissionState> onRunning,
+        Action<SeedTrace.RunningSubmissionState> onRunning,
         Action<object> onStopped,
-        Action<ErrorInfo> onErrored,
-        Action<GradedTestCaseUpdate> onGradedTestCase,
-        Action<RecordedTestCaseUpdate> onRecordedTestCase,
+        Action<SeedTrace.ErrorInfo> onErrored,
+        Action<SeedTrace.GradedTestCaseUpdate> onGradedTestCase,
+        Action<SeedTrace.RecordedTestCaseUpdate> onRecordedTestCase,
         Action<object> onFinished,
         Action<string, object?> onUnknown_
     )
@@ -230,13 +224,13 @@ public record TestSubmissionUpdateInfo
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="RunningSubmissionState"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.RunningSubmissionState"/> and returns true if successful.
     /// </summary>
-    public bool TryAsRunning(out RunningSubmissionState? value)
+    public bool TryAsRunning(out SeedTrace.RunningSubmissionState? value)
     {
         if (Type == "running")
         {
-            value = (RunningSubmissionState)Value!;
+            value = (SeedTrace.RunningSubmissionState)Value!;
             return true;
         }
         value = null;
@@ -258,13 +252,13 @@ public record TestSubmissionUpdateInfo
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="ErrorInfo"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.ErrorInfo"/> and returns true if successful.
     /// </summary>
-    public bool TryAsErrored(out ErrorInfo? value)
+    public bool TryAsErrored(out SeedTrace.ErrorInfo? value)
     {
         if (Type == "errored")
         {
-            value = (ErrorInfo)Value!;
+            value = (SeedTrace.ErrorInfo)Value!;
             return true;
         }
         value = null;
@@ -272,13 +266,13 @@ public record TestSubmissionUpdateInfo
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="GradedTestCaseUpdate"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.GradedTestCaseUpdate"/> and returns true if successful.
     /// </summary>
-    public bool TryAsGradedTestCase(out GradedTestCaseUpdate? value)
+    public bool TryAsGradedTestCase(out SeedTrace.GradedTestCaseUpdate? value)
     {
         if (Type == "gradedTestCase")
         {
-            value = (GradedTestCaseUpdate)Value!;
+            value = (SeedTrace.GradedTestCaseUpdate)Value!;
             return true;
         }
         value = null;
@@ -286,13 +280,13 @@ public record TestSubmissionUpdateInfo
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="RecordedTestCaseUpdate"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.RecordedTestCaseUpdate"/> and returns true if successful.
     /// </summary>
-    public bool TryAsRecordedTestCase(out RecordedTestCaseUpdate? value)
+    public bool TryAsRecordedTestCase(out SeedTrace.RecordedTestCaseUpdate? value)
     {
         if (Type == "recordedTestCase")
         {
-            value = (RecordedTestCaseUpdate)Value!;
+            value = (SeedTrace.RecordedTestCaseUpdate)Value!;
             return true;
         }
         value = null;
@@ -315,23 +309,31 @@ public record TestSubmissionUpdateInfo
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator TestSubmissionUpdateInfo(Running value) => new(value);
+    public static implicit operator TestSubmissionUpdateInfo(
+        TestSubmissionUpdateInfo.Running value
+    ) => new(value);
 
-    public static implicit operator TestSubmissionUpdateInfo(Errored value) => new(value);
+    public static implicit operator TestSubmissionUpdateInfo(
+        TestSubmissionUpdateInfo.Errored value
+    ) => new(value);
 
-    public static implicit operator TestSubmissionUpdateInfo(GradedTestCase value) => new(value);
+    public static implicit operator TestSubmissionUpdateInfo(
+        TestSubmissionUpdateInfo.GradedTestCase value
+    ) => new(value);
 
-    public static implicit operator TestSubmissionUpdateInfo(RecordedTestCase value) => new(value);
+    public static implicit operator TestSubmissionUpdateInfo(
+        TestSubmissionUpdateInfo.RecordedTestCase value
+    ) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<TestSubmissionUpdateInfo>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(TestSubmissionUpdateInfo).IsAssignableFrom(typeToConvert);
 
         public override TestSubmissionUpdateInfo Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -358,18 +360,19 @@ public record TestSubmissionUpdateInfo
 
             var value = discriminator switch
             {
-                "running" => json.GetProperty("value").Deserialize<RunningSubmissionState>(options)
+                "running" => json.GetProperty("value")
+                    .Deserialize<SeedTrace.RunningSubmissionState>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.RunningSubmissionState"
                     ),
                 "stopped" => new { },
-                "errored" => json.GetProperty("value").Deserialize<ErrorInfo>(options)
+                "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
-                "gradedTestCase" => json.Deserialize<GradedTestCaseUpdate>(options)
+                "gradedTestCase" => json.Deserialize<SeedTrace.GradedTestCaseUpdate>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.GradedTestCaseUpdate"
                     ),
-                "recordedTestCase" => json.Deserialize<RecordedTestCaseUpdate>(options)
+                "recordedTestCase" => json.Deserialize<SeedTrace.RecordedTestCaseUpdate>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.RecordedTestCaseUpdate"
                     ),
@@ -413,16 +416,17 @@ public record TestSubmissionUpdateInfo
     [Serializable]
     public struct Running
     {
-        public Running(RunningSubmissionState value)
+        public Running(SeedTrace.RunningSubmissionState value)
         {
             Value = value;
         }
 
-        internal RunningSubmissionState Value { get; set; }
+        internal SeedTrace.RunningSubmissionState Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Running(RunningSubmissionState value) => new(value);
+        public static implicit operator Running(SeedTrace.RunningSubmissionState value) =>
+            new(value);
     }
 
     /// <summary>
@@ -442,16 +446,16 @@ public record TestSubmissionUpdateInfo
     [Serializable]
     public struct Errored
     {
-        public Errored(ErrorInfo value)
+        public Errored(SeedTrace.ErrorInfo value)
         {
             Value = value;
         }
 
-        internal ErrorInfo Value { get; set; }
+        internal SeedTrace.ErrorInfo Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Errored(ErrorInfo value) => new(value);
+        public static implicit operator Errored(SeedTrace.ErrorInfo value) => new(value);
     }
 
     /// <summary>
@@ -460,16 +464,17 @@ public record TestSubmissionUpdateInfo
     [Serializable]
     public struct GradedTestCase
     {
-        public GradedTestCase(GradedTestCaseUpdate value)
+        public GradedTestCase(SeedTrace.GradedTestCaseUpdate value)
         {
             Value = value;
         }
 
-        internal GradedTestCaseUpdate Value { get; set; }
+        internal SeedTrace.GradedTestCaseUpdate Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator GradedTestCase(GradedTestCaseUpdate value) => new(value);
+        public static implicit operator GradedTestCase(SeedTrace.GradedTestCaseUpdate value) =>
+            new(value);
     }
 
     /// <summary>
@@ -478,16 +483,16 @@ public record TestSubmissionUpdateInfo
     [Serializable]
     public struct RecordedTestCase
     {
-        public RecordedTestCase(RecordedTestCaseUpdate value)
+        public RecordedTestCase(SeedTrace.RecordedTestCaseUpdate value)
         {
             Value = value;
         }
 
-        internal RecordedTestCaseUpdate Value { get; set; }
+        internal SeedTrace.RecordedTestCaseUpdate Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator RecordedTestCase(RecordedTestCaseUpdate value) =>
+        public static implicit operator RecordedTestCase(SeedTrace.RecordedTestCaseUpdate value) =>
             new(value);
     }
 

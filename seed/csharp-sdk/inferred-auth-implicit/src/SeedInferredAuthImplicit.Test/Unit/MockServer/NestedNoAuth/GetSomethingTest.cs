@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SeedInferredAuthImplicit.Test.Unit.MockServer;
 
 namespace SeedInferredAuthImplicit.Test.Unit.MockServer.NestedNoAuth;
 

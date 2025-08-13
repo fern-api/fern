@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariables.SeedOauthClientCredentialsWithVariablesClient(\n    \"CLIENT_ID\",\n    \"CLIENT_SECRET\"\n);\nawait client.Auth.GetTokenWithClientCredentialsAsync(\n    new SeedOauthClientCredentialsWithVariables.GetTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n        Scope = \"scope\",\n    }\n);\n"
+                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariablesClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Auth.GetTokenWithClientCredentialsAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n        Scope = \"scope\",\n    }\n);\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariables.SeedOauthClientCredentialsWithVariablesClient(\n    \"CLIENT_ID\",\n    \"CLIENT_SECRET\"\n);\nawait client.Auth.RefreshTokenAsync(\n    new SeedOauthClientCredentialsWithVariables.RefreshTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        RefreshToken = \"refresh_token\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"refresh_token\",\n        Scope = \"scope\",\n    }\n);\n"
+                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariablesClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Auth.RefreshTokenAsync(\n    new RefreshTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        RefreshToken = \"refresh_token\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"refresh_token\",\n        Scope = \"scope\",\n    }\n);\n"
             }
         },
         {
@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariables.SeedOauthClientCredentialsWithVariablesClient(\n    \"CLIENT_ID\",\n    \"CLIENT_SECRET\"\n);\nawait client.NestedNoAuth.Api.GetSomethingAsync();\n"
+                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariablesClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.NestedNoAuth.Api.GetSomethingAsync();\n"
             }
         },
         {
@@ -46,7 +46,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariables.SeedOauthClientCredentialsWithVariablesClient(\n    \"CLIENT_ID\",\n    \"CLIENT_SECRET\"\n);\nawait client.Nested.Api.GetSomethingAsync();\n"
+                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariablesClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Nested.Api.GetSomethingAsync();\n"
             }
         },
         {
@@ -58,7 +58,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariables.SeedOauthClientCredentialsWithVariablesClient(\n    \"CLIENT_ID\",\n    \"CLIENT_SECRET\"\n);\nawait client.Service.PostAsync(\"endpointParam\");\n"
+                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariablesClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Service.PostAsync(\"endpointParam\");\n"
             }
         },
         {
@@ -70,7 +70,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariables.SeedOauthClientCredentialsWithVariablesClient(\n    \"CLIENT_ID\",\n    \"CLIENT_SECRET\"\n);\nawait client.Simple.GetSomethingAsync();\n"
+                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariablesClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Simple.GetSomethingAsync();\n"
             }
         }
     ]

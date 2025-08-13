@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Text.Json;
 using NUnit.Framework;
+using SeedUnions;
 using SeedUnions.Core;
 
 namespace SeedUnions.Test;

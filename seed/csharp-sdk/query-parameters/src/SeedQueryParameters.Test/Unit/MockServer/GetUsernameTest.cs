@@ -1,5 +1,7 @@
 using System.Globalization;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using SeedQueryParameters;
 using SeedQueryParameters.Core;
 
 namespace SeedQueryParameters.Test.Unit.MockServer;
@@ -8,7 +10,7 @@ namespace SeedQueryParameters.Test.Unit.MockServer;
 public class GetUsernameTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             {

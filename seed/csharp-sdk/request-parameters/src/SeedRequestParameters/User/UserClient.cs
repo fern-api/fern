@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedRequestParameters.Core;
 
 namespace SeedRequestParameters;
@@ -17,7 +17,7 @@ public partial class UserClient
 
     /// <example><code>
     /// await client.User.CreateUsernameAsync(
-    ///     new SeedRequestParameters.CreateUsernameRequest
+    ///     new CreateUsernameRequest
     ///     {
     ///         Username = "username",
     ///         Password = "password",
@@ -25,7 +25,7 @@ public partial class UserClient
     ///     }
     /// );
     /// </code></example>
-    public async Task CreateUsernameAsync(
+    public async global::System.Threading.Tasks.Task CreateUsernameAsync(
         CreateUsernameRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -60,26 +60,26 @@ public partial class UserClient
 
     /// <example><code>
     /// await client.User.GetUsernameAsync(
-    ///     new SeedRequestParameters.GetUsersRequest
+    ///     new GetUsersRequest
     ///     {
     ///         Limit = 1,
     ///         Id = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///         Date = new DateOnly(2023, 1, 15),
     ///         Deadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///         Bytes = "SGVsbG8gd29ybGQh",
-    ///         User = new SeedRequestParameters.User
+    ///         User = new User
     ///         {
     ///             Name = "name",
     ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
     ///         },
-    ///         UserList = new List&lt;SeedRequestParameters.User&gt;()
+    ///         UserList = new List&lt;User&gt;()
     ///         {
-    ///             new SeedRequestParameters.User
+    ///             new User
     ///             {
     ///                 Name = "name",
     ///                 Tags = new List&lt;string&gt;() { "tags", "tags" },
     ///             },
-    ///             new SeedRequestParameters.User
+    ///             new User
     ///             {
     ///                 Name = "name",
     ///                 Tags = new List&lt;string&gt;() { "tags", "tags" },
@@ -88,23 +88,23 @@ public partial class UserClient
     ///         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///         KeyValue = new Dictionary&lt;string, string&gt;() { { "keyValue", "keyValue" } },
     ///         OptionalString = "optionalString",
-    ///         NestedUser = new SeedRequestParameters.NestedUser
+    ///         NestedUser = new NestedUser
     ///         {
     ///             Name = "name",
-    ///             User = new SeedRequestParameters.User
+    ///             User = new User
     ///             {
     ///                 Name = "name",
     ///                 Tags = new List&lt;string&gt;() { "tags", "tags" },
     ///             },
     ///         },
-    ///         OptionalUser = new SeedRequestParameters.User
+    ///         OptionalUser = new User
     ///         {
     ///             Name = "name",
     ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
     ///         },
     ///         ExcludeUser =
     ///         [
-    ///             new SeedRequestParameters.User
+    ///             new User
     ///             {
     ///                 Name = "name",
     ///                 Tags = new List&lt;string&gt;() { "tags", "tags" },

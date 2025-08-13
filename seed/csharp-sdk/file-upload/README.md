@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedFileUpload;
 
-var client = new SeedFileUpload.SeedFileUploadClient();
+var client = new SeedFileUploadClient();
 await client.Service.SimpleAsync();
 ```
 

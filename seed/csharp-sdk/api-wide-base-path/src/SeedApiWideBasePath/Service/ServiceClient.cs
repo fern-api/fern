@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedApiWideBasePath.Core;
 
 namespace SeedApiWideBasePath;
@@ -17,7 +17,7 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.Service.PostAsync("pathParam", "serviceParam", "resourceParam", 1);
     /// </code></example>
-    public async Task PostAsync(
+    public async global::System.Threading.Tasks.Task PostAsync(
         string pathParam,
         string serviceParam,
         string resourceParam,

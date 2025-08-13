@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(SubmissionTypeState.JsonConverter))]
 [Serializable]
 public record SubmissionTypeState
 {
@@ -19,18 +19,18 @@ public record SubmissionTypeState
     }
 
     /// <summary>
-    /// Create an instance of SubmissionTypeState with <see cref="Test"/>.
+    /// Create an instance of SubmissionTypeState with <see cref="SubmissionTypeState.Test"/>.
     /// </summary>
-    public SubmissionTypeState(Test value)
+    public SubmissionTypeState(SubmissionTypeState.Test value)
     {
         Type = "test";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of SubmissionTypeState with <see cref="Workspace"/>.
+    /// Create an instance of SubmissionTypeState with <see cref="SubmissionTypeState.Workspace"/>.
     /// </summary>
-    public SubmissionTypeState(Workspace value)
+    public SubmissionTypeState(SubmissionTypeState.Workspace value)
     {
         Type = "workspace";
         Value = value.Value;
@@ -58,26 +58,26 @@ public record SubmissionTypeState
     public bool IsWorkspace => Type == "workspace";
 
     /// <summary>
-    /// Returns the value as a <see cref="TestSubmissionState"/> if <see cref="Type"/> is 'test', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.TestSubmissionState"/> if <see cref="Type"/> is 'test', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'test'.</exception>
-    public TestSubmissionState AsTest() =>
+    public SeedTrace.TestSubmissionState AsTest() =>
         IsTest
-            ? (TestSubmissionState)Value!
-            : throw new Exception("SeedTrace.SubmissionTypeState.Type is not 'test'");
+            ? (SeedTrace.TestSubmissionState)Value!
+            : throw new Exception("SubmissionTypeState.Type is not 'test'");
 
     /// <summary>
-    /// Returns the value as a <see cref="WorkspaceSubmissionState"/> if <see cref="Type"/> is 'workspace', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.WorkspaceSubmissionState"/> if <see cref="Type"/> is 'workspace', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'workspace'.</exception>
-    public WorkspaceSubmissionState AsWorkspace() =>
+    public SeedTrace.WorkspaceSubmissionState AsWorkspace() =>
         IsWorkspace
-            ? (WorkspaceSubmissionState)Value!
-            : throw new Exception("SeedTrace.SubmissionTypeState.Type is not 'workspace'");
+            ? (SeedTrace.WorkspaceSubmissionState)Value!
+            : throw new Exception("SubmissionTypeState.Type is not 'workspace'");
 
     public T Match<T>(
-        Func<TestSubmissionState, T> onTest,
-        Func<WorkspaceSubmissionState, T> onWorkspace,
+        Func<SeedTrace.TestSubmissionState, T> onTest,
+        Func<SeedTrace.WorkspaceSubmissionState, T> onWorkspace,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -90,8 +90,8 @@ public record SubmissionTypeState
     }
 
     public void Visit(
-        Action<TestSubmissionState> onTest,
-        Action<WorkspaceSubmissionState> onWorkspace,
+        Action<SeedTrace.TestSubmissionState> onTest,
+        Action<SeedTrace.WorkspaceSubmissionState> onWorkspace,
         Action<string, object?> onUnknown_
     )
     {
@@ -110,13 +110,13 @@ public record SubmissionTypeState
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="TestSubmissionState"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.TestSubmissionState"/> and returns true if successful.
     /// </summary>
-    public bool TryAsTest(out TestSubmissionState? value)
+    public bool TryAsTest(out SeedTrace.TestSubmissionState? value)
     {
         if (Type == "test")
         {
-            value = (TestSubmissionState)Value!;
+            value = (SeedTrace.TestSubmissionState)Value!;
             return true;
         }
         value = null;
@@ -124,13 +124,13 @@ public record SubmissionTypeState
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="WorkspaceSubmissionState"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.WorkspaceSubmissionState"/> and returns true if successful.
     /// </summary>
-    public bool TryAsWorkspace(out WorkspaceSubmissionState? value)
+    public bool TryAsWorkspace(out SeedTrace.WorkspaceSubmissionState? value)
     {
         if (Type == "workspace")
         {
-            value = (WorkspaceSubmissionState)Value!;
+            value = (SeedTrace.WorkspaceSubmissionState)Value!;
             return true;
         }
         value = null;
@@ -139,19 +139,21 @@ public record SubmissionTypeState
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator SubmissionTypeState(Test value) => new(value);
+    public static implicit operator SubmissionTypeState(SubmissionTypeState.Test value) =>
+        new(value);
 
-    public static implicit operator SubmissionTypeState(Workspace value) => new(value);
+    public static implicit operator SubmissionTypeState(SubmissionTypeState.Workspace value) =>
+        new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SubmissionTypeState>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(SubmissionTypeState).IsAssignableFrom(typeToConvert);
 
         public override SubmissionTypeState Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -178,11 +180,11 @@ public record SubmissionTypeState
 
             var value = discriminator switch
             {
-                "test" => json.Deserialize<TestSubmissionState>(options)
+                "test" => json.Deserialize<SeedTrace.TestSubmissionState>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.TestSubmissionState"
                     ),
-                "workspace" => json.Deserialize<WorkspaceSubmissionState>(options)
+                "workspace" => json.Deserialize<SeedTrace.WorkspaceSubmissionState>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.WorkspaceSubmissionState"
                     ),
@@ -215,16 +217,16 @@ public record SubmissionTypeState
     [Serializable]
     public struct Test
     {
-        public Test(TestSubmissionState value)
+        public Test(SeedTrace.TestSubmissionState value)
         {
             Value = value;
         }
 
-        internal TestSubmissionState Value { get; set; }
+        internal SeedTrace.TestSubmissionState Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Test(TestSubmissionState value) => new(value);
+        public static implicit operator Test(SeedTrace.TestSubmissionState value) => new(value);
     }
 
     /// <summary>
@@ -233,15 +235,16 @@ public record SubmissionTypeState
     [Serializable]
     public struct Workspace
     {
-        public Workspace(WorkspaceSubmissionState value)
+        public Workspace(SeedTrace.WorkspaceSubmissionState value)
         {
             Value = value;
         }
 
-        internal WorkspaceSubmissionState Value { get; set; }
+        internal SeedTrace.WorkspaceSubmissionState Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Workspace(WorkspaceSubmissionState value) => new(value);
+        public static implicit operator Workspace(SeedTrace.WorkspaceSubmissionState value) =>
+            new(value);
     }
 }

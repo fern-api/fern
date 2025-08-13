@@ -33,7 +33,7 @@ public partial class SeedCsharpAccessClient
 
     /// <example><code>
     /// await client.CreateUserAsync(
-    ///     new SeedCsharpAccess.User
+    ///     new User
     ///     {
     ///         Id = "id",
     ///         Name = "name",

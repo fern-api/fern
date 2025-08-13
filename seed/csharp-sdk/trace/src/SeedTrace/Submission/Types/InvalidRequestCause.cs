@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(InvalidRequestCause.JsonConverter))]
 [Serializable]
 public record InvalidRequestCause
 {
@@ -19,27 +19,27 @@ public record InvalidRequestCause
     }
 
     /// <summary>
-    /// Create an instance of InvalidRequestCause with <see cref="SubmissionIdNotFound"/>.
+    /// Create an instance of InvalidRequestCause with <see cref="InvalidRequestCause.SubmissionIdNotFound"/>.
     /// </summary>
-    public InvalidRequestCause(SubmissionIdNotFound value)
+    public InvalidRequestCause(InvalidRequestCause.SubmissionIdNotFound value)
     {
         Type = "submissionIdNotFound";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of InvalidRequestCause with <see cref="CustomTestCasesUnsupported"/>.
+    /// Create an instance of InvalidRequestCause with <see cref="InvalidRequestCause.CustomTestCasesUnsupported"/>.
     /// </summary>
-    public InvalidRequestCause(CustomTestCasesUnsupported value)
+    public InvalidRequestCause(InvalidRequestCause.CustomTestCasesUnsupported value)
     {
         Type = "customTestCasesUnsupported";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of InvalidRequestCause with <see cref="UnexpectedLanguage"/>.
+    /// Create an instance of InvalidRequestCause with <see cref="InvalidRequestCause.UnexpectedLanguage"/>.
     /// </summary>
-    public InvalidRequestCause(UnexpectedLanguage value)
+    public InvalidRequestCause(InvalidRequestCause.UnexpectedLanguage value)
     {
         Type = "unexpectedLanguage";
         Value = value.Value;
@@ -78,9 +78,7 @@ public record InvalidRequestCause
     public SeedTrace.SubmissionIdNotFound AsSubmissionIdNotFound() =>
         IsSubmissionIdNotFound
             ? (SeedTrace.SubmissionIdNotFound)Value!
-            : throw new Exception(
-                "SeedTrace.InvalidRequestCause.Type is not 'submissionIdNotFound'"
-            );
+            : throw new Exception("InvalidRequestCause.Type is not 'submissionIdNotFound'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.CustomTestCasesUnsupported"/> if <see cref="Type"/> is 'customTestCasesUnsupported', otherwise throws an exception.
@@ -89,23 +87,21 @@ public record InvalidRequestCause
     public SeedTrace.CustomTestCasesUnsupported AsCustomTestCasesUnsupported() =>
         IsCustomTestCasesUnsupported
             ? (SeedTrace.CustomTestCasesUnsupported)Value!
-            : throw new Exception(
-                "SeedTrace.InvalidRequestCause.Type is not 'customTestCasesUnsupported'"
-            );
+            : throw new Exception("InvalidRequestCause.Type is not 'customTestCasesUnsupported'");
 
     /// <summary>
-    /// Returns the value as a <see cref="UnexpectedLanguageError"/> if <see cref="Type"/> is 'unexpectedLanguage', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.UnexpectedLanguageError"/> if <see cref="Type"/> is 'unexpectedLanguage', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'unexpectedLanguage'.</exception>
-    public UnexpectedLanguageError AsUnexpectedLanguage() =>
+    public SeedTrace.UnexpectedLanguageError AsUnexpectedLanguage() =>
         IsUnexpectedLanguage
-            ? (UnexpectedLanguageError)Value!
-            : throw new Exception("SeedTrace.InvalidRequestCause.Type is not 'unexpectedLanguage'");
+            ? (SeedTrace.UnexpectedLanguageError)Value!
+            : throw new Exception("InvalidRequestCause.Type is not 'unexpectedLanguage'");
 
     public T Match<T>(
         Func<SeedTrace.SubmissionIdNotFound, T> onSubmissionIdNotFound,
         Func<SeedTrace.CustomTestCasesUnsupported, T> onCustomTestCasesUnsupported,
-        Func<UnexpectedLanguageError, T> onUnexpectedLanguage,
+        Func<SeedTrace.UnexpectedLanguageError, T> onUnexpectedLanguage,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -123,7 +119,7 @@ public record InvalidRequestCause
     public void Visit(
         Action<SeedTrace.SubmissionIdNotFound> onSubmissionIdNotFound,
         Action<SeedTrace.CustomTestCasesUnsupported> onCustomTestCasesUnsupported,
-        Action<UnexpectedLanguageError> onUnexpectedLanguage,
+        Action<SeedTrace.UnexpectedLanguageError> onUnexpectedLanguage,
         Action<string, object?> onUnknown_
     )
     {
@@ -173,13 +169,13 @@ public record InvalidRequestCause
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="UnexpectedLanguageError"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.UnexpectedLanguageError"/> and returns true if successful.
     /// </summary>
-    public bool TryAsUnexpectedLanguage(out UnexpectedLanguageError? value)
+    public bool TryAsUnexpectedLanguage(out SeedTrace.UnexpectedLanguageError? value)
     {
         if (Type == "unexpectedLanguage")
         {
-            value = (UnexpectedLanguageError)Value!;
+            value = (SeedTrace.UnexpectedLanguageError)Value!;
             return true;
         }
         value = null;
@@ -188,22 +184,27 @@ public record InvalidRequestCause
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator InvalidRequestCause(SubmissionIdNotFound value) => new(value);
+    public static implicit operator InvalidRequestCause(
+        InvalidRequestCause.SubmissionIdNotFound value
+    ) => new(value);
 
-    public static implicit operator InvalidRequestCause(CustomTestCasesUnsupported value) =>
-        new(value);
+    public static implicit operator InvalidRequestCause(
+        InvalidRequestCause.CustomTestCasesUnsupported value
+    ) => new(value);
 
-    public static implicit operator InvalidRequestCause(UnexpectedLanguage value) => new(value);
+    public static implicit operator InvalidRequestCause(
+        InvalidRequestCause.UnexpectedLanguage value
+    ) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<InvalidRequestCause>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(InvalidRequestCause).IsAssignableFrom(typeToConvert);
 
         public override InvalidRequestCause Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -239,7 +240,7 @@ public record InvalidRequestCause
                         ?? throw new JsonException(
                             "Failed to deserialize SeedTrace.CustomTestCasesUnsupported"
                         ),
-                "unexpectedLanguage" => json.Deserialize<UnexpectedLanguageError>(options)
+                "unexpectedLanguage" => json.Deserialize<SeedTrace.UnexpectedLanguageError>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.UnexpectedLanguageError"
                     ),
@@ -316,16 +317,17 @@ public record InvalidRequestCause
     [Serializable]
     public struct UnexpectedLanguage
     {
-        public UnexpectedLanguage(UnexpectedLanguageError value)
+        public UnexpectedLanguage(SeedTrace.UnexpectedLanguageError value)
         {
             Value = value;
         }
 
-        internal UnexpectedLanguageError Value { get; set; }
+        internal SeedTrace.UnexpectedLanguageError Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator UnexpectedLanguage(UnexpectedLanguageError value) =>
-            new(value);
+        public static implicit operator UnexpectedLanguage(
+            SeedTrace.UnexpectedLanguageError value
+        ) => new(value);
     }
 }

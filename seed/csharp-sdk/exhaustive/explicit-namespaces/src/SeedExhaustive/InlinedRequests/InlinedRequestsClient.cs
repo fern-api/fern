@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.GeneralErrors;
 using SeedExhaustive.Types.Object;
@@ -21,11 +22,11 @@ public partial class InlinedRequestsClient
     /// </summary>
     /// <example><code>
     /// await client.InlinedRequests.PostWithObjectBodyandResponseAsync(
-    ///     new SeedExhaustive.InlinedRequests.PostWithObjectBody
+    ///     new PostWithObjectBody
     ///     {
     ///         String = "string",
     ///         Integer = 1,
-    ///         NestedObject = new SeedExhaustive.Types.Object.ObjectWithOptionalField
+    ///         NestedObject = new ObjectWithOptionalField
     ///         {
     ///             String = "string",
     ///             Integer = 1,

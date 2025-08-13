@@ -22,9 +22,9 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedContentTypes;
 
-var client = new SeedContentTypes.SeedContentTypesClient();
+var client = new SeedContentTypesClient();
 await client.Service.PatchAsync(
-    new SeedContentTypes.PatchProxyRequest { Application = "application", RequireAuth = true }
+    new PatchProxyRequest { Application = "application", RequireAuth = true }
 );
 ```
 

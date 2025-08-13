@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(ErrorInfo.JsonConverter))]
 [Serializable]
 public record ErrorInfo
 {
@@ -19,27 +19,27 @@ public record ErrorInfo
     }
 
     /// <summary>
-    /// Create an instance of ErrorInfo with <see cref="CompileError"/>.
+    /// Create an instance of ErrorInfo with <see cref="ErrorInfo.CompileError"/>.
     /// </summary>
-    public ErrorInfo(CompileError value)
+    public ErrorInfo(ErrorInfo.CompileError value)
     {
         Type = "compileError";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of ErrorInfo with <see cref="RuntimeError"/>.
+    /// Create an instance of ErrorInfo with <see cref="ErrorInfo.RuntimeError"/>.
     /// </summary>
-    public ErrorInfo(RuntimeError value)
+    public ErrorInfo(ErrorInfo.RuntimeError value)
     {
         Type = "runtimeError";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of ErrorInfo with <see cref="InternalError"/>.
+    /// Create an instance of ErrorInfo with <see cref="ErrorInfo.InternalError"/>.
     /// </summary>
-    public ErrorInfo(InternalError value)
+    public ErrorInfo(ErrorInfo.InternalError value)
     {
         Type = "internalError";
         Value = value.Value;
@@ -78,7 +78,7 @@ public record ErrorInfo
     public SeedTrace.CompileError AsCompileError() =>
         IsCompileError
             ? (SeedTrace.CompileError)Value!
-            : throw new Exception("SeedTrace.ErrorInfo.Type is not 'compileError'");
+            : throw new Exception("ErrorInfo.Type is not 'compileError'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.RuntimeError"/> if <see cref="Type"/> is 'runtimeError', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record ErrorInfo
     public SeedTrace.RuntimeError AsRuntimeError() =>
         IsRuntimeError
             ? (SeedTrace.RuntimeError)Value!
-            : throw new Exception("SeedTrace.ErrorInfo.Type is not 'runtimeError'");
+            : throw new Exception("ErrorInfo.Type is not 'runtimeError'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.InternalError"/> if <see cref="Type"/> is 'internalError', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record ErrorInfo
     public SeedTrace.InternalError AsInternalError() =>
         IsInternalError
             ? (SeedTrace.InternalError)Value!
-            : throw new Exception("SeedTrace.ErrorInfo.Type is not 'internalError'");
+            : throw new Exception("ErrorInfo.Type is not 'internalError'");
 
     public T Match<T>(
         Func<SeedTrace.CompileError, T> onCompileError,
@@ -182,21 +182,21 @@ public record ErrorInfo
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator ErrorInfo(CompileError value) => new(value);
+    public static implicit operator ErrorInfo(ErrorInfo.CompileError value) => new(value);
 
-    public static implicit operator ErrorInfo(RuntimeError value) => new(value);
+    public static implicit operator ErrorInfo(ErrorInfo.RuntimeError value) => new(value);
 
-    public static implicit operator ErrorInfo(InternalError value) => new(value);
+    public static implicit operator ErrorInfo(ErrorInfo.InternalError value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<ErrorInfo>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(ErrorInfo).IsAssignableFrom(typeToConvert);
 
         public override ErrorInfo Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

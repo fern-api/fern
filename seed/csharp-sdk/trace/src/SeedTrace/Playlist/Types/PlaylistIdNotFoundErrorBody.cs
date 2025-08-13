@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(PlaylistIdNotFoundErrorBody.JsonConverter))]
 [Serializable]
 public record PlaylistIdNotFoundErrorBody
 {
@@ -19,9 +19,9 @@ public record PlaylistIdNotFoundErrorBody
     }
 
     /// <summary>
-    /// Create an instance of PlaylistIdNotFoundErrorBody with <see cref="PlaylistId"/>.
+    /// Create an instance of PlaylistIdNotFoundErrorBody with <see cref="PlaylistIdNotFoundErrorBody.PlaylistId"/>.
     /// </summary>
-    public PlaylistIdNotFoundErrorBody(PlaylistId value)
+    public PlaylistIdNotFoundErrorBody(PlaylistIdNotFoundErrorBody.PlaylistId value)
     {
         Type = "playlistId";
         Value = value.Value;
@@ -50,7 +50,7 @@ public record PlaylistIdNotFoundErrorBody
     public string AsPlaylistId() =>
         IsPlaylistId
             ? (string)Value!
-            : throw new Exception("SeedTrace.PlaylistIdNotFoundErrorBody.Type is not 'playlistId'");
+            : throw new Exception("PlaylistIdNotFoundErrorBody.Type is not 'playlistId'");
 
     public T Match<T>(Func<string, T> onPlaylistId, Func<string, object?, T> onUnknown_)
     {
@@ -90,17 +90,19 @@ public record PlaylistIdNotFoundErrorBody
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator PlaylistIdNotFoundErrorBody(PlaylistId value) => new(value);
+    public static implicit operator PlaylistIdNotFoundErrorBody(
+        PlaylistIdNotFoundErrorBody.PlaylistId value
+    ) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<PlaylistIdNotFoundErrorBody>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(PlaylistIdNotFoundErrorBody).IsAssignableFrom(typeToConvert);
 
         public override PlaylistIdNotFoundErrorBody Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

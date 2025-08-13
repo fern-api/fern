@@ -22,9 +22,9 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedInferredAuthImplicitNoExpiry;
 
-var client = new SeedInferredAuthImplicitNoExpiry.SeedInferredAuthImplicitNoExpiryClient();
+var client = new SeedInferredAuthImplicitNoExpiryClient();
 await client.Auth.GetTokenWithClientCredentialsAsync(
-    new SeedInferredAuthImplicitNoExpiry.GetTokenRequest
+    new GetTokenRequest
     {
         XApiKey = "X-Api-Key",
         ClientId = "client_id",

@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">PatchAsync</a>(SeedContentTypes.PatchProxyRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">PatchAsync</a>(PatchProxyRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,7 @@
 
 ```csharp
 await client.Service.PatchAsync(
-    new SeedContentTypes.PatchProxyRequest { Application = "application", RequireAuth = true }
+    new PatchProxyRequest { Application = "application", RequireAuth = true }
 );
 ```
 </dd>
@@ -30,7 +30,7 @@ await client.Service.PatchAsync(
 <dl>
 <dd>
 
-**request:** `SeedContentTypes.PatchProxyRequest` 
+**request:** `PatchProxyRequest` 
     
 </dd>
 </dl>
@@ -42,7 +42,7 @@ await client.Service.PatchAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">PatchComplexAsync</a>(id, SeedContentTypes.PatchComplexRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">PatchComplexAsync</a>(id, PatchComplexRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -74,7 +74,7 @@ This endpoint demonstrates the distinction between:
 ```csharp
 await client.Service.PatchComplexAsync(
     "id",
-    new SeedContentTypes.PatchComplexRequest
+    new PatchComplexRequest
     {
         Name = "name",
         Age = 1,
@@ -122,7 +122,7 @@ await client.Service.PatchComplexAsync(
 <dl>
 <dd>
 
-**request:** `SeedContentTypes.PatchComplexRequest` 
+**request:** `PatchComplexRequest` 
     
 </dd>
 </dl>
@@ -134,7 +134,7 @@ await client.Service.PatchComplexAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">RegularPatchAsync</a>(id, SeedContentTypes.RegularPatchRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">RegularPatchAsync</a>(id, RegularPatchRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -163,7 +163,7 @@ Regular PATCH endpoint without merge-patch semantics
 ```csharp
 await client.Service.RegularPatchAsync(
     "id",
-    new SeedContentTypes.RegularPatchRequest { Field1 = "field1", Field2 = 1 }
+    new RegularPatchRequest { Field1 = "field1", Field2 = 1 }
 );
 ```
 </dd>
@@ -187,7 +187,7 @@ await client.Service.RegularPatchAsync(
 <dl>
 <dd>
 
-**request:** `SeedContentTypes.RegularPatchRequest` 
+**request:** `RegularPatchRequest` 
     
 </dd>
 </dl>

@@ -16,16 +16,16 @@ public partial class InlinedClient
 
     /// <example><code>
     /// await client.Inlined.SendAsync(
-    ///     new SeedLiteral.SendLiteralsInlinedRequest
+    ///     new SendLiteralsInlinedRequest
     ///     {
     ///         Temperature = 10.1,
     ///         Prompt = "You are a helpful assistant",
     ///         Context = "You're super wise",
     ///         AliasedContext = "You're super wise",
     ///         MaybeContext = "You're super wise",
-    ///         ObjectWithLiteral = new SeedLiteral.ATopLevelLiteral
+    ///         ObjectWithLiteral = new ATopLevelLiteral
     ///         {
-    ///             NestedLiteral = new SeedLiteral.ANestedLiteral { MyLiteral = "How super cool" },
+    ///             NestedLiteral = new ANestedLiteral { MyLiteral = "How super cool" },
     ///         },
     ///         Stream = false,
     ///         Query = "What is the weather today",

@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedEnum.Core;
 
 namespace SeedEnum;
@@ -16,16 +16,16 @@ public partial class HeadersClient
 
     /// <example><code>
     /// await client.Headers.SendAsync(
-    ///     new SeedEnum.SendEnumAsHeaderRequest
+    ///     new SendEnumAsHeaderRequest
     ///     {
-    ///         Operand = SeedEnum.Operand.GreaterThan,
-    ///         MaybeOperand = SeedEnum.Operand.GreaterThan,
-    ///         OperandOrColor = SeedEnum.Color.Red,
+    ///         Operand = Operand.GreaterThan,
+    ///         MaybeOperand = Operand.GreaterThan,
+    ///         OperandOrColor = Color.Red,
     ///         MaybeOperandOrColor = null,
     ///     }
     /// );
     /// </code></example>
-    public async Task SendAsync(
+    public async global::System.Threading.Tasks.Task SendAsync(
         SendEnumAsHeaderRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

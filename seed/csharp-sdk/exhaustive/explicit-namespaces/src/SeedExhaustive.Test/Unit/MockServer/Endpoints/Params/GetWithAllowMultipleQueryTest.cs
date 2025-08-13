@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using SeedExhaustive.Endpoints.Params;
+using SeedExhaustive.Test.Unit.MockServer;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Params;
 

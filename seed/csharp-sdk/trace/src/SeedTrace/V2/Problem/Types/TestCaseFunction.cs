@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(TestCaseFunction.JsonConverter))]
 [Serializable]
 public record TestCaseFunction
 {
@@ -19,18 +19,18 @@ public record TestCaseFunction
     }
 
     /// <summary>
-    /// Create an instance of TestCaseFunction with <see cref="WithActualResult"/>.
+    /// Create an instance of TestCaseFunction with <see cref="TestCaseFunction.WithActualResult"/>.
     /// </summary>
-    public TestCaseFunction(WithActualResult value)
+    public TestCaseFunction(TestCaseFunction.WithActualResult value)
     {
         Type = "withActualResult";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of TestCaseFunction with <see cref="Custom"/>.
+    /// Create an instance of TestCaseFunction with <see cref="TestCaseFunction.Custom"/>.
     /// </summary>
-    public TestCaseFunction(Custom value)
+    public TestCaseFunction(TestCaseFunction.Custom value)
     {
         Type = "custom";
         Value = value.Value;
@@ -58,26 +58,26 @@ public record TestCaseFunction
     public bool IsCustom => Type == "custom";
 
     /// <summary>
-    /// Returns the value as a <see cref="TestCaseWithActualResultImplementation"/> if <see cref="Type"/> is 'withActualResult', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.V2.TestCaseWithActualResultImplementation"/> if <see cref="Type"/> is 'withActualResult', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'withActualResult'.</exception>
-    public TestCaseWithActualResultImplementation AsWithActualResult() =>
+    public SeedTrace.V2.TestCaseWithActualResultImplementation AsWithActualResult() =>
         IsWithActualResult
-            ? (TestCaseWithActualResultImplementation)Value!
-            : throw new Exception("SeedTrace.V2.TestCaseFunction.Type is not 'withActualResult'");
+            ? (SeedTrace.V2.TestCaseWithActualResultImplementation)Value!
+            : throw new Exception("TestCaseFunction.Type is not 'withActualResult'");
 
     /// <summary>
-    /// Returns the value as a <see cref="VoidFunctionDefinition"/> if <see cref="Type"/> is 'custom', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedTrace.V2.VoidFunctionDefinition"/> if <see cref="Type"/> is 'custom', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'custom'.</exception>
-    public VoidFunctionDefinition AsCustom() =>
+    public SeedTrace.V2.VoidFunctionDefinition AsCustom() =>
         IsCustom
-            ? (VoidFunctionDefinition)Value!
-            : throw new Exception("SeedTrace.V2.TestCaseFunction.Type is not 'custom'");
+            ? (SeedTrace.V2.VoidFunctionDefinition)Value!
+            : throw new Exception("TestCaseFunction.Type is not 'custom'");
 
     public T Match<T>(
-        Func<TestCaseWithActualResultImplementation, T> onWithActualResult,
-        Func<VoidFunctionDefinition, T> onCustom,
+        Func<SeedTrace.V2.TestCaseWithActualResultImplementation, T> onWithActualResult,
+        Func<SeedTrace.V2.VoidFunctionDefinition, T> onCustom,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -90,8 +90,8 @@ public record TestCaseFunction
     }
 
     public void Visit(
-        Action<TestCaseWithActualResultImplementation> onWithActualResult,
-        Action<VoidFunctionDefinition> onCustom,
+        Action<SeedTrace.V2.TestCaseWithActualResultImplementation> onWithActualResult,
+        Action<SeedTrace.V2.VoidFunctionDefinition> onCustom,
         Action<string, object?> onUnknown_
     )
     {
@@ -110,13 +110,15 @@ public record TestCaseFunction
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="TestCaseWithActualResultImplementation"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.V2.TestCaseWithActualResultImplementation"/> and returns true if successful.
     /// </summary>
-    public bool TryAsWithActualResult(out TestCaseWithActualResultImplementation? value)
+    public bool TryAsWithActualResult(
+        out SeedTrace.V2.TestCaseWithActualResultImplementation? value
+    )
     {
         if (Type == "withActualResult")
         {
-            value = (TestCaseWithActualResultImplementation)Value!;
+            value = (SeedTrace.V2.TestCaseWithActualResultImplementation)Value!;
             return true;
         }
         value = null;
@@ -124,13 +126,13 @@ public record TestCaseFunction
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="VoidFunctionDefinition"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedTrace.V2.VoidFunctionDefinition"/> and returns true if successful.
     /// </summary>
-    public bool TryAsCustom(out VoidFunctionDefinition? value)
+    public bool TryAsCustom(out SeedTrace.V2.VoidFunctionDefinition? value)
     {
         if (Type == "custom")
         {
-            value = (VoidFunctionDefinition)Value!;
+            value = (SeedTrace.V2.VoidFunctionDefinition)Value!;
             return true;
         }
         value = null;
@@ -139,19 +141,20 @@ public record TestCaseFunction
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator TestCaseFunction(WithActualResult value) => new(value);
+    public static implicit operator TestCaseFunction(TestCaseFunction.WithActualResult value) =>
+        new(value);
 
-    public static implicit operator TestCaseFunction(Custom value) => new(value);
+    public static implicit operator TestCaseFunction(TestCaseFunction.Custom value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<TestCaseFunction>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(TestCaseFunction).IsAssignableFrom(typeToConvert);
 
         public override TestCaseFunction Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -178,13 +181,12 @@ public record TestCaseFunction
 
             var value = discriminator switch
             {
-                "withActualResult" => json.Deserialize<TestCaseWithActualResultImplementation>(
-                    options
-                )
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.V2.TestCaseWithActualResultImplementation"
-                    ),
-                "custom" => json.Deserialize<VoidFunctionDefinition>(options)
+                "withActualResult" =>
+                    json.Deserialize<SeedTrace.V2.TestCaseWithActualResultImplementation>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.V2.TestCaseWithActualResultImplementation"
+                        ),
+                "custom" => json.Deserialize<SeedTrace.V2.VoidFunctionDefinition>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.V2.VoidFunctionDefinition"
                     ),
@@ -217,17 +219,17 @@ public record TestCaseFunction
     [Serializable]
     public struct WithActualResult
     {
-        public WithActualResult(TestCaseWithActualResultImplementation value)
+        public WithActualResult(SeedTrace.V2.TestCaseWithActualResultImplementation value)
         {
             Value = value;
         }
 
-        internal TestCaseWithActualResultImplementation Value { get; set; }
+        internal SeedTrace.V2.TestCaseWithActualResultImplementation Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
         public static implicit operator WithActualResult(
-            TestCaseWithActualResultImplementation value
+            SeedTrace.V2.TestCaseWithActualResultImplementation value
         ) => new(value);
     }
 
@@ -237,15 +239,16 @@ public record TestCaseFunction
     [Serializable]
     public struct Custom
     {
-        public Custom(VoidFunctionDefinition value)
+        public Custom(SeedTrace.V2.VoidFunctionDefinition value)
         {
             Value = value;
         }
 
-        internal VoidFunctionDefinition Value { get; set; }
+        internal SeedTrace.V2.VoidFunctionDefinition Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Custom(VoidFunctionDefinition value) => new(value);
+        public static implicit operator Custom(SeedTrace.V2.VoidFunctionDefinition value) =>
+            new(value);
     }
 }

@@ -8,7 +8,7 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(UnionWithDiscriminant.JsonConverter))]
 [Serializable]
 public record UnionWithDiscriminant
 {
@@ -19,18 +19,18 @@ public record UnionWithDiscriminant
     }
 
     /// <summary>
-    /// Create an instance of UnionWithDiscriminant with <see cref="Foo"/>.
+    /// Create an instance of UnionWithDiscriminant with <see cref="UnionWithDiscriminant.Foo"/>.
     /// </summary>
-    public UnionWithDiscriminant(Foo value)
+    public UnionWithDiscriminant(UnionWithDiscriminant.Foo value)
     {
         Type = "foo";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithDiscriminant with <see cref="Bar"/>.
+    /// Create an instance of UnionWithDiscriminant with <see cref="UnionWithDiscriminant.Bar"/>.
     /// </summary>
-    public UnionWithDiscriminant(Bar value)
+    public UnionWithDiscriminant(UnionWithDiscriminant.Bar value)
     {
         Type = "bar";
         Value = value.Value;
@@ -64,7 +64,7 @@ public record UnionWithDiscriminant
     public SeedUnions.Foo AsFoo() =>
         IsFoo
             ? (SeedUnions.Foo)Value!
-            : throw new Exception("SeedUnions.UnionWithDiscriminant.Type is not 'foo'");
+            : throw new Exception("UnionWithDiscriminant.Type is not 'foo'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Bar"/> if <see cref="Type"/> is 'bar', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record UnionWithDiscriminant
     public SeedUnions.Bar AsBar() =>
         IsBar
             ? (SeedUnions.Bar)Value!
-            : throw new Exception("SeedUnions.UnionWithDiscriminant.Type is not 'bar'");
+            : throw new Exception("UnionWithDiscriminant.Type is not 'bar'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
@@ -139,19 +139,21 @@ public record UnionWithDiscriminant
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator UnionWithDiscriminant(Foo value) => new(value);
+    public static implicit operator UnionWithDiscriminant(UnionWithDiscriminant.Foo value) =>
+        new(value);
 
-    public static implicit operator UnionWithDiscriminant(Bar value) => new(value);
+    public static implicit operator UnionWithDiscriminant(UnionWithDiscriminant.Bar value) =>
+        new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithDiscriminant>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithDiscriminant).IsAssignableFrom(typeToConvert);
 
         public override UnionWithDiscriminant Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

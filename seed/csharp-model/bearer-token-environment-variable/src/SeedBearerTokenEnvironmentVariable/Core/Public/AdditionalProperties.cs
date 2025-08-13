@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.ObjectModel;
-using System.Text.Json;
-using System.Text.Json.Nodes;
+using global::System.Collections;
+using global::System.Collections.ObjectModel;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
 using SeedBearerTokenEnvironmentVariable.Core;
 
 namespace SeedBearerTokenEnvironmentVariable;

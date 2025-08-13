@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedSimpleApi;
 
-var client = new SeedSimpleApi.SeedSimpleApiClient("TOKEN");
+var client = new SeedSimpleApiClient("TOKEN");
 await client.User.GetAsync("id");
 ```
 

@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedFileDownload;
 
-var client = new SeedFileDownload.SeedFileDownloadClient();
+var client = new SeedFileDownloadClient();
 await client.Service.SimpleAsync();
 ```
 

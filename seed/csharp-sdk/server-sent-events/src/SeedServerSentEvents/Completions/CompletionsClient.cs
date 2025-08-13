@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedServerSentEvents.Core;
 
 namespace SeedServerSentEvents;
@@ -15,11 +15,9 @@ public partial class CompletionsClient
     }
 
     /// <example><code>
-    /// await client.Completions.StreamAsync(
-    ///     new SeedServerSentEvents.StreamCompletionRequest { Query = "query" }
-    /// );
+    /// await client.Completions.StreamAsync(new StreamCompletionRequest { Query = "query" });
     /// </code></example>
-    public async Task StreamAsync(
+    public async global::System.Threading.Tasks.Task StreamAsync(
         StreamCompletionRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

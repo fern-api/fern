@@ -1,8 +1,9 @@
-using System.Text;
-using System.Text.Json.Serialization;
+using global::System.Net.Http;
+using global::System.Text;
+using global::System.Text.Json.Serialization;
 using NUnit.Framework;
 using SeedFileDownload.Core;
-using SystemTask = System.Threading.Tasks.Task;
+using SystemTask = global::System.Threading.Tasks.Task;
 
 namespace SeedFileDownload.Test.Core.RawClientTests;
 

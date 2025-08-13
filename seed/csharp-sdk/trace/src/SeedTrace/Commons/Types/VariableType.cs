@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(VariableType.JsonConverter))]
 [Serializable]
 public record VariableType
 {
@@ -19,90 +19,90 @@ public record VariableType
     }
 
     /// <summary>
-    /// Create an instance of VariableType with <see cref="IntegerType"/>.
+    /// Create an instance of VariableType with <see cref="VariableType.IntegerType"/>.
     /// </summary>
-    public VariableType(IntegerType value)
+    public VariableType(VariableType.IntegerType value)
     {
         Type = "integerType";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of VariableType with <see cref="DoubleType"/>.
+    /// Create an instance of VariableType with <see cref="VariableType.DoubleType"/>.
     /// </summary>
-    public VariableType(DoubleType value)
+    public VariableType(VariableType.DoubleType value)
     {
         Type = "doubleType";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of VariableType with <see cref="BooleanType"/>.
+    /// Create an instance of VariableType with <see cref="VariableType.BooleanType"/>.
     /// </summary>
-    public VariableType(BooleanType value)
+    public VariableType(VariableType.BooleanType value)
     {
         Type = "booleanType";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of VariableType with <see cref="StringType"/>.
+    /// Create an instance of VariableType with <see cref="VariableType.StringType"/>.
     /// </summary>
-    public VariableType(StringType value)
+    public VariableType(VariableType.StringType value)
     {
         Type = "stringType";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of VariableType with <see cref="CharType"/>.
+    /// Create an instance of VariableType with <see cref="VariableType.CharType"/>.
     /// </summary>
-    public VariableType(CharType value)
+    public VariableType(VariableType.CharType value)
     {
         Type = "charType";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of VariableType with <see cref="ListType"/>.
+    /// Create an instance of VariableType with <see cref="VariableType.ListType"/>.
     /// </summary>
-    public VariableType(ListType value)
+    public VariableType(VariableType.ListType value)
     {
         Type = "listType";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of VariableType with <see cref="MapType"/>.
+    /// Create an instance of VariableType with <see cref="VariableType.MapType"/>.
     /// </summary>
-    public VariableType(MapType value)
+    public VariableType(VariableType.MapType value)
     {
         Type = "mapType";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of VariableType with <see cref="BinaryTreeType"/>.
+    /// Create an instance of VariableType with <see cref="VariableType.BinaryTreeType"/>.
     /// </summary>
-    public VariableType(BinaryTreeType value)
+    public VariableType(VariableType.BinaryTreeType value)
     {
         Type = "binaryTreeType";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of VariableType with <see cref="SinglyLinkedListType"/>.
+    /// Create an instance of VariableType with <see cref="VariableType.SinglyLinkedListType"/>.
     /// </summary>
-    public VariableType(SinglyLinkedListType value)
+    public VariableType(VariableType.SinglyLinkedListType value)
     {
         Type = "singlyLinkedListType";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of VariableType with <see cref="DoublyLinkedListType"/>.
+    /// Create an instance of VariableType with <see cref="VariableType.DoublyLinkedListType"/>.
     /// </summary>
-    public VariableType(DoublyLinkedListType value)
+    public VariableType(VariableType.DoublyLinkedListType value)
     {
         Type = "doublyLinkedListType";
         Value = value.Value;
@@ -174,43 +174,35 @@ public record VariableType
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'integerType'.</exception>
     public object AsIntegerType() =>
-        IsIntegerType
-            ? Value!
-            : throw new Exception("SeedTrace.VariableType.Type is not 'integerType'");
+        IsIntegerType ? Value! : throw new Exception("VariableType.Type is not 'integerType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'doubleType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'doubleType'.</exception>
     public object AsDoubleType() =>
-        IsDoubleType
-            ? Value!
-            : throw new Exception("SeedTrace.VariableType.Type is not 'doubleType'");
+        IsDoubleType ? Value! : throw new Exception("VariableType.Type is not 'doubleType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'booleanType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'booleanType'.</exception>
     public object AsBooleanType() =>
-        IsBooleanType
-            ? Value!
-            : throw new Exception("SeedTrace.VariableType.Type is not 'booleanType'");
+        IsBooleanType ? Value! : throw new Exception("VariableType.Type is not 'booleanType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'stringType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'stringType'.</exception>
     public object AsStringType() =>
-        IsStringType
-            ? Value!
-            : throw new Exception("SeedTrace.VariableType.Type is not 'stringType'");
+        IsStringType ? Value! : throw new Exception("VariableType.Type is not 'stringType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'charType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'charType'.</exception>
     public object AsCharType() =>
-        IsCharType ? Value! : throw new Exception("SeedTrace.VariableType.Type is not 'charType'");
+        IsCharType ? Value! : throw new Exception("VariableType.Type is not 'charType'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ListType"/> if <see cref="Type"/> is 'listType', otherwise throws an exception.
@@ -219,7 +211,7 @@ public record VariableType
     public SeedTrace.ListType AsListType() =>
         IsListType
             ? (SeedTrace.ListType)Value!
-            : throw new Exception("SeedTrace.VariableType.Type is not 'listType'");
+            : throw new Exception("VariableType.Type is not 'listType'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.MapType"/> if <see cref="Type"/> is 'mapType', otherwise throws an exception.
@@ -228,7 +220,7 @@ public record VariableType
     public SeedTrace.MapType AsMapType() =>
         IsMapType
             ? (SeedTrace.MapType)Value!
-            : throw new Exception("SeedTrace.VariableType.Type is not 'mapType'");
+            : throw new Exception("VariableType.Type is not 'mapType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'binaryTreeType', otherwise throws an exception.
@@ -237,7 +229,7 @@ public record VariableType
     public object AsBinaryTreeType() =>
         IsBinaryTreeType
             ? Value!
-            : throw new Exception("SeedTrace.VariableType.Type is not 'binaryTreeType'");
+            : throw new Exception("VariableType.Type is not 'binaryTreeType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'singlyLinkedListType', otherwise throws an exception.
@@ -246,7 +238,7 @@ public record VariableType
     public object AsSinglyLinkedListType() =>
         IsSinglyLinkedListType
             ? Value!
-            : throw new Exception("SeedTrace.VariableType.Type is not 'singlyLinkedListType'");
+            : throw new Exception("VariableType.Type is not 'singlyLinkedListType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'doublyLinkedListType', otherwise throws an exception.
@@ -255,7 +247,7 @@ public record VariableType
     public object AsDoublyLinkedListType() =>
         IsDoublyLinkedListType
             ? Value!
-            : throw new Exception("SeedTrace.VariableType.Type is not 'doublyLinkedListType'");
+            : throw new Exception("VariableType.Type is not 'doublyLinkedListType'");
 
     public T Match<T>(
         Func<object, T> onIntegerType,
@@ -481,19 +473,19 @@ public record VariableType
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator VariableType(ListType value) => new(value);
+    public static implicit operator VariableType(VariableType.ListType value) => new(value);
 
-    public static implicit operator VariableType(MapType value) => new(value);
+    public static implicit operator VariableType(VariableType.MapType value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<VariableType>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(VariableType).IsAssignableFrom(typeToConvert);
 
         public override VariableType Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

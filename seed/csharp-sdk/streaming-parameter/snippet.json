@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedStreaming;\n\nvar client = new SeedStreaming.SeedStreamingClient();\nawait client.Dummy.GenerateAsync(\n    new SeedStreaming.GenerateRequest { Stream = false, NumEvents = 5 }\n);\n"
+                "client": "using SeedStreaming;\n\nvar client = new SeedStreamingClient();\nawait client.Dummy.GenerateAsync(new GenerateRequest { Stream = false, NumEvents = 5 });\n"
             }
         }
     ]

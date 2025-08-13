@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.Nullable.<a href="/src/SeedNullable/Nullable/NullableClient.cs">GetUsersAsync</a>(SeedNullable.GetUsersRequest { ... }) -> IEnumerable<SeedNullable.User></code></summary>
+<details><summary><code>client.Nullable.<a href="/src/SeedNullable/Nullable/NullableClient.cs">GetUsersAsync</a>(GetUsersRequest { ... }) -> IEnumerable<User></code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,7 @@
 
 ```csharp
 await client.Nullable.GetUsersAsync(
-    new SeedNullable.GetUsersRequest
+    new GetUsersRequest
     {
         Usernames = ["usernames"],
         Avatar = "avatar",
@@ -37,7 +37,7 @@ await client.Nullable.GetUsersAsync(
 <dl>
 <dd>
 
-**request:** `SeedNullable.GetUsersRequest` 
+**request:** `GetUsersRequest` 
     
 </dd>
 </dl>
@@ -49,7 +49,7 @@ await client.Nullable.GetUsersAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Nullable.<a href="/src/SeedNullable/Nullable/NullableClient.cs">CreateUserAsync</a>(SeedNullable.CreateUserRequest { ... }) -> SeedNullable.User</code></summary>
+<details><summary><code>client.Nullable.<a href="/src/SeedNullable/Nullable/NullableClient.cs">CreateUserAsync</a>(CreateUserRequest { ... }) -> User</code></summary>
 <dl>
 <dd>
 
@@ -63,17 +63,17 @@ await client.Nullable.GetUsersAsync(
 
 ```csharp
 await client.Nullable.CreateUserAsync(
-    new SeedNullable.CreateUserRequest
+    new CreateUserRequest
     {
         Username = "username",
         Tags = new List<string>() { "tags", "tags" },
-        Metadata = new SeedNullable.Metadata
+        Metadata = new Metadata
         {
             CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
             UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
             Avatar = "avatar",
             Activated = true,
-            Status = new SeedNullable.Status(new SeedNullable.Status.Active()),
+            Status = new Status(new Status.Active()),
             Values = new Dictionary<string, string?>() { { "values", "values" } },
         },
         Avatar = "avatar",
@@ -93,7 +93,7 @@ await client.Nullable.CreateUserAsync(
 <dl>
 <dd>
 
-**request:** `SeedNullable.CreateUserRequest` 
+**request:** `CreateUserRequest` 
     
 </dd>
 </dl>
@@ -105,7 +105,7 @@ await client.Nullable.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Nullable.<a href="/src/SeedNullable/Nullable/NullableClient.cs">DeleteUserAsync</a>(SeedNullable.DeleteUserRequest { ... }) -> bool</code></summary>
+<details><summary><code>client.Nullable.<a href="/src/SeedNullable/Nullable/NullableClient.cs">DeleteUserAsync</a>(DeleteUserRequest { ... }) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -118,7 +118,7 @@ await client.Nullable.CreateUserAsync(
 <dd>
 
 ```csharp
-await client.Nullable.DeleteUserAsync(new SeedNullable.DeleteUserRequest { Username = "xy" });
+await client.Nullable.DeleteUserAsync(new DeleteUserRequest { Username = "xy" });
 ```
 </dd>
 </dl>
@@ -133,7 +133,7 @@ await client.Nullable.DeleteUserAsync(new SeedNullable.DeleteUserRequest { Usern
 <dl>
 <dd>
 
-**request:** `SeedNullable.DeleteUserRequest` 
+**request:** `DeleteUserRequest` 
     
 </dd>
 </dl>

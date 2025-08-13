@@ -1,5 +1,6 @@
 using System.Text.Json;
 using NUnit.Framework;
+using SeedExamples;
 using SeedExamples.Core;
 
 namespace SeedExamples.Test;
@@ -7,7 +8,7 @@ namespace SeedExamples.Test;
 [TestFixture]
 public class CronJobTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization()
     {
         var json = """
@@ -20,7 +21,7 @@ public class CronJobTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization()
     {
         var expectedJson = """

@@ -8,7 +8,7 @@ using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(DiscriminatedLiteral.JsonConverter))]
 [Serializable]
 public record DiscriminatedLiteral
 {
@@ -19,36 +19,36 @@ public record DiscriminatedLiteral
     }
 
     /// <summary>
-    /// Create an instance of DiscriminatedLiteral with <see cref="CustomName"/>.
+    /// Create an instance of DiscriminatedLiteral with <see cref="DiscriminatedLiteral.CustomName"/>.
     /// </summary>
-    public DiscriminatedLiteral(CustomName value)
+    public DiscriminatedLiteral(DiscriminatedLiteral.CustomName value)
     {
         Type = "customName";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of DiscriminatedLiteral with <see cref="DefaultName"/>.
+    /// Create an instance of DiscriminatedLiteral with <see cref="DiscriminatedLiteral.DefaultName"/>.
     /// </summary>
-    public DiscriminatedLiteral(DefaultName value)
+    public DiscriminatedLiteral(DiscriminatedLiteral.DefaultName value)
     {
         Type = "defaultName";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of DiscriminatedLiteral with <see cref="George"/>.
+    /// Create an instance of DiscriminatedLiteral with <see cref="DiscriminatedLiteral.George"/>.
     /// </summary>
-    public DiscriminatedLiteral(George value)
+    public DiscriminatedLiteral(DiscriminatedLiteral.George value)
     {
         Type = "george";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of DiscriminatedLiteral with <see cref="LiteralGeorge"/>.
+    /// Create an instance of DiscriminatedLiteral with <see cref="DiscriminatedLiteral.LiteralGeorge"/>.
     /// </summary>
-    public DiscriminatedLiteral(LiteralGeorge value)
+    public DiscriminatedLiteral(DiscriminatedLiteral.LiteralGeorge value)
     {
         Type = "literalGeorge";
         Value = value.Value;
@@ -92,7 +92,7 @@ public record DiscriminatedLiteral
     public string AsCustomName() =>
         IsCustomName
             ? (string)Value!
-            : throw new Exception("SeedLiteral.DiscriminatedLiteral.Type is not 'customName'");
+            : throw new Exception("DiscriminatedLiteral.Type is not 'customName'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'defaultName', otherwise throws an exception.
@@ -101,16 +101,14 @@ public record DiscriminatedLiteral
     public string AsDefaultName() =>
         IsDefaultName
             ? (string)Value!
-            : throw new Exception("SeedLiteral.DiscriminatedLiteral.Type is not 'defaultName'");
+            : throw new Exception("DiscriminatedLiteral.Type is not 'defaultName'");
 
     /// <summary>
     /// Returns the value as a <see cref="bool"/> if <see cref="Type"/> is 'george', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'george'.</exception>
     public bool AsGeorge() =>
-        IsGeorge
-            ? (bool)Value!
-            : throw new Exception("SeedLiteral.DiscriminatedLiteral.Type is not 'george'");
+        IsGeorge ? (bool)Value! : throw new Exception("DiscriminatedLiteral.Type is not 'george'");
 
     /// <summary>
     /// Returns the value as a <see cref="bool"/> if <see cref="Type"/> is 'literalGeorge', otherwise throws an exception.
@@ -119,7 +117,7 @@ public record DiscriminatedLiteral
     public bool AsLiteralGeorge() =>
         IsLiteralGeorge
             ? (bool)Value!
-            : throw new Exception("SeedLiteral.DiscriminatedLiteral.Type is not 'literalGeorge'");
+            : throw new Exception("DiscriminatedLiteral.Type is not 'literalGeorge'");
 
     public T Match<T>(
         Func<string, T> onCustomName,
@@ -225,23 +223,28 @@ public record DiscriminatedLiteral
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator DiscriminatedLiteral(CustomName value) => new(value);
+    public static implicit operator DiscriminatedLiteral(DiscriminatedLiteral.CustomName value) =>
+        new(value);
 
-    public static implicit operator DiscriminatedLiteral(DefaultName value) => new(value);
+    public static implicit operator DiscriminatedLiteral(DiscriminatedLiteral.DefaultName value) =>
+        new(value);
 
-    public static implicit operator DiscriminatedLiteral(George value) => new(value);
+    public static implicit operator DiscriminatedLiteral(DiscriminatedLiteral.George value) =>
+        new(value);
 
-    public static implicit operator DiscriminatedLiteral(LiteralGeorge value) => new(value);
+    public static implicit operator DiscriminatedLiteral(
+        DiscriminatedLiteral.LiteralGeorge value
+    ) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<DiscriminatedLiteral>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(DiscriminatedLiteral).IsAssignableFrom(typeToConvert);
 
         public override DiscriminatedLiteral Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

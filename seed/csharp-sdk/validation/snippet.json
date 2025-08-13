@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedValidation;\n\nvar client = new SeedValidation.SeedValidationClient();\nawait client.CreateAsync(\n    new SeedValidation.CreateRequest\n    {\n        Decimal = 2.2,\n        Even = 100,\n        Name = \"fern\",\n        Shape = SeedValidation.Shape.Square,\n    }\n);\n"
+                "client": "using SeedValidation;\n\nvar client = new SeedValidationClient();\nawait client.CreateAsync(\n    new CreateRequest\n    {\n        Decimal = 2.2,\n        Even = 100,\n        Name = \"fern\",\n        Shape = Shape.Square,\n    }\n);\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedValidation;\n\nvar client = new SeedValidation.SeedValidationClient();\nawait client.GetAsync(\n    new SeedValidation.GetRequest\n    {\n        Decimal = 2.2,\n        Even = 100,\n        Name = \"fern\",\n    }\n);\n"
+                "client": "using SeedValidation;\n\nvar client = new SeedValidationClient();\nawait client.GetAsync(\n    new GetRequest\n    {\n        Decimal = 2.2,\n        Even = 100,\n        Name = \"fern\",\n    }\n);\n"
             }
         }
     ]

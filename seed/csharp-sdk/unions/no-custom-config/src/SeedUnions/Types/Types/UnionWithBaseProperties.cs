@@ -8,7 +8,7 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(UnionWithBaseProperties.JsonConverter))]
 [Serializable]
 public record UnionWithBaseProperties
 {
@@ -19,27 +19,27 @@ public record UnionWithBaseProperties
     }
 
     /// <summary>
-    /// Create an instance of UnionWithBaseProperties with <see cref="Integer"/>.
+    /// Create an instance of UnionWithBaseProperties with <see cref="UnionWithBaseProperties.Integer"/>.
     /// </summary>
-    public UnionWithBaseProperties(Integer value)
+    public UnionWithBaseProperties(UnionWithBaseProperties.Integer value)
     {
         Type = "integer";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithBaseProperties with <see cref="String"/>.
+    /// Create an instance of UnionWithBaseProperties with <see cref="UnionWithBaseProperties.String"/>.
     /// </summary>
-    public UnionWithBaseProperties(String value)
+    public UnionWithBaseProperties(UnionWithBaseProperties.String value)
     {
         Type = "string";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithBaseProperties with <see cref="Foo"/>.
+    /// Create an instance of UnionWithBaseProperties with <see cref="UnionWithBaseProperties.Foo"/>.
     /// </summary>
-    public UnionWithBaseProperties(Foo value)
+    public UnionWithBaseProperties(UnionWithBaseProperties.Foo value)
     {
         Type = "foo";
         Value = value.Value;
@@ -81,7 +81,7 @@ public record UnionWithBaseProperties
     public int AsInteger() =>
         IsInteger
             ? (int)Value!
-            : throw new Exception("SeedUnions.UnionWithBaseProperties.Type is not 'integer'");
+            : throw new Exception("UnionWithBaseProperties.Type is not 'integer'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string', otherwise throws an exception.
@@ -90,7 +90,7 @@ public record UnionWithBaseProperties
     public string AsString() =>
         IsString
             ? (string)Value!
-            : throw new Exception("SeedUnions.UnionWithBaseProperties.Type is not 'string'");
+            : throw new Exception("UnionWithBaseProperties.Type is not 'string'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Foo"/> if <see cref="Type"/> is 'foo', otherwise throws an exception.
@@ -99,7 +99,7 @@ public record UnionWithBaseProperties
     public SeedUnions.Foo AsFoo() =>
         IsFoo
             ? (SeedUnions.Foo)Value!
-            : throw new Exception("SeedUnions.UnionWithBaseProperties.Type is not 'foo'");
+            : throw new Exception("UnionWithBaseProperties.Type is not 'foo'");
 
     public T Match<T>(
         Func<int, T> onInteger,
@@ -198,12 +198,12 @@ public record UnionWithBaseProperties
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithBaseProperties>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithBaseProperties).IsAssignableFrom(typeToConvert);
 
         public override UnionWithBaseProperties Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -238,9 +238,9 @@ public record UnionWithBaseProperties
                 _ => json.Deserialize<object?>(options),
             };
             var baseProperties =
-                json.Deserialize<BaseProperties>(options)
+                json.Deserialize<UnionWithBaseProperties.BaseProperties>(options)
                 ?? throw new JsonException(
-                    "Failed to deserialize SeedUnions.UnionWithBaseProperties.BaseProperties"
+                    "Failed to deserialize UnionWithBaseProperties.BaseProperties"
                 );
             return new UnionWithBaseProperties(discriminator, value) { Id = baseProperties.Id };
         }
@@ -267,9 +267,12 @@ public record UnionWithBaseProperties
                 } ?? new JsonObject();
             json["type"] = value.Type;
             var basePropertiesJson =
-                JsonSerializer.SerializeToNode(new BaseProperties { Id = value.Id }, options)
+                JsonSerializer.SerializeToNode(
+                    new UnionWithBaseProperties.BaseProperties { Id = value.Id },
+                    options
+                )
                 ?? throw new JsonException(
-                    "Failed to serialize SeedUnions.UnionWithBaseProperties.BaseProperties"
+                    "Failed to serialize UnionWithBaseProperties.BaseProperties"
                 );
             foreach (var property in basePropertiesJson.AsObject())
             {

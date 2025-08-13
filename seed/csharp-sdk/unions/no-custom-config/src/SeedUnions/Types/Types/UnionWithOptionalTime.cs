@@ -8,7 +8,7 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-[JsonConverter(typeof(JsonConverter))]
+[JsonConverter(typeof(UnionWithOptionalTime.JsonConverter))]
 [Serializable]
 public record UnionWithOptionalTime
 {
@@ -19,18 +19,18 @@ public record UnionWithOptionalTime
     }
 
     /// <summary>
-    /// Create an instance of UnionWithOptionalTime with <see cref="Date"/>.
+    /// Create an instance of UnionWithOptionalTime with <see cref="UnionWithOptionalTime.Date"/>.
     /// </summary>
-    public UnionWithOptionalTime(Date value)
+    public UnionWithOptionalTime(UnionWithOptionalTime.Date value)
     {
         Type = "date";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithOptionalTime with <see cref="Datetime"/>.
+    /// Create an instance of UnionWithOptionalTime with <see cref="UnionWithOptionalTime.Datetime"/>.
     /// </summary>
-    public UnionWithOptionalTime(Datetime value)
+    public UnionWithOptionalTime(UnionWithOptionalTime.Datetime value)
     {
         Type = "datetime";
         Value = value.Value;
@@ -64,7 +64,7 @@ public record UnionWithOptionalTime
     public DateOnly? AsDate() =>
         IsDate
             ? (DateOnly?)Value!
-            : throw new Exception("SeedUnions.UnionWithOptionalTime.Type is not 'date'");
+            : throw new Exception("UnionWithOptionalTime.Type is not 'date'");
 
     /// <summary>
     /// Returns the value as a <see cref="DateTime?"/> if <see cref="Type"/> is 'datetime', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record UnionWithOptionalTime
     public DateTime? AsDatetime() =>
         IsDatetime
             ? (DateTime?)Value!
-            : throw new Exception("SeedUnions.UnionWithOptionalTime.Type is not 'datetime'");
+            : throw new Exception("UnionWithOptionalTime.Type is not 'datetime'");
 
     public T Match<T>(
         Func<DateOnly?, T> onDate,
@@ -139,19 +139,21 @@ public record UnionWithOptionalTime
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator UnionWithOptionalTime(Date value) => new(value);
+    public static implicit operator UnionWithOptionalTime(UnionWithOptionalTime.Date value) =>
+        new(value);
 
-    public static implicit operator UnionWithOptionalTime(Datetime value) => new(value);
+    public static implicit operator UnionWithOptionalTime(UnionWithOptionalTime.Datetime value) =>
+        new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithOptionalTime>
     {
-        public override bool CanConvert(Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithOptionalTime).IsAssignableFrom(typeToConvert);
 
         public override UnionWithOptionalTime Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -16,7 +16,7 @@ public partial class UserClient
 
     /// <example><code>
     /// await client.User.CreateUserAsync(
-    ///     new SeedExtraProperties.CreateUserRequest
+    ///     new CreateUserRequest
     ///     {
     ///         Type = "CreateUserRequest",
     ///         Version = "v1",

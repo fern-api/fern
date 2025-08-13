@@ -1,5 +1,6 @@
 using System.Text.Json;
 using NUnit.Framework;
+using SeedObjectsWithImports;
 using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports.Test;

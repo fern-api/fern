@@ -40,7 +40,7 @@ await client.Union.GetAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">GetMetadataAsync</a>() -> Dictionary<OneOf<SeedUndiscriminatedUnions.KeyType, string>, string></code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">GetMetadataAsync</a>() -> Dictionary<OneOf<KeyType, string>, string></code></summary>
 <dl>
 <dd>
 
@@ -65,7 +65,7 @@ await client.Union.GetMetadataAsync();
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">UpdateMetadataAsync</a>(OneOf<Dictionary<string, object?>?, SeedUndiscriminatedUnions.NamedMetadata> { ... }) -> bool</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">UpdateMetadataAsync</a>(OneOf<Dictionary<string, object?>?, NamedMetadata> { ... }) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -101,7 +101,7 @@ await client.Union.UpdateMetadataAsync(
 <dl>
 <dd>
 
-**request:** `OneOf<Dictionary<string, object?>?, SeedUndiscriminatedUnions.NamedMetadata>` 
+**request:** `OneOf<Dictionary<string, object?>?, NamedMetadata>` 
     
 </dd>
 </dl>
@@ -113,7 +113,7 @@ await client.Union.UpdateMetadataAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">CallAsync</a>(SeedUndiscriminatedUnions.Request { ... }) -> bool</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">CallAsync</a>(Request { ... }) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -127,7 +127,7 @@ await client.Union.UpdateMetadataAsync(
 
 ```csharp
 await client.Union.CallAsync(
-    new SeedUndiscriminatedUnions.Request
+    new Request
     {
         Union = new Dictionary<string, object>()
         {
@@ -152,7 +152,7 @@ await client.Union.CallAsync(
 <dl>
 <dd>
 
-**request:** `SeedUndiscriminatedUnions.Request` 
+**request:** `Request` 
     
 </dd>
 </dl>
