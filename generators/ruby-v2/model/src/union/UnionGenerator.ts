@@ -35,7 +35,7 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
     }
 
     public doGenerate(): RubyFile {
-        const class_ = ruby.class_({
+        const classNode = ruby.class_({
             ...this.classReference,
             superclass: ruby.classReference({
                 name: "Union",
@@ -44,25 +44,27 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
             docstring: this.typeDeclaration.docs ?? undefined
         });
 
-        class_.addStatement(ruby.codeblock((writer) => {
-            writer.write(`discriminant :${this.discriminantPropertyName}`);
+        classNode.addStatement(ruby.codeblock((writer) => {
+            writer.newLine();
+            writer.writeLine(`discriminant :${this.discriminantPropertyName}`);
         }));
 
         for (const unionMember of this.unionMembers) {
-            class_.addStatement(ruby.codeblock((writer) => {
+            classNode.addStatement(ruby.codeblock((writer) => {
                 writer.write("member -> { ");
-                writer.write(unionMember.keyName);
-                writer.write(" }, key: \"");
                 writer.writeNode(unionMember.typeReference);
-                writer.writeLine("\"");
+                writer.write(` }, key: "${unionMember.keyName}"`);
             }));
         }
 
+        const classWithTypesModule = this.context.getTypesModule();
+        classWithTypesModule.addStatement(classNode);
+
         const classWithRootModule = this.context.getRootModule();
-        classWithRootModule.addStatement(class_);
+        classWithRootModule.addStatement(classWithTypesModule);
         return new RubyFile({
             node: ruby.codeblock((writer) => {
-                ruby.comment({ docs: "frozen_string_literal: true" });
+                writer.writeNode(ruby.comment({ docs: "frozen_string_literal: true" }));
                 writer.newLine();
                 classWithRootModule.write(writer);
             }),

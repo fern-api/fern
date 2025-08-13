@@ -9,7 +9,7 @@ module Seed
                 @client = client
             end
 
-            # @return [Seed::bigunion::BigUnion]
+            # @return [Seed::Bigunion::BigUnion]
             def get
                 raise NotImplementedError, 'This method is not yet implemented.'
             end

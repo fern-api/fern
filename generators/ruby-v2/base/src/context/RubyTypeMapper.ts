@@ -68,7 +68,7 @@ export class RubyTypeMapper {
         // In Ruby, modules are used for namespaces.
         const modules = [
             this.context.getRootModule().name,
-            ...declaredTypeName.fernFilepath.allParts.map((part) => part.snakeCase.safeName)
+            ...declaredTypeName.fernFilepath.allParts.map((part) => part.pascalCase.safeName)
         ];
         return ruby.classReference({
             name: declaredTypeName.name.pascalCase.safeName,

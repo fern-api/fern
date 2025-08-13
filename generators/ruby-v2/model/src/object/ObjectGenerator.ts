@@ -54,7 +54,7 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
 
         return new RubyFile({
             node: ruby.codeblock((writer) => {
-                ruby.comment({ docs: "frozen_string_literal: true" });
+                writer.writeNode(ruby.comment({ docs: "frozen_string_literal: true" }));
                 writer.newLine();
                 classWithRootModule.write(writer);
             }),
