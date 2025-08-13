@@ -39,13 +39,16 @@ export class SimpleTypescriptProject extends TypescriptProject {
         if (this.outputJsr) {
             await this.generateJsrJson();
         }
+        if (this.packageManager === "pnpm") {
+            await this.generatePnpmWorkspace();
+        }
     }
 
-    protected getYarnFormatCommand(): string[] {
+    protected getFormatCommand(): string[] {
         return [SimpleTypescriptProject.FORMAT_SCRIPT_NAME];
     }
 
-    protected getYarnBuildCommand(): string[] {
+    protected getBuildCommand(): string[] {
         return [SimpleTypescriptProject.BUILD_SCRIPT_NAME];
     }
 
@@ -54,6 +57,10 @@ export class SimpleTypescriptProject extends TypescriptProject {
             RelativeFilePath.of(TypescriptProject.GIT_IGNORE_FILENAME),
             ["node_modules", ".DS_Store", `/${SimpleTypescriptProject.DIST_DIRECTORY}`].join("\n")
         );
+    }
+
+    private async generatePnpmWorkspace(): Promise<void> {
+        await this.writeFileToVolume(RelativeFilePath.of(TypescriptProject.PNPM_WORKSPACE_FILENAME), "packages: ['.']");
     }
 
     private async generateNpmIgnore(): Promise<void> {
@@ -68,7 +75,8 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 SimpleTypescriptProject.FERN_IGNORE_FILENAME,
                 SimpleTypescriptProject.PRETTIER_RC_FILENAME,
                 "tsconfig.json",
-                "yarn.lock"
+                "yarn.lock",
+                "pnpm-lock.yaml"
             ].join("\n")
         );
     }
@@ -281,7 +289,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 ],
                 scripts: {
                     [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown",
-                    [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: `yarn ${SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME} && yarn ${SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME}`,
+                    [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: `${this.packageManager} ${SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME} && ${this.packageManager} ${SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME}`,
                     [SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME]: `tsc --project ./${TypescriptProject.TS_CONFIG_CJS_FILENAME}`,
                     [SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME]: [
                         `tsc --project ./${TypescriptProject.TS_CONFIG_ESM_FILENAME}`,
@@ -339,7 +347,12 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             } as any;
 
-            draft["packageManager"] = "yarn@1.22.22";
+            if (this.packageManager === "yarn") {
+                draft["packageManager"] = "yarn@1.22.22";
+            }
+            if (this.packageManager === "pnpm") {
+                draft["packageManager"] = "pnpm@10.14.0";
+            }
             draft["engines"] = {
                 node: ">=18.0.0"
             };

@@ -151,6 +151,7 @@ export declare namespace SdkGenerator {
         packagePath: string | undefined;
         omitFernHeaders: boolean;
         useDefaultRequestParameterValues: boolean;
+        packageManager: "pnpm" | "yarn";
     }
 }
 
@@ -660,7 +661,8 @@ export class SdkGenerator {
                   outputJsr: this.config.outputJsr,
                   runScripts: this.config.runScripts,
                   exportSerde,
-                  packagePath: this.relativePackagePath
+                  packagePath: this.relativePackagePath,
+                  packageManager: this.config.packageManager
               })
             : new SimpleTypescriptProject({
                   npmPackage: this.npmPackage,
@@ -679,7 +681,8 @@ export class SdkGenerator {
                   runScripts: this.config.runScripts,
                   exportSerde,
                   useLegacyExports: this.config.useLegacyExports,
-                  packagePath: this.relativePackagePath
+                  packagePath: this.relativePackagePath,
+                  packageManager: this.config.packageManager
               });
     }
 

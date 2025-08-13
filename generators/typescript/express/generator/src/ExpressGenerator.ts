@@ -71,6 +71,7 @@ export declare namespace ExpressGenerator {
         useBigInt: boolean;
         noOptionalProperties: boolean;
         packagePath: string | undefined;
+        packageManager: "pnpm" | "yarn";
     }
 }
 
@@ -290,7 +291,8 @@ export class ExpressGenerator {
             extraConfigs: undefined,
             outputJsr: false,
             exportSerde: false,
-            useLegacyExports: true
+            useLegacyExports: true,
+            packageManager: this.config.packageManager
         });
     }
 

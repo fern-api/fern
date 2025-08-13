@@ -29,6 +29,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     packagePath: z.optional(z.string()),
     omitFernHeaders: z.optional(z.boolean()),
     useDefaultRequestParameterValues: z.optional(z.boolean()),
+    packageManager: z.optional(z.enum(["pnpm", "yarn"])),
 
     // relevant to dynamic snippets
     allowExtraFields: z.optional(z.boolean()),
