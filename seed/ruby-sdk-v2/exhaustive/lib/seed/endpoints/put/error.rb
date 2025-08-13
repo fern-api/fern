@@ -6,6 +6,6 @@ module Seed
             field :code, Seed::endpoints::put::ErrorCode, optional: false, nullable: false
             field :detail, String, optional: true, nullable: false
             field :field, String, optional: true, nullable: false
-        end
+
     end
 end

@@ -39,7 +39,7 @@ module Seed
                 def get_and_return_nested_with_required_field_as_list
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
-            end
+
         end
     end
 end

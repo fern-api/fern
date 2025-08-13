@@ -14,7 +14,7 @@ module Seed
                 def get_and_return_enum
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
-            end
+
         end
     end
 end

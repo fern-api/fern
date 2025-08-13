@@ -34,7 +34,7 @@ module Seed
                 def test_delete
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
-            end
+
         end
     end
 end
