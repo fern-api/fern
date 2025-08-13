@@ -9,9 +9,6 @@ public record PatchComplexRequest
     [JsonPropertyName("name")]
     public string? Name { get; set; }
 
-    [JsonPropertyName("email")]
-    public string? Email { get; set; }
-
     [JsonPropertyName("age")]
     public int? Age { get; set; }
 
@@ -23,6 +20,21 @@ public record PatchComplexRequest
 
     [JsonPropertyName("tags")]
     public IEnumerable<string>? Tags { get; set; }
+
+    [JsonPropertyName("email")]
+    public string? Email { get; set; }
+
+    [JsonPropertyName("nickname")]
+    public string? Nickname { get; set; }
+
+    [JsonPropertyName("bio")]
+    public string? Bio { get; set; }
+
+    [JsonPropertyName("profileImageUrl")]
+    public string? ProfileImageUrl { get; set; }
+
+    [JsonPropertyName("settings")]
+    public Dictionary<string, object?>? Settings { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

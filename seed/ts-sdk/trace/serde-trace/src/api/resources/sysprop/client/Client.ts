@@ -67,6 +67,14 @@ export class Sysprop {
         numWarmInstances: number,
         requestOptions?: Sysprop.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header": requestOptions?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -75,14 +83,7 @@ export class Sysprop {
                 `/sysprop/num-warm-instances/${encodeURIComponent(serializers.Language.jsonOrThrow(language, { omitUndefined: true }))}/${encodeURIComponent(numWarmInstances)}`,
             ),
             method: "PUT",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Random-Header": requestOptions?.xRandomHeader,
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -134,6 +135,14 @@ export class Sysprop {
     private async __getNumWarmInstances(
         requestOptions?: Sysprop.RequestOptions,
     ): Promise<core.WithRawResponse<Record<SeedTrace.Language, number | undefined>>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header": requestOptions?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -142,14 +151,7 @@ export class Sysprop {
                 "/sysprop/num-warm-instances",
             ),
             method: "GET",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Random-Header": requestOptions?.xRandomHeader,
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,

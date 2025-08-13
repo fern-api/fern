@@ -10,9 +10,11 @@ module Seed
                     @client = client
                 end
 
-                # @return [void]
-                def get_and_return_union; end
-            end
+                # @return [Seed::types::union::Animal]
+                def get_and_return_union
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
+
         end
     end
 end

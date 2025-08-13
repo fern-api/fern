@@ -12,3 +12,4 @@ export * from "./timeout-sdk-error";
 export * from "./version";
 export * from "./websocket-class";
 export * from "./websocket-type-schema";
+export * from "./auth-provider";

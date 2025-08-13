@@ -41,6 +41,7 @@ export class Service {
     }
 
     private async __get(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<core.BinaryResponse>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher<core.BinaryResponse>({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -48,7 +49,7 @@ export class Service {
                 "/helloworld.txt",
             ),
             method: "GET",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             queryParameters: requestOptions?.queryParams,
             responseType: "binary-response",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

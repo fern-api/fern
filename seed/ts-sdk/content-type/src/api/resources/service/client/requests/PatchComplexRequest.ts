@@ -6,7 +6,6 @@
  * @example
  *     {
  *         name: "name",
- *         email: "email",
  *         age: 1,
  *         active: true,
  *         metadata: {
@@ -14,14 +13,27 @@
  *                 "key": "value"
  *             }
  *         },
- *         tags: ["tags", "tags"]
+ *         tags: ["tags", "tags"],
+ *         email: "email",
+ *         nickname: "nickname",
+ *         bio: "bio",
+ *         profileImageUrl: "profileImageUrl",
+ *         settings: {
+ *             "settings": {
+ *                 "key": "value"
+ *             }
+ *         }
  *     }
  */
 export interface PatchComplexRequest {
     name?: string;
-    email?: string | null;
     age?: number;
     active?: boolean;
     metadata?: Record<string, unknown>;
     tags?: string[];
+    email?: string | null;
+    nickname?: string | null;
+    bio?: string | null;
+    profileImageUrl?: string | null;
+    settings?: Record<string, unknown> | null;
 }

@@ -40,16 +40,20 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "devDependencies": {
-    "@fern-api/path-utils": "workspace:*",
-    "@fern-api/ruby-model": "workspace:*",
-    "@fern-api/ruby-ast": "workspace:*",
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/path-utils": "workspace:*",
+    "@fern-api/ruby-ast": "workspace:*",
     "@fern-api/ruby-base": "workspace:*",
+    "@fern-api/ruby-model": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.1045",
     "@fern-fern/ir-sdk": "^58.2.0",
+    "@types/lodash-es": "^4.17.12",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
+    "lodash-es": "^4.17.21",
     "tsup": "^8.5.0",
     "typescript": "5.8.3",
     "vitest": "^2.1.9"

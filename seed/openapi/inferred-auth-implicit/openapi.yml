@@ -8,7 +8,12 @@ paths:
       operationId: auth_getTokenWithClientCredentials
       tags:
         - Auth
-      parameters: []
+      parameters:
+        - name: X-Api-Key
+          in: header
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -46,7 +51,12 @@ paths:
       operationId: auth_refreshToken
       tags:
         - Auth
-      parameters: []
+      parameters:
+        - name: X-Api-Key
+          in: header
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''

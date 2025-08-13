@@ -3,7 +3,6 @@
  */
 package com.seed.inferredAuthExplicit.resources.auth;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.inferredAuthExplicit.core.ClientOptions;
 import com.seed.inferredAuthExplicit.core.MediaTypes;
 import com.seed.inferredAuthExplicit.core.ObjectMappers;
@@ -15,6 +14,8 @@ import com.seed.inferredAuthExplicit.resources.auth.requests.GetTokenRequest;
 import com.seed.inferredAuthExplicit.resources.auth.requests.RefreshTokenRequest;
 import com.seed.inferredAuthExplicit.resources.auth.types.TokenResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -40,20 +41,29 @@ public class RawAuthClient {
                 .newBuilder()
                 .addPathSegments("token")
                 .build();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("client_id", request.getClientId());
+        properties.put("client_secret", request.getClientSecret());
+        properties.put("audience", request.getAudience());
+        properties.put("grant_type", request.getGrantType());
+        if (request.getScope().isPresent()) {
+            properties.put("scope", request.getScope());
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedInferredAuthExplicitException("Failed to serialize request", e);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        _requestBuilder.addHeader("X-Api-Key", request.getXApiKey());
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -85,20 +95,30 @@ public class RawAuthClient {
                 .newBuilder()
                 .addPathSegments("token/refresh")
                 .build();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("client_id", request.getClientId());
+        properties.put("client_secret", request.getClientSecret());
+        properties.put("refresh_token", request.getRefreshToken());
+        properties.put("audience", request.getAudience());
+        properties.put("grant_type", request.getGrantType());
+        if (request.getScope().isPresent()) {
+            properties.put("scope", request.getScope());
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedInferredAuthExplicitException("Failed to serialize request", e);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        _requestBuilder.addHeader("X-Api-Key", request.getXApiKey());
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);

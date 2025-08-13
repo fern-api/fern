@@ -5,7 +5,8 @@ import { join as pathJoin } from "path";
 
 import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { AbstractRubyGeneratorContext, BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
+import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
+import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
 
 const GEMFILE_FILENAME = "Gemfile";
 const RAKEFILE_FILENAME = "Rakefile";
@@ -70,7 +71,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
             filename.replace(".Template", ""),
-            RelativeFilePath.of(`lib/${this.context.getRootFolderName()}/internal/types`),
+            RelativeFilePath.of(`lib/${this.context.getRootFolderName()}/internal`),
             replaceTemplate({
                 contents,
                 variables: getTemplateVariables({

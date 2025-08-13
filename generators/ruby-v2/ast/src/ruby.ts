@@ -9,11 +9,13 @@ import {
     KeywordSplatParameter,
     Method,
     MethodInvocation,
+    MethodKind,
     Module_,
     PositionalArgument,
     PositionalParameter,
     PositionalSplatParameter,
     TypeParameter,
+    Writer,
     YieldParameter
 } from "./ast";
 
@@ -25,11 +27,13 @@ export {
     KeywordArgument,
     Method,
     MethodInvocation,
+    MethodKind,
     Module_,
     Parameter,
     TypeLiteral,
     TypeParameter,
-    Type
+    Type,
+    Writer
 } from "./ast";
 export { AstNode } from "./ast/core/AstNode";
 

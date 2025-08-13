@@ -22,8 +22,8 @@
                 "identifier_override": "endpoint_service.patchComplex"
             },
             "snippet": {
-                "sync_client": "from seed import SeedContentTypes\n\nclient = SeedContentTypes(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.patch_complex(\n    id=\"id\",\n    name=\"name\",\n    email=\"email\",\n    age=1,\n    active=True,\n    metadata={\"metadata\": {\"key\": \"value\"}},\n    tags=[\"tags\", \"tags\"],\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedContentTypes\n\nclient = AsyncSeedContentTypes(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.patch_complex(\n        id=\"id\",\n        name=\"name\",\n        email=\"email\",\n        age=1,\n        active=True,\n        metadata={\"metadata\": {\"key\": \"value\"}},\n        tags=[\"tags\", \"tags\"],\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedContentTypes\n\nclient = SeedContentTypes(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.patch_complex(\n    id=\"id\",\n    name=\"name\",\n    age=1,\n    active=True,\n    metadata={\"metadata\": {\"key\": \"value\"}},\n    tags=[\"tags\", \"tags\"],\n    email=\"email\",\n    nickname=\"nickname\",\n    bio=\"bio\",\n    profile_image_url=\"profileImageUrl\",\n    settings={\"settings\": {\"key\": \"value\"}},\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedContentTypes\n\nclient = AsyncSeedContentTypes(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.patch_complex(\n        id=\"id\",\n        name=\"name\",\n        age=1,\n        active=True,\n        metadata={\"metadata\": {\"key\": \"value\"}},\n        tags=[\"tags\", \"tags\"],\n        email=\"email\",\n        nickname=\"nickname\",\n        bio=\"bio\",\n        profile_image_url=\"profileImageUrl\",\n        settings={\"settings\": {\"key\": \"value\"}},\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },

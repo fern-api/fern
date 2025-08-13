@@ -36,21 +36,36 @@ public class AsyncServiceClient {
     }
 
     /**
-     * Update with JSON merge patch - complex types
+     * Update with JSON merge patch - complex types.
+     * This endpoint demonstrates the distinction between:
+     * <ul>
+     * <li>optional&lt;T&gt; fields (can be present or absent, but not null)</li>
+     * <li>optional&lt;nullable&lt;T&gt;&gt; fields (can be present, absent, or null)</li>
+     * </ul>
      */
     public CompletableFuture<Void> patchComplex(String id) {
         return this.rawClient.patchComplex(id).thenApply(response -> response.body());
     }
 
     /**
-     * Update with JSON merge patch - complex types
+     * Update with JSON merge patch - complex types.
+     * This endpoint demonstrates the distinction between:
+     * <ul>
+     * <li>optional&lt;T&gt; fields (can be present or absent, but not null)</li>
+     * <li>optional&lt;nullable&lt;T&gt;&gt; fields (can be present, absent, or null)</li>
+     * </ul>
      */
     public CompletableFuture<Void> patchComplex(String id, PatchComplexRequest request) {
         return this.rawClient.patchComplex(id, request).thenApply(response -> response.body());
     }
 
     /**
-     * Update with JSON merge patch - complex types
+     * Update with JSON merge patch - complex types.
+     * This endpoint demonstrates the distinction between:
+     * <ul>
+     * <li>optional&lt;T&gt; fields (can be present or absent, but not null)</li>
+     * <li>optional&lt;nullable&lt;T&gt;&gt; fields (can be present, absent, or null)</li>
+     * </ul>
      */
     public CompletableFuture<Void> patchComplex(String id, PatchComplexRequest request, RequestOptions requestOptions) {
         return this.rawClient.patchComplex(id, request, requestOptions).thenApply(response -> response.body());

@@ -4,8 +4,10 @@
 
 package resources.auth;
 
+import java.lang.String;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import resources.auth.requests.GetTokenRequest;
 import resources.auth.requests.RefreshTokenRequest;
@@ -20,12 +22,14 @@ public interface AuthService {
       produces = "application/json",
       consumes = "application/json"
   )
-  TokenResponse getTokenWithClientCredentials(@RequestBody GetTokenRequest body);
+  TokenResponse getTokenWithClientCredentials(@RequestHeader("X-Api-Key") String xApiKey,
+      @RequestBody GetTokenRequest body);
 
   @PostMapping(
       value = "/token/refresh",
       produces = "application/json",
       consumes = "application/json"
   )
-  TokenResponse refreshToken(@RequestBody RefreshTokenRequest body);
+  TokenResponse refreshToken(@RequestHeader("X-Api-Key") String xApiKey,
+      @RequestBody RefreshTokenRequest body);
 }

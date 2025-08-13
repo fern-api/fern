@@ -5,6 +5,7 @@ import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { RawClient } from "../endpoint/http/RawClient";
 
 export const CLIENT_MEMBER_NAME = "_client";
 export const GRPC_CLIENT_MEMBER_NAME = "_grpc";
@@ -98,13 +99,16 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
     private generateEndpoints(service: HttpService): ruby.Method[] {
         const methods: ruby.Method[] = [];
         for (const endpoint of service.endpoints) {
-            const method = ruby.method({
-                name: endpoint.name.snakeCase.safeName,
-                returnType: ruby.Type.void()
-            });
-            methods.push(method);
+            if (this.subpackage.service != null) {
+                const generatedMethods = this.context.endpointGenerator.generate({
+                    endpoint,
+                    serviceId: this.subpackage.service,
+                    rawClientReference: "",
+                    rawClient: new RawClient(this.context)
+                });
+                methods.push(...generatedMethods);
+            }
         }
-
         return methods;
     }
 }

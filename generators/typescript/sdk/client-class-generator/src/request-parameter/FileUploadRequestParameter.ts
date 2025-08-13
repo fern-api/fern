@@ -103,7 +103,7 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
 
     public getReferenceToBodyProperty(property: InlinedRequestBodyProperty, context: SdkContext): ts.Expression {
         return this.getReferenceToProperty(
-            this.getGeneratedRequestWrapper(context).getInlinedRequestBodyPropertyKey(property)
+            this.getGeneratedRequestWrapper(context).getInlinedRequestBodyPropertyKey(property).propertyName
         );
     }
 

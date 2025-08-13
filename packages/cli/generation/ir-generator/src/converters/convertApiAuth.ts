@@ -274,7 +274,7 @@ function getInferredTokenEndpoint({
 
     const result: InferredAuthSchemeTokenEndpoint = {
         endpoint: createEndpointReference({ resolvedEndpoint: tokenEndpoint }),
-        expiryProperty: getInferredExpiryProperty({
+        expiryProperty: inferExpiryProperty({
             tokenEndpoint,
             getTokenEndpointConfig,
             propertyResolver
@@ -333,23 +333,43 @@ function getInferredAuthenticatedRequestHeaders({
         });
     }
     if (!result.has("authorization")) {
-        for (const property of commonAuthTokenProperties) {
+        const authTokenResponseProperty = inferAuthTokenResponseProperty({
+            tokenEndpoint,
+            propertyResolver
+        });
+        if (authTokenResponseProperty) {
+            result.set("authorization", {
+                headerName: "Authorization",
+                responseProperty: authTokenResponseProperty,
+                valuePrefix: "Bearer "
+            });
+        }
+    }
+    return Array.from(result.values());
+}
+
+function inferAuthTokenResponseProperty({
+    tokenEndpoint,
+    propertyResolver
+}: {
+    tokenEndpoint: ResolvedEndpoint;
+    propertyResolver: PropertyResolver;
+}): FernIr.ResponseProperty | undefined {
+    for (const property of commonAuthTokenProperties) {
+        try {
             const responseProperty = propertyResolver.resolveResponseProperty({
                 file: tokenEndpoint.file,
                 endpoint: tokenEndpoint.endpointId,
                 propertyComponents: [property]
             });
             if (responseProperty) {
-                result.set("authorization", {
-                    headerName: "Authorization",
-                    responseProperty,
-                    valuePrefix: "Bearer "
-                });
-                break;
+                return responseProperty;
             }
+        } catch (e) {
+            // Ignore errors
         }
     }
-    return Array.from(result.values());
+    return undefined;
 }
 
 const commonExpiryProperties = [
@@ -372,7 +392,7 @@ const commonExpiryProperties = [
     "ValidUntil"
 ];
 
-function getInferredExpiryProperty({
+function inferExpiryProperty({
     tokenEndpoint,
     getTokenEndpointConfig,
     propertyResolver
@@ -389,13 +409,17 @@ function getInferredExpiryProperty({
         });
     }
     for (const property of commonExpiryProperties) {
-        const responseProperty = propertyResolver.resolveResponseProperty({
-            file: tokenEndpoint.file,
-            endpoint: tokenEndpoint.endpointId,
-            propertyComponents: [property]
-        });
-        if (responseProperty) {
-            return responseProperty;
+        try {
+            const responseProperty = propertyResolver.resolveResponseProperty({
+                file: tokenEndpoint.file,
+                endpoint: tokenEndpoint.endpointId,
+                propertyComponents: [property]
+            });
+            if (responseProperty) {
+                return responseProperty;
+            }
+        } catch (e) {
+            // Ignore errors
         }
     }
     return undefined;

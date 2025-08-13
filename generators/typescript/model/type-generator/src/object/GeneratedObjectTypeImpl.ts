@@ -195,12 +195,15 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     }
 
     public getAllPropertiesIncludingExtensions(
-        context: Context
+        context: Context,
+        { forceCamelCase }: { forceCamelCase?: boolean } = { forceCamelCase: false }
     ): { propertyKey: string; wireKey: string; type: TypeReference }[] {
         return [
             ...this.shape.properties.map((property) => ({
                 wireKey: property.name.wireValue,
-                propertyKey: this.getPropertyKeyFromProperty(property),
+                propertyKey: forceCamelCase
+                    ? property.name.name.camelCase.safeName
+                    : this.getPropertyKeyFromProperty(property),
                 type: property.valueType
             })),
             ...this.shape.extends.flatMap((extension) => {

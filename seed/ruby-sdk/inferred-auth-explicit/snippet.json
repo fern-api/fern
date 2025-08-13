@@ -7,7 +7,7 @@
                 "identifierOverride": "endpoint_auth.getTokenWithClientCredentials"
             },
             "snippet": {
-                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.auth.get_token_with_client_credentials(\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  scope: \"scope\"\n)",
+                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.auth.get_token_with_client_credentials(\n  x_api_key: \"X-Api-Key\",\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  scope: \"scope\"\n)",
                 "type": "ruby"
             }
         },
@@ -18,7 +18,7 @@
                 "identifierOverride": "endpoint_auth.refreshToken"
             },
             "snippet": {
-                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.auth.refresh_token(\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  refresh_token: \"refresh_token\",\n  scope: \"scope\"\n)",
+                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.auth.refresh_token(\n  x_api_key: \"X-Api-Key\",\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  refresh_token: \"refresh_token\",\n  scope: \"scope\"\n)",
                 "type": "ruby"
             }
         },
@@ -29,7 +29,7 @@
                 "identifierOverride": "endpoint_auth.getTokenWithClientCredentials"
             },
             "snippet": {
-                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.auth.get_token_with_client_credentials(\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  scope: \"scope\"\n)",
+                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.auth.get_token_with_client_credentials(\n  x_api_key: \"X-Api-Key\",\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  scope: \"scope\"\n)",
                 "type": "ruby"
             }
         },
@@ -40,7 +40,7 @@
                 "identifierOverride": "endpoint_auth.refreshToken"
             },
             "snippet": {
-                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.auth.refresh_token(\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  refresh_token: \"refresh_token\",\n  scope: \"scope\"\n)",
+                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.auth.refresh_token(\n  x_api_key: \"X-Api-Key\",\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  refresh_token: \"refresh_token\",\n  scope: \"scope\"\n)",
                 "type": "ruby"
             }
         },

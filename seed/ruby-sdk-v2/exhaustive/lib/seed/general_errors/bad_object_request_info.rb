@@ -2,7 +2,7 @@
 module Seed
     module Types
         class BadObjectRequestInfo < Internal::Types::Model
-            field :message, String, optional: true, nullable: true
-        end
+            field :message, String, optional: false, nullable: false
+
     end
 end

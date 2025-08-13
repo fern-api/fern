@@ -63,23 +63,28 @@ class RawServiceClient:
         id: str,
         *,
         name: typing.Optional[str] = OMIT,
-        email: typing.Optional[str] = OMIT,
         age: typing.Optional[int] = OMIT,
         active: typing.Optional[bool] = OMIT,
         metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        nickname: typing.Optional[str] = OMIT,
+        bio: typing.Optional[str] = OMIT,
+        profile_image_url: typing.Optional[str] = OMIT,
+        settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
-        Update with JSON merge patch - complex types
+        Update with JSON merge patch - complex types.
+        This endpoint demonstrates the distinction between:
+        - optional<T> fields (can be present or absent, but not null)
+        - optional<nullable<T>> fields (can be present, absent, or null)
 
         Parameters
         ----------
         id : str
 
         name : typing.Optional[str]
-
-        email : typing.Optional[str]
 
         age : typing.Optional[int]
 
@@ -88,6 +93,16 @@ class RawServiceClient:
         metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
 
         tags : typing.Optional[typing.Sequence[str]]
+
+        email : typing.Optional[str]
+
+        nickname : typing.Optional[str]
+
+        bio : typing.Optional[str]
+
+        profile_image_url : typing.Optional[str]
+
+        settings : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -101,11 +116,15 @@ class RawServiceClient:
             method="PATCH",
             json={
                 "name": name,
-                "email": email,
                 "age": age,
                 "active": active,
                 "metadata": metadata,
                 "tags": tags,
+                "email": email,
+                "nickname": nickname,
+                "bio": bio,
+                "profileImageUrl": profile_image_url,
+                "settings": settings,
             },
             headers={
                 "content-type": "application/merge-patch+json",
@@ -216,23 +235,28 @@ class AsyncRawServiceClient:
         id: str,
         *,
         name: typing.Optional[str] = OMIT,
-        email: typing.Optional[str] = OMIT,
         age: typing.Optional[int] = OMIT,
         active: typing.Optional[bool] = OMIT,
         metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        nickname: typing.Optional[str] = OMIT,
+        bio: typing.Optional[str] = OMIT,
+        profile_image_url: typing.Optional[str] = OMIT,
+        settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
-        Update with JSON merge patch - complex types
+        Update with JSON merge patch - complex types.
+        This endpoint demonstrates the distinction between:
+        - optional<T> fields (can be present or absent, but not null)
+        - optional<nullable<T>> fields (can be present, absent, or null)
 
         Parameters
         ----------
         id : str
 
         name : typing.Optional[str]
-
-        email : typing.Optional[str]
 
         age : typing.Optional[int]
 
@@ -241,6 +265,16 @@ class AsyncRawServiceClient:
         metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
 
         tags : typing.Optional[typing.Sequence[str]]
+
+        email : typing.Optional[str]
+
+        nickname : typing.Optional[str]
+
+        bio : typing.Optional[str]
+
+        profile_image_url : typing.Optional[str]
+
+        settings : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -254,11 +288,15 @@ class AsyncRawServiceClient:
             method="PATCH",
             json={
                 "name": name,
-                "email": email,
                 "age": age,
                 "active": active,
                 "metadata": metadata,
                 "tags": tags,
+                "email": email,
+                "nickname": nickname,
+                "bio": bio,
+                "profileImageUrl": profile_image_url,
+                "settings": settings,
             },
             headers={
                 "content-type": "application/merge-patch+json",

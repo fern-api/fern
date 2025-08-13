@@ -8,7 +8,13 @@ import { SeedInferredAuthExplicitClient } from "../../src/Client";
 describe("Auth", () => {
     test("getTokenWithClientCredentials", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedInferredAuthExplicitClient({ environment: server.baseUrl });
+        const client = new SeedInferredAuthExplicitClient({
+            xApiKey: "X-Api-Key",
+            clientId: "client_id",
+            clientSecret: "client_secret",
+            scope: "scope",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             client_id: "client_id",
             client_secret: "client_secret",
@@ -20,6 +26,7 @@ describe("Auth", () => {
         server
             .mockEndpoint()
             .post("/token")
+            .header("X-Api-Key", "X-Api-Key")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -27,6 +34,7 @@ describe("Auth", () => {
             .build();
 
         const response = await client.auth.getTokenWithClientCredentials({
+            "X-Api-Key": "X-Api-Key",
             client_id: "client_id",
             client_secret: "client_secret",
             scope: "scope",
@@ -40,7 +48,13 @@ describe("Auth", () => {
 
     test("refreshToken", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedInferredAuthExplicitClient({ environment: server.baseUrl });
+        const client = new SeedInferredAuthExplicitClient({
+            xApiKey: "X-Api-Key",
+            clientId: "client_id",
+            clientSecret: "client_secret",
+            scope: "scope",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             client_id: "client_id",
             client_secret: "client_secret",
@@ -53,6 +67,7 @@ describe("Auth", () => {
         server
             .mockEndpoint()
             .post("/token/refresh")
+            .header("X-Api-Key", "X-Api-Key")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -60,6 +75,7 @@ describe("Auth", () => {
             .build();
 
         const response = await client.auth.refreshToken({
+            "X-Api-Key": "X-Api-Key",
             client_id: "client_id",
             client_secret: "client_secret",
             refresh_token: "refresh_token",

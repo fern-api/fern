@@ -41,15 +41,22 @@ module SeedContentTypesClient
       end
     end
 
-    # Update with JSON merge patch - complex types
+    # Update with JSON merge patch - complex types.
+    #  This endpoint demonstrates the distinction between:
+    #  - optional<T> fields (can be present or absent, but not null)
+    #  - optional<nullable<T>> fields (can be present, absent, or null)
     #
     # @param id [String]
     # @param name [String]
-    # @param email [String]
     # @param age [Integer]
     # @param active [Boolean]
     # @param metadata [Hash{String => Object}]
     # @param tags [Array<String>]
+    # @param email [String]
+    # @param nickname [String]
+    # @param bio [String]
+    # @param profile_image_url [String]
+    # @param settings [Hash{String => Object}]
     # @param request_options [SeedContentTypesClient::RequestOptions]
     # @return [Void]
     # @example
@@ -57,13 +64,18 @@ module SeedContentTypesClient
     #  content_types.service.patch_complex(
     #    id: "id",
     #    name: "name",
-    #    email: "email",
     #    age: 1,
     #    active: true,
     #    metadata: { "metadata": {"key":"value"} },
-    #    tags: ["tags", "tags"]
+    #    tags: ["tags", "tags"],
+    #    email: "email",
+    #    nickname: "nickname",
+    #    bio: "bio",
+    #    profile_image_url: "profileImageUrl",
+    #    settings: { "settings": {"key":"value"} }
     #  )
-    def patch_complex(id:, name: nil, email: nil, age: nil, active: nil, metadata: nil, tags: nil, request_options: nil)
+    def patch_complex(id:, name: nil, age: nil, active: nil, metadata: nil, tags: nil, email: nil, nickname: nil,
+                      bio: nil, profile_image_url: nil, settings: nil, request_options: nil)
       @request_client.conn.patch do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = {
@@ -77,11 +89,15 @@ module SeedContentTypesClient
         req.body = {
           **(request_options&.additional_body_parameters || {}),
           name: name,
-          email: email,
           age: age,
           active: active,
           metadata: metadata,
-          tags: tags
+          tags: tags,
+          email: email,
+          nickname: nickname,
+          bio: bio,
+          profileImageUrl: profile_image_url,
+          settings: settings
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/complex/#{id}"
       end
@@ -157,15 +173,22 @@ module SeedContentTypesClient
       end
     end
 
-    # Update with JSON merge patch - complex types
+    # Update with JSON merge patch - complex types.
+    #  This endpoint demonstrates the distinction between:
+    #  - optional<T> fields (can be present or absent, but not null)
+    #  - optional<nullable<T>> fields (can be present, absent, or null)
     #
     # @param id [String]
     # @param name [String]
-    # @param email [String]
     # @param age [Integer]
     # @param active [Boolean]
     # @param metadata [Hash{String => Object}]
     # @param tags [Array<String>]
+    # @param email [String]
+    # @param nickname [String]
+    # @param bio [String]
+    # @param profile_image_url [String]
+    # @param settings [Hash{String => Object}]
     # @param request_options [SeedContentTypesClient::RequestOptions]
     # @return [Void]
     # @example
@@ -173,13 +196,18 @@ module SeedContentTypesClient
     #  content_types.service.patch_complex(
     #    id: "id",
     #    name: "name",
-    #    email: "email",
     #    age: 1,
     #    active: true,
     #    metadata: { "metadata": {"key":"value"} },
-    #    tags: ["tags", "tags"]
+    #    tags: ["tags", "tags"],
+    #    email: "email",
+    #    nickname: "nickname",
+    #    bio: "bio",
+    #    profile_image_url: "profileImageUrl",
+    #    settings: { "settings": {"key":"value"} }
     #  )
-    def patch_complex(id:, name: nil, email: nil, age: nil, active: nil, metadata: nil, tags: nil, request_options: nil)
+    def patch_complex(id:, name: nil, age: nil, active: nil, metadata: nil, tags: nil, email: nil, nickname: nil,
+                      bio: nil, profile_image_url: nil, settings: nil, request_options: nil)
       Async do
         @request_client.conn.patch do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -194,11 +222,15 @@ module SeedContentTypesClient
           req.body = {
             **(request_options&.additional_body_parameters || {}),
             name: name,
-            email: email,
             age: age,
             active: active,
             metadata: metadata,
-            tags: tags
+            tags: tags,
+            email: email,
+            nickname: nickname,
+            bio: bio,
+            profileImageUrl: profile_image_url,
+            settings: settings
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/complex/#{id}"
         end

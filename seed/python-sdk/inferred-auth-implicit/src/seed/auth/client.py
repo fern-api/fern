@@ -29,6 +29,7 @@ class AuthClient:
     def get_token_with_client_credentials(
         self,
         *,
+        x_api_key: str,
         client_id: str,
         client_secret: str,
         scope: typing.Optional[str] = OMIT,
@@ -37,6 +38,8 @@ class AuthClient:
         """
         Parameters
         ----------
+        x_api_key : str
+
         client_id : str
 
         client_secret : str
@@ -58,19 +61,25 @@ class AuthClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.auth.get_token_with_client_credentials(
+            x_api_key="X-Api-Key",
             client_id="client_id",
             client_secret="client_secret",
             scope="scope",
         )
         """
         _response = self._raw_client.get_token_with_client_credentials(
-            client_id=client_id, client_secret=client_secret, scope=scope, request_options=request_options
+            x_api_key=x_api_key,
+            client_id=client_id,
+            client_secret=client_secret,
+            scope=scope,
+            request_options=request_options,
         )
         return _response.data
 
     def refresh_token(
         self,
         *,
+        x_api_key: str,
         client_id: str,
         client_secret: str,
         refresh_token: str,
@@ -80,6 +89,8 @@ class AuthClient:
         """
         Parameters
         ----------
+        x_api_key : str
+
         client_id : str
 
         client_secret : str
@@ -103,6 +114,7 @@ class AuthClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.auth.refresh_token(
+            x_api_key="X-Api-Key",
             client_id="client_id",
             client_secret="client_secret",
             refresh_token="refresh_token",
@@ -110,6 +122,7 @@ class AuthClient:
         )
         """
         _response = self._raw_client.refresh_token(
+            x_api_key=x_api_key,
             client_id=client_id,
             client_secret=client_secret,
             refresh_token=refresh_token,
@@ -137,6 +150,7 @@ class AsyncAuthClient:
     async def get_token_with_client_credentials(
         self,
         *,
+        x_api_key: str,
         client_id: str,
         client_secret: str,
         scope: typing.Optional[str] = OMIT,
@@ -145,6 +159,8 @@ class AsyncAuthClient:
         """
         Parameters
         ----------
+        x_api_key : str
+
         client_id : str
 
         client_secret : str
@@ -171,6 +187,7 @@ class AsyncAuthClient:
 
         async def main() -> None:
             await client.auth.get_token_with_client_credentials(
+                x_api_key="X-Api-Key",
                 client_id="client_id",
                 client_secret="client_secret",
                 scope="scope",
@@ -180,13 +197,18 @@ class AsyncAuthClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get_token_with_client_credentials(
-            client_id=client_id, client_secret=client_secret, scope=scope, request_options=request_options
+            x_api_key=x_api_key,
+            client_id=client_id,
+            client_secret=client_secret,
+            scope=scope,
+            request_options=request_options,
         )
         return _response.data
 
     async def refresh_token(
         self,
         *,
+        x_api_key: str,
         client_id: str,
         client_secret: str,
         refresh_token: str,
@@ -196,6 +218,8 @@ class AsyncAuthClient:
         """
         Parameters
         ----------
+        x_api_key : str
+
         client_id : str
 
         client_secret : str
@@ -224,6 +248,7 @@ class AsyncAuthClient:
 
         async def main() -> None:
             await client.auth.refresh_token(
+                x_api_key="X-Api-Key",
                 client_id="client_id",
                 client_secret="client_secret",
                 refresh_token="refresh_token",
@@ -234,6 +259,7 @@ class AsyncAuthClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.refresh_token(
+            x_api_key=x_api_key,
             client_id=client_id,
             client_secret=client_secret,
             refresh_token=refresh_token,

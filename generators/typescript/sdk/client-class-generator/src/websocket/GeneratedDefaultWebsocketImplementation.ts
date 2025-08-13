@@ -166,7 +166,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 }),
                 ...(this.channel.queryParameters ?? []).map((queryParameter) => {
                     return {
-                        name: this.getPropertyNameOfQueryParameter(queryParameter).propertyName,
+                        name: getPropertyKey(this.getPropertyNameOfQueryParameter(queryParameter).propertyName),
                         type: getTextOfTsNode(context.type.getReferenceToType(queryParameter.valueType).typeNode),
                         hasQuestionToken: context.type.isOptional(queryParameter.valueType)
                     };

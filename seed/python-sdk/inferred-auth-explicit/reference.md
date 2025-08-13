@@ -19,6 +19,7 @@ client = SeedInferredAuthExplicit(
     base_url="https://yourhost.com/path/to/api",
 )
 client.auth.get_token_with_client_credentials(
+    x_api_key="X-Api-Key",
     client_id="client_id",
     client_secret="client_secret",
     scope="scope",
@@ -34,6 +35,14 @@ client.auth.get_token_with_client_credentials(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**x_api_key:** `str` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -93,6 +102,7 @@ client = SeedInferredAuthExplicit(
     base_url="https://yourhost.com/path/to/api",
 )
 client.auth.refresh_token(
+    x_api_key="X-Api-Key",
     client_id="client_id",
     client_secret="client_secret",
     refresh_token="refresh_token",
@@ -109,6 +119,14 @@ client.auth.refresh_token(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**x_api_key:** `str` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

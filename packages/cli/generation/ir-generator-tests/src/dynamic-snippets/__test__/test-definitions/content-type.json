@@ -424,40 +424,6 @@
                         {
                             "name": {
                                 "name": {
-                                    "originalName": "email",
-                                    "camelCase": {
-                                        "unsafeName": "email",
-                                        "safeName": "email"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "email",
-                                        "safeName": "email"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "EMAIL",
-                                        "safeName": "EMAIL"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Email",
-                                        "safeName": "Email"
-                                    }
-                                },
-                                "wireValue": "email"
-                            },
-                            "typeReference": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "name": {
-                                "name": {
                                     "originalName": "age",
                                     "camelCase": {
                                         "unsafeName": "age",
@@ -584,6 +550,182 @@
                                     "value": {
                                         "type": "primitive",
                                         "value": "STRING"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "email",
+                                    "camelCase": {
+                                        "unsafeName": "email",
+                                        "safeName": "email"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "email",
+                                        "safeName": "email"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "EMAIL",
+                                        "safeName": "EMAIL"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Email",
+                                        "safeName": "Email"
+                                    }
+                                },
+                                "wireValue": "email"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "nickname",
+                                    "camelCase": {
+                                        "unsafeName": "nickname",
+                                        "safeName": "nickname"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "nickname",
+                                        "safeName": "nickname"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "NICKNAME",
+                                        "safeName": "NICKNAME"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Nickname",
+                                        "safeName": "Nickname"
+                                    }
+                                },
+                                "wireValue": "nickname"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "bio",
+                                    "camelCase": {
+                                        "unsafeName": "bio",
+                                        "safeName": "bio"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "bio",
+                                        "safeName": "bio"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "BIO",
+                                        "safeName": "BIO"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Bio",
+                                        "safeName": "Bio"
+                                    }
+                                },
+                                "wireValue": "bio"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "profileImageUrl",
+                                    "camelCase": {
+                                        "unsafeName": "profileImageURL",
+                                        "safeName": "profileImageURL"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "profile_image_url",
+                                        "safeName": "profile_image_url"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "PROFILE_IMAGE_URL",
+                                        "safeName": "PROFILE_IMAGE_URL"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ProfileImageURL",
+                                        "safeName": "ProfileImageURL"
+                                    }
+                                },
+                                "wireValue": "profileImageUrl"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "settings",
+                                    "camelCase": {
+                                        "unsafeName": "settings",
+                                        "safeName": "settings"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "settings",
+                                        "safeName": "settings"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "SETTINGS",
+                                        "safeName": "SETTINGS"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Settings",
+                                        "safeName": "Settings"
+                                    }
+                                },
+                                "wireValue": "settings"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "map",
+                                        "key": {
+                                            "type": "primitive",
+                                            "value": "STRING"
+                                        },
+                                        "value": {
+                                            "type": "unknown"
+                                        }
                                     }
                                 }
                             }

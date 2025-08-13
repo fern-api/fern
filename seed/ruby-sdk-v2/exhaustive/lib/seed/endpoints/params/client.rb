@@ -10,30 +10,46 @@ module Seed
                     @client = client
                 end
 
-                # @return [void]
-                def get_with_path; end
+                # @return [String]
+                def get_with_path
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_with_inline_path; end
+                # @return [String]
+                def get_with_inline_path
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_with_query; end
+                # @return [untyped]
+                def get_with_query
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_with_allow_multiple_query; end
+                # @return [untyped]
+                def get_with_allow_multiple_query
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_with_path_and_query; end
+                # @return [untyped]
+                def get_with_path_and_query
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_with_inline_path_and_query; end
+                # @return [untyped]
+                def get_with_inline_path_and_query
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def modify_with_path; end
+                # @return [String]
+                def modify_with_path
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def modify_with_inline_path; end
-            end
+                # @return [String]
+                def modify_with_inline_path
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
+
         end
     end
 end

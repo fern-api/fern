@@ -3,6 +3,8 @@ import { Comment } from "./Comment";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Module_ } from "./Module";
+import { Method, MethodKind } from "./Method";
+import { Type } from "./Type";
 
 export declare namespace Class_ {
     export interface Args extends Module_.Args {
@@ -14,6 +16,7 @@ export declare namespace Class_ {
 export class Class_ extends Module_ {
     public readonly superclass: ClassReference | undefined;
     public readonly statements: AstNode[];
+    public readonly methods: Method[] = [];
 
     constructor({ name, superclass, typeParameters, docstring, statements }: Class_.Args) {
         super({ name, docstring, typeParameters });
@@ -30,6 +33,24 @@ export class Class_ extends Module_ {
         this.statements.push(...statements);
     }
 
+    public addInstanceMethod(name: string, returnType: Type, statements: AstNode[]): void {
+        const method = new Method({
+            name,
+            kind: MethodKind.Instance,
+            returnType,
+            statements
+        });
+        this.addMethod(method);
+    }
+
+    public addMethod(method: Method): void {
+        this.methods.push(method);
+    }
+
+    public addMethods(methods: Method[]): void {
+        methods.forEach((method) => this.addMethod(method));
+    }
+
     public write(writer: Writer): void {
         if (this.docstring) {
             new Comment({ docs: this.docstring }).write(writer);
@@ -40,6 +61,11 @@ export class Class_ extends Module_ {
         if (this.superclass) {
             writer.write(" < ");
             this.superclass.write(writer);
+        }
+
+        if (!this.hasBody()) {
+            writer.write("; end");
+            return;
         }
 
         if (this.statements.length) {
@@ -54,11 +80,22 @@ export class Class_ extends Module_ {
             });
 
             writer.dedent();
-            writer.write("end");
-        } else {
-            writer.write("; end");
         }
+
+        if (this.methods.length) {
+            writer.newLine();
+            writer.indent();
+            this.methods.forEach((method) => {
+                method.write(writer);
+            });
+            writer.dedent();
+        }
+
         writer.newLine();
+    }
+
+    private hasBody(): boolean {
+        return this.statements.length > 0 || this.methods.length > 0;
     }
 
     public writeTypeDefinition(writer: Writer): void {
