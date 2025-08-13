@@ -38,31 +38,31 @@ export class RawClient {
         queryBagReference,
         requestType
     }: RawClient.CreateHttpRequestWrapperArgs): ruby.CodeBlock | undefined {
-       switch (requestType) {
-        case "json":
-            return ruby.codeblock((writer) => {
-                writer.writeLine(`_request = ${this.context.getReferenceToInternalJSONRequest()}.new(`)
-                writer.indent()
-                writer.writeLine(`method: ${endpoint.method.toUpperCase()},`)
-                writer.write(`path: `)
-                this.writePathString({ writer, endpoint, pathParameterReferences: pathParameterReferences ?? {} });
-                writer.writeLine();
-                if (headerBagReference != null) {
-                    writer.writeLine(`headers: ${headerBagReference},`)
-                }
-                if (queryBagReference != null) {
-                    writer.writeLine(`query: ${queryBagReference},`)
-                }
-                if (bodyReference != null) {
-                    writer.writeLine(`body: ${bodyReference},`)
-                }
-                writer.dedent()
-                writer.writeLine(`)`);
-            });
-        case "bytes":
-            return undefined;
-        case "multipartform":
-            return undefined;
+        switch (requestType) {
+            case "json":
+                return ruby.codeblock((writer) => {
+                    writer.writeLine(`_request = ${this.context.getReferenceToInternalJSONRequest()}.new(`);
+                    writer.indent();
+                    writer.writeLine(`method: ${endpoint.method.toUpperCase()},`);
+                    writer.write(`path: `);
+                    this.writePathString({ writer, endpoint, pathParameterReferences: pathParameterReferences ?? {} });
+                    writer.writeLine();
+                    if (headerBagReference != null) {
+                        writer.writeLine(`headers: ${headerBagReference},`);
+                    }
+                    if (queryBagReference != null) {
+                        writer.writeLine(`query: ${queryBagReference},`);
+                    }
+                    if (bodyReference != null) {
+                        writer.writeLine(`body: ${bodyReference},`);
+                    }
+                    writer.dedent();
+                    writer.writeLine(`)`);
+                });
+            case "bytes":
+                return undefined;
+            case "multipartform":
+                return undefined;
         }
         return undefined;
     }
