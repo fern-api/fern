@@ -10,12 +10,9 @@ module Seed
                     @client = client
                 end
 
-                # @return [Seed::folder_a::service::Response]
+                # @return [Seed::FolderA::Service::Response]
                 def get_direct_thread(request_options: {}, **params)
-                    _request = Seed::Internal::Http::JSONRequest.new(
-                        method: GET,
-                        path: ""
-                    )
+                    raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
         end

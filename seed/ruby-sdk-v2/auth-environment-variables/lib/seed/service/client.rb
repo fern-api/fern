@@ -13,20 +13,14 @@ module Seed
             #
             # @return [String]
             def get_with_api_key(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: GET,
-                    path: "apiKey"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # GET request with custom api key
             #
             # @return [String]
             def get_with_header(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: GET,
-                    path: "apiKeyInHeader"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
     end

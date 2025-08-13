@@ -10,6 +10,7 @@ module Seed
             end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             # @return [Seed::Union::Shape]
             def get
                 raise NotImplementedError, 'This method is not yet implemented.'
@@ -21,6 +22,11 @@ module Seed
                     path: "/#{params[:id]}"
                 )
 >>>>>>> b7b4afb47e (fix(ruby): add basic endpoint implementation)
+=======
+            # @return [Seed::Union::Shape]
+            def get(request_options: {}, **params)
+                raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 591a1624b0 (fix)
             end
 
             # @return [bool]

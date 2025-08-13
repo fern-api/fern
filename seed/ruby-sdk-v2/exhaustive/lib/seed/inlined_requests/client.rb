@@ -11,12 +11,9 @@ module Seed
 
             # POST with custom object in request body, response is an object
             #
-            # @return [Seed::types::object::ObjectWithOptionalField]
+            # @return [Seed::Types::Object_::ObjectWithOptionalField]
             def post_with_object_bodyand_response(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/req-bodies/object"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
     end

@@ -11,10 +11,7 @@ module Seed
 
             # @return [untyped]
             def nop(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: GET,
-                    path: "/#{params[:id]}//#{params[:nestedId]}"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
     end

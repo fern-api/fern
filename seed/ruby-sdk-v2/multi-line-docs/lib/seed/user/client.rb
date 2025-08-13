@@ -14,21 +14,15 @@ module Seed
             #
             # @return [untyped]
             def get_user(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: GET,
-                    path: "users/#{params[:userId]}"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # Create a new user.
             # This endpoint is used to create a new user.
             #
-            # @return [Seed::user::User]
+            # @return [Seed::User::User]
             def create_user(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "users"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
     end

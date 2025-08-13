@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
     module Types
@@ -8,7 +9,7 @@ module Seed
             field :ending, String, optional: false, nullable: false
             field :context, String, optional: false, nullable: false
             field :maybe_context, String, optional: true, nullable: false
-            field :container_object, Seed::reference::ContainerObject, optional: false, nullable: false
+            field :container_object, Seed::Reference::ContainerObject, optional: false, nullable: false
 
     end
 end

@@ -1,8 +1,9 @@
+# frozen_string_literal: true
 
 module Seed
     module Types
         class GetGeneratedTestCaseTemplateFileRequest < Internal::Types::Model
-            field :template, Seed::v_2::v_3::problem::TestCaseTemplate, optional: false, nullable: false
+            field :template, Seed::V2::V3::Problem::TestCaseTemplate, optional: false, nullable: false
 
     end
 end

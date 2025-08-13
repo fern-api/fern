@@ -11,12 +11,9 @@ module Seed
 
             # List all users.
             #
-            # @return [Array[Seed::user::User]]
+            # @return [Array[Seed::User::User]]
             def list(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: GET,
-                    path: "/users/"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
     end

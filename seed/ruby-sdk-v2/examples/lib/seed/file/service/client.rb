@@ -12,12 +12,9 @@ module Seed
 
                 # This endpoint returns a file by its name.
                 #
-                # @return [Seed::types::File]
+                # @return [Seed::Types::File]
                 def get_file(request_options: {}, **params)
-                    _request = Seed::Internal::Http::JSONRequest.new(
-                        method: GET,
-                        path: "/file/#{params[:filename]}"
-                    )
+                    raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
         end

@@ -11,18 +11,12 @@ module Seed
 
             # @return [untyped]
             def simple(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/snippet"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # @return [untyped]
             def download_file(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: ""
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
     end

@@ -19,12 +19,9 @@ module Seed
                 )
             end
 
-            # @return [Seed::imdb::Movie]
+            # @return [Seed::Imdb::Movie]
             def get_movie(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: GET,
-                    path: "/movies/#{params[:movieId]}"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
     end

@@ -1,8 +1,9 @@
+# frozen_string_literal: true
 
 module Seed
     module Types
         class Foo < Internal::Types::Model
-            field :foo, Seed::folder_c::common::Foo, optional: true, nullable: false
+            field :foo, Seed::FolderC::Common::Foo, optional: true, nullable: false
 
     end
 end

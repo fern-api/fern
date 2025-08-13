@@ -11,10 +11,7 @@ module Seed
 
             # @return [Seed::SendResponse]
             def send(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "inlined"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
     end

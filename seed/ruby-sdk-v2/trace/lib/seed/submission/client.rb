@@ -11,40 +11,28 @@ module Seed
 
             # Returns sessionId and execution server URL for session. Spins up server.
             #
-            # @return [Seed::submission::ExecutionSessionResponse]
+            # @return [Seed::Submission::ExecutionSessionResponse]
             def create_execution_session(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/sessions/create-session/#{params[:language]}"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # Returns execution server URL for session. Returns empty if session isn't registered.
             #
-            # @return [Seed::submission::ExecutionSessionResponse | nil]
+            # @return [Seed::Submission::ExecutionSessionResponse | nil]
             def get_execution_session(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: GET,
-                    path: "/sessions/#{params[:sessionId]}"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # Stops execution session.
             #
             # @return [untyped]
             def stop_execution_session(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: DELETE,
-                    path: "/sessions/stop/#{params[:sessionId]}"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
-            # @return [Seed::submission::GetExecutionSessionStateResponse]
+            # @return [Seed::Submission::GetExecutionSessionStateResponse]
             def get_execution_sessions_state(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: GET,
-                    path: "/sessions/execution-sessions-state"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
     end

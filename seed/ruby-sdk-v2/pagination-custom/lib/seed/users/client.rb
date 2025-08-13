@@ -11,10 +11,7 @@ module Seed
 
             # @return [Seed::UsernameCursor]
             def list_usernames_custom(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: GET,
-                    path: "/users"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
     end

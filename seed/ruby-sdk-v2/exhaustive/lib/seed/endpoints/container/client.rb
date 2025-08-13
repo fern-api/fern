@@ -18,7 +18,7 @@ module Seed
                     )
                 end
 
-                # @return [Array[Seed::types::object::ObjectWithRequiredField]]
+                # @return [Array[Seed::Types::Object_::ObjectWithRequiredField]]
                 def get_and_return_list_of_objects(request_options: {}, **params)
                     _request = Seed::Internal::Http::JSONRequest.new(
                         method: POST,
@@ -34,7 +34,7 @@ module Seed
                     )
                 end
 
-                # @return [Array[Seed::types::object::ObjectWithRequiredField]]
+                # @return [Array[Seed::Types::Object_::ObjectWithRequiredField]]
                 def get_and_return_set_of_objects(request_options: {}, **params)
                     _request = Seed::Internal::Http::JSONRequest.new(
                         method: POST,
@@ -50,7 +50,7 @@ module Seed
                     )
                 end
 
-                # @return [Hash[String, Seed::types::object::ObjectWithRequiredField]]
+                # @return [Hash[String, Seed::Types::Object_::ObjectWithRequiredField]]
                 def get_and_return_map_of_prim_to_object(request_options: {}, **params)
                     _request = Seed::Internal::Http::JSONRequest.new(
                         method: POST,
@@ -58,7 +58,7 @@ module Seed
                     )
                 end
 
-                # @return [Seed::types::object::ObjectWithRequiredField | nil]
+                # @return [Seed::Types::Object_::ObjectWithRequiredField | nil]
                 def get_and_return_optional(request_options: {}, **params)
                     _request = Seed::Internal::Http::JSONRequest.new(
                         method: POST,

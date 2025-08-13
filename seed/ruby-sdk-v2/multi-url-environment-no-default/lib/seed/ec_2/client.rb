@@ -11,10 +11,7 @@ module Seed
 
             # @return [untyped]
             def boot_instance(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/ec2/boot"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
     end

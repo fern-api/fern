@@ -1,8 +1,9 @@
+# frozen_string_literal: true
 
 module Seed
     module Types
         class FunctionImplementationForMultipleLanguages < Internal::Types::Model
-            field :code_by_language, Internal::Types::Hash[Seed::commons::Language, Seed::v_2::v_3::problem::FunctionImplementation], optional: false, nullable: false
+            field :code_by_language, Internal::Types::Hash[Seed::Commons::Language, Seed::V2::V3::Problem::FunctionImplementation], optional: false, nullable: false
 
     end
 end

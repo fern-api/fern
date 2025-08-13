@@ -11,74 +11,47 @@ module Seed
 
             # @return [untyped]
             def post(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: ""
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # @return [untyped]
             def just_file(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/just-file"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # @return [untyped]
             def just_file_with_query_params(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/just-file-with-query-params"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # @return [untyped]
             def with_content_type(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/with-content-type"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # @return [untyped]
             def with_form_encoding(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/with-form-encoding"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # @return [untyped]
             def with_form_encoded_containers(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: ""
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # @return [String]
             def optional_args(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/optional-args"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # @return [String]
             def with_inline_type(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/inline-type"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # @return [untyped]
             def simple(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/snippet"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
     end

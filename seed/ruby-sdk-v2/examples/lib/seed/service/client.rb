@@ -9,12 +9,9 @@ module Seed
                 @client = client
             end
 
-            # @return [Seed::types::Movie]
+            # @return [Seed::Types::Movie]
             def get_movie(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: GET,
-                    path: "/movie/#{params[:movieId]}"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # @return [String]
@@ -25,15 +22,12 @@ module Seed
                 )
             end
 
-            # @return [Seed::types::Metadata]
+            # @return [Seed::Types::Metadata]
             def get_metadata(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: GET,
-                    path: "/metadata"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
-            # @return [Seed::types::Response]
+            # @return [Seed::Types::Response]
             def create_big_entity(request_options: {}, **params)
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,

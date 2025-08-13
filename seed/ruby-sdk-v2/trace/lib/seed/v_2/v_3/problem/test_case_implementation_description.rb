@@ -1,8 +1,9 @@
+# frozen_string_literal: true
 
 module Seed
     module Types
         class TestCaseImplementationDescription < Internal::Types::Model
-            field :boards, Internal::Types::Array[Seed::v_2::v_3::problem::TestCaseImplementationDescriptionBoard], optional: false, nullable: false
+            field :boards, Internal::Types::Array[Seed::V2::V3::Problem::TestCaseImplementationDescriptionBoard], optional: false, nullable: false
 
     end
 end

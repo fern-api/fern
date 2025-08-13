@@ -12,10 +12,7 @@ module Seed
 
                 # @return [untyped]
                 def endpoint(request_options: {}, **params)
-                    _request = Seed::Internal::Http::JSONRequest.new(
-                        method: GET,
-                        path: "/service"
-                    )
+                    raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
                 # @return [untyped]

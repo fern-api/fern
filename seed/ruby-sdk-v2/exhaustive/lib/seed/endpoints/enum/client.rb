@@ -10,7 +10,7 @@ module Seed
                     @client = client
                 end
 
-                # @return [Seed::types::enum::WeatherReport]
+                # @return [Seed::Types::Enum::WeatherReport]
                 def get_and_return_enum(request_options: {}, **params)
                     _request = Seed::Internal::Http::JSONRequest.new(
                         method: POST,

@@ -12,10 +12,7 @@ module Seed
 
                 # @return [untyped]
                 def get_something(request_options: {}, **params)
-                    _request = Seed::Internal::Http::JSONRequest.new(
-                        method: GET,
-                        path: "/nested/get-something"
-                    )
+                    raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
         end

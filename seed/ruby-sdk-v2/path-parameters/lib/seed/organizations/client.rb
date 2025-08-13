@@ -9,28 +9,19 @@ module Seed
                 @client = client
             end
 
-            # @return [Seed::organizations::Organization]
+            # @return [Seed::Organizations::Organization]
             def get_organization(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: GET,
-                    path: "/#{params[:tenant_id]}/organizations/#{params[:organization_id]}/"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
-            # @return [Seed::user::User]
+            # @return [Seed::User::User]
             def get_organization_user(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: GET,
-                    path: "/#{params[:tenant_id]}/organizations/#{params[:organization_id]}/users/#{params[:user_id]}"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
-            # @return [Array[Seed::organizations::Organization]]
+            # @return [Array[Seed::Organizations::Organization]]
             def search_organizations(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: GET,
-                    path: "/#{params[:tenant_id]}/organizations/#{params[:organization_id]}/search"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
     end

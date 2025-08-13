@@ -43,10 +43,7 @@ module Seed
 
             # @return [untyped]
             def store_traced_test_case(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/admin/store-test-trace/submission/#{params[:submissionId]}/testCase/#{params[:testCaseId]}"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # @return [untyped]
@@ -59,10 +56,7 @@ module Seed
 
             # @return [untyped]
             def store_traced_workspace(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/admin/store-workspace-trace/submission/#{params[:submissionId]}"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # @return [untyped]

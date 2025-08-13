@@ -11,7 +11,7 @@ module Seed
 
             # Creates a problem
             #
-            # @return [Seed::problem::CreateProblemResponse]
+            # @return [Seed::Problem::CreateProblemResponse]
             def create_problem(request_options: {}, **params)
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,
@@ -21,7 +21,7 @@ module Seed
 
             # Updates a problem
             #
-            # @return [Seed::problem::UpdateProblemResponse]
+            # @return [Seed::Problem::UpdateProblemResponse]
             def update_problem(request_options: {}, **params)
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,
@@ -33,20 +33,14 @@ module Seed
             #
             # @return [untyped]
             def delete_problem(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: DELETE,
-                    path: "/problem-crud/delete/#{params[:problemId]}"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # Returns default starter files for problem
             #
-            # @return [Seed::problem::GetDefaultStarterFilesResponse]
+            # @return [Seed::Problem::GetDefaultStarterFilesResponse]
             def get_default_starter_files(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/problem-crud/default-starter-files"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
     end

@@ -13,42 +13,30 @@ module Seed
 
                     # Returns lightweight versions of all problems
                     #
-                    # @return [Array[Seed::v_2::v_3::problem::LightweightProblemInfoV2]]
+                    # @return [Array[Seed::V2::V3::Problem::LightweightProblemInfoV2]]
                     def get_lightweight_problems(request_options: {}, **params)
-                        _request = Seed::Internal::Http::JSONRequest.new(
-                            method: GET,
-                            path: "/problems-v2/lightweight-problem-info"
-                        )
+                        raise NotImplementedError, 'This method is not yet implemented.'
                     end
 
                     # Returns latest versions of all problems
                     #
-                    # @return [Array[Seed::v_2::v_3::problem::ProblemInfoV2]]
+                    # @return [Array[Seed::V2::V3::Problem::ProblemInfoV2]]
                     def get_problems(request_options: {}, **params)
-                        _request = Seed::Internal::Http::JSONRequest.new(
-                            method: GET,
-                            path: "/problems-v2/problem-info"
-                        )
+                        raise NotImplementedError, 'This method is not yet implemented.'
                     end
 
                     # Returns latest version of a problem
                     #
-                    # @return [Seed::v_2::v_3::problem::ProblemInfoV2]
+                    # @return [Seed::V2::V3::Problem::ProblemInfoV2]
                     def get_latest_problem(request_options: {}, **params)
-                        _request = Seed::Internal::Http::JSONRequest.new(
-                            method: GET,
-                            path: "/problems-v2/problem-info/#{params[:problemId]}"
-                        )
+                        raise NotImplementedError, 'This method is not yet implemented.'
                     end
 
                     # Returns requested version of a problem
                     #
-                    # @return [Seed::v_2::v_3::problem::ProblemInfoV2]
+                    # @return [Seed::V2::V3::Problem::ProblemInfoV2]
                     def get_problem_version(request_options: {}, **params)
-                        _request = Seed::Internal::Http::JSONRequest.new(
-                            method: GET,
-                            path: "/problems-v2/problem-info/#{params[:problemId]}/version/#{params[:problemVersion]}"
-                        )
+                        raise NotImplementedError, 'This method is not yet implemented.'
                     end
 
             end

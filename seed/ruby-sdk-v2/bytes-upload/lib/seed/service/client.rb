@@ -11,10 +11,7 @@ module Seed
 
             # @return [untyped]
             def upload(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "upload-content"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
     end

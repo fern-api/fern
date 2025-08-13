@@ -9,7 +9,7 @@ module Seed
                 @client = client
             end
 
-            # @return [Seed::service::Response]
+            # @return [Seed::Service::Response]
             def get_movie(request_options: {}, **params)
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,
@@ -17,7 +17,7 @@ module Seed
                 )
             end
 
-            # @return [Seed::service::Response]
+            # @return [Seed::Service::Response]
             def get_movie_docs(request_options: {}, **params)
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,
@@ -33,7 +33,7 @@ module Seed
                 )
             end
 
-            # @return [Seed::service::Response]
+            # @return [Seed::Service::Response]
             def get_movie_metadata(request_options: {}, **params)
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,
@@ -41,7 +41,7 @@ module Seed
                 )
             end
 
-            # @return [Seed::service::Response | nil]
+            # @return [Seed::Service::Response | nil]
             def get_optional_movie(request_options: {}, **params)
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,
@@ -49,7 +49,7 @@ module Seed
                 )
             end
 
-            # @return [Seed::service::WithDocs | nil]
+            # @return [Seed::Service::WithDocs | nil]
             def get_optional_movie_docs(request_options: {}, **params)
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,

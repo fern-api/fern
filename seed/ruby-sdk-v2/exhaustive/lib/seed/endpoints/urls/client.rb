@@ -12,34 +12,22 @@ module Seed
 
                 # @return [String]
                 def with_mixed_case(request_options: {}, **params)
-                    _request = Seed::Internal::Http::JSONRequest.new(
-                        method: GET,
-                        path: "/urls/MixedCase"
-                    )
+                    raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
                 # @return [String]
                 def no_ending_slash(request_options: {}, **params)
-                    _request = Seed::Internal::Http::JSONRequest.new(
-                        method: GET,
-                        path: "/urls/no-ending-slash"
-                    )
+                    raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
                 # @return [String]
                 def with_ending_slash(request_options: {}, **params)
-                    _request = Seed::Internal::Http::JSONRequest.new(
-                        method: GET,
-                        path: "/urls/with-ending-slash/"
-                    )
+                    raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
                 # @return [String]
                 def with_underscores(request_options: {}, **params)
-                    _request = Seed::Internal::Http::JSONRequest.new(
-                        method: GET,
-                        path: "/urls/with_underscores"
-                    )
+                    raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
         end

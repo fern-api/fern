@@ -13,12 +13,9 @@ module Seed
 
                     # Get event metadata.
                     #
-                    # @return [Seed::user::events::metadata::Metadata]
+                    # @return [Seed::User::Events::Metadata::Metadata]
                     def get_metadata(request_options: {}, **params)
-                        _request = Seed::Internal::Http::JSONRequest.new(
-                            method: GET,
-                            path: "/users/events/metadata/"
-                        )
+                        raise NotImplementedError, 'This method is not yet implemented.'
                     end
 
             end

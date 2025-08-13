@@ -11,7 +11,7 @@ module Seed
 
             # Create a new organization.
             #
-            # @return [Seed::organization::Organization]
+            # @return [Seed::Organization::Organization]
             def create(request_options: {}, **params)
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,

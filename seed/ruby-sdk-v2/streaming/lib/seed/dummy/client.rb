@@ -11,18 +11,12 @@ module Seed
 
             # @return [untyped]
             def generate_stream(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "generate-stream"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
-            # @return [Seed::dummy::StreamResponse]
+            # @return [Seed::Dummy::StreamResponse]
             def generate(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "generate"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
     end

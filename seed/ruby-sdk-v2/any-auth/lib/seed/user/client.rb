@@ -9,12 +9,9 @@ module Seed
                 @client = client
             end
 
-            # @return [Array[Seed::user::User]]
+            # @return [Array[Seed::User::User]]
             def get(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "users"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
     end

@@ -9,7 +9,7 @@ module Seed
                 @client = client
             end
 
-            # @return [Seed::complex::PaginatedConversationResponse]
+            # @return [Seed::Complex::PaginatedConversationResponse]
             def search(request_options: {}, **params)
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,
