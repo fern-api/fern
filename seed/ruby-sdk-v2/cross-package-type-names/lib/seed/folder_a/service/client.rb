@@ -11,8 +11,11 @@ module Seed
                 end
 
                 # @return [Seed::folder_a::service::Response]
-                def get_direct_thread
-                    raise NotImplementedError, 'This method is not yet implemented.'
+                def get_direct_thread(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: GET,
+                        path: ""
+                    )
                 end
 
         end

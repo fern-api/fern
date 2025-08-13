@@ -10,8 +10,11 @@ module Seed
             end
 
             # @return [Seed::foo::ImportingType]
-            def find
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def find(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: ""
+                )
             end
 
     end

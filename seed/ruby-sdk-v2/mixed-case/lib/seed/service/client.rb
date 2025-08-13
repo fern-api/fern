@@ -10,13 +10,19 @@ module Seed
             end
 
             # @return [Seed::service::Resource]
-            def get_resource
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def get_resource(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: GET,
+                    path: "/resource/#{params[:ResourceID]}"
+                )
             end
 
             # @return [Array[Seed::service::Resource]]
-            def list_resources
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def list_resources(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: GET,
+                    path: "/resource"
+                )
             end
 
     end

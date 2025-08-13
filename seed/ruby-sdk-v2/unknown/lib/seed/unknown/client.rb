@@ -10,13 +10,19 @@ module Seed
             end
 
             # @return [Array[Hash[String, untyped]]]
-            def post
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def post(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: ""
+                )
             end
 
             # @return [Array[Hash[String, untyped]]]
-            def post_object
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def post_object(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "/with-object"
+                )
             end
 
     end

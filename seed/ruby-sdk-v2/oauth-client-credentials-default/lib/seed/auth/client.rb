@@ -10,8 +10,11 @@ module Seed
             end
 
             # @return [Seed::auth::TokenResponse]
-            def get_token
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def get_token(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "/token"
+                )
             end
 
     end

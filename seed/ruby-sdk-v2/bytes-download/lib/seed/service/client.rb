@@ -10,8 +10,11 @@ module Seed
             end
 
             # @return [untyped]
-            def download
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def download(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: GET,
+                    path: "download-content/#{params[:id]}"
+                )
             end
 
     end

@@ -10,8 +10,11 @@ module Seed
             end
 
             # @return [String]
-            def send_optional_body
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def send_optional_body(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "send-optional-body"
+                )
             end
 
     end

@@ -10,8 +10,11 @@ module Seed
             end
 
             # @return [untyped]
-            def stream
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def stream(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "stream"
+                )
             end
 
     end

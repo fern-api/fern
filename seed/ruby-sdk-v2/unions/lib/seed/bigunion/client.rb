@@ -9,19 +9,34 @@ module Seed
                 @client = client
             end
 
+<<<<<<< HEAD
             # @return [Seed::Bigunion::BigUnion]
             def get
                 raise NotImplementedError, 'This method is not yet implemented.'
+=======
+            # @return [Seed::bigunion::BigUnion]
+            def get(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: GET,
+                    path: "/#{params[:id]}"
+                )
+>>>>>>> b7b4afb47e (fix(ruby): add basic endpoint implementation)
             end
 
             # @return [bool]
-            def update
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def update(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: PATCH,
+                    path: ""
+                )
             end
 
             # @return [Hash[String, bool]]
-            def update_many
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def update_many(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: PATCH,
+                    path: "/many"
+                )
             end
 
     end

@@ -10,13 +10,19 @@ module Seed
             end
 
             # @return [untyped]
-            def head
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def head(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: HEAD,
+                    path: "/users"
+                )
             end
 
             # @return [Array[Seed::user::User]]
-            def list
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def list(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: GET,
+                    path: "/users"
+                )
             end
 
     end

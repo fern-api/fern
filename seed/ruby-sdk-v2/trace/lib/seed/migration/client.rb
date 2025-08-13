@@ -10,8 +10,11 @@ module Seed
             end
 
             # @return [Array[Seed::migration::Migration]]
-            def get_attempted_migrations
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def get_attempted_migrations(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: GET,
+                    path: "/migration-info/all"
+                )
             end
 
     end

@@ -10,8 +10,11 @@ module Seed
             end
 
             # @return [Seed::user::User]
-            def get
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def get(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: GET,
+                    path: "/users/#{params[:id]}"
+                )
             end
 
     end

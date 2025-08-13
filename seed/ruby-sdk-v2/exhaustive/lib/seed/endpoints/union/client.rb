@@ -11,8 +11,11 @@ module Seed
                 end
 
                 # @return [Seed::types::union::Animal]
-                def get_and_return_union
-                    raise NotImplementedError, 'This method is not yet implemented.'
+                def get_and_return_union(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/union"
+                    )
                 end
 
         end

@@ -28,4 +28,76 @@ export class RawClient {
     public constructor(context: SdkGeneratorContext) {
         this.context = context;
     }
+
+    public sendRequest({
+        baseUrl,
+        endpoint,
+        bodyReference,
+        pathParameterReferences,
+        headerBagReference,
+        queryBagReference,
+        requestType
+    }: RawClient.CreateHttpRequestWrapperArgs): ruby.CodeBlock | undefined {
+       switch (requestType) {
+        case "json":
+            return ruby.codeblock((writer) => {
+                writer.writeLine(`_request = ${this.context.getReferenceToInternalJSONRequest()}.new(`)
+                writer.indent()
+                writer.writeLine(`method: ${endpoint.method.toUpperCase()},`)
+                writer.write(`path: `)
+                this.writePathString({ writer, endpoint, pathParameterReferences: pathParameterReferences ?? {} });
+                writer.writeLine();
+                if (headerBagReference != null) {
+                    writer.writeLine(`headers: ${headerBagReference},`)
+                }
+                if (queryBagReference != null) {
+                    writer.writeLine(`query: ${queryBagReference},`)
+                }
+                if (bodyReference != null) {
+                    writer.writeLine(`body: ${bodyReference},`)
+                }
+                writer.dedent()
+                writer.writeLine(`)`);
+            });
+        case "bytes":
+            return undefined;
+        case "multipartform":
+            return undefined;
+        }
+        return undefined;
+    }
+
+    private writePathString({
+        writer,
+        endpoint,
+        pathParameterReferences
+    }: {
+        writer: ruby.Writer;
+        endpoint: HttpEndpoint;
+        pathParameterReferences: Record<string, string>;
+    }): void {
+        const hasPathParameters = endpoint.fullPath.parts.some((part) => part.pathParameter != null);
+        if (!hasPathParameters) {
+            writer.write(`"${endpoint.fullPath.head}"`);
+            return;
+        }
+
+        // Build the Ruby string interpolation for the path
+        let rubyPath = endpoint.fullPath.head;
+        for (const part of endpoint.fullPath.parts) {
+            if (part.pathParameter != null) {
+                const reference = pathParameterReferences[part.pathParameter];
+                if (reference == null) {
+                    throw new Error(
+                        `Failed to find request parameter for the endpoint ${endpoint.id} with path parameter ${part.pathParameter}`
+                    );
+                }
+                // Insert Ruby interpolation for the path parameter
+                rubyPath += `#{${reference}}${part.tail}`;
+            } else {
+                rubyPath += part.tail;
+            }
+        }
+        writer.write(`"${rubyPath}"`);
+    }
 }

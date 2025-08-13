@@ -9,9 +9,14 @@ module Seed
                 @client = client
             end
 
+            # POST request with no auth
+            #
             # @return [bool]
-            def post_with_no_auth
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def post_with_no_auth(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "/no-auth"
+                )
             end
 
     end

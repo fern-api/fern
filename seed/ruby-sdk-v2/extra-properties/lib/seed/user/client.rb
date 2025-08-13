@@ -10,8 +10,11 @@ module Seed
             end
 
             # @return [Seed::user::User]
-            def create_user
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def create_user(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "/user"
+                )
             end
 
     end

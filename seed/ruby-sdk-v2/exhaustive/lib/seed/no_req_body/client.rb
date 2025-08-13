@@ -10,13 +10,19 @@ module Seed
             end
 
             # @return [Seed::types::object::ObjectWithOptionalField]
-            def get_with_no_request_body
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def get_with_no_request_body(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: GET,
+                    path: "/no-req-body"
+                )
             end
 
             # @return [String]
-            def post_with_no_request_body
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def post_with_no_request_body(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "/no-req-body"
+                )
             end
 
     end

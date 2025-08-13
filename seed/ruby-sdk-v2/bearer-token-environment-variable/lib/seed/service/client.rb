@@ -9,9 +9,14 @@ module Seed
                 @client = client
             end
 
+            # GET request with custom api key
+            #
             # @return [String]
-            def get_with_bearer_token
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def get_with_bearer_token(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: GET,
+                    path: "apiKey"
+                )
             end
 
     end

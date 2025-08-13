@@ -10,13 +10,19 @@ module Seed
             end
 
             # @return [untyped]
-            def send
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def send(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "query"
+                )
             end
 
             # @return [untyped]
-            def send_list
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def send_list(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "query-list"
+                )
             end
 
     end

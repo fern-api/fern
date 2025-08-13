@@ -9,29 +9,54 @@ module Seed
                 @client = client
             end
 
+            # Create a new playlist
+            #
             # @return [Seed::playlist::Playlist]
-            def create_playlist
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def create_playlist(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "/v2/playlist/#{params[:serviceParam]}/create"
+                )
             end
 
+            # Returns the user's playlists
+            #
             # @return [Array[Seed::playlist::Playlist]]
-            def get_playlists
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def get_playlists(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: GET,
+                    path: "/v2/playlist/#{params[:serviceParam]}/all"
+                )
             end
 
+            # Returns a playlist
+            #
             # @return [Seed::playlist::Playlist]
-            def get_playlist
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def get_playlist(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: GET,
+                    path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlistId]}"
+                )
             end
 
+            # Updates a playlist
+            #
             # @return [Seed::playlist::Playlist | nil]
-            def update_playlist
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def update_playlist(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: PUT,
+                    path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlistId]}"
+                )
             end
 
+            # Deletes a playlist
+            #
             # @return [untyped]
-            def delete_playlist
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def delete_playlist(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: DELETE,
+                    path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlist_id]}"
+                )
             end
 
     end

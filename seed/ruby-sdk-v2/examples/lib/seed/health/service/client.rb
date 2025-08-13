@@ -10,14 +10,24 @@ module Seed
                     @client = client
                 end
 
+                # This endpoint checks the health of a resource.
+                #
                 # @return [untyped]
-                def check
-                    raise NotImplementedError, 'This method is not yet implemented.'
+                def check(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: GET,
+                        path: "/check/#{params[:id]}"
+                    )
                 end
 
+                # This endpoint checks the health of the service.
+                #
                 # @return [bool]
-                def ping
-                    raise NotImplementedError, 'This method is not yet implemented.'
+                def ping(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: GET,
+                        path: "/ping"
+                    )
                 end
 
         end

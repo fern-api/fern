@@ -10,9 +10,14 @@ module Seed
                     @client = client
                 end
 
+                # List all user events.
+                #
                 # @return [Array[Seed::user::events::Event]]
-                def list_events
-                    raise NotImplementedError, 'This method is not yet implemented.'
+                def list_events(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: GET,
+                        path: "/users/events/"
+                    )
                 end
 
         end

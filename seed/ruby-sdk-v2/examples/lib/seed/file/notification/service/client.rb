@@ -12,8 +12,11 @@ module Seed
                     end
 
                     # @return [Seed::types::Exception]
-                    def get_exception
-                        raise NotImplementedError, 'This method is not yet implemented.'
+                    def get_exception(request_options: {}, **params)
+                        _request = Seed::Internal::Http::JSONRequest.new(
+                            method: GET,
+                            path: "/file/notification/#{params[:notificationId]}"
+                        )
                     end
 
             end

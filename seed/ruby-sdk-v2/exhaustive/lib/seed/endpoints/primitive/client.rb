@@ -11,48 +11,75 @@ module Seed
                 end
 
                 # @return [String]
-                def get_and_return_string
-                    raise NotImplementedError, 'This method is not yet implemented.'
+                def get_and_return_string(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/primitive/string"
+                    )
                 end
 
                 # @return [Integer]
-                def get_and_return_int
-                    raise NotImplementedError, 'This method is not yet implemented.'
+                def get_and_return_int(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/primitive/integer"
+                    )
                 end
 
                 # @return [Integer]
-                def get_and_return_long
-                    raise NotImplementedError, 'This method is not yet implemented.'
+                def get_and_return_long(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/primitive/long"
+                    )
                 end
 
                 # @return [Integer]
-                def get_and_return_double
-                    raise NotImplementedError, 'This method is not yet implemented.'
+                def get_and_return_double(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/primitive/double"
+                    )
                 end
 
                 # @return [bool]
-                def get_and_return_bool
-                    raise NotImplementedError, 'This method is not yet implemented.'
+                def get_and_return_bool(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/primitive/boolean"
+                    )
                 end
 
                 # @return [String]
-                def get_and_return_datetime
-                    raise NotImplementedError, 'This method is not yet implemented.'
+                def get_and_return_datetime(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/primitive/datetime"
+                    )
                 end
 
                 # @return [String]
-                def get_and_return_date
-                    raise NotImplementedError, 'This method is not yet implemented.'
+                def get_and_return_date(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/primitive/date"
+                    )
                 end
 
                 # @return [String]
-                def get_and_return_uuid
-                    raise NotImplementedError, 'This method is not yet implemented.'
+                def get_and_return_uuid(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/primitive/uuid"
+                    )
                 end
 
                 # @return [String]
-                def get_and_return_base_64
-                    raise NotImplementedError, 'This method is not yet implemented.'
+                def get_and_return_base_64(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/primitive/base64"
+                    )
                 end
 
         end

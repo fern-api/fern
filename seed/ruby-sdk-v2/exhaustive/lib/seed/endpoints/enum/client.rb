@@ -11,8 +11,11 @@ module Seed
                 end
 
                 # @return [Seed::types::enum::WeatherReport]
-                def get_and_return_enum
-                    raise NotImplementedError, 'This method is not yet implemented.'
+                def get_and_return_enum(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/enum"
+                    )
                 end
 
         end

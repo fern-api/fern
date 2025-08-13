@@ -10,8 +10,11 @@ module Seed
             end
 
             # @return [String]
-            def get_presigned_url
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def get_presigned_url(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "/s3/presigned-url"
+                )
             end
 
     end

@@ -10,8 +10,11 @@ module Seed
             end
 
             # @return [untyped]
-            def endpoint
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def endpoint(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: DELETE,
+                    path: "/container/"
+                )
             end
 
     end

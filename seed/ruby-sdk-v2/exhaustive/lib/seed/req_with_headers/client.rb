@@ -10,8 +10,11 @@ module Seed
             end
 
             # @return [untyped]
-            def get_with_custom_header
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def get_with_custom_header(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "/test-headers/custom-header"
+                )
             end
 
     end
