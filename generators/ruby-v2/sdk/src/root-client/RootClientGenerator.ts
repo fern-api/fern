@@ -2,9 +2,7 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
-import {
-    Subpackage
-} from "@fern-fern/ir-sdk/api";
+import { Subpackage } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments";
@@ -44,7 +42,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     }
 
     private getFilename(): string {
-        return "client.rb"
+        return "client.rb";
     }
 
     private getInitializeMethod(): ruby.Method {
@@ -55,7 +53,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             type: ruby.Type.nilable(ruby.Type.string()),
             initializer: undefined,
             docs: "Override the default base URL for the API, e.g., `https://api.example.com`"
-        })
+        });
         parameters.push(baseUrlParameter);
 
         const authenticationParameter = this.getAuthenticationParameter();
@@ -69,23 +67,27 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             parameters: {
                 keyword: parameters
             },
-            returnType: ruby.Type.class_(ruby.classReference({
-                name: "Client",
-                modules: [this.context.getRootModule().name],
-                fullyQualified: true
-            })),
-        })
+            returnType: ruby.Type.class_(
+                ruby.classReference({
+                    name: "Client",
+                    modules: [this.context.getRootModule().name],
+                    fullyQualified: true
+                })
+            )
+        });
 
-        method.addStatement(ruby.codeblock((writer) => {
-            writer.write(`@raw_client = `);
-            writer.writeNode(this.context.getRawClientClassReference());
-            writer.writeLine(`.new(`)
-            writer.indent();
-            writer.writeLine(`base_url: base_url,`)
-            writer.writeLine(`headers: ${this.getRawClientHeaders()}`)
-            writer.dedent();
-            writer.writeLine(`)`)
-        }))
+        method.addStatement(
+            ruby.codeblock((writer) => {
+                writer.write(`@raw_client = `);
+                writer.writeNode(this.context.getRawClientClassReference());
+                writer.writeLine(`.new(`);
+                writer.indent();
+                writer.writeLine(`base_url: base_url,`);
+                writer.writeLine(`headers: ${this.getRawClientHeaders()}`);
+                writer.dedent();
+                writer.writeLine(`)`);
+            })
+        );
 
         return method;
     }
@@ -97,12 +99,15 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     return ruby.parameters.keyword({
                         name: TOKEN_PARAMETER_NAME,
                         type: ruby.Type.string(),
-                        initializer: scheme.tokenEnvVar != null ? undefined : ruby.codeblock((writer) => {
-                            writer.write(`ENV.fetch("${scheme.tokenEnvVar}", nil)`)
-                        }),
+                        initializer:
+                            scheme.tokenEnvVar != null
+                                ? undefined
+                                : ruby.codeblock((writer) => {
+                                      writer.write(`ENV.fetch("${scheme.tokenEnvVar}", nil)`);
+                                  }),
                         optional: scheme.tokenEnvVar == null,
                         docs: undefined
-                    })
+                    });
                 default:
                     return undefined;
             }
@@ -118,13 +123,13 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             headers.push({
                 key: ruby.TypeLiteral.string("User-Agent"),
                 value: ruby.TypeLiteral.string(this.context.ir.sdkConfig.platformHeaders.userAgent.value)
-            })
+            });
         }
 
         headers.push({
             key: ruby.TypeLiteral.string(this.context.ir.sdkConfig.platformHeaders.language),
             value: ruby.TypeLiteral.string("Ruby")
-        })
+        });
 
         for (const header of this.context.ir.auth.schemes) {
             switch (header.type) {
@@ -132,13 +137,13 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     headers.push({
                         key: ruby.TypeLiteral.string("Authorization"),
                         value: ruby.TypeLiteral.string(`Bearer #{${TOKEN_PARAMETER_NAME}}`)
-                    })
+                    });
                     break;
                 default:
                     break;
             }
         }
-        
+
         return ruby.TypeLiteral.hash(headers);
     }
 
