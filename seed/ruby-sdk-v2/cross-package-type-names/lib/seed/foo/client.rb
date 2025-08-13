@@ -9,8 +9,8 @@ module Seed
                 @client = client
             end
 
-            # @return [Seed::foo::ImportingType]
-            def find
+            # @return [Seed::Foo::ImportingType]
+            def find(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

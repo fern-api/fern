@@ -9,8 +9,10 @@ module Seed
                 @client = client
             end
 
+            # GET request that always throws an error
+            #
             # @return [String]
-            def throw_error
+            def throw_error(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

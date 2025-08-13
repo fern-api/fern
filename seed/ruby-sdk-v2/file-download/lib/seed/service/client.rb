@@ -10,12 +10,12 @@ module Seed
             end
 
             # @return [untyped]
-            def simple
+            def simple(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # @return [untyped]
-            def download_file
+            def download_file(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

@@ -10,7 +10,7 @@ module Seed
             end
 
             # @return [untyped]
-            def boot_instance
+            def boot_instance(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

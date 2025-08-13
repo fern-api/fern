@@ -10,12 +10,12 @@ module Seed
             end
 
             # @return [untyped]
-            def generate_stream
+            def generate_stream(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 
-            # @return [Seed::dummy::StreamResponse]
-            def generate
+            # @return [Seed::Dummy::StreamResponse]
+            def generate(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

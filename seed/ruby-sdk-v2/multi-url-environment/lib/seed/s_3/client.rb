@@ -10,7 +10,7 @@ module Seed
             end
 
             # @return [String]
-            def get_presigned_url
+            def get_presigned_url(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

@@ -11,8 +11,10 @@ module Seed
                         @client = client
                     end
 
-                    # @return [Seed::user::events::metadata::Metadata]
-                    def get_metadata
+                    # Get event metadata.
+                    #
+                    # @return [Seed::User::Events::Metadata::Metadata]
+                    def get_metadata(request_options: {}, **params)
                         raise NotImplementedError, 'This method is not yet implemented.'
                     end
 

@@ -11,22 +11,22 @@ module Seed
                 end
 
                 # @return [String]
-                def with_mixed_case
+                def with_mixed_case(request_options: {}, **params)
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
                 # @return [String]
-                def no_ending_slash
+                def no_ending_slash(request_options: {}, **params)
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
                 # @return [String]
-                def with_ending_slash
+                def with_ending_slash(request_options: {}, **params)
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
                 # @return [String]
-                def with_underscores
+                def with_underscores(request_options: {}, **params)
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
 

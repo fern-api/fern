@@ -9,18 +9,18 @@ module Seed
                 @client = client
             end
 
-            # @return [Seed::organizations::Organization]
-            def get_organization
+            # @return [Seed::Organizations::Organization]
+            def get_organization(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 
-            # @return [Seed::user::User]
-            def get_organization_user
+            # @return [Seed::User::User]
+            def get_organization_user(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 
-            # @return [Array[Seed::organizations::Organization]]
-            def search_organizations
+            # @return [Array[Seed::Organizations::Organization]]
+            def search_organizations(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

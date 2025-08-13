@@ -9,14 +9,21 @@ module Seed
                 @client = client
             end
 
+            # GET request with custom auth scheme
+            #
             # @return [bool]
-            def get_with_custom_auth
+            def get_with_custom_auth(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 
+            # POST request with custom auth scheme
+            #
             # @return [bool]
-            def post_with_custom_auth
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def post_with_custom_auth(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "custom-auth"
+                )
             end
 
     end

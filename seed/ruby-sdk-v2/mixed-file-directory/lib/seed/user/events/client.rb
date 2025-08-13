@@ -10,8 +10,10 @@ module Seed
                     @client = client
                 end
 
-                # @return [Array[Seed::user::events::Event]]
-                def list_events
+                # List all user events.
+                #
+                # @return [Array[Seed::User::Events::Event]]
+                def list_events(request_options: {}, **params)
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
 

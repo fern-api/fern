@@ -10,7 +10,7 @@ module Seed
             end
 
             # @return [untyped]
-            def get_something
+            def get_something(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

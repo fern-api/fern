@@ -10,12 +10,12 @@ module Seed
             end
 
             # @return [untyped]
-            def create_username
+            def create_username(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 
-            # @return [Seed::user::User]
-            def get_username
+            # @return [Seed::User::User]
+            def get_username(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

@@ -9,8 +9,8 @@ module Seed
                 @client = client
             end
 
-            # @return [Seed::user::User]
-            def create_user
+            # @return [Seed::User::User]
+            def create_user(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

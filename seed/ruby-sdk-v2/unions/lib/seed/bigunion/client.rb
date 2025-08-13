@@ -10,18 +10,24 @@ module Seed
             end
 
             # @return [Seed::Bigunion::BigUnion]
-            def get
+            def get(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # @return [bool]
-            def update
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def update(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: PATCH,
+                    path: ""
+                )
             end
 
             # @return [Hash[String, bool]]
-            def update_many
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def update_many(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: PATCH,
+                    path: "/many"
+                )
             end
 
     end

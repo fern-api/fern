@@ -9,18 +9,18 @@ module Seed
                 @client = client
             end
 
-            # @return [Array[Seed::nullable::User]]
-            def get_users
+            # @return [Array[Seed::Nullable::User]]
+            def get_users(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 
-            # @return [Seed::nullable::User]
-            def create_user
+            # @return [Seed::Nullable::User]
+            def create_user(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # @return [bool]
-            def delete_user
+            def delete_user(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

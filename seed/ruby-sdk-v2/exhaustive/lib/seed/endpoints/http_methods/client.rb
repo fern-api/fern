@@ -11,27 +11,36 @@ module Seed
                 end
 
                 # @return [String]
-                def test_get
+                def test_get(request_options: {}, **params)
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
-                # @return [Seed::types::object::ObjectWithOptionalField]
-                def test_post
-                    raise NotImplementedError, 'This method is not yet implemented.'
+                # @return [Seed::Types::Object_::ObjectWithOptionalField]
+                def test_post(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/http-methods"
+                    )
                 end
 
-                # @return [Seed::types::object::ObjectWithOptionalField]
-                def test_put
-                    raise NotImplementedError, 'This method is not yet implemented.'
+                # @return [Seed::Types::Object_::ObjectWithOptionalField]
+                def test_put(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: PUT,
+                        path: "/http-methods/#{params[:id]}"
+                    )
                 end
 
-                # @return [Seed::types::object::ObjectWithOptionalField]
-                def test_patch
-                    raise NotImplementedError, 'This method is not yet implemented.'
+                # @return [Seed::Types::Object_::ObjectWithOptionalField]
+                def test_patch(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: PATCH,
+                        path: "/http-methods/#{params[:id]}"
+                    )
                 end
 
                 # @return [bool]
-                def test_delete
+                def test_delete(request_options: {}, **params)
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
 

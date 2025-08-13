@@ -10,7 +10,7 @@ module Seed
             end
 
             # @return [Seed::SendResponse]
-            def send
+            def send(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

@@ -10,13 +10,16 @@ module Seed
             end
 
             # @return [Seed::Union::Shape]
-            def get
+            def get(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # @return [bool]
-            def update
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def update(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: PATCH,
+                    path: ""
+                )
             end
 
     end

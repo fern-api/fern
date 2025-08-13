@@ -10,7 +10,7 @@ module Seed
             end
 
             # @return [Seed::UsernameCursor]
-            def list_usernames_custom
+            def list_usernames_custom(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

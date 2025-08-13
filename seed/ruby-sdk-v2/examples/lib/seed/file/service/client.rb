@@ -10,8 +10,10 @@ module Seed
                     @client = client
                 end
 
-                # @return [Seed::types::File]
-                def get_file
+                # This endpoint returns a file by its name.
+                #
+                # @return [Seed::Types::File]
+                def get_file(request_options: {}, **params)
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
 

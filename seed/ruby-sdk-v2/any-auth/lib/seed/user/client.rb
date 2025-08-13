@@ -9,8 +9,8 @@ module Seed
                 @client = client
             end
 
-            # @return [Array[Seed::user::User]]
-            def get
+            # @return [Array[Seed::User::User]]
+            def get(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

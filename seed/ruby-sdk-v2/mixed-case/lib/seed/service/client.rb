@@ -9,13 +9,13 @@ module Seed
                 @client = client
             end
 
-            # @return [Seed::service::Resource]
-            def get_resource
+            # @return [Seed::Service::Resource]
+            def get_resource(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 
-            # @return [Array[Seed::service::Resource]]
-            def list_resources
+            # @return [Array[Seed::Service::Resource]]
+            def list_resources(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

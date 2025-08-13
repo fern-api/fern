@@ -10,13 +10,16 @@ module Seed
             end
 
             # @return [Array[String]]
-            def get_homepage_problems
+            def get_homepage_problems(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # @return [untyped]
-            def set_homepage_problems
-                raise NotImplementedError, 'This method is not yet implemented.'
+            def set_homepage_problems(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "/homepage-problems"
+                )
             end
 
     end

@@ -11,8 +11,8 @@ module Seed
                         @client = client
                     end
 
-                    # @return [Seed::types::Exception]
-                    def get_exception
+                    # @return [Seed::Types::Exception]
+                    def get_exception(request_options: {}, **params)
                         raise NotImplementedError, 'This method is not yet implemented.'
                     end
 

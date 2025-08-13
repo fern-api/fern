@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 
 module Seed
     module Types
         class NonVoidFunctionDefinition < Internal::Types::Model
-            field :signature, Seed::v_2::v_3::problem::NonVoidFunctionSignature, optional: false, nullable: false
-            field :code, Seed::v_2::v_3::problem::FunctionImplementationForMultipleLanguages, optional: false, nullable: false
+            field :signature, Seed::V2::V3::Problem::NonVoidFunctionSignature, optional: false, nullable: false
+            field :code, Seed::V2::V3::Problem::FunctionImplementationForMultipleLanguages, optional: false, nullable: false
 
     end
 end

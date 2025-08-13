@@ -1,11 +1,12 @@
+# frozen_string_literal: true
 
 module Seed
     module Types
         class TestCaseV2 < Internal::Types::Model
-            field :metadata, Seed::v_2::v_3::problem::TestCaseMetadata, optional: false, nullable: false
-            field :implementation, Seed::v_2::v_3::problem::TestCaseImplementationReference, optional: false, nullable: false
-            field :arguments, Internal::Types::Hash[String, Seed::commons::VariableValue], optional: false, nullable: false
-            field :expects, Seed::v_2::v_3::problem::TestCaseExpects, optional: true, nullable: false
+            field :metadata, Seed::V2::V3::Problem::TestCaseMetadata, optional: false, nullable: false
+            field :implementation, Seed::V2::V3::Problem::TestCaseImplementationReference, optional: false, nullable: false
+            field :arguments, Internal::Types::Hash[String, Seed::Commons::VariableValue], optional: false, nullable: false
+            field :expects, Seed::V2::V3::Problem::TestCaseExpects, optional: true, nullable: false
 
     end
 end

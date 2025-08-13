@@ -9,13 +9,17 @@ module Seed
                 @client = client
             end
 
+            # GET request with custom api key
+            #
             # @return [String]
-            def get_with_api_key
+            def get_with_api_key(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 
+            # GET request with custom api key
+            #
             # @return [String]
-            def get_with_header
+            def get_with_header(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

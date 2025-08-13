@@ -10,7 +10,7 @@ module Seed
             end
 
             # @return [untyped]
-            def get_with_custom_header
+            def get_with_custom_header(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

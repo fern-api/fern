@@ -10,8 +10,8 @@ module Seed
                     @client = client
                 end
 
-                # @return [Seed::folder_a::service::Response]
-                def get_direct_thread
+                # @return [Seed::FolderA::Service::Response]
+                def get_direct_thread(request_options: {}, **params)
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
 

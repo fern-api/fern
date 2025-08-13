@@ -10,12 +10,12 @@ module Seed
             end
 
             # @return [untyped]
-            def send
+            def send(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # @return [untyped]
-            def send_list
+            def send_list(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

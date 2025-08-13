@@ -10,7 +10,7 @@ module Seed
             end
 
             # @return [String]
-            def get_text
+            def get_text(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

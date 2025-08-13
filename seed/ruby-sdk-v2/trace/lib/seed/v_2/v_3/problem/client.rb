@@ -11,23 +11,31 @@ module Seed
                         @client = client
                     end
 
-                    # @return [Array[Seed::v_2::v_3::problem::LightweightProblemInfoV2]]
-                    def get_lightweight_problems
+                    # Returns lightweight versions of all problems
+                    #
+                    # @return [Array[Seed::V2::V3::Problem::LightweightProblemInfoV2]]
+                    def get_lightweight_problems(request_options: {}, **params)
                         raise NotImplementedError, 'This method is not yet implemented.'
                     end
 
-                    # @return [Array[Seed::v_2::v_3::problem::ProblemInfoV2]]
-                    def get_problems
+                    # Returns latest versions of all problems
+                    #
+                    # @return [Array[Seed::V2::V3::Problem::ProblemInfoV2]]
+                    def get_problems(request_options: {}, **params)
                         raise NotImplementedError, 'This method is not yet implemented.'
                     end
 
-                    # @return [Seed::v_2::v_3::problem::ProblemInfoV2]
-                    def get_latest_problem
+                    # Returns latest version of a problem
+                    #
+                    # @return [Seed::V2::V3::Problem::ProblemInfoV2]
+                    def get_latest_problem(request_options: {}, **params)
                         raise NotImplementedError, 'This method is not yet implemented.'
                     end
 
-                    # @return [Seed::v_2::v_3::problem::ProblemInfoV2]
-                    def get_problem_version
+                    # Returns requested version of a problem
+                    #
+                    # @return [Seed::V2::V3::Problem::ProblemInfoV2]
+                    def get_problem_version(request_options: {}, **params)
                         raise NotImplementedError, 'This method is not yet implemented.'
                     end
 

@@ -10,12 +10,12 @@ module Seed
             end
 
             # @return [untyped]
-            def set_num_warm_instances
+            def set_num_warm_instances(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 
-            # @return [Hash[Seed::commons::Language, Integer]]
-            def get_num_warm_instances
+            # @return [Hash[Seed::Commons::Language, Integer]]
+            def get_num_warm_instances(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

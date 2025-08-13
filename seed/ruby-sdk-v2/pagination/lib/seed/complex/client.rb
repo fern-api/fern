@@ -9,9 +9,12 @@ module Seed
                 @client = client
             end
 
-            # @return [Seed::complex::PaginatedConversationResponse]
-            def search
-                raise NotImplementedError, 'This method is not yet implemented.'
+            # @return [Seed::Complex::PaginatedConversationResponse]
+            def search(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "#{params[:index]}/conversations/search"
+                )
             end
 
     end

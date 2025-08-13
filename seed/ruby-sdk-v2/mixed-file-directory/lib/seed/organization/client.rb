@@ -9,9 +9,14 @@ module Seed
                 @client = client
             end
 
-            # @return [Seed::organization::Organization]
-            def create
-                raise NotImplementedError, 'This method is not yet implemented.'
+            # Create a new organization.
+            #
+            # @return [Seed::Organization::Organization]
+            def create(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "/organizations/"
+                )
             end
 
     end

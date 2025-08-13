@@ -10,12 +10,12 @@ module Seed
             end
 
             # @return [String]
-            def create
+            def create(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 
             # @return [untyped]
-            def delete
+            def delete(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 

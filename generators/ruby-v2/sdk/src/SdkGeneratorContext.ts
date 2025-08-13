@@ -126,6 +126,13 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return `Client`;
     }
 
+    public getReferenceToInternalJSONRequest(): ruby.ClassReference {
+        return ruby.classReference({
+            name: "JSONRequest",
+            modules: [this.getRootModule().name, "Internal", "Http"]
+        });
+    }
+
     public getCoreAsIsFiles(): string[] {
         const files = [
             // Errors
