@@ -7,7 +7,7 @@ pub mod request_options;
 pub mod client_error;
 pub mod types;
 
-pub use client::{AuthClient};
+pub use client::{OauthClientCredentialsClient, AuthClient, NestedNoAuthClient, ApiClient, NestedClient, ApiClient, SimpleClient};
 pub use error::{ApiError};
 pub use types::{*};
 pub use client_config::{*};

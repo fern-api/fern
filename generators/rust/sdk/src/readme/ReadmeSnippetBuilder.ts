@@ -260,7 +260,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         fields.push({
             name: "base_url",
             value: Expression.methodCall({
-                target: Expression.stringLiteral(""),
+                target: Expression.stringLiteral(" "),
                 method: "to_string",
                 args: []
             })

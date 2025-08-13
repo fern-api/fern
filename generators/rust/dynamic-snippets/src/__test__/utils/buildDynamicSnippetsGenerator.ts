@@ -14,8 +14,8 @@ export function buildDynamicSnippetsGenerator({
 }): DynamicSnippetsGenerator {
     const content = readFileSync(irFilepath, "utf-8");
     const ir = JSON.parse(content);
-    return new DynamicSnippetsGenerator({ 
-        ir, 
+    return new DynamicSnippetsGenerator({
+        ir,
         config
         // Add formatter when available: formatter: new RustFormatter()
     });
