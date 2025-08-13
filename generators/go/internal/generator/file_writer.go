@@ -49,6 +49,7 @@ type fileWriter struct {
 
 func newFileWriter(
 	filename string,
+	packagePath string,
 	packageName string,
 	baseImportPath string,
 	whitelabel bool,
@@ -87,12 +88,12 @@ func newFileWriter(
 
 	// Add an import to the core utilities package generated for
 	// the SDK.
-	scope.AddImport(path.Join(baseImportPath, "core"))
-	scope.AddImport(path.Join(baseImportPath, "internal"))
-	scope.AddImport(path.Join(baseImportPath, "option"))
+	scope.AddImport(path.Join(packagePath, baseImportPath, "core"))
+	scope.AddImport(path.Join(packagePath, baseImportPath, "internal"))
+	scope.AddImport(path.Join(packagePath, baseImportPath, "option"))
 
 	f := &fileWriter{
-		filename:                     filename,
+		filename:                     path.Join(packagePath, filename),
 		packageName:                  packageName,
 		baseImportPath:               baseImportPath,
 		whitelabel:                   whitelabel,
@@ -173,6 +174,7 @@ func (f *fileWriter) WriteRaw(s string) {
 func (f *fileWriter) clone() *fileWriter {
 	return newFileWriter(
 		f.filename,
+		"",
 		f.packageName,
 		f.baseImportPath,
 		f.whitelabel,

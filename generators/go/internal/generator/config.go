@@ -44,6 +44,7 @@ type Config struct {
 	ExportedClientName           string
 	PackageLayout                PackageLayout
 	UnionVersion                 UnionVersion
+	PackagePath                  string
 
 	// If not specified, a go.mod and go.sum will not be generated.
 	ModuleConfig *ModuleConfig
@@ -88,6 +89,7 @@ func NewConfig(
 	packageLayout string,
 	unionVersion string,
 	moduleConfig *ModuleConfig,
+	packagePath string,
 ) (*Config, error) {
 	pl, err := parsePackageLayout(packageLayout)
 	if err != nil {
@@ -119,6 +121,7 @@ func NewConfig(
 		PackageLayout:                pl,
 		UnionVersion:                 uv,
 		ModuleConfig:                 moduleConfig,
+		PackagePath:                  packagePath,
 	}, nil
 }
 

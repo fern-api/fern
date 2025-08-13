@@ -150,6 +150,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 	for fileInfo, typesToGenerate := range fileInfoToTypes {
 		writer := newFileWriter(
 			fileInfo.filename,
+			g.config.PackagePath,
 			fileInfo.packageName,
 			g.config.ImportPath,
 			g.config.Whitelabel,
@@ -297,7 +298,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	if ir.RootPackage != nil && ir.RootPackage.Docs != nil && len(*ir.RootPackage.Docs) > 0 {
 		fileInfo := fileInfoForPackage(rootPackageName, ir.RootPackage.FernFilepath)
 		writer := newFileWriter(
-			fileInfo.filename,
+			fileInfo.filename, 
+			g.config.PackagePath,
 			fileInfo.packageName,
 			"",
 			g.config.Whitelabel,
@@ -320,7 +322,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		}
 		fileInfo := fileInfoForPackageDocs(subpackage.FernFilepath)
 		writer := newFileWriter(
-			fileInfo.filename,
+			fileInfo.filename, 
+			g.config.PackagePath,
 			fileInfo.packageName,
 			"",
 			g.config.Whitelabel,
@@ -370,7 +373,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		// Generate the core API files.
 		fileInfo := fileInfoForRequestOptionsDefinition()
 		writer := newFileWriter(
-			fileInfo.filename,
+			fileInfo.filename, g.config.PackagePath,
 			fileInfo.packageName,
 			g.config.ImportPath,
 			g.config.Whitelabel,
@@ -404,6 +407,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			fileInfo, useCore := fileInfoForEnvironments(rootPackageName, generatedNames, generatedPackages)
 			writer = newFileWriter(
 				fileInfo.filename,
+				g.config.PackagePath,
 				fileInfo.packageName,
 				g.config.ImportPath,
 				g.config.Whitelabel,
@@ -430,7 +434,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		// Generate the request options.
 		fileInfo = fileInfoForRequestOptions()
 		writer = newFileWriter(
-			fileInfo.filename,
+			fileInfo.filename, g.config.PackagePath,
 			fileInfo.packageName,
 			g.config.ImportPath,
 			g.config.Whitelabel,
@@ -464,7 +468,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		if len(ir.IdempotencyHeaders) > 0 {
 			fileInfo = fileInfoForIdempotentRequestOptionsDefinition()
 			writer = newFileWriter(
-				fileInfo.filename,
+				fileInfo.filename, g.config.PackagePath,
 				fileInfo.packageName,
 				g.config.ImportPath,
 				g.config.Whitelabel,
@@ -488,7 +492,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, file)
 			fileInfo = fileInfoForIdempotentRequestOptions()
 			writer = newFileWriter(
-				fileInfo.filename,
+				fileInfo.filename, g.config.PackagePath,
 				fileInfo.packageName,
 				g.config.ImportPath,
 				g.config.Whitelabel,
@@ -515,7 +519,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			// Generate the legacy client option helper functions (for backwards compatibility).
 			fileInfo = fileInfoForLegacyClientOptions()
 			writer = newFileWriter(
-				fileInfo.filename,
+				fileInfo.filename, g.config.PackagePath,
 				fileInfo.packageName,
 				g.config.ImportPath,
 				g.config.Whitelabel,
@@ -541,7 +545,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		// Generate the Optional[T] constructors.
 		fileInfo, useCore := fileInfoForOptionalHelpers(rootPackageName, generatedNames, generatedPackages)
 		writer = newFileWriter(
-			fileInfo.filename,
+			fileInfo.filename, g.config.PackagePath,
 			fileInfo.packageName,
 			g.config.ImportPath,
 			g.config.Whitelabel,
@@ -593,7 +597,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, newPagerFile(g.coordinator, g.config.ImportPath))
 			files = append(files, newPagerTestFile(g.coordinator))
 		}
-		clientTestFile, err := newClientTestFile(g.config.ImportPath, rootPackageName, g.coordinator, g.config.PackageLayout, g.config.ClientName, g.config.ClientConstructorName)
+		clientTestFile, err := newClientTestFile(g.config.ImportPath, g.config.PackagePath, rootPackageName, g.coordinator, g.config.PackageLayout, g.config.ClientName, g.config.ClientConstructorName)
 		if err != nil {
 			return nil, err
 		}
@@ -601,7 +605,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		// Generate the error types, if any.
 		for fileInfo, irErrors := range fileInfoToErrors(rootPackageName, ir.Errors) {
 			writer := newFileWriter(
-				fileInfo.filename,
+				fileInfo.filename, g.config.PackagePath,
 				fileInfo.packageName,
 				g.config.ImportPath,
 				g.config.Whitelabel,
@@ -772,7 +776,7 @@ func (g *Generator) generateRootService(
 ) (*File, *GeneratedClient, error) {
 	fileInfo := fileInfoForRootService(irService.Name.FernFilepath, rootPackageName, g.config.PackageLayout)
 	writer := newFileWriter(
-		fileInfo.filename,
+		fileInfo.filename, g.config.PackagePath,
 		fileInfo.packageName,
 		g.config.ImportPath,
 		g.config.Whitelabel,
@@ -822,7 +826,7 @@ func (g *Generator) generateService(
 ) (*File, *GeneratedClient, error) {
 	fileInfo := fileInfoForService(irService.Name.FernFilepath)
 	writer := newFileWriter(
-		fileInfo.filename,
+		fileInfo.filename, g.config.PackagePath,
 		fileInfo.packageName,
 		g.config.ImportPath,
 		g.config.Whitelabel,
@@ -875,7 +879,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 ) (*File, error) {
 	fileInfo := fileInfoForService(irSubpackage.FernFilepath)
 	writer := newFileWriter(
-		fileInfo.filename,
+		fileInfo.filename, g.config.PackagePath,
 		fileInfo.packageName,
 		g.config.ImportPath,
 		g.config.Whitelabel,
@@ -923,7 +927,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 ) (*File, *GeneratedClient, error) {
 	fileInfo := fileInfoForRootService(fernFilepath, rootPackageName, g.config.PackageLayout)
 	writer := newFileWriter(
-		fileInfo.filename,
+		fileInfo.filename, g.config.PackagePath,
 		fileInfo.packageName,
 		g.config.ImportPath,
 		g.config.Whitelabel,
@@ -1181,6 +1185,7 @@ func newFileParamFile(coordinator *coordinator.Client, rootPackageName string, g
 
 func newClientTestFile(
 	baseImportPath string,
+	packagePath string,
 	rootPackageName string,
 	coordinator *coordinator.Client,
 	packageLayout PackageLayout,
@@ -1197,6 +1202,7 @@ func newClientTestFile(
 	}
 	f := newFileWriter(
 		filename,
+		packagePath,
 		packageName,
 		baseImportPath,
 		false,

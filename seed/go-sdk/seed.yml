@@ -81,6 +81,9 @@ fixtures:
         packageLayout: flat
         clientName: Acme
         clientConstructorName: New
+    - outputFolder: package-path
+      customConfig: 
+        packagePath: management
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1

@@ -44,6 +44,7 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.PackageLayout,
 		config.UnionVersion,
 		config.Module,
+		config.PackagePath,
 	)
 	if err != nil {
 		return nil, err
