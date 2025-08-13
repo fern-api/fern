@@ -11,18 +11,7 @@ module Seed
 
             # @return [untyped]
             def test(request_options: {}, **params)
-<<<<<<< HEAD
-<<<<<<< HEAD
                 raise NotImplementedError, 'This method is not yet implemented.'
-=======
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: GET,
-                    path: ""
-                )
->>>>>>> ca21b06d09 (fix)
-=======
-                raise NotImplementedError, 'This method is not yet implemented.'
->>>>>>> 51153df442 (fix)
             end
 
     end

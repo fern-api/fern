@@ -33,13 +33,6 @@ module Seed
 =======
 >>>>>>> 2f201d7634 (fix)
             # @return [Seed::Bigunion::BigUnion]
-<<<<<<< HEAD
-            def get(request_options: {}, **params)
-                raise NotImplementedError, 'This method is not yet implemented.'
-=======
-            # @return [Seed::bigunion::BigUnion]
-=======
->>>>>>> 51153df442 (fix)
             def get(request_options: {}, **params)
 <<<<<<< HEAD
                 _request = Seed::Internal::Http::JSONRequest.new(

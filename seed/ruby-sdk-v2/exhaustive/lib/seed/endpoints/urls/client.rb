@@ -12,66 +12,22 @@ module Seed
 
                 # @return [String]
                 def with_mixed_case(request_options: {}, **params)
-<<<<<<< HEAD
-<<<<<<< HEAD
                     raise NotImplementedError, 'This method is not yet implemented.'
-=======
-                    _request = Seed::Internal::Http::JSONRequest.new(
-                        method: GET,
-                        path: "/urls/MixedCase"
-                    )
->>>>>>> ca21b06d09 (fix)
-=======
-                    raise NotImplementedError, 'This method is not yet implemented.'
->>>>>>> 51153df442 (fix)
                 end
 
                 # @return [String]
                 def no_ending_slash(request_options: {}, **params)
-<<<<<<< HEAD
-<<<<<<< HEAD
                     raise NotImplementedError, 'This method is not yet implemented.'
-=======
-                    _request = Seed::Internal::Http::JSONRequest.new(
-                        method: GET,
-                        path: "/urls/no-ending-slash"
-                    )
->>>>>>> ca21b06d09 (fix)
-=======
-                    raise NotImplementedError, 'This method is not yet implemented.'
->>>>>>> 51153df442 (fix)
                 end
 
                 # @return [String]
                 def with_ending_slash(request_options: {}, **params)
-<<<<<<< HEAD
-<<<<<<< HEAD
                     raise NotImplementedError, 'This method is not yet implemented.'
-=======
-                    _request = Seed::Internal::Http::JSONRequest.new(
-                        method: GET,
-                        path: "/urls/with-ending-slash/"
-                    )
->>>>>>> ca21b06d09 (fix)
-=======
-                    raise NotImplementedError, 'This method is not yet implemented.'
->>>>>>> 51153df442 (fix)
                 end
 
                 # @return [String]
                 def with_underscores(request_options: {}, **params)
-<<<<<<< HEAD
-<<<<<<< HEAD
                     raise NotImplementedError, 'This method is not yet implemented.'
-=======
-                    _request = Seed::Internal::Http::JSONRequest.new(
-                        method: GET,
-                        path: "/urls/with_underscores"
-                    )
->>>>>>> ca21b06d09 (fix)
-=======
-                    raise NotImplementedError, 'This method is not yet implemented.'
->>>>>>> 51153df442 (fix)
                 end
 
         end

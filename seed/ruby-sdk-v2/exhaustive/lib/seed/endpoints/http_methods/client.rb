@@ -12,27 +12,10 @@ module Seed
 
                 # @return [String]
                 def test_get(request_options: {}, **params)
-<<<<<<< HEAD
-<<<<<<< HEAD
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
                 # @return [Seed::Types::Object_::ObjectWithOptionalField]
-=======
-                    _request = Seed::Internal::Http::JSONRequest.new(
-                        method: GET,
-                        path: "/http-methods/#{params[:id]}"
-                    )
-                end
-
-                # @return [Seed::types::object::ObjectWithOptionalField]
->>>>>>> ca21b06d09 (fix)
-=======
-                    raise NotImplementedError, 'This method is not yet implemented.'
-                end
-
-                # @return [Seed::Types::Object_::ObjectWithOptionalField]
->>>>>>> 51153df442 (fix)
                 def test_post(request_options: {}, **params)
                     _request = Seed::Internal::Http::JSONRequest.new(
                         method: POST,
@@ -40,15 +23,7 @@ module Seed
                     )
                 end
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                 # @return [Seed::Types::Object_::ObjectWithOptionalField]
-=======
-                # @return [Seed::types::object::ObjectWithOptionalField]
->>>>>>> ca21b06d09 (fix)
-=======
-                # @return [Seed::Types::Object_::ObjectWithOptionalField]
->>>>>>> 51153df442 (fix)
                 def test_put(request_options: {}, **params)
                     _request = Seed::Internal::Http::JSONRequest.new(
                         method: PUT,
@@ -56,15 +31,7 @@ module Seed
                     )
                 end
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                 # @return [Seed::Types::Object_::ObjectWithOptionalField]
-=======
-                # @return [Seed::types::object::ObjectWithOptionalField]
->>>>>>> ca21b06d09 (fix)
-=======
-                # @return [Seed::Types::Object_::ObjectWithOptionalField]
->>>>>>> 51153df442 (fix)
                 def test_patch(request_options: {}, **params)
                     _request = Seed::Internal::Http::JSONRequest.new(
                         method: PATCH,
@@ -74,18 +41,7 @@ module Seed
 
                 # @return [bool]
                 def test_delete(request_options: {}, **params)
-<<<<<<< HEAD
-<<<<<<< HEAD
                     raise NotImplementedError, 'This method is not yet implemented.'
-=======
-                    _request = Seed::Internal::Http::JSONRequest.new(
-                        method: DELETE,
-                        path: "/http-methods/#{params[:id]}"
-                    )
->>>>>>> ca21b06d09 (fix)
-=======
-                    raise NotImplementedError, 'This method is not yet implemented.'
->>>>>>> 51153df442 (fix)
                 end
 
         end

@@ -18,15 +18,7 @@ module Seed
                     )
                 end
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                 # @return [Array[Seed::Types::Object_::ObjectWithRequiredField]]
-=======
-                # @return [Array[Seed::types::object::ObjectWithRequiredField]]
->>>>>>> ca21b06d09 (fix)
-=======
-                # @return [Array[Seed::Types::Object_::ObjectWithRequiredField]]
->>>>>>> 51153df442 (fix)
                 def get_and_return_list_of_objects(request_options: {}, **params)
                     _request = Seed::Internal::Http::JSONRequest.new(
                         method: POST,
@@ -42,15 +34,7 @@ module Seed
                     )
                 end
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                 # @return [Array[Seed::Types::Object_::ObjectWithRequiredField]]
-=======
-                # @return [Array[Seed::types::object::ObjectWithRequiredField]]
->>>>>>> ca21b06d09 (fix)
-=======
-                # @return [Array[Seed::Types::Object_::ObjectWithRequiredField]]
->>>>>>> 51153df442 (fix)
                 def get_and_return_set_of_objects(request_options: {}, **params)
                     _request = Seed::Internal::Http::JSONRequest.new(
                         method: POST,
@@ -66,15 +50,7 @@ module Seed
                     )
                 end
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                 # @return [Hash[String, Seed::Types::Object_::ObjectWithRequiredField]]
-=======
-                # @return [Hash[String, Seed::types::object::ObjectWithRequiredField]]
->>>>>>> ca21b06d09 (fix)
-=======
-                # @return [Hash[String, Seed::Types::Object_::ObjectWithRequiredField]]
->>>>>>> 51153df442 (fix)
                 def get_and_return_map_of_prim_to_object(request_options: {}, **params)
                     _request = Seed::Internal::Http::JSONRequest.new(
                         method: POST,
@@ -82,15 +58,7 @@ module Seed
                     )
                 end
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                 # @return [Seed::Types::Object_::ObjectWithRequiredField | nil]
-=======
-                # @return [Seed::types::object::ObjectWithRequiredField | nil]
->>>>>>> ca21b06d09 (fix)
-=======
-                # @return [Seed::Types::Object_::ObjectWithRequiredField | nil]
->>>>>>> 51153df442 (fix)
                 def get_and_return_optional(request_options: {}, **params)
                     _request = Seed::Internal::Http::JSONRequest.new(
                         method: POST,
