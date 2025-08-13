@@ -8,7 +8,7 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-[JsonConverter(typeof(UnionWithSubTypes.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record UnionWithSubTypes
 {
@@ -19,18 +19,18 @@ public record UnionWithSubTypes
     }
 
     /// <summary>
-    /// Create an instance of UnionWithSubTypes with <see cref="UnionWithSubTypes.Foo"/>.
+    /// Create an instance of UnionWithSubTypes with <see cref="Foo"/>.
     /// </summary>
-    public UnionWithSubTypes(UnionWithSubTypes.Foo value)
+    public UnionWithSubTypes(Foo value)
     {
         Type = "foo";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithSubTypes with <see cref="UnionWithSubTypes.FooExtended"/>.
+    /// Create an instance of UnionWithSubTypes with <see cref="FooExtended"/>.
     /// </summary>
-    public UnionWithSubTypes(UnionWithSubTypes.FooExtended value)
+    public UnionWithSubTypes(FooExtended value)
     {
         Type = "fooExtended";
         Value = value.Value;
@@ -62,7 +62,9 @@ public record UnionWithSubTypes
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo'.</exception>
     public SeedUnions.Foo AsFoo() =>
-        IsFoo ? (SeedUnions.Foo)Value! : throw new Exception("UnionWithSubTypes.Type is not 'foo'");
+        IsFoo
+            ? (SeedUnions.Foo)Value!
+            : throw new Exception("SeedUnions.UnionWithSubTypes.Type is not 'foo'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.FooExtended"/> if <see cref="Type"/> is 'fooExtended', otherwise throws an exception.
@@ -71,7 +73,7 @@ public record UnionWithSubTypes
     public SeedUnions.FooExtended AsFooExtended() =>
         IsFooExtended
             ? (SeedUnions.FooExtended)Value!
-            : throw new Exception("UnionWithSubTypes.Type is not 'fooExtended'");
+            : throw new Exception("SeedUnions.UnionWithSubTypes.Type is not 'fooExtended'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
@@ -137,20 +139,19 @@ public record UnionWithSubTypes
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator UnionWithSubTypes(UnionWithSubTypes.Foo value) => new(value);
+    public static implicit operator UnionWithSubTypes(Foo value) => new(value);
 
-    public static implicit operator UnionWithSubTypes(UnionWithSubTypes.FooExtended value) =>
-        new(value);
+    public static implicit operator UnionWithSubTypes(FooExtended value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithSubTypes>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(UnionWithSubTypes).IsAssignableFrom(typeToConvert);
 
         public override UnionWithSubTypes Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {

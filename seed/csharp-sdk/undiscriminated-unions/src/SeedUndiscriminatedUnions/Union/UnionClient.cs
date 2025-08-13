@@ -185,7 +185,7 @@ public partial class UnionClient
 
     /// <example><code>
     /// await client.Union.CallAsync(
-    ///     new Request
+    ///     new SeedUndiscriminatedUnions.Request
     ///     {
     ///         Union = new Dictionary&lt;string, object&gt;()
     ///         {

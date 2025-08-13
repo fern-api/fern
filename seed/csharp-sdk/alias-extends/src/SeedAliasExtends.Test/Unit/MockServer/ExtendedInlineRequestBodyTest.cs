@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using SeedAliasExtends;
 
 namespace SeedAliasExtends.Test.Unit.MockServer;
 

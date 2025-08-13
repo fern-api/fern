@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(TestSubmissionStatus.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record TestSubmissionStatus
 {
@@ -19,36 +19,36 @@ public record TestSubmissionStatus
     }
 
     /// <summary>
-    /// Create an instance of TestSubmissionStatus with <see cref="TestSubmissionStatus.Stopped"/>.
+    /// Create an instance of TestSubmissionStatus with <see cref="Stopped"/>.
     /// </summary>
-    public TestSubmissionStatus(TestSubmissionStatus.Stopped value)
+    public TestSubmissionStatus(Stopped value)
     {
         Type = "stopped";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of TestSubmissionStatus with <see cref="TestSubmissionStatus.Errored"/>.
+    /// Create an instance of TestSubmissionStatus with <see cref="Errored"/>.
     /// </summary>
-    public TestSubmissionStatus(TestSubmissionStatus.Errored value)
+    public TestSubmissionStatus(Errored value)
     {
         Type = "errored";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of TestSubmissionStatus with <see cref="TestSubmissionStatus.Running"/>.
+    /// Create an instance of TestSubmissionStatus with <see cref="Running"/>.
     /// </summary>
-    public TestSubmissionStatus(TestSubmissionStatus.Running value)
+    public TestSubmissionStatus(Running value)
     {
         Type = "running";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of TestSubmissionStatus with <see cref="TestSubmissionStatus.TestCaseIdToState"/>.
+    /// Create an instance of TestSubmissionStatus with <see cref="TestCaseIdToState"/>.
     /// </summary>
-    public TestSubmissionStatus(TestSubmissionStatus.TestCaseIdToState value)
+    public TestSubmissionStatus(TestCaseIdToState value)
     {
         Type = "testCaseIdToState";
         Value = value.Value;
@@ -90,39 +90,41 @@ public record TestSubmissionStatus
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'stopped'.</exception>
     public object AsStopped() =>
-        IsStopped ? Value! : throw new Exception("TestSubmissionStatus.Type is not 'stopped'");
+        IsStopped
+            ? Value!
+            : throw new Exception("SeedTrace.TestSubmissionStatus.Type is not 'stopped'");
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedTrace.ErrorInfo"/> if <see cref="Type"/> is 'errored', otherwise throws an exception.
+    /// Returns the value as a <see cref="ErrorInfo"/> if <see cref="Type"/> is 'errored', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'errored'.</exception>
-    public SeedTrace.ErrorInfo AsErrored() =>
+    public ErrorInfo AsErrored() =>
         IsErrored
-            ? (SeedTrace.ErrorInfo)Value!
-            : throw new Exception("TestSubmissionStatus.Type is not 'errored'");
+            ? (ErrorInfo)Value!
+            : throw new Exception("SeedTrace.TestSubmissionStatus.Type is not 'errored'");
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedTrace.RunningSubmissionState"/> if <see cref="Type"/> is 'running', otherwise throws an exception.
+    /// Returns the value as a <see cref="RunningSubmissionState"/> if <see cref="Type"/> is 'running', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'running'.</exception>
-    public SeedTrace.RunningSubmissionState AsRunning() =>
+    public RunningSubmissionState AsRunning() =>
         IsRunning
-            ? (SeedTrace.RunningSubmissionState)Value!
-            : throw new Exception("TestSubmissionStatus.Type is not 'running'");
+            ? (RunningSubmissionState)Value!
+            : throw new Exception("SeedTrace.TestSubmissionStatus.Type is not 'running'");
 
     /// <summary>
-    /// Returns the value as a <see cref="Dictionary<string, SubmissionStatusForTestCase>"/> if <see cref="Type"/> is 'testCaseIdToState', otherwise throws an exception.
+    /// Returns the value as a <see cref="Dictionary<string, SeedTrace.SubmissionStatusForTestCase>"/> if <see cref="Type"/> is 'testCaseIdToState', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'testCaseIdToState'.</exception>
     public Dictionary<string, SubmissionStatusForTestCase> AsTestCaseIdToState() =>
         IsTestCaseIdToState
             ? (Dictionary<string, SubmissionStatusForTestCase>)Value!
-            : throw new Exception("TestSubmissionStatus.Type is not 'testCaseIdToState'");
+            : throw new Exception("SeedTrace.TestSubmissionStatus.Type is not 'testCaseIdToState'");
 
     public T Match<T>(
         Func<object, T> onStopped,
-        Func<SeedTrace.ErrorInfo, T> onErrored,
-        Func<SeedTrace.RunningSubmissionState, T> onRunning,
+        Func<ErrorInfo, T> onErrored,
+        Func<RunningSubmissionState, T> onRunning,
         Func<Dictionary<string, SubmissionStatusForTestCase>, T> onTestCaseIdToState,
         Func<string, object?, T> onUnknown_
     )
@@ -139,8 +141,8 @@ public record TestSubmissionStatus
 
     public void Visit(
         Action<object> onStopped,
-        Action<SeedTrace.ErrorInfo> onErrored,
-        Action<SeedTrace.RunningSubmissionState> onRunning,
+        Action<ErrorInfo> onErrored,
+        Action<RunningSubmissionState> onRunning,
         Action<Dictionary<string, SubmissionStatusForTestCase>> onTestCaseIdToState,
         Action<string, object?> onUnknown_
     )
@@ -180,13 +182,13 @@ public record TestSubmissionStatus
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedTrace.ErrorInfo"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="ErrorInfo"/> and returns true if successful.
     /// </summary>
-    public bool TryAsErrored(out SeedTrace.ErrorInfo? value)
+    public bool TryAsErrored(out ErrorInfo? value)
     {
         if (Type == "errored")
         {
-            value = (SeedTrace.ErrorInfo)Value!;
+            value = (ErrorInfo)Value!;
             return true;
         }
         value = null;
@@ -194,13 +196,13 @@ public record TestSubmissionStatus
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedTrace.RunningSubmissionState"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="RunningSubmissionState"/> and returns true if successful.
     /// </summary>
-    public bool TryAsRunning(out SeedTrace.RunningSubmissionState? value)
+    public bool TryAsRunning(out RunningSubmissionState? value)
     {
         if (Type == "running")
         {
-            value = (SeedTrace.RunningSubmissionState)Value!;
+            value = (RunningSubmissionState)Value!;
             return true;
         }
         value = null;
@@ -208,7 +210,7 @@ public record TestSubmissionStatus
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="Dictionary<string, SubmissionStatusForTestCase>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="Dictionary<string, SeedTrace.SubmissionStatusForTestCase>"/> and returns true if successful.
     /// </summary>
     public bool TryAsTestCaseIdToState(out Dictionary<string, SubmissionStatusForTestCase>? value)
     {
@@ -223,25 +225,21 @@ public record TestSubmissionStatus
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator TestSubmissionStatus(TestSubmissionStatus.Errored value) =>
-        new(value);
+    public static implicit operator TestSubmissionStatus(Errored value) => new(value);
 
-    public static implicit operator TestSubmissionStatus(TestSubmissionStatus.Running value) =>
-        new(value);
+    public static implicit operator TestSubmissionStatus(Running value) => new(value);
 
-    public static implicit operator TestSubmissionStatus(
-        TestSubmissionStatus.TestCaseIdToState value
-    ) => new(value);
+    public static implicit operator TestSubmissionStatus(TestCaseIdToState value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<TestSubmissionStatus>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(TestSubmissionStatus).IsAssignableFrom(typeToConvert);
 
         public override TestSubmissionStatus Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -269,17 +267,16 @@ public record TestSubmissionStatus
             var value = discriminator switch
             {
                 "stopped" => new { },
-                "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo>(options)
+                "errored" => json.GetProperty("value").Deserialize<ErrorInfo>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
-                "running" => json.GetProperty("value")
-                    .Deserialize<SeedTrace.RunningSubmissionState>(options)
+                "running" => json.GetProperty("value").Deserialize<RunningSubmissionState>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.RunningSubmissionState"
                     ),
                 "testCaseIdToState" => json.GetProperty("value")
                     .Deserialize<Dictionary<string, SubmissionStatusForTestCase>>(options)
                     ?? throw new JsonException(
-                        "Failed to deserialize Dictionary<string, SubmissionStatusForTestCase>"
+                        "Failed to deserialize Dictionary<string, SeedTrace.SubmissionStatusForTestCase>"
                     ),
                 _ => json.Deserialize<object?>(options),
             };
@@ -332,16 +329,16 @@ public record TestSubmissionStatus
     [Serializable]
     public struct Errored
     {
-        public Errored(SeedTrace.ErrorInfo value)
+        public Errored(ErrorInfo value)
         {
             Value = value;
         }
 
-        internal SeedTrace.ErrorInfo Value { get; set; }
+        internal ErrorInfo Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Errored(SeedTrace.ErrorInfo value) => new(value);
+        public static implicit operator Errored(ErrorInfo value) => new(value);
     }
 
     /// <summary>
@@ -350,17 +347,16 @@ public record TestSubmissionStatus
     [Serializable]
     public struct Running
     {
-        public Running(SeedTrace.RunningSubmissionState value)
+        public Running(RunningSubmissionState value)
         {
             Value = value;
         }
 
-        internal SeedTrace.RunningSubmissionState Value { get; set; }
+        internal RunningSubmissionState Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Running(SeedTrace.RunningSubmissionState value) =>
-            new(value);
+        public static implicit operator Running(RunningSubmissionState value) => new(value);
     }
 
     /// <summary>

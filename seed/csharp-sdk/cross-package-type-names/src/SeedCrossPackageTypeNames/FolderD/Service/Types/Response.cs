@@ -1,6 +1,5 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using SeedCrossPackageTypeNames;
 using SeedCrossPackageTypeNames.Core;
 using SeedCrossPackageTypeNames.FolderB;
 

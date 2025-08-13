@@ -91,7 +91,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
             type: csharp.Class.ClassType.Class,
             static_: true,
             namespace: this.context.getNamespace(),
-            isNestedClass: true,
+            enclosingType: stringEnum.reference,
             summary: "Constant strings for enum values",
             annotations: [this.context.getSerializableAttribute()]
         });

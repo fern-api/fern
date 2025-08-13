@@ -60,7 +60,9 @@ public partial class BigunionClient
 
     /// <example><code>
     /// await client.Bigunion.UpdateAsync(
-    ///     new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = "value" }))
+    ///     new SeedUnions.BigUnion(
+    ///         new SeedUnions.BigUnion.NormalSweet(new SeedUnions.NormalSweet { Value = "value" })
+    ///     )
     /// );
     /// </code></example>
     public async Task<bool> UpdateAsync(
@@ -107,10 +109,14 @@ public partial class BigunionClient
 
     /// <example><code>
     /// await client.Bigunion.UpdateManyAsync(
-    ///     new List&lt;BigUnion&gt;()
+    ///     new List&lt;SeedUnions.BigUnion&gt;()
     ///     {
-    ///         new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = "value" })),
-    ///         new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = "value" })),
+    ///         new SeedUnions.BigUnion(
+    ///             new SeedUnions.BigUnion.NormalSweet(new SeedUnions.NormalSweet { Value = "value" })
+    ///         ),
+    ///         new SeedUnions.BigUnion(
+    ///             new SeedUnions.BigUnion.NormalSweet(new SeedUnions.NormalSweet { Value = "value" })
+    ///         ),
     ///     }
     /// );
     /// </code></example>

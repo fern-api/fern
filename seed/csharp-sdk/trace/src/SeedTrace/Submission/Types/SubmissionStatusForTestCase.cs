@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(SubmissionStatusForTestCase.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record SubmissionStatusForTestCase
 {
@@ -19,27 +19,27 @@ public record SubmissionStatusForTestCase
     }
 
     /// <summary>
-    /// Create an instance of SubmissionStatusForTestCase with <see cref="SubmissionStatusForTestCase.Graded"/>.
+    /// Create an instance of SubmissionStatusForTestCase with <see cref="Graded"/>.
     /// </summary>
-    public SubmissionStatusForTestCase(SubmissionStatusForTestCase.Graded value)
+    public SubmissionStatusForTestCase(Graded value)
     {
         Type = "graded";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of SubmissionStatusForTestCase with <see cref="SubmissionStatusForTestCase.GradedV2"/>.
+    /// Create an instance of SubmissionStatusForTestCase with <see cref="GradedV2"/>.
     /// </summary>
-    public SubmissionStatusForTestCase(SubmissionStatusForTestCase.GradedV2 value)
+    public SubmissionStatusForTestCase(GradedV2 value)
     {
         Type = "gradedV2";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of SubmissionStatusForTestCase with <see cref="SubmissionStatusForTestCase.Traced"/>.
+    /// Create an instance of SubmissionStatusForTestCase with <see cref="Traced"/>.
     /// </summary>
-    public SubmissionStatusForTestCase(SubmissionStatusForTestCase.Traced value)
+    public SubmissionStatusForTestCase(Traced value)
     {
         Type = "traced";
         Value = value.Value;
@@ -72,36 +72,36 @@ public record SubmissionStatusForTestCase
     public bool IsTraced => Type == "traced";
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedTrace.TestCaseResultWithStdout"/> if <see cref="Type"/> is 'graded', otherwise throws an exception.
+    /// Returns the value as a <see cref="TestCaseResultWithStdout"/> if <see cref="Type"/> is 'graded', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'graded'.</exception>
-    public SeedTrace.TestCaseResultWithStdout AsGraded() =>
+    public TestCaseResultWithStdout AsGraded() =>
         IsGraded
-            ? (SeedTrace.TestCaseResultWithStdout)Value!
-            : throw new Exception("SubmissionStatusForTestCase.Type is not 'graded'");
+            ? (TestCaseResultWithStdout)Value!
+            : throw new Exception("SeedTrace.SubmissionStatusForTestCase.Type is not 'graded'");
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedTrace.TestCaseGrade"/> if <see cref="Type"/> is 'gradedV2', otherwise throws an exception.
+    /// Returns the value as a <see cref="TestCaseGrade"/> if <see cref="Type"/> is 'gradedV2', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'gradedV2'.</exception>
-    public SeedTrace.TestCaseGrade AsGradedV2() =>
+    public TestCaseGrade AsGradedV2() =>
         IsGradedV2
-            ? (SeedTrace.TestCaseGrade)Value!
-            : throw new Exception("SubmissionStatusForTestCase.Type is not 'gradedV2'");
+            ? (TestCaseGrade)Value!
+            : throw new Exception("SeedTrace.SubmissionStatusForTestCase.Type is not 'gradedV2'");
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedTrace.TracedTestCase"/> if <see cref="Type"/> is 'traced', otherwise throws an exception.
+    /// Returns the value as a <see cref="TracedTestCase"/> if <see cref="Type"/> is 'traced', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'traced'.</exception>
-    public SeedTrace.TracedTestCase AsTraced() =>
+    public TracedTestCase AsTraced() =>
         IsTraced
-            ? (SeedTrace.TracedTestCase)Value!
-            : throw new Exception("SubmissionStatusForTestCase.Type is not 'traced'");
+            ? (TracedTestCase)Value!
+            : throw new Exception("SeedTrace.SubmissionStatusForTestCase.Type is not 'traced'");
 
     public T Match<T>(
-        Func<SeedTrace.TestCaseResultWithStdout, T> onGraded,
-        Func<SeedTrace.TestCaseGrade, T> onGradedV2,
-        Func<SeedTrace.TracedTestCase, T> onTraced,
+        Func<TestCaseResultWithStdout, T> onGraded,
+        Func<TestCaseGrade, T> onGradedV2,
+        Func<TracedTestCase, T> onTraced,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -115,9 +115,9 @@ public record SubmissionStatusForTestCase
     }
 
     public void Visit(
-        Action<SeedTrace.TestCaseResultWithStdout> onGraded,
-        Action<SeedTrace.TestCaseGrade> onGradedV2,
-        Action<SeedTrace.TracedTestCase> onTraced,
+        Action<TestCaseResultWithStdout> onGraded,
+        Action<TestCaseGrade> onGradedV2,
+        Action<TracedTestCase> onTraced,
         Action<string, object?> onUnknown_
     )
     {
@@ -139,13 +139,13 @@ public record SubmissionStatusForTestCase
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedTrace.TestCaseResultWithStdout"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="TestCaseResultWithStdout"/> and returns true if successful.
     /// </summary>
-    public bool TryAsGraded(out SeedTrace.TestCaseResultWithStdout? value)
+    public bool TryAsGraded(out TestCaseResultWithStdout? value)
     {
         if (Type == "graded")
         {
-            value = (SeedTrace.TestCaseResultWithStdout)Value!;
+            value = (TestCaseResultWithStdout)Value!;
             return true;
         }
         value = null;
@@ -153,13 +153,13 @@ public record SubmissionStatusForTestCase
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedTrace.TestCaseGrade"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="TestCaseGrade"/> and returns true if successful.
     /// </summary>
-    public bool TryAsGradedV2(out SeedTrace.TestCaseGrade? value)
+    public bool TryAsGradedV2(out TestCaseGrade? value)
     {
         if (Type == "gradedV2")
         {
-            value = (SeedTrace.TestCaseGrade)Value!;
+            value = (TestCaseGrade)Value!;
             return true;
         }
         value = null;
@@ -167,13 +167,13 @@ public record SubmissionStatusForTestCase
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedTrace.TracedTestCase"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="TracedTestCase"/> and returns true if successful.
     /// </summary>
-    public bool TryAsTraced(out SeedTrace.TracedTestCase? value)
+    public bool TryAsTraced(out TracedTestCase? value)
     {
         if (Type == "traced")
         {
-            value = (SeedTrace.TracedTestCase)Value!;
+            value = (TracedTestCase)Value!;
             return true;
         }
         value = null;
@@ -182,27 +182,21 @@ public record SubmissionStatusForTestCase
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator SubmissionStatusForTestCase(
-        SubmissionStatusForTestCase.Graded value
-    ) => new(value);
+    public static implicit operator SubmissionStatusForTestCase(Graded value) => new(value);
 
-    public static implicit operator SubmissionStatusForTestCase(
-        SubmissionStatusForTestCase.GradedV2 value
-    ) => new(value);
+    public static implicit operator SubmissionStatusForTestCase(GradedV2 value) => new(value);
 
-    public static implicit operator SubmissionStatusForTestCase(
-        SubmissionStatusForTestCase.Traced value
-    ) => new(value);
+    public static implicit operator SubmissionStatusForTestCase(Traced value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SubmissionStatusForTestCase>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(SubmissionStatusForTestCase).IsAssignableFrom(typeToConvert);
 
         public override SubmissionStatusForTestCase Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -229,14 +223,13 @@ public record SubmissionStatusForTestCase
 
             var value = discriminator switch
             {
-                "graded" => json.Deserialize<SeedTrace.TestCaseResultWithStdout>(options)
+                "graded" => json.Deserialize<TestCaseResultWithStdout>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.TestCaseResultWithStdout"
                     ),
-                "gradedV2" => json.GetProperty("value")
-                    .Deserialize<SeedTrace.TestCaseGrade>(options)
+                "gradedV2" => json.GetProperty("value").Deserialize<TestCaseGrade>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.TestCaseGrade"),
-                "traced" => json.Deserialize<SeedTrace.TracedTestCase>(options)
+                "traced" => json.Deserialize<TracedTestCase>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.TracedTestCase"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -271,17 +264,16 @@ public record SubmissionStatusForTestCase
     [Serializable]
     public struct Graded
     {
-        public Graded(SeedTrace.TestCaseResultWithStdout value)
+        public Graded(TestCaseResultWithStdout value)
         {
             Value = value;
         }
 
-        internal SeedTrace.TestCaseResultWithStdout Value { get; set; }
+        internal TestCaseResultWithStdout Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Graded(SeedTrace.TestCaseResultWithStdout value) =>
-            new(value);
+        public static implicit operator Graded(TestCaseResultWithStdout value) => new(value);
     }
 
     /// <summary>
@@ -290,16 +282,16 @@ public record SubmissionStatusForTestCase
     [Serializable]
     public struct GradedV2
     {
-        public GradedV2(SeedTrace.TestCaseGrade value)
+        public GradedV2(TestCaseGrade value)
         {
             Value = value;
         }
 
-        internal SeedTrace.TestCaseGrade Value { get; set; }
+        internal TestCaseGrade Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator GradedV2(SeedTrace.TestCaseGrade value) => new(value);
+        public static implicit operator GradedV2(TestCaseGrade value) => new(value);
     }
 
     /// <summary>
@@ -308,15 +300,15 @@ public record SubmissionStatusForTestCase
     [Serializable]
     public struct Traced
     {
-        public Traced(SeedTrace.TracedTestCase value)
+        public Traced(TracedTestCase value)
         {
             Value = value;
         }
 
-        internal SeedTrace.TracedTestCase Value { get; set; }
+        internal TracedTestCase Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Traced(SeedTrace.TracedTestCase value) => new(value);
+        public static implicit operator Traced(TracedTestCase value) => new(value);
     }
 }

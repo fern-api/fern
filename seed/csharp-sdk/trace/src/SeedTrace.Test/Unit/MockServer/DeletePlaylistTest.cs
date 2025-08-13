@@ -5,7 +5,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class DeletePlaylistTest : BaseMockServerTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void MockServerTest()
     {
         Server

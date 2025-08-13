@@ -22,14 +22,14 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedValidation;
 
-var client = new SeedValidationClient();
+var client = new SeedValidation.SeedValidationClient();
 await client.CreateAsync(
-    new CreateRequest
+    new SeedValidation.CreateRequest
     {
         Decimal = 2.2,
         Even = 100,
         Name = "fern",
-        Shape = Shape.Square,
+        Shape = SeedValidation.Shape.Square,
     }
 );
 ```

@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedVariables.Core;
 
 namespace SeedVariables;
@@ -17,7 +17,7 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.Service.PostAsync("endpointParam");
     /// </code></example>
-    public async global::System.Threading.Tasks.Task PostAsync(
+    public async Task PostAsync(
         string endpointParam,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

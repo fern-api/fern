@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(ActualResult.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record ActualResult
 {
@@ -19,27 +19,27 @@ public record ActualResult
     }
 
     /// <summary>
-    /// Create an instance of ActualResult with <see cref="ActualResult.ValueInner"/>.
+    /// Create an instance of ActualResult with <see cref="ValueInner"/>.
     /// </summary>
-    public ActualResult(ActualResult.ValueInner value)
+    public ActualResult(ValueInner value)
     {
         Type = "value";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of ActualResult with <see cref="ActualResult.Exception"/>.
+    /// Create an instance of ActualResult with <see cref="Exception"/>.
     /// </summary>
-    public ActualResult(ActualResult.Exception value)
+    public ActualResult(Exception value)
     {
         Type = "exception";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of ActualResult with <see cref="ActualResult.ExceptionV2"/>.
+    /// Create an instance of ActualResult with <see cref="ExceptionV2"/>.
     /// </summary>
-    public ActualResult(ActualResult.ExceptionV2 value)
+    public ActualResult(ExceptionV2 value)
     {
         Type = "exceptionV2";
         Value = value.Value;
@@ -72,22 +72,22 @@ public record ActualResult
     public bool IsExceptionV2 => Type == "exceptionV2";
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedTrace.VariableValue"/> if <see cref="Type"/> is 'value', otherwise throws an exception.
+    /// Returns the value as a <see cref="VariableValue"/> if <see cref="Type"/> is 'value', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'value'.</exception>
-    public SeedTrace.VariableValue AsValue() =>
+    public VariableValue AsValue() =>
         IsValue
-            ? (SeedTrace.VariableValue)Value!
-            : throw new Exception("ActualResult.Type is not 'value'");
+            ? (VariableValue)Value!
+            : throw new Exception("SeedTrace.ActualResult.Type is not 'value'");
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedTrace.ExceptionInfo"/> if <see cref="Type"/> is 'exception', otherwise throws an exception.
+    /// Returns the value as a <see cref="ExceptionInfo"/> if <see cref="Type"/> is 'exception', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'exception'.</exception>
-    public SeedTrace.ExceptionInfo AsException() =>
+    public ExceptionInfo AsException() =>
         IsException
-            ? (SeedTrace.ExceptionInfo)Value!
-            : throw new Exception("ActualResult.Type is not 'exception'");
+            ? (ExceptionInfo)Value!
+            : throw new Exception("SeedTrace.ActualResult.Type is not 'exception'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ExceptionV2"/> if <see cref="Type"/> is 'exceptionV2', otherwise throws an exception.
@@ -96,11 +96,11 @@ public record ActualResult
     public SeedTrace.ExceptionV2 AsExceptionV2() =>
         IsExceptionV2
             ? (SeedTrace.ExceptionV2)Value!
-            : throw new Exception("ActualResult.Type is not 'exceptionV2'");
+            : throw new Exception("SeedTrace.ActualResult.Type is not 'exceptionV2'");
 
     public T Match<T>(
-        Func<SeedTrace.VariableValue, T> onValue,
-        Func<SeedTrace.ExceptionInfo, T> onException,
+        Func<VariableValue, T> onValue,
+        Func<ExceptionInfo, T> onException,
         Func<SeedTrace.ExceptionV2, T> onExceptionV2,
         Func<string, object?, T> onUnknown_
     )
@@ -115,8 +115,8 @@ public record ActualResult
     }
 
     public void Visit(
-        Action<SeedTrace.VariableValue> onValue,
-        Action<SeedTrace.ExceptionInfo> onException,
+        Action<VariableValue> onValue,
+        Action<ExceptionInfo> onException,
         Action<SeedTrace.ExceptionV2> onExceptionV2,
         Action<string, object?> onUnknown_
     )
@@ -139,13 +139,13 @@ public record ActualResult
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedTrace.VariableValue"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="VariableValue"/> and returns true if successful.
     /// </summary>
-    public bool TryAsValue(out SeedTrace.VariableValue? value)
+    public bool TryAsValue(out VariableValue? value)
     {
         if (Type == "value")
         {
-            value = (SeedTrace.VariableValue)Value!;
+            value = (VariableValue)Value!;
             return true;
         }
         value = null;
@@ -153,13 +153,13 @@ public record ActualResult
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedTrace.ExceptionInfo"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="ExceptionInfo"/> and returns true if successful.
     /// </summary>
-    public bool TryAsException(out SeedTrace.ExceptionInfo? value)
+    public bool TryAsException(out ExceptionInfo? value)
     {
         if (Type == "exception")
         {
-            value = (SeedTrace.ExceptionInfo)Value!;
+            value = (ExceptionInfo)Value!;
             return true;
         }
         value = null;
@@ -182,21 +182,21 @@ public record ActualResult
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator ActualResult(ActualResult.ValueInner value) => new(value);
+    public static implicit operator ActualResult(ValueInner value) => new(value);
 
-    public static implicit operator ActualResult(ActualResult.Exception value) => new(value);
+    public static implicit operator ActualResult(Exception value) => new(value);
 
-    public static implicit operator ActualResult(ActualResult.ExceptionV2 value) => new(value);
+    public static implicit operator ActualResult(ExceptionV2 value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<ActualResult>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(ActualResult).IsAssignableFrom(typeToConvert);
 
         public override ActualResult Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -223,9 +223,9 @@ public record ActualResult
 
             var value = discriminator switch
             {
-                "value" => json.GetProperty("value").Deserialize<SeedTrace.VariableValue>(options)
+                "value" => json.GetProperty("value").Deserialize<VariableValue>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.VariableValue"),
-                "exception" => json.Deserialize<SeedTrace.ExceptionInfo>(options)
+                "exception" => json.Deserialize<ExceptionInfo>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionInfo"),
                 "exceptionV2" => json.GetProperty("value")
                     .Deserialize<SeedTrace.ExceptionV2>(options)
@@ -266,16 +266,16 @@ public record ActualResult
     [Serializable]
     public struct ValueInner
     {
-        public ValueInner(SeedTrace.VariableValue value)
+        public ValueInner(VariableValue value)
         {
             Value = value;
         }
 
-        internal SeedTrace.VariableValue Value { get; set; }
+        internal VariableValue Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator ValueInner(SeedTrace.VariableValue value) => new(value);
+        public static implicit operator ValueInner(VariableValue value) => new(value);
     }
 
     /// <summary>
@@ -284,16 +284,16 @@ public record ActualResult
     [Serializable]
     public struct Exception
     {
-        public Exception(SeedTrace.ExceptionInfo value)
+        public Exception(ExceptionInfo value)
         {
             Value = value;
         }
 
-        internal SeedTrace.ExceptionInfo Value { get; set; }
+        internal ExceptionInfo Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Exception(SeedTrace.ExceptionInfo value) => new(value);
+        public static implicit operator Exception(ExceptionInfo value) => new(value);
     }
 
     /// <summary>

@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedCsharpNamespaceConflict;
 
-var client = new SeedCsharpNamespaceConflictClient();
+var client = new SeedCsharpNamespaceConflict.SeedCsharpNamespaceConflictClient();
 await client.Tasktest.HelloAsync();
 ```
 

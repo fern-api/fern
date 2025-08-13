@@ -1,8 +1,8 @@
-using global::System.Reflection;
-using global::System.Text.Json;
-using global::System.Text.Json.Nodes;
-using global::System.Text.Json.Serialization;
-using global::System.Text.Json.Serialization.Metadata;
+using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 
 namespace SeedAliasExtends.Core;
 

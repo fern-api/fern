@@ -1,6 +1,5 @@
 using System.Text.Json;
 using NUnit.Framework;
-using SeedValidation;
 using SeedValidation.Core;
 
 namespace SeedValidation.Test;

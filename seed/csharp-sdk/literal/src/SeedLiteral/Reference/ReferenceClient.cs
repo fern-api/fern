@@ -16,17 +16,17 @@ public partial class ReferenceClient
 
     /// <example><code>
     /// await client.Reference.SendAsync(
-    ///     new SendRequest
+    ///     new SeedLiteral.SendRequest
     ///     {
     ///         Prompt = "You are a helpful assistant",
     ///         Stream = false,
     ///         Context = "You're super wise",
     ///         Query = "What is the weather today",
-    ///         ContainerObject = new ContainerObject
+    ///         ContainerObject = new SeedLiteral.ContainerObject
     ///         {
-    ///             NestedObjects = new List&lt;NestedObjectWithLiterals&gt;()
+    ///             NestedObjects = new List&lt;SeedLiteral.NestedObjectWithLiterals&gt;()
     ///             {
-    ///                 new NestedObjectWithLiterals
+    ///                 new SeedLiteral.NestedObjectWithLiterals
     ///                 {
     ///                     Literal1 = "literal1",
     ///                     Literal2 = "literal2",

@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedNurseryApi.Core;
 
 namespace SeedNurseryApi;
@@ -15,9 +15,9 @@ public partial class PackageClient
     }
 
     /// <example><code>
-    /// await client.Package.TestAsync(new TestRequest { For = "for" });
+    /// await client.Package.TestAsync(new SeedNurseryApi.TestRequest { For = "for" });
     /// </code></example>
-    public async global::System.Threading.Tasks.Task TestAsync(
+    public async Task TestAsync(
         TestRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

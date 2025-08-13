@@ -1,4 +1,4 @@
-using global::System.Net.Http;
+using System.Net.Http;
 
 namespace SeedCsharpAccess.Core;
 

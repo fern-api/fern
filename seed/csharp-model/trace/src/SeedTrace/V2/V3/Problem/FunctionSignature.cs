@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
 
-[JsonConverter(typeof(FunctionSignature.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record FunctionSignature
 {
@@ -19,27 +19,27 @@ public record FunctionSignature
     }
 
     /// <summary>
-    /// Create an instance of FunctionSignature with <see cref="FunctionSignature.Void"/>.
+    /// Create an instance of FunctionSignature with <see cref="Void"/>.
     /// </summary>
-    public FunctionSignature(FunctionSignature.Void value)
+    public FunctionSignature(Void value)
     {
         Type = "void";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of FunctionSignature with <see cref="FunctionSignature.NonVoid"/>.
+    /// Create an instance of FunctionSignature with <see cref="NonVoid"/>.
     /// </summary>
-    public FunctionSignature(FunctionSignature.NonVoid value)
+    public FunctionSignature(NonVoid value)
     {
         Type = "nonVoid";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of FunctionSignature with <see cref="FunctionSignature.VoidThatTakesActualResult"/>.
+    /// Create an instance of FunctionSignature with <see cref="VoidThatTakesActualResult"/>.
     /// </summary>
-    public FunctionSignature(FunctionSignature.VoidThatTakesActualResult value)
+    public FunctionSignature(VoidThatTakesActualResult value)
     {
         Type = "voidThatTakesActualResult";
         Value = value.Value;
@@ -72,39 +72,38 @@ public record FunctionSignature
     public bool IsVoidThatTakesActualResult => Type == "voidThatTakesActualResult";
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedTrace.V2.V3.VoidFunctionSignature"/> if <see cref="Type"/> is 'void', otherwise throws an exception.
+    /// Returns the value as a <see cref="VoidFunctionSignature"/> if <see cref="Type"/> is 'void', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'void'.</exception>
-    public SeedTrace.V2.V3.VoidFunctionSignature AsVoid() =>
+    public VoidFunctionSignature AsVoid() =>
         IsVoid
-            ? (SeedTrace.V2.V3.VoidFunctionSignature)Value!
-            : throw new Exception("FunctionSignature.Type is not 'void'");
+            ? (VoidFunctionSignature)Value!
+            : throw new Exception("SeedTrace.V2.V3.FunctionSignature.Type is not 'void'");
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedTrace.V2.V3.NonVoidFunctionSignature"/> if <see cref="Type"/> is 'nonVoid', otherwise throws an exception.
+    /// Returns the value as a <see cref="NonVoidFunctionSignature"/> if <see cref="Type"/> is 'nonVoid', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'nonVoid'.</exception>
-    public SeedTrace.V2.V3.NonVoidFunctionSignature AsNonVoid() =>
+    public NonVoidFunctionSignature AsNonVoid() =>
         IsNonVoid
-            ? (SeedTrace.V2.V3.NonVoidFunctionSignature)Value!
-            : throw new Exception("FunctionSignature.Type is not 'nonVoid'");
+            ? (NonVoidFunctionSignature)Value!
+            : throw new Exception("SeedTrace.V2.V3.FunctionSignature.Type is not 'nonVoid'");
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult"/> if <see cref="Type"/> is 'voidThatTakesActualResult', otherwise throws an exception.
+    /// Returns the value as a <see cref="VoidFunctionSignatureThatTakesActualResult"/> if <see cref="Type"/> is 'voidThatTakesActualResult', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'voidThatTakesActualResult'.</exception>
-    public SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult AsVoidThatTakesActualResult() =>
+    public VoidFunctionSignatureThatTakesActualResult AsVoidThatTakesActualResult() =>
         IsVoidThatTakesActualResult
-            ? (SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult)Value!
-            : throw new Exception("FunctionSignature.Type is not 'voidThatTakesActualResult'");
+            ? (VoidFunctionSignatureThatTakesActualResult)Value!
+            : throw new Exception(
+                "SeedTrace.V2.V3.FunctionSignature.Type is not 'voidThatTakesActualResult'"
+            );
 
     public T Match<T>(
-        Func<SeedTrace.V2.V3.VoidFunctionSignature, T> onVoid,
-        Func<SeedTrace.V2.V3.NonVoidFunctionSignature, T> onNonVoid,
-        Func<
-            SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult,
-            T
-        > onVoidThatTakesActualResult,
+        Func<VoidFunctionSignature, T> onVoid,
+        Func<NonVoidFunctionSignature, T> onNonVoid,
+        Func<VoidFunctionSignatureThatTakesActualResult, T> onVoidThatTakesActualResult,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -120,9 +119,9 @@ public record FunctionSignature
     }
 
     public void Visit(
-        Action<SeedTrace.V2.V3.VoidFunctionSignature> onVoid,
-        Action<SeedTrace.V2.V3.NonVoidFunctionSignature> onNonVoid,
-        Action<SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult> onVoidThatTakesActualResult,
+        Action<VoidFunctionSignature> onVoid,
+        Action<NonVoidFunctionSignature> onNonVoid,
+        Action<VoidFunctionSignatureThatTakesActualResult> onVoidThatTakesActualResult,
         Action<string, object?> onUnknown_
     )
     {
@@ -144,13 +143,13 @@ public record FunctionSignature
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedTrace.V2.V3.VoidFunctionSignature"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="VoidFunctionSignature"/> and returns true if successful.
     /// </summary>
-    public bool TryAsVoid(out SeedTrace.V2.V3.VoidFunctionSignature? value)
+    public bool TryAsVoid(out VoidFunctionSignature? value)
     {
         if (Type == "void")
         {
-            value = (SeedTrace.V2.V3.VoidFunctionSignature)Value!;
+            value = (VoidFunctionSignature)Value!;
             return true;
         }
         value = null;
@@ -158,13 +157,13 @@ public record FunctionSignature
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedTrace.V2.V3.NonVoidFunctionSignature"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="NonVoidFunctionSignature"/> and returns true if successful.
     /// </summary>
-    public bool TryAsNonVoid(out SeedTrace.V2.V3.NonVoidFunctionSignature? value)
+    public bool TryAsNonVoid(out NonVoidFunctionSignature? value)
     {
         if (Type == "nonVoid")
         {
-            value = (SeedTrace.V2.V3.NonVoidFunctionSignature)Value!;
+            value = (NonVoidFunctionSignature)Value!;
             return true;
         }
         value = null;
@@ -172,15 +171,15 @@ public record FunctionSignature
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="VoidFunctionSignatureThatTakesActualResult"/> and returns true if successful.
     /// </summary>
     public bool TryAsVoidThatTakesActualResult(
-        out SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult? value
+        out VoidFunctionSignatureThatTakesActualResult? value
     )
     {
         if (Type == "voidThatTakesActualResult")
         {
-            value = (SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult)Value!;
+            value = (VoidFunctionSignatureThatTakesActualResult)Value!;
             return true;
         }
         value = null;
@@ -189,24 +188,22 @@ public record FunctionSignature
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator FunctionSignature(FunctionSignature.Void value) => new(value);
+    public static implicit operator FunctionSignature(Void value) => new(value);
 
-    public static implicit operator FunctionSignature(FunctionSignature.NonVoid value) =>
+    public static implicit operator FunctionSignature(NonVoid value) => new(value);
+
+    public static implicit operator FunctionSignature(VoidThatTakesActualResult value) =>
         new(value);
-
-    public static implicit operator FunctionSignature(
-        FunctionSignature.VoidThatTakesActualResult value
-    ) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<FunctionSignature>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(FunctionSignature).IsAssignableFrom(typeToConvert);
 
         public override FunctionSignature Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -233,18 +230,16 @@ public record FunctionSignature
 
             var value = discriminator switch
             {
-                "void" => json.Deserialize<SeedTrace.V2.V3.VoidFunctionSignature>(options)
+                "void" => json.Deserialize<VoidFunctionSignature>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.V2.V3.VoidFunctionSignature"
                     ),
-                "nonVoid" => json.Deserialize<SeedTrace.V2.V3.NonVoidFunctionSignature>(options)
+                "nonVoid" => json.Deserialize<NonVoidFunctionSignature>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.V2.V3.NonVoidFunctionSignature"
                     ),
                 "voidThatTakesActualResult" =>
-                    json.Deserialize<SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult>(
-                        options
-                    )
+                    json.Deserialize<VoidFunctionSignatureThatTakesActualResult>(options)
                         ?? throw new JsonException(
                             "Failed to deserialize SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult"
                         ),
@@ -281,17 +276,16 @@ public record FunctionSignature
     [Serializable]
     public struct Void
     {
-        public Void(SeedTrace.V2.V3.VoidFunctionSignature value)
+        public Void(VoidFunctionSignature value)
         {
             Value = value;
         }
 
-        internal SeedTrace.V2.V3.VoidFunctionSignature Value { get; set; }
+        internal VoidFunctionSignature Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Void(SeedTrace.V2.V3.VoidFunctionSignature value) =>
-            new(value);
+        public static implicit operator Void(VoidFunctionSignature value) => new(value);
     }
 
     /// <summary>
@@ -300,17 +294,16 @@ public record FunctionSignature
     [Serializable]
     public struct NonVoid
     {
-        public NonVoid(SeedTrace.V2.V3.NonVoidFunctionSignature value)
+        public NonVoid(NonVoidFunctionSignature value)
         {
             Value = value;
         }
 
-        internal SeedTrace.V2.V3.NonVoidFunctionSignature Value { get; set; }
+        internal NonVoidFunctionSignature Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator NonVoid(SeedTrace.V2.V3.NonVoidFunctionSignature value) =>
-            new(value);
+        public static implicit operator NonVoid(NonVoidFunctionSignature value) => new(value);
     }
 
     /// <summary>
@@ -319,19 +312,17 @@ public record FunctionSignature
     [Serializable]
     public struct VoidThatTakesActualResult
     {
-        public VoidThatTakesActualResult(
-            SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult value
-        )
+        public VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult value)
         {
             Value = value;
         }
 
-        internal SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult Value { get; set; }
+        internal VoidFunctionSignatureThatTakesActualResult Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
         public static implicit operator VoidThatTakesActualResult(
-            SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult value
+            VoidFunctionSignatureThatTakesActualResult value
         ) => new(value);
     }
 }

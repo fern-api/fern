@@ -69,13 +69,17 @@ public partial class ComplexClient
     /// <example><code>
     /// await client.Complex.SearchAsync(
     ///     "index",
-    ///     new SearchRequest
+    ///     new SeedPagination.SearchRequest
     ///     {
-    ///         Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = "starting_after" },
-    ///         Query = new SingleFilterSearchRequest
+    ///         Pagination = new SeedPagination.StartingAfterPaging
+    ///         {
+    ///             PerPage = 1,
+    ///             StartingAfter = "starting_after",
+    ///         },
+    ///         Query = new SeedPagination.SingleFilterSearchRequest
     ///         {
     ///             Field = "field",
-    ///             Operator = SingleFilterSearchRequestOperator.Equals,
+    ///             Operator = SeedPagination.SingleFilterSearchRequestOperator.Equals,
     ///             Value = "value",
     ///         },
     ///     }

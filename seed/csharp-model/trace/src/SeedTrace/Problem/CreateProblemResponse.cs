@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(CreateProblemResponse.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record CreateProblemResponse
 {
@@ -19,18 +19,18 @@ public record CreateProblemResponse
     }
 
     /// <summary>
-    /// Create an instance of CreateProblemResponse with <see cref="CreateProblemResponse.Success"/>.
+    /// Create an instance of CreateProblemResponse with <see cref="Success"/>.
     /// </summary>
-    public CreateProblemResponse(CreateProblemResponse.Success value)
+    public CreateProblemResponse(Success value)
     {
         Type = "success";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of CreateProblemResponse with <see cref="CreateProblemResponse.Error"/>.
+    /// Create an instance of CreateProblemResponse with <see cref="Error"/>.
     /// </summary>
-    public CreateProblemResponse(CreateProblemResponse.Error value)
+    public CreateProblemResponse(Error value)
     {
         Type = "error";
         Value = value.Value;
@@ -64,20 +64,20 @@ public record CreateProblemResponse
     public string AsSuccess() =>
         IsSuccess
             ? (string)Value!
-            : throw new Exception("CreateProblemResponse.Type is not 'success'");
+            : throw new Exception("SeedTrace.CreateProblemResponse.Type is not 'success'");
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedTrace.CreateProblemError"/> if <see cref="Type"/> is 'error', otherwise throws an exception.
+    /// Returns the value as a <see cref="CreateProblemError"/> if <see cref="Type"/> is 'error', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'error'.</exception>
-    public SeedTrace.CreateProblemError AsError() =>
+    public CreateProblemError AsError() =>
         IsError
-            ? (SeedTrace.CreateProblemError)Value!
-            : throw new Exception("CreateProblemResponse.Type is not 'error'");
+            ? (CreateProblemError)Value!
+            : throw new Exception("SeedTrace.CreateProblemResponse.Type is not 'error'");
 
     public T Match<T>(
         Func<string, T> onSuccess,
-        Func<SeedTrace.CreateProblemError, T> onError,
+        Func<CreateProblemError, T> onError,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -91,7 +91,7 @@ public record CreateProblemResponse
 
     public void Visit(
         Action<string> onSuccess,
-        Action<SeedTrace.CreateProblemError> onError,
+        Action<CreateProblemError> onError,
         Action<string, object?> onUnknown_
     )
     {
@@ -124,13 +124,13 @@ public record CreateProblemResponse
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedTrace.CreateProblemError"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="CreateProblemError"/> and returns true if successful.
     /// </summary>
-    public bool TryAsError(out SeedTrace.CreateProblemError? value)
+    public bool TryAsError(out CreateProblemError? value)
     {
         if (Type == "error")
         {
-            value = (SeedTrace.CreateProblemError)Value!;
+            value = (CreateProblemError)Value!;
             return true;
         }
         value = null;
@@ -139,21 +139,19 @@ public record CreateProblemResponse
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator CreateProblemResponse(CreateProblemResponse.Success value) =>
-        new(value);
+    public static implicit operator CreateProblemResponse(Success value) => new(value);
 
-    public static implicit operator CreateProblemResponse(CreateProblemResponse.Error value) =>
-        new(value);
+    public static implicit operator CreateProblemResponse(Error value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<CreateProblemResponse>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(CreateProblemResponse).IsAssignableFrom(typeToConvert);
 
         public override CreateProblemResponse Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -182,8 +180,7 @@ public record CreateProblemResponse
             {
                 "success" => json.GetProperty("value").Deserialize<string>(options)
                     ?? throw new JsonException("Failed to deserialize string"),
-                "error" => json.GetProperty("value")
-                    .Deserialize<SeedTrace.CreateProblemError>(options)
+                "error" => json.GetProperty("value").Deserialize<CreateProblemError>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.CreateProblemError"
                     ),
@@ -240,15 +237,15 @@ public record CreateProblemResponse
     [Serializable]
     public struct Error
     {
-        public Error(SeedTrace.CreateProblemError value)
+        public Error(CreateProblemError value)
         {
             Value = value;
         }
 
-        internal SeedTrace.CreateProblemError Value { get; set; }
+        internal CreateProblemError Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Error(SeedTrace.CreateProblemError value) => new(value);
+        public static implicit operator Error(CreateProblemError value) => new(value);
     }
 }

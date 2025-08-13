@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedIdempotencyHeaders;\n\nvar client = new SeedIdempotencyHeadersClient(\"TOKEN\");\nawait client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd });\n"
+                "client": "using SeedIdempotencyHeaders;\n\nvar client = new SeedIdempotencyHeaders.SeedIdempotencyHeadersClient(\"TOKEN\");\nawait client.Payment.CreateAsync(\n    new SeedIdempotencyHeaders.CreatePaymentRequest\n    {\n        Amount = 1,\n        Currency = SeedIdempotencyHeaders.Currency.Usd,\n    }\n);\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedIdempotencyHeaders;\n\nvar client = new SeedIdempotencyHeadersClient(\"TOKEN\");\nawait client.Payment.DeleteAsync(\"paymentId\");\n"
+                "client": "using SeedIdempotencyHeaders;\n\nvar client = new SeedIdempotencyHeaders.SeedIdempotencyHeadersClient(\"TOKEN\");\nawait client.Payment.DeleteAsync(\"paymentId\");\n"
             }
         }
     ]

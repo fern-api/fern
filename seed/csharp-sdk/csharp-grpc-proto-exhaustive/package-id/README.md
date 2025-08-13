@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedApi;
 
-var client = new SeedApiClient();
+var client = new SeedApi.SeedApiClient();
 await client.Dataservice.FooAsync();
 ```
 
