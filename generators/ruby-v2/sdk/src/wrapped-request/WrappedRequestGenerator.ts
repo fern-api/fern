@@ -31,7 +31,11 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
         const properties: ObjectProperty[] = [];
 
         const class_ = ruby.class_({
-            name: this.wrapper.wrapperName.pascalCase.safeName
+            name: this.wrapper.wrapperName.pascalCase.safeName,
+            superclass: ruby.classReference({
+                name: "Model",
+                modules: ["Internal", "Types"]
+            }),
         });
 
         const rootModule = this.context.getRootModule();
