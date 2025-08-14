@@ -516,7 +516,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         this.addGeneratedFile(testGenerator.generateFile());
         StreamTestGenerator streamTestGenerator = new StreamTestGenerator(context);
         this.addGeneratedFile(streamTestGenerator.generateFile());
-        
+
         // Generate wire tests if enabled
         if (customConfig.enableWireTests()) {
             // Add MockWebServer dependency
@@ -526,14 +526,11 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                     .artifact("mockwebserver")
                     .version(ParsedGradleDependency.OKHTTP_VERSION)
                     .build());
-            
+
             // Generate wire test for each service
             for (HttpService service : ir.getServices().values()) {
                 if (!service.getEndpoints().isEmpty()) {
-                    WireTestGenerator wireTestGenerator = new WireTestGenerator(
-                            service, 
-                            context,
-                            new HashMap<>());
+                    WireTestGenerator wireTestGenerator = new WireTestGenerator(service, context, new HashMap<>());
                     this.addGeneratedFile(wireTestGenerator.generateFile());
                 }
             }
