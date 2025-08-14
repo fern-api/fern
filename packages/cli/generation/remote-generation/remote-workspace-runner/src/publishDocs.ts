@@ -20,14 +20,12 @@ import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/wo
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { DynamicIr, DynamicIrUpload } from "@fern-fern/fdr-cjs-sdk/api/resources/api/resources/v1/resources/register";
+import { DynamicIr, DynamicIrUpload, SnippetsConfig } from "@fern-fern/fdr-cjs-sdk/api/resources/api/resources/v1/resources/register";
 
 import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { measureImageSizes } from "./measureImageSizes";
 import { convertIrToDynamicSnippetsIr } from "@fern-api/ir-generator";
 import { GeneratorLanguage } from "@fern-fern/fdr-cjs-sdk/api/resources/generators";
-import { DynamicIntermediateRepresentation } from "@fern-api/ir-sdk/src/sdk/api/resources/dynamic";
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
@@ -174,21 +172,18 @@ export async function publishDocs({
         async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
             const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
 
-            // use the api name to reference multiples apis
-            // otherwise, fallback to og name ("api")
-            const fdrApiId = apiName ?? ir.apiName.originalName;
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
             if (dynamicSnippets) {
                 dynamicIRsByLanguage = await generateLanguageSpecificDynamicIRs({
                     workspace,
                     context,
-                    apiName: fdrApiId
+                    snippetsConfig
                 });
             }
 
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
-                apiId: CjsFdrSdk.ApiId(fdrApiId),
+                apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),
                 definition: {
                     ...apiDefinition,
                     snippetsConfiguration: preview ? undefined : apiDefinition.snippetsConfiguration
@@ -402,18 +397,26 @@ function parseBasePath(domain: string): string | undefined {
 async function generateLanguageSpecificDynamicIRs({
     workspace,
     context,
-    apiName
+    snippetsConfig
 }: {
     workspace: FernWorkspace | undefined;
     context: TaskContext;
-    apiName: string;
+    snippetsConfig: SnippetsConfig;
 }): Promise<Record<string, DynamicIr> | undefined> {
     let languageSpecificIRs: Record<string, DynamicIr> = {};
 
     if (!workspace) {
         return undefined;
     }
-
+    
+    let languagesWithGeneratorConfig = {
+        "typescript": snippetsConfig.typescriptSdk?.package,
+        "python": snippetsConfig.pythonSdk?.package,
+        "java": snippetsConfig.javaSdk?.coordinate,
+        "go": snippetsConfig.goSdk?.githubRepo,
+        "csharp": snippetsConfig.csharpSdk?.package,
+        "ruby": snippetsConfig.rubySdk?.gem,
+    }
     let generatorLanguages = new Set<GeneratorLanguage>();
     if (workspace.generatorsConfiguration?.groups) {
         for (const group of workspace.generatorsConfiguration.groups) {
@@ -424,7 +427,7 @@ async function generateLanguageSpecificDynamicIRs({
     }
 
     for (const language of generatorLanguages) {
-        context.logger.debug(`Generating dynamic IR for ${apiName}:${language}`);
+        context.logger.debug(`Generating dynamic IR for ${language}`);
         // generate dynamic IR for each language of each generator group of each api workspace
         const irForDynamicSnippets = generateIntermediateRepresentation({
             workspace,
@@ -456,7 +459,7 @@ async function generateLanguageSpecificDynamicIRs({
                 dynamicIR
             };
         } else {
-            context.logger.debug(`Failed to create dynamic IR for ${apiName}:${language}`);
+            context.logger.debug(`Failed to create dynamic IR for ${language}`);
         }
     }
 

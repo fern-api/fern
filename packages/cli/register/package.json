@@ -47,7 +47,7 @@
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.139.8-78131bb81",
+    "@fern-fern/fdr-cjs-sdk": "0.139.9-492ec7b92",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
