@@ -5,6 +5,7 @@ import { ModuleConfigSchema } from "./ModuleConfigSchema";
 export const BaseGoCustomConfigSchema = z.object({
     module: ModuleConfigSchema.optional(),
     packageName: z.string().optional(),
+    packagePath: z.string().optional(),
     importPath: z.string().optional(),
 
     alwaysSendRequiredProperties: z.boolean().optional(),

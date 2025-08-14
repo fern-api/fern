@@ -1,6 +1,8 @@
 package main
 
 import (
+	"path"
+
 	"github.com/fern-api/fern-go/internal/cmd"
 	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/generator"
@@ -38,7 +40,7 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.SnippetFilepath,
 		config.ClientName,
 		config.ClientConstructorName,
-		config.ImportPath,
+		path.Join(config.ImportPath, config.PackagePath),
 		config.PackageName,
 		config.ExportedClientName,
 		config.PackageLayout,

@@ -129,7 +129,35 @@ func (g *Generator) Generate(mode Mode) ([]*File, error) {
 	if err != nil {
 		return nil, err
 	}
-	return g.generate(ir, mode)
+	files, err := g.generate(ir, mode)
+	if err != nil {
+		return nil, err
+	}
+
+	// Define keywords and the string to prepend
+	keywords := []string{"core", "internal", "option", "client"}
+	prependString := "inhereplease/"
+
+	// Loop over the array and modify paths
+	for i := range files {
+		for _, keyword := range keywords {
+			if strings.HasPrefix(files[i].Path, keyword) {
+				files[i].Path = prependString + files[i].Path
+				break // Stop after first match
+			}
+		}
+	}
+
+	for i, file := range files {
+		fmt.Printf("File %d, at %s\n", i, file.Path)
+	}
+	for i, file := range files {
+		fmt.Printf("File %d\nAt %s\n%s\n\n\n", i, file.Path, file.Content)
+	}
+
+
+
+	return files, nil
 }
 
 func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mode Mode, rootClientInstantiation *ast.AssignStmt, rootPackageName string) ([]*File, []*GeneratedClient, error) {
