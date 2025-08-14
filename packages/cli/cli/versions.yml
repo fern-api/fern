@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Split OpenAPI endpoints with multiple request bodies into multiple endpoints using `x-fern-sdk-method-name`.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-14"
+  version: 0.66.15
+
+- changelogEntry:
     - summary: Specify generator metadata for Swift.
       type: fix
   irVersion: 59

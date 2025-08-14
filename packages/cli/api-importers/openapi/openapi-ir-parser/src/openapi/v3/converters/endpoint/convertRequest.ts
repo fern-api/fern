@@ -15,51 +15,103 @@ import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalP
 import { SCHEMA_REFERENCE_PREFIX, convertSchema, getSchemaIdFromReference } from "../../../../schema/convertSchemas";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { getApplicationJsonSchemaMediaObject, getExamples } from "./getApplicationJsonSchema";
+import {
+    findApplicationJsonRequest,
+    getApplicationJsonSchemaMediaObject,
+    getExamples
+} from "./getApplicationJsonSchema";
+import { getExtension } from "../../../../getExtension";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 
-function getApplicationUrlFormEncodedRequest(
-    requestBody: OpenAPIV3.RequestBodyObject,
-    context: AbstractOpenAPIV3ParserContext
-):
+function findApplicationUrlFormEncodedRequest({
+    content,
+    context
+}: {
+    content: Record<string, OpenAPIV3.MediaTypeObject>;
+    context: AbstractOpenAPIV3ParserContext;
+}): [string, OpenAPIV3.MediaTypeObject] | undefined {
+    for (const [mediaType, mediaTypeObject] of Object.entries(content)) {
+        const result = getApplicationUrlFormEncodedRequest({ mediaType, mediaTypeObject, context });
+        if (result) {
+            return [mediaType, mediaTypeObject];
+        }
+    }
+    return undefined;
+}
+
+function getApplicationUrlFormEncodedRequest({
+    mediaType,
+    mediaTypeObject,
+    context
+}: {
+    mediaType: string;
+    mediaTypeObject: OpenAPIV3.MediaTypeObject;
+    context: AbstractOpenAPIV3ParserContext;
+}):
     | {
           schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
           contentType: string;
           examples: NamedFullExample[];
       }
     | undefined {
-    for (const [mediaType, mediaTypeObject] of Object.entries(requestBody.content)) {
-        if (MediaType.parse(mediaType)?.isURLEncoded()) {
-            return {
-                schema: mediaTypeObject.schema,
-                contentType: mediaType,
-                examples: getExamples(mediaTypeObject, context)
-            };
+    if (MediaType.parse(mediaType)?.isURLEncoded()) {
+        return {
+            schema: mediaTypeObject.schema,
+            contentType: mediaType,
+            examples: getExamples(mediaTypeObject, context)
+        };
+    }
+    return undefined;
+}
+
+function findMultipartFormDataRequest({
+    content
+}: {
+    content: Record<string, OpenAPIV3.MediaTypeObject>;
+}): [string, OpenAPIV3.MediaTypeObject] | undefined {
+    for (const [mediaType, mediaTypeObject] of Object.entries(content)) {
+        const result = getMultipartFormDataRequest({ mediaType, mediaTypeObject });
+        if (result) {
+            return [mediaType, mediaTypeObject];
         }
     }
     return undefined;
 }
 
-function getMultipartFormDataRequest(requestBody: OpenAPIV3.RequestBodyObject):
+function getMultipartFormDataRequest({
+    mediaType,
+    mediaTypeObject
+}: {
+    mediaType: string;
+    mediaTypeObject: OpenAPIV3.MediaTypeObject;
+}):
     | {
           schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
           encoding: Record<string, OpenAPIV3.EncodingObject> | undefined;
       }
     | undefined {
-    for (const [mediaType, mediaTypeObject] of Object.entries(requestBody.content)) {
-        if (MediaType.parse(mediaType)?.isMultipart()) {
-            return { schema: mediaTypeObject.schema, encoding: mediaTypeObject.encoding };
-        }
+    if (MediaType.parse(mediaType)?.isMultipart()) {
+        return { schema: mediaTypeObject.schema, encoding: mediaTypeObject.encoding };
     }
     return undefined;
 }
 
-function isOctetStreamRequest(requestBody: OpenAPIV3.RequestBodyObject): boolean {
-    for (const mediaType in requestBody.content) {
-        if (MediaType.parse(mediaType)?.isOctetStream()) {
-            return true;
+function isOctetStreamRequest({ mediaType }: { mediaType: string }): boolean {
+    return MediaType.parse(mediaType)?.isBinary() ?? false;
+}
+
+function findOctetStreamRequest({
+    content
+}: {
+    content: Record<string, OpenAPIV3.MediaTypeObject>;
+}): [string, OpenAPIV3.MediaTypeObject] | undefined {
+    for (const [mediaType, mediaTypeObject] of Object.entries(content)) {
+        const result = isOctetStreamRequest({ mediaType });
+        if (result) {
+            return [mediaType, mediaTypeObject];
         }
     }
-    return false;
+    return undefined;
 }
 
 function multipartRequestHasFile(
@@ -79,46 +131,178 @@ function multipartRequestHasFile(
     );
 }
 
-export function convertRequest({
-    requestBody,
+export function convertToSingleRequest({
+    content,
+    description,
     document,
     context,
     requestBreadcrumbs,
     source,
     namespace
 }: {
-    requestBody: OpenAPIV3.ReferenceObject | OpenAPIV3.RequestBodyObject;
+    content: Record<string, OpenAPIV3.MediaTypeObject>;
+    description: string | undefined;
     document: OpenAPIV3.Document;
     context: AbstractOpenAPIV3ParserContext;
     requestBreadcrumbs: string[];
     source: Source;
     namespace: string | undefined;
 }): RequestWithExample | undefined {
-    const resolvedRequestBody = isReferenceObject(requestBody)
-        ? context.resolveRequestBodyReference(requestBody)
-        : requestBody;
-
-    const multipartFormData = getMultipartFormDataRequest(resolvedRequestBody);
-    const multipartSchema = multipartFormData?.schema;
-    const multipartEncoding = multipartFormData?.encoding;
-
-    const urlEncodedRequest = getApplicationUrlFormEncodedRequest(resolvedRequestBody, context);
-
-    const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content, context);
+    const octetStreamRequest = findOctetStreamRequest({ content });
 
     // convert as application/octet-stream
-    if (isOctetStreamRequest(resolvedRequestBody)) {
-        return RequestWithExample.octetStream({
-            description: resolvedRequestBody.description,
-            source
+    if (octetStreamRequest) {
+        const [mediaType, mediaTypeObject] = octetStreamRequest;
+        return convertRequest({
+            mediaType: mediaType,
+            mediaTypeObject: mediaTypeObject,
+            description,
+            document,
+            context,
+            requestBreadcrumbs,
+            source,
+            namespace
         });
     }
 
+    const multipartFormDataRequest = findMultipartFormDataRequest({ content });
+    const jsonRequest = findApplicationJsonRequest({ content, context });
+
+    // convert as application/json
+    const jsonOrMultipartOrNone = multipartOrJsonOrNone({
+        json: jsonRequest,
+        multipart: multipartFormDataRequest,
+        document,
+        visitor: {
+            json: ([mediaType, mediaTypeObject]) =>
+                convertRequest({
+                    mediaType,
+                    mediaTypeObject,
+                    description,
+                    document,
+                    context,
+                    requestBreadcrumbs,
+                    source,
+                    namespace
+                }),
+            multipart: ([mediaType, mediaTypeObject]) =>
+                convertRequest({
+                    mediaType,
+                    mediaTypeObject,
+                    description,
+                    document,
+                    context,
+                    requestBreadcrumbs,
+                    source,
+                    namespace
+                }),
+            neither: () => undefined
+        }
+    });
+    if (jsonOrMultipartOrNone) {
+        return jsonOrMultipartOrNone;
+    }
+
+    const urlEncodedRequest = findApplicationUrlFormEncodedRequest({ content, context });
+    // convert as application/x-www-form-urlencoded
+    if (urlEncodedRequest) {
+        const [mediaType, mediaTypeObject] = urlEncodedRequest;
+        return convertRequest({
+            mediaType,
+            mediaTypeObject,
+            description,
+            document,
+            context,
+            requestBreadcrumbs,
+            source,
+            namespace
+        });
+    }
+    return undefined;
+}
+
+// JSON is preferred, unless there's a file property inside of the JSON, then multipart is preferred
+// if no multipart is present, prefer JSON
+// if multipart is present, and no JSON, use multipart
+function multipartOrJsonOrNone<TResult, TNone>({
+    json,
+    multipart,
+    document,
+    visitor
+}: {
+    json: [string, OpenAPIV3.MediaTypeObject] | undefined;
+    multipart: [string, OpenAPIV3.MediaTypeObject] | undefined;
+    document: OpenAPIV3.Document;
+    visitor: {
+        json: (media: [string, OpenAPIV3.MediaTypeObject]) => TResult;
+        multipart: (media: [string, OpenAPIV3.MediaTypeObject]) => TResult;
+        neither: () => TNone;
+    };
+}) {
+    if (!json && !multipart) {
+        return visitor.neither();
+    }
+    const [, jsonMediaTypeObject] = json ?? [undefined, undefined];
+    const [, multipartMediaTypeObject] = multipart ?? [undefined, undefined];
+
+    if (!jsonMediaTypeObject?.schema && !multipartMediaTypeObject?.schema) {
+        return visitor.neither();
+    }
+
+    if (jsonMediaTypeObject?.schema && multipartMediaTypeObject?.schema) {
+        if (jsonMediaTypeObject.schema && multipartRequestHasFile(jsonMediaTypeObject.schema, document)) {
+            return visitor.multipart(multipart as [string, OpenAPIV3.MediaTypeObject]);
+        }
+
+        return visitor.json(json as [string, OpenAPIV3.MediaTypeObject]);
+    }
+    if (jsonMediaTypeObject?.schema) {
+        return visitor.json(json as [string, OpenAPIV3.MediaTypeObject]);
+    }
+    if (multipartMediaTypeObject?.schema) {
+        return visitor.multipart(multipart as [string, OpenAPIV3.MediaTypeObject]);
+    }
+
+    return visitor.neither();
+}
+
+export function convertRequest({
+    mediaType,
+    mediaTypeObject,
+    description,
+    document,
+    context,
+    requestBreadcrumbs,
+    source,
+    namespace
+}: {
+    mediaType: string;
+    mediaTypeObject: OpenAPIV3.MediaTypeObject;
+    description: string | undefined;
+    document: OpenAPIV3.Document;
+    context: AbstractOpenAPIV3ParserContext;
+    requestBreadcrumbs: string[];
+    source: Source;
+    namespace: string | undefined;
+}): RequestWithExample | undefined {
+    const sdkMethodName = getRequestSdkMethodName({ mediaTypeObject });
+
+    // convert as application/octet-stream
+    if (isOctetStreamRequest({ mediaType })) {
+        return RequestWithExample.octetStream({
+            description: description,
+            source,
+            sdkMethodName,
+            contentType: mediaType
+        });
+    }
+
+    const multipartFormData = getMultipartFormDataRequest({ mediaType, mediaTypeObject });
+    const multipartSchema = multipartFormData?.schema;
+    const multipartEncoding = multipartFormData?.encoding;
+
     // convert as multipart request
-    if (
-        (multipartSchema != null && jsonMediaObject == null) ||
-        (multipartSchema != null && multipartRequestHasFile(multipartSchema, document))
-    ) {
+    if (multipartSchema) {
         const resolvedMultipartSchema = isReferenceObject(multipartSchema)
             ? resolveSchema(multipartSchema, document)
             : {
@@ -131,7 +315,8 @@ export function convertRequest({
             context,
             requestBreadcrumbs,
             source,
-            namespace
+            namespace,
+            false
         );
         const properties: MultipartRequestProperty[] = [];
         if (convertedMultipartSchema.type === "object") {
@@ -173,12 +358,14 @@ export function convertRequest({
                     : undefined,
             description: resolvedMultipartSchema.schema.description,
             properties,
-            source
+            source,
+            sdkMethodName
         });
     }
 
     // convert as application/json
-    if (jsonMediaObject != null) {
+    const jsonMediaObject = getApplicationJsonSchemaMediaObject({ mediaType, mediaTypeObject, context });
+    if (jsonMediaObject) {
         const requestSchema = convertSchema(
             jsonMediaObject.schema,
             false,
@@ -196,10 +383,12 @@ export function convertRequest({
             additionalProperties:
                 !isReferenceObject(jsonMediaObject.schema) &&
                 isAdditionalPropertiesAny(jsonMediaObject.schema.additionalProperties, context.options),
-            source
+            source,
+            sdkMethodName
         });
     }
 
+    const urlEncodedRequest = getApplicationUrlFormEncodedRequest({ mediaType, mediaTypeObject, context });
     // convert as application/x-www-form-urlencoded
     if (urlEncodedRequest != null && urlEncodedRequest.schema != null) {
         const convertedUrlEncodedSchema = convertSchema(
@@ -208,18 +397,28 @@ export function convertRequest({
             context,
             requestBreadcrumbs,
             source,
-            namespace
+            namespace,
+            false
         );
-        return RequestWithExample.json({
+        return RequestWithExample.formUrlEncoded({
             schema: convertedUrlEncodedSchema,
-            description: resolvedRequestBody.description,
+            description,
             contentType: urlEncodedRequest.contentType,
             source,
             fullExamples: urlEncodedRequest.examples,
-            additionalProperties: false
+            additionalProperties: false,
+            sdkMethodName
         });
     }
     return undefined;
+}
+
+function getRequestSdkMethodName({
+    mediaTypeObject
+}: {
+    mediaTypeObject: OpenAPIV3.MediaTypeObject;
+}): string | undefined {
+    return getExtension<string>(mediaTypeObject, FernOpenAPIExtension.SDK_METHOD_NAME);
 }
 
 const CONTENT_TYPE_TO_ENCODING_MAP: Record<string, MultipartRequestPropertyEncoding> = {

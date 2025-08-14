@@ -2007,6 +2007,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "contentType": "application/octet-stream",
         "type": "octetStream"
       },
       "errors": {},

@@ -1816,6 +1816,7 @@
           "file": "../swagger.json",
           "type": "openapi"
         },
+        "contentType": "application/octet-stream",
         "type": "octetStream"
       },
       "response": {

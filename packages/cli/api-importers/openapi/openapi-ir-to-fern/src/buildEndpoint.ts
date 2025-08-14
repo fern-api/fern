@@ -431,7 +431,7 @@ function getRequest({
     usedNames: Set<string>;
     namespace: string | undefined;
 }): ConvertedRequest {
-    if (request.type === "json") {
+    if (request.type === "json" || request.type === "formUrlEncoded") {
         const maybeSchemaId = request.schema.type === "reference" ? request.schema.schema : undefined;
         const resolvedSchema =
             request.schema.type === "reference" ? context.getSchema(request.schema.schema, namespace) : request.schema;
@@ -598,7 +598,7 @@ function getRequest({
             schemaIdsToExclude: [],
             value: {
                 body: "bytes",
-                "content-type": MediaType.APPLICATION_OCTET_STREAM,
+                "content-type": request.contentType ?? MediaType.APPLICATION_OCTET_STREAM,
                 "query-parameters": queryParameters,
                 ...(request.description ? { docs: request.description } : {})
             }
@@ -697,6 +697,8 @@ function endpointRequestSupportsInlinedPathParameters({
         case "multipart":
             return true;
         case "json":
+            return true;
+        case "formUrlEncoded":
             return true;
         default:
             assertNever(request);

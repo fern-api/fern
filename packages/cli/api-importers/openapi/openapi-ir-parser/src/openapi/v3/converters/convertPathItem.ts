@@ -30,7 +30,7 @@ export function convertPathItem(
             continue;
         }
         const convertToWebhook = isWebhook({ operation: operation.operation });
-        const convertedOperation = convertOperation({
+        const convertedOperations = convertOperation({
             context,
             pathItemContext: {
                 ...basePathItemContext,
@@ -39,8 +39,8 @@ export function convertPathItem(
             operation: operation.operation,
             convertToWebhook
         });
-        if (convertedOperation != null) {
-            result.push(convertedOperation);
+        if (convertedOperations) {
+            result.push(convertedOperations);
         }
     }
     return result;
@@ -67,7 +67,7 @@ export function convertPathItemToWebhooks(
             context.logger.debug(`Skipping endpoint "${operation.method} ${path}"`);
             continue;
         }
-        const convertedOperation = convertOperation({
+        const convertedOperations = convertOperation({
             context,
             pathItemContext: {
                 ...basePathItemContext,
@@ -76,8 +76,8 @@ export function convertPathItemToWebhooks(
             operation: operation.operation,
             convertToWebhook: true
         });
-        if (convertedOperation != null) {
-            result.push(convertedOperation as ConvertedWebhookOperation);
+        if (convertedOperations) {
+            result.push(convertedOperations as ConvertedWebhookOperation);
         }
     }
     return result;
