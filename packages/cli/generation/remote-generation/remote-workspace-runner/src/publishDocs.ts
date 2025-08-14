@@ -469,19 +469,23 @@ async function generateLanguageSpecificDynamicIRs({
                     // include metadata along with the dynamic IR
                     if (dynamicIR) {
                         let publishingInfo = {};
+                        let githubRepo = "";
                         if (generatorInvocation.outputMode.type === "github") {
                             publishingInfo = {
                                 ...generatorInvocation.outputMode.publishInfo
-                            }
+                            };
+                            githubRepo = generatorInvocation.outputMode.repo;
                         } else if (generatorInvocation.outputMode.type === "githubV2") {
                             publishingInfo = {
                                 ...generatorInvocation.outputMode.githubV2.publishInfo
-                            }
+                            };
+                            githubRepo = generatorInvocation.outputMode.githubV2.repo;
                         }
-                        
+
                         languageSpecificIRs[generatorInvocation.language] = {
                             dynamicIR: {
                                 language: generatorInvocation.language,
+                                githubRepo,
                                 publishingInfo: {
                                     ...publishingInfo
                                 },
