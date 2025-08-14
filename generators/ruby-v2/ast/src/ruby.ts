@@ -1,7 +1,7 @@
 import {
+    Class_,
     ClassInstantiation,
     ClassReference,
-    Class_,
     CodeBlock,
     Comment,
     KeywordArgument,
@@ -22,24 +22,24 @@ import {
 import * as TypeLiteral from "./ast/TypeLiteral";
 
 export {
+    Class_,
     ClassInstantiation,
     ClassReference,
-    Class_,
     CodeBlock,
     KeywordArgument,
+    KeywordParameter,
     Method,
     MethodInvocation,
     MethodKind,
     Module_,
     Parameter,
+    Type,
     TypeLiteral,
     TypeParameter,
-    Type,
-    Writer,
-    KeywordParameter
+    Writer
 } from "./ast";
-export type { HashEntry } from "./ast/TypeLiteral";
 export { AstNode } from "./ast/core/AstNode";
+export type { HashEntry } from "./ast/TypeLiteral";
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg);

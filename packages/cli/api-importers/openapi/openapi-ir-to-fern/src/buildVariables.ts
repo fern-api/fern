@@ -1,9 +1,8 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { Schema } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
-
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { buildTypeReference } from "./buildTypeReference";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
 import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";

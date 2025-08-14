@@ -1,13 +1,12 @@
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
+import { loggingExeca } from "@fern-api/logging-execa";
 import decompress from "decompress";
+import fs from "fs";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
 import tmp from "tmp-promise";
 import xml2js from "xml2js";
-import fs from "fs";
-
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
-import { Logger } from "@fern-api/logger";
-import { loggingExeca } from "@fern-api/logging-execa";
 
 const PLATFORM_IS_WINDOWS = process.platform === "win32";
 const ETAG_FILENAME = "etag";

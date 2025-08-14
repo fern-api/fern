@@ -1,6 +1,5 @@
-import { upperFirst } from "lodash-es";
-
 import { generatorsYml } from "@fern-api/configuration";
+import { upperFirst } from "lodash-es";
 
 export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<string>> = {
     [generatorsYml.GenerationLanguage.PHP]: new Set(

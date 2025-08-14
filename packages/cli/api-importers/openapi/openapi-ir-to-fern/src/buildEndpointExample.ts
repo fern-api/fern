@@ -5,9 +5,9 @@ import {
     FullExample,
     LiteralExample,
     PathParameterExample,
-    PrimitiveExample
+    PrimitiveExample,
+    Schema
 } from "@fern-api/openapi-ir";
-import { Schema } from "@fern-api/openapi-ir";
 
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertEndpointResponseExample, convertFullExample } from "./utils/convertFullExample";

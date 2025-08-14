@@ -1,6 +1,3 @@
-import { camelCase } from "lodash-es";
-import { OpenAPIV3_1 } from "openapi-types";
-
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     FernIr,
@@ -12,6 +9,8 @@ import {
 } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { AbstractConverter, ServersConverter } from "@fern-api/v3-importer-commons";
+import { camelCase } from "lodash-es";
+import { OpenAPIV3_1 } from "openapi-types";
 
 import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";

@@ -1,21 +1,20 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
+import { TaskContext } from "@fern-api/task-context";
 import { chmod, cp, unlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
-import { TaskContext } from "@fern-api/task-context";
-
 import {
+    getProtobufYamlV1,
     PROTOBUF_EXPORT_CONFIG_V1,
     PROTOBUF_EXPORT_CONFIG_V2,
+    PROTOBUF_GEN_CONFIG,
     PROTOBUF_GENERATOR_CONFIG_FILENAME,
     PROTOBUF_GENERATOR_OUTPUT_FILEPATH,
-    PROTOBUF_GEN_CONFIG,
     PROTOBUF_MODULE_PACKAGE_JSON,
     PROTOBUF_SHELL_PROXY,
-    PROTOBUF_SHELL_PROXY_FILENAME,
-    getProtobufYamlV1
+    PROTOBUF_SHELL_PROXY_FILENAME
 } from "./utils";
 
 export class ProtobufIRGenerator {

@@ -1,7 +1,6 @@
+import { loggingExeca, runExeca } from "@fern-api/logging-execa";
 import { Options } from "execa";
 import path from "path";
-
-import { loggingExeca, runExeca } from "@fern-api/logging-execa";
 
 export async function runFernCli(
     args: string[],

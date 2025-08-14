@@ -1,16 +1,14 @@
-import { cp, mkdir, writeFile } from "fs/promises";
-import yaml from "js-yaml";
-
 import {
     DOCS_CONFIGURATION_FILENAME,
+    docsYml,
     FERN_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME,
-    docsYml,
     generatorsYml
 } from "@fern-api/configuration";
-import { AbsoluteFilePath, RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
-
+import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
+import { cp, mkdir, writeFile } from "fs/promises";
+import yaml from "js-yaml";
 
 import { FernDocsBuilder, FernDocsNavigationBuilder } from "./FernDocsBuilder";
 

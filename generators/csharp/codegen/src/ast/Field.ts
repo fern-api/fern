@@ -4,10 +4,10 @@ import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
-import { Type } from "./Type";
-import { XmlDocBlock } from "./XmlDocBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { Type } from "./Type";
+import { XmlDocBlock } from "./XmlDocBlock";
 
 export declare namespace Field {
     interface Args {

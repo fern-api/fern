@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-
+import { BaseGoCustomConfigSchema, go } from "@fern-api/go-ast";
 import {
     ContainerType,
     Literal,
@@ -8,8 +8,6 @@ import {
     PrimitiveTypeV1,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-
-import { BaseGoCustomConfigSchema, go } from "@fern-api/go-ast";
 import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext";
 
 export declare namespace GoZeroValueMapper {

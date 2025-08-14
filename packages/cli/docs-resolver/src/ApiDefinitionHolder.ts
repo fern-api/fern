@@ -1,8 +1,7 @@
-import { camelCase } from "lodash-es";
-import urlJoin from "url-join";
-
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { TaskContext } from "@fern-api/task-context";
+import { camelCase } from "lodash-es";
+import urlJoin from "url-join";
 
 import { isSubpackage } from "./utils/isSubpackage";
 import { stringifyEndpointPathParts, stringifyEndpointPathParts2 } from "./utils/stringifyEndpointPathParts";

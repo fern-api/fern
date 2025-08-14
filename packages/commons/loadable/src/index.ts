@@ -1,3 +1,4 @@
+export type { Failed, Loadable, Loaded, Loading, NotFailed, NotStartedLoading } from "./Loadable";
 export {
     failed,
     isFailed,
@@ -8,7 +9,6 @@ export {
     loading,
     notStartedLoading
 } from "./Loadable";
-export type { Failed, Loadable, Loaded, Loading, NotFailed, NotStartedLoading } from "./Loadable";
 export {
     flatMapLoadable,
     getLoadableValue,
@@ -18,4 +18,4 @@ export {
     mapNotFailedLoadableArray,
     visitLoadableArray
 } from "./utils";
-export { visitLoadable, type LoadableVisitor } from "./visitor";
+export { type LoadableVisitor, visitLoadable } from "./visitor";

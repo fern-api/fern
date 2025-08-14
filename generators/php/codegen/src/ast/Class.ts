@@ -2,11 +2,11 @@ import { Access } from "./Access";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 import { Field } from "./Field";
 import { Method } from "./Method";
 import { Parameter } from "./Parameter";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
 import { orderByAccess } from "./utils/orderByAccess";
 
 export declare namespace Class {

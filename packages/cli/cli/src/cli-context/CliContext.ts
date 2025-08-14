@@ -1,19 +1,18 @@
-import { confirm, input } from "@inquirer/prompts";
-import chalk from "chalk";
-import { maxBy } from "lodash-es";
-
-import { LOG_LEVELS, LogLevel, createLogger } from "@fern-api/logger";
+import { createLogger, LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { getPosthogManager } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { FernCliError, Finishable, PosthogEvent, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
+import { confirm, input } from "@inquirer/prompts";
+import chalk from "chalk";
+import { maxBy } from "lodash-es";
 
 import { CliEnvironment } from "./CliEnvironment";
 import { Log } from "./Log";
+import { logErrorMessage } from "./logErrorMessage";
 import { TaskContextImpl } from "./TaskContextImpl";
 import { TtyAwareLogger } from "./TtyAwareLogger";
-import { logErrorMessage } from "./logErrorMessage";
 import { getFernUpgradeMessage } from "./upgrade-utils/getFernUpgradeMessage";
 import { FernGeneratorUpgradeInfo, getProjectGeneratorUpgrades } from "./upgrade-utils/getGeneratorVersions";
 import { getLatestVersionOfCli } from "./upgrade-utils/getLatestVersionOfCli";

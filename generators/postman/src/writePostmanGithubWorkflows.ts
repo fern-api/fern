@@ -1,8 +1,7 @@
+import { GeneratorConfig, GithubOutputMode } from "@fern-api/base-generator";
 import endent from "endent";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
-
-import { GeneratorConfig, GithubOutputMode } from "@fern-api/base-generator";
 
 import { PostmanGeneratorConfigSchema } from "./config/schemas/PostmanGeneratorConfigSchema";
 import { getCollectionOutputFilename } from "./writePostmanCollection";

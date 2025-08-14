@@ -1,8 +1,7 @@
-import assert from "assert";
-
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
+import assert from "assert";
 
 import { loadAPIWorkspace } from "../loadAPIWorkspace";
 

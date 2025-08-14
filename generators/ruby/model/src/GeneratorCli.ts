@@ -1,5 +1,3 @@
-import { cp } from "fs/promises";
-
 import { AbstractGeneratorContext, getPackageName, getSdkVersion } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -18,11 +16,11 @@ import {
     getGemName
 } from "@fern-api/ruby-codegen";
 import { AbstractGeneratorCli } from "@fern-api/ruby-generator-cli";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { cp } from "fs/promises";
 
-import { RubyModelCustomConfig, parseCustomConfig } from "./CustomConfig";
+import { parseCustomConfig, RubyModelCustomConfig } from "./CustomConfig";
 import { TypesGenerator } from "./TypesGenerator";
 
 export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomConfig> {

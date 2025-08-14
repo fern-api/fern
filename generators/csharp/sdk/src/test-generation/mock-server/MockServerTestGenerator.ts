@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
-import { CSharpFile, FileGenerator, convertExampleTypeReferenceToTypeReference } from "@fern-api/csharp-base";
+import { CSharpFile, convertExampleTypeReferenceToTypeReference, FileGenerator } from "@fern-api/csharp-base";
 import { csharp } from "@fern-api/csharp-codegen";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
@@ -11,10 +11,9 @@ import {
     HttpEndpoint,
     ServiceId
 } from "@fern-fern/ir-sdk/api";
-
+import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator";
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { MOCK_SERVER_TEST_FOLDER, SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator";
 import { MockEndpointGenerator } from "./MockEndpointGenerator";
 
 export declare namespace TestClass {

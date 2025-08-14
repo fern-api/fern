@@ -1,10 +1,9 @@
-import { mkdir, writeFile } from "fs/promises";
-import yaml from "js-yaml";
-
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { AbsoluteFilePath, dirname } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { Project } from "@fern-api/project-loader";
+import { mkdir, writeFile } from "fs/promises";
+import yaml from "js-yaml";
 
 import { CliContext } from "../../cli-context/CliContext";
 import { convertIrToOpenApi } from "./convertIrToOpenApi";

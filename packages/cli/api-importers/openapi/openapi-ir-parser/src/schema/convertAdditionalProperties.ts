@@ -1,5 +1,3 @@
-import { OpenAPIV3 } from "openapi-types";
-
 import { assertNever } from "@fern-api/core-utils";
 import {
     Availability,
@@ -10,10 +8,11 @@ import {
     SdkGroupName,
     Source
 } from "@fern-api/openapi-ir";
+import { OpenAPIV3 } from "openapi-types";
 
 import { ParseOpenAPIOptions } from "../options";
-import { SchemaParserContext } from "./SchemaParserContext";
 import { convertSchema } from "./convertSchemas";
+import { SchemaParserContext } from "./SchemaParserContext";
 import { isReferenceObject } from "./utils/isReferenceObject";
 
 export function convertAdditionalProperties({

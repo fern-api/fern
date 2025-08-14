@@ -1,5 +1,3 @@
-import { OpenAPIV3 } from "openapi-types";
-
 import { MediaType } from "@fern-api/core-utils";
 import {
     MultipartRequestProperty,
@@ -10,9 +8,10 @@ import {
     SchemaWithExample,
     Source
 } from "@fern-api/openapi-ir";
+import { OpenAPIV3 } from "openapi-types";
 
 import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalProperties";
-import { SCHEMA_REFERENCE_PREFIX, convertSchema, getSchemaIdFromReference } from "../../../../schema/convertSchemas";
+import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../../../../schema/convertSchemas";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { getApplicationJsonSchemaMediaObject, getExamples } from "./getApplicationJsonSchema";

@@ -1,13 +1,10 @@
+import { assertNever } from "@fern-api/core-utils";
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { Fetcher, GetReferenceOpts } from "@fern-typescript/commons";
 import { EndpointSampleCode, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-
-import { assertNever } from "@fern-api/core-utils";
-
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { getReadableTypeNode } from "../getReadableTypeNode";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 import { buildUrl } from "./utils/buildUrl";

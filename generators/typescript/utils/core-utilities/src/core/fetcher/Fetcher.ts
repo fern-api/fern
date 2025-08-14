@@ -1,14 +1,14 @@
 import { toJson } from "../json";
 import { APIResponse } from "./APIResponse";
-import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse";
-import { Supplier } from "./Supplier";
 import { createRequestUrl } from "./createRequestUrl";
 import { getErrorResponseBody } from "./getErrorResponseBody";
 import { getFetchFn } from "./getFetchFn";
 import { getRequestBody } from "./getRequestBody";
 import { getResponseBody } from "./getResponseBody";
 import { makeRequest } from "./makeRequest";
+import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse";
 import { requestWithRetries } from "./requestWithRetries";
+import { Supplier } from "./Supplier";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 

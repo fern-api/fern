@@ -1,6 +1,5 @@
-import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
-
 import { ruby } from "@fern-api/ruby-ast";
+import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { HttpEndpointGenerator } from "./http/HttpEndpointGenerator";
 import { RawClient } from "./http/RawClient";

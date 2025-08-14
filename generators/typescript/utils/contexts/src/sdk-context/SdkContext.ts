@@ -1,13 +1,12 @@
+import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { Logger } from "@fern-api/logger";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ExportsManager, ImportsManager, NpmPackage } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
-import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { Logger } from "@fern-api/logger";
-
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-
 import { BaseContext } from "../base-context";
+import { AuthProviderContext } from "./auth-provider";
 import { EndpointErrorUnionContext } from "./endpoint-error-union";
 import { EnvironmentsContext } from "./environments";
 import { GenericAPISdkErrorContext } from "./generic-api-sdk-error";
@@ -21,7 +20,6 @@ import { TimeoutSdkErrorContext } from "./timeout-sdk-error";
 import { VersionContext } from "./version";
 import { WebsocketClassContext } from "./websocket-class";
 import { WebsocketTypeSchemaContext } from "./websocket-type-schema";
-import { AuthProviderContext } from "./auth-provider";
 
 export interface SdkContext extends BaseContext {
     logger: Logger;

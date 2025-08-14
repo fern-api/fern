@@ -1,8 +1,8 @@
 import {
-    FernFileContext,
-    VariableResolverImpl,
     constructFernFileContext,
-    constructRootApiFileContext
+    constructRootApiFileContext,
+    FernFileContext,
+    VariableResolverImpl
 } from "@fern-api/ir-generator";
 
 import { Rule, RuleViolation } from "../../Rule";

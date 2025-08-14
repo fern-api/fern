@@ -1,7 +1,6 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
-
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
 export class GeneratedFile {
     public filename: string;

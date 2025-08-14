@@ -1,13 +1,13 @@
 import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons";
 import {
-    RawSchemas,
     isRawAliasDefinition,
     parseGeneric,
+    RawSchemas,
     recursivelyVisitRawTypeReference
 } from "@fern-api/fern-definition-schema";
 import { ContainerType, TypeReference } from "@fern-api/ir-sdk";
 
-import { FernFileContext, constructFernFileContext } from "../FernFileContext";
+import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { parseInlineType } from "../utils/parseInlineType";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
 import { ObjectPathItem, ResolvedType } from "./ResolvedType";

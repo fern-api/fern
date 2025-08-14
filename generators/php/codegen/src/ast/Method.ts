@@ -2,11 +2,11 @@ import { Access } from "./Access";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
-import { Parameter } from "./Parameter";
-import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { SELF, STATIC } from "./core/Constant";
 import { Writer } from "./core/Writer";
+import { Parameter } from "./Parameter";
+import { Type } from "./Type";
 
 export declare namespace Method {
     interface Args {

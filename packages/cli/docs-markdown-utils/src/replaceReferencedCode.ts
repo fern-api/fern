@@ -1,7 +1,6 @@
-import { readFile } from "fs/promises";
-
-import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { readFile } from "fs/promises";
 
 async function defaultFileLoader(filepath: AbsoluteFilePath): Promise<string> {
     // strip frontmatter from the referenced markdown

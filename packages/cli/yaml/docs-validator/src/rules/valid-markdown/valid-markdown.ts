@@ -1,12 +1,11 @@
+import { getMarkdownFormat, parseImagePaths, parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
+import { AbsoluteFilePath, dirname } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
 import { serialize } from "next-mdx-remote/serialize";
 import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import { z } from "zod";
-
-import { getMarkdownFormat, parseImagePaths, parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
-import { AbsoluteFilePath, dirname } from "@fern-api/fs-utils";
-import { Logger } from "@fern-api/logger";
 
 import { Rule } from "../../Rule";
 

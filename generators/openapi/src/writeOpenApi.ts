@@ -1,7 +1,3 @@
-import { writeFile } from "fs/promises";
-import yaml from "js-yaml";
-import path from "path";
-
 import {
     ExitStatusUpdate,
     GeneratorNotificationService,
@@ -11,9 +7,11 @@ import {
 } from "@fern-api/base-generator";
 import { mergeWithOverrides } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
+import { writeFile } from "fs/promises";
+import yaml from "js-yaml";
+import path from "path";
 
 import { convertToOpenApi } from "./convertToOpenApi";
 import { getCustomConfig } from "./customConfig";

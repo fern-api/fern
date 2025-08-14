@@ -1,8 +1,7 @@
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { exec } from "child_process";
 import stripAnsi from "strip-ansi";
 import { vi } from "vitest";
-
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 
 import { runFernCli, runFernCliWithoutAuthToken } from "../../utils/runFernCli";
 import { init } from "../init/init";

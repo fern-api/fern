@@ -1,4 +1,9 @@
 import {
+    ExampleTypeShape,
+    UndiscriminatedUnionMember,
+    UndiscriminatedUnionTypeDeclaration
+} from "@fern-fern/ir-sdk/api";
+import {
     GetReferenceOpts,
     getWriterForMultiLineUnionType,
     maybeAddDocsNode,
@@ -10,15 +15,9 @@ import {
     StatementStructures,
     StructureKind,
     TypeAliasDeclarationStructure,
-    WriterFunction,
-    ts
+    ts,
+    WriterFunction
 } from "ts-morph";
-
-import {
-    ExampleTypeShape,
-    UndiscriminatedUnionMember,
-    UndiscriminatedUnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
 
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 

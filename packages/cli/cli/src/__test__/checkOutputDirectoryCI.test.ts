@@ -1,8 +1,7 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { describe, expect, it, vi } from "vitest";
-
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { CliContext } from "../cli-context/CliContext";
 import { checkOutputDirectory } from "../commands/generate/checkOutputDirectory";

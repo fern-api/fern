@@ -1,6 +1,5 @@
-import { OpenAPIV3_1 } from "openapi-types";
-
 import { Availability, ContainerType, TypeReference } from "@fern-api/ir-sdk";
+import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
 import { SchemaConverter } from "./SchemaConverter";

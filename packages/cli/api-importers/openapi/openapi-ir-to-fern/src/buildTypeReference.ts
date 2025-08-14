@@ -18,13 +18,12 @@ import {
     StringSchema
 } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
-
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import {
     buildEnumTypeDeclaration,
     buildObjectTypeDeclaration,
     buildOneOfTypeDeclaration
 } from "./buildTypeDeclaration";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
 import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";

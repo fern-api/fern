@@ -1,5 +1,3 @@
-import path from "path";
-
 import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
 import { Audiences, generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
@@ -8,6 +6,7 @@ import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
+import path from "path";
 
 import { CliContext } from "../../cli-context/CliContext";
 import { generateIrForFernWorkspace } from "./generateIrForFernWorkspace";

@@ -1,7 +1,7 @@
 import { AstNode } from "./AstNode";
-import { Writer } from "./Writer";
-import { Type } from "./Type";
 import { Attribute } from "./Attribute";
+import { Type } from "./Type";
+import { Writer } from "./Writer";
 
 export declare namespace EnumVariant {
     interface Args {

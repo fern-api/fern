@@ -1,12 +1,11 @@
-import fs, { readdir } from "fs/promises";
-import yaml from "js-yaml";
-import { OpenAPI } from "openapi-types";
-
 import { InMemoryOpenAPILoader } from "@fern-api/browser-compatible-fern-workspace";
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
+import fs, { readdir } from "fs/promises";
+import yaml from "js-yaml";
+import { OpenAPI } from "openapi-types";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 const filterFixture = process.env.TEST_FIXTURE;

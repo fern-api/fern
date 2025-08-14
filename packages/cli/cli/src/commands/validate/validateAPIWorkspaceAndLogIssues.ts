@@ -1,11 +1,10 @@
-import validatePackageName from "validate-npm-package-name";
-
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { validateFernWorkspace } from "@fern-api/fern-definition-validator";
 import { validateGeneratorsWorkspace } from "@fern-api/generators-validator";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { validateOSSWorkspace } from "@fern-api/oss-validator";
 import { TaskContext } from "@fern-api/task-context";
+import validatePackageName from "validate-npm-package-name";
 
 import { logViolations } from "./logViolations";
 

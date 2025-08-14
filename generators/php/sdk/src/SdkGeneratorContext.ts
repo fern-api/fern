@@ -1,16 +1,16 @@
-import { camelCase, upperFirst } from "lodash-es";
-
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { AbstractPhpGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
+    ErrorDeclaration,
+    ErrorId,
     FernFilepath,
     HttpEndpoint,
     HttpMethod,
     HttpService,
+    IntermediateRepresentation,
     Name,
     SdkRequestWrapper,
     ServiceId,
@@ -19,16 +19,14 @@ import {
     TypeId,
     UserAgent
 } from "@fern-fern/ir-sdk/api";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { ErrorDeclaration, ErrorId } from "@fern-fern/ir-sdk/api";
-
-import { PhpGeneratorAgent } from "./PhpGeneratorAgent";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { camelCase, upperFirst } from "lodash-es";
 import { EXCEPTIONS_DIRECTORY, REQUESTS_DIRECTORY, RESERVED_METHOD_NAMES, TYPES_DIRECTORY } from "./constants";
 import { RawClient } from "./core/RawClient";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 import { GuzzleClient } from "./external/GuzzleClient";
+import { PhpGeneratorAgent } from "./PhpGeneratorAgent";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomConfigSchema> {
     public endpointGenerator: EndpointGenerator;

@@ -1,6 +1,5 @@
-import { JSONSchema4 } from "json-schema";
-
 import { EnumTypeDeclaration } from "@fern-api/ir-sdk";
+import { JSONSchema4 } from "json-schema";
 
 import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext";
 

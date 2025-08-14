@@ -1,7 +1,6 @@
-import { create, protoInt64 } from "@bufbuild/protobuf";
-import { type SupportedEdition, maximumEdition, minimumEdition } from "@bufbuild/protobuf";
+import { create, maximumEdition, minimumEdition, protoInt64, type SupportedEdition } from "@bufbuild/protobuf";
 import type { CodeGeneratorRequest, CodeGeneratorResponse } from "@bufbuild/protobuf/wkt";
-import { CodeGeneratorResponseSchema, CodeGeneratorResponse_Feature } from "@bufbuild/protobuf/wkt";
+import { CodeGeneratorResponse_Feature, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
 import { FileInfo, Plugin } from "@bufbuild/protoplugin";
 
 import { version } from "../package.json";

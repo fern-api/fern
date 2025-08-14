@@ -4,13 +4,13 @@ import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "@fern-api/impo
 import { Logger } from "@fern-api/logger";
 import {
     HttpMethod,
+    isSchemaEqual,
     ObjectSchema,
     OneOfSchema,
     OpenApiIntermediateRepresentation,
     Schema,
     SchemaId
 } from "@fern-api/openapi-ir";
-import { isSchemaEqual } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 
 import { ConvertOpenAPIOptions } from "./ConvertOpenAPIOptions";

@@ -3,12 +3,9 @@ import {
     FernGeneratorExec,
     GeneratorNotificationService
 } from "@fern-api/browser-compatible-base-generator";
-import { IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
-
-import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
-
 import { RelativeFilePath } from "@fern-api/path-utils";
-import { ruby } from "@fern-api/ruby-ast";
+import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
+import { IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
 import { capitalize, snakeCase } from "lodash-es";
 import { RubyTypeMapper } from "./RubyTypeMapper";
 

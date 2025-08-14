@@ -1,22 +1,17 @@
-import { writeFile } from "fs/promises";
-
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractCsharpGeneratorCli, TestFileGenerator } from "@fern-api/csharp-base";
 import { validateReadOnlyMemoryTypes } from "@fern-api/csharp-codegen";
 import {
-    generateTests as generateModelTests,
     generateModels,
+    generateTests as generateModelTests,
     generateVersion,
     generateWellKnownProtobufFiles
 } from "@fern-api/fern-csharp-model";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { writeFile } from "fs/promises";
 import { SnippetJsonGenerator } from "./endpoint/snippets/SnippetJsonGenerator";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator";
@@ -33,6 +28,8 @@ import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator";
 import { RequestOptionsInterfaceGenerator } from "./options/RequestOptionsInterfaceGenerator";
 import { buildReference } from "./reference/buildReference";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
 

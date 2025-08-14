@@ -1,10 +1,8 @@
-import { readFile } from "fs/promises";
-import yaml from "js-yaml";
-
 import { TaskContext } from "@fern-api/task-context";
-
 import { CliReleaseRequest, GeneratorReleaseRequest } from "@fern-fern/generators-sdk/api/resources/generators";
 import * as serializers from "@fern-fern/generators-sdk/serialization";
+import { readFile } from "fs/promises";
+import yaml from "js-yaml";
 
 export async function parseGeneratorReleasesFile({
     generatorId,

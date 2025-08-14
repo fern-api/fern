@@ -1,5 +1,11 @@
-import { ImportsManager, Reference, TypeReferenceNode } from "@fern-typescript/commons";
-import { ExportsManager } from "@fern-typescript/commons";
+import {
+    DeclaredTypeName,
+    ExampleTypeReference,
+    ResolvedTypeReference,
+    TypeDeclaration,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
+import { ExportsManager, ImportsManager, Reference, TypeReferenceNode } from "@fern-typescript/commons";
 import {
     BaseContext,
     GeneratedType,
@@ -15,14 +21,6 @@ import {
 } from "@fern-typescript/type-reference-converters";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { SourceFile, ts } from "ts-morph";
-
-import {
-    DeclaredTypeName,
-    ExampleTypeReference,
-    ResolvedTypeReference,
-    TypeDeclaration,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
 
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 

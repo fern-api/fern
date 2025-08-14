@@ -1,3 +1,4 @@
+import { DeclaredTypeName, ShapeType, TypeReference } from "@fern-fern/ir-sdk/api";
 import {
     CoreUtilities,
     ExportsManager,
@@ -14,8 +15,6 @@ import {
 } from "@fern-typescript/type-reference-converters";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { SourceFile, ts } from "ts-morph";
-
-import { DeclaredTypeName, ShapeType, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";

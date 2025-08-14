@@ -20,13 +20,12 @@ import {
     StreamingResponse,
     Subpackage
 } from "@fern-fern/ir-sdk/api";
-
-import { GoGeneratorAgent } from "./GoGeneratorAgent";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
+import { GoGeneratorAgent } from "./GoGeneratorAgent";
 import { Caller } from "./internal/Caller";
 import { Streamer } from "./internal/Streamer";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomConfigSchema> {
     public readonly caller: Caller;

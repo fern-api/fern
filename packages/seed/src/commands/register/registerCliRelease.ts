@@ -1,11 +1,9 @@
-import { readFile } from "fs/promises";
-import yaml from "js-yaml";
-
-import { RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-
 import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
 import * as serializers from "@fern-fern/generators-sdk/serialization";
+import { readFile } from "fs/promises";
+import yaml from "js-yaml";
 
 import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
 

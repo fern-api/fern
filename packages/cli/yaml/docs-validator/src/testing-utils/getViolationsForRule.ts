@@ -1,9 +1,8 @@
-import stripAnsi from "strip-ansi";
-
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { loadProjectFromDirectory } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
+import stripAnsi from "strip-ansi";
 
 import { Rule } from "../Rule";
 import { ValidationViolation } from "../ValidationViolation";

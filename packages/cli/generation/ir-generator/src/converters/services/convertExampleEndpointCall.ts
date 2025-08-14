@@ -1,12 +1,10 @@
-import urlJoin from "url-join";
-
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { isNonNullish, isPlainObject } from "@fern-api/core-utils";
 import {
-    RawSchemas,
     isInlineRequestBody,
     parseBytesRequest,
     parseRawFileType,
+    RawSchemas,
     visitExampleResponseSchema
 } from "@fern-api/fern-definition-schema";
 import {
@@ -21,6 +19,7 @@ import {
     Name
 } from "@fern-api/ir-sdk";
 import { hashJSON } from "@fern-api/ir-utils";
+import urlJoin from "url-join";
 
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";

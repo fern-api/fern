@@ -1,14 +1,14 @@
 import { Class } from "./Class";
 import { Comment } from "./Comment";
+import { AstNode } from "./core/AstNode";
+import { ImportedName, ModulePath } from "./core/types";
+import { createPythonClassName } from "./core/utils";
+import { Writer } from "./core/Writer";
 import { Field } from "./Field";
 import { Method } from "./Method";
 import { Reference } from "./Reference";
 import { StarImport } from "./StarImport";
 import { Type } from "./Type";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { ImportedName, ModulePath } from "./core/types";
-import { createPythonClassName } from "./core/utils";
 
 interface UniqueReferenceValue {
     modulePath: ModulePath;

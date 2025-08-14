@@ -1,4 +1,4 @@
-import { RelativeFilePath, dirname, join } from "@fern-api/path-utils";
+import { dirname, join, RelativeFilePath } from "@fern-api/path-utils";
 
 export function getResolvedPathOfImportedFile({
     referencedIn,

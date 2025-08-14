@@ -1,9 +1,4 @@
-import { isEqual, size } from "lodash-es";
-import { OpenAPIV3 } from "openapi-types";
-import urlJoin from "url-join";
-
 import { isNonNullish } from "@fern-api/core-utils";
-
 import {
     ContainerType,
     EnvironmentsConfig,
@@ -29,11 +24,14 @@ import {
     TypeDeclaration,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+import { isEqual, size } from "lodash-es";
+import { OpenAPIV3 } from "openapi-types";
+import urlJoin from "url-join";
 
 import { getDeclaredTypeNameKey, getErrorTypeNameKey } from "../convertToOpenApi";
 import { Mode } from "../writeOpenApi";
 import { convertObject } from "./convertObject";
-import { OpenApiComponentSchema, convertTypeReference } from "./typeConverter";
+import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter";
 
 export function convertServices({
     ir,

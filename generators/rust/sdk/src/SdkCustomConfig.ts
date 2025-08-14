@@ -1,6 +1,5 @@
-import { z } from "zod";
-
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-base";
+import { z } from "zod";
 
 export const SdkCustomConfigSchema = BaseRustCustomConfigSchema.extend({
     clientName: z.string().optional(),

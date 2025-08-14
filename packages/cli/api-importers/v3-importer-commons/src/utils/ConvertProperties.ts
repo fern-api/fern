@@ -1,12 +1,11 @@
-import { OpenAPIV3_1 } from "openapi-types";
-
 import { ObjectProperty, TypeId } from "@fern-api/ir-sdk";
+import { OpenAPIV3_1 } from "openapi-types";
 
 import { Extensions } from "..";
 import { AbstractConverterContext } from "../AbstractConverterContext";
-import { ErrorCollector } from "../ErrorCollector";
 import { SchemaConverter } from "../converters/schema/SchemaConverter";
 import { SchemaOrReferenceConverter } from "../converters/schema/SchemaOrReferenceConverter";
+import { ErrorCollector } from "../ErrorCollector";
 
 export function convertProperties({
     properties,

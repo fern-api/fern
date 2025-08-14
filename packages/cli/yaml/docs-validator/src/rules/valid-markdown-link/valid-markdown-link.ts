@@ -1,19 +1,18 @@
+import { noop } from "@fern-api/core-utils";
+import { convertIrToApiDefinition, DocsDefinitionResolver } from "@fern-api/docs-resolver";
+import { APIV1Read, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
+import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { createLogger } from "@fern-api/logger";
+import { createMockTaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { randomUUID } from "crypto";
 import path from "path";
 
-import { noop } from "@fern-api/core-utils";
-import { DocsDefinitionResolver, convertIrToApiDefinition } from "@fern-api/docs-resolver";
-import { APIV1Read, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, RelativeFilePath, join, relative } from "@fern-api/fs-utils";
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { createLogger } from "@fern-api/logger";
-import { createMockTaskContext } from "@fern-api/task-context";
-
 import { SourceResolverImpl } from "../../../../../cli-source-resolver/src/SourceResolverImpl";
 import { Rule, RuleViolation } from "../../Rule";
 import { checkIfPathnameExists } from "./check-if-pathname-exists";
-import { PathnameToCheck, collectPathnamesToCheck } from "./collect-pathnames";
+import { collectPathnamesToCheck, PathnameToCheck } from "./collect-pathnames";
 import { getInstanceUrls, removeLeadingSlash, toBaseUrl } from "./url-utils";
 
 const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
