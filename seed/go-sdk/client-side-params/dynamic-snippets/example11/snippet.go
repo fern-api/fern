@@ -16,19 +16,15 @@ func do() {
             "<token>",
         ),
     )
-    client.Service.ListResources(
+    client.Service.GetClient(
         context.TODO(),
-        &fern.ListResourcesRequest{
-            Page: 1,
-            PerPage: 1,
-            Sort: "created_at",
-            Order: "desc",
-            IncludeTotals: true,
+        "clientId",
+        &fern.GetClientRequest{
             Fields: fern.String(
                 "fields",
             ),
-            Search: fern.String(
-                "search",
+            IncludeFields: fern.Bool(
+                true,
             ),
         },
     )
