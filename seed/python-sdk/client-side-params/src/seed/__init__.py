@@ -2,16 +2,35 @@
 
 # isort: skip_file
 
-from .types import Resource, SearchResponse
+from .types import (
+    Client,
+    Connection,
+    CreateUserRequest,
+    Identity,
+    PaginatedClientResponse,
+    PaginatedUserResponse,
+    Resource,
+    SearchResponse,
+    UpdateUserRequest,
+    User,
+)
 from . import service, types
 from .client import AsyncSeedClientSideParams, SeedClientSideParams
 from .version import __version__
 
 __all__ = [
     "AsyncSeedClientSideParams",
+    "Client",
+    "Connection",
+    "CreateUserRequest",
+    "Identity",
+    "PaginatedClientResponse",
+    "PaginatedUserResponse",
     "Resource",
     "SearchResponse",
     "SeedClientSideParams",
+    "UpdateUserRequest",
+    "User",
     "__version__",
     "service",
     "types",
