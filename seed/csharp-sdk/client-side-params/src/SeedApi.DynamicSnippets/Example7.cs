@@ -3,7 +3,7 @@ using SeedClientSideParams;
 
 namespace Usage;
 
-public class Example0
+public class Example7
 {
     public async global::System.Threading.Tasks.Task Do() {
         var client = new SeedClientSideParamsClient(
@@ -13,16 +13,8 @@ public class Example0
             }
         );
 
-        await client.Service.ListResourcesAsync(
-            new ListResourcesRequest{
-                Page = 1,
-                PerPage = 1,
-                Sort = "created_at",
-                Order = "desc",
-                IncludeTotals = true,
-                Fields = "fields",
-                Search = "search"
-            }
+        await client.Service.DeleteUserAsync(
+            "userId"
         );
     }
 
