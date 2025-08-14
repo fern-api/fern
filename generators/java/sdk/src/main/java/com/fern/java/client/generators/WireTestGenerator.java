@@ -24,6 +24,7 @@ import com.fern.ir.model.http.HttpService;
 import com.fern.ir.model.http.PathParameter;
 import com.fern.ir.model.http.QueryParameter;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.PrimitiveType;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
@@ -38,6 +39,7 @@ import com.squareup.javapoet.TypeSpec;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import javax.lang.model.element.Modifier;
 
 public final class WireTestGenerator extends AbstractFileGenerator {
@@ -91,10 +93,15 @@ public final class WireTestGenerator extends AbstractFileGenerator {
             if (endpoint.getRequestBody().isPresent()) {
                 testClassBuilder.addMethod(generateRequestBodyTest(endpoint));
             }
+            
+            // Add error response tests
+            testClassBuilder.addMethod(generate404ErrorTest(endpoint));
+            testClassBuilder.addMethod(generate500ErrorTest(endpoint));
         }
 
         JavaFile javaFile = JavaFile.builder(className.packageName(), testClassBuilder.build())
                 .addStaticImport(ClassName.get("org.junit.jupiter.api", "Assertions"), "*")
+                .addStaticImport(ClassName.get("org.junit.jupiter.api", "Assertions"), "assertThrows")
                 .build();
 
         return GeneratedJavaFile.builder()
@@ -154,15 +161,15 @@ public final class WireTestGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec generateSuccessTest(HttpEndpoint endpoint) {
-        String endpointId = Integer.toHexString(endpoint.hashCode());
-        String testName = "testEndpoint" + endpointId + "_SuccessResponse";
+        String endpointName = endpoint.getName().get().getPascalCase().getSafeName();
+        String testName = "test" + endpointName + "_SuccessResponse";
         
         MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(testName)
                 .addAnnotation(ClassName.get("org.junit.jupiter.api", "Test"))
                 .addModifiers(Modifier.PUBLIC)
                 .addException(Exception.class)
                 .addJavadoc("Test successful response for $L endpoint", 
-                        "endpoint");
+                        endpointName);
 
         // Setup mock response
         methodBuilder.addComment("Given: Mock server returns successful response")
@@ -187,15 +194,15 @@ public final class WireTestGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec generateQueryParameterTest(HttpEndpoint endpoint) {
-        String endpointId = Integer.toHexString(endpoint.hashCode());
-        String testName = "testEndpoint" + endpointId + "_QueryParameters";
+        String endpointName = endpoint.getName().get().getPascalCase().getSafeName();
+        String testName = "test" + endpointName + "_QueryParameters";
         
         MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(testName)
                 .addAnnotation(ClassName.get("org.junit.jupiter.api", "Test"))
                 .addModifiers(Modifier.PUBLIC)
                 .addException(Exception.class)
                 .addJavadoc("Test query parameter serialization for $L endpoint",
-                        "endpoint");
+                        endpointName);
 
         // Setup mock response
         methodBuilder.addStatement("server.enqueue(new $T().setResponseCode(200).setBody(\"{}\"))",
@@ -221,15 +228,15 @@ public final class WireTestGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec generateRequestBodyTest(HttpEndpoint endpoint) {
-        String endpointId = Integer.toHexString(endpoint.hashCode());
-        String testName = "testEndpoint" + endpointId + "_RequestBody";
+        String endpointName = endpoint.getName().get().getPascalCase().getSafeName();
+        String testName = "test" + endpointName + "_RequestBody";
         
         MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(testName)
                 .addAnnotation(ClassName.get("org.junit.jupiter.api", "Test"))
                 .addModifiers(Modifier.PUBLIC)
                 .addException(Exception.class)
                 .addJavadoc("Test request body serialization for $L endpoint",
-                        "endpoint");
+                        endpointName);
 
         // Setup mock response
         methodBuilder.addStatement("server.enqueue(new $T().setResponseCode(200).setBody(\"{}\"))",
@@ -250,13 +257,11 @@ public final class WireTestGenerator extends AbstractFileGenerator {
     }
 
     private String generateClientCall(HttpEndpoint endpoint) {
-        StringBuilder call = new StringBuilder("client");
+        StringBuilder call = new StringBuilder("client.service()");
         
-        // Navigate to the service
-        // Skip service navigation for now
-        
-        // Call the endpoint method
-        call.append(".").append(endpoint.getName().get().getCamelCase().getSafeName()).append("(");
+        // Call the endpoint method - getName() returns EndpointName with get() method
+        String methodName = endpoint.getName().get().getCamelCase().getSafeName();
+        call.append(".").append(methodName).append("(");
         
         // Add path parameters if any
         boolean first = true;
@@ -271,14 +276,13 @@ public final class WireTestGenerator extends AbstractFileGenerator {
     }
 
     private String generateClientCallWithQueryParams(HttpEndpoint endpoint) {
-        StringBuilder call = new StringBuilder("client");
+        StringBuilder call = new StringBuilder("client.service()");
         
-        // Navigate to the service
-        // Skip service navigation for now
-        
-        // Build request object with query parameters
-        String requestClassName = endpoint.getName().get().getPascalCase().getSafeName() + "Request";
-        call.append(".").append(endpoint.getName().get().getCamelCase().getSafeName()).append("(");
+        // Build request object with query parameters - getName() returns EndpointName with get() method
+        String endpointName = endpoint.getName().get().getPascalCase().getSafeName();
+        String methodName = endpoint.getName().get().getCamelCase().getSafeName();
+        String requestClassName = endpointName + "Request";
+        call.append(".").append(methodName).append("(");
         
         // Add path parameters first
         for (PathParameter pathParam : endpoint.getPathParameters()) {
@@ -287,10 +291,16 @@ public final class WireTestGenerator extends AbstractFileGenerator {
         
         // Add request object with query parameters
         if (!endpoint.getQueryParameters().isEmpty()) {
-            call.append(requestClassName).append(".builder()");
+            // Use fully qualified class name for the request
+            String packageName = context.getPoetClassNameFactory().getRootPackage();
+            call.append(packageName).append(".resources.service.requests.")
+                .append(requestClassName).append(".builder()");
             for (QueryParameter queryParam : endpoint.getQueryParameters()) {
-                call.append(".").append("param")
-                    .append("(\"test-value\")");
+                // Use the actual parameter name from the query parameter
+                String paramName = queryParam.getName().getName().getCamelCase().getSafeName();
+                String testValue = generateTestValueForParam(queryParam);
+                call.append(".").append(paramName)
+                    .append("(").append(testValue).append(")");
             }
             call.append(".build()");
         }
@@ -300,12 +310,11 @@ public final class WireTestGenerator extends AbstractFileGenerator {
     }
 
     private String generateClientCallWithBody(HttpEndpoint endpoint) {
-        StringBuilder call = new StringBuilder("client");
+        StringBuilder call = new StringBuilder("client.service()");
         
-        // Navigate to the service
-        // Skip service navigation for now
-        
-        call.append(".").append(endpoint.getName().get().getCamelCase().getSafeName()).append("(");
+        // getName() returns EndpointName with get() method
+        String methodName = endpoint.getName().get().getCamelCase().getSafeName();
+        call.append(".").append(methodName).append("(");
         
         // Add path parameters
         for (PathParameter pathParam : endpoint.getPathParameters()) {
@@ -319,5 +328,94 @@ public final class WireTestGenerator extends AbstractFileGenerator {
         
         call.append(")");
         return call.toString();
+    }
+    
+    private MethodSpec generate404ErrorTest(HttpEndpoint endpoint) {
+        // getName() returns EndpointName with get() method
+        String endpointName = endpoint.getName().get().getPascalCase().getSafeName();
+        String testName = "test" + endpointName + "_404Error";
+        
+        // Get the API error class name
+        ClassName apiErrorClass = context.getPoetClassNameFactory()
+                .getApiErrorClassName(
+                        context.getGeneratorConfig().getOrganization(),
+                        context.getGeneratorConfig().getWorkspaceName(),
+                        context.getCustomConfig());
+        
+        MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(testName)
+                .addAnnotation(ClassName.get("org.junit.jupiter.api", "Test"))
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Test 404 error response for $L endpoint", endpointName);
+
+        // Setup mock error response
+        methodBuilder.addComment("Given: Mock server returns 404 error")
+                .addStatement("server.enqueue(new $T()$>.setResponseCode(404)" +
+                        ".setBody(\"{\\\"error\\\":\\\"not_found\\\",\\\"message\\\":\\\"Resource not found\\\"}\")$<)",
+                        MOCK_RESPONSE);
+
+        // Make the API call and verify exception is thrown
+        methodBuilder.addComment("When/Then: API call should throw exception with correct status code");
+        String clientCall = generateClientCall(endpoint);
+        methodBuilder.addStatement("$T exception = assertThrows($T.class, () -> { $L; })",
+                        apiErrorClass, apiErrorClass, clientCall)
+                .addStatement("assertEquals(404, exception.getStatusCode())");
+
+        return methodBuilder.build();
+    }
+
+    private MethodSpec generate500ErrorTest(HttpEndpoint endpoint) {
+        // getName() returns EndpointName with get() method
+        String endpointName = endpoint.getName().get().getPascalCase().getSafeName();
+        String testName = "test" + endpointName + "_500Error";
+        
+        // Get the API error class name
+        ClassName apiErrorClass = context.getPoetClassNameFactory()
+                .getApiErrorClassName(
+                        context.getGeneratorConfig().getOrganization(),
+                        context.getGeneratorConfig().getWorkspaceName(),
+                        context.getCustomConfig());
+        
+        MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(testName)
+                .addAnnotation(ClassName.get("org.junit.jupiter.api", "Test"))
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Test 500 error response for $L endpoint", endpointName);
+
+        // Setup mock error response
+        methodBuilder.addComment("Given: Mock server returns 500 error")
+                .addStatement("server.enqueue(new $T()$>.setResponseCode(500)" +
+                        ".setBody(\"{\\\"error\\\":\\\"internal_error\\\",\\\"message\\\":\\\"Internal server error\\\"}\")$<)",
+                        MOCK_RESPONSE);
+
+        // Make the API call and verify exception is thrown
+        methodBuilder.addComment("When/Then: API call should throw exception with correct status code");
+        String clientCall = generateClientCall(endpoint);
+        methodBuilder.addStatement("$T exception = assertThrows($T.class, () -> { $L; })",
+                        apiErrorClass, apiErrorClass, clientCall)
+                .addStatement("assertEquals(500, exception.getStatusCode())");
+
+        return methodBuilder.build();
+    }
+    
+    private String generateTestValueForParam(QueryParameter queryParam) {
+        // Generate appropriate test values based on parameter type
+        String paramName = queryParam.getName().getWireValue();
+        
+        // Check common parameter patterns
+        if (paramName.contains("page") || paramName.contains("limit") || 
+            paramName.contains("offset") || paramName.contains("per_page")) {
+            return "10";
+        } else if (paramName.contains("sort") || paramName.contains("order")) {
+            return "\"asc\"";
+        } else if (paramName.contains("include") || paramName.contains("totals")) {
+            return "true";
+        } else if (paramName.contains("fields")) {
+            return "\"id,name\"";
+        } else if (paramName.contains("search") || paramName.contains("query")) {
+            return "\"test query\"";
+        } else if (paramName.contains("format")) {
+            return "\"json\"";
+        } else {
+            return "\"test-value\"";
+        }
     }
 }
