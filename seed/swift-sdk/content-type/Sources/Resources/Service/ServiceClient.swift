@@ -16,7 +16,10 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    /// Update with JSON merge patch - complex types
+    /// Update with JSON merge patch - complex types.
+    /// This endpoint demonstrates the distinction between:
+    /// - optional<T> fields (can be present or absent, but not null)
+    /// - optional<nullable<T>> fields (can be present, absent, or null)
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func patchComplex(id: String, request: PatchComplexRequest, requestOptions: RequestOptions? = nil) async throws -> Void {

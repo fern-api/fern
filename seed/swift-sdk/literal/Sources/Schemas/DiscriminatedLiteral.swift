@@ -77,12 +77,12 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
 
     public struct DefaultName: Codable, Hashable, Sendable {
         public let type: String = "defaultName"
-        public let value: JSONValue
+        public let value: Bob
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            value: JSONValue,
+            value: Bob,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.value = value
@@ -91,7 +91,7 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.value = try container.decode(JSONValue.self, forKey: .value)
+            self.value = try container.decode(Bob.self, forKey: .value)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
@@ -100,6 +100,10 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
             try encoder.encodeAdditionalProperties(self.additionalProperties)
             try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
+        }
+
+        public enum Bob: String, Codable, Hashable, CaseIterable, Sendable {
+            case bob = "Bob"
         }
 
         /// Keys for encoding/decoding struct properties.

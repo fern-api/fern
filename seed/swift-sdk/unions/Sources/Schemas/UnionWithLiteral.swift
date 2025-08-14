@@ -28,12 +28,12 @@ public enum UnionWithLiteral: Codable, Hashable, Sendable {
 
     public struct Fern: Codable, Hashable, Sendable {
         public let type: String = "fern"
-        public let value: JSONValue
+        public let value: Fern
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            value: JSONValue,
+            value: Fern,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.value = value
@@ -42,7 +42,7 @@ public enum UnionWithLiteral: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.value = try container.decode(JSONValue.self, forKey: .value)
+            self.value = try container.decode(Fern.self, forKey: .value)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
@@ -51,6 +51,10 @@ public enum UnionWithLiteral: Codable, Hashable, Sendable {
             try encoder.encodeAdditionalProperties(self.additionalProperties)
             try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
+        }
+
+        public enum Fern: String, Codable, Hashable, CaseIterable, Sendable {
+            case fern
         }
 
         /// Keys for encoding/decoding struct properties.

@@ -1,10 +1,14 @@
 import { swift } from "@fern-api/swift-codegen";
+import { TypeReference } from "@fern-fern/ir-sdk/api";
+
+import { ModelGeneratorContext } from "../../ModelGeneratorContext";
+import { LocalContext } from "./LocalContext";
 
 export declare namespace StructGenerator {
     interface ConstantPropertyDefinition {
         unsafeName: string;
         rawName: string;
-        type: swift.Type;
+        type: swift.Type | TypeReference;
         value: swift.Expression;
         docsContent?: string;
     }
@@ -12,7 +16,7 @@ export declare namespace StructGenerator {
     interface DataPropertyDefinition {
         unsafeName: string;
         rawName: string;
-        type: swift.Type;
+        type: TypeReference;
         docsContent?: string;
     }
 
@@ -22,6 +26,7 @@ export declare namespace StructGenerator {
         dataPropertyDefinitions: DataPropertyDefinition[];
         additionalProperties: boolean;
         docsContent?: string;
+        context: ModelGeneratorContext;
     }
 }
 
@@ -29,50 +34,31 @@ export class StructGenerator {
     private readonly name: string;
     private readonly constantPropertyDefinitions: StructGenerator.ConstantPropertyDefinition[];
     private readonly dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[];
-    private readonly additionalPropertiesInfo;
     private readonly docsContent?: string;
+    private readonly generatorContext: ModelGeneratorContext;
+    private readonly localContext: LocalContext;
 
-    public constructor({
-        name,
-        constantPropertyDefinitions,
-        dataPropertyDefinitions,
-        additionalProperties,
-        docsContent
-    }: StructGenerator.Args) {
+    public constructor(args: StructGenerator.Args) {
+        const { name, constantPropertyDefinitions, dataPropertyDefinitions, docsContent, context } = args;
         this.name = name;
         this.constantPropertyDefinitions = constantPropertyDefinitions;
         this.dataPropertyDefinitions = dataPropertyDefinitions;
-        this.additionalPropertiesInfo = additionalProperties ? this.getAdditionalPropertiesInfo() : undefined;
         this.docsContent = docsContent;
+        this.generatorContext = context;
+        this.localContext = LocalContext.buildForStructGenerator(args);
     }
-
-    private getAdditionalPropertiesInfo = () => {
-        const otherPropertyNames = [
-            ...this.constantPropertyDefinitions.map((p) => p.unsafeName),
-            ...this.dataPropertyDefinitions.map((p) => p.unsafeName)
-        ];
-        const otherPropertyNamesSet = new Set(otherPropertyNames);
-        let propertyName = "additionalProperties";
-        while (otherPropertyNamesSet.has(propertyName)) {
-            propertyName = "_" + propertyName;
-        }
-        return {
-            propertyName,
-            swiftType: swift.Type.dictionary(swift.Type.string(), swift.Type.jsonValue())
-        };
-    };
 
     public generate(): swift.Struct {
         const constantProperties = this.generateConstantProperties();
         const dataProperties = this.generateDataProperties();
         const properties = [...constantProperties, ...dataProperties];
-        if (this.additionalPropertiesInfo) {
+        if (this.localContext.additionalPropertiesMetadata) {
             properties.push(
                 swift.property({
-                    unsafeName: this.additionalPropertiesInfo.propertyName,
+                    unsafeName: this.localContext.additionalPropertiesMetadata.propertyName,
                     accessLevel: swift.AccessLevel.Public,
                     declarationType: swift.DeclarationType.Let,
-                    type: this.additionalPropertiesInfo.swiftType,
+                    type: this.localContext.additionalPropertiesMetadata.swiftType,
                     docs: swift.docComment({
                         summary: "Additional properties that are not explicitly defined in the schema"
                     })
@@ -97,7 +83,7 @@ export class StructGenerator {
                 unsafeName: p.unsafeName,
                 accessLevel: swift.AccessLevel.Public,
                 declarationType: swift.DeclarationType.Let,
-                type: p.type,
+                type: this.getSwiftTypeForProperty(p),
                 defaultValue: p.value,
                 docs: p.docsContent ? swift.docComment({ summary: p.docsContent }) : undefined
             })
@@ -110,15 +96,24 @@ export class StructGenerator {
                 unsafeName: p.unsafeName,
                 accessLevel: swift.AccessLevel.Public,
                 declarationType: swift.DeclarationType.Let,
-                type: p.type,
+                type: this.getSwiftTypeForProperty(p),
                 docs: p.docsContent ? swift.docComment({ summary: p.docsContent }) : undefined
             })
         );
     }
 
+    private getSwiftTypeForProperty(
+        definition: StructGenerator.ConstantPropertyDefinition | StructGenerator.DataPropertyDefinition
+    ) {
+        if (definition.type instanceof swift.Type) {
+            return definition.type;
+        }
+        return this.generatorContext.getSwiftTypeForTypeReference(definition.type, this.localContext);
+    }
+
     private generateInitializers(dataProperties: swift.Property[]): swift.Initializer[] {
         const initializers = [this.generatePrimaryInitializer(dataProperties)];
-        if (this.additionalPropertiesInfo) {
+        if (this.localContext.additionalPropertiesMetadata) {
             initializers.push(this.generateInitializerForDecoder(dataProperties));
         }
         return initializers;
@@ -133,12 +128,12 @@ export class StructGenerator {
                 defaultValue: p.type.isOptional ? swift.Expression.rawValue("nil") : undefined
             });
         });
-        if (this.additionalPropertiesInfo) {
+        if (this.localContext.additionalPropertiesMetadata) {
             parameters.push(
                 swift.functionParameter({
-                    argumentLabel: this.additionalPropertiesInfo.propertyName,
-                    unsafeName: this.additionalPropertiesInfo.propertyName,
-                    type: this.additionalPropertiesInfo.swiftType,
+                    argumentLabel: this.localContext.additionalPropertiesMetadata.propertyName,
+                    unsafeName: this.localContext.additionalPropertiesMetadata.propertyName,
+                    type: this.localContext.additionalPropertiesMetadata.swiftType,
                     defaultValue: swift.Expression.contextualMethodCall({ methodName: "init" })
                 })
             );
@@ -146,11 +141,11 @@ export class StructGenerator {
         const bodyStatements = dataProperties.map((p) =>
             swift.Statement.propertyAssignment(p.unsafeName, swift.Expression.reference(p.unsafeName))
         );
-        if (this.additionalPropertiesInfo) {
+        if (this.localContext.additionalPropertiesMetadata) {
             bodyStatements.push(
                 swift.Statement.propertyAssignment(
-                    this.additionalPropertiesInfo.propertyName,
-                    swift.Expression.reference(this.additionalPropertiesInfo.propertyName)
+                    this.localContext.additionalPropertiesMetadata.propertyName,
+                    swift.Expression.reference(this.localContext.additionalPropertiesMetadata.propertyName)
                 )
             );
         }
@@ -210,10 +205,10 @@ export class StructGenerator {
             });
         }
 
-        if (this.additionalPropertiesInfo) {
+        if (this.localContext.additionalPropertiesMetadata) {
             bodyStatements.push(
                 swift.Statement.propertyAssignment(
-                    this.additionalPropertiesInfo.propertyName,
+                    this.localContext.additionalPropertiesMetadata.propertyName,
                     swift.Expression.try(
                         swift.Expression.methodCall({
                             target: swift.Expression.reference("decoder"),
@@ -251,7 +246,7 @@ export class StructGenerator {
 
     private generateMethods(constantProperties: swift.Property[], dataProperties: swift.Property[]) {
         const methods: swift.Method[] = [];
-        if (this.additionalPropertiesInfo) {
+        if (this.localContext.additionalPropertiesMetadata) {
             methods.push(this.generateEncodeMethod(constantProperties, dataProperties));
         }
         return methods;
@@ -278,7 +273,7 @@ export class StructGenerator {
             );
         }
 
-        if (this.additionalPropertiesInfo) {
+        if (this.localContext.additionalPropertiesMetadata) {
             bodyStatements.push(
                 swift.Statement.expressionStatement(
                     swift.Expression.try(
@@ -289,7 +284,7 @@ export class StructGenerator {
                                 swift.functionArgument({
                                     value: swift.Expression.memberAccess({
                                         target: swift.Expression.rawValue("self"),
-                                        memberName: this.additionalPropertiesInfo.propertyName
+                                        memberName: this.localContext.additionalPropertiesMetadata.propertyName
                                     })
                                 })
                             ]
@@ -342,6 +337,9 @@ export class StructGenerator {
 
     private generateNestedTypes(dataProperties: swift.Property[]) {
         const nestedTypes: (swift.Struct | swift.EnumWithRawValues)[] = [];
+        this.localContext.stringLiteralEnums.forEach((enum_) => {
+            nestedTypes.push(enum_);
+        });
         if (dataProperties.length > 0) {
             nestedTypes.push(this.generateCodingKeysEnum());
         }

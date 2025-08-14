@@ -7,13 +7,13 @@ public final class DummyClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func generate(request: GenerateRequest, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func generate(request: GenerateRequest, requestOptions: RequestOptions? = nil) async throws -> JSONValue {
         return try await httpClient.performRequest(
             method: .post,
             path: "/generate",
             body: request,
             requestOptions: requestOptions,
-            responseType: Any.self
+            responseType: JSONValue.self
         )
     }
 }

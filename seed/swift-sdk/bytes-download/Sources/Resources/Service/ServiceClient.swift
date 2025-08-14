@@ -7,12 +7,12 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func download(id: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func download(id: String, requestOptions: RequestOptions? = nil) async throws -> JSONValue {
         return try await httpClient.performRequest(
             method: .get,
             path: "/download-content/\(id)",
             requestOptions: requestOptions,
-            responseType: Any.self
+            responseType: JSONValue.self
         )
     }
 }

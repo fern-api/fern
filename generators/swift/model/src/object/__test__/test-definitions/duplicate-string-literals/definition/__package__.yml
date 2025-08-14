@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  ObjectWithDuplicateStringLiterals:
+    properties:
+      field1: string
+      field2: optional<string>
+      literalField1: literal<"usa">
+      literalField2: literal<"usa">
+      literalField3: literal<"USA">
+      literalField4: literal<"Usa">

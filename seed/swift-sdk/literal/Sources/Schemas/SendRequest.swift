@@ -1,10 +1,10 @@
 import Foundation
 
 public struct SendRequest: Codable, Hashable, Sendable {
-    public let prompt: JSONValue
+    public let prompt: YouAreAHelpfulAssistant
     public let query: String
     public let stream: JSONValue
-    public let ending: JSONValue
+    public let ending: Ending
     public let context: SomeLiteral
     public let maybeContext: SomeLiteral?
     public let containerObject: ContainerObject
@@ -12,10 +12,10 @@ public struct SendRequest: Codable, Hashable, Sendable {
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        prompt: JSONValue,
+        prompt: YouAreAHelpfulAssistant,
         query: String,
         stream: JSONValue,
-        ending: JSONValue,
+        ending: Ending,
         context: SomeLiteral,
         maybeContext: SomeLiteral? = nil,
         containerObject: ContainerObject,
@@ -33,10 +33,10 @@ public struct SendRequest: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.prompt = try container.decode(JSONValue.self, forKey: .prompt)
+        self.prompt = try container.decode(YouAreAHelpfulAssistant.self, forKey: .prompt)
         self.query = try container.decode(String.self, forKey: .query)
         self.stream = try container.decode(JSONValue.self, forKey: .stream)
-        self.ending = try container.decode(JSONValue.self, forKey: .ending)
+        self.ending = try container.decode(Ending.self, forKey: .ending)
         self.context = try container.decode(SomeLiteral.self, forKey: .context)
         self.maybeContext = try container.decodeIfPresent(SomeLiteral.self, forKey: .maybeContext)
         self.containerObject = try container.decode(ContainerObject.self, forKey: .containerObject)
@@ -53,6 +53,14 @@ public struct SendRequest: Codable, Hashable, Sendable {
         try container.encode(self.context, forKey: .context)
         try container.encodeIfPresent(self.maybeContext, forKey: .maybeContext)
         try container.encode(self.containerObject, forKey: .containerObject)
+    }
+
+    public enum YouAreAHelpfulAssistant: String, Codable, Hashable, CaseIterable, Sendable {
+        case youAreAHelpfulAssistant = "You are a helpful assistant"
+    }
+
+    public enum Ending: String, Codable, Hashable, CaseIterable, Sendable {
+        case ending = "$ending"
     }
 
     /// Keys for encoding/decoding struct properties.

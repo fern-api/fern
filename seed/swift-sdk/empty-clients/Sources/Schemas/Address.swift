@@ -6,7 +6,7 @@ public struct Address: Codable, Hashable, Sendable {
     public let city: String
     public let state: String
     public let zip: String
-    public let country: JSONValue
+    public let country: Usa
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -16,7 +16,7 @@ public struct Address: Codable, Hashable, Sendable {
         city: String,
         state: String,
         zip: String,
-        country: JSONValue,
+        country: Usa,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.line1 = line1
@@ -35,7 +35,7 @@ public struct Address: Codable, Hashable, Sendable {
         self.city = try container.decode(String.self, forKey: .city)
         self.state = try container.decode(String.self, forKey: .state)
         self.zip = try container.decode(String.self, forKey: .zip)
-        self.country = try container.decode(JSONValue.self, forKey: .country)
+        self.country = try container.decode(Usa.self, forKey: .country)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -48,6 +48,10 @@ public struct Address: Codable, Hashable, Sendable {
         try container.encode(self.state, forKey: .state)
         try container.encode(self.zip, forKey: .zip)
         try container.encode(self.country, forKey: .country)
+    }
+
+    public enum Usa: String, Codable, Hashable, CaseIterable, Sendable {
+        case usa = "USA"
     }
 
     /// Keys for encoding/decoding struct properties.
