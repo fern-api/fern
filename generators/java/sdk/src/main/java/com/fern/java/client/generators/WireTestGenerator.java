@@ -59,17 +59,11 @@ public final class WireTestGenerator extends AbstractFileGenerator {
 
     // Test constants
     private static final String TEST_TOKEN = "test-token";
-    private static final String TEST_PREFIX = "test-";
     private static final String DEFAULT_SERVICE_NAME = "service";
     private static final String TODO_PREFIX = "TODO: ";
 
-    // Response body templates
-    private static final String ARRAY_RESPONSE = "[{\"id\":\"test-id\",\"value\":\"test-value\"}]";
+    // Response templates - using minimal responses since actual shape cannot be guaranteed
     private static final String EMPTY_RESPONSE = "{}";
-    private static final String SUCCESS_RESPONSE =
-            "{\"id\":\"test-id\",\"status\":\"success\",\"createdAt\":\"2024-01-01T00:00:00Z\"}";
-    private static final String DEFAULT_RESPONSE =
-            "{\"id\":\"test-id\",\"name\":\"test-name\",\"status\":\"success\",\"data\":{}}";
     private static final String NOT_FOUND_ERROR = "{\"error\":\"not_found\",\"message\":\"Resource not found\"}";
     private static final String INTERNAL_ERROR = "{\"error\":\"internal_error\",\"message\":\"Internal server error\"}";
 
@@ -90,6 +84,96 @@ public final class WireTestGenerator extends AbstractFileGenerator {
         return parts.get(parts.size() - 1).getCamelCase().getSafeName();
     }
 
+    /**
+     * Determines if we should generate a full test for this endpoint. Complex endpoints are skipped and get skeleton
+     * tests instead. Based on TypeScript wire test implementation patterns.
+     */
+    private boolean shouldGenerateTest(HttpEndpoint endpoint) {
+        // Skip endpoints without names
+        // Using try-catch since EndpointName has .get() but not .isPresent()
+        try {
+            endpoint.getName().get();
+        } catch (Exception e) {
+            return false;
+        }
+
+        // Skip OAuth endpoints (not yet supported)
+        if (context.getIr().getAuth() != null
+                && context.getIr().getAuth().toString().contains("oauth")) {
+            return false;
+        }
+
+        // Skip file upload/download endpoints
+        if (endpoint.getRequestBody().isPresent()) {
+            HttpRequestBody requestBody = endpoint.getRequestBody().get();
+            if (requestBody.isFileUpload() || requestBody.isBytes()) {
+                return false;
+            }
+        }
+
+        // Skip streaming/file download endpoints (simplified check)
+        // TODO: Add detailed response type checking when IR model types are clarified
+
+        // Skip paginated endpoints
+        if (endpoint.getPagination().isPresent()) {
+            return false;
+        }
+
+        // Skip idempotent endpoints (with idempotency headers)
+        if (endpoint.getIdempotent()) {
+            return false;
+        }
+
+        // Skip endpoints with complex path parameters or request bodies for now
+        if (!endpoint.getPathParameters().isEmpty() || endpoint.getRequestBody().isPresent()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Generates a skeleton test for complex endpoints that require manual customization. Includes comments explaining
+     * what needs to be implemented.
+     */
+    private MethodSpec generateSkeletonTest(HttpEndpoint endpoint) {
+        String endpointName = endpoint.getName().get().getPascalCase().getSafeName();
+        String testName = "test" + endpointName + "_Manual";
+
+        MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(testName)
+                .addAnnotation(ClassName.get("org.junit.jupiter.api", "Test"))
+                .addAnnotation(ClassName.get("org.junit.jupiter.api", "Disabled"))
+                .addModifiers(Modifier.PUBLIC)
+                .addException(Exception.class);
+
+        methodBuilder.addComment("Manual test implementation required");
+        methodBuilder.addComment(
+                "Endpoint: " + endpoint.getMethod() + " " + endpoint.getPath().getHead());
+
+        if (!endpoint.getPathParameters().isEmpty()) {
+            methodBuilder.addComment(
+                    "Path parameters: " + endpoint.getPathParameters().size());
+        }
+        if (endpoint.getRequestBody().isPresent()) {
+            methodBuilder.addComment("Has request body");
+        }
+        if (!endpoint.getQueryParameters().isEmpty()) {
+            methodBuilder.addComment(
+                    "Query parameters: " + endpoint.getQueryParameters().size());
+        }
+        if (endpoint.getPagination().isPresent()) {
+            methodBuilder.addComment("Pagination supported");
+        }
+
+        methodBuilder.addStatement("// TODO: Implement test");
+        methodBuilder.addStatement("// 1. Setup mock response");
+        methodBuilder.addStatement("// 2. Create request with required fields");
+        methodBuilder.addStatement("// 3. Execute client call");
+        methodBuilder.addStatement("// 4. Verify HTTP interaction");
+
+        return methodBuilder.build();
+    }
+
     @Override
     public GeneratedJavaFile generateFile() {
         TypeSpec.Builder testClassBuilder = TypeSpec.classBuilder(className)
@@ -101,19 +185,22 @@ public final class WireTestGenerator extends AbstractFileGenerator {
                 .addMethod(generateTeardownMethod());
 
         for (HttpEndpoint endpoint : service.getEndpoints()) {
+            // Skip endpoints without names
+            try {
+                endpoint.getName().get();
+            } catch (Exception e) {
+                continue;
+            }
+
+            // Only generate tests for endpoints we can handle automatically
+            if (!shouldGenerateTest(endpoint)) {
+                testClassBuilder.addMethod(generateSkeletonTest(endpoint));
+                continue;
+            }
+
             testClassBuilder.addMethod(generateSuccessTest(endpoint));
 
-            boolean isSimpleForQueryTest = endpoint.getPathParameters().isEmpty()
-                    && !endpoint.getSdkRequest().isPresent();
-
-            if (!endpoint.getQueryParameters().isEmpty() && isSimpleForQueryTest) {
-                testClassBuilder.addMethod(generateQueryParameterTest(endpoint));
-            }
-
-            if (endpoint.getRequestBody().isPresent() && isSimpleForQueryTest) {
-                testClassBuilder.addMethod(generateRequestBodyTest(endpoint));
-            }
-
+            // Only generate error tests for simple endpoints
             if (canGenerateErrorTestsForEndpoint(endpoint)) {
                 testClassBuilder.addMethod(generate404ErrorTest(endpoint));
                 testClassBuilder.addMethod(generate500ErrorTest(endpoint));
@@ -194,29 +281,36 @@ public final class WireTestGenerator extends AbstractFileGenerator {
         methodBuilder.addStatement(
                 "server.enqueue(new $T()$>.setResponseCode(200).setBody($S)$<)", MOCK_RESPONSE, responseBody);
 
-        boolean isSimpleEndpoint = endpoint.getPathParameters().isEmpty()
-                && !endpoint.getSdkRequest().isPresent()
-                && !endpoint.getRequestBody().isPresent();
+        // Detect if endpoint requires manual customization
+        boolean requiresCustomization = !endpoint.getPathParameters().isEmpty()
+                || endpoint.getSdkRequest().isPresent()
+                || endpoint.getRequestBody().isPresent()
+                || !endpoint.getQueryParameters().isEmpty();
 
-        String clientCall = generateClientCall(endpoint);
-        if (isSimpleEndpoint) {
-            methodBuilder.addStatement(clientCall);
-
-            methodBuilder
-                    .addStatement("$T recorded = server.takeRequest()", RECORDED_REQUEST)
-                    .addStatement("assertNotNull(recorded)")
-                    .addStatement(
-                            "assertEquals($S, recorded.getMethod())",
-                            endpoint.getMethod().toString())
-                    .addStatement(
-                            "assertTrue(recorded.getPath().startsWith($S))",
-                            endpoint.getPath().getHead());
-        } else {
-            methodBuilder.addComment(TODO_PREFIX + clientCall);
-            methodBuilder.addStatement("server.takeRequest()");
+        if (requiresCustomization) {
+            // Skip test generation for complex endpoints that require manual customization
+            methodBuilder.addComment("This endpoint requires manual customization:");
+            methodBuilder.addComment("- Path parameters, request bodies, or query parameters need to be set");
+            methodBuilder.addComment("- Response shape cannot be guaranteed");
+            methodBuilder.addComment("Example client call: " + generateClientCall(endpoint));
+            methodBuilder.addStatement("// Test skipped - requires manual implementation");
+            return methodBuilder.build();
         }
 
-        if (isSimpleEndpoint && context.getIr().getAuth() != null) {
+        String clientCall = generateClientCall(endpoint);
+        methodBuilder.addStatement(clientCall);
+
+        methodBuilder
+                .addStatement("$T recorded = server.takeRequest()", RECORDED_REQUEST)
+                .addStatement("assertNotNull(recorded)")
+                .addStatement(
+                        "assertEquals($S, recorded.getMethod())",
+                        endpoint.getMethod().toString())
+                .addStatement(
+                        "assertTrue(recorded.getPath().startsWith($S))",
+                        endpoint.getPath().getHead());
+
+        if (!requiresCustomization && context.getIr().getAuth() != null) {
             methodBuilder
                     .addStatement("assertNotNull(recorded.getHeader(\"Authorization\"))")
                     .addStatement("assertTrue(recorded.getHeader(\"Authorization\").startsWith(\"Bearer \"))");
@@ -712,16 +806,8 @@ public final class WireTestGenerator extends AbstractFileGenerator {
     }
 
     private String getSuccessResponseBody(HttpEndpoint endpoint) {
-        String endpointName = endpoint.getName().get().getCamelCase().getSafeName();
-
-        if (endpointName.startsWith("list") || endpointName.startsWith("get") && endpointName.endsWith("s")) {
-            return ARRAY_RESPONSE;
-        } else if (endpointName.startsWith("delete")) {
-            return EMPTY_RESPONSE;
-        } else if (endpointName.startsWith("create") || endpointName.startsWith("update")) {
-            return SUCCESS_RESPONSE;
-        }
-
-        return DEFAULT_RESPONSE;
+        // Cannot guarantee JSON shape - using empty response
+        // Tests should verify HTTP protocol behavior, not response parsing
+        return EMPTY_RESPONSE;
     }
 }

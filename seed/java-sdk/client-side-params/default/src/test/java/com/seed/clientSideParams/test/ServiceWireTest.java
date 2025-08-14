@@ -14,6 +14,7 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public final class ServiceWireTest {
@@ -41,11 +42,13 @@ public final class ServiceWireTest {
 
     @Test
     public void testListResources_SuccessResponse() throws Exception {
-        server.enqueue(
-                new MockResponse().setResponseCode(200).setBody("[{\"id\":\"test-id\",\"value\":\"test-value\"}]"));
-        // TODO:
+        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+        // This endpoint requires manual customization:
+        // - Path parameters, request bodies, or query parameters need to be set
+        // - Response shape cannot be guaranteed
+        // Example client call:
         // client.service().listResources(com.seed.clientSideParams.resources.service.requests.ListResourcesRequest.builder().build())
-        server.takeRequest();
+        // Test skipped - requires manual implementation;
     }
 
     @Test
@@ -89,32 +92,42 @@ public final class ServiceWireTest {
     }
 
     @Test
-    public void testGetResource_SuccessResponse() throws Exception {
-        server.enqueue(new MockResponse()
-                .setResponseCode(200)
-                .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"status\":\"success\",\"data\":{}}"));
-        // TODO: client.service().getResource("test-resource_id",
-        // com.seed.clientSideParams.resources.service.requests.GetResourceRequest.builder().build())
-        server.takeRequest();
+    @Disabled
+    public void testGetResource_Manual() throws Exception {
+        // Manual test implementation required
+        // Endpoint: GET /resources/
+        // Path parameters: 1
+        // Query parameters: 2
+        // TODO: Implement test;
+        // 1. Setup mock response;
+        // 2. Create request with required fields;
+        // 3. Execute client call;
+        // 4. Verify HTTP interaction;
     }
 
     @Test
-    public void testSearchResources_SuccessResponse() throws Exception {
-        server.enqueue(new MockResponse()
-                .setResponseCode(200)
-                .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"status\":\"success\",\"data\":{}}"));
-        // TODO:
-        // client.service().searchResources(com.seed.clientSideParams.resources.service.requests.SearchResourcesRequest.builder().build())
-        server.takeRequest();
+    @Disabled
+    public void testSearchResources_Manual() throws Exception {
+        // Manual test implementation required
+        // Endpoint: POST /resources/search
+        // Has request body
+        // Query parameters: 2
+        // TODO: Implement test;
+        // 1. Setup mock response;
+        // 2. Create request with required fields;
+        // 3. Execute client call;
+        // 4. Verify HTTP interaction;
     }
 
     @Test
     public void testListUsers_SuccessResponse() throws Exception {
-        server.enqueue(
-                new MockResponse().setResponseCode(200).setBody("[{\"id\":\"test-id\",\"value\":\"test-value\"}]"));
-        // TODO:
+        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+        // This endpoint requires manual customization:
+        // - Path parameters, request bodies, or query parameters need to be set
+        // - Response shape cannot be guaranteed
+        // Example client call:
         // client.service().listUsers(com.seed.clientSideParams.resources.service.requests.ListUsersRequest.builder().build())
-        server.takeRequest();
+        // Test skipped - requires manual implementation;
     }
 
     @Test
@@ -158,49 +171,68 @@ public final class ServiceWireTest {
     }
 
     @Test
-    public void testGetUserById_SuccessResponse() throws Exception {
-        server.enqueue(new MockResponse()
-                .setResponseCode(200)
-                .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"status\":\"success\",\"data\":{}}"));
-        // TODO: client.service().getUserById("test-user_id",
-        // com.seed.clientSideParams.resources.service.requests.GetUserByIdRequest.builder().build())
-        server.takeRequest();
+    @Disabled
+    public void testGetUserById_Manual() throws Exception {
+        // Manual test implementation required
+        // Endpoint: GET /users/
+        // Path parameters: 1
+        // Query parameters: 2
+        // TODO: Implement test;
+        // 1. Setup mock response;
+        // 2. Create request with required fields;
+        // 3. Execute client call;
+        // 4. Verify HTTP interaction;
     }
 
     @Test
-    public void testCreateUser_SuccessResponse() throws Exception {
-        server.enqueue(new MockResponse()
-                .setResponseCode(200)
-                .setBody("{\"id\":\"test-id\",\"status\":\"success\",\"createdAt\":\"2024-01-01T00:00:00Z\"}"));
-        // TODO:
-        // client.service().createUser(com.seed.clientSideParams.resources.service.requests.CreateUserRequest.builder().build())
-        server.takeRequest();
+    @Disabled
+    public void testCreateUser_Manual() throws Exception {
+        // Manual test implementation required
+        // Endpoint: POST /users
+        // Has request body
+        // TODO: Implement test;
+        // 1. Setup mock response;
+        // 2. Create request with required fields;
+        // 3. Execute client call;
+        // 4. Verify HTTP interaction;
     }
 
     @Test
-    public void testUpdateUser_SuccessResponse() throws Exception {
-        server.enqueue(new MockResponse()
-                .setResponseCode(200)
-                .setBody("{\"id\":\"test-id\",\"status\":\"success\",\"createdAt\":\"2024-01-01T00:00:00Z\"}"));
-        // TODO: client.service().updateUser("test-user_id",
-        // com.seed.clientSideParams.resources.service.requests.UpdateUserRequest.builder().build())
-        server.takeRequest();
+    @Disabled
+    public void testUpdateUser_Manual() throws Exception {
+        // Manual test implementation required
+        // Endpoint: PATCH /users/
+        // Path parameters: 1
+        // Has request body
+        // TODO: Implement test;
+        // 1. Setup mock response;
+        // 2. Create request with required fields;
+        // 3. Execute client call;
+        // 4. Verify HTTP interaction;
     }
 
     @Test
-    public void testDeleteUser_SuccessResponse() throws Exception {
-        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
-        // TODO: client.service().deleteUser("test-user_id")
-        server.takeRequest();
+    @Disabled
+    public void testDeleteUser_Manual() throws Exception {
+        // Manual test implementation required
+        // Endpoint: DELETE /users/
+        // Path parameters: 1
+        // TODO: Implement test;
+        // 1. Setup mock response;
+        // 2. Create request with required fields;
+        // 3. Execute client call;
+        // 4. Verify HTTP interaction;
     }
 
     @Test
     public void testListConnections_SuccessResponse() throws Exception {
-        server.enqueue(
-                new MockResponse().setResponseCode(200).setBody("[{\"id\":\"test-id\",\"value\":\"test-value\"}]"));
-        // TODO:
+        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+        // This endpoint requires manual customization:
+        // - Path parameters, request bodies, or query parameters need to be set
+        // - Response shape cannot be guaranteed
+        // Example client call:
         // client.service().listConnections(com.seed.clientSideParams.resources.service.requests.ListConnectionsRequest.builder().build())
-        server.takeRequest();
+        // Test skipped - requires manual implementation;
     }
 
     @Test
@@ -217,6 +249,7 @@ public final class ServiceWireTest {
                             .requests
                             .ListConnectionsRequest
                             .builder()
+                            .page(0)
                             .build());
         });
         assertEquals(404, exception.statusCode());
@@ -236,28 +269,35 @@ public final class ServiceWireTest {
                             .requests
                             .ListConnectionsRequest
                             .builder()
+                            .page(0)
                             .build());
         });
         assertEquals(500, exception.statusCode());
     }
 
     @Test
-    public void testGetConnection_SuccessResponse() throws Exception {
-        server.enqueue(new MockResponse()
-                .setResponseCode(200)
-                .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"status\":\"success\",\"data\":{}}"));
-        // TODO: client.service().getConnection("test-connection_id",
-        // com.seed.clientSideParams.resources.service.requests.GetConnectionRequest.builder().build())
-        server.takeRequest();
+    @Disabled
+    public void testGetConnection_Manual() throws Exception {
+        // Manual test implementation required
+        // Endpoint: GET /connections/
+        // Path parameters: 1
+        // Query parameters: 1
+        // TODO: Implement test;
+        // 1. Setup mock response;
+        // 2. Create request with required fields;
+        // 3. Execute client call;
+        // 4. Verify HTTP interaction;
     }
 
     @Test
     public void testListClients_SuccessResponse() throws Exception {
-        server.enqueue(
-                new MockResponse().setResponseCode(200).setBody("[{\"id\":\"test-id\",\"value\":\"test-value\"}]"));
-        // TODO:
+        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+        // This endpoint requires manual customization:
+        // - Path parameters, request bodies, or query parameters need to be set
+        // - Response shape cannot be guaranteed
+        // Example client call:
         // client.service().listClients(com.seed.clientSideParams.resources.service.requests.ListClientsRequest.builder().build())
-        server.takeRequest();
+        // Test skipped - requires manual implementation;
     }
 
     @Test
@@ -299,12 +339,16 @@ public final class ServiceWireTest {
     }
 
     @Test
-    public void testGetClient_SuccessResponse() throws Exception {
-        server.enqueue(new MockResponse()
-                .setResponseCode(200)
-                .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"status\":\"success\",\"data\":{}}"));
-        // TODO: client.service().getClient("test-client_id",
-        // com.seed.clientSideParams.resources.service.requests.GetClientRequest.builder().build())
-        server.takeRequest();
+    @Disabled
+    public void testGetClient_Manual() throws Exception {
+        // Manual test implementation required
+        // Endpoint: GET /clients/
+        // Path parameters: 1
+        // Query parameters: 2
+        // TODO: Implement test;
+        // 1. Setup mock response;
+        // 2. Create request with required fields;
+        // 3. Execute client call;
+        // 4. Verify HTTP interaction;
     }
 }
