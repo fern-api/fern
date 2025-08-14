@@ -41,13 +41,6 @@ interface FileWithMimeType {
     absoluteFilePath: AbsoluteFilePath;
     relativeFilePath: RelativeFilePath;
 }
-interface DynamicIRWithMetadata extends DynamicIRMetadata {
-    dynamicIR: any;
-}
-interface DynamicIRMetadata {
-    packageName: string;
-    generatorConfig: any | undefined;
-}
 
 export async function publishDocs({
     token,
@@ -416,8 +409,8 @@ async function generateLanguageSpecificDynamicIRs({
     workspace: FernWorkspace | undefined;
     context: TaskContext;
     snippetsConfig: SnippetsConfig;
-}): Promise<Record<string, any> | undefined> {
-    let languageSpecificIRs: Record<string, any> = {};
+}): Promise<Record<string, DynamicIr> | undefined> {
+    let languageSpecificIRs: Record<string, DynamicIr> = {};
 
     if (!workspace) {
         return undefined;
@@ -477,10 +470,12 @@ async function generateLanguageSpecificDynamicIRs({
                     // include metadata along with the dynamic IR
                     if (dynamicIR) {
                         languageSpecificIRs[generatorInvocation.language] = {
-                            language: generatorInvocation.language,
-                            packageName,
                             dynamicIR: {
-                                ...dynamicIR
+                                language: generatorInvocation.language,
+                                packageName,
+                                dynamicIR: {
+                                    ...dynamicIR
+                                }
                             }
                         }
                     } else {
