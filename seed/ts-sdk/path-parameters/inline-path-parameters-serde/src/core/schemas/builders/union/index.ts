@@ -1,5 +1,5 @@
-export { discriminant } from "./discriminant.js";
 export type { Discriminant } from "./discriminant.js";
+export { discriminant } from "./discriminant.js";
 export type {
     inferParsedDiscriminant,
     inferParsedUnion,
