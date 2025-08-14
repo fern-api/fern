@@ -117,7 +117,11 @@ export class RootClientGenerator {
         const authSchemes = this.getAuthSchemeParameters();
         if (authSchemes.bearer) {
             // For `bearer` auth scheme, we have one more convenience initializer for the async token provider
-            initializers.push(this.generateConvenienceInitializer({ bearerTokenParamType: "async-provider" }));
+            initializers.push(
+                this.generateConvenienceInitializer({
+                    bearerTokenParamType: "async-provider"
+                })
+            );
         }
         initializers.push(this.generateDesignatedInitializer());
         return initializers;
@@ -125,7 +129,9 @@ export class RootClientGenerator {
 
     private generateConvenienceInitializer({ bearerTokenParamType }: { bearerTokenParamType: BearerTokenParamType }) {
         const authSchemes = this.getAuthSchemeParameters();
-        const initializerParams = this.getConvenienceInitializerParams({ bearerTokenParamType });
+        const initializerParams = this.getConvenienceInitializerParams({
+            bearerTokenParamType
+        });
 
         const designatedInitializerArgs: swift.FunctionArgument[] = [
             swift.functionArgument({
@@ -134,11 +140,11 @@ export class RootClientGenerator {
             })
         ];
 
-        if (authSchemes.header) {
-            designatedInitializerArgs.push(
-                swift.functionArgument({
-                    label: "headerAuth",
-                    value: authSchemes.header.param.type.isOptional
+        designatedInitializerArgs.push(
+            swift.functionArgument({
+                label: "headerAuth",
+                value: authSchemes.header
+                    ? authSchemes.header.param.type.isOptional
                         ? swift.Expression.methodCallWithTrailingClosure({
                               target: swift.Expression.reference(authSchemes.header.param.unsafeName),
                               methodName: "map",
@@ -171,15 +177,15 @@ export class RootClientGenerator {
                               ],
                               multiline: true
                           })
-                })
-            );
-        }
+                    : swift.Expression.nil()
+            })
+        );
 
-        if (authSchemes.bearer) {
-            designatedInitializerArgs.push(
-                swift.functionArgument({
-                    label: "bearerAuth",
-                    value: authSchemes.bearer.stringParam.type.isOptional
+        designatedInitializerArgs.push(
+            swift.functionArgument({
+                label: "bearerAuth",
+                value: authSchemes.bearer
+                    ? authSchemes.bearer.stringParam.type.isOptional
                         ? swift.Expression.methodCallWithTrailingClosure({
                               target: swift.Expression.reference(authSchemes.bearer.stringParam.unsafeName),
                               methodName: "map",
@@ -216,30 +222,30 @@ export class RootClientGenerator {
                                   })
                               ]
                           })
-                })
-            );
-        }
+                    : swift.Expression.nil()
+            })
+        );
 
-        if (authSchemes.basic) {
-            designatedInitializerArgs.push(
-                swift.functionArgument({
-                    label: "basicAuth",
-                    value: swift.Expression.contextualMethodCall({
-                        methodName: "init",
-                        arguments_: [
-                            swift.functionArgument({
-                                label: "username",
-                                value: swift.Expression.reference(authSchemes.basic.usernameParam.unsafeName)
-                            }),
-                            swift.functionArgument({
-                                label: "password",
-                                value: swift.Expression.reference(authSchemes.basic.passwordParam.unsafeName)
-                            })
-                        ]
-                    })
-                })
-            );
-        }
+        designatedInitializerArgs.push(
+            swift.functionArgument({
+                label: "basicAuth",
+                value: authSchemes.basic
+                    ? swift.Expression.contextualMethodCall({
+                          methodName: "init",
+                          arguments_: [
+                              swift.functionArgument({
+                                  label: "username",
+                                  value: swift.Expression.reference(authSchemes.basic.usernameParam.unsafeName)
+                              }),
+                              swift.functionArgument({
+                                  label: "password",
+                                  value: swift.Expression.reference(authSchemes.basic.passwordParam.unsafeName)
+                              })
+                          ]
+                      })
+                    : swift.Expression.nil()
+            })
+        );
 
         designatedInitializerArgs.push(
             swift.functionArgument({
@@ -403,7 +409,10 @@ export class RootClientGenerator {
                         swift.Expression.classInitialization({
                             unsafeName: clientName,
                             arguments_: [
-                                swift.functionArgument({ label: "config", value: swift.Expression.reference("config") })
+                                swift.functionArgument({
+                                    label: "config",
+                                    value: swift.Expression.reference("config")
+                                })
                             ]
                         })
                     )
@@ -413,7 +422,10 @@ export class RootClientGenerator {
                     swift.Expression.classInitialization({
                         unsafeName: this.clientGeneratorContext.httpClient.clientName,
                         arguments_: [
-                            swift.functionArgument({ label: "config", value: swift.Expression.reference("config") })
+                            swift.functionArgument({
+                                label: "config",
+                                value: swift.Expression.reference("config")
+                            })
                         ]
                     })
                 )
