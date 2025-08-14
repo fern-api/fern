@@ -137,10 +137,7 @@ export class RootClientGenerator {
             swift.functionArgument({
                 label: "baseURL",
                 value: swift.Expression.reference("baseURL")
-            })
-        ];
-
-        designatedInitializerArgs.push(
+            }),
             swift.functionArgument({
                 label: "headerAuth",
                 value: authSchemes.header
@@ -178,10 +175,7 @@ export class RootClientGenerator {
                               multiline: true
                           })
                     : swift.Expression.nil()
-            })
-        );
-
-        designatedInitializerArgs.push(
+            }),
             swift.functionArgument({
                 label: "bearerAuth",
                 value: authSchemes.bearer
@@ -223,10 +217,7 @@ export class RootClientGenerator {
                               ]
                           })
                     : swift.Expression.nil()
-            })
-        );
-
-        designatedInitializerArgs.push(
+            }),
             swift.functionArgument({
                 label: "basicAuth",
                 value: authSchemes.basic
@@ -244,10 +235,7 @@ export class RootClientGenerator {
                           ]
                       })
                     : swift.Expression.nil()
-            })
-        );
-
-        designatedInitializerArgs.push(
+            }),
             swift.functionArgument({
                 label: "headers",
                 value: swift.Expression.reference("headers")
@@ -264,7 +252,7 @@ export class RootClientGenerator {
                 label: "urlSession",
                 value: swift.Expression.reference("urlSession")
             })
-        );
+        ];
 
         const getDocsSummary = () => {
             if (!authSchemes.bearer) {

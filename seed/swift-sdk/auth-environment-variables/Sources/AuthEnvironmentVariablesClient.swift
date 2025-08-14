@@ -26,6 +26,8 @@ public final class AuthEnvironmentVariablesClient: Sendable {
             headerAuth: apiKey.map {
                 .init(key: $0, header: "X-FERN-API-KEY")
             },
+            bearerAuth: nil,
+            basicAuth: nil,
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,

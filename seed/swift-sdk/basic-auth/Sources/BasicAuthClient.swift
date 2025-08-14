@@ -26,6 +26,8 @@ public final class BasicAuthClient: Sendable {
     ) {
         self.init(
             baseURL: baseURL,
+            headerAuth: nil,
+            bearerAuth: nil,
             basicAuth: .init(username: username, password: password),
             headers: headers,
             timeout: timeout,
