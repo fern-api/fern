@@ -74,9 +74,7 @@ export class Class_ extends Module_ {
 
             this.statements.forEach((statement, index) => {
                 statement.write(writer);
-                if (index < this.statements.length - 1) {
-                    writer.newLine();
-                }
+                writer.newLine();
             });
 
             writer.dedent();

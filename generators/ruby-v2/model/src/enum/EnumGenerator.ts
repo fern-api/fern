@@ -24,22 +24,19 @@ export class EnumGenerator extends FileGenerator<RubyFile, ModelCustomConfigSche
     }
 
     public doGenerate(): RubyFile {
-        const enumModule = ruby.module({
+        const enumClass = ruby.class_({
             name: this.typeDeclaration.name.name.pascalCase.safeName
         });
-        enumModule.addStatement(ruby.codeblock(`extends ${this.context.getRootModule().name}::Internal::Types::Enum`));
+        enumClass.addStatement(ruby.codeblock(`includes ${this.context.getRootModule().name}::Internal::Types::Enum`));
 
         for (const enumValue of this.enumDeclaration.values) {
-            enumModule.addStatement(
+            enumClass.addStatement(
                 ruby.codeblock(`${enumValue.name.name.screamingSnakeCase.safeName} = "${enumValue.name.wireValue}"`)
             );
         }
 
-        const typesModule = this.context.getTypesModule();
-        typesModule.addStatement(enumModule);
-
         const rootModule = this.context.getRootModule();
-        rootModule.addStatement(typesModule);
+        rootModule.addStatement(enumClass);
 
         return new RubyFile({
             node: ruby.codeblock((writer) => {
