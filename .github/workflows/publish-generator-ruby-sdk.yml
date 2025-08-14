@@ -28,7 +28,7 @@ jobs:
         uses: ./.github/actions/publish-generator
         with:
           generator-name: "ruby-sdk"
-          version-file: "generators/ruby/sdk/versions.yml"
+          version-file: "generators/ruby-v2/sdk/versions.yml"
           fern-token: ${{ secrets.FERN_TOKEN }}
           docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
       - name: manual publish
