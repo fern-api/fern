@@ -23,6 +23,7 @@ Instantiate and use the client with the following:
 from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
+    token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
 client.service.search_resources(
@@ -43,6 +44,7 @@ import asyncio
 from seed import AsyncSeedClientSideParams
 
 client = AsyncSeedClientSideParams(
+    token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
 
