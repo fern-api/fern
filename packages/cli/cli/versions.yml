@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Upload metadata alongside dynamic IR for SDK snippets in docs. 
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-14"
+  version: 0.66.16
+
+- changelogEntry:
     - summary: Specify generator metadata for Swift.
       type: fix
   irVersion: 59
