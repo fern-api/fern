@@ -1266,10 +1266,10 @@ packages:
             }
         engines: { node: ">= 0.4" }
 
-    electron-to-chromium@1.5.200:
+    electron-to-chromium@1.5.201:
         resolution:
             {
-                integrity: sha512-rFCxROw7aOe4uPTfIAx+rXv9cEcGx+buAF4npnhtTqCJk5KDFRnh3+KYj7rdVh6lsFt5/aPs+Irj9rZ33WMA7w==,
+                integrity: sha512-ZG65vsrLClodGqywuigc+7m0gr4ISoTQttfVh7nfpLv0M7SIwF4WbFNEOywcqTiujs12AUeeXbFyQieDICAIxg==,
             }
 
     emittery@0.13.1:
@@ -3789,7 +3789,7 @@ snapshots:
     browserslist@4.25.2:
         dependencies:
             caniuse-lite: 1.0.30001735
-            electron-to-chromium: 1.5.200
+            electron-to-chromium: 1.5.201
             node-releases: 2.0.19
             update-browserslist-db: 1.1.3(browserslist@4.25.2)
 
@@ -3920,7 +3920,7 @@ snapshots:
             es-errors: 1.3.0
             gopd: 1.2.0
 
-    electron-to-chromium@1.5.200: {}
+    electron-to-chromium@1.5.201: {}
 
     emittery@0.13.1: {}
 
