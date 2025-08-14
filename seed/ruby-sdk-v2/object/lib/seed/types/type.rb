@@ -29,6 +29,6 @@ module Seed
             field :twentythree, String, optional: false, nullable: false
             field :twentyfour, String, optional: true, nullable: false
             field :twentyfive, String, optional: true, nullable: false
-
+        end
     end
 end

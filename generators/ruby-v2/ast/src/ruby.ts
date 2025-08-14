@@ -18,6 +18,7 @@ import {
     Writer,
     YieldParameter
 } from "./ast";
+import { IfElse } from "./ast/IfElse";
 
 import * as TypeLiteral from "./ast/TypeLiteral";
 
@@ -105,4 +106,8 @@ export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
 
 export function positionalArgument(args: PositionalArgument.Args): PositionalArgument {
     return new PositionalArgument(args);
+}
+
+export function ifElse(args: IfElse.Args): IfElse {
+    return new IfElse(args);
 }

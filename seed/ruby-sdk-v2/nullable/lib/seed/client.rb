@@ -16,5 +16,5 @@ module Seed
         def nullable
             @nullable ||= Seed::Nullable::Client.new(client: @raw_client)
         end
-
+    end
 end

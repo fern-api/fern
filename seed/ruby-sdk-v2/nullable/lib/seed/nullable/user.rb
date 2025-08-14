@@ -11,6 +11,6 @@ module Seed
             field :favorite_number, Seed::Nullable::WeirdNumber, optional: false, nullable: false
             field :numbers, Internal::Types::Array[Integer], optional: true, nullable: false
             field :strings, Internal::Types::Hash[String, Internal::Types::Hash[String, ]], optional: true, nullable: false
-
+        end
     end
 end
