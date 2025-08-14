@@ -4,7 +4,6 @@ import (
     client "github.com/client-side-params/fern/client"
     option "github.com/client-side-params/fern/option"
     context "context"
-    fern "github.com/client-side-params/fern"
 )
 
 func do() {
@@ -16,12 +15,8 @@ func do() {
             "<token>",
         ),
     )
-    client.Service.GetResource(
+    client.Service.DeleteUser(
         context.TODO(),
-        "resourceId",
-        &fern.GetResourceRequest{
-            IncludeMetadata: true,
-            Format: "json",
-        },
+        "userId",
     )
 }

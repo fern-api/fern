@@ -12,13 +12,18 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
+        option.WithToken(
+            "<token>",
+        ),
     )
     client.Service.SearchResources(
         context.TODO(),
         &fern.SearchResourcesRequest{
             Limit: 1,
             Offset: 1,
-            Query: "query",
+            Query: fern.String(
+                "query",
+            ),
             Filters: map[string]any{
                 "filters": map[string]any{
                     "key": "value",

@@ -2,13 +2,57 @@
     "endpoints": [
         {
             "id": {
+                "path": "/api/clients",
+                "method": "GET",
+                "identifier_override": "endpoint_service.listClients"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/client-side-params/fern\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n\toption \"github.com/client-side-params/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Service.ListClients(\n\tcontext.TODO(),\n\t\u0026fern.ListClientsRequest{\n\t\tFields: fern.String(\n\t\t\t\"fields\",\n\t\t),\n\t\tIncludeFields: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tPage: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tPerPage: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tIncludeTotals: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tIsGlobal: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tIsFirstParty: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tAppType: []string{\n\t\t\t\"app_type\",\n\t\t\t\"app_type\",\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/clients/{clientId}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getClient"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/client-side-params/fern\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n\toption \"github.com/client-side-params/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Service.GetClient(\n\tcontext.TODO(),\n\t\"clientId\",\n\t\u0026fern.GetClientRequest{\n\t\tFields: fern.String(\n\t\t\t\"fields\",\n\t\t),\n\t\tIncludeFields: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/connections",
+                "method": "GET",
+                "identifier_override": "endpoint_service.listConnections"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/client-side-params/fern\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n\toption \"github.com/client-side-params/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Service.ListConnections(\n\tcontext.TODO(),\n\t\u0026fern.ListConnectionsRequest{\n\t\tStrategy: fern.String(\n\t\t\t\"strategy\",\n\t\t),\n\t\tName: fern.String(\n\t\t\t\"name\",\n\t\t),\n\t\tFields: fern.String(\n\t\t\t\"fields\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/connections/{connectionId}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getConnection"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/client-side-params/fern\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n\toption \"github.com/client-side-params/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Service.GetConnection(\n\tcontext.TODO(),\n\t\"connectionId\",\n\t\u0026fern.GetConnectionRequest{\n\t\tFields: fern.String(\n\t\t\t\"fields\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/api/resources",
                 "method": "GET",
                 "identifier_override": "endpoint_service.listResources"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/client-side-params/fern\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.ListResources(\n\tcontext.TODO(),\n\t\u0026fern.ListResourcesRequest{\n\t\tPage:          1,\n\t\tPerPage:       1,\n\t\tSort:          \"created_at\",\n\t\tOrder:         \"desc\",\n\t\tIncludeTotals: true,\n\t\tFields: fern.String(\n\t\t\t\"fields\",\n\t\t),\n\t\tSearch: fern.String(\n\t\t\t\"search\",\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/client-side-params/fern\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n\toption \"github.com/client-side-params/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Service.ListResources(\n\tcontext.TODO(),\n\t\u0026fern.ListResourcesRequest{\n\t\tPage:          1,\n\t\tPerPage:       1,\n\t\tSort:          \"created_at\",\n\t\tOrder:         \"desc\",\n\t\tIncludeTotals: true,\n\t\tFields: fern.String(\n\t\t\t\"fields\",\n\t\t),\n\t\tSearch: fern.String(\n\t\t\t\"search\",\n\t\t),\n\t},\n)\n"
             }
         },
         {
@@ -19,7 +63,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/client-side-params/fern\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.SearchResources(\n\tcontext.TODO(),\n\t\u0026fern.SearchResourcesRequest{\n\t\tLimit:  1,\n\t\tOffset: 1,\n\t\tQuery:  \"query\",\n\t\tFilters: map[string]interface{}{\n\t\t\t\"filters\": map[string]interface{}{\n\t\t\t\t\"key\": \"value\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/client-side-params/fern\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n\toption \"github.com/client-side-params/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Service.SearchResources(\n\tcontext.TODO(),\n\t\u0026fern.SearchResourcesRequest{\n\t\tLimit:  1,\n\t\tOffset: 1,\n\t\tQuery: fern.String(\n\t\t\t\"query\",\n\t\t),\n\t\tFilters: map[string]interface{}{\n\t\t\t\"filters\": map[string]interface{}{\n\t\t\t\t\"key\": \"value\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
             }
         },
         {
@@ -30,7 +74,62 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/client-side-params/fern\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.GetResource(\n\tcontext.TODO(),\n\t\"resourceId\",\n\t\u0026fern.GetResourceRequest{\n\t\tIncludeMetadata: true,\n\t\tFormat:          \"json\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/client-side-params/fern\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n\toption \"github.com/client-side-params/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Service.GetResource(\n\tcontext.TODO(),\n\t\"resourceId\",\n\t\u0026fern.GetResourceRequest{\n\t\tIncludeMetadata: true,\n\t\tFormat:          \"json\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users",
+                "method": "GET",
+                "identifier_override": "endpoint_service.listUsers"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/client-side-params/fern\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n\toption \"github.com/client-side-params/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Service.ListUsers(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersRequest{\n\t\tPage: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tPerPage: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tIncludeTotals: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tSort: fern.String(\n\t\t\t\"sort\",\n\t\t),\n\t\tConnection: fern.String(\n\t\t\t\"connection\",\n\t\t),\n\t\tQ: fern.String(\n\t\t\t\"q\",\n\t\t),\n\t\tSearchEngine: fern.String(\n\t\t\t\"search_engine\",\n\t\t),\n\t\tFields: fern.String(\n\t\t\t\"fields\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users",
+                "method": "POST",
+                "identifier_override": "endpoint_service.createUser"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/client-side-params/fern\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n\toption \"github.com/client-side-params/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Service.CreateUser(\n\tcontext.TODO(),\n\t\u0026fern.CreateUserRequest{\n\t\tEmail: \"email\",\n\t\tEmailVerified: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tUsername: fern.String(\n\t\t\t\"username\",\n\t\t),\n\t\tPassword: fern.String(\n\t\t\t\"password\",\n\t\t),\n\t\tPhoneNumber: fern.String(\n\t\t\t\"phone_number\",\n\t\t),\n\t\tPhoneVerified: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tUserMetadata: map[string]interface{}{\n\t\t\t\"user_metadata\": map[string]interface{}{\n\t\t\t\t\"key\": \"value\",\n\t\t\t},\n\t\t},\n\t\tAppMetadata: map[string]interface{}{\n\t\t\t\"app_metadata\": map[string]interface{}{\n\t\t\t\t\"key\": \"value\",\n\t\t\t},\n\t\t},\n\t\tConnection: \"connection\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_service.deleteUser"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n\toption \"github.com/client-side-params/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Service.DeleteUser(\n\tcontext.TODO(),\n\t\"userId\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getUserById"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/client-side-params/fern\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n\toption \"github.com/client-side-params/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Service.GetUserById(\n\tcontext.TODO(),\n\t\"userId\",\n\t\u0026fern.GetUserRequest{\n\t\tFields: fern.String(\n\t\t\t\"fields\",\n\t\t),\n\t\tIncludeFields: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_service.updateUser"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/client-side-params/fern\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n\toption \"github.com/client-side-params/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Service.UpdateUser(\n\tcontext.TODO(),\n\t\"userId\",\n\t\u0026fern.UpdateUserRequest{\n\t\tEmail: fern.String(\n\t\t\t\"email\",\n\t\t),\n\t\tEmailVerified: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tUsername: fern.String(\n\t\t\t\"username\",\n\t\t),\n\t\tPhoneNumber: fern.String(\n\t\t\t\"phone_number\",\n\t\t),\n\t\tPhoneVerified: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tUserMetadata: map[string]interface{}{\n\t\t\t\"user_metadata\": map[string]interface{}{\n\t\t\t\t\"key\": \"value\",\n\t\t\t},\n\t\t},\n\t\tAppMetadata: map[string]interface{}{\n\t\t\t\"app_metadata\": map[string]interface{}{\n\t\t\t\t\"key\": \"value\",\n\t\t\t},\n\t\t},\n\t\tPassword: fern.String(\n\t\t\t\"password\",\n\t\t),\n\t\tBlocked: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t},\n)\n"
             }
         }
     ]
