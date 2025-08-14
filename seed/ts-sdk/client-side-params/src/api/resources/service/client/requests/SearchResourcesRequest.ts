@@ -20,6 +20,7 @@ export interface SearchResourcesRequest {
     limit: number;
     /** Offset for pagination */
     offset: number;
-    query: string;
+    /** Search query text */
+    query?: string;
     filters?: Record<string, unknown>;
 }
