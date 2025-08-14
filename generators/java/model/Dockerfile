@@ -1,5 +1,5 @@
 # Apple Silicon: FROM bitnami/gradle:latest
-FROM bitnami/gradle:8.5.0
+FROM us-east1-docker.pkg.dev/sayari-datastore/bitnami/gradle:8.5.0
 
 COPY build/distributions/model.tar init.sh /
 RUN cd / \
