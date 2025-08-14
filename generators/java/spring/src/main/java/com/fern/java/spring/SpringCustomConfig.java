@@ -49,6 +49,13 @@ public interface SpringCustomConfig extends ICustomConfig, IDownloadFilesCustomC
         return false;
     }
 
+    @Value.Default
+    @JsonProperty("enable-wire-tests")
+    @Override
+    default Boolean enableWireTests() {
+        return false;
+    }
+
     static ImmutableSpringCustomConfig.Builder builder() {
         return ImmutableSpringCustomConfig.builder();
     }
