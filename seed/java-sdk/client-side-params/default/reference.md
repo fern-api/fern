@@ -262,7 +262,7 @@ client.service().searchResources(
 <dl>
 <dd>
 
-**query:** `String` 
+**query:** `Optional<String>` — Search query text
     
 </dd>
 </dl>

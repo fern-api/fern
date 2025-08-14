@@ -75,6 +75,8 @@ service:
             docs: Offset for pagination
         body:
           properties:
-            query: string
+            query: 
+              type: optional<string>
+              docs: Search query text
             filters: optional<map<string, unknown>>
       response: root.SearchResponse

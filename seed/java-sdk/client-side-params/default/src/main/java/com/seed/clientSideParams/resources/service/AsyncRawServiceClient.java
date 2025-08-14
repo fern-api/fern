@@ -198,7 +198,9 @@ public class AsyncRawServiceClient {
         QueryStringMapper.addQueryParameter(
                 httpUrl, "offset", request.getOffset().orElse(0), false);
         Map<String, Object> properties = new HashMap<>();
-        properties.put("query", request.getQuery());
+        if (request.getQuery().isPresent()) {
+            properties.put("query", request.getQuery());
+        }
         if (request.getFilters().isPresent()) {
             properties.put("filters", request.getFilters());
         }

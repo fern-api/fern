@@ -6,10 +6,8 @@ package com.seed.clientSideParams.test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.clientSideParams.SeedClientSideParamsClient;
-import com.seed.clientSideParams.SeedClientSideParamsClientBuilder;
 import com.seed.clientSideParams.core.SeedClientSideParamsApiException;
 import java.io.IOException;
 import okhttp3.mockwebserver.MockResponse;
@@ -33,8 +31,10 @@ public final class ServiceWireTest {
     public void setup() throws IOException {
         server = new MockWebServer();
         server.start();
-        client = SeedClientSideParamsClientBuilder.builder()
+        // Disable retries for tests to avoid timeouts
+        client = SeedClientSideParamsClient.builder()
                 .url(server.url("/").toString())
+                .maxRetries(0)
                 .build();
     }
 
@@ -49,9 +49,20 @@ public final class ServiceWireTest {
     @Test
     public void testListResources_SuccessResponse() throws Exception {
         // Given: Mock server returns successful response
-        server.enqueue(new MockResponse().setResponseCode(200).setBody("{\"status\":\"success\"}"));
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("[{\"id\":\"test-id\",\"name\":\"Test Resource\",\"description\":\"Test description\"}]"));
         // When: API call is made
-        client.service().listResources();
+        client.service()
+                .listResources(com.seed
+                        .clientSideParams
+                        .resources
+                        .service
+                        .requests
+                        .ListResourcesRequest
+                        .builder()
+                        .page(0)
+                        .build());
         // Then: Verify request was made correctly
         RecordedRequest recorded = server.takeRequest();
         assertNotNull(recorded);
@@ -64,7 +75,9 @@ public final class ServiceWireTest {
      */
     @Test
     public void testListResources_QueryParameters() throws Exception {
-        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("[{\"id\":\"test-id\",\"name\":\"Test Resource\",\"description\":\"Test description\"}]"));
         client.service()
                 .listResources(com.seed
                         .clientSideParams
@@ -104,9 +117,18 @@ public final class ServiceWireTest {
                 .setBody("{\"error\":\"not_found\",\"message\":\"Resource not found\"}"));
         // When/Then: API call should throw exception with correct status code
         SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
-            client.service().listResources();
+            client.service()
+                    .listResources(com.seed
+                            .clientSideParams
+                            .resources
+                            .service
+                            .requests
+                            .ListResourcesRequest
+                            .builder()
+                            .page(0)
+                            .build());
         });
-        assertEquals(404, exception.getStatusCode());
+        assertEquals(404, exception.statusCode());
     }
 
     /**
@@ -120,9 +142,18 @@ public final class ServiceWireTest {
                 .setBody("{\"error\":\"internal_error\",\"message\":\"Internal server error\"}"));
         // When/Then: API call should throw exception with correct status code
         SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
-            client.service().listResources();
+            client.service()
+                    .listResources(com.seed
+                            .clientSideParams
+                            .resources
+                            .service
+                            .requests
+                            .ListResourcesRequest
+                            .builder()
+                            .page(0)
+                            .build());
         });
-        assertEquals(500, exception.getStatusCode());
+        assertEquals(500, exception.statusCode());
     }
 
     /**
@@ -131,9 +162,21 @@ public final class ServiceWireTest {
     @Test
     public void testGetResource_SuccessResponse() throws Exception {
         // Given: Mock server returns successful response
-        server.enqueue(new MockResponse().setResponseCode(200).setBody("{\"status\":\"success\"}"));
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"id\":\"test-id\",\"name\":\"Test Resource\",\"description\":\"Test description\"}"));
         // When: API call is made
-        client.service().getResource("test-resource_id");
+        client.service()
+                .getResource(
+                        "test-resource_id",
+                        com.seed
+                                .clientSideParams
+                                .resources
+                                .service
+                                .requests
+                                .GetResourceRequest
+                                .builder()
+                                .build());
         // Then: Verify request was made correctly
         RecordedRequest recorded = server.takeRequest();
         assertNotNull(recorded);
@@ -146,7 +189,9 @@ public final class ServiceWireTest {
      */
     @Test
     public void testGetResource_QueryParameters() throws Exception {
-        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"id\":\"test-id\",\"name\":\"Test Resource\",\"description\":\"Test description\"}"));
         client.service()
                 .getResource(
                         "test-resource_id",
@@ -178,9 +223,19 @@ public final class ServiceWireTest {
                 .setBody("{\"error\":\"not_found\",\"message\":\"Resource not found\"}"));
         // When/Then: API call should throw exception with correct status code
         SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
-            client.service().getResource("test-resource_id");
+            client.service()
+                    .getResource(
+                            "test-resource_id",
+                            com.seed
+                                    .clientSideParams
+                                    .resources
+                                    .service
+                                    .requests
+                                    .GetResourceRequest
+                                    .builder()
+                                    .build());
         });
-        assertEquals(404, exception.getStatusCode());
+        assertEquals(404, exception.statusCode());
     }
 
     /**
@@ -194,9 +249,19 @@ public final class ServiceWireTest {
                 .setBody("{\"error\":\"internal_error\",\"message\":\"Internal server error\"}"));
         // When/Then: API call should throw exception with correct status code
         SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
-            client.service().getResource("test-resource_id");
+            client.service()
+                    .getResource(
+                            "test-resource_id",
+                            com.seed
+                                    .clientSideParams
+                                    .resources
+                                    .service
+                                    .requests
+                                    .GetResourceRequest
+                                    .builder()
+                                    .build());
         });
-        assertEquals(500, exception.getStatusCode());
+        assertEquals(500, exception.statusCode());
     }
 
     /**
@@ -205,9 +270,22 @@ public final class ServiceWireTest {
     @Test
     public void testSearchResources_SuccessResponse() throws Exception {
         // Given: Mock server returns successful response
-        server.enqueue(new MockResponse().setResponseCode(200).setBody("{\"status\":\"success\"}"));
+        server.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setBody(
+                                "{\"results\":[{\"id\":\"test-id\",\"name\":\"Test Resource\"}],\"total\":1,\"nextOffset\":null}"));
         // When: API call is made
-        client.service().searchResources();
+        client.service()
+                .searchResources(com.seed
+                        .clientSideParams
+                        .resources
+                        .service
+                        .requests
+                        .SearchResourcesRequest
+                        .builder()
+                        .query("test")
+                        .build());
         // Then: Verify request was made correctly
         RecordedRequest recorded = server.takeRequest();
         assertNotNull(recorded);
@@ -220,7 +298,11 @@ public final class ServiceWireTest {
      */
     @Test
     public void testSearchResources_QueryParameters() throws Exception {
-        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+        server.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setBody(
+                                "{\"results\":[{\"id\":\"test-id\",\"name\":\"Test Resource\"}],\"total\":1,\"nextOffset\":null}"));
         client.service()
                 .searchResources(com.seed
                         .clientSideParams
@@ -229,6 +311,7 @@ public final class ServiceWireTest {
                         .requests
                         .SearchResourcesRequest
                         .builder()
+                        .query("test query")
                         .limit(10)
                         .offset(10)
                         .build());
@@ -244,12 +327,25 @@ public final class ServiceWireTest {
      */
     @Test
     public void testSearchResources_RequestBody() throws Exception {
-        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
-        client.service().searchResources(Map.of("test", "data"));
+        server.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setBody(
+                                "{\"results\":[{\"id\":\"test-id\",\"name\":\"Test Resource\"}],\"total\":1,\"nextOffset\":null}"));
+        client.service()
+                .searchResources(com.seed
+                        .clientSideParams
+                        .resources
+                        .service
+                        .requests
+                        .SearchResourcesRequest
+                        .builder()
+                        .query("test")
+                        .build());
         RecordedRequest recorded = server.takeRequest();
         String body = recorded.getBody().readUtf8();
         assertNotNull(body);
-        JsonNode bodyJson = objectMapper.readTree(body);
+        com.fasterxml.jackson.databind.JsonNode bodyJson = objectMapper.readTree(body);
         assertNotNull(bodyJson);
     }
 
@@ -264,9 +360,18 @@ public final class ServiceWireTest {
                 .setBody("{\"error\":\"not_found\",\"message\":\"Resource not found\"}"));
         // When/Then: API call should throw exception with correct status code
         SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
-            client.service().searchResources();
+            client.service()
+                    .searchResources(com.seed
+                            .clientSideParams
+                            .resources
+                            .service
+                            .requests
+                            .SearchResourcesRequest
+                            .builder()
+                            .query("test")
+                            .build());
         });
-        assertEquals(404, exception.getStatusCode());
+        assertEquals(404, exception.statusCode());
     }
 
     /**
@@ -280,8 +385,17 @@ public final class ServiceWireTest {
                 .setBody("{\"error\":\"internal_error\",\"message\":\"Internal server error\"}"));
         // When/Then: API call should throw exception with correct status code
         SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
-            client.service().searchResources();
+            client.service()
+                    .searchResources(com.seed
+                            .clientSideParams
+                            .resources
+                            .service
+                            .requests
+                            .SearchResourcesRequest
+                            .builder()
+                            .query("test")
+                            .build());
         });
-        assertEquals(500, exception.getStatusCode());
+        assertEquals(500, exception.statusCode());
     }
 }

@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "aff8920f",
+            "example_identifier": "7bad1fef",
             "id": {
                 "method": "POST",
                 "path": "/api/resources/search",
