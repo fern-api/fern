@@ -129,12 +129,348 @@ paths:
               properties:
                 query:
                   type: string
+                  nullable: true
+                  description: Search query text
                 filters:
                   type: object
                   additionalProperties: true
                   nullable: true
-              required:
-                - query
+  /api/users:
+    get:
+      description: List or search for users
+      operationId: service_listUsers
+      tags:
+        - Service
+      parameters:
+        - name: page
+          in: query
+          description: Page index of the results to return. First page is 0.
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: per_page
+          in: query
+          description: Number of results per page.
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: include_totals
+          in: query
+          description: >-
+            Return results inside an object that contains the total result count
+            (true) or as a direct array of results (false, default).
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+        - name: sort
+          in: query
+          description: >-
+            Field to sort by. Use field:order where order is 1 for ascending and
+            -1 for descending.
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: connection
+          in: query
+          description: Connection filter
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: q
+          in: query
+          description: Query string following Lucene query string syntax
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: search_engine
+          in: query
+          description: Search engine version (v1, v2, or v3)
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: fields
+          in: query
+          description: Comma-separated list of fields to include or exclude
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: >-
+            Returns either PaginatedUserResponse (if include_totals=true) or
+            list<User> (if include_totals=false)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUserResponse'
+    post:
+      description: Create a new user
+      operationId: service_createUser
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+  /api/users/{userId}:
+    get:
+      description: Get a user by ID
+      operationId: service_getUserById
+      tags:
+        - Service
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: fields
+          in: query
+          description: Comma-separated list of fields to include or exclude
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: include_fields
+          in: query
+          description: true to include the fields specified, false to exclude them
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    patch:
+      description: Update a user
+      operationId: service_updateUser
+      tags:
+        - Service
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+    delete:
+      description: Delete a user
+      operationId: service_deleteUser
+      tags:
+        - Service
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+  /api/connections:
+    get:
+      description: List all connections
+      operationId: service_listConnections
+      tags:
+        - Service
+      parameters:
+        - name: strategy
+          in: query
+          description: Filter by strategy type (e.g., auth0, google-oauth2, samlp)
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: name
+          in: query
+          description: Filter by connection name
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: fields
+          in: query
+          description: Comma-separated list of fields to include
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Connection'
+  /api/connections/{connectionId}:
+    get:
+      description: Get a connection by ID
+      operationId: service_getConnection
+      tags:
+        - Service
+      parameters:
+        - name: connectionId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: fields
+          in: query
+          description: Comma-separated list of fields to include
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+  /api/clients:
+    get:
+      description: List all clients/applications
+      operationId: service_listClients
+      tags:
+        - Service
+      parameters:
+        - name: fields
+          in: query
+          description: Comma-separated list of fields to include
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: include_fields
+          in: query
+          description: Whether specified fields are included or excluded
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+        - name: page
+          in: query
+          description: Page number (zero-based)
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: per_page
+          in: query
+          description: Number of results per page
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: include_totals
+          in: query
+          description: Include total count in response
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+        - name: is_global
+          in: query
+          description: Filter by global clients
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+        - name: is_first_party
+          in: query
+          description: Filter by first party clients
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+        - name: app_type
+          in: query
+          description: >-
+            Filter by application type (spa, native, regular_web,
+            non_interactive)
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedClientResponse'
+  /api/clients/{clientId}:
+    get:
+      description: Get a client by ID
+      operationId: service_getClient
+      tags:
+        - Service
+      parameters:
+        - name: clientId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: fields
+          in: query
+          description: Comma-separated list of fields to include
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: include_fields
+          in: query
+          description: Whether specified fields are included or excluded
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
 components:
   schemas:
     Resource:
@@ -179,4 +515,418 @@ components:
           nullable: true
       required:
         - results
-  securitySchemes: {}
+    User:
+      title: User
+      type: object
+      description: User object similar to Auth0 users
+      properties:
+        user_id:
+          type: string
+        email:
+          type: string
+        email_verified:
+          type: boolean
+        username:
+          type: string
+          nullable: true
+        phone_number:
+          type: string
+          nullable: true
+        phone_verified:
+          type: boolean
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        identities:
+          type: array
+          items:
+            $ref: '#/components/schemas/Identity'
+          nullable: true
+        app_metadata:
+          type: object
+          additionalProperties: true
+          nullable: true
+        user_metadata:
+          type: object
+          additionalProperties: true
+          nullable: true
+        picture:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        nickname:
+          type: string
+          nullable: true
+        multifactor:
+          type: array
+          items:
+            type: string
+          nullable: true
+        last_ip:
+          type: string
+          nullable: true
+        last_login:
+          type: string
+          format: date-time
+          nullable: true
+        logins_count:
+          type: integer
+          nullable: true
+        blocked:
+          type: boolean
+          nullable: true
+        given_name:
+          type: string
+          nullable: true
+        family_name:
+          type: string
+          nullable: true
+      required:
+        - user_id
+        - email
+        - email_verified
+        - created_at
+        - updated_at
+    Identity:
+      title: Identity
+      type: object
+      properties:
+        connection:
+          type: string
+        user_id:
+          type: string
+        provider:
+          type: string
+        is_social:
+          type: boolean
+        access_token:
+          type: string
+          nullable: true
+        expires_in:
+          type: integer
+          nullable: true
+      required:
+        - connection
+        - user_id
+        - provider
+        - is_social
+    PaginatedUserResponse:
+      title: PaginatedUserResponse
+      type: object
+      description: Response with pagination info like Auth0
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        start:
+          type: integer
+        limit:
+          type: integer
+        length:
+          type: integer
+        total:
+          type: integer
+          nullable: true
+      required:
+        - users
+        - start
+        - limit
+        - length
+    CreateUserRequest:
+      title: CreateUserRequest
+      type: object
+      properties:
+        email:
+          type: string
+        email_verified:
+          type: boolean
+          nullable: true
+        username:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+        phone_number:
+          type: string
+          nullable: true
+        phone_verified:
+          type: boolean
+          nullable: true
+        user_metadata:
+          type: object
+          additionalProperties: true
+          nullable: true
+        app_metadata:
+          type: object
+          additionalProperties: true
+          nullable: true
+        connection:
+          type: string
+      required:
+        - email
+        - connection
+    UpdateUserRequest:
+      title: UpdateUserRequest
+      type: object
+      properties:
+        email:
+          type: string
+          nullable: true
+        email_verified:
+          type: boolean
+          nullable: true
+        username:
+          type: string
+          nullable: true
+        phone_number:
+          type: string
+          nullable: true
+        phone_verified:
+          type: boolean
+          nullable: true
+        user_metadata:
+          type: object
+          additionalProperties: true
+          nullable: true
+        app_metadata:
+          type: object
+          additionalProperties: true
+          nullable: true
+        password:
+          type: string
+          nullable: true
+        blocked:
+          type: boolean
+          nullable: true
+    Connection:
+      title: Connection
+      type: object
+      description: Represents an identity provider connection
+      properties:
+        id:
+          type: string
+          description: Connection identifier
+        name:
+          type: string
+          description: Connection name
+        display_name:
+          type: string
+          nullable: true
+          description: Display name for the connection
+        strategy:
+          type: string
+          description: >-
+            The identity provider identifier (auth0, google-oauth2, facebook,
+            etc.)
+        options:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: Connection-specific configuration options
+        enabled_clients:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: List of client IDs that can use this connection
+        realms:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: Applicable realms for enterprise connections
+        is_domain_connection:
+          type: boolean
+          nullable: true
+          description: Whether this is a domain connection
+        metadata:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: Additional metadata
+      required:
+        - id
+        - name
+        - strategy
+    Client:
+      title: Client
+      type: object
+      description: Represents a client application
+      properties:
+        client_id:
+          type: string
+          description: The unique client identifier
+        tenant:
+          type: string
+          nullable: true
+          description: The tenant name
+        name:
+          type: string
+          description: Name of the client
+        description:
+          type: string
+          nullable: true
+          description: Free text description of the client
+        global:
+          type: boolean
+          nullable: true
+          description: Whether this is a global client
+        client_secret:
+          type: string
+          nullable: true
+          description: The client secret (only for non-public clients)
+        app_type:
+          type: string
+          nullable: true
+          description: The type of application (spa, native, regular_web, non_interactive)
+        logo_uri:
+          type: string
+          nullable: true
+          description: URL of the client logo
+        is_first_party:
+          type: boolean
+          nullable: true
+          description: Whether this client is a first party client
+        oidc_conformant:
+          type: boolean
+          nullable: true
+          description: Whether this client conforms to OIDC specifications
+        callbacks:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: Allowed callback URLs
+        allowed_origins:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: Allowed origins for CORS
+        web_origins:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: Allowed web origins for CORS
+        grant_types:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: Allowed grant types
+        jwt_configuration:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: JWT configuration for the client
+        signing_keys:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+          nullable: true
+          description: Client signing keys
+        encryption_key:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: Encryption key
+        sso:
+          type: boolean
+          nullable: true
+          description: Whether SSO is enabled
+        sso_disabled:
+          type: boolean
+          nullable: true
+          description: Whether SSO is disabled
+        cross_origin_auth:
+          type: boolean
+          nullable: true
+          description: Whether to use cross-origin authentication
+        cross_origin_loc:
+          type: string
+          nullable: true
+          description: URL for cross-origin authentication
+        custom_login_page_on:
+          type: boolean
+          nullable: true
+          description: Whether a custom login page is enabled
+        custom_login_page:
+          type: string
+          nullable: true
+          description: Custom login page URL
+        custom_login_page_preview:
+          type: string
+          nullable: true
+          description: Custom login page preview URL
+        form_template:
+          type: string
+          nullable: true
+          description: Form template for WS-Federation
+        is_heroku_app:
+          type: boolean
+          nullable: true
+          description: Whether this is a Heroku application
+        addons:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: Addons enabled for this client
+        token_endpoint_auth_method:
+          type: string
+          nullable: true
+          description: Requested authentication method for the token endpoint
+        client_metadata:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: Metadata associated with the client
+        mobile:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: Mobile app settings
+      required:
+        - client_id
+        - name
+    PaginatedClientResponse:
+      title: PaginatedClientResponse
+      type: object
+      description: Paginated response for clients listing
+      properties:
+        start:
+          type: integer
+          description: Starting index (zero-based)
+        limit:
+          type: integer
+          description: Number of items requested
+        length:
+          type: integer
+          description: Number of items returned
+        total:
+          type: integer
+          nullable: true
+          description: Total number of items (when include_totals=true)
+        clients:
+          type: array
+          items:
+            $ref: '#/components/schemas/Client'
+          description: List of clients
+      required:
+        - start
+        - limit
+        - length
+        - clients
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
