@@ -5,6 +5,7 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation, PublishingConfig } from "@fern-fern/ir-sdk/api";
 
+import { ReadmeConfigBuilder } from "./readme";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 
 export class RustGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContext> {
@@ -26,7 +27,14 @@ export class RustGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorConte
     public getReadmeConfig(
         args: AbstractGeneratorAgent.ReadmeConfigArgs<SdkGeneratorContext>
     ): FernGeneratorCli.ReadmeConfig {
-        throw new Error("Method not implemented.");
+        const readmeConfigBuilder = new ReadmeConfigBuilder({
+            endpointSnippets: args.endpointSnippets
+        });
+        return readmeConfigBuilder.build({
+            context: args.context,
+            remote: args.remote,
+            featureConfig: args.featureConfig
+        });
     }
 
     public getLanguage(): FernGeneratorCli.Language {

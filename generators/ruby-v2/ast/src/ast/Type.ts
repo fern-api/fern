@@ -107,7 +107,71 @@ export class Type extends AstNode {
     }
 
     public write(_writer: Writer): void {
-        return;
+        if (!this.internalType) {
+            return;
+        }
+
+        switch (this.internalType?.type) {
+            case "integer":
+                _writer.write("Integer");
+                return;
+            case "string":
+                _writer.write("String");
+                return;
+            case "class":
+                _writer.writeNode(this.internalType.reference);
+                return;
+            case "instance":
+                break;
+            case "boolean":
+                _writer.write("Internal::Types::Boolean");
+                return;
+            case "nil":
+                break;
+            case "top":
+                break;
+            case "bot":
+                break;
+            case "void":
+                break;
+            case "boolish":
+                break;
+            case "union":
+                if (this.internalType.elems.length === 2 && this.internalType.elems[1]?.internalType?.type === "nil") {
+                    const type = this.internalType.elems[0];
+                    if (type != null) {
+                        type.write(_writer);
+                    }
+                }
+                break;
+            case "intersection":
+                break;
+            case "array":
+                _writer.write("Internal::Types::Array[");
+                this.internalType.elem.write(_writer);
+                _writer.write("]");
+                return;
+            case "hash":
+                _writer.write("Internal::Types::Hash[");
+                this.internalType.keyType.write(_writer);
+                _writer.write(", ");
+                this.internalType.valueType.write(_writer);
+                _writer.write("]");
+                return;
+            case "object":
+                _writer.write("Object");
+                break;
+            case "singleton":
+                break;
+            case "generic":
+                break;
+            case "self":
+                break;
+            case "tuple":
+                break;
+            default:
+                assertNever(this.internalType);
+        }
     }
 
     public writeTypeDefinition(writer: Writer): void {

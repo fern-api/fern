@@ -42,6 +42,13 @@ public interface SpringCustomConfig extends ICustomConfig, IDownloadFilesCustomC
         return PackageLayout.NESTED;
     }
 
+    @Value.Default
+    @JsonProperty("use-default-request-parameter-values")
+    @Override
+    default Boolean useDefaultRequestParameterValues() {
+        return false;
+    }
+
     static ImmutableSpringCustomConfig.Builder builder() {
         return ImmutableSpringCustomConfig.builder();
     }

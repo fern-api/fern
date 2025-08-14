@@ -2,7 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { generateFields } from "../generateFields";
+import { generateFields } from "./generateFields";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
@@ -54,7 +54,7 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
 
         return new RubyFile({
             node: ruby.codeblock((writer) => {
-                ruby.comment({ docs: "frozen_string_literal: true" });
+                writer.writeNode(ruby.comment({ docs: "frozen_string_literal: true" }));
                 writer.newLine();
                 classWithRootModule.write(writer);
             }),

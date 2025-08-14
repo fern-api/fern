@@ -68,6 +68,9 @@ fixtures:
       outputFolder: with-partner-audience
   exhaustive:
     - customConfig:
+        packageManager: pnpm
+      outputFolder: use-pnpm
+    - customConfig:
         omitFernHeaders: true
       outputFolder: omit-fern-headers
     - customConfig:
@@ -317,10 +320,31 @@ fixtures:
 scripts:
   - docker: fernapi/ts-seed
     commands:
-      - mkdir cache
-      - yarn install --cache-folder ./cache
-      - if grep -q '"build":' package.json; then yarn build; fi
-      - if grep -q '"test":' package.json; then yarn test --passWithNoTests; fi
+      - |
+        if grep -q '"packageManager": "pnpm' package.json; then
+          mkdir -p .pnpm-cache
+          echo "Enabling corepack and preparing pnpm..."
+          corepack enable
+          corepack prepare pnpm@10.14.0 --activate
+          echo "Running pnpm install..."
+          pnpm install
+          echo "Running pnpm build..."
+          if grep -q '"build":' package.json; then pnpm build; fi
+          echo "Running pnpm test..."
+          if grep -q '"test":' package.json; then pnpm test; fi
+        fi
+        if grep -q '"packageManager": "yarn' package.json; then
+          mkdir -p .yarn-cache
+          echo "Enabling corepack and preparing yarn..."
+          corepack enable
+          corepack prepare yarn@1.22.22 --activate
+          echo "Running yarn install..."
+          yarn install
+          echo "Running yarn build..."
+          if grep -q '"build":' package.json; then yarn build; fi
+          echo "Running yarn test..."
+          if grep -q '"test":' package.json; then yarn test; fi
+        fi
 allowedFailures:
   - bytes-download
   - circular-references

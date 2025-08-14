@@ -45,4 +45,5 @@ export interface SdkCustomConfig {
     packagePath: string | undefined;
     omitFernHeaders: boolean | undefined;
     useDefaultRequestParameterValues: boolean | undefined;
+    packageManager: "pnpm" | "yarn";
 }

@@ -21,5 +21,25 @@ impl ServiceClient {
         ).await
     }
 
+    pub async fn patch_complex(&self, id: &String, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ClientError> {
+        self.http_client.execute_request(
+            Method::PATCH,
+            &format!("complex/{}", id),
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
+    }
+
+    pub async fn regular_patch(&self, id: &String, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ClientError> {
+        self.http_client.execute_request(
+            Method::PATCH,
+            &format!("regular/{}", id),
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
+    }
+
 }
 

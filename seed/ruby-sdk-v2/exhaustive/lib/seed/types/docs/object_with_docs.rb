@@ -1,8 +1,9 @@
+# frozen_string_literal: true
 
 module Seed
     module Types
         class ObjectWithDocs < Internal::Types::Model
-            field :string, String, optional: true, nullable: true
-        end
+            field :string, String, optional: false, nullable: false
+
     end
 end

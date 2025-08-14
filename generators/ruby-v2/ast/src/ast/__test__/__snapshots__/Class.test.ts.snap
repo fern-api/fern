@@ -36,16 +36,9 @@ end
 
 exports[`Class > writes class with docstring 1`] = `
 "# A class that does foobar
-class Foobar; end
-"
+class Foobar; end"
 `;
 
-exports[`Class > writes class with superclass 1`] = `
-"class Child < Parent; end
-"
-`;
+exports[`Class > writes class with superclass 1`] = `"class Child < Parent; end"`;
 
-exports[`Class > writes empty class 1`] = `
-"class Foobar; end
-"
-`;
+exports[`Class > writes empty class 1`] = `"class Foobar; end"`;

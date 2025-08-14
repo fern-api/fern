@@ -10,27 +10,104 @@ module Seed
                     @client = client
                 end
 
-                # @return [void]
-                def get_and_return_list_of_primitives; end
+                # @return [Array[String]]
+                def get_and_return_list_of_primitives(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/container/list-of-primitives"
+                    )
 
-                # @return [void]
-                def get_and_return_list_of_objects; end
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
+                end
 
-                # @return [void]
-                def get_and_return_set_of_primitives; end
+                # @return [Array[Seed::Types::Object_::ObjectWithRequiredField]]
+                def get_and_return_list_of_objects(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/container/list-of-objects"
+                    )
 
-                # @return [void]
-                def get_and_return_set_of_objects; end
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
+                end
 
-                # @return [void]
-                def get_and_return_map_prim_to_prim; end
+                # @return [Array[String]]
+                def get_and_return_set_of_primitives(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/container/set-of-primitives"
+                    )
 
-                # @return [void]
-                def get_and_return_map_of_prim_to_object; end
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
+                end
 
-                # @return [void]
-                def get_and_return_optional; end
-            end
+                # @return [Array[Seed::Types::Object_::ObjectWithRequiredField]]
+                def get_and_return_set_of_objects(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/container/set-of-objects"
+                    )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
+                end
+
+                # @return [Hash[String, String]]
+                def get_and_return_map_prim_to_prim(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/container/map-prim-to-prim"
+                    )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
+                end
+
+                # @return [Hash[String, Seed::Types::Object_::ObjectWithRequiredField]]
+                def get_and_return_map_of_prim_to_object(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/container/map-prim-to-object"
+                    )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
+                end
+
+                # @return [Seed::Types::Object_::ObjectWithRequiredField | nil]
+                def get_and_return_optional(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/container/opt-objects"
+                    )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
+                end
+
         end
     end
 end

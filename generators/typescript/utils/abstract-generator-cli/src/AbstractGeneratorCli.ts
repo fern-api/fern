@@ -137,7 +137,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             isPackagePrivate: npmPackage != null && npmPackage.private,
                             pathToProject,
                             config,
-                            publishToJsr: this.publishToJsr(customConfig)
+                            publishToJsr: this.publishToJsr(customConfig),
+                            packageManager: this.getPackageManager(customConfig)
                         });
                     });
                     await typescriptProject.copyProjectTo({
@@ -215,6 +216,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     }): Promise<PersistedTypescriptProject>;
     protected abstract isPackagePrivate(customConfig: CustomConfig): boolean;
     protected abstract publishToJsr(customConfig: CustomConfig): boolean;
+    protected abstract getPackageManager(customConfig: CustomConfig): "pnpm" | "yarn";
     protected abstract outputSourceFiles(customConfig: CustomConfig): boolean;
     protected abstract shouldTolerateRepublish(customConfig: CustomConfig): boolean;
 

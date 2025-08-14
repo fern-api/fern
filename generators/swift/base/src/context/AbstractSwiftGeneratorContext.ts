@@ -19,6 +19,15 @@ import {
 import { AsIsFileDefinition, AsIsFiles } from "../AsIs";
 import { SwiftProject } from "../project";
 
+/**
+ * Registry for local type information used by individual generators to resolve type references
+ * and handle nested type collisions within their specific context.
+ */
+export interface LocalTypeRegistry {
+    getSwiftTypeForStringLiteral(literalValue: string): swift.Type;
+    hasNestedTypeWithName(symbolName: string): boolean;
+}
+
 export abstract class AbstractSwiftGeneratorContext<
     CustomConfig extends BaseSwiftCustomConfigSchema
 > extends AbstractGeneratorContext {
@@ -123,21 +132,29 @@ export abstract class AbstractSwiftGeneratorContext<
         return Object.values(AsIsFiles);
     }
 
-    public getSwiftTypeForTypeReference(typeReference: TypeReference): swift.Type {
+    public getSwiftTypeForTypeReference(
+        typeReference: TypeReference,
+        localTypeRegistry?: LocalTypeRegistry
+    ): swift.Type {
         switch (typeReference.type) {
             case "container":
                 return typeReference.container._visit({
-                    // TODO(kafkas): Handle these cases
-                    literal: () => swift.Type.jsonValue(),
+                    literal: (literal) =>
+                        literal._visit({
+                            boolean: () => swift.Type.jsonValue(), // TODO(kafkas): Implement boolean literals
+                            string: (literalValue) =>
+                                localTypeRegistry?.getSwiftTypeForStringLiteral(literalValue) ?? swift.Type.jsonValue(),
+                            _other: () => swift.Type.jsonValue()
+                        }),
                     map: (type) =>
                         swift.Type.dictionary(
-                            this.getSwiftTypeForTypeReference(type.keyType),
-                            this.getSwiftTypeForTypeReference(type.valueType)
+                            this.getSwiftTypeForTypeReference(type.keyType, localTypeRegistry),
+                            this.getSwiftTypeForTypeReference(type.valueType, localTypeRegistry)
                         ),
-                    set: () => swift.Type.jsonValue(),
-                    nullable: () => swift.Type.jsonValue(),
-                    optional: (ref) => swift.Type.optional(this.getSwiftTypeForTypeReference(ref)),
-                    list: (ref) => swift.Type.array(this.getSwiftTypeForTypeReference(ref)),
+                    set: () => swift.Type.jsonValue(), // TODO(kafkas): Implement set type
+                    nullable: () => swift.Type.jsonValue(), // TODO(kafkas): Implement nullable types
+                    optional: (ref) => swift.Type.optional(this.getSwiftTypeForTypeReference(ref, localTypeRegistry)),
+                    list: (ref) => swift.Type.array(this.getSwiftTypeForTypeReference(ref, localTypeRegistry)),
                     _other: () => swift.Type.jsonValue()
                 });
             case "primitive":
@@ -150,8 +167,7 @@ export abstract class AbstractSwiftGeneratorContext<
                     long: () => swift.Type.int64(),
                     float: () => swift.Type.float(),
                     double: () => swift.Type.double(),
-                    // TODO(kafkas): We may need to implement our own value type for this
-                    bigInteger: () => swift.Type.string(),
+                    bigInteger: () => swift.Type.string(), // TODO(kafkas): We may need to implement our own value type for this
                     date: () => swift.Type.date(),
                     dateTime: () => swift.Type.date(),
                     base64: () => swift.Type.string(),
@@ -160,12 +176,19 @@ export abstract class AbstractSwiftGeneratorContext<
                 });
             case "named": {
                 const symbolName = this.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeReference.typeId);
-                return swift.Type.custom(symbolName);
+                const hasNestedTypeWithSameName = localTypeRegistry?.hasNestedTypeWithName?.(symbolName);
+                return swift.Type.custom(
+                    hasNestedTypeWithSameName ? this.getFullyQualifiedNameForSchemaType(symbolName) : symbolName
+                );
             }
             case "unknown":
                 return swift.Type.jsonValue();
             default:
                 assertNever(typeReference);
         }
+    }
+
+    public getFullyQualifiedNameForSchemaType(symbolName: string): string {
+        return `${this.targetName}.${symbolName}`;
     }
 }

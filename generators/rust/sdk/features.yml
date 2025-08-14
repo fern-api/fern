@@ -1,0 +1,28 @@
+features:
+  - id: USAGE
+    description: |
+      Instantiate and use the client with the following:
+
+  - id: ERRORS
+    description: |
+      When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
+
+  - id: RETRIES
+    advanced: true
+    description: |
+      The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+      as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
+      retry limit (default: 2).
+
+      A request is deemed retryable when any of the following HTTP status codes is returned:
+
+      - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+      - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+      - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+      Use the `max_retries` method to configure this behavior.
+
+  - id: TIMEOUTS
+    advanced: true
+    description: |
+      The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.

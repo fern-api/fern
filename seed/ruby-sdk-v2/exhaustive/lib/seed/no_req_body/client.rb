@@ -9,11 +9,28 @@ module Seed
                 @client = client
             end
 
-            # @return [void]
-            def get_with_no_request_body; end
+            # @return [Seed::Types::Object_::ObjectWithOptionalField]
+            def get_with_no_request_body(request_options: {}, **params)
+                _request = params
 
-            # @return [void]
-            def post_with_no_request_body; end
-        end
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return Seed::Types::Object_::Types::ObjectWithOptionalField.load(_response.body)
+
+                else
+                    raise _response.body
+            end
+
+            # @return [String]
+            def post_with_no_request_body(request_options: {}, **params)
+                _request = params
+
+                _response = @client.send(_request)
+                if _response.code >= "200" && _response.code < "300"
+                    return 
+                else
+                    raise _response.body
+            end
+
     end
 end

@@ -1,0 +1,660 @@
+{
+  "types": {
+    "type_types:Resource": {
+      "name": "Resource",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "description",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "created_at",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "datetime"
+              }
+            }
+          },
+          {
+            "key": "updated_at",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "datetime"
+              }
+            }
+          },
+          {
+            "key": "metadata",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_types:SearchResponse": {
+      "name": "SearchResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "results",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_types:Resource"
+              }
+            }
+          },
+          {
+            "key": "total",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "next_offset",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {
+    "subpackage_service": {
+      "subpackageId": "subpackage_service",
+      "name": "service",
+      "endpoints": [
+        {
+          "auth": false,
+          "description": "List resources with pagination",
+          "method": "GET",
+          "id": "listResources",
+          "originalEndpointId": "endpoint_service.listResources",
+          "name": "List Resources",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/api"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/resources"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "Zero-indexed page number",
+              "key": "page",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            },
+            {
+              "description": "Number of items per page",
+              "key": "per_page",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer",
+                  "default": 50
+                }
+              }
+            },
+            {
+              "description": "Sort field",
+              "key": "sort",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "default": "created_at"
+                }
+              }
+            },
+            {
+              "description": "Sort order (asc or desc)",
+              "key": "order",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "default": "desc"
+                }
+              }
+            },
+            {
+              "description": "Whether to include total count",
+              "key": "include_totals",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "default": true
+                }
+              }
+            },
+            {
+              "description": "Comma-separated list of fields to include",
+              "key": "fields",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "description": "Search query",
+              "key": "search",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_types:Resource"
+                }
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/api/resources",
+              "pathParameters": {},
+              "queryParameters": {
+                "page": 1,
+                "per_page": 1,
+                "sort": "created_at",
+                "order": "desc",
+                "include_totals": true
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": [
+                {
+                  "id": "id",
+                  "name": "name",
+                  "description": "description",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "metadata": {
+                    "metadata": {
+                      "key": "value"
+                    }
+                  }
+                },
+                {
+                  "id": "id",
+                  "name": "name",
+                  "description": "description",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "metadata": {
+                    "metadata": {
+                      "key": "value"
+                    }
+                  }
+                }
+              ],
+              "responseBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "id": "id",
+                    "name": "name",
+                    "description": "description",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "metadata": {
+                      "metadata": {
+                        "key": "value"
+                      }
+                    }
+                  },
+                  {
+                    "id": "id",
+                    "name": "name",
+                    "description": "description",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "metadata": {
+                      "metadata": {
+                        "key": "value"
+                      }
+                    }
+                  }
+                ]
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "description": "Get a single resource",
+          "method": "GET",
+          "id": "getResource",
+          "originalEndpointId": "endpoint_service.getResource",
+          "name": "Get Resource",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "resourceId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/api"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/resources/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "resourceId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "Include metadata in response",
+              "key": "include_metadata",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            },
+            {
+              "description": "Response format",
+              "key": "format",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "default": "json"
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_types:Resource"
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/api/resources/resourceId",
+              "pathParameters": {
+                "resourceId": "resourceId"
+              },
+              "queryParameters": {
+                "include_metadata": true,
+                "format": "json"
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "id": "id",
+                "name": "name",
+                "description": "description",
+                "created_at": "2024-01-15T09:30:00Z",
+                "updated_at": "2024-01-15T09:30:00Z",
+                "metadata": {
+                  "metadata": {
+                    "key": "value"
+                  }
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": "id",
+                  "name": "name",
+                  "description": "description",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "metadata": {
+                    "metadata": {
+                      "key": "value"
+                    }
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "description": "Search resources with complex parameters",
+          "method": "POST",
+          "id": "searchResources",
+          "originalEndpointId": "endpoint_service.searchResources",
+          "name": "Search Resources",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/api"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/resources/search"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "Maximum results to return",
+              "key": "limit",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer",
+                  "default": 100
+                }
+              }
+            },
+            {
+              "description": "Offset for pagination",
+              "key": "offset",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer",
+                  "default": 0
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "query",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  {
+                    "key": "filters",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "map",
+                        "keyType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "valueType": {
+                          "type": "unknown"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_types:SearchResponse"
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/api/resources/search",
+              "pathParameters": {},
+              "queryParameters": {
+                "limit": 1,
+                "offset": 1
+              },
+              "headers": {},
+              "requestBody": {
+                "query": "query"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "query": "query"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "results": [
+                  {
+                    "id": "id",
+                    "name": "name",
+                    "description": "description",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "metadata": {
+                      "metadata": {
+                        "key": "value"
+                      }
+                    }
+                  },
+                  {
+                    "id": "id",
+                    "name": "name",
+                    "description": "description",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "metadata": {
+                      "metadata": {
+                        "key": "value"
+                      }
+                    }
+                  }
+                ],
+                "total": 1,
+                "next_offset": 1
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "results": [
+                    {
+                      "id": "id",
+                      "name": "name",
+                      "description": "description",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "metadata": {
+                        "metadata": {
+                          "key": "value"
+                        }
+                      }
+                    },
+                    {
+                      "id": "id",
+                      "name": "name",
+                      "description": "description",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "metadata": {
+                        "metadata": {
+                          "key": "value"
+                        }
+                      }
+                    }
+                  ],
+                  "total": 1,
+                  "next_offset": 1
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
+    "subpackage_types": {
+      "subpackageId": "subpackage_types",
+      "name": "types",
+      "endpoints": [],
+      "webhooks": [],
+      "websockets": [],
+      "types": [
+        "type_types:Resource",
+        "type_types:SearchResponse"
+      ],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": [
+      "subpackage_service",
+      "subpackage_types"
+    ]
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

@@ -22,8 +22,6 @@
     "test:ete": "pnpm --filter @fern-api/cli dist:cli:dev && pnpm --filter @fern-api/seed-cli dist:cli && pnpm --filter @fern-api/ete-tests test",
     "test:ete:update": "pnpm --filter @fern-api/cli dist:cli:dev && pnpm --filter @fern-api/seed-cli dist:cli && pnpm --filter @fern-api/ete-tests test -- -u",
     "lint:biome": "biome lint",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path .eslintignore",
-    "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'packages/**/src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
     "lint:spelling": "cspell **",

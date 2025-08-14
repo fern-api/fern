@@ -19,4 +19,5 @@ export interface ExpressCustomConfig {
     noOptionalProperties: boolean;
     enableInlineTypes: boolean;
     packagePath: string | undefined;
+    packageManager: "pnpm" | "yarn";
 }

@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.0.4
+  createdAt: "2025-08-13"
+  changelogEntry:
+    - type: fix
+      summary: Updated generator CLI SDK version to 0.0.33 for consistency.
+  irVersion: 58
+
+- version: 0.0.3
+  createdAt: "2025-08-13"
+  changelogEntry:
+    - type: feat
+      summary: Added README generation support.
+  irVersion: 58
+
 - version: 0.0.2
   createdAt: "2025-08-11"
   changelogEntry:

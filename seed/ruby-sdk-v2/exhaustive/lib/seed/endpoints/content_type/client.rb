@@ -10,12 +10,36 @@ module Seed
                     @client = client
                 end
 
-                # @return [void]
-                def post_json_patch_content_type; end
+                # @return [untyped]
+                def post_json_patch_content_type(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/foo/bar"
+                    )
 
-                # @return [void]
-                def post_json_patch_content_with_charset_type; end
-            end
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return
+
+                    else
+                        raise _response.body
+                end
+
+                # @return [untyped]
+                def post_json_patch_content_with_charset_type(request_options: {}, **params)
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: POST,
+                        path: "/foo/baz"
+                    )
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return
+
+                    else
+                        raise _response.body
+                end
+
         end
     end
 end

@@ -12,6 +12,7 @@ $client = new SeedClient(
 );
 $client->auth->refreshToken(
     new RefreshTokenRequest([
+        'xApiKey' => 'X-Api-Key',
         'clientId' => 'client_id',
         'clientSecret' => 'client_secret',
         'refreshToken' => 'refresh_token',

@@ -3,9 +3,9 @@ module Seed
     module Endpoints
         module Params
             class GetWithPathAndQuery
-                field :param, String, optional: true, nullable: true
-                field :query, String, optional: true, nullable: true
-            end
+                field :param, String, optional: false, nullable: false
+                field :query, String, optional: false, nullable: false
+
         end
     end
 end

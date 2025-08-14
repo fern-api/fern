@@ -37,6 +37,7 @@ import com.fern.java.client.GeneratedWrappedRequest.InlinedRequestBodyGetters;
 import com.fern.java.client.GeneratedWrappedRequest.JsonFileUploadProperty;
 import com.fern.java.client.GeneratedWrappedRequest.ReferencedRequestBodyGetter;
 import com.fern.java.client.GeneratedWrappedRequest.RequestBodyGetter;
+import com.fern.java.client.generators.endpoint.DefaultValueExtractor;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.ObjectGenerator;
 import com.fern.java.generators.object.EnrichedObjectProperty;
@@ -58,6 +59,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final boolean inlinePathParams;
     private final boolean inlineFileProperties;
+    private final DefaultValueExtractor defaultValueExtractor;
 
     public WrappedRequestGenerator(
             SdkRequestWrapper sdkRequestWrapper,
@@ -93,6 +95,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         this.inlineFileProperties = generatorContext.getCustomConfig().inlineFileProperties()
                 && httpEndpoint.getRequestBody().isPresent()
                 && httpEndpoint.getRequestBody().get().isFileUpload();
+        this.defaultValueExtractor = new DefaultValueExtractor(generatorContext);
     }
 
     @Override
@@ -104,30 +107,43 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         List<ObjectProperty> fileObjectProperties = new ArrayList<>();
         List<DeclaredTypeName> extendedInterfaces = new ArrayList<>();
         httpService.getHeaders().forEach(httpHeader -> {
+            TypeReference valueType = httpHeader.getValueType();
+            if (defaultValueExtractor.hasDefaultValue(valueType)) {
+                valueType = TypeReference.container(ContainerType.optional(valueType));
+            }
             headerObjectProperties.add(ObjectProperty.builder()
                     .name(httpHeader.getName())
-                    .valueType(httpHeader.getValueType())
+                    .valueType(valueType)
                     .docs(httpHeader.getDocs())
                     .build());
         });
         httpEndpoint.getHeaders().forEach(httpHeader -> {
+            TypeReference valueType = httpHeader.getValueType();
+            if (defaultValueExtractor.hasDefaultValue(valueType)) {
+                valueType = TypeReference.container(ContainerType.optional(valueType));
+            }
             headerObjectProperties.add(ObjectProperty.builder()
                     .name(httpHeader.getName())
-                    .valueType(httpHeader.getValueType())
+                    .valueType(valueType)
                     .docs(httpHeader.getDocs())
                     .build());
         });
         httpEndpoint.getQueryParameters().forEach(queryParameter -> {
+            TypeReference valueType = queryParameter.getValueType();
+            boolean hasDefault = defaultValueExtractor.hasDefaultValue(valueType);
+            if (hasDefault) {
+                valueType = TypeReference.container(ContainerType.optional(valueType));
+            }
             if (queryParameter.getAllowMultiple()) {
                 queryParameterAllowMultipleObjectProperties.add(ObjectProperty.builder()
                         .name(queryParameter.getName())
-                        .valueType(queryParameter.getValueType())
+                        .valueType(valueType)
                         .docs(queryParameter.getDocs())
                         .build());
             } else {
                 queryParameterObjectProperties.add(ObjectProperty.builder()
                         .name(queryParameter.getName())
-                        .valueType(queryParameter.getValueType())
+                        .valueType(valueType)
                         .docs(queryParameter.getDocs())
                         .build());
             }
@@ -137,12 +153,16 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
             httpEndpoint.getPathParameters().stream()
                     .filter(param -> param.getLocation().equals(PathParameterLocation.ENDPOINT))
                     .forEach(pathParameter -> {
+                        TypeReference valueType = pathParameter.getValueType();
+                        if (defaultValueExtractor.hasDefaultValue(valueType)) {
+                            valueType = TypeReference.container(ContainerType.optional(valueType));
+                        }
                         pathParameterObjectProperties.add(ObjectProperty.builder()
                                 .name(NameAndWireValue.builder()
                                         .wireValue(pathParameter.getName().getOriginalName())
                                         .name(pathParameter.getName())
                                         .build())
-                                .valueType(pathParameter.getValueType())
+                                .valueType(valueType)
                                 .docs(pathParameter.getDocs())
                                 .build());
                     });

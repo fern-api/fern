@@ -1,0 +1,80 @@
+imports:
+  root: types.yml
+
+service:
+  base-path: ""
+  auth: false
+  endpoints:
+    listResources:
+      docs: List resources with pagination
+      method: GET
+      path: /resources
+      request:
+        name: ListResourcesRequest
+        query-parameters:
+          page:
+            type: integer
+            docs: Zero-indexed page number
+          per_page:
+            type: integer
+            default: 50
+            docs: Number of items per page
+          sort:
+            type: string
+            default: "created_at"
+            docs: Sort field
+          order:
+            type: string
+            default: "desc"
+            docs: Sort order (asc or desc)
+          include_totals:
+            type: boolean
+            default: true
+            docs: Whether to include total count
+          fields:
+            type: optional<string>
+            docs: Comma-separated list of fields to include
+          search:
+            type: optional<string>
+            docs: Search query
+      response: list<root.Resource>
+
+    getResource:
+      docs: Get a single resource
+      method: GET
+      path: /resources/{resourceId}
+      path-parameters:
+        resourceId: string
+      request:
+        name: GetResourceRequest
+        query-parameters:
+          include_metadata:
+            type: boolean
+            default: false
+            docs: Include metadata in response
+          format:
+            type: string
+            default: "json"
+            docs: Response format
+      response: root.Resource
+
+    searchResources:
+      docs: Search resources with complex parameters
+      method: POST
+      path: /resources/search
+      request:
+        name: SearchResourcesRequest
+        query-parameters:
+          limit:
+            type: integer
+            default: 100
+            docs: Maximum results to return
+          offset:
+            type: integer
+            default: 0
+            docs: Offset for pagination
+        body:
+          properties:
+            query: string
+            filters: optional<map<string, unknown>>
+      response: root.SearchResponse

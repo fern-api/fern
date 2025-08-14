@@ -19,7 +19,7 @@ public struct Type: Codable, Hashable, Sendable {
     public let fifteen: [[Int]]
     public let sixteen: [[String: Int]]
     public let seventeen: [UUID?]
-    public let eighteen: JSONValue
+    public let eighteen: Eighteen
     public let nineteen: Name
     public let twenty: UInt
     public let twentyone: UInt64
@@ -48,7 +48,7 @@ public struct Type: Codable, Hashable, Sendable {
         fifteen: [[Int]],
         sixteen: [[String: Int]],
         seventeen: [UUID?],
-        eighteen: JSONValue,
+        eighteen: Eighteen,
         nineteen: Name,
         twenty: UInt,
         twentyone: UInt64,
@@ -105,7 +105,7 @@ public struct Type: Codable, Hashable, Sendable {
         self.fifteen = try container.decode([[Int]].self, forKey: .fifteen)
         self.sixteen = try container.decode([[String: Int]].self, forKey: .sixteen)
         self.seventeen = try container.decode([UUID?].self, forKey: .seventeen)
-        self.eighteen = try container.decode(JSONValue.self, forKey: .eighteen)
+        self.eighteen = try container.decode(Eighteen.self, forKey: .eighteen)
         self.nineteen = try container.decode(Name.self, forKey: .nineteen)
         self.twenty = try container.decode(UInt.self, forKey: .twenty)
         self.twentyone = try container.decode(UInt64.self, forKey: .twentyone)
@@ -144,6 +144,10 @@ public struct Type: Codable, Hashable, Sendable {
         try container.encode(self.twentythree, forKey: .twentythree)
         try container.encodeIfPresent(self.twentyfour, forKey: .twentyfour)
         try container.encodeIfPresent(self.twentyfive, forKey: .twentyfive)
+    }
+
+    public enum Eighteen: String, Codable, Hashable, CaseIterable, Sendable {
+        case eighteen
     }
 
     /// Keys for encoding/decoding struct properties.

@@ -4,7 +4,7 @@ public struct Practitioner: Codable, Hashable, Sendable {
     public let id: String
     public let relatedResources: [ResourceList]
     public let memo: Memo
-    public let resourceType: JSONValue
+    public let resourceType: Practitioner
     public let name: String
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
@@ -13,7 +13,7 @@ public struct Practitioner: Codable, Hashable, Sendable {
         id: String,
         relatedResources: [ResourceList],
         memo: Memo,
-        resourceType: JSONValue,
+        resourceType: Practitioner,
         name: String,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -30,7 +30,7 @@ public struct Practitioner: Codable, Hashable, Sendable {
         self.id = try container.decode(String.self, forKey: .id)
         self.relatedResources = try container.decode([ResourceList].self, forKey: .relatedResources)
         self.memo = try container.decode(Memo.self, forKey: .memo)
-        self.resourceType = try container.decode(JSONValue.self, forKey: .resourceType)
+        self.resourceType = try container.decode(Practitioner.self, forKey: .resourceType)
         self.name = try container.decode(String.self, forKey: .name)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
@@ -43,6 +43,10 @@ public struct Practitioner: Codable, Hashable, Sendable {
         try container.encode(self.memo, forKey: .memo)
         try container.encode(self.resourceType, forKey: .resourceType)
         try container.encode(self.name, forKey: .name)
+    }
+
+    public enum Practitioner: String, Codable, Hashable, CaseIterable, Sendable {
+        case practitioner = "Practitioner"
     }
 
     /// Keys for encoding/decoding struct properties.

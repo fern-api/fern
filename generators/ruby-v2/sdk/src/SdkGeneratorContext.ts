@@ -1,8 +1,8 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractRubyGeneratorContext, ruby } from "@fern-api/ruby-ast";
-import { AsIsFiles, RubyProject } from "@fern-api/ruby-base";
-import { camelCase, upperFirst } from "lodash-es";
-
+import { RelativeFilePath } from "@fern-api/path-utils";
+import { ruby } from "@fern-api/ruby-ast";
+import { ClassReference } from "@fern-api/ruby-ast/src/ast/ClassReference";
+import { AbstractRubyGeneratorContext, AsIsFiles, RubyProject } from "@fern-api/ruby-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     HttpService,
@@ -12,15 +12,14 @@ import {
     SubpackageId,
     TypeId
 } from "@fern-fern/ir-sdk/api";
-
-import { RelativeFilePath } from "@fern-api/path-utils";
-import { ClassReference } from "@fern-api/ruby-ast/src/ast/ClassReference";
+import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 const ROOT_TYPES_FOLDER = "types";
 
 export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomConfigSchema> {
     public readonly project: RubyProject;
+    public readonly endpointGenerator: EndpointGenerator;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -28,8 +27,9 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         public readonly customConfig: SdkCustomConfigSchema,
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
-        super(ir, config, customConfig, generatorNotificationService);
+        super(ir, config, customConfig ?? {}, generatorNotificationService);
         this.project = new RubyProject({ context: this });
+        this.endpointGenerator = new EndpointGenerator({ context: this });
     }
 
     public getRootFolderPath(): RelativeFilePath {
@@ -118,6 +118,29 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return ruby.classReference({
             name: "Environment",
             modules: [this.getRootModule().name]
+        });
+    }
+
+    public getRootClientClassName(): string {
+        return `Client`;
+    }
+
+    public getReferenceToInternalJSONRequest(): ruby.ClassReference {
+        return ruby.classReference({
+            name: "JSONRequest",
+            modules: [this.getRootModule().name, "Internal", "Http"]
+        });
+    }
+
+    public getReferenceToTypeId(typeId: TypeId): ruby.ClassReference {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return ruby.classReference({
+            name: typeDeclaration.name.name.pascalCase.safeName,
+            modules: [
+                this.getRootModule().name,
+                ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName),
+                "Types"
+            ]
         });
     }
 

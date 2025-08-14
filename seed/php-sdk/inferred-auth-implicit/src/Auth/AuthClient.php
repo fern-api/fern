@@ -68,12 +68,15 @@ class AuthClient
     public function getTokenWithClientCredentials(GetTokenRequest $request, ?array $options = null): TokenResponse
     {
         $options = array_merge($this->options, $options ?? []);
+        $headers = [];
+        $headers['X-Api-Key'] = $request->xApiKey;
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/token",
                     method: HttpMethod::POST,
+                    headers: $headers,
                     body: $request,
                 ),
                 $options,
@@ -122,12 +125,15 @@ class AuthClient
     public function refreshToken(RefreshTokenRequest $request, ?array $options = null): TokenResponse
     {
         $options = array_merge($this->options, $options ?? []);
+        $headers = [];
+        $headers['X-Api-Key'] = $request->xApiKey;
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/token/refresh",
                     method: HttpMethod::POST,
+                    headers: $headers,
                     body: $request,
                 ),
                 $options,

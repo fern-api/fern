@@ -1,3 +1,5 @@
 import Foundation
 
-public typealias SomeLiteral = JSONValue
+public enum SomeLiteral: String, Codable, Hashable, CaseIterable, Sendable {
+    case youreSuperWise = "You're super wise"
+}

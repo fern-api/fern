@@ -10,18 +10,50 @@ module Seed
                     @client = client
                 end
 
-                # @return [void]
-                def with_mixed_case; end
+                # @return [String]
+                def with_mixed_case(request_options: {}, **params)
+                    _request = params
 
-                # @return [void]
-                def no_ending_slash; end
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
+                end
 
-                # @return [void]
-                def with_ending_slash; end
+                # @return [String]
+                def no_ending_slash(request_options: {}, **params)
+                    _request = params
 
-                # @return [void]
-                def with_underscores; end
-            end
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
+                end
+
+                # @return [String]
+                def with_ending_slash(request_options: {}, **params)
+                    _request = params
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
+                end
+
+                # @return [String]
+                def with_underscores(request_options: {}, **params)
+                    _request = params
+
+                    _response = @client.send(_request)
+                    if _response.code >= "200" && _response.code < "300"
+                        return 
+                    else
+                        raise _response.body
+                end
+
         end
     end
 end
