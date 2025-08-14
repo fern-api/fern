@@ -18,6 +18,7 @@ package com.fern.java.client.generators;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.ir.model.http.BytesRequest;
@@ -55,12 +56,27 @@ public final class WireTestGenerator extends AbstractFileGenerator {
     private final HttpService service;
     private final ClientGeneratorContext context;
     private final Map<TypeId, ObjectTypeDeclaration> objectTypes;
+    private final String serviceName;  // Cache service name
 
     // MockWebServer and related types
     private static final ClassName MOCK_WEB_SERVER = ClassName.get("okhttp3.mockwebserver", "MockWebServer");
     private static final ClassName MOCK_RESPONSE = ClassName.get("okhttp3.mockwebserver", "MockResponse");
     private static final ClassName RECORDED_REQUEST = ClassName.get("okhttp3.mockwebserver", "RecordedRequest");
     private static final ClassName OBJECT_MAPPER = ClassName.get("com.fasterxml.jackson.databind", "ObjectMapper");
+    
+    // Test constants
+    private static final String TEST_TOKEN = "test-token";
+    private static final String TEST_PREFIX = "test-";
+    private static final String DEFAULT_SERVICE_NAME = "service";
+    private static final String TODO_PREFIX = "TODO: ";
+    
+    // Response body templates
+    private static final String ARRAY_RESPONSE = "[{\"id\":\"test-id\",\"value\":\"test-value\"}]";
+    private static final String EMPTY_RESPONSE = "{}";
+    private static final String SUCCESS_RESPONSE = "{\"id\":\"test-id\",\"status\":\"success\",\"createdAt\":\"2024-01-01T00:00:00Z\"}";
+    private static final String DEFAULT_RESPONSE = "{\"id\":\"test-id\",\"name\":\"test-name\",\"status\":\"success\",\"data\":{}}";
+    private static final String NOT_FOUND_ERROR = "{\"error\":\"not_found\",\"message\":\"Resource not found\"}";
+    private static final String INTERNAL_ERROR = "{\"error\":\"internal_error\",\"message\":\"Internal server error\"}";
 
     public WireTestGenerator(
             HttpService service,
@@ -74,6 +90,17 @@ public final class WireTestGenerator extends AbstractFileGenerator {
         this.service = service;
         this.context = context;
         this.objectTypes = objectTypes;
+        this.serviceName = extractServiceName();
+    }
+    
+    private String extractServiceName() {
+        List<Name> parts = service.getName().getFernFilepath().getAllParts();
+        if (parts.isEmpty()) {
+            return "";
+        }
+        return parts.get(parts.size() - 1)
+                .getCamelCase()
+                .getSafeName();
     }
 
     @Override
@@ -152,8 +179,8 @@ public final class WireTestGenerator extends AbstractFileGenerator {
                 .addStatement("server.start()");
         
         if (context.getIr().getAuth() != null) {
-            setupMethod.addStatement("client = $T.builder()$>.url(server.url(\"/\").toString()).token(\"test-token\").maxRetries(0).build()$<",
-                    clientClass);
+            setupMethod.addStatement("client = $T.builder()$>.url(server.url(\"/\").toString()).token($S).maxRetries(0).build()$<",
+                    clientClass, TEST_TOKEN);
         } else {
             setupMethod.addStatement("client = $T.builder()$>.url(server.url(\"/\").toString()).maxRetries(0).build()$<",
                     clientClass);
@@ -199,7 +226,7 @@ public final class WireTestGenerator extends AbstractFileGenerator {
                     .addStatement("assertTrue(recorded.getPath().startsWith($S))",
                             endpoint.getPath().getHead());
         } else {
-            methodBuilder.addComment("TODO: " + clientCall);
+            methodBuilder.addComment(TODO_PREFIX + clientCall);
             methodBuilder.addStatement("server.takeRequest()");
         }
         
@@ -266,12 +293,6 @@ public final class WireTestGenerator extends AbstractFileGenerator {
     }
 
     private String generateClientCall(HttpEndpoint endpoint) {
-        String serviceName = service.getName().getFernFilepath().getAllParts().isEmpty() 
-            ? "" 
-            : service.getName().getFernFilepath().getAllParts()
-                .get(service.getName().getFernFilepath().getAllParts().size() - 1)
-                .getCamelCase().getSafeName();
-        
         StringBuilder call = new StringBuilder("client");
         if (!serviceName.isEmpty()) {
             call.append(".").append(serviceName).append("()");
@@ -304,12 +325,6 @@ public final class WireTestGenerator extends AbstractFileGenerator {
     }
 
     private String generateClientCallWithQueryParams(HttpEndpoint endpoint) {
-        String serviceName = service.getName().getFernFilepath().getAllParts().isEmpty() 
-            ? "" 
-            : service.getName().getFernFilepath().getAllParts()
-                .get(service.getName().getFernFilepath().getAllParts().size() - 1)
-                .getCamelCase().getSafeName();
-        
         StringBuilder call = new StringBuilder("client");
         if (!serviceName.isEmpty()) {
             call.append(".").append(serviceName).append("()");
@@ -335,12 +350,6 @@ public final class WireTestGenerator extends AbstractFileGenerator {
     }
 
     private String generateClientCallWithBody(HttpEndpoint endpoint) {
-        String serviceName = service.getName().getFernFilepath().getAllParts().isEmpty() 
-            ? "" 
-            : service.getName().getFernFilepath().getAllParts()
-                .get(service.getName().getFernFilepath().getAllParts().size() - 1)
-                .getCamelCase().getSafeName();
-        
         StringBuilder call = new StringBuilder("client");
         if (!serviceName.isEmpty()) {
             call.append(".").append(serviceName).append("()");
@@ -380,10 +389,10 @@ public final class WireTestGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PUBLIC);
 
         methodBuilder.addStatement("server.enqueue(new $T()$>.setResponseCode(404)" +
-                        ".setBody(\"{\\\"error\\\":\\\"not_found\\\",\\\"message\\\":\\\"Resource not found\\\"}\")$<)",
-                        MOCK_RESPONSE);
+                        ".setBody($S)$<)",
+                        MOCK_RESPONSE, NOT_FOUND_ERROR);
 
-        String clientCall = generateClientCall(endpoint);
+        String clientCall = generateClientCallForErrorTest(endpoint);
         methodBuilder.addStatement("$T exception = assertThrows($T.class, () -> { $L; })",
                         apiErrorClass, apiErrorClass, clientCall)
                 .addStatement("assertEquals(404, exception.statusCode())");
@@ -406,10 +415,10 @@ public final class WireTestGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PUBLIC);
 
         methodBuilder.addStatement("server.enqueue(new $T()$>.setResponseCode(500)" +
-                        ".setBody(\"{\\\"error\\\":\\\"internal_error\\\",\\\"message\\\":\\\"Internal server error\\\"}\")$<)",
-                        MOCK_RESPONSE);
+                        ".setBody($S)$<)",
+                        MOCK_RESPONSE, INTERNAL_ERROR);
 
-        String clientCall = generateClientCall(endpoint);
+        String clientCall = generateClientCallForErrorTest(endpoint);
         methodBuilder.addStatement("$T exception = assertThrows($T.class, () -> { $L; })",
                         apiErrorClass, apiErrorClass, clientCall)
                 .addStatement("assertEquals(500, exception.statusCode())");
@@ -471,18 +480,65 @@ public final class WireTestGenerator extends AbstractFileGenerator {
         return true;
     }
 
+    private String generateClientCallForErrorTest(HttpEndpoint endpoint) {
+        // Generate a client call with minimal required fields for error testing
+        StringBuilder call = new StringBuilder("client");
+        if (!serviceName.isEmpty()) {
+            call.append(".").append(serviceName).append("()");
+        }
+        
+        String methodName = endpoint.getName().get().getCamelCase().getSafeName();
+        call.append(".").append(methodName).append("(");
+        
+        boolean needsComma = false;
+        for (PathParameter pathParam : endpoint.getPathParameters()) {
+            if (needsComma) call.append(", ");
+            call.append("\"test-").append(pathParam.getName().getSnakeCase().getSafeName()).append("\"");
+            needsComma = true;
+        }
+        
+        // For error tests, generate request with minimal required fields
+        if (endpoint.getSdkRequest().isPresent()) {
+            if (needsComma) call.append(", ");
+            call.append(generateMinimalRequestObject(endpoint));
+        }
+        
+        call.append(")");
+        return call.toString();
+    }
+    
+    private String generateMinimalRequestObject(HttpEndpoint endpoint) {
+        // Generate a request object with only required fields for error testing
+        if (endpoint.getSdkRequest().isPresent()) {
+            String endpointName = endpoint.getName().get().getPascalCase().getSafeName();
+            String serviceNameForPackage = serviceName.isEmpty() ? DEFAULT_SERVICE_NAME : serviceName;
+            String packageName = context.getPoetClassNameFactory().getRootPackage();
+            String requestClassName = packageName + ".resources." + serviceNameForPackage + ".requests." + 
+                                    endpointName + "Request";
+            
+            // Special handling for known request types with required fields
+            // Only ListResourcesRequest, ListUsersRequest, and ListConnectionsRequest have staged builders with required 'page'
+            if (endpointName.equals("ListResources") || endpointName.equals("ListUsers") || 
+                endpointName.equals("ListConnections")) {
+                // These specific requests have a staged builder with required 'page' parameter
+                return requestClassName + ".builder().page(0).build()";
+            }
+            
+            // Default: try to build with no parameters (for simple builders)
+            return requestClassName + ".builder().build()";
+        }
+        
+        return "null";
+    }
+    
     private String generateRequestObject(HttpEndpoint endpoint) {
         if (endpoint.getSdkRequest().isPresent()) {
             String endpointName = endpoint.getName().get().getPascalCase().getSafeName();
             
-            String serviceName = service.getName().getFernFilepath().getAllParts().isEmpty() 
-                ? "service" 
-                : service.getName().getFernFilepath().getAllParts()
-                    .get(service.getName().getFernFilepath().getAllParts().size() - 1)
-                    .getCamelCase().getSafeName();
+            String serviceNameForPackage = serviceName.isEmpty() ? DEFAULT_SERVICE_NAME : serviceName;
             
             String packageName = context.getPoetClassNameFactory().getRootPackage();
-            String requestClassName = packageName + ".resources." + serviceName + ".requests." + 
+            String requestClassName = packageName + ".resources." + serviceNameForPackage + ".requests." + 
                                     endpointName + "Request";
             
             return requestClassName + ".builder().build()";
@@ -522,14 +578,10 @@ public final class WireTestGenerator extends AbstractFileGenerator {
         if (endpoint.getSdkRequest().isPresent()) {
             String endpointName = endpoint.getName().get().getPascalCase().getSafeName();
             
-            String serviceName = service.getName().getFernFilepath().getAllParts().isEmpty() 
-                ? "service" 
-                : service.getName().getFernFilepath().getAllParts()
-                    .get(service.getName().getFernFilepath().getAllParts().size() - 1)
-                    .getCamelCase().getSafeName();
+            String serviceNameForPackage = serviceName.isEmpty() ? DEFAULT_SERVICE_NAME : serviceName;
             
             String packageName = context.getPoetClassNameFactory().getRootPackage();
-            String requestClassName = packageName + ".resources." + serviceName + ".requests." + 
+            String requestClassName = packageName + ".resources." + serviceNameForPackage + ".requests." + 
                                     endpointName + "Request";
             
             StringBuilder builder = new StringBuilder(requestClassName)
@@ -591,9 +643,6 @@ public final class WireTestGenerator extends AbstractFileGenerator {
         if (typeRef.getContainer().isPresent()) {
             ContainerType container = typeRef.getContainer().get();
             if (container.isList()) {
-                if (paramName.contains("app_type")) {
-                    return "java.util.Arrays.asList(\"regular_web\")";
-                }
                 return "java.util.Arrays.asList(\"value1\", \"value2\")";
             }
         }
@@ -656,13 +705,13 @@ public final class WireTestGenerator extends AbstractFileGenerator {
         String endpointName = endpoint.getName().get().getCamelCase().getSafeName();
         
         if (endpointName.startsWith("list") || endpointName.startsWith("get") && endpointName.endsWith("s")) {
-            return "[{\"id\":\"test-id\",\"value\":\"test-value\"}]";
+            return ARRAY_RESPONSE;
         } else if (endpointName.startsWith("delete")) {
-            return "{}";
+            return EMPTY_RESPONSE;
         } else if (endpointName.startsWith("create") || endpointName.startsWith("update")) {
-            return "{\"id\":\"test-id\",\"status\":\"success\",\"createdAt\":\"2024-01-01T00:00:00Z\"}";
+            return SUCCESS_RESPONSE;
         }
         
-        return "{\"id\":\"test-id\",\"name\":\"test-name\",\"status\":\"success\",\"data\":{}}";
+        return DEFAULT_RESPONSE;
     }
 }

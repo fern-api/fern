@@ -62,6 +62,7 @@ public final class ServiceWireTest {
                             .requests
                             .ListResourcesRequest
                             .builder()
+                            .page(0)
                             .build());
         });
         assertEquals(404, exception.statusCode());
@@ -81,6 +82,7 @@ public final class ServiceWireTest {
                             .requests
                             .ListResourcesRequest
                             .builder()
+                            .page(0)
                             .build());
         });
         assertEquals(500, exception.statusCode());
@@ -129,6 +131,7 @@ public final class ServiceWireTest {
                             .requests
                             .ListUsersRequest
                             .builder()
+                            .page(0)
                             .build());
         });
         assertEquals(404, exception.statusCode());
@@ -148,6 +151,7 @@ public final class ServiceWireTest {
                             .requests
                             .ListUsersRequest
                             .builder()
+                            .page(0)
                             .build());
         });
         assertEquals(500, exception.statusCode());
