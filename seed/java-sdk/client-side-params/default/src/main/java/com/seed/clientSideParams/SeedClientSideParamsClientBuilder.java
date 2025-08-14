@@ -13,9 +13,19 @@ public class SeedClientSideParamsClientBuilder {
 
     private Optional<Integer> maxRetries = Optional.empty();
 
+    private String token = null;
+
     private Environment environment;
 
     private OkHttpClient httpClient;
+
+    /**
+     * Sets token
+     */
+    public SeedClientSideParamsClientBuilder token(String token) {
+        this.token = token;
+        return this;
+    }
 
     public SeedClientSideParamsClientBuilder url(String url) {
         this.environment = Environment.custom(url);
@@ -49,6 +59,7 @@ public class SeedClientSideParamsClientBuilder {
     protected ClientOptions buildClientOptions() {
         ClientOptions.Builder builder = ClientOptions.builder();
         setEnvironment(builder);
+        setAuthentication(builder);
         setHttpClient(builder);
         setTimeouts(builder);
         setRetries(builder);
@@ -64,6 +75,27 @@ public class SeedClientSideParamsClientBuilder {
      */
     protected void setEnvironment(ClientOptions.Builder builder) {
         builder.environment(this.environment);
+    }
+
+    /**
+     * Override this method to customize authentication.
+     * This method is called during client options construction to set up authentication headers.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     *
+     * Example:
+     * <pre>{@code
+     * &#64;Override
+     * protected void setAuthentication(ClientOptions.Builder builder) {
+     *     super.setAuthentication(builder); // Keep existing auth
+     *     builder.addHeader("X-API-Key", this.apiKey);
+     * }
+     * }</pre>
+     */
+    protected void setAuthentication(ClientOptions.Builder builder) {
+        if (this.token != null) {
+            builder.addHeader("Authorization", "Bearer " + this.token);
+        }
     }
 
     /**

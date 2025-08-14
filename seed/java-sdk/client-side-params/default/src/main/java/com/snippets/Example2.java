@@ -8,6 +8,7 @@ public class Example2 {
     public static void main(String[] args) {
         SeedClientSideParamsClient client = SeedClientSideParamsClient
             .builder()
+            .token("<token>")
             .url("https://api.fern.com")
             .build();
 
