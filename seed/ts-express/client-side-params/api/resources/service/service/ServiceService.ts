@@ -66,6 +66,167 @@ export interface ServiceServiceMethods {
         },
         next: express.NextFunction,
     ): void | Promise<void>;
+    listUsers(
+        req: express.Request<
+            never,
+            SeedClientSideParams.PaginatedUserResponse,
+            never,
+            {
+                page?: number;
+                per_page?: number;
+                include_totals?: boolean;
+                sort?: string;
+                connection?: string;
+                q?: string;
+                search_engine?: string;
+                fields?: string;
+            }
+        >,
+        res: {
+            send: (responseBody: SeedClientSideParams.PaginatedUserResponse) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    getUserById(
+        req: express.Request<
+            {
+                userId: string;
+            },
+            SeedClientSideParams.User,
+            never,
+            {
+                fields?: string;
+                include_fields?: boolean;
+            }
+        >,
+        res: {
+            send: (responseBody: SeedClientSideParams.User) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    createUser(
+        req: express.Request<never, SeedClientSideParams.User, SeedClientSideParams.CreateUserRequest, never>,
+        res: {
+            send: (responseBody: SeedClientSideParams.User) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    updateUser(
+        req: express.Request<
+            {
+                userId: string;
+            },
+            SeedClientSideParams.User,
+            SeedClientSideParams.UpdateUserRequest,
+            never
+        >,
+        res: {
+            send: (responseBody: SeedClientSideParams.User) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    deleteUser(
+        req: express.Request<
+            {
+                userId: string;
+            },
+            never,
+            never,
+            never
+        >,
+        res: {
+            send: () => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    listConnections(
+        req: express.Request<
+            never,
+            SeedClientSideParams.Connection[],
+            never,
+            {
+                strategy?: string;
+                name?: string;
+                fields?: string;
+            }
+        >,
+        res: {
+            send: (responseBody: SeedClientSideParams.Connection[]) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    getConnection(
+        req: express.Request<
+            {
+                connectionId: string;
+            },
+            SeedClientSideParams.Connection,
+            never,
+            {
+                fields?: string;
+            }
+        >,
+        res: {
+            send: (responseBody: SeedClientSideParams.Connection) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    listClients(
+        req: express.Request<
+            never,
+            SeedClientSideParams.PaginatedClientResponse,
+            never,
+            {
+                fields?: string;
+                include_fields?: boolean;
+                page?: number;
+                per_page?: number;
+                include_totals?: boolean;
+                is_global?: boolean;
+                is_first_party?: boolean;
+                app_type?: string[];
+            }
+        >,
+        res: {
+            send: (responseBody: SeedClientSideParams.PaginatedClientResponse) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    getClient(
+        req: express.Request<
+            {
+                clientId: string;
+            },
+            SeedClientSideParams.Client,
+            never,
+            {
+                fields?: string;
+                include_fields?: boolean;
+            }
+        >,
+        res: {
+            send: (responseBody: SeedClientSideParams.Client) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
 }
 
 export class ServiceService {
@@ -198,6 +359,316 @@ export class ServiceService {
                     ),
                 });
                 next(request.errors);
+            }
+        });
+        this.router.get("/users", async (req, res, next) => {
+            try {
+                await this.methods.listUsers(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                serializers.PaginatedUserResponse.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                }),
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next,
+                );
+                if (!res.writableEnded) {
+                    next();
+                }
+            } catch (error) {
+                if (error instanceof errors.SeedClientSideParamsError) {
+                    console.warn(
+                        `Endpoint 'listUsers' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition.",
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.get("/users/:userId", async (req, res, next) => {
+            try {
+                await this.methods.getUserById(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(serializers.User.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }));
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next,
+                );
+                if (!res.writableEnded) {
+                    next();
+                }
+            } catch (error) {
+                if (error instanceof errors.SeedClientSideParamsError) {
+                    console.warn(
+                        `Endpoint 'getUserById' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition.",
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.post("/users", async (req, res, next) => {
+            const request = serializers.CreateUserRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.createUser(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.User.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    if (!res.writableEnded) {
+                        next();
+                    }
+                } catch (error) {
+                    if (error instanceof errors.SeedClientSideParamsError) {
+                        console.warn(
+                            `Endpoint 'createUser' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.",
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.patch("/users/:userId", async (req, res, next) => {
+            const request = serializers.UpdateUserRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.updateUser(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.User.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    if (!res.writableEnded) {
+                        next();
+                    }
+                } catch (error) {
+                    if (error instanceof errors.SeedClientSideParamsError) {
+                        console.warn(
+                            `Endpoint 'updateUser' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.",
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.delete("/users/:userId", async (req, res, next) => {
+            try {
+                await this.methods.deleteUser(
+                    req as any,
+                    {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next,
+                );
+                if (!res.writableEnded) {
+                    next();
+                }
+            } catch (error) {
+                if (error instanceof errors.SeedClientSideParamsError) {
+                    console.warn(
+                        `Endpoint 'deleteUser' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition.",
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.get("/connections", async (req, res, next) => {
+            try {
+                await this.methods.listConnections(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                serializers.service.listConnections.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                }),
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next,
+                );
+                if (!res.writableEnded) {
+                    next();
+                }
+            } catch (error) {
+                if (error instanceof errors.SeedClientSideParamsError) {
+                    console.warn(
+                        `Endpoint 'listConnections' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition.",
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.get("/connections/:connectionId", async (req, res, next) => {
+            try {
+                await this.methods.getConnection(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                serializers.Connection.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }),
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next,
+                );
+                if (!res.writableEnded) {
+                    next();
+                }
+            } catch (error) {
+                if (error instanceof errors.SeedClientSideParamsError) {
+                    console.warn(
+                        `Endpoint 'getConnection' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition.",
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.get("/clients", async (req, res, next) => {
+            try {
+                await this.methods.listClients(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                serializers.PaginatedClientResponse.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                }),
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next,
+                );
+                if (!res.writableEnded) {
+                    next();
+                }
+            } catch (error) {
+                if (error instanceof errors.SeedClientSideParamsError) {
+                    console.warn(
+                        `Endpoint 'listClients' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition.",
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.get("/clients/:clientId", async (req, res, next) => {
+            try {
+                await this.methods.getClient(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(serializers.Client.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }));
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next,
+                );
+                if (!res.writableEnded) {
+                    next();
+                }
+            } catch (error) {
+                if (error instanceof errors.SeedClientSideParamsError) {
+                    console.warn(
+                        `Endpoint 'getClient' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition.",
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
             }
         });
         return this.router;

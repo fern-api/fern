@@ -3,6 +3,6 @@
  */
 
 export interface SearchResourcesRequest {
-    query: string;
+    query?: string;
     filters?: Record<string, unknown>;
 }
