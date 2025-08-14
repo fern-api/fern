@@ -98,7 +98,7 @@
   version: 0.66.11
 
 - changelogEntry:
-    - summary: Add 'vendor' to set of reservved keywords for go.
+    - summary: Add 'vendor' to set of reserved keywords for go.
       type: fix
   irVersion: 59
   createdAt: "2025-08-11"
