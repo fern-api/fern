@@ -17,5 +17,5 @@ module Seed
         def service
             @service ||= Seed::Service::Client.new(client: @raw_client)
         end
-
+    end
 end

@@ -1,9 +1,8 @@
+import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/configuration";
+import { CONSOLE_LOGGER } from "@fern-api/logger";
 import fs from "fs";
 import { difference } from "lodash-es";
 import path from "path";
-
-import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/configuration";
-import { CONSOLE_LOGGER } from "@fern-api/logger";
 
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { printTestCases } from "./printTestCases";

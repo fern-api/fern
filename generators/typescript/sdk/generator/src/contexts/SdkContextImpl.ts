@@ -1,12 +1,16 @@
+import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { Logger } from "@fern-api/logger";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { Constants, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import {
+    CoreUtilities,
     CoreUtilitiesManager,
+    createExternalDependencies,
     DependencyManager,
     ExportsManager,
     ExternalDependencies,
     ImportsManager,
-    NpmPackage,
-    createExternalDependencies,
-    CoreUtilities
+    NpmPackage
 } from "@fern-typescript/commons";
 import {
     AuthProviderContext,
@@ -35,12 +39,6 @@ import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
 import { SourceFile, ts } from "ts-morph";
 
-import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { Logger } from "@fern-api/logger";
-
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { Constants, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "../declaration-referencers/EnvironmentsDeclarationReferencer";
 import { GenericAPISdkErrorDeclarationReferencer } from "../declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
@@ -62,15 +60,15 @@ import { JsonContextImpl } from "./json/JsonContextImpl";
 import { RequestWrapperContextImpl } from "./request-wrapper/RequestWrapperContextImpl";
 import { SdkClientClassContextImpl } from "./sdk-client-class/SdkClientClassContextImpl";
 import { SdkEndpointTypeSchemasContextImpl } from "./sdk-endpoint-type-schemas/SdkEndpointTypeSchemasContextImpl";
-import { SdkErrorSchemaContextImpl } from "./sdk-error-schema/SdkErrorSchemaContextImpl";
 import { SdkErrorContextImpl } from "./sdk-error/SdkErrorContextImpl";
+import { SdkErrorSchemaContextImpl } from "./sdk-error-schema/SdkErrorSchemaContextImpl";
 import { SdkInlinedRequestBodySchemaContextImpl } from "./sdk-inlined-request-body-schema/SdkInlinedRequestBodySchemaContextImpl";
 import { TimeoutSdkErrorContextImpl } from "./timeout-sdk-error/TimeoutSdkErrorContextImpl";
-import { TypeSchemaContextImpl } from "./type-schema/TypeSchemaContextImpl";
 import { TypeContextImpl } from "./type/TypeContextImpl";
+import { TypeSchemaContextImpl } from "./type-schema/TypeSchemaContextImpl";
 import { VersionContextImpl } from "./version/VersionContextImpl";
-import { WebsocketTypeSchemaContextImpl } from "./websocket-type-schema/WebsocketTypeSchemaImpl";
 import { WebsocketContextImpl } from "./websocket/WebsocketContextImpl";
+import { WebsocketTypeSchemaContextImpl } from "./websocket-type-schema/WebsocketTypeSchemaImpl";
 
 const ROOT_CLIENT_VARIABLE_NAME = "client";
 

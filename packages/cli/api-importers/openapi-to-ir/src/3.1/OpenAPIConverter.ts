@@ -1,14 +1,13 @@
-import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
-
 import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
 import { AbstractSpecConverter, Converters, ServersConverter } from "@fern-api/v3-importer-commons";
+import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers";
 import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExtension";
 import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1";
-import { PathConverter } from "./paths/PathConverter";
 import { WebhookConverter } from "./paths/operations/WebhookConverter";
+import { PathConverter } from "./paths/PathConverter";
 import { SecuritySchemeConverter } from "./securitySchemes/SecuritySchemeConverter";
 
 export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;

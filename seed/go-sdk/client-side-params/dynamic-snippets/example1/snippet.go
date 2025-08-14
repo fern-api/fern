@@ -12,6 +12,9 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
+        option.WithToken(
+            "<token>",
+        ),
     )
     client.Service.GetResource(
         context.TODO(),

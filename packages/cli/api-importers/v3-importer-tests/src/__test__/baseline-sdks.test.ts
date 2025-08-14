@@ -1,11 +1,10 @@
-import { readdir } from "fs/promises";
-
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
+import { readdir } from "fs/promises";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 const filterFixture = process.env.TEST_FIXTURE;

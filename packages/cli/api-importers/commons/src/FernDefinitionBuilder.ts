@@ -1,8 +1,7 @@
-import { camelCase, isEqual } from "lodash-es";
-
 import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
 import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath, RelativeFilePath, basename, dirname, join, relative } from "@fern-api/path-utils";
+import { AbsoluteFilePath, basename, dirname, join, RelativeFilePath, relative } from "@fern-api/path-utils";
+import { camelCase, isEqual } from "lodash-es";
 
 import { FernDefinitionDirectory } from "./utils/FernDefinitionDirectory";
 

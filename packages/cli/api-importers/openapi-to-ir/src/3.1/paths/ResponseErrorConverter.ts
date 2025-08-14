@@ -1,7 +1,6 @@
-import { OpenAPIV3_1 } from "openapi-types";
-
 import { FernFilepath, ResponseError, TypeReference } from "@fern-api/ir-sdk";
 import { Converters, ERROR_NAMES_BY_STATUS_CODE } from "@fern-api/v3-importer-commons";
+import { OpenAPIV3_1 } from "openapi-types";
 
 export declare namespace ResponseErrorConverter {
     export interface Args extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Args {

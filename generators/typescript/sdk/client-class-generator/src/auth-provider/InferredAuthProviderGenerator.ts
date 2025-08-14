@@ -1,3 +1,4 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExportedFilePath,
     getPropertyKey,
@@ -16,8 +17,6 @@ import {
     VariableDeclarationKind,
     WriterFunction
 } from "ts-morph";
-
-import { FernIr } from "@fern-fern/ir-sdk";
 
 import { AuthProviderGenerator } from "./AuthProviderGenerator";
 

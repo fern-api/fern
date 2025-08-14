@@ -9,15 +9,24 @@ import java.lang.Integer;
 import java.lang.String;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import resources.service.requests.SearchResourcesRequest;
+import resources.types.types.Client;
+import resources.types.types.Connection;
+import resources.types.types.CreateUserRequest;
+import resources.types.types.PaginatedClientResponse;
+import resources.types.types.PaginatedUserResponse;
 import resources.types.types.Resource;
 import resources.types.types.SearchResponse;
+import resources.types.types.UpdateUserRequest;
+import resources.types.types.User;
 
 @RequestMapping(
     path = "/"
@@ -48,4 +57,80 @@ public interface ServiceService {
   )
   SearchResponse searchResources(@RequestParam("limit") Integer limit,
       @RequestParam("offset") Integer offset, @RequestBody SearchResourcesRequest body);
+
+  @GetMapping(
+      value = "/users",
+      produces = "application/json"
+  )
+  PaginatedUserResponse listUsers(@RequestParam("page") Optional<Integer> page,
+      @RequestParam("per_page") Optional<Integer> perPage,
+      @RequestParam("include_totals") Optional<Boolean> includeTotals,
+      @RequestParam("sort") Optional<String> sort,
+      @RequestParam("connection") Optional<String> connection,
+      @RequestParam("q") Optional<String> q,
+      @RequestParam("search_engine") Optional<String> searchEngine,
+      @RequestParam("fields") Optional<String> fields);
+
+  @GetMapping(
+      value = "/users/{userId}",
+      produces = "application/json"
+  )
+  User getUserById(@PathVariable("userId") String userId,
+      @RequestParam("fields") Optional<String> fields,
+      @RequestParam("include_fields") Optional<Boolean> includeFields);
+
+  @PostMapping(
+      value = "/users",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  User createUser(@RequestBody CreateUserRequest body);
+
+  @PatchMapping(
+      value = "/users/{userId}",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  User updateUser(@PathVariable("userId") String userId, @RequestBody UpdateUserRequest body);
+
+  @DeleteMapping(
+      value = "/users/{userId}",
+      produces = "application/json"
+  )
+  void deleteUser(@PathVariable("userId") String userId);
+
+  @GetMapping(
+      value = "/connections",
+      produces = "application/json"
+  )
+  List<Connection> listConnections(@RequestParam("strategy") Optional<String> strategy,
+      @RequestParam("name") Optional<String> name, @RequestParam("fields") Optional<String> fields);
+
+  @GetMapping(
+      value = "/connections/{connectionId}",
+      produces = "application/json"
+  )
+  Connection getConnection(@PathVariable("connectionId") String connectionId,
+      @RequestParam("fields") Optional<String> fields);
+
+  @GetMapping(
+      value = "/clients",
+      produces = "application/json"
+  )
+  PaginatedClientResponse listClients(@RequestParam("fields") Optional<String> fields,
+      @RequestParam("include_fields") Optional<Boolean> includeFields,
+      @RequestParam("page") Optional<Integer> page,
+      @RequestParam("per_page") Optional<Integer> perPage,
+      @RequestParam("include_totals") Optional<Boolean> includeTotals,
+      @RequestParam("is_global") Optional<Boolean> isGlobal,
+      @RequestParam("is_first_party") Optional<Boolean> isFirstParty,
+      @RequestParam("app_type") Optional<List<String>> appType);
+
+  @GetMapping(
+      value = "/clients/{clientId}",
+      produces = "application/json"
+  )
+  Client getClient(@PathVariable("clientId") String clientId,
+      @RequestParam("fields") Optional<String> fields,
+      @RequestParam("include_fields") Optional<Boolean> includeFields);
 }

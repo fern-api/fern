@@ -1,6 +1,6 @@
 import { python } from "..";
-import { ClassMethodType } from "../Method";
 import { Writer } from "../core/Writer";
+import { ClassMethodType } from "../Method";
 
 describe("Method", () => {
     let writer: Writer;

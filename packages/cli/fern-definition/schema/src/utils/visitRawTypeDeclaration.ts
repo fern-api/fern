@@ -1,7 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
-
-import { AliasSchema, DiscriminatedUnionSchema, EnumSchema, ObjectSchema, TypeDeclarationSchema } from "../schemas";
-import { UndiscriminatedUnionSchema } from "../schemas";
+import {
+    AliasSchema,
+    DiscriminatedUnionSchema,
+    EnumSchema,
+    ObjectSchema,
+    TypeDeclarationSchema,
+    UndiscriminatedUnionSchema
+} from "../schemas";
 
 export interface RawTypeDeclarationVisitor<R> {
     alias: (schema: string | AliasSchema) => R;

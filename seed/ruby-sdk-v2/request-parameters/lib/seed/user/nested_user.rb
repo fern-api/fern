@@ -5,6 +5,6 @@ module Seed
         class NestedUser < Internal::Types::Model
             field :name, String, optional: false, nullable: false
             field :user, Seed::User::User, optional: false, nullable: false
-
+        end
     end
 end

@@ -1,7 +1,6 @@
+import { Values } from "@fern-api/core-utils";
 import { Plugin } from "@redocly/openapi-core/lib/config";
 import { NodeType } from "@redocly/openapi-core/lib/types";
-
-import { Values } from "@fern-api/core-utils";
 
 import { TypedExtensionId } from "./id";
 

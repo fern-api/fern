@@ -2,8 +2,8 @@ import { expect } from "vitest";
 
 import { python } from "..";
 import { CodeBlock } from "../CodeBlock";
-import { ClassMethodType, Method } from "../Method";
 import { Writer } from "../core/Writer";
+import { ClassMethodType, Method } from "../Method";
 
 describe("PythonFile", () => {
     let writer: Writer;

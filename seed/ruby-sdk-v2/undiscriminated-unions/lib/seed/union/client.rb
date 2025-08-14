@@ -17,11 +17,12 @@ module Seed
                 )
 
                 _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
+                if if _response.code >= "200" && _response.code < "300"
                     return Seed::Union::Types::MyUnion.load(_response.body)
-
+                    
                 else
                     raise _response.body
+                end
             end
 
             # @return [Hash[Seed::Union::Key, String]]
@@ -29,11 +30,12 @@ module Seed
                 _request = params
 
                 _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
+                if if _response.code >= "200" && _response.code < "300"
                     return Seed::Union::Types::Metadata.load(_response.body)
-
+                    
                 else
                     raise _response.body
+                end
             end
 
             # @return [bool]
@@ -44,10 +46,11 @@ module Seed
                 )
 
                 _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
+                if if _response.code >= "200" && _response.code < "300"
                     return 
                 else
                     raise _response.body
+                end
             end
 
             # @return [bool]
@@ -58,10 +61,11 @@ module Seed
                 )
 
                 _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
+                if if _response.code >= "200" && _response.code < "300"
                     return 
                 else
                     raise _response.body
+                end
             end
 
             # @return [Seed::Union::UnionWithDuplicateTypes]
@@ -72,11 +76,12 @@ module Seed
                 )
 
                 _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
+                if if _response.code >= "200" && _response.code < "300"
                     return Seed::Union::Types::UnionWithDuplicateTypes.load(_response.body)
-
+                    
                 else
                     raise _response.body
+                end
             end
 
             # @return [String]
@@ -87,11 +92,12 @@ module Seed
                 )
 
                 _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
+                if if _response.code >= "200" && _response.code < "300"
                     return 
                 else
                     raise _response.body
+                end
             end
-
+        end
     end
 end

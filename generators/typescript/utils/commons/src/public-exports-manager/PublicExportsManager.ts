@@ -1,9 +1,8 @@
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { existsSync } from "fs";
 import { glob } from "glob";
 import path from "path";
 import { Directory, Project } from "ts-morph";
-
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
 export class PublicExportsManager {
     public async generatePublicExportsFiles({ pathToSrc }: { pathToSrc: AbsoluteFilePath }): Promise<void> {

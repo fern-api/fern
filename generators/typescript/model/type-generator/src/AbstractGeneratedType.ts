@@ -1,8 +1,7 @@
-import { GetReferenceOpts, Reference, getTextOfTsNode } from "@fern-typescript/commons";
-import { BaseContext, BaseGeneratedType } from "@fern-typescript/contexts";
-import { ModuleDeclarationStructure, StatementStructures, WriterFunction, ts } from "ts-morph";
-
 import { ExampleType, ExampleTypeShape, FernFilepath } from "@fern-fern/ir-sdk/api";
+import { GetReferenceOpts, getTextOfTsNode, Reference } from "@fern-typescript/commons";
+import { BaseContext, BaseGeneratedType } from "@fern-typescript/contexts";
+import { ModuleDeclarationStructure, StatementStructures, ts, WriterFunction } from "ts-morph";
 
 export declare namespace AbstractGeneratedType {
     export interface Init<Shape, Context> {

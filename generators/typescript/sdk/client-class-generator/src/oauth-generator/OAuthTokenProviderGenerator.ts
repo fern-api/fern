@@ -1,7 +1,3 @@
-import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
-import { Code, code } from "ts-poet";
-
 import {
     HttpEndpoint,
     HttpService,
@@ -14,6 +10,9 @@ import {
     OAuthScheme,
     ResponseProperty
 } from "@fern-fern/ir-sdk/api";
+import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
+import { SdkContext } from "@fern-typescript/contexts";
+import { Code, code } from "ts-poet";
 
 export class OAuthTokenProviderGenerator {
     public static readonly OAUTH_TOKEN_PROVIDER_CLASS_NAME = "OAuthTokenProvider";

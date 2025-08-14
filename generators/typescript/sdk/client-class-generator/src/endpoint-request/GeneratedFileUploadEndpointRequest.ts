@@ -1,15 +1,4 @@
 import {
-    Fetcher,
-    GetReferenceOpts,
-    ImportsManager,
-    PackageId,
-    getParameterNameForPositionalPathParameter,
-    getTextOfTsNode
-} from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
-import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-
-import {
     ExampleEndpointCall,
     FileProperty,
     HttpEndpoint,
@@ -17,13 +6,22 @@ import {
     HttpService,
     IntermediateRepresentation
 } from "@fern-fern/ir-sdk/api";
-
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
-import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
+import {
+    Fetcher,
+    GetReferenceOpts,
+    getParameterNameForPositionalPathParameter,
+    getTextOfTsNode,
+    ImportsManager,
+    PackageId
+} from "@fern-typescript/commons";
+import { SdkContext } from "@fern-typescript/contexts";
+import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { appendPropertyToFormData } from "../endpoints/utils/appendPropertyToFormData";
+import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
 import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders";
 import { getParameterNameForFile } from "../endpoints/utils/getParameterNameForFile";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter";
 import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest";
 

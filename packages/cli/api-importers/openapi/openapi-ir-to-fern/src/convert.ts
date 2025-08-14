@@ -1,8 +1,7 @@
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/path-utils";
-
-import { OpenApiIrConverterContext, OpenApiIrConverterContextOpts } from "./OpenApiIrConverterContext";
 import { buildFernDefinition } from "./buildFernDefinition";
+import { OpenApiIrConverterContext, OpenApiIrConverterContextOpts } from "./OpenApiIrConverterContext";
 
 export interface OpenApiConvertedFernDefinition {
     rootApiFile: RootApiFileSchema;

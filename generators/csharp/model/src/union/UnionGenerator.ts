@@ -1,14 +1,13 @@
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { csharp, escapeForCSharpString } from "@fern-api/csharp-codegen";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExampleUnionType, TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
-
+import { generateFields } from "../generateFields";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { generateFields } from "../generateFields";
 import { ObjectGenerator } from "../object/ObjectGenerator";
 import { ExampleGenerator } from "../snippets/ExampleGenerator";
 

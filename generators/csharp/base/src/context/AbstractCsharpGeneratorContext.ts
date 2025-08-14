@@ -1,10 +1,7 @@
-import { camelCase, upperFirst } from "lodash-es";
-
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { BaseCsharpCustomConfigSchema, convertReadOnlyPrimitiveTypes, csharp } from "@fern-api/csharp-codegen";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
-
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     FernFilepath,
     HttpHeader,
@@ -18,6 +15,7 @@ import {
     TypeReference,
     UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
+import { camelCase, upperFirst } from "lodash-es";
 
 import {
     COLLECTION_ITEM_SERIALIZER_CLASS_NAME,

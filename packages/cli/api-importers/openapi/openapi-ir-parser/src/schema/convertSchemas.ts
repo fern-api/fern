@@ -1,6 +1,3 @@
-import { size } from "lodash-es";
-import { OpenAPIV3 } from "openapi-types";
-
 import { Logger } from "@fern-api/logger";
 import {
     Availability,
@@ -14,6 +11,8 @@ import {
     SdkGroupName,
     Source
 } from "@fern-api/openapi-ir";
+import { size } from "lodash-es";
+import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../getExtension";
 import { OpenAPIExtension } from "../openapi/v3/extensions/extensions";
@@ -24,7 +23,6 @@ import { getFernEnum } from "../openapi/v3/extensions/getFernEnum";
 import { getFernTypeExtension } from "../openapi/v3/extensions/getFernTypeExtension";
 import { getSourceExtension } from "../openapi/v3/extensions/getSourceExtension";
 import { getValueIfBoolean } from "../utils/getValue";
-import { SchemaParserContext } from "./SchemaParserContext";
 import { convertAdditionalProperties, wrapMap } from "./convertAdditionalProperties";
 import { convertArray } from "./convertArray";
 import { convertAvailability } from "./convertAvailability";
@@ -41,6 +39,7 @@ import {
 } from "./convertUndiscriminatedOneOf";
 import { getDefaultAsString } from "./defaults/getDefault";
 import { getExampleAsArray, getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./examples/getExample";
+import { SchemaParserContext } from "./SchemaParserContext";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 import { getGeneratedTypeName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";

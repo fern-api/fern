@@ -1,14 +1,9 @@
-import chalk from "chalk";
-import os from "os";
-import path from "path";
-import tmp from "tmp-promise";
-
 import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -17,6 +12,10 @@ import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
 } from "@fern-api/workspace-loader";
+import chalk from "chalk";
+import os from "os";
+import path from "path";
+import tmp from "tmp-promise";
 
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 

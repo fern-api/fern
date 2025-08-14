@@ -1,6 +1,3 @@
-import { camelCase } from "lodash-es";
-import { OpenAPIV3 } from "openapi-types";
-
 import {
     EndpointSdkName,
     EndpointWithExample,
@@ -8,6 +5,8 @@ import {
     SdkGroupName,
     WebhookWithExample
 } from "@fern-api/openapi-ir";
+import { camelCase } from "lodash-es";
+import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../../../../getExtension";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";

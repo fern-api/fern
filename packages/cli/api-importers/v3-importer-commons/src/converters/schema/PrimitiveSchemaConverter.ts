@@ -1,5 +1,3 @@
-import { OpenAPIV3_1 } from "openapi-types";
-
 import {
     ContainerType,
     IntegerValidationRules,
@@ -9,6 +7,7 @@ import {
     StringValidationRules,
     TypeReference
 } from "@fern-api/ir-sdk";
+import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
 

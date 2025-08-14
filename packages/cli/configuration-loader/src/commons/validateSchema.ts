@@ -1,8 +1,7 @@
-import path from "path";
-import { z } from "zod";
-
 import { addPrefixToString } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
+import path from "path";
+import { z } from "zod";
 
 export async function validateSchema<T>({
     schema,

@@ -1,4 +1,4 @@
-import { OpenAPIV3 } from "openapi-types";
+import { MediaType } from "@fern-api/core-utils";
 
 import {
     EndpointSdkName,
@@ -8,9 +8,10 @@ import {
     SchemaWithExample,
     Source
 } from "@fern-api/openapi-ir";
-
+import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../../getExtension";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { DummyOpenAPIV3ParserContext } from "../../DummyOpenAPIV3ParserContext";
 import { OpenAPIExtension } from "../../extensions/extensions";
@@ -22,9 +23,7 @@ import { convertServer } from "../convertServer";
 import { ConvertedParameters, convertParameters } from "../endpoint/convertParameters";
 import { convertRequest, convertToSingleRequest } from "../endpoint/convertRequest";
 import { convertResponse } from "../endpoint/convertResponse";
-import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { isApplicationJsonMediaType } from "../endpoint/getApplicationJsonSchema";
-import { MediaType } from "@fern-api/core-utils";
 
 export function convertHttpOperation({
     operationContext,

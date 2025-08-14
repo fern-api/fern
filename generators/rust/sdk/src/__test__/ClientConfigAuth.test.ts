@@ -1,6 +1,6 @@
-import { describe, it, expect } from "vitest";
 import * as fs from "fs";
 import * as path from "path";
+import { describe, expect, it } from "vitest";
 import { ClientConfigGenerator } from "../generators/ClientConfigGenerator";
 import { createSampleGeneratorContext } from "./util/createSampleGeneratorContext";
 

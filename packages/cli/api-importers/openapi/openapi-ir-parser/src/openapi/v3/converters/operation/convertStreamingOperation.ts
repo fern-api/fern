@@ -1,8 +1,7 @@
-import { OpenAPIV3 } from "openapi-types";
-
-import { MediaType, assertNever } from "@fern-api/core-utils";
+import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { EndpointExample, EndpointWithExample } from "@fern-api/openapi-ir";
+import { OpenAPIV3 } from "openapi-types";
 
 import { getSchemaIdFromReference } from "../../../../schema/convertSchemas";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";

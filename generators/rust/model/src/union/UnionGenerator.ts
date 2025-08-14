@@ -3,6 +3,7 @@ import { RustFile } from "@fern-api/rust-base";
 import { Attribute, rust } from "@fern-api/rust-codegen";
 import { SingleUnionType, TypeDeclaration, TypeReference, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
+import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import {
     isCollectionType,
     isDateTimeType,
@@ -10,7 +11,6 @@ import {
     isUnknownType,
     isUuidType
 } from "../utils/primitiveTypeUtils";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class UnionGenerator {
     private readonly typeDeclaration: TypeDeclaration;

@@ -1,11 +1,10 @@
-import semver from "semver";
-
-import { RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import semver from "semver";
 
 import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
 import { parseCliReleasesFile } from "../../utils/convertVersionsFileToReleases";
-import { VersionFilePair, getNewCliVersion } from "../../utils/versionUtilities";
+import { getNewCliVersion, VersionFilePair } from "../../utils/versionUtilities";
 
 export async function getLatestCli({
     context,

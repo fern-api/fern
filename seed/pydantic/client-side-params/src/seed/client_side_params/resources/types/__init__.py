@@ -2,7 +2,26 @@
 
 # isort: skip_file
 
+from .client import Client
+from .connection import Connection
+from .create_user_request import CreateUserRequest
+from .identity import Identity
+from .paginated_client_response import PaginatedClientResponse
+from .paginated_user_response import PaginatedUserResponse
 from .resource import Resource
 from .search_response import SearchResponse
+from .update_user_request import UpdateUserRequest
+from .user import User
 
-__all__ = ["Resource", "SearchResponse"]
+__all__ = [
+    "Client",
+    "Connection",
+    "CreateUserRequest",
+    "Identity",
+    "PaginatedClientResponse",
+    "PaginatedUserResponse",
+    "Resource",
+    "SearchResponse",
+    "UpdateUserRequest",
+    "User",
+]

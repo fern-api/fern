@@ -8,6 +8,7 @@ import com.fern.ir.core.ObjectMappers;
 import com.fern.ir.model.auth.AuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.commons.ErrorId;
+import com.fern.ir.model.http.HttpService;
 import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.ir.model.publish.DirectPublish;
@@ -44,6 +45,7 @@ import com.fern.java.client.generators.SuppliersGenerator;
 import com.fern.java.client.generators.SyncRootClientGenerator;
 import com.fern.java.client.generators.SyncSubpackageClientGenerator;
 import com.fern.java.client.generators.TestGenerator;
+import com.fern.java.client.generators.WireTestGenerator;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
 import com.fern.java.generators.EnumGenerator;
 import com.fern.java.generators.NullableGenerator;
@@ -67,6 +69,7 @@ import com.fern.java.output.gradle.ParsedGradleDependency;
 import com.palantir.common.streams.KeyedStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -141,6 +144,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .baseExceptionClassName(customConfig.baseExceptionClassName())
                 .customDependencies(customConfig.customDependencies())
                 .useDefaultRequestParameterValues(customConfig.useDefaultRequestParameterValues())
+                .enableWireTests(customConfig.enableWireTests())
                 .build();
 
         Boolean generateFullProject = ir.getPublishConfig()
@@ -512,5 +516,24 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         this.addGeneratedFile(testGenerator.generateFile());
         StreamTestGenerator streamTestGenerator = new StreamTestGenerator(context);
         this.addGeneratedFile(streamTestGenerator.generateFile());
+
+        // Generate wire tests if enabled
+        if (customConfig.enableWireTests()) {
+            // Add MockWebServer dependency
+            dependencies.add(ParsedGradleDependency.builder()
+                    .type(GradleDependencyType.TEST_IMPLEMENTATION)
+                    .group("com.squareup.okhttp3")
+                    .artifact("mockwebserver")
+                    .version(ParsedGradleDependency.OKHTTP_VERSION)
+                    .build());
+
+            // Generate wire test for each service
+            for (HttpService service : ir.getServices().values()) {
+                if (!service.getEndpoints().isEmpty()) {
+                    WireTestGenerator wireTestGenerator = new WireTestGenerator(service, context, new HashMap<>());
+                    this.addGeneratedFile(wireTestGenerator.generateFile());
+                }
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 import { BaseRubyCustomConfigSchema } from "../../custom-config/BaseRubyCustomConfigSchema";
-import { Type } from "../Type";
 import { Writer } from "../core/Writer";
+import { Type } from "../Type";
 
 describe("Type", () => {
     let writerConfig: Writer.Args;

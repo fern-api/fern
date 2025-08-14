@@ -1,9 +1,9 @@
 export {
-    TypeReferenceLocation,
     type DefinitionFileAstNodeTypes,
     type DefinitionFileAstNodeVisitor,
     type DefinitionFileAstVisitor,
-    type TypeDeclarationName
+    type TypeDeclarationName,
+    TypeReferenceLocation
 } from "./DefinitionFileAstVisitor";
 export {
     type PackageMarkerAstNodeTypes,

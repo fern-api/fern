@@ -16,5 +16,5 @@ module Seed
         def unknown
             @unknown ||= Seed::Unknown::Client.new(client: @raw_client)
         end
-
+    end
 end

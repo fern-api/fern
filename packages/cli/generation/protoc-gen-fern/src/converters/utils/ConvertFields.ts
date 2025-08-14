@@ -1,9 +1,8 @@
 import { FieldDescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import { ObjectProperty, TypeId } from "@fern-api/ir-sdk";
-
-import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { FieldConverter } from "../message/FieldConverter";
+import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { PATH_FIELD_NUMBERS } from "./PathFieldNumbers";
 
 export function convertFields({

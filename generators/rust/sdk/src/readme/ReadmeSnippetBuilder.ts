@@ -1,6 +1,6 @@
 import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
 import { isNonNullish } from "@fern-api/core-utils";
-import { rust, UseStatement, Expression, Statement, CodeBlock, Writer } from "@fern-api/rust-codegen";
+import { CodeBlock, Expression, rust, Statement, UseStatement, Writer } from "@fern-api/rust-codegen";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";

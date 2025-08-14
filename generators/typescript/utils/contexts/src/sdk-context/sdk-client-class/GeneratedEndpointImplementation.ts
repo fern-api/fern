@@ -1,10 +1,8 @@
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-
-import { SdkContext } from "../SdkContext";
 import { EndpointSampleCode } from "../../commons/EndpointSampleCode";
+import { SdkContext } from "../SdkContext";
 
 export namespace GeneratedEndpointImplementation {
     export interface EndpointSignature {

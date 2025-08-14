@@ -1,6 +1,3 @@
-import { NpmPackage, PersistedTypescriptProject, constructNpmPackage } from "@fern-typescript/commons";
-import { GeneratorContext } from "@fern-typescript/contexts";
-
 import {
     FernGeneratorExec,
     GeneratorNotificationService,
@@ -9,11 +6,12 @@ import {
     parseIR
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { CONSOLE_LOGGER, LogLevel, Logger, createLogger } from "@fern-api/logger";
-
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { FernIr, serialization } from "@fern-fern/ir-sdk";
 import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { constructNpmPackage, NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
+import { GeneratorContext } from "@fern-typescript/contexts";
 
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";

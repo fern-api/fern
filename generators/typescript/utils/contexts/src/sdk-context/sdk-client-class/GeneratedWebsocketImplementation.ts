@@ -1,6 +1,5 @@
-import { InterfaceDeclarationStructure, OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-
 import { WebSocketChannel } from "@fern-fern/ir-sdk/api";
+import { InterfaceDeclarationStructure, OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
 import { SdkContext } from "../SdkContext";
 

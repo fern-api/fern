@@ -1,12 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
-
+import { RawSchemas } from "..";
 import {
     AuthSchemeDeclarationSchema,
     BasicAuthSchemeSchema,
     HeaderAuthSchemeSchema,
     OAuthSchemeSchema
 } from "../schemas";
-import { RawSchemas } from "..";
 
 export interface AuthSchemeDeclarationVisitor<R> {
     header: (authScheme: HeaderAuthSchemeSchema) => R;

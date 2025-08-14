@@ -1,10 +1,9 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { QueryParameter, Schema, VALID_ENUM_NAME_REGEX, generateEnumNameFromValue } from "@fern-api/openapi-ir";
+import { generateEnumNameFromValue, QueryParameter, Schema, VALID_ENUM_NAME_REGEX } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
-
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { buildTypeReference } from "./buildTypeReference";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
 import { getDefaultFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 

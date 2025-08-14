@@ -134,6 +134,7 @@ fixtures:
   client-side-params:
     - customConfig:
         use-default-request-parameter-values: true
+        enable-wire-tests: true
       outputFolder: default
   file-upload:
     - customConfig:

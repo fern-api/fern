@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 
 function shouldProcessIconPath(iconPath: string): boolean {

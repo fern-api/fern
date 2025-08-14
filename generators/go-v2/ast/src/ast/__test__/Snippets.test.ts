@@ -1,13 +1,13 @@
+import { AstNode } from "../core/AstNode";
+import { GoFile } from "../core/GoFile";
 import { Field } from "../Field";
 import { File } from "../File";
 import { Func } from "../Func";
 import { GoTypeReference } from "../GoTypeReference";
+import { MultiNode } from "../MultiNode";
 import { Struct } from "../Struct";
 import { Type } from "../Type";
 import { TypeInstantiation } from "../TypeInstantiation";
-import { AstNode } from "../core/AstNode";
-import { GoFile } from "../core/GoFile";
-import { MultiNode } from "../MultiNode";
 
 interface TestCase {
     description: string;

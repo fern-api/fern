@@ -1,18 +1,15 @@
-import { writeFile } from "fs/promises";
-
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractJavaGeneratorCli } from "@fern-api/java-base";
 import { DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-
+import { writeFile } from "fs/promises";
+import { buildReference } from "./reference/buildReference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { buildReference } from "./reference/buildReference";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
 

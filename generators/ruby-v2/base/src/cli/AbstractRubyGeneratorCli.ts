@@ -1,10 +1,9 @@
 import { AbstractGeneratorCli, parseIR } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
-import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
-
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
+import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
 
 export abstract class AbstractRubyGeneratorCli<
     CustomConfig extends BaseRubyCustomConfigSchema,

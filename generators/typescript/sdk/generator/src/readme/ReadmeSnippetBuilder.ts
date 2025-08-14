@@ -1,16 +1,14 @@
+import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { isNonNullish } from "@fern-api/core-utils";
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, SdkRequestWrapper } from "@fern-fern/ir-sdk/api";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { readFileSync } from "fs";
 import { template } from "lodash-es";
-import { Code, code } from "ts-poet";
-
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
-import { isNonNullish } from "@fern-api/core-utils";
-
-import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, SdkRequestWrapper } from "@fern-fern/ir-sdk/api";
 import { join } from "path";
+import { Code, code } from "ts-poet";
 
 interface EndpointWithFilepath {
     endpoint: HttpEndpoint;

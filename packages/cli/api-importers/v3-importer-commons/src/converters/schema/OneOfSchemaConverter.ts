@@ -1,5 +1,3 @@
-import { OpenAPIV3_1 } from "openapi-types";
-
 import {
     ContainerType,
     DeclaredTypeName,
@@ -10,6 +8,7 @@ import {
     TypeReference,
     UndiscriminatedUnionMember
 } from "@fern-api/ir-sdk";
+import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
 import { FernDiscriminatedExtension } from "../../extensions/x-fern-discriminated";

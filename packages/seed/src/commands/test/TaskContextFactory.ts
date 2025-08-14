@@ -1,8 +1,7 @@
-import chalk from "chalk";
-
 import { assertNever } from "@fern-api/core-utils";
 import { CONSOLE_LOGGER, LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
+import chalk from "chalk";
 
 import { TaskContextImpl } from "../../TaskContextImpl";
 

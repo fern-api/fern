@@ -1,9 +1,8 @@
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import path from "path";
 import { Directory, SourceFile } from "ts-morph";
 
-import { RelativeFilePath } from "@fern-api/fs-utils";
-
-import { ModuleSpecifier, getRelativePathAsModuleSpecifierTo } from "../referencing";
+import { getRelativePathAsModuleSpecifierTo, ModuleSpecifier } from "../referencing";
 
 export interface ExportedFilePath {
     directories: ExportedDirectory[];

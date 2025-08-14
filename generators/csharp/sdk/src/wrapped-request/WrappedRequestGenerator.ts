@@ -1,7 +1,7 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { csharp } from "@fern-api/csharp-codegen";
 import { ExampleGenerator, generateField, generateFieldForFileProperty } from "@fern-api/fern-csharp-model";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import {
     ContainerType,

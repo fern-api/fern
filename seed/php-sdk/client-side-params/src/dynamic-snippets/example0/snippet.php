@@ -6,6 +6,7 @@ use Seed\SeedClient;
 use Seed\Service\Requests\ListResourcesRequest;
 
 $client = new SeedClient(
+    token: '<token>',
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],

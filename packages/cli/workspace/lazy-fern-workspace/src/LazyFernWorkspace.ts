@@ -1,5 +1,3 @@
-import hash from "object-hash";
-
 import { AbstractAPIWorkspace, FernDefinition, FernWorkspace } from "@fern-api/api-workspace-commons";
 import {
     DEFINITION_DIRECTORY,
@@ -7,8 +5,9 @@ import {
     generatorsYml,
     loadDependenciesConfiguration
 } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import hash from "object-hash";
 
 import { OSSWorkspace } from "./OSSWorkspace";
 import { handleFailedWorkspaceParserResultRaw } from "./utils/handleFailedWorkspaceParserResult";

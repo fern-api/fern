@@ -1,6 +1,5 @@
-import { SdkCustomConfig, SdkGeneratorCli } from "@fern-typescript/sdk-generator-cli";
-
 import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
+import { SdkCustomConfig, SdkGeneratorCli } from "@fern-typescript/sdk-generator-cli";
 
 import { ServerGeneratorCLI } from "./ServerGeneratorCli";
 

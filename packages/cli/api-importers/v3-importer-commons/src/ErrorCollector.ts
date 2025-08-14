@@ -1,13 +1,12 @@
+import { formatLog } from "@fern-api/cli-logger";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { LogLevel } from "@fern-api/logger";
 import * as fs from "fs";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import SourceMap from "js-yaml-source-map";
 import path from "path";
 import YAML from "yaml";
-
-import { formatLog } from "@fern-api/cli-logger";
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { LogLevel } from "@fern-api/logger";
 
 interface APIErrorLoggingArgs {
     /* Defaults to false */

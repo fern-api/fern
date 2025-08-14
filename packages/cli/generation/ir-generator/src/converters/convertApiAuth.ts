@@ -4,17 +4,17 @@ import {
     AuthScheme,
     AuthSchemesRequirement,
     FernIr,
-    OAuthConfiguration,
-    InferredAuthSchemeTokenEndpoint
+    InferredAuthSchemeTokenEndpoint,
+    OAuthConfiguration
 } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../FernFileContext";
 import { EndpointResolver } from "../resolvers/EndpointResolver";
 import { PropertyResolver } from "../resolvers/PropertyResolver";
-import { convertOAuthClientCredentials } from "./convertOAuthClientCredentials";
-import { getRefreshTokenEndpoint, get0AuthTokenEndpoint } from "./convertOAuthUtils";
-import { createEndpointReference } from "../utils/createEndpointReference";
 import { ResolvedEndpoint } from "../resolvers/ResolvedEndpoint";
+import { createEndpointReference } from "../utils/createEndpointReference";
+import { convertOAuthClientCredentials } from "./convertOAuthClientCredentials";
+import { get0AuthTokenEndpoint, getRefreshTokenEndpoint } from "./convertOAuthUtils";
 import { getResponsePropertyComponents } from "./services/convertProperty";
 
 export function convertApiAuth({

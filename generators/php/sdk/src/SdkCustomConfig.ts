@@ -1,6 +1,5 @@
-import { z } from "zod";
-
 import { BasePhpCustomConfigSchema } from "@fern-api/php-codegen";
+import { z } from "zod";
 
 export const SdkCustomConfigSchema = z
     .strictObject({

@@ -1,3 +1,4 @@
+import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
 import {
     GetReferenceOpts,
     getPropertyKey,
@@ -14,11 +15,9 @@ import {
     StatementStructures,
     StructureKind,
     TypeAliasDeclarationStructure,
-    WriterFunction,
-    ts
+    ts,
+    WriterFunction
 } from "ts-morph";
-
-import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 

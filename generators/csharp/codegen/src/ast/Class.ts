@@ -3,6 +3,8 @@ import { Annotation } from "./Annotation";
 import { ClassInstantiation } from "./ClassInstantiation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 import { Field } from "./Field";
 import { Interface } from "./Interface";
 import { Method, MethodType } from "./Method";
@@ -10,8 +12,6 @@ import { MethodInvocation } from "./MethodInvocation";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
 import { XmlDocBlock } from "./XmlDocBlock";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
 
 export class Class extends AstNode {
     public static readonly ClassType = {

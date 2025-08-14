@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { csharp, escapeForCSharpString } from "@fern-api/csharp-codegen";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import {
     AuthScheme,
@@ -14,12 +14,11 @@ import {
     Subpackage,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { RawClient } from "../endpoint/http/RawClient";
 import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
 import { OauthTokenProviderGenerator } from "../oauth/OauthTokenProviderGenerator";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig";
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export const CLIENT_MEMBER_NAME = "_client";
 export const GRPC_CLIENT_MEMBER_NAME = "_grpc";

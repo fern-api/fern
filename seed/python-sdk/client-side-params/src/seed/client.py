@@ -16,6 +16,7 @@ class SeedClientSideParams:
     base_url : str
         The base url to use for requests from the client.
 
+    token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -33,6 +34,7 @@ class SeedClientSideParams:
     from seed import SeedClientSideParams
 
     client = SeedClientSideParams(
+        token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -41,6 +43,7 @@ class SeedClientSideParams:
         self,
         *,
         base_url: str,
+        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -51,6 +54,7 @@ class SeedClientSideParams:
         )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
+            token=token,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -71,6 +75,7 @@ class AsyncSeedClientSideParams:
     base_url : str
         The base url to use for requests from the client.
 
+    token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -88,6 +93,7 @@ class AsyncSeedClientSideParams:
     from seed import AsyncSeedClientSideParams
 
     client = AsyncSeedClientSideParams(
+        token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -96,6 +102,7 @@ class AsyncSeedClientSideParams:
         self,
         *,
         base_url: str,
+        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -106,6 +113,7 @@ class AsyncSeedClientSideParams:
         )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
+            token=token,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None

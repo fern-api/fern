@@ -1,6 +1,6 @@
+import { AstNode } from "./core/AstNode";
 import { Type } from "./Type";
 import { TypeParameter } from "./TypeParameter";
-import { AstNode } from "./core/AstNode";
 
 export declare namespace Parameter {
     interface Args {

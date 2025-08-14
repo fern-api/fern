@@ -1,24 +1,23 @@
-import { readFile } from "fs/promises";
-import { v4 as uuidv4 } from "uuid";
-
 import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
 import {
     APIV1Read,
     APIV1Write,
-    DocsV1Read,
-    FdrAPI,
-    FernNavigation,
-    SDKSnippetHolder,
     convertAPIDefinitionToDb,
     convertDbAPIDefinitionToRead,
     convertDbDocsConfigToRead,
-    convertDocsDefinitionToDb
+    convertDocsDefinitionToDb,
+    DocsV1Read,
+    FdrAPI,
+    FernNavigation,
+    SDKSnippetHolder
 } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, convertToFernHostAbsoluteFilePath, relative } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
+import { readFile } from "fs/promises";
+import { v4 as uuidv4 } from "uuid";
 
 import {
     replaceImagePathsAndUrls,

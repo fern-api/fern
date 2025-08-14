@@ -1,13 +1,4 @@
 import {
-    ContentDescriptorObject,
-    ExampleObject,
-    ExamplePairingObject,
-    MethodObject,
-    ServerObject
-} from "@open-rpc/meta-schema";
-import { OpenAPIV3 } from "openapi-types";
-
-import {
     FernIr,
     HttpEndpoint,
     HttpEndpointSource,
@@ -22,6 +13,14 @@ import {
 } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { AbstractConverter, Converters, ServersConverter } from "@fern-api/v3-importer-commons";
+import {
+    ContentDescriptorObject,
+    ExampleObject,
+    ExamplePairingObject,
+    MethodObject,
+    ServerObject
+} from "@open-rpc/meta-schema";
+import { OpenAPIV3 } from "openapi-types";
 
 import { OpenRPCConverterContext3_1 } from "../OpenRPCConverterContext3_1";
 

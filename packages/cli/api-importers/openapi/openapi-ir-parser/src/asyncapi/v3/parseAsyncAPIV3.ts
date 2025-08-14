@@ -1,6 +1,3 @@
-import { camelCase, upperFirst } from "lodash-es";
-import { OpenAPIV3 } from "openapi-types";
-
 import {
     HeaderWithExample,
     PathParameterWithExample,
@@ -12,6 +9,8 @@ import {
     WebsocketMessageSchema,
     WebsocketSessionExample
 } from "@fern-api/openapi-ir";
+import { camelCase, upperFirst } from "lodash-es";
+import { OpenAPIV3 } from "openapi-types";
 
 import { FernOpenAPIExtension } from "../..";
 import { getExtension } from "../../getExtension";
@@ -21,7 +20,7 @@ import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSche
 import { getSchemas } from "../../utils/getSchemas";
 import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from "../ExampleWebsocketSessionFactory";
 import { FernAsyncAPIExtension } from "../fernExtensions";
-import { WebsocketSessionExampleExtension, getFernExamples } from "../getFernExamples";
+import { getFernExamples, WebsocketSessionExampleExtension } from "../getFernExamples";
 import { ParseAsyncAPIOptions } from "../options";
 import { AsyncAPIIntermediateRepresentation } from "../parse";
 import { ChannelId, ServerContext } from "../sharedTypes";

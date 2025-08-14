@@ -1,6 +1,5 @@
-import { z } from "zod";
-
 import { BaseSwiftCustomConfigSchema } from "@fern-api/swift-codegen";
+import { z } from "zod";
 
 export const SdkCustomConfigSchema = BaseSwiftCustomConfigSchema;
 
