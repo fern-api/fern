@@ -42,7 +42,7 @@ export class HttpEndpointGenerator {
             serviceId
         });
 
-        const statements = [];
+        const statements: ruby.AstNode[] = [];
 
         const pathParameterReferences = this.getPathParameterReferences({ endpoint });
 
@@ -58,46 +58,37 @@ export class HttpEndpointGenerator {
         } else {
             statements.push(
                 ruby.codeblock((writer) => {
-                    writer.writeLine(`_request = params`);
+                    writer.write(`_request = params`);
                 })
             );
         }
 
         statements.push(
-            ruby.codeblock((writer) => {
-                writer.writeLine(`${HTTP_RESPONSE_VARIABLE_NAME} = @client.send(${RAW_CLIENT_REQUEST_VARIABLE_NAME})`);
-                writer.writeLine(
-                    `if ${HTTP_RESPONSE_VARIABLE_NAME}.code >= "200" && ${HTTP_RESPONSE_VARIABLE_NAME}.code < "300"`
-                );
-
-                writer.indent();
-
-                if (endpoint.response?.body == null) {
-                    writer.writeLine(`return`);
-                } else {
-                    switch (endpoint.response.body.type) {
-                        case "json":
-                            writer.write(`return `);
-                            this.loadResponseBodyFromJson({
-                                writer,
-                                typeReference: endpoint.response.body.value.responseBodyType
-                            });
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                writer.dedent();
-            })
-        );
-
-        statements.push(
-            ruby.codeblock((writer) => {
-                writer.writeLine("else");
-                writer.indent();
-                writer.writeLine(`raise ${HTTP_RESPONSE_VARIABLE_NAME}.body`);
-                writer.dedent();
+            ruby.codeblock(`${HTTP_RESPONSE_VARIABLE_NAME} = @client.send(${RAW_CLIENT_REQUEST_VARIABLE_NAME})`),
+            ruby.ifElse({
+                if: {
+                    condition: ruby.codeblock(`${HTTP_RESPONSE_VARIABLE_NAME}.code >= "200" && ${HTTP_RESPONSE_VARIABLE_NAME}.code < "300"`),
+                    thenBody: [ruby.codeblock(writer => {
+                        if (endpoint.response?.body == null) {
+                            writer.writeLine(`return`);
+                        } else {
+                            switch (endpoint.response.body.type) {
+                                case "json":
+                                    writer.write(`return `);
+                                    this.loadResponseBodyFromJson({
+                                        writer,
+                                        typeReference: endpoint.response.body.value.responseBodyType
+                                    });
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    })]
+                },
+                elseBody: ruby.codeblock(writer => {
+                    writer.writeLine(`raise ${HTTP_RESPONSE_VARIABLE_NAME}.body`);
+                }),
             })
         );
 

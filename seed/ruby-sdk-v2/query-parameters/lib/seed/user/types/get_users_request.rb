@@ -16,6 +16,6 @@ module Seed
             field :optional_user, Seed::User::User, optional: true, nullable: false
             field :exclude_user, Seed::User::User, optional: false, nullable: false
             field :filter, String, optional: false, nullable: false
-
+        end
     end
 end

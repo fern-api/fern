@@ -18,6 +18,6 @@ module Seed
             field :filter, String, optional: false, nullable: false
             field :long_param, Integer, optional: false, nullable: false
             field :big_int_param, String, optional: false, nullable: false
-
+        end
     end
 end

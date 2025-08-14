@@ -17,5 +17,5 @@ module Seed
         def user
             @user ||= Seed::User::Client.new(client: @raw_client)
         end
-
+    end
 end
