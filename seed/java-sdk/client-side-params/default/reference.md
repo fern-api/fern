@@ -701,3 +701,351 @@ client.service().deleteUser("userId");
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.service.listConnections() -> List&lt;Connection&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all connections
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.service().listConnections(
+    ListConnectionsRequest
+        .builder()
+        .strategy("strategy")
+        .name("name")
+        .fields("fields")
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**strategy:** `Optional<String>` — Filter by strategy type (e.g., auth0, google-oauth2, samlp)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `Optional<String>` — Filter by connection name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `Optional<String>` — Comma-separated list of fields to include
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service.getConnection(connectionId) -> Connection</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a connection by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.service().getConnection(
+    "connectionId",
+    GetConnectionRequest
+        .builder()
+        .fields("fields")
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**connectionId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `Optional<String>` — Comma-separated list of fields to include
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service.listClients() -> PaginatedClientResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all clients/applications
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.service().listClients(
+    ListClientsRequest
+        .builder()
+        .fields("fields")
+        .includeFields(true)
+        .page(1)
+        .perPage(1)
+        .includeTotals(true)
+        .isGlobal(true)
+        .isFirstParty(true)
+        .appType(
+            new ArrayList<String>(
+                Arrays.asList("app_type", "app_type")
+            )
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fields:** `Optional<String>` — Comma-separated list of fields to include
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `Optional<Boolean>` — Whether specified fields are included or excluded
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `Optional<Integer>` — Page number (zero-based)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `Optional<Integer>` — Number of results per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `Optional<Boolean>` — Include total count in response
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isGlobal:** `Optional<Boolean>` — Filter by global clients
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isFirstParty:** `Optional<Boolean>` — Filter by first party clients
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**appType:** `Optional<List<String>>` — Filter by application type (spa, native, regular_web, non_interactive)
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service.getClient(clientId) -> Client</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a client by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.service().getClient(
+    "clientId",
+    GetClientRequest
+        .builder()
+        .fields("fields")
+        .includeFields(true)
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**clientId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `Optional<String>` — Comma-separated list of fields to include
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `Optional<Boolean>` — Whether specified fields are included or excluded
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

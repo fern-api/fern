@@ -12,14 +12,10 @@ import com.seed.clientSideParams.core.SeedClientSideParamsApiException;
 import java.io.IOException;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
-import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-/**
- * Wire protocol tests for service
- */
 public final class ServiceWireTest {
     private MockWebServer server;
 
@@ -31,9 +27,9 @@ public final class ServiceWireTest {
     public void setup() throws IOException {
         server = new MockWebServer();
         server.start();
-        // Disable retries for tests to avoid timeouts
         client = SeedClientSideParamsClient.builder()
                 .url(server.url("/").toString())
+                .token("test-token")
                 .maxRetries(0)
                 .build();
     }
@@ -43,78 +39,20 @@ public final class ServiceWireTest {
         server.shutdown();
     }
 
-    /**
-     * Test successful response for ListResources endpoint
-     */
     @Test
     public void testListResources_SuccessResponse() throws Exception {
-        // Given: Mock server returns successful response
-        server.enqueue(new MockResponse()
-                .setResponseCode(200)
-                .setBody("[{\"id\":\"test-id\",\"name\":\"Test Resource\",\"description\":\"Test description\"}]"));
-        // When: API call is made
-        client.service()
-                .listResources(com.seed
-                        .clientSideParams
-                        .resources
-                        .service
-                        .requests
-                        .ListResourcesRequest
-                        .builder()
-                        .build());
-        // Then: Verify request was made correctly
-        RecordedRequest recorded = server.takeRequest();
-        assertNotNull(recorded);
-        assertEquals("GET", recorded.getMethod());
-        assertTrue(recorded.getPath().startsWith("/resources"));
+        server.enqueue(
+                new MockResponse().setResponseCode(200).setBody("[{\"id\":\"test-id\",\"value\":\"test-value\"}]"));
+        // TODO:
+        // client.service().listResources(com.seed.clientSideParams.resources.service.requests.ListResourcesRequest.builder().build())
+        server.takeRequest();
     }
 
-    /**
-     * Test query parameter serialization for ListResources endpoint
-     */
-    @Test
-    public void testListResources_QueryParameters() throws Exception {
-        server.enqueue(new MockResponse()
-                .setResponseCode(200)
-                .setBody("[{\"id\":\"test-id\",\"name\":\"Test Resource\",\"description\":\"Test description\"}]"));
-        client.service()
-                .listResources(com.seed
-                        .clientSideParams
-                        .resources
-                        .service
-                        .requests
-                        .ListResourcesRequest
-                        .builder()
-                        .page(10)
-                        .perPage(10)
-                        .sort("asc")
-                        .order("asc")
-                        .includeTotals(true)
-                        .fields("id,name")
-                        .search("test query")
-                        .build());
-        RecordedRequest recorded = server.takeRequest();
-        String path = recorded.getPath();
-        assertNotNull(path);
-        assertTrue(path.contains("page=") || path.contains("page" + "="));
-        assertTrue(path.contains("per_page=") || path.contains("per_page" + "="));
-        assertTrue(path.contains("sort=") || path.contains("sort" + "="));
-        assertTrue(path.contains("order=") || path.contains("order" + "="));
-        assertTrue(path.contains("include_totals=") || path.contains("include_totals" + "="));
-        assertTrue(path.contains("fields=") || path.contains("fields" + "="));
-        assertTrue(path.contains("search=") || path.contains("search" + "="));
-    }
-
-    /**
-     * Test 404 error response for ListResources endpoint
-     */
     @Test
     public void testListResources_404Error() {
-        // Given: Mock server returns 404 error
         server.enqueue(new MockResponse()
                 .setResponseCode(404)
                 .setBody("{\"error\":\"not_found\",\"message\":\"Resource not found\"}"));
-        // When/Then: API call should throw exception with correct status code
         SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
             client.service()
                     .listResources(com.seed
@@ -129,16 +67,11 @@ public final class ServiceWireTest {
         assertEquals(404, exception.statusCode());
     }
 
-    /**
-     * Test 500 error response for ListResources endpoint
-     */
     @Test
     public void testListResources_500Error() {
-        // Given: Mock server returns 500 error
         server.enqueue(new MockResponse()
                 .setResponseCode(500)
                 .setBody("{\"error\":\"internal_error\",\"message\":\"Internal server error\"}"));
-        // When/Then: API call should throw exception with correct status code
         SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
             client.service()
                     .listResources(com.seed
@@ -153,322 +86,40 @@ public final class ServiceWireTest {
         assertEquals(500, exception.statusCode());
     }
 
-    /**
-     * Test successful response for GetResource endpoint
-     */
     @Test
     public void testGetResource_SuccessResponse() throws Exception {
-        // Given: Mock server returns successful response
         server.enqueue(new MockResponse()
                 .setResponseCode(200)
-                .setBody("{\"id\":\"test-id\",\"name\":\"Test Resource\",\"description\":\"Test description\"}"));
-        // When: API call is made
-        client.service()
-                .getResource(
-                        "test-resource_id",
-                        com.seed
-                                .clientSideParams
-                                .resources
-                                .service
-                                .requests
-                                .GetResourceRequest
-                                .builder()
-                                .build());
-        // Then: Verify request was made correctly
-        RecordedRequest recorded = server.takeRequest();
-        assertNotNull(recorded);
-        assertEquals("GET", recorded.getMethod());
-        assertTrue(recorded.getPath().startsWith("/resources/"));
+                .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"status\":\"success\",\"data\":{}}"));
+        // TODO: client.service().getResource("test-resource_id",
+        // com.seed.clientSideParams.resources.service.requests.GetResourceRequest.builder().build())
+        server.takeRequest();
     }
 
-    /**
-     * Test query parameter serialization for GetResource endpoint
-     */
-    @Test
-    public void testGetResource_QueryParameters() throws Exception {
-        server.enqueue(new MockResponse()
-                .setResponseCode(200)
-                .setBody("{\"id\":\"test-id\",\"name\":\"Test Resource\",\"description\":\"Test description\"}"));
-        client.service()
-                .getResource(
-                        "test-resource_id",
-                        com.seed
-                                .clientSideParams
-                                .resources
-                                .service
-                                .requests
-                                .GetResourceRequest
-                                .builder()
-                                .includeMetadata(true)
-                                .format("json")
-                                .build());
-        RecordedRequest recorded = server.takeRequest();
-        String path = recorded.getPath();
-        assertNotNull(path);
-        assertTrue(path.contains("include_metadata=") || path.contains("include_metadata" + "="));
-        assertTrue(path.contains("format=") || path.contains("format" + "="));
-    }
-
-    /**
-     * Test 404 error response for GetResource endpoint
-     */
-    @Test
-    public void testGetResource_404Error() {
-        // Given: Mock server returns 404 error
-        server.enqueue(new MockResponse()
-                .setResponseCode(404)
-                .setBody("{\"error\":\"not_found\",\"message\":\"Resource not found\"}"));
-        // When/Then: API call should throw exception with correct status code
-        SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
-            client.service()
-                    .getResource(
-                            "test-resource_id",
-                            com.seed
-                                    .clientSideParams
-                                    .resources
-                                    .service
-                                    .requests
-                                    .GetResourceRequest
-                                    .builder()
-                                    .build());
-        });
-        assertEquals(404, exception.statusCode());
-    }
-
-    /**
-     * Test 500 error response for GetResource endpoint
-     */
-    @Test
-    public void testGetResource_500Error() {
-        // Given: Mock server returns 500 error
-        server.enqueue(new MockResponse()
-                .setResponseCode(500)
-                .setBody("{\"error\":\"internal_error\",\"message\":\"Internal server error\"}"));
-        // When/Then: API call should throw exception with correct status code
-        SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
-            client.service()
-                    .getResource(
-                            "test-resource_id",
-                            com.seed
-                                    .clientSideParams
-                                    .resources
-                                    .service
-                                    .requests
-                                    .GetResourceRequest
-                                    .builder()
-                                    .build());
-        });
-        assertEquals(500, exception.statusCode());
-    }
-
-    /**
-     * Test successful response for SearchResources endpoint
-     */
     @Test
     public void testSearchResources_SuccessResponse() throws Exception {
-        // Given: Mock server returns successful response
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"results\":[{\"id\":\"test-id\",\"name\":\"Test Resource\"}],\"total\":1,\"nextOffset\":null}"));
-        // When: API call is made
-        client.service()
-                .searchResources(com.seed
-                        .clientSideParams
-                        .resources
-                        .service
-                        .requests
-                        .SearchResourcesRequest
-                        .builder()
-                        .build());
-        // Then: Verify request was made correctly
-        RecordedRequest recorded = server.takeRequest();
-        assertNotNull(recorded);
-        assertEquals("POST", recorded.getMethod());
-        assertTrue(recorded.getPath().startsWith("/resources/search"));
-    }
-
-    /**
-     * Test query parameter serialization for SearchResources endpoint
-     */
-    @Test
-    public void testSearchResources_QueryParameters() throws Exception {
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"results\":[{\"id\":\"test-id\",\"name\":\"Test Resource\"}],\"total\":1,\"nextOffset\":null}"));
-        client.service()
-                .searchResources(com.seed
-                        .clientSideParams
-                        .resources
-                        .service
-                        .requests
-                        .SearchResourcesRequest
-                        .builder()
-                        .limit(10)
-                        .offset(10)
-                        .build());
-        RecordedRequest recorded = server.takeRequest();
-        String path = recorded.getPath();
-        assertNotNull(path);
-        assertTrue(path.contains("limit=") || path.contains("limit" + "="));
-        assertTrue(path.contains("offset=") || path.contains("offset" + "="));
-    }
-
-    /**
-     * Test request body serialization for SearchResources endpoint
-     */
-    @Test
-    public void testSearchResources_RequestBody() throws Exception {
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"results\":[{\"id\":\"test-id\",\"name\":\"Test Resource\"}],\"total\":1,\"nextOffset\":null}"));
-        client.service()
-                .searchResources(com.seed
-                        .clientSideParams
-                        .resources
-                        .service
-                        .requests
-                        .SearchResourcesRequest
-                        .builder()
-                        .build());
-        RecordedRequest recorded = server.takeRequest();
-        String body = recorded.getBody().readUtf8();
-        assertNotNull(body);
-        com.fasterxml.jackson.databind.JsonNode bodyJson = objectMapper.readTree(body);
-        assertNotNull(bodyJson);
-    }
-
-    /**
-     * Test 404 error response for SearchResources endpoint
-     */
-    @Test
-    public void testSearchResources_404Error() {
-        // Given: Mock server returns 404 error
         server.enqueue(new MockResponse()
-                .setResponseCode(404)
-                .setBody("{\"error\":\"not_found\",\"message\":\"Resource not found\"}"));
-        // When/Then: API call should throw exception with correct status code
-        SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
-            client.service()
-                    .searchResources(com.seed
-                            .clientSideParams
-                            .resources
-                            .service
-                            .requests
-                            .SearchResourcesRequest
-                            .builder()
-                            .build());
-        });
-        assertEquals(404, exception.statusCode());
+                .setResponseCode(200)
+                .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"status\":\"success\",\"data\":{}}"));
+        // TODO:
+        // client.service().searchResources(com.seed.clientSideParams.resources.service.requests.SearchResourcesRequest.builder().build())
+        server.takeRequest();
     }
 
-    /**
-     * Test 500 error response for SearchResources endpoint
-     */
-    @Test
-    public void testSearchResources_500Error() {
-        // Given: Mock server returns 500 error
-        server.enqueue(new MockResponse()
-                .setResponseCode(500)
-                .setBody("{\"error\":\"internal_error\",\"message\":\"Internal server error\"}"));
-        // When/Then: API call should throw exception with correct status code
-        SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
-            client.service()
-                    .searchResources(com.seed
-                            .clientSideParams
-                            .resources
-                            .service
-                            .requests
-                            .SearchResourcesRequest
-                            .builder()
-                            .build());
-        });
-        assertEquals(500, exception.statusCode());
-    }
-
-    /**
-     * Test successful response for ListUsers endpoint
-     */
     @Test
     public void testListUsers_SuccessResponse() throws Exception {
-        // Given: Mock server returns successful response
         server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"users\":[{\"user_id\":\"test-id\",\"email\":\"test@example.com\",\"email_verified\":true}],\"start\":0,\"limit\":50,\"length\":1}"));
-        // When: API call is made
-        client.service()
-                .listUsers(com.seed
-                        .clientSideParams
-                        .resources
-                        .service
-                        .requests
-                        .ListUsersRequest
-                        .builder()
-                        .build());
-        // Then: Verify request was made correctly
-        RecordedRequest recorded = server.takeRequest();
-        assertNotNull(recorded);
-        assertEquals("GET", recorded.getMethod());
-        assertTrue(recorded.getPath().startsWith("/users"));
+                new MockResponse().setResponseCode(200).setBody("[{\"id\":\"test-id\",\"value\":\"test-value\"}]"));
+        // TODO:
+        // client.service().listUsers(com.seed.clientSideParams.resources.service.requests.ListUsersRequest.builder().build())
+        server.takeRequest();
     }
 
-    /**
-     * Test query parameter serialization for ListUsers endpoint
-     */
-    @Test
-    public void testListUsers_QueryParameters() throws Exception {
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"users\":[{\"user_id\":\"test-id\",\"email\":\"test@example.com\",\"email_verified\":true}],\"start\":0,\"limit\":50,\"length\":1}"));
-        client.service()
-                .listUsers(com.seed
-                        .clientSideParams
-                        .resources
-                        .service
-                        .requests
-                        .ListUsersRequest
-                        .builder()
-                        .page(10)
-                        .perPage(10)
-                        .includeTotals(true)
-                        .sort("asc")
-                        .connection("test-value")
-                        .q("test-value")
-                        .searchEngine("test query")
-                        .fields("id,name")
-                        .build());
-        RecordedRequest recorded = server.takeRequest();
-        String path = recorded.getPath();
-        assertNotNull(path);
-        assertTrue(path.contains("page=") || path.contains("page" + "="));
-        assertTrue(path.contains("per_page=") || path.contains("per_page" + "="));
-        assertTrue(path.contains("include_totals=") || path.contains("include_totals" + "="));
-        assertTrue(path.contains("sort=") || path.contains("sort" + "="));
-        assertTrue(path.contains("connection=") || path.contains("connection" + "="));
-        assertTrue(path.contains("q=") || path.contains("q" + "="));
-        assertTrue(path.contains("search_engine=") || path.contains("search_engine" + "="));
-        assertTrue(path.contains("fields=") || path.contains("fields" + "="));
-    }
-
-    /**
-     * Test 404 error response for ListUsers endpoint
-     */
     @Test
     public void testListUsers_404Error() {
-        // Given: Mock server returns 404 error
         server.enqueue(new MockResponse()
                 .setResponseCode(404)
                 .setBody("{\"error\":\"not_found\",\"message\":\"Resource not found\"}"));
-        // When/Then: API call should throw exception with correct status code
         SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
             client.service()
                     .listUsers(com.seed
@@ -483,16 +134,11 @@ public final class ServiceWireTest {
         assertEquals(404, exception.statusCode());
     }
 
-    /**
-     * Test 500 error response for ListUsers endpoint
-     */
     @Test
     public void testListUsers_500Error() {
-        // Given: Mock server returns 500 error
         server.enqueue(new MockResponse()
                 .setResponseCode(500)
                 .setBody("{\"error\":\"internal_error\",\"message\":\"Internal server error\"}"));
-        // When/Then: API call should throw exception with correct status code
         SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
             client.service()
                     .listUsers(com.seed
@@ -507,379 +153,154 @@ public final class ServiceWireTest {
         assertEquals(500, exception.statusCode());
     }
 
-    /**
-     * Test successful response for GetUserById endpoint
-     */
     @Test
     public void testGetUserById_SuccessResponse() throws Exception {
-        // Given: Mock server returns successful response
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"user_id\":\"test-id\",\"email\":\"test@example.com\",\"email_verified\":true,\"created_at\":\"2024-01-01T00:00:00Z\",\"updated_at\":\"2024-01-01T00:00:00Z\"}"));
-        // When: API call is made
-        client.service()
-                .getUserById(
-                        "test-user_id",
-                        com.seed
-                                .clientSideParams
-                                .resources
-                                .service
-                                .requests
-                                .GetUserByIdRequest
-                                .builder()
-                                .build());
-        // Then: Verify request was made correctly
-        RecordedRequest recorded = server.takeRequest();
-        assertNotNull(recorded);
-        assertEquals("GET", recorded.getMethod());
-        assertTrue(recorded.getPath().startsWith("/users/"));
-    }
-
-    /**
-     * Test query parameter serialization for GetUserById endpoint
-     */
-    @Test
-    public void testGetUserById_QueryParameters() throws Exception {
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"user_id\":\"test-id\",\"email\":\"test@example.com\",\"email_verified\":true,\"created_at\":\"2024-01-01T00:00:00Z\",\"updated_at\":\"2024-01-01T00:00:00Z\"}"));
-        client.service()
-                .getUserById(
-                        "test-user_id",
-                        com.seed
-                                .clientSideParams
-                                .resources
-                                .service
-                                .requests
-                                .GetUserByIdRequest
-                                .builder()
-                                .fields("id,name")
-                                .includeFields(true)
-                                .build());
-        RecordedRequest recorded = server.takeRequest();
-        String path = recorded.getPath();
-        assertNotNull(path);
-        assertTrue(path.contains("fields=") || path.contains("fields" + "="));
-        assertTrue(path.contains("include_fields=") || path.contains("include_fields" + "="));
-    }
-
-    /**
-     * Test 404 error response for GetUserById endpoint
-     */
-    @Test
-    public void testGetUserById_404Error() {
-        // Given: Mock server returns 404 error
         server.enqueue(new MockResponse()
-                .setResponseCode(404)
-                .setBody("{\"error\":\"not_found\",\"message\":\"Resource not found\"}"));
-        // When/Then: API call should throw exception with correct status code
-        SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
-            client.service()
-                    .getUserById(
-                            "test-user_id",
-                            com.seed
-                                    .clientSideParams
-                                    .resources
-                                    .service
-                                    .requests
-                                    .GetUserByIdRequest
-                                    .builder()
-                                    .build());
-        });
-        assertEquals(404, exception.statusCode());
+                .setResponseCode(200)
+                .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"status\":\"success\",\"data\":{}}"));
+        // TODO: client.service().getUserById("test-user_id",
+        // com.seed.clientSideParams.resources.service.requests.GetUserByIdRequest.builder().build())
+        server.takeRequest();
     }
 
-    /**
-     * Test 500 error response for GetUserById endpoint
-     */
-    @Test
-    public void testGetUserById_500Error() {
-        // Given: Mock server returns 500 error
-        server.enqueue(new MockResponse()
-                .setResponseCode(500)
-                .setBody("{\"error\":\"internal_error\",\"message\":\"Internal server error\"}"));
-        // When/Then: API call should throw exception with correct status code
-        SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
-            client.service()
-                    .getUserById(
-                            "test-user_id",
-                            com.seed
-                                    .clientSideParams
-                                    .resources
-                                    .service
-                                    .requests
-                                    .GetUserByIdRequest
-                                    .builder()
-                                    .build());
-        });
-        assertEquals(500, exception.statusCode());
-    }
-
-    /**
-     * Test successful response for CreateUser endpoint
-     */
     @Test
     public void testCreateUser_SuccessResponse() throws Exception {
-        // Given: Mock server returns successful response
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"user_id\":\"test-id\",\"email\":\"test@example.com\",\"email_verified\":true,\"created_at\":\"2024-01-01T00:00:00Z\",\"updated_at\":\"2024-01-01T00:00:00Z\"}"));
-        // When: API call is made
-        client.service()
-                .createUser(com.seed
-                        .clientSideParams
-                        .resources
-                        .service
-                        .requests
-                        .CreateUserRequest
-                        .builder()
-                        .build());
-        // Then: Verify request was made correctly
-        RecordedRequest recorded = server.takeRequest();
-        assertNotNull(recorded);
-        assertEquals("POST", recorded.getMethod());
-        assertTrue(recorded.getPath().startsWith("/users"));
-    }
-
-    /**
-     * Test request body serialization for CreateUser endpoint
-     */
-    @Test
-    public void testCreateUser_RequestBody() throws Exception {
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"user_id\":\"test-id\",\"email\":\"test@example.com\",\"email_verified\":true,\"created_at\":\"2024-01-01T00:00:00Z\",\"updated_at\":\"2024-01-01T00:00:00Z\"}"));
-        client.service()
-                .createUser(com.seed
-                        .clientSideParams
-                        .resources
-                        .types
-                        .types
-                        .CreateUserRequest
-                        .builder()
-                        .build());
-        RecordedRequest recorded = server.takeRequest();
-        String body = recorded.getBody().readUtf8();
-        assertNotNull(body);
-        com.fasterxml.jackson.databind.JsonNode bodyJson = objectMapper.readTree(body);
-        assertNotNull(bodyJson);
-    }
-
-    /**
-     * Test 404 error response for CreateUser endpoint
-     */
-    @Test
-    public void testCreateUser_404Error() {
-        // Given: Mock server returns 404 error
         server.enqueue(new MockResponse()
-                .setResponseCode(404)
-                .setBody("{\"error\":\"not_found\",\"message\":\"Resource not found\"}"));
-        // When/Then: API call should throw exception with correct status code
-        SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
-            client.service()
-                    .createUser(com.seed
-                            .clientSideParams
-                            .resources
-                            .service
-                            .requests
-                            .CreateUserRequest
-                            .builder()
-                            .build());
-        });
-        assertEquals(404, exception.statusCode());
+                .setResponseCode(200)
+                .setBody("{\"id\":\"test-id\",\"status\":\"success\",\"createdAt\":\"2024-01-01T00:00:00Z\"}"));
+        // TODO:
+        // client.service().createUser(com.seed.clientSideParams.resources.service.requests.CreateUserRequest.builder().build())
+        server.takeRequest();
     }
 
-    /**
-     * Test 500 error response for CreateUser endpoint
-     */
-    @Test
-    public void testCreateUser_500Error() {
-        // Given: Mock server returns 500 error
-        server.enqueue(new MockResponse()
-                .setResponseCode(500)
-                .setBody("{\"error\":\"internal_error\",\"message\":\"Internal server error\"}"));
-        // When/Then: API call should throw exception with correct status code
-        SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
-            client.service()
-                    .createUser(com.seed
-                            .clientSideParams
-                            .resources
-                            .service
-                            .requests
-                            .CreateUserRequest
-                            .builder()
-                            .build());
-        });
-        assertEquals(500, exception.statusCode());
-    }
-
-    /**
-     * Test successful response for UpdateUser endpoint
-     */
     @Test
     public void testUpdateUser_SuccessResponse() throws Exception {
-        // Given: Mock server returns successful response
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"user_id\":\"test-id\",\"email\":\"test@example.com\",\"email_verified\":true,\"created_at\":\"2024-01-01T00:00:00Z\",\"updated_at\":\"2024-01-01T00:00:00Z\"}"));
-        // When: API call is made
-        client.service()
-                .updateUser(
-                        "test-user_id",
-                        com.seed
-                                .clientSideParams
-                                .resources
-                                .service
-                                .requests
-                                .UpdateUserRequest
-                                .builder()
-                                .build());
-        // Then: Verify request was made correctly
-        RecordedRequest recorded = server.takeRequest();
-        assertNotNull(recorded);
-        assertEquals("PATCH", recorded.getMethod());
-        assertTrue(recorded.getPath().startsWith("/users/"));
-    }
-
-    /**
-     * Test request body serialization for UpdateUser endpoint
-     */
-    @Test
-    public void testUpdateUser_RequestBody() throws Exception {
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"user_id\":\"test-id\",\"email\":\"test@example.com\",\"email_verified\":true,\"created_at\":\"2024-01-01T00:00:00Z\",\"updated_at\":\"2024-01-01T00:00:00Z\"}"));
-        client.service()
-                .updateUser(
-                        "test-user_id",
-                        com.seed
-                                .clientSideParams
-                                .resources
-                                .types
-                                .types
-                                .UpdateUserRequest
-                                .builder()
-                                .build());
-        RecordedRequest recorded = server.takeRequest();
-        String body = recorded.getBody().readUtf8();
-        assertNotNull(body);
-        com.fasterxml.jackson.databind.JsonNode bodyJson = objectMapper.readTree(body);
-        assertNotNull(bodyJson);
-    }
-
-    /**
-     * Test 404 error response for UpdateUser endpoint
-     */
-    @Test
-    public void testUpdateUser_404Error() {
-        // Given: Mock server returns 404 error
         server.enqueue(new MockResponse()
-                .setResponseCode(404)
-                .setBody("{\"error\":\"not_found\",\"message\":\"Resource not found\"}"));
-        // When/Then: API call should throw exception with correct status code
-        SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
-            client.service()
-                    .updateUser(
-                            "test-user_id",
-                            com.seed
-                                    .clientSideParams
-                                    .resources
-                                    .service
-                                    .requests
-                                    .UpdateUserRequest
-                                    .builder()
-                                    .build());
-        });
-        assertEquals(404, exception.statusCode());
+                .setResponseCode(200)
+                .setBody("{\"id\":\"test-id\",\"status\":\"success\",\"createdAt\":\"2024-01-01T00:00:00Z\"}"));
+        // TODO: client.service().updateUser("test-user_id",
+        // com.seed.clientSideParams.resources.service.requests.UpdateUserRequest.builder().build())
+        server.takeRequest();
     }
 
-    /**
-     * Test 500 error response for UpdateUser endpoint
-     */
-    @Test
-    public void testUpdateUser_500Error() {
-        // Given: Mock server returns 500 error
-        server.enqueue(new MockResponse()
-                .setResponseCode(500)
-                .setBody("{\"error\":\"internal_error\",\"message\":\"Internal server error\"}"));
-        // When/Then: API call should throw exception with correct status code
-        SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
-            client.service()
-                    .updateUser(
-                            "test-user_id",
-                            com.seed
-                                    .clientSideParams
-                                    .resources
-                                    .service
-                                    .requests
-                                    .UpdateUserRequest
-                                    .builder()
-                                    .build());
-        });
-        assertEquals(500, exception.statusCode());
-    }
-
-    /**
-     * Test successful response for DeleteUser endpoint
-     */
     @Test
     public void testDeleteUser_SuccessResponse() throws Exception {
-        // Given: Mock server returns successful response
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"user_id\":\"test-id\",\"email\":\"test@example.com\",\"email_verified\":true,\"created_at\":\"2024-01-01T00:00:00Z\",\"updated_at\":\"2024-01-01T00:00:00Z\"}"));
-        // When: API call is made
-        client.service().deleteUser("test-user_id");
-        // Then: Verify request was made correctly
-        RecordedRequest recorded = server.takeRequest();
-        assertNotNull(recorded);
-        assertEquals("DELETE", recorded.getMethod());
-        assertTrue(recorded.getPath().startsWith("/users/"));
+        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+        // TODO: client.service().deleteUser("test-user_id")
+        server.takeRequest();
     }
 
-    /**
-     * Test 404 error response for DeleteUser endpoint
-     */
     @Test
-    public void testDeleteUser_404Error() {
-        // Given: Mock server returns 404 error
+    public void testListConnections_SuccessResponse() throws Exception {
+        server.enqueue(
+                new MockResponse().setResponseCode(200).setBody("[{\"id\":\"test-id\",\"value\":\"test-value\"}]"));
+        // TODO:
+        // client.service().listConnections(com.seed.clientSideParams.resources.service.requests.ListConnectionsRequest.builder().build())
+        server.takeRequest();
+    }
+
+    @Test
+    public void testListConnections_404Error() {
         server.enqueue(new MockResponse()
                 .setResponseCode(404)
                 .setBody("{\"error\":\"not_found\",\"message\":\"Resource not found\"}"));
-        // When/Then: API call should throw exception with correct status code
         SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
-            client.service().deleteUser("test-user_id");
+            client.service()
+                    .listConnections(com.seed
+                            .clientSideParams
+                            .resources
+                            .service
+                            .requests
+                            .ListConnectionsRequest
+                            .builder()
+                            .build());
         });
         assertEquals(404, exception.statusCode());
     }
 
-    /**
-     * Test 500 error response for DeleteUser endpoint
-     */
     @Test
-    public void testDeleteUser_500Error() {
-        // Given: Mock server returns 500 error
+    public void testListConnections_500Error() {
         server.enqueue(new MockResponse()
                 .setResponseCode(500)
                 .setBody("{\"error\":\"internal_error\",\"message\":\"Internal server error\"}"));
-        // When/Then: API call should throw exception with correct status code
         SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
-            client.service().deleteUser("test-user_id");
+            client.service()
+                    .listConnections(com.seed
+                            .clientSideParams
+                            .resources
+                            .service
+                            .requests
+                            .ListConnectionsRequest
+                            .builder()
+                            .build());
         });
         assertEquals(500, exception.statusCode());
+    }
+
+    @Test
+    public void testGetConnection_SuccessResponse() throws Exception {
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"status\":\"success\",\"data\":{}}"));
+        // TODO: client.service().getConnection("test-connection_id",
+        // com.seed.clientSideParams.resources.service.requests.GetConnectionRequest.builder().build())
+        server.takeRequest();
+    }
+
+    @Test
+    public void testListClients_SuccessResponse() throws Exception {
+        server.enqueue(
+                new MockResponse().setResponseCode(200).setBody("[{\"id\":\"test-id\",\"value\":\"test-value\"}]"));
+        // TODO:
+        // client.service().listClients(com.seed.clientSideParams.resources.service.requests.ListClientsRequest.builder().build())
+        server.takeRequest();
+    }
+
+    @Test
+    public void testListClients_404Error() {
+        server.enqueue(new MockResponse()
+                .setResponseCode(404)
+                .setBody("{\"error\":\"not_found\",\"message\":\"Resource not found\"}"));
+        SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
+            client.service()
+                    .listClients(com.seed
+                            .clientSideParams
+                            .resources
+                            .service
+                            .requests
+                            .ListClientsRequest
+                            .builder()
+                            .build());
+        });
+        assertEquals(404, exception.statusCode());
+    }
+
+    @Test
+    public void testListClients_500Error() {
+        server.enqueue(new MockResponse()
+                .setResponseCode(500)
+                .setBody("{\"error\":\"internal_error\",\"message\":\"Internal server error\"}"));
+        SeedClientSideParamsApiException exception = assertThrows(SeedClientSideParamsApiException.class, () -> {
+            client.service()
+                    .listClients(com.seed
+                            .clientSideParams
+                            .resources
+                            .service
+                            .requests
+                            .ListClientsRequest
+                            .builder()
+                            .build());
+        });
+        assertEquals(500, exception.statusCode());
+    }
+
+    @Test
+    public void testGetClient_SuccessResponse() throws Exception {
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"status\":\"success\",\"data\":{}}"));
+        // TODO: client.service().getClient("test-client_id",
+        // com.seed.clientSideParams.resources.service.requests.GetClientRequest.builder().build())
+        server.takeRequest();
     }
 }

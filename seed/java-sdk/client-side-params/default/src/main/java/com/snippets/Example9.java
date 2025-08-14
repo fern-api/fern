@@ -1,8 +1,9 @@
 package com.snippets;
 
 import com.seed.clientSideParams.SeedClientSideParamsClient;
+import com.seed.clientSideParams.resources.service.requests.GetConnectionRequest;
 
-public class Example7 {
+public class Example9 {
     public static void main(String[] args) {
         SeedClientSideParamsClient client = SeedClientSideParamsClient
             .builder()
@@ -10,6 +11,12 @@ public class Example7 {
             .url("https://api.fern.com")
             .build();
 
-        client.service().deleteUser("userId");
+        client.service().getConnection(
+            "connectionId",
+            GetConnectionRequest
+                .builder()
+                .fields("fields")
+                .build()
+        );
     }
 }

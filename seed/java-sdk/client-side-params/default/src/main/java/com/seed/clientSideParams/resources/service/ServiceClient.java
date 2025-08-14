@@ -5,12 +5,19 @@ package com.seed.clientSideParams.resources.service;
 
 import com.seed.clientSideParams.core.ClientOptions;
 import com.seed.clientSideParams.core.RequestOptions;
+import com.seed.clientSideParams.resources.service.requests.GetClientRequest;
+import com.seed.clientSideParams.resources.service.requests.GetConnectionRequest;
 import com.seed.clientSideParams.resources.service.requests.GetResourceRequest;
 import com.seed.clientSideParams.resources.service.requests.GetUserRequest;
+import com.seed.clientSideParams.resources.service.requests.ListClientsRequest;
+import com.seed.clientSideParams.resources.service.requests.ListConnectionsRequest;
 import com.seed.clientSideParams.resources.service.requests.ListResourcesRequest;
 import com.seed.clientSideParams.resources.service.requests.ListUsersRequest;
 import com.seed.clientSideParams.resources.service.requests.SearchResourcesRequest;
+import com.seed.clientSideParams.resources.types.types.Client;
+import com.seed.clientSideParams.resources.types.types.Connection;
 import com.seed.clientSideParams.resources.types.types.CreateUserRequest;
+import com.seed.clientSideParams.resources.types.types.PaginatedClientResponse;
 import com.seed.clientSideParams.resources.types.types.PaginatedUserResponse;
 import com.seed.clientSideParams.resources.types.types.Resource;
 import com.seed.clientSideParams.resources.types.types.SearchResponse;
@@ -166,5 +173,91 @@ public class ServiceClient {
      */
     public void deleteUser(String userId, RequestOptions requestOptions) {
         this.rawClient.deleteUser(userId, requestOptions).body();
+    }
+
+    /**
+     * List all connections
+     */
+    public List<Connection> listConnections() {
+        return this.rawClient.listConnections().body();
+    }
+
+    /**
+     * List all connections
+     */
+    public List<Connection> listConnections(ListConnectionsRequest request) {
+        return this.rawClient.listConnections(request).body();
+    }
+
+    /**
+     * List all connections
+     */
+    public List<Connection> listConnections(ListConnectionsRequest request, RequestOptions requestOptions) {
+        return this.rawClient.listConnections(request, requestOptions).body();
+    }
+
+    /**
+     * Get a connection by ID
+     */
+    public Connection getConnection(String connectionId) {
+        return this.rawClient.getConnection(connectionId).body();
+    }
+
+    /**
+     * Get a connection by ID
+     */
+    public Connection getConnection(String connectionId, GetConnectionRequest request) {
+        return this.rawClient.getConnection(connectionId, request).body();
+    }
+
+    /**
+     * Get a connection by ID
+     */
+    public Connection getConnection(String connectionId, GetConnectionRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getConnection(connectionId, request, requestOptions)
+                .body();
+    }
+
+    /**
+     * List all clients/applications
+     */
+    public PaginatedClientResponse listClients() {
+        return this.rawClient.listClients().body();
+    }
+
+    /**
+     * List all clients/applications
+     */
+    public PaginatedClientResponse listClients(ListClientsRequest request) {
+        return this.rawClient.listClients(request).body();
+    }
+
+    /**
+     * List all clients/applications
+     */
+    public PaginatedClientResponse listClients(ListClientsRequest request, RequestOptions requestOptions) {
+        return this.rawClient.listClients(request, requestOptions).body();
+    }
+
+    /**
+     * Get a client by ID
+     */
+    public Client getClient(String clientId) {
+        return this.rawClient.getClient(clientId).body();
+    }
+
+    /**
+     * Get a client by ID
+     */
+    public Client getClient(String clientId, GetClientRequest request) {
+        return this.rawClient.getClient(clientId, request).body();
+    }
+
+    /**
+     * Get a client by ID
+     */
+    public Client getClient(String clientId, GetClientRequest request, RequestOptions requestOptions) {
+        return this.rawClient.getClient(clientId, request, requestOptions).body();
     }
 }

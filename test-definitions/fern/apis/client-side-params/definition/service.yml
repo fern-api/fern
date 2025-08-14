@@ -163,3 +163,87 @@ service:
         userId: string
       response:
         docs: No content on successful deletion
+    
+    # Connection management endpoints (Auth0-style)
+    listConnections:
+      docs: List all connections
+      method: GET
+      path: /connections
+      request:
+        name: ListConnectionsRequest
+        query-parameters:
+          strategy: 
+            type: optional<string>
+            docs: Filter by strategy type (e.g., auth0, google-oauth2, samlp)
+          name:
+            type: optional<string>
+            docs: Filter by connection name
+          fields:
+            type: optional<string>
+            docs: Comma-separated list of fields to include
+      response: list<root.Connection>
+    
+    getConnection:
+      docs: Get a connection by ID
+      method: GET
+      path: /connections/{connectionId}
+      path-parameters:
+        connectionId: string
+      request:
+        name: GetConnectionRequest
+        query-parameters:
+          fields:
+            type: optional<string>
+            docs: Comma-separated list of fields to include
+      response: root.Connection
+    
+    # Client/Application management endpoints
+    listClients:
+      docs: List all clients/applications
+      method: GET
+      path: /clients
+      request:
+        name: ListClientsRequest  
+        query-parameters:
+          fields:
+            type: optional<string>
+            docs: Comma-separated list of fields to include
+          include_fields:
+            type: optional<boolean>
+            docs: Whether specified fields are included or excluded
+          page:
+            type: optional<integer>
+            docs: Page number (zero-based)
+          per_page:
+            type: optional<integer>
+            docs: Number of results per page
+          include_totals:
+            type: optional<boolean>
+            docs: Include total count in response
+          is_global:
+            type: optional<boolean>
+            docs: Filter by global clients
+          is_first_party:
+            type: optional<boolean>
+            docs: Filter by first party clients
+          app_type:
+            type: optional<list<string>>
+            docs: Filter by application type (spa, native, regular_web, non_interactive)
+      response: root.PaginatedClientResponse
+    
+    getClient:
+      docs: Get a client by ID
+      method: GET
+      path: /clients/{clientId}
+      path-parameters:
+        clientId: string
+      request:
+        name: GetClientRequest
+        query-parameters:
+          fields:
+            type: optional<string>
+            docs: Comma-separated list of fields to include
+          include_fields:
+            type: optional<boolean>
+            docs: Whether specified fields are included or excluded
+      response: root.Client
