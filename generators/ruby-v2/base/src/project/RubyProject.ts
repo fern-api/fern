@@ -54,7 +54,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
             this.coreFiles.push(
                 await this.createAsIsFile({
                     filename,
-                    gemNamespace: this.context.config.organization || "fern"
+                    gemNamespace: firstCharUpperCase(this.context.config.organization || "fern")
                 })
             );
         }
@@ -90,6 +90,12 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         this.context.logger.debug(`mkdir ${absolutePathToDirectory}`);
         await mkdir(absolutePathToDirectory, { recursive: true });
     }
+}
+
+function firstCharUpperCase(st: string): string {
+    return st.length < 1
+        ? st
+        : st.charAt(0).toUpperCase() + st.substring(1);
 }
 
 function replaceTemplate({ contents, variables }: { contents: string; variables: Record<string, unknown> }): string {
