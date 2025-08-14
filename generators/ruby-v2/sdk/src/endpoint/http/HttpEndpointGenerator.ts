@@ -67,28 +67,32 @@ export class HttpEndpointGenerator {
             ruby.codeblock(`${HTTP_RESPONSE_VARIABLE_NAME} = @client.send(${RAW_CLIENT_REQUEST_VARIABLE_NAME})`),
             ruby.ifElse({
                 if: {
-                    condition: ruby.codeblock(`${HTTP_RESPONSE_VARIABLE_NAME}.code >= "200" && ${HTTP_RESPONSE_VARIABLE_NAME}.code < "300"`),
-                    thenBody: [ruby.codeblock(writer => {
-                        if (endpoint.response?.body == null) {
-                            writer.writeLine(`return`);
-                        } else {
-                            switch (endpoint.response.body.type) {
-                                case "json":
-                                    writer.write(`return `);
-                                    this.loadResponseBodyFromJson({
-                                        writer,
-                                        typeReference: endpoint.response.body.value.responseBodyType
-                                    });
-                                    break;
-                                default:
-                                    break;
+                    condition: ruby.codeblock(
+                        `${HTTP_RESPONSE_VARIABLE_NAME}.code >= "200" && ${HTTP_RESPONSE_VARIABLE_NAME}.code < "300"`
+                    ),
+                    thenBody: [
+                        ruby.codeblock((writer) => {
+                            if (endpoint.response?.body == null) {
+                                writer.writeLine(`return`);
+                            } else {
+                                switch (endpoint.response.body.type) {
+                                    case "json":
+                                        writer.write(`return `);
+                                        this.loadResponseBodyFromJson({
+                                            writer,
+                                            typeReference: endpoint.response.body.value.responseBodyType
+                                        });
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
-                        }
-                    })]
+                        })
+                    ]
                 },
-                elseBody: ruby.codeblock(writer => {
+                elseBody: ruby.codeblock((writer) => {
                     writer.writeLine(`raise ${HTTP_RESPONSE_VARIABLE_NAME}.body`);
-                }),
+                })
             })
         );
 

@@ -5,7 +5,6 @@ import { Writer } from "./core/Writer";
  * Represents an if-else statement in the AST.
  */
 export declare namespace IfElse {
-
     export type If = {
         condition: AstNode;
         thenBody: AstNode[];

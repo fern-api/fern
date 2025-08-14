@@ -37,7 +37,7 @@ export {
     Type,
     TypeLiteral,
     TypeParameter,
-    Writer,
+    Writer
 } from "./ast";
 export { AstNode } from "./ast/core/AstNode";
 export type { HashEntry } from "./ast/TypeLiteral";
