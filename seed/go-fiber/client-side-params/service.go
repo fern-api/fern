@@ -2,11 +2,58 @@
 
 package clientsideparams
 
+type GetClientRequest struct {
+	// Comma-separated list of fields to include
+	Fields *string `query:"fields"`
+	// Whether specified fields are included or excluded
+	IncludeFields *bool `query:"include_fields"`
+}
+
+type GetConnectionRequest struct {
+	// Comma-separated list of fields to include
+	Fields *string `query:"fields"`
+}
+
 type GetResourceRequest struct {
 	// Include metadata in response
 	IncludeMetadata bool `query:"include_metadata"`
 	// Response format
 	Format string `query:"format"`
+}
+
+type GetUserRequest struct {
+	// Comma-separated list of fields to include or exclude
+	Fields *string `query:"fields"`
+	// true to include the fields specified, false to exclude them
+	IncludeFields *bool `query:"include_fields"`
+}
+
+type ListClientsRequest struct {
+	// Comma-separated list of fields to include
+	Fields *string `query:"fields"`
+	// Whether specified fields are included or excluded
+	IncludeFields *bool `query:"include_fields"`
+	// Page number (zero-based)
+	Page *int `query:"page"`
+	// Number of results per page
+	PerPage *int `query:"per_page"`
+	// Include total count in response
+	IncludeTotals *bool `query:"include_totals"`
+	// Filter by global clients
+	IsGlobal *bool `query:"is_global"`
+	// Filter by first party clients
+	IsFirstParty *bool `query:"is_first_party"`
+	// Filter by application type (spa, native, regular_web, non_interactive)
+	AppType []string `query:"app_type"`
+}
+
+type ListConnectionsRequest struct {
+	// Filter by strategy type (e.g., auth0, google-oauth2, samlp)
+	Strategy *string `query:"strategy"`
+	// Filter by connection name
+	Name *string `query:"name"`
+	// Comma-separated list of fields to include
+	Fields *string `query:"fields"`
 }
 
 type ListResourcesRequest struct {
@@ -26,11 +73,31 @@ type ListResourcesRequest struct {
 	Search *string `query:"search"`
 }
 
+type ListUsersRequest struct {
+	// Page index of the results to return. First page is 0.
+	Page *int `query:"page"`
+	// Number of results per page.
+	PerPage *int `query:"per_page"`
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	IncludeTotals *bool `query:"include_totals"`
+	// Field to sort by. Use field:order where order is 1 for ascending and -1 for descending.
+	Sort *string `query:"sort"`
+	// Connection filter
+	Connection *string `query:"connection"`
+	// Query string following Lucene query string syntax
+	Q *string `query:"q"`
+	// Search engine version (v1, v2, or v3)
+	SearchEngine *string `query:"search_engine"`
+	// Comma-separated list of fields to include or exclude
+	Fields *string `query:"fields"`
+}
+
 type SearchResourcesRequest struct {
 	// Maximum results to return
 	Limit int `query:"limit"`
 	// Offset for pagination
-	Offset  int                    `query:"offset"`
-	Query   string                 `json:"query" url:"-"`
+	Offset int `query:"offset"`
+	// Search query text
+	Query   *string                `json:"query,omitempty" url:"-"`
 	Filters map[string]interface{} `json:"filters,omitempty" url:"-"`
 }
