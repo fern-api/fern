@@ -27,7 +27,7 @@ export class EnumGenerator extends FileGenerator<RubyFile, ModelCustomConfigSche
         const enumClass = ruby.class_({
             name: this.typeDeclaration.name.name.pascalCase.safeName
         });
-        enumClass.addStatement(ruby.codeblock(`includes ${this.context.getRootModule().name}::Internal::Types::Enum`));
+        enumClass.addStatement(ruby.codeblock(`include ${this.context.getRootModule().name}::Internal::Types::Enum`));
 
         for (const enumValue of this.enumDeclaration.values) {
             enumClass.addStatement(

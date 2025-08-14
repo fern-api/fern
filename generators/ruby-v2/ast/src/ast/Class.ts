@@ -64,7 +64,7 @@ export class Class_ extends Module_ {
         }
 
         if (!this.hasBody()) {
-            writer.write("; end");
+            writer.writeLine("; end");
             return;
         }
 

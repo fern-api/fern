@@ -70,6 +70,9 @@ export class RubyTypeMapper {
             this.context.getRootModule().name,
             ...declaredTypeName.fernFilepath.allParts.map((part) => part.pascalCase.safeName)
         ];
+        if (modules.length === 1) {
+            modules.push("Types");
+        }
         return ruby.classReference({
             name: declaredTypeName.name.pascalCase.safeName,
             modules,
