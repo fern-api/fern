@@ -25,6 +25,7 @@ public class BaseMockServerTest
 
         // Initialize the Client
         Client = new SeedClientSideParamsClient(
+            "TOKEN",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
     }

@@ -4,28 +4,25 @@ using SeedClientSideParams.Core;
 namespace SeedClientSideParams;
 
 [Serializable]
-public record SearchResourcesRequest
+public record ListConnectionsRequest
 {
     /// <summary>
-    /// Maximum results to return
+    /// Filter by strategy type (e.g., auth0, google-oauth2, samlp)
     /// </summary>
     [JsonIgnore]
-    public required int Limit { get; set; }
+    public string? Strategy { get; set; }
 
     /// <summary>
-    /// Offset for pagination
+    /// Filter by connection name
     /// </summary>
     [JsonIgnore]
-    public required int Offset { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
-    /// Search query text
+    /// Comma-separated list of fields to include
     /// </summary>
-    [JsonPropertyName("query")]
-    public string? Query { get; set; }
-
-    [JsonPropertyName("filters")]
-    public Dictionary<string, object?>? Filters { get; set; }
+    [JsonIgnore]
+    public string? Fields { get; set; }
 
     /// <inheritdoc />
     public override string ToString()
