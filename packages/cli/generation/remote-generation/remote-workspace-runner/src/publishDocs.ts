@@ -433,7 +433,7 @@ async function generateLanguageSpecificDynamicIRs({
         for (const group of workspace.generatorsConfiguration.groups) {
             for (const generatorInvocation of group.generators) {
                 const packageName = generatorsYml.getPackageName({ generatorInvocation });
-                
+
                 // generate a dynamic IR for configuration that matches the requested api snippet
                 if (
                     packageName &&
@@ -477,7 +477,7 @@ async function generateLanguageSpecificDynamicIRs({
                                     ...dynamicIR
                                 }
                             }
-                        }
+                        };
                     } else {
                         context.logger.debug(`Failed to create dynamic IR for ${generatorInvocation.language}`);
                     }
@@ -507,7 +507,7 @@ async function uploadDynamicIRs({
     if (Object.keys(dynamicIRUploadUrls).length > 0) {
         for (const [language, source] of Object.entries(dynamicIRUploadUrls)) {
             const dynamicIR = dynamicIRs[language];
-            
+
             if (dynamicIR) {
                 const response = await fetch(source.uploadUrl, {
                     method: "PUT",
