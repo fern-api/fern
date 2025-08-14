@@ -30,7 +30,6 @@ import {
 import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { measureImageSizes } from "./measureImageSizes";
 import { convertIrToDynamicSnippetsIr } from "@fern-api/ir-generator";
-import { GeneratorLanguage } from "@fern-fern/fdr-cjs-sdk/api/resources/generators";
 import { generatorsYml } from "@fern-api/configuration";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
@@ -472,7 +471,7 @@ async function generateLanguageSpecificDynamicIRs({
                         languageSpecificIRs[generatorInvocation.language] = {
                             dynamicIR: {
                                 language: generatorInvocation.language,
-                                packageName,
+                                outputMode: generatorInvocation.outputMode,
                                 dynamicIR: {
                                     ...dynamicIR
                                 }
