@@ -38,6 +38,71 @@
                 "sync_client": "package com.example.usage;\n\nimport com.seed.clientSideParams.SeedClientSideParamsClient;\nimport com.seed.clientSideParams.resources.service.requests.SearchResourcesRequest;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedClientSideParamsClient client = SeedClientSideParamsClient\n            .builder()\n            .build();\n\n        client.service().searchResources(\n            SearchResourcesRequest\n                .builder()\n                .limit(1)\n                .offset(1)\n                .query(\"query\")\n                .filters(\n                    new HashMap<String, Object>() {{\n                        put(\"filters\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .build()\n        );\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.clientSideParams.SeedClientSideParamsClient;\nimport com.seed.clientSideParams.resources.service.requests.SearchResourcesRequest;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedClientSideParamsClient client = SeedClientSideParamsClient\n            .builder()\n            .build();\n\n        client.service().searchResources(\n            SearchResourcesRequest\n                .builder()\n                .limit(1)\n                .offset(1)\n                .query(\"query\")\n                .filters(\n                    new HashMap<String, Object>() {{\n                        put(\"filters\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .build()\n        );\n    }\n}\n"
             }
+        },
+        {
+            "example_identifier": "93df4f5",
+            "id": {
+                "method": "GET",
+                "path": "/api/users",
+                "identifier_override": "endpoint_service.listUsers"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.clientSideParams.SeedClientSideParamsClient;\nimport com.seed.clientSideParams.resources.service.requests.ListUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedClientSideParamsClient client = SeedClientSideParamsClient\n            .builder()\n            .build();\n\n        client.service().listUsers(\n            ListUsersRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .includeTotals(true)\n                .sort(\"sort\")\n                .connection(\"connection\")\n                .q(\"q\")\n                .searchEngine(\"search_engine\")\n                .fields(\"fields\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.clientSideParams.SeedClientSideParamsClient;\nimport com.seed.clientSideParams.resources.service.requests.ListUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedClientSideParamsClient client = SeedClientSideParamsClient\n            .builder()\n            .build();\n\n        client.service().listUsers(\n            ListUsersRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .includeTotals(true)\n                .sort(\"sort\")\n                .connection(\"connection\")\n                .q(\"q\")\n                .searchEngine(\"search_engine\")\n                .fields(\"fields\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "28d15f88",
+            "id": {
+                "method": "GET",
+                "path": "/api/users/{userId}",
+                "identifier_override": "endpoint_service.getUserById"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.clientSideParams.SeedClientSideParamsClient;\nimport com.seed.clientSideParams.resources.service.requests.GetUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedClientSideParamsClient client = SeedClientSideParamsClient\n            .builder()\n            .build();\n\n        client.service().getUserById(\n            \"userId\",\n            GetUserRequest\n                .builder()\n                .fields(\"fields\")\n                .includeFields(true)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.clientSideParams.SeedClientSideParamsClient;\nimport com.seed.clientSideParams.resources.service.requests.GetUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedClientSideParamsClient client = SeedClientSideParamsClient\n            .builder()\n            .build();\n\n        client.service().getUserById(\n            \"userId\",\n            GetUserRequest\n                .builder()\n                .fields(\"fields\")\n                .includeFields(true)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "8b6eaff8",
+            "id": {
+                "method": "POST",
+                "path": "/api/users",
+                "identifier_override": "endpoint_service.createUser"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.clientSideParams.SeedClientSideParamsClient;\nimport com.seed.clientSideParams.resources.types.types.CreateUserRequest;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedClientSideParamsClient client = SeedClientSideParamsClient\n            .builder()\n            .build();\n\n        client.service().createUser(\n            CreateUserRequest\n                .builder()\n                .email(\"email\")\n                .connection(\"connection\")\n                .emailVerified(true)\n                .username(\"username\")\n                .password(\"password\")\n                .phoneNumber(\"phone_number\")\n                .phoneVerified(true)\n                .userMetadata(\n                    new HashMap<String, Object>() {{\n                        put(\"user_metadata\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .appMetadata(\n                    new HashMap<String, Object>() {{\n                        put(\"app_metadata\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.clientSideParams.SeedClientSideParamsClient;\nimport com.seed.clientSideParams.resources.types.types.CreateUserRequest;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedClientSideParamsClient client = SeedClientSideParamsClient\n            .builder()\n            .build();\n\n        client.service().createUser(\n            CreateUserRequest\n                .builder()\n                .email(\"email\")\n                .connection(\"connection\")\n                .emailVerified(true)\n                .username(\"username\")\n                .password(\"password\")\n                .phoneNumber(\"phone_number\")\n                .phoneVerified(true)\n                .userMetadata(\n                    new HashMap<String, Object>() {{\n                        put(\"user_metadata\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .appMetadata(\n                    new HashMap<String, Object>() {{\n                        put(\"app_metadata\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "fc40d0b4",
+            "id": {
+                "method": "PATCH",
+                "path": "/api/users/{userId}",
+                "identifier_override": "endpoint_service.updateUser"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.clientSideParams.SeedClientSideParamsClient;\nimport com.seed.clientSideParams.resources.types.types.UpdateUserRequest;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedClientSideParamsClient client = SeedClientSideParamsClient\n            .builder()\n            .build();\n\n        client.service().updateUser(\n            \"userId\",\n            UpdateUserRequest\n                .builder()\n                .email(\"email\")\n                .emailVerified(true)\n                .username(\"username\")\n                .phoneNumber(\"phone_number\")\n                .phoneVerified(true)\n                .userMetadata(\n                    new HashMap<String, Object>() {{\n                        put(\"user_metadata\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .appMetadata(\n                    new HashMap<String, Object>() {{\n                        put(\"app_metadata\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .password(\"password\")\n                .blocked(true)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.clientSideParams.SeedClientSideParamsClient;\nimport com.seed.clientSideParams.resources.types.types.UpdateUserRequest;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedClientSideParamsClient client = SeedClientSideParamsClient\n            .builder()\n            .build();\n\n        client.service().updateUser(\n            \"userId\",\n            UpdateUserRequest\n                .builder()\n                .email(\"email\")\n                .emailVerified(true)\n                .username(\"username\")\n                .phoneNumber(\"phone_number\")\n                .phoneVerified(true)\n                .userMetadata(\n                    new HashMap<String, Object>() {{\n                        put(\"user_metadata\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .appMetadata(\n                    new HashMap<String, Object>() {{\n                        put(\"app_metadata\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .password(\"password\")\n                .blocked(true)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "bec8d744",
+            "id": {
+                "method": "DELETE",
+                "path": "/api/users/{userId}",
+                "identifier_override": "endpoint_service.deleteUser"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.clientSideParams.SeedClientSideParamsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedClientSideParamsClient client = SeedClientSideParamsClient\n            .builder()\n            .build();\n\n        client.service().deleteUser(\"userId\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.clientSideParams.SeedClientSideParamsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedClientSideParamsClient client = SeedClientSideParamsClient\n            .builder()\n            .build();\n\n        client.service().deleteUser(\"userId\");\n    }\n}\n"
+            }
         }
     ],
     "types": {}

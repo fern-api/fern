@@ -6,10 +6,16 @@ package com.seed.clientSideParams.resources.service;
 import com.seed.clientSideParams.core.ClientOptions;
 import com.seed.clientSideParams.core.RequestOptions;
 import com.seed.clientSideParams.resources.service.requests.GetResourceRequest;
+import com.seed.clientSideParams.resources.service.requests.GetUserRequest;
 import com.seed.clientSideParams.resources.service.requests.ListResourcesRequest;
+import com.seed.clientSideParams.resources.service.requests.ListUsersRequest;
 import com.seed.clientSideParams.resources.service.requests.SearchResourcesRequest;
+import com.seed.clientSideParams.resources.types.types.CreateUserRequest;
+import com.seed.clientSideParams.resources.types.types.PaginatedUserResponse;
 import com.seed.clientSideParams.resources.types.types.Resource;
 import com.seed.clientSideParams.resources.types.types.SearchResponse;
+import com.seed.clientSideParams.resources.types.types.UpdateUserRequest;
+import com.seed.clientSideParams.resources.types.types.User;
 import java.util.List;
 
 public class ServiceClient {
@@ -69,5 +75,96 @@ public class ServiceClient {
      */
     public SearchResponse searchResources(SearchResourcesRequest request, RequestOptions requestOptions) {
         return this.rawClient.searchResources(request, requestOptions).body();
+    }
+
+    /**
+     * List or search for users
+     */
+    public PaginatedUserResponse listUsers() {
+        return this.rawClient.listUsers().body();
+    }
+
+    /**
+     * List or search for users
+     */
+    public PaginatedUserResponse listUsers(ListUsersRequest request) {
+        return this.rawClient.listUsers(request).body();
+    }
+
+    /**
+     * List or search for users
+     */
+    public PaginatedUserResponse listUsers(ListUsersRequest request, RequestOptions requestOptions) {
+        return this.rawClient.listUsers(request, requestOptions).body();
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public User getUserById(String userId) {
+        return this.rawClient.getUserById(userId).body();
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public User getUserById(String userId, GetUserRequest request) {
+        return this.rawClient.getUserById(userId, request).body();
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public User getUserById(String userId, GetUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient.getUserById(userId, request, requestOptions).body();
+    }
+
+    /**
+     * Create a new user
+     */
+    public User createUser(CreateUserRequest request) {
+        return this.rawClient.createUser(request).body();
+    }
+
+    /**
+     * Create a new user
+     */
+    public User createUser(CreateUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient.createUser(request, requestOptions).body();
+    }
+
+    /**
+     * Update a user
+     */
+    public User updateUser(String userId) {
+        return this.rawClient.updateUser(userId).body();
+    }
+
+    /**
+     * Update a user
+     */
+    public User updateUser(String userId, UpdateUserRequest request) {
+        return this.rawClient.updateUser(userId, request).body();
+    }
+
+    /**
+     * Update a user
+     */
+    public User updateUser(String userId, UpdateUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient.updateUser(userId, request, requestOptions).body();
+    }
+
+    /**
+     * Delete a user
+     */
+    public void deleteUser(String userId) {
+        this.rawClient.deleteUser(userId).body();
+    }
+
+    /**
+     * Delete a user
+     */
+    public void deleteUser(String userId, RequestOptions requestOptions) {
+        this.rawClient.deleteUser(userId, requestOptions).body();
     }
 }

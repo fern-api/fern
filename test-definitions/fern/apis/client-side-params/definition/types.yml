@@ -13,3 +13,70 @@ types:
       results: list<Resource>
       total: optional<integer>
       next_offset: optional<integer>
+
+  User:
+    docs: User object similar to Auth0 users
+    properties:
+      user_id: string
+      email: string
+      email_verified: boolean
+      username: optional<string>
+      phone_number: optional<string>
+      phone_verified: optional<boolean>
+      created_at: datetime
+      updated_at: datetime
+      identities: optional<list<Identity>>
+      app_metadata: optional<map<string, unknown>>
+      user_metadata: optional<map<string, unknown>>
+      picture: optional<string>
+      name: optional<string>
+      nickname: optional<string>
+      multifactor: optional<list<string>>
+      last_ip: optional<string>
+      last_login: optional<datetime>
+      logins_count: optional<integer>
+      blocked: optional<boolean>
+      given_name: optional<string>
+      family_name: optional<string>
+
+  Identity:
+    properties:
+      connection: string
+      user_id: string
+      provider: string
+      is_social: boolean
+      access_token: optional<string>
+      expires_in: optional<integer>
+
+  PaginatedUserResponse:
+    docs: Response with pagination info like Auth0
+    properties:
+      users: list<User>
+      start: integer
+      limit: integer
+      length: integer
+      total: optional<integer>
+
+  CreateUserRequest:
+    properties:
+      email: string
+      email_verified: optional<boolean>
+      username: optional<string>
+      password: optional<string>
+      phone_number: optional<string>
+      phone_verified: optional<boolean>
+      user_metadata: optional<map<string, unknown>>
+      app_metadata: optional<map<string, unknown>>
+      connection: string
+      
+  UpdateUserRequest:
+    properties:
+      email: optional<string>
+      email_verified: optional<boolean>
+      username: optional<string>
+      phone_number: optional<string>
+      phone_verified: optional<boolean>
+      user_metadata: optional<map<string, unknown>>
+      app_metadata: optional<map<string, unknown>>
+      password: optional<string>
+      blocked: optional<boolean>

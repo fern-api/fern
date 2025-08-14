@@ -6,10 +6,16 @@ package com.seed.clientSideParams.resources.service;
 import com.seed.clientSideParams.core.ClientOptions;
 import com.seed.clientSideParams.core.RequestOptions;
 import com.seed.clientSideParams.resources.service.requests.GetResourceRequest;
+import com.seed.clientSideParams.resources.service.requests.GetUserRequest;
 import com.seed.clientSideParams.resources.service.requests.ListResourcesRequest;
+import com.seed.clientSideParams.resources.service.requests.ListUsersRequest;
 import com.seed.clientSideParams.resources.service.requests.SearchResourcesRequest;
+import com.seed.clientSideParams.resources.types.types.CreateUserRequest;
+import com.seed.clientSideParams.resources.types.types.PaginatedUserResponse;
 import com.seed.clientSideParams.resources.types.types.Resource;
 import com.seed.clientSideParams.resources.types.types.SearchResponse;
+import com.seed.clientSideParams.resources.types.types.UpdateUserRequest;
+import com.seed.clientSideParams.resources.types.types.User;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -73,5 +79,96 @@ public class AsyncServiceClient {
     public CompletableFuture<SearchResponse> searchResources(
             SearchResourcesRequest request, RequestOptions requestOptions) {
         return this.rawClient.searchResources(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * List or search for users
+     */
+    public CompletableFuture<PaginatedUserResponse> listUsers() {
+        return this.rawClient.listUsers().thenApply(response -> response.body());
+    }
+
+    /**
+     * List or search for users
+     */
+    public CompletableFuture<PaginatedUserResponse> listUsers(ListUsersRequest request) {
+        return this.rawClient.listUsers(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * List or search for users
+     */
+    public CompletableFuture<PaginatedUserResponse> listUsers(ListUsersRequest request, RequestOptions requestOptions) {
+        return this.rawClient.listUsers(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public CompletableFuture<User> getUserById(String userId) {
+        return this.rawClient.getUserById(userId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public CompletableFuture<User> getUserById(String userId, GetUserRequest request) {
+        return this.rawClient.getUserById(userId, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public CompletableFuture<User> getUserById(String userId, GetUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient.getUserById(userId, request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Create a new user
+     */
+    public CompletableFuture<User> createUser(CreateUserRequest request) {
+        return this.rawClient.createUser(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Create a new user
+     */
+    public CompletableFuture<User> createUser(CreateUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient.createUser(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update a user
+     */
+    public CompletableFuture<User> updateUser(String userId) {
+        return this.rawClient.updateUser(userId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update a user
+     */
+    public CompletableFuture<User> updateUser(String userId, UpdateUserRequest request) {
+        return this.rawClient.updateUser(userId, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update a user
+     */
+    public CompletableFuture<User> updateUser(String userId, UpdateUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient.updateUser(userId, request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Delete a user
+     */
+    public CompletableFuture<Void> deleteUser(String userId) {
+        return this.rawClient.deleteUser(userId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Delete a user
+     */
+    public CompletableFuture<Void> deleteUser(String userId, RequestOptions requestOptions) {
+        return this.rawClient.deleteUser(userId, requestOptions).thenApply(response -> response.body());
     }
 }

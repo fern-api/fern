@@ -281,3 +281,423 @@ client.service().searchResources(
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.service.listUsers() -> PaginatedUserResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List or search for users
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.service().listUsers(
+    ListUsersRequest
+        .builder()
+        .page(1)
+        .perPage(1)
+        .includeTotals(true)
+        .sort("sort")
+        .connection("connection")
+        .q("q")
+        .searchEngine("search_engine")
+        .fields("fields")
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Optional<Integer>` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `Optional<Integer>` — Number of results per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `Optional<Boolean>` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort:** `Optional<String>` — Field to sort by. Use field:order where order is 1 for ascending and -1 for descending.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connection:** `Optional<String>` — Connection filter
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**q:** `Optional<String>` — Query string following Lucene query string syntax
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**searchEngine:** `Optional<String>` — Search engine version (v1, v2, or v3)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `Optional<String>` — Comma-separated list of fields to include or exclude
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service.getUserById(userId) -> User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a user by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.service().getUserById(
+    "userId",
+    GetUserRequest
+        .builder()
+        .fields("fields")
+        .includeFields(true)
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**userId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `Optional<String>` — Comma-separated list of fields to include or exclude
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `Optional<Boolean>` — true to include the fields specified, false to exclude them
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service.createUser(request) -> User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.service().createUser(
+    CreateUserRequest
+        .builder()
+        .email("email")
+        .connection("connection")
+        .emailVerified(true)
+        .username("username")
+        .password("password")
+        .phoneNumber("phone_number")
+        .phoneVerified(true)
+        .userMetadata(
+            new HashMap<String, Object>() {{
+                put("user_metadata", new 
+                HashMap<String, Object>() {{put("key", "value");
+                }});
+            }}
+        )
+        .appMetadata(
+            new HashMap<String, Object>() {{
+                put("app_metadata", new 
+                HashMap<String, Object>() {{put("key", "value");
+                }});
+            }}
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreateUserRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service.updateUser(userId, request) -> User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.service().updateUser(
+    "userId",
+    UpdateUserRequest
+        .builder()
+        .email("email")
+        .emailVerified(true)
+        .username("username")
+        .phoneNumber("phone_number")
+        .phoneVerified(true)
+        .userMetadata(
+            new HashMap<String, Object>() {{
+                put("user_metadata", new 
+                HashMap<String, Object>() {{put("key", "value");
+                }});
+            }}
+        )
+        .appMetadata(
+            new HashMap<String, Object>() {{
+                put("app_metadata", new 
+                HashMap<String, Object>() {{put("key", "value");
+                }});
+            }}
+        )
+        .password("password")
+        .blocked(true)
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**userId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdateUserRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service.deleteUser(userId)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.service().deleteUser("userId");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**userId:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

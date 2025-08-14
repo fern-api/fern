@@ -3,6 +3,7 @@
  */
 package com.seed.clientSideParams.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.clientSideParams.core.ClientOptions;
 import com.seed.clientSideParams.core.MediaTypes;
@@ -13,10 +14,16 @@ import com.seed.clientSideParams.core.SeedClientSideParamsApiException;
 import com.seed.clientSideParams.core.SeedClientSideParamsException;
 import com.seed.clientSideParams.core.SeedClientSideParamsHttpResponse;
 import com.seed.clientSideParams.resources.service.requests.GetResourceRequest;
+import com.seed.clientSideParams.resources.service.requests.GetUserRequest;
 import com.seed.clientSideParams.resources.service.requests.ListResourcesRequest;
+import com.seed.clientSideParams.resources.service.requests.ListUsersRequest;
 import com.seed.clientSideParams.resources.service.requests.SearchResourcesRequest;
+import com.seed.clientSideParams.resources.types.types.CreateUserRequest;
+import com.seed.clientSideParams.resources.types.types.PaginatedUserResponse;
 import com.seed.clientSideParams.resources.types.types.Resource;
 import com.seed.clientSideParams.resources.types.types.SearchResponse;
+import com.seed.clientSideParams.resources.types.types.UpdateUserRequest;
+import com.seed.clientSideParams.resources.types.types.User;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -231,6 +238,369 @@ public class AsyncRawServiceClient {
                         future.complete(new SeedClientSideParamsHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), SearchResponse.class),
                                 response));
+                        return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    future.completeExceptionally(new SeedClientSideParamsApiException(
+                            "Error with status code " + response.code(),
+                            response.code(),
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedClientSideParamsException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(
+                        new SeedClientSideParamsException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    /**
+     * List or search for users
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedUserResponse>> listUsers() {
+        return listUsers(ListUsersRequest.builder().build());
+    }
+
+    /**
+     * List or search for users
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedUserResponse>> listUsers(
+            ListUsersRequest request) {
+        return listUsers(request, null);
+    }
+
+    /**
+     * List or search for users
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedUserResponse>> listUsers(
+            ListUsersRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users");
+        if (request.getPage().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "page", request.getPage().get(), false);
+        }
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "per_page", request.getPerPage().orElse(50), false);
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "include_totals", request.getIncludeTotals().orElse(false), false);
+        if (request.getSort().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "sort", request.getSort().get(), false);
+        }
+        if (request.getConnection().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "connection", request.getConnection().get(), false);
+        }
+        if (request.getQ().isPresent()) {
+            QueryStringMapper.addQueryParameter(httpUrl, "q", request.getQ().get(), false);
+        }
+        if (request.getSearchEngine().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "search_engine", request.getSearchEngine().get(), false);
+        }
+        if (request.getFields().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "fields", request.getFields().get(), false);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedUserResponse>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedClientSideParamsHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PaginatedUserResponse.class),
+                                response));
+                        return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    future.completeExceptionally(new SeedClientSideParamsApiException(
+                            "Error with status code " + response.code(),
+                            response.code(),
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedClientSideParamsException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(
+                        new SeedClientSideParamsException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<User>> getUserById(String userId) {
+        return getUserById(userId, GetUserRequest.builder().build());
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<User>> getUserById(
+            String userId, GetUserRequest request) {
+        return getUserById(userId, request, null);
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<User>> getUserById(
+            String userId, GetUserRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .addPathSegment(userId);
+        if (request.getFields().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "fields", request.getFields().get(), false);
+        }
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "include_fields", request.getIncludeFields().orElse(true), false);
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedClientSideParamsHttpResponse<User>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedClientSideParamsHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), User.class), response));
+                        return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    future.completeExceptionally(new SeedClientSideParamsApiException(
+                            "Error with status code " + response.code(),
+                            response.code(),
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedClientSideParamsException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(
+                        new SeedClientSideParamsException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Create a new user
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<User>> createUser(CreateUserRequest request) {
+        return createUser(request, null);
+    }
+
+    /**
+     * Create a new user
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<User>> createUser(
+            CreateUserRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedClientSideParamsException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedClientSideParamsHttpResponse<User>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedClientSideParamsHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), User.class), response));
+                        return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    future.completeExceptionally(new SeedClientSideParamsApiException(
+                            "Error with status code " + response.code(),
+                            response.code(),
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedClientSideParamsException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(
+                        new SeedClientSideParamsException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Update a user
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<User>> updateUser(String userId) {
+        return updateUser(userId, UpdateUserRequest.builder().build());
+    }
+
+    /**
+     * Update a user
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<User>> updateUser(
+            String userId, UpdateUserRequest request) {
+        return updateUser(userId, request, null);
+    }
+
+    /**
+     * Update a user
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<User>> updateUser(
+            String userId, UpdateUserRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .addPathSegment(userId)
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedClientSideParamsException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("PATCH", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedClientSideParamsHttpResponse<User>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedClientSideParamsHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), User.class), response));
+                        return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    future.completeExceptionally(new SeedClientSideParamsApiException(
+                            "Error with status code " + response.code(),
+                            response.code(),
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedClientSideParamsException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(
+                        new SeedClientSideParamsException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Delete a user
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<Void>> deleteUser(String userId) {
+        return deleteUser(userId, null);
+    }
+
+    /**
+     * Delete a user
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<Void>> deleteUser(
+            String userId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .addPathSegment(userId)
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("DELETE", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedClientSideParamsHttpResponse<Void>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedClientSideParamsHttpResponse<>(null, response));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";

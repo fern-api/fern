@@ -80,3 +80,86 @@ service:
               docs: Search query text
             filters: optional<map<string, unknown>>
       response: root.SearchResponse
+    
+    # User management endpoints (Auth0-like)
+    listUsers:
+      docs: List or search for users
+      method: GET
+      path: /users
+      request:
+        name: ListUsersRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: Page index of the results to return. First page is 0.
+          per_page:
+            type: optional<integer>
+            default: 50
+            docs: Number of results per page.
+          include_totals:
+            type: optional<boolean>
+            default: false
+            docs: Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+          sort:
+            type: optional<string>
+            docs: Field to sort by. Use field:order where order is 1 for ascending and -1 for descending.
+          connection:
+            type: optional<string>
+            docs: Connection filter
+          q:
+            type: optional<string>
+            docs: Query string following Lucene query string syntax
+          search_engine:
+            type: optional<string>
+            docs: Search engine version (v1, v2, or v3)
+          fields:
+            type: optional<string>
+            docs: Comma-separated list of fields to include or exclude
+      response: 
+        type: root.PaginatedUserResponse
+        docs: Returns either PaginatedUserResponse (if include_totals=true) or list<User> (if include_totals=false)
+    
+    getUserById:
+      docs: Get a user by ID
+      method: GET
+      path: /users/{userId}
+      path-parameters:
+        userId: string
+      request:
+        name: GetUserRequest
+        query-parameters:
+          fields:
+            type: optional<string>
+            docs: Comma-separated list of fields to include or exclude
+          include_fields:
+            type: optional<boolean>
+            default: true
+            docs: true to include the fields specified, false to exclude them
+      response: root.User
+    
+    createUser:
+      docs: Create a new user
+      method: POST
+      path: /users
+      request:
+        body: root.CreateUserRequest
+      response: root.User
+    
+    updateUser:
+      docs: Update a user
+      method: PATCH
+      path: /users/{userId}
+      path-parameters:
+        userId: string
+      request:
+        body: root.UpdateUserRequest
+      response: root.User
+    
+    deleteUser:
+      docs: Delete a user
+      method: DELETE
+      path: /users/{userId}
+      path-parameters:
+        userId: string
+      response:
+        docs: No content on successful deletion

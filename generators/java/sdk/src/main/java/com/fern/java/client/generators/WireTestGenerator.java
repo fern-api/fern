@@ -20,11 +20,17 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.BytesRequest;
+import com.fern.ir.model.http.FileUploadRequest;
+import com.fern.ir.model.http.HttpRequestBody;
+import com.fern.ir.model.http.HttpRequestBodyReference;
 import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.InlinedRequestBody;
 import com.fern.ir.model.http.PathParameter;
 import com.fern.ir.model.http.QueryParameter;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
@@ -245,42 +251,8 @@ public final class WireTestGenerator extends AbstractFileGenerator {
                 MOCK_RESPONSE, responseBody);
 
         // Make API call with request body
-        // For request body tests, use a request object instead of Map.of
-        // This handles SDKs that have typed request objects
-        String requestClassName = endpointName + "Request";
-        String packageName = context.getPoetClassNameFactory().getRootPackage();
-        StringBuilder clientCall = new StringBuilder("client.service().");
-        clientCall.append(endpoint.getName().get().getCamelCase().getSafeName()).append("(");
-        
-        // Add path parameters
-        boolean hasPathParams = false;
-        for (PathParameter pathParam : endpoint.getPathParameters()) {
-            if (hasPathParams) clientCall.append(", ");
-            clientCall.append("\"test-").append(pathParam.getName().getSnakeCase().getSafeName()).append("\"");
-            hasPathParams = true;
-        }
-        
-        // Add request object
-        if (hasPathParams) clientCall.append(", ");
-        clientCall.append(packageName).append(".resources.service.requests.")
-            .append(requestClassName).append(".builder()");
-        
-        // Handle staged builders - check if this is SearchResourcesRequest which needs query first
-        if (endpointName.equals("SearchResources")) {
-            clientCall.append(".query(\"test\")");
-        } else if (!endpoint.getQueryParameters().isEmpty()) {
-            // Add required field if needed (for staged builders)
-            for (QueryParameter queryParam : endpoint.getQueryParameters()) {
-                String paramName = queryParam.getName().getName().getCamelCase().getSafeName();
-                if (paramName.equals("query") || paramName.equals("searchQuery")) {
-                    clientCall.append(".").append(paramName).append("(\"test\")");
-                    break;
-                }
-            }
-        }
-        
-        clientCall.append(".build())");
-        methodBuilder.addStatement(clientCall.toString());
+        String clientCall = generateClientCallWithBody(endpoint);
+        methodBuilder.addStatement(clientCall);
 
         // Verify request body
         methodBuilder.addStatement("$T recorded = server.takeRequest()", RECORDED_REQUEST)
@@ -295,50 +267,31 @@ public final class WireTestGenerator extends AbstractFileGenerator {
     private String generateClientCall(HttpEndpoint endpoint) {
         StringBuilder call = new StringBuilder("client.service()");
         
-        // Call the endpoint method - getName() returns EndpointName with get() method
+        // Call the endpoint method
         String methodName = endpoint.getName().get().getCamelCase().getSafeName();
-        String endpointName = endpoint.getName().get().getPascalCase().getSafeName();
         call.append(".").append(methodName).append("(");
         
         // Add path parameters if any
-        boolean hasPathParams = false;
+        boolean needsComma = false;
         for (PathParameter pathParam : endpoint.getPathParameters()) {
-            if (hasPathParams) call.append(", ");
+            if (needsComma) call.append(", ");
             call.append("\"test-").append(pathParam.getName().getSnakeCase().getSafeName()).append("\"");
-            hasPathParams = true;
+            needsComma = true;
         }
         
-        // Check if we need to add a request object (for endpoints with query params or request body)
-        // Even if empty, some SDKs require the request object
-        if (!endpoint.getQueryParameters().isEmpty() || endpoint.getRequestBody().isPresent()) {
-            if (hasPathParams) call.append(", ");
-            String requestClassName = endpointName + "Request";
-            String packageName = context.getPoetClassNameFactory().getRootPackage();
-            call.append(packageName).append(".resources.service.requests.")
-                .append(requestClassName).append(".builder()");
-            
-            // Handle staged builders - check if this is SearchResourcesRequest which needs query first
-            if (endpointName.equals("SearchResources")) {
-                call.append(".query(\"test\")");
-            } else {
-                // Add required fields with default values for common patterns
-                // This handles staged builders that require certain fields
-                for (QueryParameter queryParam : endpoint.getQueryParameters()) {
-                    if (!queryParam.getAllowMultiple()) {
-                        String paramName = queryParam.getName().getName().getCamelCase().getSafeName();
-                        // Add common required fields with defaults
-                        if (paramName.equals("page") || paramName.equals("pageNumber")) {
-                            call.append(".").append(paramName).append("(0)");
-                            break; // Only add the first required field for simplicity
-                        } else if (paramName.equals("query") || paramName.equals("searchQuery")) {
-                            call.append(".").append(paramName).append("(\"test\")");
-                            break;
-                        }
-                    }
-                }
-            }
-            
-            call.append(".build()");
+        // Determine if we need a request object based on the IR
+        boolean hasWrapperRequest = endpoint.getSdkRequest().isPresent();
+        boolean hasQueryParams = !endpoint.getQueryParameters().isEmpty();
+        boolean hasRequestBody = endpoint.getRequestBody().isPresent();
+        
+        // If endpoint has SDK request wrapper OR has query params (but no body), it needs a request object
+        if (hasWrapperRequest || (hasQueryParams && !hasRequestBody)) {
+            if (needsComma) call.append(", ");
+            call.append(generateRequestObject(endpoint));
+        } else if (hasRequestBody) {
+            // Endpoint has a direct request body - determine what to pass
+            if (needsComma) call.append(", ");
+            call.append(generateRequestBody(endpoint));
         }
         
         call.append(")");
@@ -348,45 +301,21 @@ public final class WireTestGenerator extends AbstractFileGenerator {
     private String generateClientCallWithQueryParams(HttpEndpoint endpoint) {
         StringBuilder call = new StringBuilder("client.service()");
         
-        // Build request object with query parameters - getName() returns EndpointName with get() method
-        String endpointName = endpoint.getName().get().getPascalCase().getSafeName();
         String methodName = endpoint.getName().get().getCamelCase().getSafeName();
-        String requestClassName = endpointName + "Request";
         call.append(".").append(methodName).append("(");
         
         // Add path parameters first
+        boolean needsComma = false;
         for (PathParameter pathParam : endpoint.getPathParameters()) {
-            call.append("\"test-").append(pathParam.getName().getSnakeCase().getSafeName()).append("\", ");
+            if (needsComma) call.append(", ");
+            call.append("\"test-").append(pathParam.getName().getSnakeCase().getSafeName()).append("\"");
+            needsComma = true;
         }
         
         // Add request object with query parameters
         if (!endpoint.getQueryParameters().isEmpty()) {
-            // Use fully qualified class name for the request
-            String packageName = context.getPoetClassNameFactory().getRootPackage();
-            call.append(packageName).append(".resources.service.requests.")
-                .append(requestClassName).append(".builder()");
-            
-            // Handle staged builders - check if this is SearchResourcesRequest which needs query first
-            boolean hasRequiredField = false;
-            if (endpointName.equals("SearchResources")) {
-                call.append(".query(\"test query\")");
-                hasRequiredField = true;
-            }
-            
-            for (QueryParameter queryParam : endpoint.getQueryParameters()) {
-                // Use the actual parameter name from the query parameter
-                String paramName = queryParam.getName().getName().getCamelCase().getSafeName();
-                
-                // Skip if we already added this as required field
-                if (hasRequiredField && paramName.equals("query")) {
-                    continue;
-                }
-                
-                String testValue = generateTestValueForParam(queryParam);
-                call.append(".").append(paramName)
-                    .append("(").append(testValue).append(")");
-            }
-            call.append(".build()");
+            if (needsComma) call.append(", ");
+            call.append(generateRequestObjectWithQueryParams(endpoint));
         }
         
         call.append(")");
@@ -396,18 +325,21 @@ public final class WireTestGenerator extends AbstractFileGenerator {
     private String generateClientCallWithBody(HttpEndpoint endpoint) {
         StringBuilder call = new StringBuilder("client.service()");
         
-        // getName() returns EndpointName with get() method
         String methodName = endpoint.getName().get().getCamelCase().getSafeName();
         call.append(".").append(methodName).append("(");
         
         // Add path parameters
+        boolean needsComma = false;
         for (PathParameter pathParam : endpoint.getPathParameters()) {
-            call.append("\"test-").append(pathParam.getName().getSnakeCase().getSafeName()).append("\", ");
+            if (needsComma) call.append(", ");
+            call.append("\"test-").append(pathParam.getName().getSnakeCase().getSafeName()).append("\"");
+            needsComma = true;
         }
         
-        // Add simple request body
+        // Add request body
         if (endpoint.getRequestBody().isPresent()) {
-            call.append("java.util.Map.of(\"test\", \"data\")");
+            if (needsComma) call.append(", ");
+            call.append(generateRequestBodyForTest(endpoint));
         }
         
         call.append(")");
@@ -415,7 +347,6 @@ public final class WireTestGenerator extends AbstractFileGenerator {
     }
     
     private MethodSpec generate404ErrorTest(HttpEndpoint endpoint) {
-        // getName() returns EndpointName with get() method
         String endpointName = endpoint.getName().get().getPascalCase().getSafeName();
         String testName = "test" + endpointName + "_404Error";
         
@@ -448,7 +379,6 @@ public final class WireTestGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec generate500ErrorTest(HttpEndpoint endpoint) {
-        // getName() returns EndpointName with get() method
         String endpointName = endpoint.getName().get().getPascalCase().getSafeName();
         String testName = "test" + endpointName + "_500Error";
         
@@ -480,11 +410,151 @@ public final class WireTestGenerator extends AbstractFileGenerator {
         return methodBuilder.build();
     }
     
+    private String generateRequestObject(HttpEndpoint endpoint) {
+        String endpointName = endpoint.getName().get().getPascalCase().getSafeName();
+        String packageName = context.getPoetClassNameFactory().getRootPackage();
+        
+        // Check if this endpoint has an SDK request wrapper
+        if (endpoint.getSdkRequest().isPresent()) {
+            // Use the wrapper request pattern
+            return packageName + ".resources.service.requests." + endpointName + "Request.builder().build()";
+        }
+        
+        // For endpoints with only query params, generate minimal request
+        return packageName + ".resources.service.requests." + endpointName + "Request.builder().build()";
+    }
+    
+    private String generateRequestObjectWithQueryParams(HttpEndpoint endpoint) {
+        String endpointName = endpoint.getName().get().getPascalCase().getSafeName();
+        String packageName = context.getPoetClassNameFactory().getRootPackage();
+        StringBuilder builder = new StringBuilder(packageName)
+                .append(".resources.service.requests.")
+                .append(endpointName)
+                .append("Request.builder()");
+        
+        // Add query parameters with test values
+        for (QueryParameter queryParam : endpoint.getQueryParameters()) {
+            String paramName = queryParam.getName().getName().getCamelCase().getSafeName();
+            String testValue = generateTestValueForParam(queryParam);
+            builder.append(".").append(paramName).append("(").append(testValue).append(")");
+        }
+        
+        builder.append(".build()");
+        return builder.toString();
+    }
+    
+    private String generateRequestBody(HttpEndpoint endpoint) {
+        if (!endpoint.getRequestBody().isPresent()) {
+            return "null";
+        }
+        
+        HttpRequestBody requestBody = endpoint.getRequestBody().get();
+        
+        return requestBody.visit(new HttpRequestBody.Visitor<String>() {
+            @Override
+            public String visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
+                // For inlined request bodies, use a map
+                return "java.util.Map.of(\"test\", \"data\")";
+            }
+            
+            @Override
+            public String visitReference(HttpRequestBodyReference reference) {
+                TypeReference typeRef = reference.getRequestBodyType();
+                
+                // Check if it's a named type (custom object)
+                if (typeRef.isNamed()) {
+                    String typeName = typeRef.getNamed().get().getName().getPascalCase().getSafeName();
+                    String packageName = context.getPoetClassNameFactory().getRootPackage();
+                    
+                    // Try to determine the package location
+                    return packageName + ".resources.types.types." + typeName + ".builder().build()";
+                }
+                
+                // Fallback to a simple map for unknown types
+                return "java.util.Map.of(\"test\", \"data\")";
+            }
+            
+            @Override
+            public String visitFileUpload(FileUploadRequest fileUpload) {
+                // Not handling file uploads in tests for now
+                return "null";
+            }
+            
+            @Override
+            public String visitBytes(BytesRequest bytes) {
+                // For byte arrays, return a test byte array
+                return "\"test\".getBytes()";
+            }
+            
+            @Override
+            public String _visitUnknown(Object unknownType) {
+                return "java.util.Map.of(\"test\", \"data\")";
+            }
+        });
+    }
+    
+    private String generateRequestBodyForTest(HttpEndpoint endpoint) {
+        if (!endpoint.getRequestBody().isPresent()) {
+            return "null";
+        }
+        
+        HttpRequestBody requestBody = endpoint.getRequestBody().get();
+        
+        return requestBody.visit(new HttpRequestBody.Visitor<String>() {
+            @Override
+            public String visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
+                // Generate an inline request body object
+                String endpointName = endpoint.getName().get().getPascalCase().getSafeName();
+                String packageName = context.getPoetClassNameFactory().getRootPackage();
+                return packageName + ".resources.service.requests." + endpointName + "Request.builder().build()";
+            }
+            
+            @Override
+            public String visitReference(HttpRequestBodyReference reference) {
+                TypeReference typeRef = reference.getRequestBodyType();
+                
+                if (typeRef.isNamed()) {
+                    String typeName = typeRef.getNamed().get().getName().getPascalCase().getSafeName();
+                    String packageName = context.getPoetClassNameFactory().getRootPackage();
+                    
+                    // Check if this type ends with "Request" - if so, it's likely a request type
+                    if (typeName.endsWith("Request")) {
+                        return packageName + ".resources.types.types." + typeName + ".builder().build()";
+                    }
+                    
+                    // For other types, still use the types package
+                    return packageName + ".resources.types.types." + typeName + ".builder().build()";
+                }
+                
+                // Fallback for simple types or unknown patterns
+                return "java.util.Map.of(\"test\", \"data\")";
+            }
+            
+            @Override
+            public String visitFileUpload(FileUploadRequest fileUpload) {
+                // Not handling file uploads in tests for now
+                return "null";
+            }
+            
+            @Override
+            public String visitBytes(BytesRequest bytes) {
+                // For byte arrays, return a test byte array
+                return "\"test\".getBytes()";
+            }
+            
+            @Override
+            public String _visitUnknown(Object unknownType) {
+                return "java.util.Map.of(\"test\", \"data\")";
+            }
+        });
+    }
+    
     private String generateTestValueForParam(QueryParameter queryParam) {
         // Generate appropriate test values based on parameter type
         String paramName = queryParam.getName().getWireValue();
+        TypeReference typeRef = queryParam.getValueType();
         
-        // Check common parameter patterns
+        // Check common parameter patterns first
         if (paramName.contains("page") || paramName.contains("limit") || 
             paramName.contains("offset") || paramName.contains("per_page")) {
             return "10";
@@ -498,9 +568,16 @@ public final class WireTestGenerator extends AbstractFileGenerator {
             return "\"test query\"";
         } else if (paramName.contains("format")) {
             return "\"json\"";
-        } else {
+        }
+        
+        // Use type information for more accurate values
+        if (typeRef.isPrimitive()) {
+            // For primitive types, just return simple test values
+            // This is simpler than using the visitor pattern for test data
             return "\"test-value\"";
         }
+        
+        return "\"test-value\"";
     }
     
     private String getSuccessResponseBody(HttpEndpoint endpoint) {
@@ -509,11 +586,18 @@ public final class WireTestGenerator extends AbstractFileGenerator {
         
         // Check endpoint patterns and return appropriate mock data
         if (endpointName.contains("List")) {
+            // Check if it's a paginated response
+            if (endpointName.equals("ListUsers")) {
+                return "{\"users\":[{\"user_id\":\"test-id\",\"email\":\"test@example.com\",\"email_verified\":true}],\"start\":0,\"limit\":50,\"length\":1}";
+            }
             // Return array for list endpoints
             return "[{\"id\":\"test-id\",\"name\":\"Test Resource\",\"description\":\"Test description\"}]";
         } else if (endpointName.contains("Search")) {
             // Return search response structure
             return "{\"results\":[{\"id\":\"test-id\",\"name\":\"Test Resource\"}],\"total\":1,\"nextOffset\":null}";
+        } else if (endpointName.contains("User")) {
+            // Return User object for user endpoints
+            return "{\"user_id\":\"test-id\",\"email\":\"test@example.com\",\"email_verified\":true,\"created_at\":\"2024-01-01T00:00:00Z\",\"updated_at\":\"2024-01-01T00:00:00Z\"}";
         } else if (endpointName.contains("Get")) {
             // Return single resource
             return "{\"id\":\"test-id\",\"name\":\"Test Resource\",\"description\":\"Test description\"}";
