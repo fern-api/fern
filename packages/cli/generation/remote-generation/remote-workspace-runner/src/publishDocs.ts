@@ -20,11 +20,8 @@ import {
     SnippetsConfig
 } from "@fern-fern/fdr-cjs-sdk/api/resources/api/resources/v1/resources/register";
 
-import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
-import { measureImageSizes } from "./measureImageSizes";
 import { convertIrToDynamicSnippetsIr } from "@fern-api/ir-generator";
 import { generatorsYml } from "@fern-api/configuration";
-import { DynamicIr, DynamicIrUpload } from "@fern-fern/fdr-cjs-sdk/api/resources/api/resources/v1/resources/register";
 import { GeneratorLanguage } from "@fern-fern/fdr-cjs-sdk/api/resources/generators";
 import axios from "axios";
 import chalk from "chalk";
