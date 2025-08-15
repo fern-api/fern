@@ -4,6 +4,8 @@
 
 package com.random.api.generated.resources.service;
 
+import com.random.api.generated.resources.service.requests.NamedMixedPatchRequest;
+import com.random.api.generated.resources.service.requests.OptionalMergePatchRequest;
 import com.random.api.generated.resources.service.requests.PatchComplexRequest;
 import com.random.api.generated.resources.service.requests.PatchProxyRequest;
 import com.random.api.generated.resources.service.requests.RegularPatchRequest;
@@ -30,6 +32,20 @@ public interface ServiceService {
       consumes = "application/json"
   )
   void patchComplex(@PathVariable("id") String id, @RequestBody PatchComplexRequest body);
+
+  @PatchMapping(
+      value = "/named-mixed/{id}",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  void namedPatchWithMixed(@PathVariable("id") String id, @RequestBody NamedMixedPatchRequest body);
+
+  @PatchMapping(
+      value = "/optional-merge-patch-test",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  void optionalMergePatchTest(@RequestBody OptionalMergePatchRequest body);
 
   @PatchMapping(
       value = "/regular/{id}",
