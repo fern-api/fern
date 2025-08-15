@@ -1,5 +1,10 @@
 package com.fern.java;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
@@ -45,11 +50,6 @@ import java.util.stream.Collectors;
 import org.immutables.value.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends IDownloadFilesCustomConfig> {
 
@@ -94,15 +94,13 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
     /**
      * Preprocesses the IR JSON to handle integer overflow in example values.
-     * 
-     * OpenAPI specifications may contain example values that exceed Java's Integer
-     * limits (e.g., from systems using 64-bit integers). This method finds such
-     * values in fields explicitly typed as "integer" and converts them to "long"
-     * type to preserve the original value while preventing Jackson deserialization
-     * failures.
-     * 
-     * Note: This only processes integer fields in the IR's example values to avoid
-     * modifying actual schema definitions.
+     *
+     * <p>OpenAPI specifications may contain example values that exceed Java's Integer limits (e.g., from systems using
+     * 64-bit integers). This method finds such values in fields explicitly typed as "integer" and converts them to
+     * "long" type to preserve the original value while preventing Jackson deserialization failures.
+     *
+     * <p>Note: This only processes integer fields in the IR's example values to avoid modifying actual schema
+     * definitions.
      */
     private static String preprocessIntegerOverflow(String json) {
         if (json == null || json.trim().isEmpty()) {
@@ -260,8 +258,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
     private Path outputDirectory = null;
 
-    protected AbstractGeneratorCli() {
-    }
+    protected AbstractGeneratorCli() {}
 
     public final void run(String... args) {
         String pluginPath = args[0];
@@ -321,8 +318,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             K customConfig) {
         runInDownloadFilesModeHook(generatorExecClient, generatorConfig, ir, customConfig);
         Boolean generateFullProject = ir.getPublishConfig()
-                .map(publishConfig -> publishConfig
-                        .visit(new com.fern.ir.model.publish.PublishingConfig.Visitor<Boolean>() {
+                .map(publishConfig ->
+                        publishConfig.visit(new com.fern.ir.model.publish.PublishingConfig.Visitor<Boolean>() {
                             @Override
                             public Boolean visitDirect(DirectPublish value) {
                                 return false;
@@ -350,8 +347,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         generatedFiles.forEach(
                 generatedFile -> generatedFile.write(outputDirectory, true, customConfig.packagePrefix()));
         if (generateFullProject) {
-            runCommandBlocking(new String[] { "gradle", "wrapper" }, outputDirectory, Collections.emptyMap());
-            runCommandBlocking(new String[] { "gradle", "spotlessApply" }, outputDirectory, Collections.emptyMap());
+            runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
+            runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
         }
     }
 
@@ -370,8 +367,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         Optional<MavenCoordinate> maybeMavenCoordinate = githubOutputMode
                 .getPublishInfo()
                 .flatMap(githubPublishInfo -> githubPublishInfo.getMaven().map(mavenGithubPublishInfo -> {
-                    MavenArtifactAndGroup mavenArtifactAndGroup = MavenCoordinateParser
-                            .parse(mavenGithubPublishInfo.getCoordinate());
+                    MavenArtifactAndGroup mavenArtifactAndGroup =
+                            MavenCoordinateParser.parse(mavenGithubPublishInfo.getCoordinate());
                     return MavenCoordinate.builder()
                             .group(mavenArtifactAndGroup.group())
                             .artifact(mavenArtifactAndGroup.artifact())
@@ -380,10 +377,10 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 }));
         runInGithubModeHook(generatorExecClient, generatorConfig, ir, customConfig, githubOutputMode);
 
-        Optional<MavenGithubPublishInfo> mavenGithubPublishInfo = githubOutputMode.getPublishInfo()
-                .flatMap(githubPublishInfo -> githubPublishInfo.getMaven());
+        Optional<MavenGithubPublishInfo> mavenGithubPublishInfo =
+                githubOutputMode.getPublishInfo().flatMap(githubPublishInfo -> githubPublishInfo.getMaven());
         Boolean addSignatureBlock = (mavenGithubPublishInfo.isPresent()
-                && mavenGithubPublishInfo.get().getSignature().isPresent())
+                        && mavenGithubPublishInfo.get().getSignature().isPresent())
                 || customConfigPublishToCentral(generatorConfig);
         // add project level files
         addRootProjectFiles(maybeMavenCoordinate, true, addSignatureBlock, generatorConfig);
@@ -392,8 +389,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 mavenGithubPublishInfo.flatMap(MavenGithubPublishInfo::getSignature)));
         // write files to disk
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
-        runCommandBlocking(new String[] { "gradle", "wrapper" }, outputDirectory, Collections.emptyMap());
-        runCommandBlocking(new String[] { "gradle", "spotlessApply" }, outputDirectory, Collections.emptyMap());
+        runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
+        runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
     }
 
     public boolean customConfigPublishToCentral(GeneratorConfig _generatorConfig) {
@@ -414,9 +411,10 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             T customConfig,
             GeneratorPublishConfig publishOutputMode) {
         // send publishing update
-        MavenRegistryConfigV2 mavenRegistryConfigV2 = publishOutputMode.getRegistriesV2().getMaven();
-        MavenArtifactAndGroup mavenArtifactAndGroup = MavenCoordinateParser
-                .parse(mavenRegistryConfigV2.getCoordinate());
+        MavenRegistryConfigV2 mavenRegistryConfigV2 =
+                publishOutputMode.getRegistriesV2().getMaven();
+        MavenArtifactAndGroup mavenArtifactAndGroup =
+                MavenCoordinateParser.parse(mavenRegistryConfigV2.getCoordinate());
         MavenCoordinate mavenCoordinate = MavenCoordinate.builder()
                 .group(mavenArtifactAndGroup.group())
                 .artifact(mavenArtifactAndGroup.artifact())
@@ -434,8 +432,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 generatorConfig);
 
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
-        runCommandBlocking(new String[] { "gradle", "wrapper" }, outputDirectory, Collections.emptyMap());
-        runCommandBlocking(new String[] { "gradle", "spotlessApply" }, outputDirectory, Collections.emptyMap());
+        runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
+        runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
 
         // run publish
         if (!generatorConfig.getDryRun()) {
@@ -447,17 +445,18 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     GeneratedBuildGradle.MAVEN_PUBLISH_REGISTRY_URL_ENV_VAR,
                     mavenRegistryConfigV2.getRegistryUrl()));
             if (addSignatureBlock) {
-                MavenCentralSignature signature = mavenRegistryConfigV2.getSignature().get();
+                MavenCentralSignature signature =
+                        mavenRegistryConfigV2.getSignature().get();
                 publishEnvVars.put(GeneratedBuildGradle.MAVEN_SIGNING_KEY_ID, signature.getKeyId());
                 publishEnvVars.put(GeneratedBuildGradle.MAVEN_SIGNING_PASSWORD, signature.getPassword());
                 publishEnvVars.put(GeneratedBuildGradle.MAVEN_SIGNING_KEY, signature.getSecretKey());
                 runCommandBlocking(
-                        new String[] { "./.publish/prepare.sh" },
+                        new String[] {"./.publish/prepare.sh"},
                         Paths.get(generatorConfig.getOutput().getPath()),
                         publishEnvVars);
             }
             runCommandBlocking(
-                    new String[] { "gradle", "publish" },
+                    new String[] {"gradle", "publish"},
                     Paths.get(generatorConfig.getOutput().getPath()),
                     publishEnvVars);
         }
@@ -557,7 +556,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         addGeneratedFile(buildGradle.build());
         String settingsGradleContents = "";
         if (maybeMavenCoordinate.isPresent()) {
-            settingsGradleContents += "rootProject.name = '" + maybeMavenCoordinate.get().getArtifact() + "'\n\n";
+            settingsGradleContents +=
+                    "rootProject.name = '" + maybeMavenCoordinate.get().getArtifact() + "'\n\n";
         }
         settingsGradleContents += getSubProjects().stream()
                 .map(project -> "include '" + project + "'")
