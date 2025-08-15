@@ -45,6 +45,11 @@ import java.util.stream.Collectors;
 import org.immutables.value.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends IDownloadFilesCustomConfig> {
 
@@ -100,84 +105,127 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
      * modifying actual schema definitions.
      */
     private static String preprocessIntegerOverflow(String json) {
-        // Pattern to match "integer": large_number_value patterns
-        String integerPattern = "(?<!\")(\"integer\"\\s*:\\s*)(-?\\d{10,})(?!\\d)";
-        
-        // Pattern to match long values that might be strings when they should be numbers 
-        String longStringPattern = "(?<!\")(\"long\"\\s*:\\s*)\"(-?\\d+)\"";
+        if (json == null || json.trim().isEmpty()) {
+            return json;
+        }
 
-        java.util.regex.Pattern intPattern = java.util.regex.Pattern.compile(integerPattern);
-        java.util.regex.Pattern longPattern = java.util.regex.Pattern.compile(longStringPattern);
-        
-        StringBuffer sb = new StringBuffer();
-        int modifications = 0;
+        try {
+            return processJsonForIntegerOverflow(json);
+        } catch (Exception e) {
+            log.warn("Failed to preprocess integer overflow, using original JSON", e);
+            return json;
+        }
+    }
 
-        // First pass: convert integer overflow to long
-        java.util.regex.Matcher intMatcher = intPattern.matcher(json);
-        while (intMatcher.find()) {
-            String numberStr = intMatcher.group(2);
-            try {
-                long value = Long.parseLong(numberStr);
+    private static String processJsonForIntegerOverflow(String json) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode rootNode = mapper.readTree(json);
 
-                if (value > Integer.MAX_VALUE || value < Integer.MIN_VALUE) {
-                    // Convert to "long" field to preserve the original value
-                    log.info("Integer overflow detected in IR example value: {}. Converting to long type to preserve value.", value);
-                    intMatcher.appendReplacement(sb, "\"long\": " + value);
-                    modifications++;
-                } else {
-                    intMatcher.appendReplacement(sb, intMatcher.group(0));
+        IntegerOverflowProcessor processor = new IntegerOverflowProcessor();
+        JsonNode processedNode = processor.processNode(rootNode);
+
+        if (processor.getConversions() > 0) {
+            log.info("Converted {} integer overflow value(s) to long type in IR", processor.getConversions());
+        }
+
+        return mapper.writeValueAsString(processedNode);
+    }
+
+    private static class IntegerOverflowProcessor {
+        private int conversions = 0;
+
+        public int getConversions() {
+            return conversions;
+        }
+
+        public JsonNode processNode(JsonNode node) {
+            if (node == null) {
+                return node;
+            }
+
+            if (node.isObject()) {
+                return processObjectNode((ObjectNode) node);
+            } else if (node.isArray()) {
+                return processArrayNode((ArrayNode) node);
+            } else if (node.isNumber()) {
+                return processNumberNode(node);
+            } else {
+                return node;
+            }
+        }
+
+        private JsonNode processObjectNode(ObjectNode objectNode) {
+            ObjectNode result = objectNode.deepCopy();
+
+            if (result.has("integer")) {
+                JsonNode integerNode = result.get("integer");
+                if (integerNode.isNumber() && isIntegerOverflow(integerNode)) {
+                    long value = integerNode.asLong();
+                    log.debug("Integer overflow detected in IR example value: {}. Converting to long type.", value);
+                    result.remove("integer");
+                    result.put("long", value);
+                    conversions++;
                 }
-            } catch (NumberFormatException e) {
-                log.warn("Failed to parse potential integer value: '{}'. Preserving original.", numberStr);
-                intMatcher.appendReplacement(sb, intMatcher.group(0));
             }
-        }
-        intMatcher.appendTail(sb);
 
-        // Second pass: fix any long values that are incorrectly quoted as strings
-        String firstPassResult = sb.toString();
-        sb = new StringBuffer();
-        java.util.regex.Matcher longMatcher = longPattern.matcher(firstPassResult);
-        while (longMatcher.find()) {
-            String numberStr = longMatcher.group(2);
+            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> fields = result.fields();
+            while (fields.hasNext()) {
+                java.util.Map.Entry<String, JsonNode> field = fields.next();
+                String fieldName = field.getKey();
+                JsonNode fieldValue = field.getValue();
+
+                if ("integer".equals(fieldName) || "long".equals(fieldName)) {
+                    continue;
+                }
+
+                JsonNode processedValue = processNode(fieldValue);
+                if (processedValue != fieldValue) {
+                    result.set(fieldName, processedValue);
+                }
+            }
+
+            return result;
+        }
+
+        private JsonNode processArrayNode(ArrayNode arrayNode) {
+            ArrayNode result = arrayNode.deepCopy();
+
+            for (int i = 0; i < result.size(); i++) {
+                JsonNode element = result.get(i);
+                JsonNode processedElement = processNode(element);
+                if (processedElement != element) {
+                    result.set(i, processedElement);
+                }
+            }
+
+            return result;
+        }
+
+        private JsonNode processNumberNode(JsonNode numberNode) {
+            if (isIntegerOverflow(numberNode)) {
+                log.debug("Converting overflow integer {} to long", numberNode.asLong());
+                conversions++;
+                return JsonNodeFactory.instance.numberNode(numberNode.asLong());
+            }
+            return numberNode;
+        }
+
+        private boolean isIntegerOverflow(JsonNode numberNode) {
+            if (!numberNode.isNumber()) {
+                return false;
+            }
+
             try {
-                Long.parseLong(numberStr); // Validate it's a valid long
-                log.debug("Converting quoted long value to unquoted: {}", numberStr);
-                longMatcher.appendReplacement(sb, "\"long\": " + numberStr);
-            } catch (NumberFormatException e) {
-                longMatcher.appendReplacement(sb, longMatcher.group(0));
+                if (numberNode.isIntegralNumber()) {
+                    long value = numberNode.asLong();
+                    return value > Integer.MAX_VALUE || value < Integer.MIN_VALUE;
+                }
+            } catch (Exception e) {
+                log.debug("Failed to check integer overflow for value: {}", numberNode);
             }
-        }
-        longMatcher.appendTail(sb);
 
-        // Third pass: Handle cases where large integers become string values in the JSON
-        // This can happen when Jackson initially serializes large integers as strings
-        String secondPassResult = sb.toString();
-        sb = new StringBuffer();
-        
-        // Pattern to match any numeric value that should be unquoted but is quoted
-        // This handles cases where our conversion created quoted numbers
-        String quotedNumberPattern = "(?<!\")(\\\"(-?\\d{10,})\\\")(?!\\w)";
-        java.util.regex.Pattern quotedPattern = java.util.regex.Pattern.compile(quotedNumberPattern);
-        java.util.regex.Matcher quotedMatcher = quotedPattern.matcher(secondPassResult);
-        
-        while (quotedMatcher.find()) {
-            String numberStr = quotedMatcher.group(2);
-            try {
-                Long.parseLong(numberStr); // Validate it's a valid long
-                log.debug("Removing quotes from large number: {}", numberStr);
-                quotedMatcher.appendReplacement(sb, numberStr);
-            } catch (NumberFormatException e) {
-                quotedMatcher.appendReplacement(sb, quotedMatcher.group(0));
-            }
+            return false;
         }
-        quotedMatcher.appendTail(sb);
-
-        if (modifications > 0) {
-            log.info("Converted {} integer overflow value(s) to long type in IR", modifications);
-        }
-
-        return sb.toString();
     }
 
     private static void runCommandBlocking(String[] command, Path workingDirectory, Map<String, String> environment) {
