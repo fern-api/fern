@@ -6,13 +6,10 @@ import { MediaType } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { DynamicIntermediateRepresentation } from "@fern-api/ir-sdk/src/sdk/api/resources/dynamic";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { dynamic } from "@fern-api/ir-sdk";
 import {
     DynamicIr,
@@ -20,9 +17,7 @@ import {
     SnippetsConfig
 } from "@fern-fern/fdr-cjs-sdk/api/resources/api/resources/v1/resources/register";
 
-import { convertIrToDynamicSnippetsIr } from "@fern-api/ir-generator";
 import { generatorsYml } from "@fern-api/configuration";
-import { GeneratorLanguage } from "@fern-fern/fdr-cjs-sdk/api/resources/generators";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
