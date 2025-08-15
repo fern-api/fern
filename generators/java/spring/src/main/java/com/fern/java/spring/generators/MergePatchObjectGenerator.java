@@ -47,7 +47,7 @@ import javax.lang.model.element.Modifier;
  */
 public final class MergePatchObjectGenerator extends AbstractFileGenerator {
 
-    private static final ClassName OPTIONAL_NULLABLE = ClassName.get("core", "OptionalNullable");
+    private final ClassName optionalNullableClassName;
     private final ObjectTypeDeclaration objectTypeDeclaration;
 
     public MergePatchObjectGenerator(
@@ -56,6 +56,8 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
             AbstractGeneratorContext<?, ?> generatorContext) {
         super(className, generatorContext);
         this.objectTypeDeclaration = objectTypeDeclaration;
+        this.optionalNullableClassName =
+                generatorContext.getPoetClassNameFactory().getCoreClassName("OptionalNullable");
     }
 
     @Override
@@ -241,7 +243,7 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
         if (needsOptionalNullable) {
             // For nullable<T> or optional<nullable<T>>, use OptionalNullable wrapper
             TypeName innerType = extractFromNullable(valueType);
-            return ParameterizedTypeName.get(OPTIONAL_NULLABLE, innerType);
+            return ParameterizedTypeName.get(optionalNullableClassName, innerType);
         } else {
             // For optional<T> (not nullable) or required fields, use normal type mapping
             // The PoetTypeNameMapper will handle Optional<T> for optional fields
@@ -480,7 +482,9 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(String.class)
-                .addStatement("return $T.stringify(this)", ClassName.get("core", "ObjectMappers"))
+                .addStatement(
+                        "return $T.stringify(this)",
+                        generatorContext.getPoetClassNameFactory().getObjectMapperClassName())
                 .build();
     }
 
@@ -511,8 +515,8 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
 
             // Initialize OptionalNullable fields to absent
             if (fieldType instanceof ParameterizedTypeName
-                    && ((ParameterizedTypeName) fieldType).rawType.equals(OPTIONAL_NULLABLE)) {
-                fieldBuilder.initializer("$T.absent()", OPTIONAL_NULLABLE);
+                    && ((ParameterizedTypeName) fieldType).rawType.equals(optionalNullableClassName)) {
+                fieldBuilder.initializer("$T.absent()", optionalNullableClassName);
             }
 
             FieldSpec field = fieldBuilder.build();
@@ -547,7 +551,7 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
 
         // For OptionalNullable fields, create a special setter
         if (fieldType instanceof ParameterizedTypeName
-                && ((ParameterizedTypeName) fieldType).rawType.equals(OPTIONAL_NULLABLE)) {
+                && ((ParameterizedTypeName) fieldType).rawType.equals(optionalNullableClassName)) {
             TypeName innerType = ((ParameterizedTypeName) fieldType).typeArguments.get(0);
 
             // Add JsonSetter annotation to handle deserialization
@@ -557,7 +561,7 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
 
             // Accept the inner type and wrap in OptionalNullable
             setter.addParameter(innerType, "value");
-            setter.addStatement("this.$N = $T.ofNullable(value)", fieldName, OPTIONAL_NULLABLE);
+            setter.addStatement("this.$N = $T.ofNullable(value)", fieldName, optionalNullableClassName);
         } else {
             setter.addParameter(fieldType, "value");
             setter.addStatement("this.$N = value", fieldName);
