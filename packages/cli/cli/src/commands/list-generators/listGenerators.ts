@@ -66,7 +66,7 @@ export async function listGenerators({
                 } catch (error) {
                     // If we can't get version info for a generator, still include it without version
                     const type = getGeneratorTypeString(generator.generatorType);
-                    
+
                     const generatorInfo: GeneratorInfo = {
                         id: generator.id,
                         name: generator.displayName,
@@ -86,10 +86,16 @@ export async function listGenerators({
 
         // Sort generators by type, then by language, then by name
         generatorInfos.sort((a, b) => {
-            if (a.type !== b.type) return a.type.localeCompare(b.type);
+            if (a.type !== b.type) {
+                return a.type.localeCompare(b.type);
+            }
             if (a.language !== b.language) {
-                if (!a.language) return 1;
-                if (!b.language) return -1;
+                if (!a.language) {
+                    return 1;
+                }
+                if (!b.language) {
+                    return -1;
+                }
                 return a.language.localeCompare(b.language);
             }
             return a.name.localeCompare(b.name);
