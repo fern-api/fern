@@ -1,5 +1,5 @@
-import { dynamic } from "@fern-fern/ir-sdk/api";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { dynamic } from "@fern-fern/ir-sdk/api";
 
 /**
  * The @fern-api/dynamic-ir-sdk doesn't include the serialization layer, so the casing

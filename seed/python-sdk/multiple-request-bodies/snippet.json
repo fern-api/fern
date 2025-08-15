@@ -1,0 +1,18 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/documents/upload",
+                "method": "POST",
+                "identifier_override": "endpoint_.uploadJsonDocument"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    token=\"YOUR_TOKEN\",\n)\nclient.upload_json_document()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.upload_json_document()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

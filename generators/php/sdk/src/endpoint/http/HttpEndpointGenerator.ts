@@ -1,9 +1,6 @@
-import { upperFirst } from "lodash-es";
-
 import { Arguments, UnnamedArgument } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
-
 import {
     CursorPagination,
     HttpEndpoint,
@@ -15,6 +12,7 @@ import {
     ResponseProperty,
     ServiceId
 } from "@fern-fern/ir-sdk/api";
+import { upperFirst } from "lodash-es";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";

@@ -1,3 +1,4 @@
+import { ErrorDeclaration, ErrorDiscriminationStrategy, ResponseError } from "@fern-fern/ir-sdk/api";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import {
@@ -6,8 +7,6 @@ import {
     SinglePropertySingleUnionTypeGenerator,
     SingleUnionTypeGenerator
 } from "@fern-typescript/union-generator";
-
-import { ErrorDeclaration, ErrorDiscriminationStrategy, ResponseError } from "@fern-fern/ir-sdk/api";
 
 export declare namespace ParsedSingleUnionTypeForError {
     export interface Init {

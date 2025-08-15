@@ -4,9 +4,8 @@ import { dynamic } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-
-import { DynamicSnippetsTestSuite } from "./DynamicSnippetsTestSuite";
 import { DynamicSnippetsCsharpTestGenerator } from "./csharp/DynamicSnippetsCsharpTestGenerator";
+import { DynamicSnippetsTestSuite } from "./DynamicSnippetsTestSuite";
 import { DynamicSnippetsGoTestGenerator } from "./go/DynamicSnippetsGoTestGenerator";
 import { DynamicSnippetsJavaTestGenerator } from "./java/DynamicSnippetsJavaTestGenerator";
 import { DynamicSnippetsPhpTestGenerator } from "./php/DynamicSnippetsPhpTestGenerator";

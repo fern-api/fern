@@ -1,2 +1,2 @@
-export { RustConfigurationManager } from "./RustConfigurationManager";
 export { BaseRustCustomConfigSchema } from "./BaseRustConfigSchema";
+export { RustConfigurationManager } from "./RustConfigurationManager";

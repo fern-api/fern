@@ -1,8 +1,7 @@
+import { Examples } from "@fern-api/core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { Examples } from "@fern-api/core-utils";
-
-import { APIError, AbstractConverter, AbstractConverterContext } from "..";
+import { AbstractConverter, AbstractConverterContext, APIError } from "..";
 
 export declare namespace ExampleConverter {
     export interface Args extends AbstractConverter.Args<AbstractConverterContext<object>> {

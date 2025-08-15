@@ -1,9 +1,9 @@
 import { AstNode } from "./AstNode";
-import { Writer } from "./Writer";
 import { Expression } from "./Expression";
-import { Type } from "./Type";
-import { Pattern } from "./Pattern";
 import { MatchArm } from "./MatchArm";
+import { Pattern } from "./Pattern";
+import { Type } from "./Type";
+import { Writer } from "./Writer";
 
 export declare namespace Statement {
     type Args =

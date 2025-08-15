@@ -1,7 +1,7 @@
 import {
+    Class_,
     ClassInstantiation,
     ClassReference,
-    Class_,
     CodeBlock,
     Comment,
     KeywordArgument,
@@ -18,28 +18,29 @@ import {
     Writer,
     YieldParameter
 } from "./ast";
+import { IfElse } from "./ast/IfElse";
 
 import * as TypeLiteral from "./ast/TypeLiteral";
 
 export {
+    Class_,
     ClassInstantiation,
     ClassReference,
-    Class_,
     CodeBlock,
     KeywordArgument,
+    KeywordParameter,
     Method,
     MethodInvocation,
     MethodKind,
     Module_,
     Parameter,
+    Type,
     TypeLiteral,
     TypeParameter,
-    Type,
-    Writer,
-    KeywordParameter
+    Writer
 } from "./ast";
-export type { HashEntry } from "./ast/TypeLiteral";
 export { AstNode } from "./ast/core/AstNode";
+export type { HashEntry } from "./ast/TypeLiteral";
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg);
@@ -105,4 +106,8 @@ export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
 
 export function positionalArgument(args: PositionalArgument.Args): PositionalArgument {
     return new PositionalArgument(args);
+}
+
+export function ifElse(args: IfElse.Args): IfElse {
+    return new IfElse(args);
 }

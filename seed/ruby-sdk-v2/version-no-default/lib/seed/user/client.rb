@@ -16,10 +16,10 @@ module Seed
                 _response = @client.send(_request)
                 if _response.code >= "200" && _response.code < "300"
                     return Seed::User::Types::User.load(_response.body)
-
                 else
                     raise _response.body
+                end
             end
-
+        end
     end
 end

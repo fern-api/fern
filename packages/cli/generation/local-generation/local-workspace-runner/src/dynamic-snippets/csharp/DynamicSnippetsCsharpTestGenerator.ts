@@ -1,13 +1,11 @@
-import { mkdir, writeFile } from "fs/promises";
-import path from "path";
-
 import { Style } from "@fern-api/browser-compatible-base-generator";
 import { Config, DynamicSnippetsGenerator } from "@fern-api/csharp-dynamic-snippets";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { dynamic } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { mkdir, writeFile } from "fs/promises";
+import path from "path";
 
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";

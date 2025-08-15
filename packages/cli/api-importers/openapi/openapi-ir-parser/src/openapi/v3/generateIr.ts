@@ -1,6 +1,3 @@
-import { mapValues } from "lodash-es";
-import { OpenAPIV3 } from "openapi-types";
-
 import { assertNever, isNonNullish } from "@fern-api/core-utils";
 import {
     Endpoint,
@@ -22,23 +19,24 @@ import {
     WebhookWithExample
 } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
+import { mapValues } from "lodash-es";
+import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../../getExtension";
 import { ParseOpenAPIOptions } from "../../options";
 import { convertSchema } from "../../schema/convertSchemas";
-import { ExampleTypeFactory } from "../../schema/examples/ExampleTypeFactory";
 import { convertToFullExample } from "../../schema/examples/convertToFullExample";
+import { ExampleTypeFactory } from "../../schema/examples/ExampleTypeFactory";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { getGeneratedTypeName } from "../../schema/utils/getSchemaName";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
 import { getSchemas } from "../../utils/getSchemas";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
-import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
-import { ExampleEndpointFactory } from "./converters/ExampleEndpointFactory";
 import { convertPathItem, convertPathItemToWebhooks } from "./converters/convertPathItem";
 import { convertSecurityScheme } from "./converters/convertSecurityScheme";
 import { convertServer } from "./converters/convertServer";
 import { ERROR_NAMES } from "./converters/convertToHttpError";
+import { ExampleEndpointFactory } from "./converters/ExampleEndpointFactory";
 import { ConvertedOperation } from "./converters/operation/convertOperation";
 import { FernOpenAPIExtension } from "./extensions/fernExtensions";
 import { getFernBasePath } from "./extensions/getFernBasePath";
@@ -49,6 +47,7 @@ import { getIdempotencyHeaders } from "./extensions/getIdempotencyHeaders";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
 import { getWebhooksPathsObject } from "./getWebhookPathsObject";
 import { hasIncompleteExample } from "./hasIncompleteExample";
+import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 import { runResolutions } from "./runResolutions";
 
 export function generateIr({
@@ -118,20 +117,20 @@ export function generateIr({
             }
             switch (operation.type) {
                 case "async":
-                    endpointsWithExample.push(operation.sync);
-                    endpointsWithExample.push(operation.async);
+                    endpointsWithExample.push(...operation.sync);
+                    endpointsWithExample.push(...operation.async);
                     break;
                 case "http":
-                    endpointsWithExample.push(operation.value);
+                    endpointsWithExample.push(...operation.value);
                     break;
                 case "streaming":
-                    endpointsWithExample.push(operation.streaming);
+                    endpointsWithExample.push(...operation.streaming);
                     if (operation.nonStreaming) {
-                        endpointsWithExample.push(operation.nonStreaming);
+                        endpointsWithExample.push(...operation.nonStreaming);
                     }
                     break;
                 case "webhook":
-                    webhooksWithExample.push(operation.value);
+                    webhooksWithExample.push(...operation.value);
                     break;
                 default:
                     assertNever(operation);
@@ -149,7 +148,7 @@ export function generateIr({
             if (audiences.length > 0 && !audiences.some((audience) => webhookAudiences.includes(audience))) {
                 continue;
             }
-            webhooksWithExample.push(webhook.value);
+            webhooksWithExample.push(...webhook.value);
         }
     });
 
@@ -259,7 +258,7 @@ export function generateIr({
         return {
             ...endpointWithExample,
             request:
-                request?.type === "json"
+                request?.type === "json" || request?.type === "formUrlEncoded"
                     ? {
                           ...request,
                           schema: convertSchemaWithExampleToSchema(request.schema)
@@ -522,20 +521,24 @@ function getAllParentSchemaIds({
     return result;
 }
 
+function distinct<T>(array: T[]): T[] {
+    return [...new Set(array)];
+}
+
 function getAudiences({ operation }: { operation: ConvertedOperation }): string[] {
     let endpointAudiences: string[] = [];
     switch (operation.type) {
         case "async":
-            endpointAudiences = operation.async.audiences;
+            endpointAudiences = distinct(operation.async.flatMap((op) => op.audiences));
             break;
         case "http":
-            endpointAudiences = operation.value.audiences;
+            endpointAudiences = distinct(operation.value.flatMap((op) => op.audiences));
             break;
         case "streaming":
-            endpointAudiences = operation.streaming.audiences;
+            endpointAudiences = distinct(operation.streaming.flatMap((op) => op.audiences));
             break;
         case "webhook":
-            endpointAudiences = operation.value.audiences;
+            endpointAudiences = distinct(operation.value.flatMap((op) => op.audiences));
             break;
         default:
             assertNever(operation);

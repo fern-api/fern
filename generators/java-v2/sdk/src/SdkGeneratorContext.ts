@@ -1,10 +1,7 @@
-import { camelCase } from "lodash-es";
-
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { java } from "@fern-api/java-ast";
 import { AbstractJavaGeneratorContext, JavaProject } from "@fern-api/java-base";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     ExampleEndpointCall,
@@ -15,12 +12,12 @@ import {
     TypeDeclaration,
     TypeId
 } from "@fern-fern/ir-sdk/api";
-
-import { JavaGeneratorAgent } from "./JavaGeneratorAgent";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { camelCase } from "lodash-es";
 import { TYPES_DIRECTORY } from "./constants";
+import { JavaGeneratorAgent } from "./JavaGeneratorAgent";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomConfigSchema> {
     public readonly generatorAgent: JavaGeneratorAgent;

@@ -1,6 +1,5 @@
-import { OpenAPIV3 } from "openapi-types";
-
 import { MediaType } from "@fern-api/core-utils";
+import { OpenAPIV3 } from "openapi-types";
 
 import { isReferenceObject } from "./isReferenceObject";
 

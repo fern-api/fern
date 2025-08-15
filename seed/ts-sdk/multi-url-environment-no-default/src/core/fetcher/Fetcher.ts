@@ -1,14 +1,14 @@
 import { toJson } from "../json.js";
 import { APIResponse } from "./APIResponse.js";
-import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.js";
-import { Supplier } from "./Supplier.js";
 import { createRequestUrl } from "./createRequestUrl.js";
 import { getErrorResponseBody } from "./getErrorResponseBody.js";
 import { getFetchFn } from "./getFetchFn.js";
 import { getRequestBody } from "./getRequestBody.js";
 import { getResponseBody } from "./getResponseBody.js";
 import { makeRequest } from "./makeRequest.js";
+import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.js";
 import { requestWithRetries } from "./requestWithRetries.js";
+import { Supplier } from "./Supplier.js";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 

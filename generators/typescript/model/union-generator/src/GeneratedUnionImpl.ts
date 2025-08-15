@@ -1,11 +1,12 @@
+import { ObjectProperty } from "@fern-fern/ir-sdk/api";
 import {
     FernWriters,
-    ObjectWriter,
-    Reference,
     getPropertyKey,
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
-    maybeAddDocsStructure
+    maybeAddDocsStructure,
+    ObjectWriter,
+    Reference
 } from "@fern-typescript/commons";
 import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts";
 import {
@@ -16,13 +17,11 @@ import {
     StatementStructures,
     StructureKind,
     TypeAliasDeclarationStructure,
+    ts,
     VariableDeclarationKind,
     VariableStatementStructure,
-    WriterFunction,
-    ts
+    WriterFunction
 } from "ts-morph";
-
-import { ObjectProperty } from "@fern-fern/ir-sdk/api";
 
 import { KnownSingleUnionType } from "./known-single-union-type/KnownSingleUnionType";
 import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType";

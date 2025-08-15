@@ -1,6 +1,6 @@
-import { LambdaParameter } from "./LambdaParameter";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { LambdaParameter } from "./LambdaParameter";
 
 export declare namespace Lambda {
     interface Args {

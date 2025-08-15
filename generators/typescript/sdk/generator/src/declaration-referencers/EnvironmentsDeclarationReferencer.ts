@@ -1,15 +1,14 @@
+import { EnvironmentsConfig, MultipleBaseUrlsEnvironments, SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
 import {
     ExportedFilePath,
     ExportsManager,
+    getReferenceToExportFromPackage,
+    getReferenceToExportViaNamespaceImport,
     ImportsManager,
     NpmPackage,
-    Reference,
-    getReferenceToExportFromPackage,
-    getReferenceToExportViaNamespaceImport
+    Reference
 } from "@fern-typescript/commons";
 import { SourceFile } from "ts-morph";
-
-import { EnvironmentsConfig, MultipleBaseUrlsEnvironments, SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
 
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 

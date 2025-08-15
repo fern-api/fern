@@ -16,5 +16,5 @@ module Seed
         def completions
             @completions ||= Seed::Completions::Client.new(client: @raw_client)
         end
-
+    end
 end

@@ -1,9 +1,8 @@
-import path from "path";
-
 import { Audiences } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
+import path from "path";
 
 import { CliContext } from "../../cli-context/CliContext";
 import { generateIrForFernWorkspace } from "../generate-ir/generateIrForFernWorkspace";

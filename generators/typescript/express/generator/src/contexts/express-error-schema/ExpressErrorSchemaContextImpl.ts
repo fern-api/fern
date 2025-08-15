@@ -1,10 +1,9 @@
+import { DeclaredErrorName } from "@fern-fern/ir-sdk/api";
 import { CoreUtilities, ExportsManager, ImportsManager, Reference, Zurg } from "@fern-typescript/commons";
 import { ExpressErrorSchemaContext, GeneratedExpressErrorSchema } from "@fern-typescript/contexts";
 import { ExpressErrorSchemaGenerator } from "@fern-typescript/express-error-schema-generator";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
-
-import { DeclaredErrorName } from "@fern-fern/ir-sdk/api";
 
 import { ExpressErrorDeclarationReferencer } from "../../declaration-referencers/ExpressErrorDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";

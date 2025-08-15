@@ -6,8 +6,8 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { TypescriptCustomConfigSchema } from "../../../typescript-v2/ast/src";
-import { ServerGeneratorContext } from "./ServerGeneratorContext";
 import { ReadmeGenerator } from "./readme/ReadmeGenerator";
+import { ServerGeneratorContext } from "./ServerGeneratorContext";
 import { ToolsGenerator } from "./tools/ToolsGenerator";
 
 export declare namespace ServerGeneratorCLI {

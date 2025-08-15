@@ -1,7 +1,3 @@
-import yaml from "js-yaml";
-import { camelCase } from "lodash-es";
-import { OpenAPIV3_1 } from "openapi-types";
-
 import { OpenAPISettings } from "@fern-api/api-workspace-commons";
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
@@ -18,10 +14,13 @@ import {
 } from "@fern-api/ir-sdk";
 import { ExampleGenerationArgs } from "@fern-api/ir-utils";
 import { Logger } from "@fern-api/logger";
+import yaml from "js-yaml";
+import { camelCase } from "lodash-es";
+import { OpenAPIV3_1 } from "openapi-types";
 
 import { Extensions } from ".";
-import { APIErrorLevel, ErrorCollector } from "./ErrorCollector";
 import { SchemaConverter } from "./converters/schema/SchemaConverter";
+import { APIErrorLevel, ErrorCollector } from "./ErrorCollector";
 
 export type DisplayNameOverrideSource = "schema_identifier" | "discriminator_key" | "reference_identifier";
 

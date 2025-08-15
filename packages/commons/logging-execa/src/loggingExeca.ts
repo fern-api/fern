@@ -1,6 +1,5 @@
-import execa, { ExecaReturnValue } from "execa";
-
 import { Logger } from "@fern-api/logger";
+import execa, { ExecaReturnValue } from "execa";
 
 export declare namespace loggingExeca {
     export interface Options extends execa.Options {

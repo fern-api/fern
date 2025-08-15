@@ -1,5 +1,3 @@
-import { OpenAPIV3_1 } from "openapi-types";
-
 import { isNonNullish } from "@fern-api/core-utils";
 import {
     Environments,
@@ -7,6 +5,7 @@ import {
     MultipleBaseUrlsEnvironment,
     SingleBaseUrlEnvironment
 } from "@fern-api/ir-sdk";
+import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
 import { ServerNameExtension } from "../../extensions/x-fern-server-name";

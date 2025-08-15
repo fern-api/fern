@@ -27,7 +27,9 @@ namespace Example;
 use Seed\SeedClient;
 use Seed\Service\Requests\SearchResourcesRequest;
 
-$client = new SeedClient();
+$client = new SeedClient(
+    token: '<token>',
+);
 $client->service->searchResources(
     new SearchResourcesRequest([
         'limit' => 1,

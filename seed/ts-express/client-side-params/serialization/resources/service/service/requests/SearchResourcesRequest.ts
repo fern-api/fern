@@ -10,13 +10,13 @@ export const SearchResourcesRequest: core.serialization.Schema<
     serializers.SearchResourcesRequest.Raw,
     SeedClientSideParams.SearchResourcesRequest
 > = core.serialization.object({
-    query: core.serialization.string(),
+    query: core.serialization.string().optional(),
     filters: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
 });
 
 export declare namespace SearchResourcesRequest {
     export interface Raw {
-        query: string;
+        query?: string | null;
         filters?: Record<string, unknown> | null;
     }
 }

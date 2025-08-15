@@ -1,9 +1,9 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import {
-    NodePath,
-    RawSchemas,
     isInlineRequestBody,
     isVariablePathParameter,
+    NodePath,
+    RawSchemas,
     visitExampleResponseSchema
 } from "@fern-api/fern-definition-schema";
 

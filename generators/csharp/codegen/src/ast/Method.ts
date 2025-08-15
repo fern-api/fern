@@ -4,12 +4,12 @@ import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
 import { TypeParameter } from "./TypeParameter";
 import { XmlDocBlock } from "./XmlDocBlock";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
 
 export enum MethodType {
     INSTANCE,

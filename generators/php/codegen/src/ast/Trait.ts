@@ -1,9 +1,9 @@
 import { ClassReference } from "./ClassReference";
 import { Comment } from "./Comment";
-import { Field } from "./Field";
-import { Method } from "./Method";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { Field } from "./Field";
+import { Method } from "./Method";
 import { orderByAccess } from "./utils/orderByAccess";
 
 export declare namespace Trait {

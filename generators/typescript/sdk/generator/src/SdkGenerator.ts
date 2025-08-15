@@ -1,48 +1,6 @@
-import {
-    BundledTypescriptProject,
-    CoreUtilitiesManager,
-    DependencyManager,
-    ExportedDirectory,
-    ExportedFilePath,
-    ExportsManager,
-    ImportsManager,
-    NpmPackage,
-    PackageId,
-    PublicExportsManager,
-    SimpleTypescriptProject,
-    TypescriptProject,
-    getFullPathForEndpoint,
-    getTextOfTsNode,
-    AsIsManager
-} from "@fern-typescript/commons";
-import { GeneratorContext } from "@fern-typescript/contexts";
-import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
-import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
-import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
-import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
-import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
-import {
-    AuthProvidersGenerator,
-    SdkClientClassGenerator,
-    WebsocketClassGenerator
-} from "@fern-typescript/sdk-client-class-generator";
-import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator";
-import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
-import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
-import { SdkErrorSchemaGenerator } from "@fern-typescript/sdk-error-schema-generator";
-import { SdkInlinedRequestBodySchemaGenerator } from "@fern-typescript/sdk-inlined-request-schema-generator";
-import { TypeGenerator } from "@fern-typescript/type-generator";
-import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
-import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
-import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
-import { writeFile } from "fs/promises";
-import { Directory, Project, SourceFile, ts } from "ts-morph";
-import { v4 as uuidv4 } from "uuid";
-
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
@@ -57,9 +15,46 @@ import {
     WebSocketChannel
 } from "@fern-fern/ir-sdk/api";
 import { FdrSnippetTemplate, FdrSnippetTemplateClient, FdrSnippetTemplateEnvironment } from "@fern-fern/snippet-sdk";
-
-import { TemplateGenerator } from "./TemplateGenerator";
-import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent";
+import {
+    AsIsManager,
+    BundledTypescriptProject,
+    CoreUtilitiesManager,
+    DependencyManager,
+    ExportedDirectory,
+    ExportedFilePath,
+    ExportsManager,
+    getFullPathForEndpoint,
+    getTextOfTsNode,
+    ImportsManager,
+    NpmPackage,
+    PackageId,
+    PublicExportsManager,
+    SimpleTypescriptProject,
+    TypescriptProject
+} from "@fern-typescript/commons";
+import { GeneratorContext } from "@fern-typescript/contexts";
+import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
+import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
+import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
+import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
+import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
+import {
+    AuthProvidersGenerator,
+    OAuthTokenProviderGenerator,
+    SdkClientClassGenerator,
+    WebsocketClassGenerator
+} from "@fern-typescript/sdk-client-class-generator";
+import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
+import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
+import { SdkErrorSchemaGenerator } from "@fern-typescript/sdk-error-schema-generator";
+import { SdkInlinedRequestBodySchemaGenerator } from "@fern-typescript/sdk-inlined-request-schema-generator";
+import { TypeGenerator } from "@fern-typescript/type-generator";
+import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
+import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
+import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
+import { writeFile } from "fs/promises";
+import { Directory, Project, SourceFile, ts } from "ts-morph";
+import { v4 as uuidv4 } from "uuid";
 import { SdkContextImpl } from "./contexts/SdkContextImpl";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer";
@@ -75,6 +70,8 @@ import { VersionDeclarationReferencer } from "./declaration-referencers/VersionD
 import { WebsocketSocketDeclarationReferencer } from "./declaration-referencers/WebsocketSocketDeclarationReferencer";
 import { WebsocketTypeSchemaDeclarationReferencer } from "./declaration-referencers/WebsocketTypeSchemaDeclarationReferencer";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
+import { TemplateGenerator } from "./TemplateGenerator";
+import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent";
 import { JestTestGenerator } from "./test-generator/JestTestGenerator";
 import { VersionFileGenerator } from "./version/VersionFileGenerator";
 import { VersionGenerator } from "./version/VersionGenerator";

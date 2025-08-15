@@ -1,6 +1,6 @@
-import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
+import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
-import { RelativeFilePath, join } from "@fern-api/path-utils";
+import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 
 import { SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
 

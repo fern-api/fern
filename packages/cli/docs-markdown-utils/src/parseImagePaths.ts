@@ -1,3 +1,6 @@
+import { AbsoluteFilePath, dirname, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import type { Node as EstreeNode } from "estree";
 import { walk } from "estree-walker";
 import grayMatter from "gray-matter";
@@ -7,11 +10,6 @@ import { mdx } from "micromark-extension-mdx";
 import { isAbsolute } from "path";
 import { CONTINUE, SKIP, visit } from "unist-util-visit";
 import { z } from "zod";
-
-import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
-
-import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 
 import { extractAttributeValueLiteral, extractSingleLiteral } from "./extract-literals";
 import { isMdxExpression, isMdxJsxAttribute, isMdxJsxElement, isMdxJsxExpressionAttribute } from "./is-mdx-element";

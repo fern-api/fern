@@ -1,5 +1,3 @@
-import { PackageId } from "@fern-typescript/commons";
-
 import {
     HttpService,
     IntermediateRepresentation,
@@ -9,6 +7,7 @@ import {
     WebSocketChannel,
     WebSocketChannelId
 } from "@fern-fern/ir-sdk/api";
+import { PackageId } from "@fern-typescript/commons";
 
 export class PackageResolver {
     constructor(private readonly intermediateRepresentation: IntermediateRepresentation) {}

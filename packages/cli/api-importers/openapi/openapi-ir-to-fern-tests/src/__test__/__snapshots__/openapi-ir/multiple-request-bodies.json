@@ -1,0 +1,468 @@
+{
+  "title": "Sample API",
+  "servers": [
+    {
+      "url": "https://api.example.com/v1",
+      "description": "Production server"
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Upload document metadata (JSON) or document file",
+      "audiences": [],
+      "operationId": "uploadDocument",
+      "tags": [],
+      "sdkName": {
+        "groupName": [],
+        "methodName": "uploadJsonDocument"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UploadDocumentRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "uploadDocumentRequestTitle",
+              "key": "title",
+              "schema": {
+                "generatedName": "uploadDocumentRequestTitle",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UploadDocumentRequestTitle",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "uploadDocumentRequestAuthor",
+              "key": "author",
+              "schema": {
+                "generatedName": "uploadDocumentRequestAuthor",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UploadDocumentRequestAuthor",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "uploadDocumentRequestTags",
+              "key": "tags",
+              "schema": {
+                "generatedName": "uploadDocumentRequestTags",
+                "value": {
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "UploadDocumentRequestTagsItem",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "generatedName": "UploadDocumentRequestTags",
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "UploadDocumentRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "sdkMethodName": "uploadJsonDocument",
+        "type": "json"
+      },
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "value": {
+            "generatedName": "UploadDocumentResponse",
+            "schemas": [
+              {
+                "generatedName": "UploadDocumentResponseZero",
+                "schema": "DocumentMetadata",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              {
+                "generatedName": "UploadDocumentResponseOne",
+                "schema": "DocumentUploadResult",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              }
+            ],
+            "groupName": [],
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "undiscriminated"
+          },
+          "type": "oneOf"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": true,
+      "method": "POST",
+      "path": "/documents/upload",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "title": {
+                  "value": {
+                    "value": "title",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "author": {
+                  "value": {
+                    "value": "author",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "tags": {
+                  "value": [
+                    {
+                      "value": [
+                        {
+                          "key": {
+                            "value": "key",
+                            "type": "string"
+                          },
+                          "value": {
+                            "value": {
+                              "value": "value",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        }
+                      ],
+                      "type": "map"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Upload document metadata (JSON) or document file",
+      "audiences": [],
+      "operationId": "uploadDocument",
+      "tags": [],
+      "sdkName": {
+        "groupName": [],
+        "methodName": "uploadPdfDocument"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UploadDocumentRequest",
+      "request": {
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "sdkMethodName": "uploadPdfDocument",
+        "contentType": "application/pdf",
+        "type": "octetStream"
+      },
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "value": {
+            "generatedName": "UploadDocumentResponse",
+            "schemas": [
+              {
+                "generatedName": "UploadDocumentResponseZero",
+                "schema": "DocumentMetadata",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              {
+                "generatedName": "UploadDocumentResponseOne",
+                "schema": "DocumentUploadResult",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              }
+            ],
+            "groupName": [],
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "undiscriminated"
+          },
+          "type": "oneOf"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": true,
+      "method": "POST",
+      "path": "/documents/upload",
+      "examples": [],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "DocumentMetadata": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "documentMetadataId",
+            "key": "id",
+            "schema": {
+              "generatedName": "documentMetadataId",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "DocumentMetadataId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "documentMetadataTitle",
+            "key": "title",
+            "schema": {
+              "generatedName": "documentMetadataTitle",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "DocumentMetadataTitle",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "documentMetadataAuthor",
+            "key": "author",
+            "schema": {
+              "generatedName": "documentMetadataAuthor",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "DocumentMetadataAuthor",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "documentMetadataTags",
+            "key": "tags",
+            "schema": {
+              "generatedName": "documentMetadataTags",
+              "value": {
+                "value": {
+                  "generatedName": "DocumentMetadataTags",
+                  "type": "unknown"
+                },
+                "generatedName": "DocumentMetadataTags",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "DocumentMetadata",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "DocumentUploadResult": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "documentUploadResultFileId",
+            "key": "fileId",
+            "schema": {
+              "generatedName": "documentUploadResultFileId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "DocumentUploadResultFileId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "documentUploadResultStatus",
+            "key": "status",
+            "schema": {
+              "generatedName": "documentUploadResultStatus",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "DocumentUploadResultStatus",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "DocumentUploadResult",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {
+    "bearerAuth": {
+      "type": "bearer"
+    }
+  },
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

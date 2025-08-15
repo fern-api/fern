@@ -1,14 +1,13 @@
-import chalk from "chalk";
-import { mkdir, writeFile } from "fs/promises";
-
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, RelativeFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, RelativeFilePath } from "@fern-api/fs-utils";
 import { convertToFernFilepath, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { convertIRtoJsonSchema } from "@fern-api/ir-to-jsonschema";
 import { IdGenerator } from "@fern-api/ir-utils";
 import { Project } from "@fern-api/project-loader";
+import chalk from "chalk";
+import { mkdir, writeFile } from "fs/promises";
 
 import { CliContext } from "../../cli-context/CliContext";
 

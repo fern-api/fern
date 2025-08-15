@@ -1,7 +1,7 @@
 import { AbstractGeneratorContext } from "@fern-api/base-generator";
 import {
-    ClassReferenceFactory,
     Class_,
+    ClassReferenceFactory,
     ExampleGenerator,
     GeneratedFile,
     GeneratedRubyFile,
@@ -41,10 +41,10 @@ import { ArtifactRegistry } from "./utils/ArtifactRegistry";
 import { FileUploadUtility } from "./utils/FileUploadUtility";
 import { HeadersGenerator } from "./utils/HeadersGenerator";
 import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass";
-import { RequestOptions } from "./utils/RequestOptionsClass";
-import { RootImportsFile } from "./utils/RootImportsFile";
 import { AccessToken } from "./utils/oauth/AccessToken";
 import { OauthTokenProvider } from "./utils/oauth/OauthTokenProvider";
+import { RequestOptions } from "./utils/RequestOptionsClass";
+import { RootImportsFile } from "./utils/RootImportsFile";
 
 // TODO: This (as an abstract class) will probably be used across CLIs
 export class ClientsGenerator {

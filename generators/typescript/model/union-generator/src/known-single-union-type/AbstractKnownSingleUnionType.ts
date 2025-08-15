@@ -1,8 +1,7 @@
+import { assertNever } from "@fern-api/core-utils";
 import { getPropertyKey } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-
-import { assertNever } from "@fern-api/core-utils";
 
 import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 import { AbstractParsedSingleUnionType } from "../parsed-single-union-type/AbstractParsedSingleUnionType";

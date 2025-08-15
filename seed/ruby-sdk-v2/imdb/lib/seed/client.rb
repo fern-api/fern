@@ -17,5 +17,5 @@ module Seed
         def imdb
             @imdb ||= Seed::Imdb::Client.new(client: @raw_client)
         end
-
+    end
 end

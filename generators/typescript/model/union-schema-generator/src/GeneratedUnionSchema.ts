@@ -1,9 +1,8 @@
-import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { Reference, Zurg, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts";
-import { ModuleDeclaration, VariableDeclarationKind, ts } from "ts-morph";
-
 import { NameAndWireValue, ObjectProperty } from "@fern-fern/ir-sdk/api";
+import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
+import { getPropertyKey, getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
+import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts";
+import { ModuleDeclaration, ts, VariableDeclarationKind } from "ts-morph";
 
 import { RawSingleUnionType } from "./RawSingleUnionType";
 

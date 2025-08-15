@@ -1,9 +1,8 @@
 import { csharp } from "@fern-api/csharp-codegen";
 
 import { ExampleEndpointCall, ExampleTypeReference, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
 export declare namespace TestClass {
     interface TestInput {

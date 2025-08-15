@@ -2,9 +2,13 @@ import {
     ExampleHeader,
     ExamplePathParameter,
     ExampleQueryParameter,
-    ExampleQueryParameterShape
+    ExampleQueryParameterShape,
+    HttpHeader,
+    PathParameter,
+    QueryParameter,
+    TypeDeclaration,
+    TypeId
 } from "@fern-api/ir-sdk";
-import { HttpHeader, PathParameter, QueryParameter, TypeDeclaration, TypeId } from "@fern-api/ir-sdk";
 
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";

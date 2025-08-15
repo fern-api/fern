@@ -10,8 +10,8 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
-import { isCollectionType, isDateTimeType, isUnknownType, isUuidType } from "../utils/primitiveTypeUtils";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { isCollectionType, isDateTimeType, isUnknownType, isUuidType } from "../utils/primitiveTypeUtils";
 
 export class UndiscriminatedUnionGenerator {
     private readonly typeDeclaration: TypeDeclaration;

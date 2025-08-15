@@ -1,8 +1,7 @@
-import { Source, bundle } from "@redocly/openapi-core";
-import { OpenAPI } from "openapi-types";
-
 import { DEFAULT_OPENAPI_BUNDLE_OPTIONS } from "@fern-api/api-workspace-commons";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { bundle, Source } from "@redocly/openapi-core";
+import { OpenAPI } from "openapi-types";
 
 import { OpenAPIRefResolver } from "../loaders/OpenAPIRefResolver";
 

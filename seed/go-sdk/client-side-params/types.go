@@ -9,6 +9,794 @@ import (
 	time "time"
 )
 
+// Represents a client application
+type Client struct {
+	// The unique client identifier
+	ClientId string `json:"client_id" url:"client_id"`
+	// The tenant name
+	Tenant *string `json:"tenant,omitempty" url:"tenant,omitempty"`
+	// Name of the client
+	Name string `json:"name" url:"name"`
+	// Free text description of the client
+	Description *string `json:"description,omitempty" url:"description,omitempty"`
+	// Whether this is a global client
+	Global *bool `json:"global,omitempty" url:"global,omitempty"`
+	// The client secret (only for non-public clients)
+	ClientSecret *string `json:"client_secret,omitempty" url:"client_secret,omitempty"`
+	// The type of application (spa, native, regular_web, non_interactive)
+	AppType *string `json:"app_type,omitempty" url:"app_type,omitempty"`
+	// URL of the client logo
+	LogoUri *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
+	// Whether this client is a first party client
+	IsFirstParty *bool `json:"is_first_party,omitempty" url:"is_first_party,omitempty"`
+	// Whether this client conforms to OIDC specifications
+	OidcConformant *bool `json:"oidc_conformant,omitempty" url:"oidc_conformant,omitempty"`
+	// Allowed callback URLs
+	Callbacks []string `json:"callbacks,omitempty" url:"callbacks,omitempty"`
+	// Allowed origins for CORS
+	AllowedOrigins []string `json:"allowed_origins,omitempty" url:"allowed_origins,omitempty"`
+	// Allowed web origins for CORS
+	WebOrigins []string `json:"web_origins,omitempty" url:"web_origins,omitempty"`
+	// Allowed grant types
+	GrantTypes []string `json:"grant_types,omitempty" url:"grant_types,omitempty"`
+	// JWT configuration for the client
+	JwtConfiguration map[string]interface{} `json:"jwt_configuration,omitempty" url:"jwt_configuration,omitempty"`
+	// Client signing keys
+	SigningKeys []map[string]interface{} `json:"signing_keys,omitempty" url:"signing_keys,omitempty"`
+	// Encryption key
+	EncryptionKey map[string]interface{} `json:"encryption_key,omitempty" url:"encryption_key,omitempty"`
+	// Whether SSO is enabled
+	Sso *bool `json:"sso,omitempty" url:"sso,omitempty"`
+	// Whether SSO is disabled
+	SsoDisabled *bool `json:"sso_disabled,omitempty" url:"sso_disabled,omitempty"`
+	// Whether to use cross-origin authentication
+	CrossOriginAuth *bool `json:"cross_origin_auth,omitempty" url:"cross_origin_auth,omitempty"`
+	// URL for cross-origin authentication
+	CrossOriginLoc *string `json:"cross_origin_loc,omitempty" url:"cross_origin_loc,omitempty"`
+	// Whether a custom login page is enabled
+	CustomLoginPageOn *bool `json:"custom_login_page_on,omitempty" url:"custom_login_page_on,omitempty"`
+	// Custom login page URL
+	CustomLoginPage *string `json:"custom_login_page,omitempty" url:"custom_login_page,omitempty"`
+	// Custom login page preview URL
+	CustomLoginPagePreview *string `json:"custom_login_page_preview,omitempty" url:"custom_login_page_preview,omitempty"`
+	// Form template for WS-Federation
+	FormTemplate *string `json:"form_template,omitempty" url:"form_template,omitempty"`
+	// Whether this is a Heroku application
+	IsHerokuApp *bool `json:"is_heroku_app,omitempty" url:"is_heroku_app,omitempty"`
+	// Addons enabled for this client
+	Addons map[string]interface{} `json:"addons,omitempty" url:"addons,omitempty"`
+	// Requested authentication method for the token endpoint
+	TokenEndpointAuthMethod *string `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
+	// Metadata associated with the client
+	ClientMetadata map[string]interface{} `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
+	// Mobile app settings
+	Mobile map[string]interface{} `json:"mobile,omitempty" url:"mobile,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *Client) GetClientId() string {
+	if c == nil {
+		return ""
+	}
+	return c.ClientId
+}
+
+func (c *Client) GetTenant() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Tenant
+}
+
+func (c *Client) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *Client) GetDescription() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Description
+}
+
+func (c *Client) GetGlobal() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.Global
+}
+
+func (c *Client) GetClientSecret() *string {
+	if c == nil {
+		return nil
+	}
+	return c.ClientSecret
+}
+
+func (c *Client) GetAppType() *string {
+	if c == nil {
+		return nil
+	}
+	return c.AppType
+}
+
+func (c *Client) GetLogoUri() *string {
+	if c == nil {
+		return nil
+	}
+	return c.LogoUri
+}
+
+func (c *Client) GetIsFirstParty() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.IsFirstParty
+}
+
+func (c *Client) GetOidcConformant() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.OidcConformant
+}
+
+func (c *Client) GetCallbacks() []string {
+	if c == nil {
+		return nil
+	}
+	return c.Callbacks
+}
+
+func (c *Client) GetAllowedOrigins() []string {
+	if c == nil {
+		return nil
+	}
+	return c.AllowedOrigins
+}
+
+func (c *Client) GetWebOrigins() []string {
+	if c == nil {
+		return nil
+	}
+	return c.WebOrigins
+}
+
+func (c *Client) GetGrantTypes() []string {
+	if c == nil {
+		return nil
+	}
+	return c.GrantTypes
+}
+
+func (c *Client) GetJwtConfiguration() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.JwtConfiguration
+}
+
+func (c *Client) GetSigningKeys() []map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.SigningKeys
+}
+
+func (c *Client) GetEncryptionKey() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.EncryptionKey
+}
+
+func (c *Client) GetSso() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.Sso
+}
+
+func (c *Client) GetSsoDisabled() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.SsoDisabled
+}
+
+func (c *Client) GetCrossOriginAuth() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.CrossOriginAuth
+}
+
+func (c *Client) GetCrossOriginLoc() *string {
+	if c == nil {
+		return nil
+	}
+	return c.CrossOriginLoc
+}
+
+func (c *Client) GetCustomLoginPageOn() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.CustomLoginPageOn
+}
+
+func (c *Client) GetCustomLoginPage() *string {
+	if c == nil {
+		return nil
+	}
+	return c.CustomLoginPage
+}
+
+func (c *Client) GetCustomLoginPagePreview() *string {
+	if c == nil {
+		return nil
+	}
+	return c.CustomLoginPagePreview
+}
+
+func (c *Client) GetFormTemplate() *string {
+	if c == nil {
+		return nil
+	}
+	return c.FormTemplate
+}
+
+func (c *Client) GetIsHerokuApp() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.IsHerokuApp
+}
+
+func (c *Client) GetAddons() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.Addons
+}
+
+func (c *Client) GetTokenEndpointAuthMethod() *string {
+	if c == nil {
+		return nil
+	}
+	return c.TokenEndpointAuthMethod
+}
+
+func (c *Client) GetClientMetadata() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.ClientMetadata
+}
+
+func (c *Client) GetMobile() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.Mobile
+}
+
+func (c *Client) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *Client) UnmarshalJSON(data []byte) error {
+	type unmarshaler Client
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = Client(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *Client) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Represents an identity provider connection
+type Connection struct {
+	// Connection identifier
+	Id string `json:"id" url:"id"`
+	// Connection name
+	Name string `json:"name" url:"name"`
+	// Display name for the connection
+	DisplayName *string `json:"display_name,omitempty" url:"display_name,omitempty"`
+	// The identity provider identifier (auth0, google-oauth2, facebook, etc.)
+	Strategy string `json:"strategy" url:"strategy"`
+	// Connection-specific configuration options
+	Options map[string]interface{} `json:"options,omitempty" url:"options,omitempty"`
+	// List of client IDs that can use this connection
+	EnabledClients []string `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	// Applicable realms for enterprise connections
+	Realms []string `json:"realms,omitempty" url:"realms,omitempty"`
+	// Whether this is a domain connection
+	IsDomainConnection *bool `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	// Additional metadata
+	Metadata map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *Connection) GetId() string {
+	if c == nil {
+		return ""
+	}
+	return c.Id
+}
+
+func (c *Connection) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *Connection) GetDisplayName() *string {
+	if c == nil {
+		return nil
+	}
+	return c.DisplayName
+}
+
+func (c *Connection) GetStrategy() string {
+	if c == nil {
+		return ""
+	}
+	return c.Strategy
+}
+
+func (c *Connection) GetOptions() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.Options
+}
+
+func (c *Connection) GetEnabledClients() []string {
+	if c == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *Connection) GetRealms() []string {
+	if c == nil {
+		return nil
+	}
+	return c.Realms
+}
+
+func (c *Connection) GetIsDomainConnection() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.IsDomainConnection
+}
+
+func (c *Connection) GetMetadata() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.Metadata
+}
+
+func (c *Connection) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *Connection) UnmarshalJSON(data []byte) error {
+	type unmarshaler Connection
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = Connection(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *Connection) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateUserRequest struct {
+	Email         string                 `json:"email" url:"email"`
+	EmailVerified *bool                  `json:"email_verified,omitempty" url:"email_verified,omitempty"`
+	Username      *string                `json:"username,omitempty" url:"username,omitempty"`
+	Password      *string                `json:"password,omitempty" url:"password,omitempty"`
+	PhoneNumber   *string                `json:"phone_number,omitempty" url:"phone_number,omitempty"`
+	PhoneVerified *bool                  `json:"phone_verified,omitempty" url:"phone_verified,omitempty"`
+	UserMetadata  map[string]interface{} `json:"user_metadata,omitempty" url:"user_metadata,omitempty"`
+	AppMetadata   map[string]interface{} `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
+	Connection    string                 `json:"connection" url:"connection"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateUserRequest) GetEmail() string {
+	if c == nil {
+		return ""
+	}
+	return c.Email
+}
+
+func (c *CreateUserRequest) GetEmailVerified() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.EmailVerified
+}
+
+func (c *CreateUserRequest) GetUsername() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Username
+}
+
+func (c *CreateUserRequest) GetPassword() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Password
+}
+
+func (c *CreateUserRequest) GetPhoneNumber() *string {
+	if c == nil {
+		return nil
+	}
+	return c.PhoneNumber
+}
+
+func (c *CreateUserRequest) GetPhoneVerified() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.PhoneVerified
+}
+
+func (c *CreateUserRequest) GetUserMetadata() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.UserMetadata
+}
+
+func (c *CreateUserRequest) GetAppMetadata() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.AppMetadata
+}
+
+func (c *CreateUserRequest) GetConnection() string {
+	if c == nil {
+		return ""
+	}
+	return c.Connection
+}
+
+func (c *CreateUserRequest) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateUserRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateUserRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateUserRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateUserRequest) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type Identity struct {
+	Connection  string  `json:"connection" url:"connection"`
+	UserId      string  `json:"user_id" url:"user_id"`
+	Provider    string  `json:"provider" url:"provider"`
+	IsSocial    bool    `json:"is_social" url:"is_social"`
+	AccessToken *string `json:"access_token,omitempty" url:"access_token,omitempty"`
+	ExpiresIn   *int    `json:"expires_in,omitempty" url:"expires_in,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (i *Identity) GetConnection() string {
+	if i == nil {
+		return ""
+	}
+	return i.Connection
+}
+
+func (i *Identity) GetUserId() string {
+	if i == nil {
+		return ""
+	}
+	return i.UserId
+}
+
+func (i *Identity) GetProvider() string {
+	if i == nil {
+		return ""
+	}
+	return i.Provider
+}
+
+func (i *Identity) GetIsSocial() bool {
+	if i == nil {
+		return false
+	}
+	return i.IsSocial
+}
+
+func (i *Identity) GetAccessToken() *string {
+	if i == nil {
+		return nil
+	}
+	return i.AccessToken
+}
+
+func (i *Identity) GetExpiresIn() *int {
+	if i == nil {
+		return nil
+	}
+	return i.ExpiresIn
+}
+
+func (i *Identity) GetExtraProperties() map[string]interface{} {
+	return i.extraProperties
+}
+
+func (i *Identity) UnmarshalJSON(data []byte) error {
+	type unmarshaler Identity
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*i = Identity(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
+	if err != nil {
+		return err
+	}
+	i.extraProperties = extraProperties
+	i.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (i *Identity) String() string {
+	if len(i.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(i); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", i)
+}
+
+// Paginated response for clients listing
+type PaginatedClientResponse struct {
+	// Starting index (zero-based)
+	Start int `json:"start" url:"start"`
+	// Number of items requested
+	Limit int `json:"limit" url:"limit"`
+	// Number of items returned
+	Length int `json:"length" url:"length"`
+	// Total number of items (when include_totals=true)
+	Total *int `json:"total,omitempty" url:"total,omitempty"`
+	// List of clients
+	Clients []*Client `json:"clients" url:"clients"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (p *PaginatedClientResponse) GetStart() int {
+	if p == nil {
+		return 0
+	}
+	return p.Start
+}
+
+func (p *PaginatedClientResponse) GetLimit() int {
+	if p == nil {
+		return 0
+	}
+	return p.Limit
+}
+
+func (p *PaginatedClientResponse) GetLength() int {
+	if p == nil {
+		return 0
+	}
+	return p.Length
+}
+
+func (p *PaginatedClientResponse) GetTotal() *int {
+	if p == nil {
+		return nil
+	}
+	return p.Total
+}
+
+func (p *PaginatedClientResponse) GetClients() []*Client {
+	if p == nil {
+		return nil
+	}
+	return p.Clients
+}
+
+func (p *PaginatedClientResponse) GetExtraProperties() map[string]interface{} {
+	return p.extraProperties
+}
+
+func (p *PaginatedClientResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler PaginatedClientResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PaginatedClientResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PaginatedClientResponse) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
+// Response with pagination info like Auth0
+type PaginatedUserResponse struct {
+	Users  []*User `json:"users" url:"users"`
+	Start  int     `json:"start" url:"start"`
+	Limit  int     `json:"limit" url:"limit"`
+	Length int     `json:"length" url:"length"`
+	Total  *int    `json:"total,omitempty" url:"total,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (p *PaginatedUserResponse) GetUsers() []*User {
+	if p == nil {
+		return nil
+	}
+	return p.Users
+}
+
+func (p *PaginatedUserResponse) GetStart() int {
+	if p == nil {
+		return 0
+	}
+	return p.Start
+}
+
+func (p *PaginatedUserResponse) GetLimit() int {
+	if p == nil {
+		return 0
+	}
+	return p.Limit
+}
+
+func (p *PaginatedUserResponse) GetLength() int {
+	if p == nil {
+		return 0
+	}
+	return p.Length
+}
+
+func (p *PaginatedUserResponse) GetTotal() *int {
+	if p == nil {
+		return nil
+	}
+	return p.Total
+}
+
+func (p *PaginatedUserResponse) GetExtraProperties() map[string]interface{} {
+	return p.extraProperties
+}
+
+func (p *PaginatedUserResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler PaginatedUserResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PaginatedUserResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PaginatedUserResponse) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
 type Resource struct {
 	Id          string                 `json:"id" url:"id"`
 	Name        string                 `json:"name" url:"name"`
@@ -177,4 +965,347 @@ func (s *SearchResponse) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
+}
+
+type UpdateUserRequest struct {
+	Email         *string                `json:"email,omitempty" url:"email,omitempty"`
+	EmailVerified *bool                  `json:"email_verified,omitempty" url:"email_verified,omitempty"`
+	Username      *string                `json:"username,omitempty" url:"username,omitempty"`
+	PhoneNumber   *string                `json:"phone_number,omitempty" url:"phone_number,omitempty"`
+	PhoneVerified *bool                  `json:"phone_verified,omitempty" url:"phone_verified,omitempty"`
+	UserMetadata  map[string]interface{} `json:"user_metadata,omitempty" url:"user_metadata,omitempty"`
+	AppMetadata   map[string]interface{} `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
+	Password      *string                `json:"password,omitempty" url:"password,omitempty"`
+	Blocked       *bool                  `json:"blocked,omitempty" url:"blocked,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateUserRequest) GetEmail() *string {
+	if u == nil {
+		return nil
+	}
+	return u.Email
+}
+
+func (u *UpdateUserRequest) GetEmailVerified() *bool {
+	if u == nil {
+		return nil
+	}
+	return u.EmailVerified
+}
+
+func (u *UpdateUserRequest) GetUsername() *string {
+	if u == nil {
+		return nil
+	}
+	return u.Username
+}
+
+func (u *UpdateUserRequest) GetPhoneNumber() *string {
+	if u == nil {
+		return nil
+	}
+	return u.PhoneNumber
+}
+
+func (u *UpdateUserRequest) GetPhoneVerified() *bool {
+	if u == nil {
+		return nil
+	}
+	return u.PhoneVerified
+}
+
+func (u *UpdateUserRequest) GetUserMetadata() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.UserMetadata
+}
+
+func (u *UpdateUserRequest) GetAppMetadata() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.AppMetadata
+}
+
+func (u *UpdateUserRequest) GetPassword() *string {
+	if u == nil {
+		return nil
+	}
+	return u.Password
+}
+
+func (u *UpdateUserRequest) GetBlocked() *bool {
+	if u == nil {
+		return nil
+	}
+	return u.Blocked
+}
+
+func (u *UpdateUserRequest) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UpdateUserRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateUserRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateUserRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateUserRequest) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// User object similar to Auth0 users
+type User struct {
+	UserId        string                 `json:"user_id" url:"user_id"`
+	Email         string                 `json:"email" url:"email"`
+	EmailVerified bool                   `json:"email_verified" url:"email_verified"`
+	Username      *string                `json:"username,omitempty" url:"username,omitempty"`
+	PhoneNumber   *string                `json:"phone_number,omitempty" url:"phone_number,omitempty"`
+	PhoneVerified *bool                  `json:"phone_verified,omitempty" url:"phone_verified,omitempty"`
+	CreatedAt     time.Time              `json:"created_at" url:"created_at"`
+	UpdatedAt     time.Time              `json:"updated_at" url:"updated_at"`
+	Identities    []*Identity            `json:"identities,omitempty" url:"identities,omitempty"`
+	AppMetadata   map[string]interface{} `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
+	UserMetadata  map[string]interface{} `json:"user_metadata,omitempty" url:"user_metadata,omitempty"`
+	Picture       *string                `json:"picture,omitempty" url:"picture,omitempty"`
+	Name          *string                `json:"name,omitempty" url:"name,omitempty"`
+	Nickname      *string                `json:"nickname,omitempty" url:"nickname,omitempty"`
+	Multifactor   []string               `json:"multifactor,omitempty" url:"multifactor,omitempty"`
+	LastIp        *string                `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	LastLogin     *time.Time             `json:"last_login,omitempty" url:"last_login,omitempty"`
+	LoginsCount   *int                   `json:"logins_count,omitempty" url:"logins_count,omitempty"`
+	Blocked       *bool                  `json:"blocked,omitempty" url:"blocked,omitempty"`
+	GivenName     *string                `json:"given_name,omitempty" url:"given_name,omitempty"`
+	FamilyName    *string                `json:"family_name,omitempty" url:"family_name,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *User) GetUserId() string {
+	if u == nil {
+		return ""
+	}
+	return u.UserId
+}
+
+func (u *User) GetEmail() string {
+	if u == nil {
+		return ""
+	}
+	return u.Email
+}
+
+func (u *User) GetEmailVerified() bool {
+	if u == nil {
+		return false
+	}
+	return u.EmailVerified
+}
+
+func (u *User) GetUsername() *string {
+	if u == nil {
+		return nil
+	}
+	return u.Username
+}
+
+func (u *User) GetPhoneNumber() *string {
+	if u == nil {
+		return nil
+	}
+	return u.PhoneNumber
+}
+
+func (u *User) GetPhoneVerified() *bool {
+	if u == nil {
+		return nil
+	}
+	return u.PhoneVerified
+}
+
+func (u *User) GetCreatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.CreatedAt
+}
+
+func (u *User) GetUpdatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.UpdatedAt
+}
+
+func (u *User) GetIdentities() []*Identity {
+	if u == nil {
+		return nil
+	}
+	return u.Identities
+}
+
+func (u *User) GetAppMetadata() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.AppMetadata
+}
+
+func (u *User) GetUserMetadata() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.UserMetadata
+}
+
+func (u *User) GetPicture() *string {
+	if u == nil {
+		return nil
+	}
+	return u.Picture
+}
+
+func (u *User) GetName() *string {
+	if u == nil {
+		return nil
+	}
+	return u.Name
+}
+
+func (u *User) GetNickname() *string {
+	if u == nil {
+		return nil
+	}
+	return u.Nickname
+}
+
+func (u *User) GetMultifactor() []string {
+	if u == nil {
+		return nil
+	}
+	return u.Multifactor
+}
+
+func (u *User) GetLastIp() *string {
+	if u == nil {
+		return nil
+	}
+	return u.LastIp
+}
+
+func (u *User) GetLastLogin() *time.Time {
+	if u == nil {
+		return nil
+	}
+	return u.LastLogin
+}
+
+func (u *User) GetLoginsCount() *int {
+	if u == nil {
+		return nil
+	}
+	return u.LoginsCount
+}
+
+func (u *User) GetBlocked() *bool {
+	if u == nil {
+		return nil
+	}
+	return u.Blocked
+}
+
+func (u *User) GetGivenName() *string {
+	if u == nil {
+		return nil
+	}
+	return u.GivenName
+}
+
+func (u *User) GetFamilyName() *string {
+	if u == nil {
+		return nil
+	}
+	return u.FamilyName
+}
+
+func (u *User) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *User) UnmarshalJSON(data []byte) error {
+	type embed User
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+		LastLogin *internal.DateTime `json:"last_login,omitempty"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = User(unmarshaler.embed)
+	u.CreatedAt = unmarshaler.CreatedAt.Time()
+	u.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	u.LastLogin = unmarshaler.LastLogin.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *User) MarshalJSON() ([]byte, error) {
+	type embed User
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+		LastLogin *internal.DateTime `json:"last_login,omitempty"`
+	}{
+		embed:     embed(*u),
+		CreatedAt: internal.NewDateTime(u.CreatedAt),
+		UpdatedAt: internal.NewDateTime(u.UpdatedAt),
+		LastLogin: internal.NewOptionalDateTime(u.LastLogin),
+	}
+	return json.Marshal(marshaler)
+}
+
+func (u *User) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }

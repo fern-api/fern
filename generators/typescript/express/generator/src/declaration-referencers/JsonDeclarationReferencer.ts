@@ -1,9 +1,9 @@
 import {
     ExportedFilePath,
     ExportsManager,
+    getReferenceToExportFromRoot,
     ImportsManager,
-    Reference,
-    getReferenceToExportFromRoot
+    Reference
 } from "@fern-typescript/commons";
 import { SourceFile } from "ts-morph";
 

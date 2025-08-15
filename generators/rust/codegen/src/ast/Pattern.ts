@@ -1,6 +1,6 @@
 import { AstNode } from "./AstNode";
-import { Writer } from "./Writer";
 import { Expression } from "./Expression";
+import { Writer } from "./Writer";
 
 export declare namespace Pattern {
     type Args =

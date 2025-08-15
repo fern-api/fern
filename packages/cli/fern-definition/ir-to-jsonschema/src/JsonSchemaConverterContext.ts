@@ -1,7 +1,6 @@
-import { JSONSchema4 } from "json-schema";
-
 import { IntermediateRepresentation, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
+import { JSONSchema4 } from "json-schema";
 
 export class JsonSchemaConverterContext {
     private readonly buildingTypeIds: Set<TypeId> = new Set();

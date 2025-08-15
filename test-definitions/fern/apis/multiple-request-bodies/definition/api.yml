@@ -1,0 +1,11 @@
+auth: BearerAuthScheme
+auth-schemes:
+  BearerAuthScheme:
+    scheme: bearer
+default-environment: Default
+display-name: Sample API
+environments:
+  Default: https://api.example.com/v1
+error-discrimination:
+  strategy: status-code
+name: api

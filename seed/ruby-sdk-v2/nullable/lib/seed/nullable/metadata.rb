@@ -9,6 +9,6 @@ module Seed
             field :activated, Internal::Types::Boolean, optional: true, nullable: false
             field :status, Seed::Nullable::Status, optional: false, nullable: false
             field :values, Internal::Types::Hash[String, String], optional: true, nullable: false
-
+        end
     end
 end

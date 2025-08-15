@@ -16,5 +16,5 @@ module Seed
         def dummy
             @dummy ||= Seed::Dummy::Client.new(client: @raw_client)
         end
-
+    end
 end

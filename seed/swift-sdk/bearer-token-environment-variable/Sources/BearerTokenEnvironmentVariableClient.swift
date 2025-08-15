@@ -23,7 +23,9 @@ public final class BearerTokenEnvironmentVariableClient: Sendable {
     ) {
         self.init(
             baseURL: baseURL,
+            headerAuth: nil,
             bearerAuth: .init(token: apiKey),
+            basicAuth: nil,
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,
@@ -49,7 +51,9 @@ public final class BearerTokenEnvironmentVariableClient: Sendable {
     ) {
         self.init(
             baseURL: baseURL,
+            headerAuth: nil,
             bearerAuth: .init(token: apiKey),
+            basicAuth: nil,
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,

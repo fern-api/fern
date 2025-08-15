@@ -1,10 +1,11 @@
+import { DeclaredTypeName, ShapeType, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import {
+    CoreUtilities,
     ExportsManager,
     ImportsManager,
     Reference,
     TypeReferenceNode,
-    Zurg,
-    CoreUtilities
+    Zurg
 } from "@fern-typescript/commons";
 import { BaseContext, GeneratedTypeSchema, TypeSchemaContext } from "@fern-typescript/contexts";
 import { TypeGenerator } from "@fern-typescript/type-generator";
@@ -14,8 +15,6 @@ import {
 } from "@fern-typescript/type-reference-converters";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { SourceFile, ts } from "ts-morph";
-
-import { DeclaredTypeName, ShapeType, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";

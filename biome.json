@@ -344,6 +344,8 @@
 				"packages/**/lib/**",
 				"generators/**/lib/**"
 			],
+			"linter": { "enabled": false },
+			"assist": { "enabled": false },
 			"formatter": { "enabled": false }
 		}
 	],

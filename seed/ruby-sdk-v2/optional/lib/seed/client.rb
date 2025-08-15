@@ -16,5 +16,5 @@ module Seed
         def optional
             @optional ||= Seed::Optional::Client.new(client: @raw_client)
         end
-
+    end
 end

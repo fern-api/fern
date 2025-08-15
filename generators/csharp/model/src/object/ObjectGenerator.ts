@@ -1,6 +1,6 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { csharp } from "@fern-api/csharp-codegen";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import {
     ExampleObjectType,
@@ -9,10 +9,9 @@ import {
     ObjectTypeDeclaration,
     TypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-
+import { generateFields } from "../generateFields";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { generateFields } from "../generateFields";
 import { ExampleGenerator } from "../snippets/ExampleGenerator";
 
 export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {

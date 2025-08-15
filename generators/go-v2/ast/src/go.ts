@@ -86,7 +86,6 @@ export function typeReference(args: GoTypeReference.Args): GoTypeReference {
     return new GoTypeReference(args);
 }
 
-export { AstNode } from "./ast/core/AstNode";
 export {
     Alias,
     CodeBlock,
@@ -96,6 +95,7 @@ export {
     Func,
     FuncInvocation,
     GoTypeReference as TypeReference,
+    IoReaderTypeReference,
     Method,
     MethodInvocation,
     MultiNode,
@@ -103,12 +103,12 @@ export {
     Pointer,
     Selector,
     Struct,
+    type StructField,
+    TimeTypeReference,
     Type,
     TypeDeclaration,
     TypeInstantiation,
-    type StructField,
-    Writer,
-    TimeTypeReference,
     UuidTypeReference,
-    IoReaderTypeReference
+    Writer
 } from "./ast";
+export { AstNode } from "./ast/core/AstNode";

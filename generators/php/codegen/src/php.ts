@@ -15,9 +15,9 @@ import {
     Parameter,
     Trait
 } from "./ast";
+import { AstNode } from "./ast/core/AstNode";
 import { DataClass } from "./ast/DataClass";
 import { MergeArrays } from "./ast/MergeArrays";
-import { AstNode } from "./ast/core/AstNode";
 import { convertToPhpVariableName } from "./ast/utils/convertToPhpVariableName";
 
 export function array(args: Array_.Args): Array_ {
@@ -113,17 +113,15 @@ export function this_(): AstNode {
     });
 }
 
-export { AstNode } from "./ast/core/AstNode";
 export {
     Access,
     Array,
     Attribute,
     Class,
-    type ConstructorField,
-    Trait,
     ClassInstantiation,
     ClassReference,
     CodeBlock,
+    type ConstructorField,
     DataClass,
     Enum,
     Field,
@@ -131,7 +129,9 @@ export {
     Method,
     MethodInvocation,
     Parameter,
+    Trait,
     Type,
     TypeLiteral,
     Writer
 } from "./ast";
+export { AstNode } from "./ast/core/AstNode";

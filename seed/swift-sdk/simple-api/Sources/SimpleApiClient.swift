@@ -23,7 +23,9 @@ public final class SimpleApiClient: Sendable {
     ) {
         self.init(
             baseURL: baseURL,
+            headerAuth: nil,
             bearerAuth: .init(token: token),
+            basicAuth: nil,
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,
@@ -49,7 +51,9 @@ public final class SimpleApiClient: Sendable {
     ) {
         self.init(
             baseURL: baseURL,
+            headerAuth: nil,
             bearerAuth: .init(token: token),
+            basicAuth: nil,
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,

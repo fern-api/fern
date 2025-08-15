@@ -1,7 +1,6 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readdir } from "fs/promises";
 import path from "path";
-
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { diff } from "./diff";
 

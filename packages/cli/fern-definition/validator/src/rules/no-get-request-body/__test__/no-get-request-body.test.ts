@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { NoGetRequestBodyRule } from "../no-get-request-body";

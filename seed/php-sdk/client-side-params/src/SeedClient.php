@@ -30,6 +30,7 @@ class SeedClient
     private RawClient $client;
 
     /**
+     * @param ?string $token The token to use for authentication.
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -39,6 +40,7 @@ class SeedClient
      * } $options
      */
     public function __construct(
+        ?string $token = null,
         ?array $options = null,
     ) {
         $defaultHeaders = [
@@ -47,6 +49,9 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
+        if ($token != null) {
+            $defaultHeaders['Authorization'] = "Bearer $token";
+        }
 
         $this->options = $options ?? [];
         $this->options['headers'] = array_merge(

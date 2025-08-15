@@ -1,6 +1,6 @@
 import { AstNode, Writer } from "./index";
-import { Type } from "./Type";
 import { Statement } from "./Statement";
+import { Type } from "./Type";
 
 export declare namespace Expression {
     type Args =

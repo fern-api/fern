@@ -1,7 +1,3 @@
-import { TypeReferenceNode } from "@fern-typescript/commons";
-import { BaseContext } from "@fern-typescript/contexts";
-import { ts } from "ts-morph";
-
 import {
     ContainerType,
     DeclaredTypeName,
@@ -12,6 +8,9 @@ import {
     ShapeType,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+import { TypeReferenceNode } from "@fern-typescript/commons";
+import { BaseContext } from "@fern-typescript/contexts";
+import { ts } from "ts-morph";
 
 export declare namespace AbstractTypeReferenceConverter {
     export interface Init {

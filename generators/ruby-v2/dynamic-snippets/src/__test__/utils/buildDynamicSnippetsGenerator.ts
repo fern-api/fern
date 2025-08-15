@@ -1,7 +1,6 @@
-import { readFileSync } from "fs";
-
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
+import { readFileSync } from "fs";
 
 import { DynamicSnippetsGenerator } from "../../DynamicSnippetsGenerator";
 
