@@ -44,7 +44,8 @@ import java.util.Optional;
 import javax.lang.model.element.Modifier;
 
 /**
- * Generates object classes for JSON Merge Patch request bodies. Uses OptionalNullable wrapper for optional<nullable<T>>
+ * Generates object classes for JSON Merge Patch request bodies. Uses
+ * OptionalNullable wrapper for optional<nullable<T>>
  * types and Optional for optional<T> types.
  */
 public final class MergePatchObjectGenerator extends AbstractFileGenerator {
@@ -114,7 +115,8 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
 
         // For JSON Merge Patch, we need to handle:
         // 1. nullable<T> -> OptionalNullable<T> (can be absent, present, or null)
-        // 2. optional<nullable<T>> -> OptionalNullable<T> (can be absent, present, or null)
+        // 2. optional<nullable<T>> -> OptionalNullable<T> (can be absent, present, or
+        // null)
         // 3. optional<T> -> Optional<T> (can be absent or present, but not null)
         // 4. T -> T (required, must be present)
 
@@ -467,7 +469,8 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
         if (!fields.isEmpty()) {
             CodeBlock.Builder codeBlock = CodeBlock.builder().add("return java.util.Objects.hash(");
             for (int i = 0; i < fields.size(); i++) {
-                if (i > 0) codeBlock.add(", ");
+                if (i > 0)
+                    codeBlock.add(", ");
                 codeBlock.add("this.$N", fields.get(i).name);
             }
             codeBlock.add(")");
@@ -512,8 +515,7 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
             String fieldName = KeyWordUtils.getKeyWordCompatibleName(
                     property.getName().getName().getCamelCase().getUnsafeName());
 
-            FieldSpec.Builder fieldBuilder =
-                    FieldSpec.builder(fieldType, fieldName).addModifiers(Modifier.PRIVATE);
+            FieldSpec.Builder fieldBuilder = FieldSpec.builder(fieldType, fieldName).addModifiers(Modifier.PRIVATE);
 
             // Initialize OptionalNullable and Optional fields
             if (fieldType instanceof ParameterizedTypeName) {
@@ -521,7 +523,6 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
                 if (paramType.rawType.equals(optionalNullableClassName)) {
                     fieldBuilder.initializer("$T.absent()", optionalNullableClassName);
                 } else if (paramType.rawType.equals(ClassName.get(Optional.class))) {
-                    // FIX: Initialize Optional fields to empty
                     fieldBuilder.initializer("$T.empty()", Optional.class);
                 }
             }
@@ -556,31 +557,25 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .returns(ClassName.get(className.packageName(), className.simpleName(), "Builder"));
 
-        // For OptionalNullable fields, create a special setter
         if (fieldType instanceof ParameterizedTypeName
                 && ((ParameterizedTypeName) fieldType).rawType.equals(optionalNullableClassName)) {
             TypeName innerType = ((ParameterizedTypeName) fieldType).typeArguments.get(0);
 
-            // Add JsonSetter annotation to handle deserialization
             setter.addAnnotation(AnnotationSpec.builder(JsonSetter.class)
                     .addMember("value", "$S", property.getName().getWireValue())
                     .build());
 
-            // Accept the inner type and wrap in OptionalNullable
             setter.addParameter(innerType, "value");
             setter.addStatement("this.$N = $T.ofNullable(value)", fieldName, optionalNullableClassName);
         } else if (fieldType instanceof ParameterizedTypeName
                 && ((ParameterizedTypeName) fieldType).rawType.equals(ClassName.get(Optional.class))) {
-            // FIX: For Optional fields, add JsonSetter with Nulls.SKIP
             TypeName innerType = ((ParameterizedTypeName) fieldType).typeArguments.get(0);
 
-            // Add JsonSetter annotation with Nulls.SKIP to ignore null values
             setter.addAnnotation(AnnotationSpec.builder(JsonSetter.class)
                     .addMember("value", "$S", property.getName().getWireValue())
                     .addMember("nulls", "$T.$L", Nulls.class, "SKIP")
                     .build());
 
-            // Accept the inner type and wrap in Optional
             setter.addParameter(innerType, "value");
             setter.addStatement("this.$N = $T.ofNullable(value)", fieldName, Optional.class);
         } else {
@@ -594,12 +589,12 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec createBuildMethod(List<FieldSpec> fields) {
-        MethodSpec.Builder build =
-                MethodSpec.methodBuilder("build").addModifiers(Modifier.PUBLIC).returns(className);
+        MethodSpec.Builder build = MethodSpec.methodBuilder("build").addModifiers(Modifier.PUBLIC).returns(className);
 
         CodeBlock.Builder params = CodeBlock.builder();
         for (int i = 0; i < fields.size(); i++) {
-            if (i > 0) params.add(", ");
+            if (i > 0)
+                params.add(", ");
             params.add("$N", fields.get(i).name);
         }
 
