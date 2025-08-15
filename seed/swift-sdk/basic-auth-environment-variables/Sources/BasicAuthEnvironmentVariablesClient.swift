@@ -26,6 +26,8 @@ public final class BasicAuthEnvironmentVariablesClient: Sendable {
     ) {
         self.init(
             baseURL: baseURL,
+            headerAuth: nil,
+            bearerAuth: nil,
             basicAuth: .init(username: username, password: accessToken),
             headers: headers,
             timeout: timeout,
