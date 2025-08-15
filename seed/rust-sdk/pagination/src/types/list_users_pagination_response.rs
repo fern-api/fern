@@ -2,7 +2,7 @@ use crate::page::Page;
 use crate::user::User;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct ListUsersPaginationResponse {
     #[serde(rename = "hasNextPage")]
     #[serde(skip_serializing_if = "Option::is_none")]

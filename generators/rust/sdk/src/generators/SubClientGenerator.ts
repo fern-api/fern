@@ -892,7 +892,8 @@ export class SubClientGenerator {
             ? `response${hasNextPath}.and_then(|v| v.as_bool()).unwrap_or(!items.is_empty())`
             : "!items.is_empty()";
 
-        return `// Generic field extraction for offset pagination
+        if (isInPaginationLoop) {
+            return `// Generic field extraction for offset pagination
                         let items: Vec<serde_json::Value> = response
                             ${resultsPath}
                             .and_then(|v| v.as_array())
@@ -900,9 +901,7 @@ export class SubClientGenerator {
                             .unwrap_or_default();
                         
                         let has_next_page = ${hasNextPageCheck};
-                        ${
-                            isInPaginationLoop
-                                ? `// Calculate next page number for offset pagination
+                        // Calculate next page number for offset pagination
                         let next_cursor: Option<String> = if has_next_page {
                             let current_page_num: u64 = current_page.parse().unwrap_or(0);
                             let step_size = if let Some(step) = response.get("${stepParamName}") {
@@ -913,10 +912,19 @@ export class SubClientGenerator {
                             Some((current_page_num + step_size).to_string())
                         } else {
                             None
-                        };`
-                                : `// Offset pagination tracking handled by paginator
-                        let next_cursor: Option<String> = None;`
-                        }`;
+                        };`;
+        } else {
+            return `// Generic field extraction for offset pagination
+                        let items: Vec<serde_json::Value> = response
+                            ${resultsPath}
+                            .and_then(|v| v.as_array())
+                            .map(|arr| arr.clone())
+                            .unwrap_or_default();
+                        
+                        // Offset pagination tracking handled by paginator
+                        let next_cursor: Option<String> = None;
+                        let has_next_page = ${hasNextPageCheck};`;
+        }
     }
 
     private generateGenericCustomExtraction(): string {

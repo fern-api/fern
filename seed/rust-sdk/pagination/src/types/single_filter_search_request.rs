@@ -1,7 +1,7 @@
 use crate::single_filter_search_request_operator::SingleFilterSearchRequestOperator;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct SingleFilterSearchRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub field: Option<String>,

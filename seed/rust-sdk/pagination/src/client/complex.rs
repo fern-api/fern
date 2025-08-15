@@ -1,8 +1,7 @@
 use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
 use reqwest::{Method};
-use crate::{AsyncPaginator, SyncPaginator, PaginationResult};
-use std::sync::{Arc};
 use crate::{types::*};
+use crate::{AsyncPaginator, PaginationResult};
 
 pub struct ComplexClient {
     pub http_client: HttpClient,
@@ -14,54 +13,56 @@ impl ComplexClient {
         Ok(Self { http_client })
     }
 
-    pub async fn search(&self, index: &String, request: &SearchRequest, options: Option<RequestOptions>) -> Result<PaginatedConversationResponse, ClientError> {
-        self.http_client.execute_request(
-            Method::POST,
-            &format!("{}", index),
-            Some(serde_json::to_value(request).unwrap_or_default()),
-            None,
-            options,
-        ).await
-    }
-
-    pub async fn search_paginated(&self, index: &String, request: &SearchRequest, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
-        
-        let http_client = Arc::new(self.http_client.clone());
-        let page_loader = move |client: Arc<HttpClient>, cursor: Option<String>| {
-            let client = client.clone();
-            async move {
-                // Implementation for cursor-based pagination
-                // This is a placeholder - real implementation would make HTTP request
-                // and extract cursor + items from response
-                Ok(PaginationResult {
-                    items: vec![],
-                    next_cursor: None,
-                    has_next_page: false,
-                })
-            }
-        };
-        
-        AsyncPaginator::new(http_client, page_loader, None)
-    }
-
-    pub fn search_paginated_sync(&self, index: &String, request: &SearchRequest, options: Option<RequestOptions>) -> Result<SyncPaginator<serde_json::Value>, ClientError> {
-        
-        let http_client = Arc::new(self.http_client.clone());
-        let page_loader = move |client: Arc<HttpClient>, cursor: Option<String>| {
-            let client = client.clone();
+    pub async fn search(&self, index: &String, request: &SearchRequest, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
+        let http_client = std::sync::Arc::new(self.http_client.clone());
+            let base_query_params = None;
+            let options_clone = options.clone();
+            let index_clone = index.clone();
+            let request_clone = request.clone();
             
-                // Implementation for cursor-based pagination
-                // This is a placeholder - real implementation would make HTTP request
-                // and extract cursor + items from response
-                Ok(PaginationResult {
-                    items: vec![],
-                    next_cursor: None,
-                    has_next_page: false,
-                })
-            
-        };
-        
-        SyncPaginator::new(http_client, page_loader, None)
+            AsyncPaginator::new(
+                http_client,
+                move |client, cursor_value| {
+                    let mut query_params: Vec<(String, String)> = base_query_params.clone().unwrap_or_default();
+                    if let Some(cursor) = cursor_value {
+                        // Add cursor parameter based on pagination configuration
+                        query_params.push(("starting_after".to_string(), cursor));
+                    }
+                    let options_for_request = options_clone.clone();
+                    
+                    // Clone captured variables to move into the async block
+                    let index_for_async = index_clone.clone();
+                    let request_for_async = request_clone.clone();
+                    
+                    Box::pin(async move {
+                        let response: serde_json::Value = client.execute_request(
+                            Method::POST,
+                            &format!("{}", index_for_async),
+                            Some(serde_json::to_value(request_for_async).unwrap_or_default()),
+                            Some(query_params),
+                            options_for_request,
+                        ).await?;
+                        
+                        // Extract pagination info from response
+                        // Generic field extraction using pagination configuration
+                        let items: Vec<serde_json::Value> = response
+                            .get("conversations")
+                            .and_then(|v| v.as_array())
+                            .map(|arr| arr.clone())
+                            .unwrap_or_default();
+                        
+                        let next_cursor: Option<String> = response.get("pages").and_then(|v| v.get("next")).and_then(|v| v.get("starting_after")).and_then(|v| v.as_str().map(|s| s.to_string()));
+                        let has_next_page = next_cursor.is_some();
+                        
+                        Ok(PaginationResult {
+                            items,
+                            next_cursor,
+                            has_next_page,
+                        })
+                    })
+                },
+                None, // Start with no cursor
+            )
     }
 
 }
