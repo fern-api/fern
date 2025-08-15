@@ -44,8 +44,7 @@ import java.util.Optional;
 import javax.lang.model.element.Modifier;
 
 /**
- * Generates object classes for JSON Merge Patch request bodies. Uses
- * OptionalNullable wrapper for optional<nullable<T>>
+ * Generates object classes for JSON Merge Patch request bodies. Uses OptionalNullable wrapper for optional<nullable<T>>
  * types and Optional for optional<T> types.
  */
 public final class MergePatchObjectGenerator extends AbstractFileGenerator {
@@ -469,8 +468,7 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
         if (!fields.isEmpty()) {
             CodeBlock.Builder codeBlock = CodeBlock.builder().add("return java.util.Objects.hash(");
             for (int i = 0; i < fields.size(); i++) {
-                if (i > 0)
-                    codeBlock.add(", ");
+                if (i > 0) codeBlock.add(", ");
                 codeBlock.add("this.$N", fields.get(i).name);
             }
             codeBlock.add(")");
@@ -515,7 +513,8 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
             String fieldName = KeyWordUtils.getKeyWordCompatibleName(
                     property.getName().getName().getCamelCase().getUnsafeName());
 
-            FieldSpec.Builder fieldBuilder = FieldSpec.builder(fieldType, fieldName).addModifiers(Modifier.PRIVATE);
+            FieldSpec.Builder fieldBuilder =
+                    FieldSpec.builder(fieldType, fieldName).addModifiers(Modifier.PRIVATE);
 
             // Initialize OptionalNullable and Optional fields
             if (fieldType instanceof ParameterizedTypeName) {
@@ -589,12 +588,12 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec createBuildMethod(List<FieldSpec> fields) {
-        MethodSpec.Builder build = MethodSpec.methodBuilder("build").addModifiers(Modifier.PUBLIC).returns(className);
+        MethodSpec.Builder build =
+                MethodSpec.methodBuilder("build").addModifiers(Modifier.PUBLIC).returns(className);
 
         CodeBlock.Builder params = CodeBlock.builder();
         for (int i = 0; i < fields.size(); i++) {
-            if (i > 0)
-                params.add(", ");
+            if (i > 0) params.add(", ");
             params.add("$N", fields.get(i).name);
         }
 
