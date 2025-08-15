@@ -1,6 +1,5 @@
-import crypto from "crypto";
-
 import { FernNavigation } from "@fern-api/fdr-sdk";
+import crypto from "crypto";
 
 function hash(id: string): string {
     return crypto.createHash("sha256").update(id).digest("hex");

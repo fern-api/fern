@@ -1,7 +1,6 @@
-import chalk from "chalk";
-
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+import chalk from "chalk";
 
 import { RuleViolation } from "../../Rule";
 import { maybeFileFromResolvedType, resolveResponseType } from "../../utils/propertyValidatorUtils";

@@ -1,22 +1,4 @@
-import {
-    DependencyManager,
-    DependencyType,
-    ExportedFilePath,
-    PackageId,
-    Reference,
-    getExampleEndpointCalls,
-    getParameterNameForRootExamplePathParameter,
-    getParameterNameForRootPathParameter,
-    getTextOfTsNode
-} from "@fern-typescript/commons";
-import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
-import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator";
-import path from "path";
-import { Directory, ts } from "ts-morph";
-import { Code, arrayOf, code, literalOf } from "ts-poet";
-
 import { assertNever } from "@fern-api/core-utils";
-
 import {
     AuthScheme,
     ExampleEndpointCall,
@@ -28,6 +10,22 @@ import {
     HttpService,
     IntermediateRepresentation
 } from "@fern-fern/ir-sdk/api";
+import {
+    DependencyManager,
+    DependencyType,
+    ExportedFilePath,
+    getExampleEndpointCalls,
+    getParameterNameForRootExamplePathParameter,
+    getParameterNameForRootPathParameter,
+    getTextOfTsNode,
+    PackageId,
+    Reference
+} from "@fern-typescript/commons";
+import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
+import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator";
+import path from "path";
+import { Directory, ts } from "ts-morph";
+import { arrayOf, Code, code, literalOf } from "ts-poet";
 
 const DEFAULT_PACKAGE_PATH = "src";
 

@@ -21,7 +21,7 @@ export class PackageSwiftGenerator {
         return SwiftFile.create({
             filename: "Package.swift",
             directory: RelativeFilePath.of(""),
-            fileContents: [
+            contents: [
                 swift.comment({ content: "swift-tools-version: 5.7" }),
                 swift.LineBreak.single(),
                 swift.Statement.import("PackageDescription"),

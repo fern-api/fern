@@ -1,7 +1,6 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import path from "path";
 import { Project, SyntaxKind } from "ts-morph";
-
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
 // Define the possible import modifications
 const ImportModification = {

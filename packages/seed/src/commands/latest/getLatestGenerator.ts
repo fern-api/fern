@@ -1,7 +1,6 @@
-import semver from "semver";
-
-import { RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import semver from "semver";
 
 import { GeneratorWorkspace, loadCliWorkspace } from "../../loadGeneratorWorkspaces";
 import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases";

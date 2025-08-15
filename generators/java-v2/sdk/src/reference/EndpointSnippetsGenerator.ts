@@ -1,6 +1,6 @@
 import { DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
 
-import { ExampleEndpointCall, HttpEndpoint, dynamic } from "@fern-fern/ir-sdk/api";
+import { dynamic, ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";

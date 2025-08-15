@@ -6,11 +6,12 @@ public partial class SeedClientSideParamsClient
 {
     private readonly RawClient _client;
 
-    public SeedClientSideParamsClient(ClientOptions? clientOptions = null)
+    public SeedClientSideParamsClient(string token, ClientOptions? clientOptions = null)
     {
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
+                { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedClientSideParams" },
                 { "X-Fern-SDK-Version", Version.Current },

@@ -5,18 +5,20 @@
 import * as serializers from "../../../index";
 import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
-import { OctetStreamRequest } from "../../finalIr/types/OctetStreamRequest";
-import { MultipartRequest } from "../../finalIr/types/MultipartRequest";
+import { ParseOctetStreamRequest } from "./ParseOctetStreamRequest";
+import { ParseMultipartRequest } from "./ParseMultipartRequest";
 import { JsonRequestWithExample } from "./JsonRequestWithExample";
+import { ParseFormUrlEncodedRequest } from "./ParseFormUrlEncodedRequest";
 
 export const RequestWithExample: core.serialization.Schema<
     serializers.RequestWithExample.Raw,
     FernOpenapiIr.RequestWithExample
 > = core.serialization
     .union("type", {
-        octetStream: OctetStreamRequest,
-        multipart: MultipartRequest,
+        octetStream: ParseOctetStreamRequest,
+        multipart: ParseMultipartRequest,
         json: JsonRequestWithExample,
+        formUrlEncoded: ParseFormUrlEncodedRequest,
     })
     .transform<FernOpenapiIr.RequestWithExample>({
         transform: (value) => {
@@ -27,6 +29,8 @@ export const RequestWithExample: core.serialization.Schema<
                     return FernOpenapiIr.RequestWithExample.multipart(value);
                 case "json":
                     return FernOpenapiIr.RequestWithExample.json(value);
+                case "formUrlEncoded":
+                    return FernOpenapiIr.RequestWithExample.formUrlEncoded(value);
                 default:
                     return value as FernOpenapiIr.RequestWithExample;
             }
@@ -35,17 +39,25 @@ export const RequestWithExample: core.serialization.Schema<
     });
 
 export declare namespace RequestWithExample {
-    export type Raw = RequestWithExample.OctetStream | RequestWithExample.Multipart | RequestWithExample.Json;
+    export type Raw =
+        | RequestWithExample.OctetStream
+        | RequestWithExample.Multipart
+        | RequestWithExample.Json
+        | RequestWithExample.FormUrlEncoded;
 
-    export interface OctetStream extends OctetStreamRequest.Raw {
+    export interface OctetStream extends ParseOctetStreamRequest.Raw {
         type: "octetStream";
     }
 
-    export interface Multipart extends MultipartRequest.Raw {
+    export interface Multipart extends ParseMultipartRequest.Raw {
         type: "multipart";
     }
 
     export interface Json extends JsonRequestWithExample.Raw {
         type: "json";
+    }
+
+    export interface FormUrlEncoded extends ParseFormUrlEncodedRequest.Raw {
+        type: "formUrlEncoded";
     }
 }

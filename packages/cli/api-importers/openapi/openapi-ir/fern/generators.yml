@@ -2,7 +2,7 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fernapi/fern-typescript-node-sdk
         version:  0.45.1
         output:
           location: local-file-system

@@ -17,5 +17,5 @@ module Seed
         def payment
             @payment ||= Seed::Payment::Client.new(client: @raw_client)
         end
-
+    end
 end

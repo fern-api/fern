@@ -17,26 +17,24 @@ module Seed
                     method: POST,
                     path: "/movies/create-movie"
                 )
-
                 _response = @client.send(_request)
                 if _response.code >= "200" && _response.code < "300"
                     return Seed::Imdb::Types::MovieId.load(_response.body)
-
                 else
                     raise _response.body
+                end
             end
 
             # @return [Seed::Imdb::Movie]
             def get_movie(request_options: {}, **params)
                 _request = params
-
                 _response = @client.send(_request)
                 if _response.code >= "200" && _response.code < "300"
                     return Seed::Imdb::Types::Movie.load(_response.body)
-
                 else
                     raise _response.body
+                end
             end
-
+        end
     end
 end

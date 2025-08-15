@@ -44,6 +44,7 @@ public class Example {
     public static void main(String[] args) {
         SeedClientSideParamsClient client = SeedClientSideParamsClient
             .builder()
+            .token("<token>")
             .build();
 
         client.service().searchResources(

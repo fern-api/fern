@@ -18,8 +18,11 @@ public record SearchResourcesRequest
     [JsonIgnore]
     public required int Offset { get; set; }
 
+    /// <summary>
+    /// Search query text
+    /// </summary>
     [JsonPropertyName("query")]
-    public required string Query { get; set; }
+    public string? Query { get; set; }
 
     [JsonPropertyName("filters")]
     public Dictionary<string, object?>? Filters { get; set; }

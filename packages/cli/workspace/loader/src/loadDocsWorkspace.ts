@@ -1,10 +1,9 @@
-import { readFile } from "fs/promises";
-import yaml from "js-yaml";
-
 import { DOCS_CONFIGURATION_FILENAME, docsYml } from "@fern-api/configuration-loader";
 import { validateAgainstJsonSchema } from "@fern-api/core-utils";
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { readFile } from "fs/promises";
+import yaml from "js-yaml";
 
 import * as DocsYmlJsonSchema from "./docs-yml.schema.json";
 import { DocsWorkspace } from "./types/Workspace";

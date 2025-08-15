@@ -3,14 +3,14 @@ import Foundation
 public struct GetTokenRequest: Codable, Hashable, Sendable {
     public let clientId: String
     public let clientSecret: String
-    public let grantType: JSONValue
+    public let grantType: ClientCredentials
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         clientId: String,
         clientSecret: String,
-        grantType: JSONValue,
+        grantType: ClientCredentials,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.clientId = clientId
@@ -23,7 +23,7 @@ public struct GetTokenRequest: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.clientId = try container.decode(String.self, forKey: .clientId)
         self.clientSecret = try container.decode(String.self, forKey: .clientSecret)
-        self.grantType = try container.decode(JSONValue.self, forKey: .grantType)
+        self.grantType = try container.decode(ClientCredentials.self, forKey: .grantType)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -33,6 +33,10 @@ public struct GetTokenRequest: Codable, Hashable, Sendable {
         try container.encode(self.clientId, forKey: .clientId)
         try container.encode(self.clientSecret, forKey: .clientSecret)
         try container.encode(self.grantType, forKey: .grantType)
+    }
+
+    public enum ClientCredentials: String, Codable, Hashable, CaseIterable, Sendable {
+        case clientCredentials = "client_credentials"
     }
 
     /// Keys for encoding/decoding struct properties.

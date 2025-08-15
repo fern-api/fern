@@ -1,4 +1,4 @@
-import { RawSchemas, isInlineRequestBody, isRawObjectDefinition } from "@fern-api/fern-definition-schema";
+import { isInlineRequestBody, isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 import { PrimitiveTypeV1 } from "@fern-api/ir-sdk";
 

@@ -1,15 +1,14 @@
-import { OpenAPIV3 } from "openapi-types";
-
 import { assertNever } from "@fern-api/core-utils";
 import { OpenApiIntermediateRepresentation, Source as OpenApiIrSource, Schemas } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
+import { OpenAPIV3 } from "openapi-types";
 
 import { DEFAULT_PARSE_ASYNCAPI_SETTINGS, ParseAsyncAPIOptions } from "./asyncapi/options";
 import { parseAsyncAPI } from "./asyncapi/parse";
 import { AsyncAPIV2 } from "./asyncapi/v2";
 import { AsyncAPIV3 } from "./asyncapi/v3";
 import { generateIr as generateIrFromV3 } from "./openapi/v3/generateIr";
-import { ParseOpenAPIOptions, getParseOptions } from "./options";
+import { getParseOptions, ParseOpenAPIOptions } from "./options";
 
 export type Document = OpenAPIDocument | AsyncAPIDocument;
 

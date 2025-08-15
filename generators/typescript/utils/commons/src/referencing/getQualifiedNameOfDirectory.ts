@@ -1,6 +1,5 @@
-import path from "path";
-
 import { keys } from "@fern-api/core-utils";
+import path from "path";
 
 import { ExportedDirectory, ExportsManager } from "../exports-manager";
 

@@ -1,6 +1,3 @@
-import { SdkContext } from "@fern-typescript/contexts";
-import { ts } from "ts-morph";
-
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     HeaderAuthScheme,
@@ -9,6 +6,8 @@ import {
     HttpService,
     IntermediateRepresentation
 } from "@fern-fern/ir-sdk/api";
+import { SdkContext } from "@fern-typescript/contexts";
+import { ts } from "ts-morph";
 
 import { GeneratedHeader } from "../../GeneratedHeader";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";

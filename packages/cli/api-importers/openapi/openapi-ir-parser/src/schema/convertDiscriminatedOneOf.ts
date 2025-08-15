@@ -1,5 +1,3 @@
-import { OpenAPIV3 } from "openapi-types";
-
 import {
     Availability,
     CommonPropertyWithExample,
@@ -9,9 +7,9 @@ import {
     SdkGroupName,
     Source
 } from "@fern-api/openapi-ir";
-
-import { SchemaParserContext } from "./SchemaParserContext";
+import { OpenAPIV3 } from "openapi-types";
 import { convertReferenceObject, convertSchema, convertSchemaObject } from "./convertSchemas";
+import { SchemaParserContext } from "./SchemaParserContext";
 import { isReferenceObject } from "./utils/isReferenceObject";
 
 export function convertDiscriminatedOneOf({

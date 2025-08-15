@@ -1,10 +1,9 @@
-import { PackageId, convertHttpPathToExpressRoute, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import { IntermediateRepresentation, Name, Package } from "@fern-fern/ir-sdk/api";
+import { convertHttpPathToExpressRoute, getPropertyKey, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressRegister } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { partition } from "lodash-es";
 import { ts } from "ts-morph";
-
-import { IntermediateRepresentation, Name, Package } from "@fern-fern/ir-sdk/api";
 
 export declare namespace GeneratedExpressRegisterImpl {
     export interface Init {

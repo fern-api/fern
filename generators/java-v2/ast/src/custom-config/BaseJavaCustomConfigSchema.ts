@@ -20,6 +20,7 @@ export const BaseJavaCustomConfigSchema = z.object({
     "json-include": z.enum(["non-absent", "non-empty"]).optional(),
     "enable-extensible-builders": z.boolean().optional(),
     "use-default-request-parameter-values": z.boolean().optional(),
+    "enable-wire-tests": z.boolean().optional(),
 
     // Deprecated.
     "wrapped-aliases": z.boolean().optional()

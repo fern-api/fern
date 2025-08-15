@@ -1,10 +1,9 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-
-import { runFernCli } from "../../utils/runFernCli";
-import { generateIrAsString } from "./generateIrAsString";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import path from "path";
+import { runFernCli } from "../../utils/runFernCli";
+import { generateIrAsString } from "./generateIrAsString";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
@@ -105,6 +104,7 @@ describe("ir", () => {
 });
 
 describe("ir from proto", () => {
+    // biome-ignore lint/suspicious/noSkippedTests: Allow test skip for now
     it.skip("works with proto-ir", async () => {
         try {
             await runFernCli(["ir", "ir.json", "--from-openapi"], {
@@ -121,7 +121,7 @@ describe("ir from proto", () => {
             throw error;
         }
     }, 10_000);
-
+    // biome-ignore lint/suspicious/noSkippedTests: Allow test skip for now
     it.skip("ir from proto through oas", async () => {
         try {
             await runFernCli(["ir", "ir.json", "--from-openapi"], {

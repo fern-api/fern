@@ -1,9 +1,8 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import fs from "fs/promises";
 import { glob } from "glob";
 import path from "path";
 import { Project } from "ts-morph";
-
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
 const asIsFilePath = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("assets/asIs"));
 

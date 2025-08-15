@@ -39,16 +39,16 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
 
     /**
      * Adds a source file to the project. Conflicts will be resolved by appending underscores to duplicate names.
-     * The file will include a Foundation import.
+     * The file will include a Foundation import so you don't need to add it to the file contents manually.
      */
     public addSourceFile({
         nameCandidateWithoutExtension,
         directory,
-        fileContents
+        contents
     }: {
         nameCandidateWithoutExtension: string;
         directory: RelativeFilePath;
-        fileContents: swift.FileComponent[];
+        contents: swift.FileComponent[];
     }): SwiftFile {
         let filenameWithoutExt = nameCandidateWithoutExtension;
         while (this.srcFileNamesWithoutExtension.has(filenameWithoutExt)) {
@@ -58,26 +58,29 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         const file = SwiftFile.createWithFoundation({
             filename: filenameWithoutExt + ".swift",
             directory,
-            fileContents
+            contents
         });
         this.srcFiles.push(file);
         return file;
     }
 
+    /**
+     * Adds a source "as is" file to the project.
+     */
     public addSourceAsIsFile({
         filenameWithoutExt,
         directory,
-        fileContents
+        contents
     }: {
         filenameWithoutExt: string;
         directory: RelativeFilePath;
-        fileContents: swift.FileComponent[];
+        contents: string;
     }): SwiftFile {
         this.srcFileNamesWithoutExtension.add(filenameWithoutExt);
         const file = SwiftFile.create({
             filename: filenameWithoutExt + ".swift",
             directory,
-            fileContents
+            contents: [contents]
         });
         this.srcFiles.push(file);
         return file;

@@ -60,7 +60,7 @@ export class RawClient {
                         writer.writeLine(`body: ${bodyReference},`);
                     }
                     writer.dedent();
-                    writer.writeLine(`)`);
+                    writer.write(`)`);
                 });
             case "bytes":
                 return undefined;

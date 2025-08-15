@@ -1,5 +1,3 @@
-import { OpenAPIV3 } from "openapi-types";
-
 import {
     HeaderWithExample,
     PathParameterWithExample,
@@ -12,19 +10,20 @@ import {
     WebsocketMessageSchema,
     WebsocketSessionExample
 } from "@fern-api/openapi-ir";
+import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../../getExtension";
 import { FernOpenAPIExtension } from "../../openapi/v3/extensions/fernExtensions";
 import { ParseOpenAPIOptions } from "../../options";
 import { convertAvailability } from "../../schema/convertAvailability";
 import { convertReferenceObject, convertSchema } from "../../schema/convertSchemas";
-import { UndiscriminatedOneOfPrefix, convertUndiscriminatedOneOf } from "../../schema/convertUndiscriminatedOneOf";
+import { convertUndiscriminatedOneOf, UndiscriminatedOneOfPrefix } from "../../schema/convertUndiscriminatedOneOf";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
 import { getSchemas } from "../../utils/getSchemas";
 import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from "../ExampleWebsocketSessionFactory";
 import { FernAsyncAPIExtension } from "../fernExtensions";
-import { WebsocketSessionExampleExtension, getFernExamples } from "../getFernExamples";
+import { getFernExamples, WebsocketSessionExampleExtension } from "../getFernExamples";
 import { ParseAsyncAPIOptions } from "../options";
 import { AsyncAPIIntermediateRepresentation } from "../parse";
 import { ServerContext } from "../sharedTypes";

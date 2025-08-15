@@ -1,9 +1,7 @@
-import { isEqual, uniqWith } from "lodash-es";
-
 import { assertNever } from "@fern-api/core-utils";
 import { BasePhpCustomConfigSchema, php } from "@fern-api/php-codegen";
-
 import { ObjectProperty } from "@fern-fern/ir-sdk/api";
+import { isEqual, uniqWith } from "lodash-es";
 
 import { AbstractPhpGeneratorContext } from "./AbstractPhpGeneratorContext";
 

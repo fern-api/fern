@@ -1,9 +1,9 @@
 import { AstNode } from "./AstNode";
-import { Writer } from "./Writer";
-import { EnumVariant } from "./EnumVariant";
 import { Attribute } from "./Attribute";
+import { EnumVariant } from "./EnumVariant";
 import { Visibility } from "./types";
 import { writeVisibility } from "./utils/writeVisibility";
+import { Writer } from "./Writer";
 
 export declare namespace Enum {
     interface Args {

@@ -1,11 +1,10 @@
-import chalk from "chalk";
-import { writeFile } from "fs/promises";
-import { produce } from "immer";
-
 import { runMigrations } from "@fern-api/cli-migrations";
 import { FERN_DIRECTORY, fernConfigJson, getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { isVersionAhead } from "@fern-api/semver-utils";
+import chalk from "chalk";
+import { writeFile } from "fs/promises";
+import { produce } from "immer";
 
 import { CliContext } from "../../cli-context/CliContext";
 import { doesVersionOfCliExist } from "../../cli-context/upgrade-utils/doesVersionOfCliExist";

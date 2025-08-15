@@ -1,7 +1,6 @@
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { camelCase } from "lodash-es";
 import urlJoin from "url-join";
-
-import { FdrAPI } from "@fern-api/fdr-sdk";
 
 import { getBasePath } from "./ApiDefinitionHolder";
 import { stringifyEndpointPathParts, stringifyEndpointPathParts2 } from "./utils/stringifyEndpointPathParts";

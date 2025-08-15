@@ -1,13 +1,13 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
+    constructFernFileContext,
     ErrorResolverImpl,
     ExampleResolverImpl,
-    TypeResolverImpl,
-    VariableResolverImpl,
-    constructFernFileContext,
     getEndpointPathParameters,
-    resolvePathParameter
+    resolvePathParameter,
+    TypeResolverImpl,
+    VariableResolverImpl
 } from "@fern-api/ir-generator";
 
 import { Rule } from "../../Rule";

@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, RelativeFilePath, join, relative } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 
 import { AstNode } from "./core/AstNode";
 

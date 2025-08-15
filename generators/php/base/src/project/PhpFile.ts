@@ -1,10 +1,8 @@
-import path from "path";
-
 import { File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { BasePhpCustomConfigSchema, php } from "@fern-api/php-codegen";
-
 import { FernFilepath } from "@fern-fern/ir-sdk/api";
+import path from "path";
 
 export type Namespace = string;
 

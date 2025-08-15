@@ -1,4 +1,4 @@
-import { Examples, assertNever } from "@fern-api/core-utils";
+import { assertNever, Examples } from "@fern-api/core-utils";
 import {
     DoubleValidationRules,
     ExamplePrimitive,

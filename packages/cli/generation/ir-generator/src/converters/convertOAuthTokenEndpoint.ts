@@ -3,8 +3,8 @@ import { OAuthTokenEndpoint } from "@fern-api/ir-sdk";
 import { FernFileContext } from "../FernFileContext";
 import { EndpointResolver } from "../resolvers/EndpointResolver";
 import { PropertyResolver } from "../resolvers/PropertyResolver";
-import { TokenEndpoint } from "./convertOAuthUtils";
 import { createEndpointReference } from "../utils/createEndpointReference";
+import { TokenEndpoint } from "./convertOAuthUtils";
 
 export function convertOAuthTokenEndpoint({
     endpointResolver,

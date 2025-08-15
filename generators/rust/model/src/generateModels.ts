@@ -1,9 +1,9 @@
 import { RustFile } from "@fern-api/rust-base";
+import { AliasGenerator } from "./alias";
+import { EnumGenerator } from "./enum";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { StructGenerator } from "./object";
-import { EnumGenerator } from "./enum";
-import { AliasGenerator } from "./alias";
-import { UnionGenerator, UndiscriminatedUnionGenerator } from "./union";
+import { UndiscriminatedUnionGenerator, UnionGenerator } from "./union";
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): RustFile[] {
     const files: RustFile[] = [];

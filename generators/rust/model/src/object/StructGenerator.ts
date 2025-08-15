@@ -1,21 +1,21 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
-import { rust, Attribute, PUBLIC } from "@fern-api/rust-codegen";
+import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 
 import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
+import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import {
+    getInnerTypeFromOptional,
+    isCollectionType,
+    isDateTimeOnlyType,
     isDateTimeType,
     isDateType,
-    isDateTimeOnlyType,
-    isUuidType,
-    isCollectionType,
-    isUnknownType,
     isOptionalType,
-    getInnerTypeFromOptional
+    isUnknownType,
+    isUuidType
 } from "../utils/primitiveTypeUtils";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class StructGenerator {
     private readonly typeDeclaration: TypeDeclaration;

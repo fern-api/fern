@@ -1,7 +1,7 @@
 import { swift } from "@fern-api/swift-codegen";
 import { InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
 
-import { StructGenerator } from "../helpers";
+import { StructGenerator } from "../helpers/struct-generator/StructGenerator";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export declare namespace ObjectGenerator {
@@ -40,11 +40,12 @@ export class ObjectGenerator {
             dataPropertyDefinitions: [...this.extendedProperties, ...this.properties].map((p) => ({
                 unsafeName: p.name.name.camelCase.unsafeName,
                 rawName: p.name.wireValue,
-                type: this.context.getSwiftTypeForTypeReference(p.valueType),
+                type: p.valueType,
                 docsContent: p.docs
             })),
             additionalProperties: true,
-            docsContent: this.docsContent
+            docsContent: this.docsContent,
+            context: this.context
         }).generate();
     }
 }

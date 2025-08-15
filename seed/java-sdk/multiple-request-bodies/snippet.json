@@ -1,0 +1,31 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "d9db31a8",
+            "id": {
+                "method": "POST",
+                "path": "/documents/upload",
+                "identifier_override": "endpoint_.uploadJsonDocument"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.UploadDocumentRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.uploadJsonDocument(\n            UploadDocumentRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.UploadDocumentRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.uploadJsonDocument(\n            UploadDocumentRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "5fbca3ff",
+            "id": {
+                "method": "POST",
+                "path": "/documents/upload",
+                "identifier_override": "endpoint_.uploadJsonDocument"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.UploadDocumentRequest;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.uploadJsonDocument(\n            UploadDocumentRequest\n                .builder()\n                .author(\"author\")\n                .tags(\n                    new ArrayList<String>(\n                        Arrays.asList(\"tags\", \"tags\")\n                    )\n                )\n                .title(\"title\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.UploadDocumentRequest;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.uploadJsonDocument(\n            UploadDocumentRequest\n                .builder()\n                .author(\"author\")\n                .tags(\n                    new ArrayList<String>(\n                        Arrays.asList(\"tags\", \"tags\")\n                    )\n                )\n                .title(\"title\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

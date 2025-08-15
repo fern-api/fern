@@ -1,10 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
-import { EnumGenerator } from "./enum/EnumGenerator";
-import { ObjectGenerator } from "./object/ObjectGenerator";
-import { AliasGenerator } from "./alias/AliasGenerator";
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { AbstractModelGenerator } from "./AbstractModelGenerator";
+import { AliasGenerator } from "./alias/AliasGenerator";
+import { EnumGenerator } from "./enum/EnumGenerator";
+import { ModelGeneratorContext } from "./ModelGeneratorContext";
+import { ObjectGenerator } from "./object/ObjectGenerator";
 import { DiscriminatedUnionGenerator } from "./union/DiscriminatedUnionGenerator";
 import { UndiscriminatedUnionGenerator } from "./union/UndiscriminatedUnionGenerator";
 

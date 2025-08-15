@@ -1,19 +1,18 @@
-import { mkdir, writeFile } from "fs/promises";
-import yaml from "js-yaml";
-
 import {
     DEFAULT_GROUP_NAME,
     DEFINITION_DIRECTORY,
-    GENERATORS_CONFIGURATION_FILENAME,
     GENERATOR_INVOCATIONS,
-    ROOT_API_FILENAME,
+    GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
-    getLatestGeneratorVersion
+    getLatestGeneratorVersion,
+    ROOT_API_FILENAME
 } from "@fern-api/configuration-loader";
 import { formatDefinitionFile } from "@fern-api/fern-definition-formatter";
 import { RootApiFileSchema } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join, relative } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { mkdir, writeFile } from "fs/promises";
+import yaml from "js-yaml";
 
 import { SAMPLE_IMDB_API } from "./sampleImdbApi";
 

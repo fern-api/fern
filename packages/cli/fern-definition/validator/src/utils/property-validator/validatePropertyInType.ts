@@ -1,4 +1,4 @@
-import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema";
+import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 
 import { RuleViolation } from "../../Rule";

@@ -1,8 +1,8 @@
 import { Class_ } from "./Class";
 import { Comment } from "./Comment";
-import { TypeParameter } from "./TypeParameter";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { TypeParameter } from "./TypeParameter";
 
 export declare namespace Module_ {
     export interface Args {

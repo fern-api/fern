@@ -5,15 +5,15 @@ import { keys } from "../../utils/keys.js";
 import { maybeSkipValidation } from "../../utils/maybeSkipValidation.js";
 import { enum_ } from "../enum/index.js";
 import { ObjectSchema } from "../object/index.js";
-import { ObjectLikeSchema, getObjectLikeUtils } from "../object-like/index.js";
+import { getObjectLikeUtils, ObjectLikeSchema } from "../object-like/index.js";
 import { getSchemaUtils } from "../schema-utils/index.js";
 import { Discriminant } from "./discriminant.js";
 import {
-    UnionSubtypes,
     inferParsedDiscriminant,
     inferParsedUnion,
     inferRawDiscriminant,
     inferRawUnion,
+    UnionSubtypes,
 } from "./types.js";
 
 export function union<D extends string | Discriminant<any, any>, U extends UnionSubtypes<any>>(

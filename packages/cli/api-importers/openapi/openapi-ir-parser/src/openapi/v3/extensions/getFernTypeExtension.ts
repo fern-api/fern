@@ -1,5 +1,3 @@
-import { OpenAPIV3 } from "openapi-types";
-
 import { assertNever } from "@fern-api/core-utils";
 import { recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema";
 import {
@@ -9,6 +7,7 @@ import {
     SchemaWithExample,
     Source
 } from "@fern-api/openapi-ir";
+import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../../../getExtension";
 import { FernOpenAPIExtension } from "./fernExtensions";

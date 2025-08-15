@@ -1,7 +1,7 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { VariableId } from "@fern-api/ir-sdk";
 
-import { FernFileContext, constructRootApiFileContext } from "../FernFileContext";
+import { constructRootApiFileContext, FernFileContext } from "../FernFileContext";
 
 export interface VariableResolver {
     getDeclarationOrThrow(

@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import { entries } from "@fern-api/core-utils";
-import { RelativeFilePath, getFilename } from "@fern-api/fs-utils";
+import { getFilename, RelativeFilePath } from "@fern-api/fs-utils";
 
 export const AsIsFileNames = {
     // Core infrastructure templates

@@ -1,17 +1,16 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { MediaType, assertNever } from "@fern-api/core-utils";
+import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Endpoint, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
-
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { State } from "./State";
 import { buildEndpointExample } from "./buildEndpointExample";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
 import { buildHeader } from "./buildHeader";
 import { buildPathParameter } from "./buildPathParameter";
 import { buildQueryParameter } from "./buildQueryParameter";
 import { buildTypeReference } from "./buildTypeReference";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { State } from "./State";
 import { convertAvailability } from "./utils/convertAvailability";
 import { convertFullExample } from "./utils/convertFullExample";
 import { resolveLocationWithNamespace } from "./utils/convertSdkGroupName";
@@ -431,7 +430,7 @@ function getRequest({
     usedNames: Set<string>;
     namespace: string | undefined;
 }): ConvertedRequest {
-    if (request.type === "json") {
+    if (request.type === "json" || request.type === "formUrlEncoded") {
         const maybeSchemaId = request.schema.type === "reference" ? request.schema.schema : undefined;
         const resolvedSchema =
             request.schema.type === "reference" ? context.getSchema(request.schema.schema, namespace) : request.schema;
@@ -598,7 +597,7 @@ function getRequest({
             schemaIdsToExclude: [],
             value: {
                 body: "bytes",
-                "content-type": MediaType.APPLICATION_OCTET_STREAM,
+                "content-type": request.contentType ?? MediaType.APPLICATION_OCTET_STREAM,
                 "query-parameters": queryParameters,
                 ...(request.description ? { docs: request.description } : {})
             }
@@ -697,6 +696,8 @@ function endpointRequestSupportsInlinedPathParameters({
         case "multipart":
             return true;
         case "json":
+            return true;
+        case "formUrlEncoded":
             return true;
         default:
             assertNever(request);

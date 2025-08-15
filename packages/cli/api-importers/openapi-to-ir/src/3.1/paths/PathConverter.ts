@@ -1,7 +1,6 @@
-import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
-
 import { AuthScheme } from "@fern-api/ir-sdk";
 import { AbstractConverter, Converters } from "@fern-api/v3-importer-commons";
+import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { HttpMethods } from "../../constants/HttpMethods";
 import { FernIdempotentExtension } from "../../extensions/x-fern-idempotent";

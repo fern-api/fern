@@ -1,6 +1,3 @@
-import { camelCase } from "lodash-es";
-import { OpenAPIV3 } from "openapi-types";
-
 import {
     EndpointSdkName,
     EndpointWithExample,
@@ -8,6 +5,8 @@ import {
     SdkGroupName,
     WebhookWithExample
 } from "@fern-api/openapi-ir";
+import { camelCase } from "lodash-es";
+import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../../../../getExtension";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
@@ -29,24 +28,24 @@ export type ConvertedOperation =
 
 export interface ConvertedAsyncAndSyncOperation {
     type: "async";
-    async: EndpointWithExample;
-    sync: EndpointWithExample;
+    async: EndpointWithExample[];
+    sync: EndpointWithExample[];
 }
 
 export interface ConvertedHttpOperation {
     type: "http";
-    value: EndpointWithExample;
+    value: EndpointWithExample[];
 }
 
 export interface ConvertedWebhookOperation {
     type: "webhook";
-    value: WebhookWithExample;
+    value: WebhookWithExample[];
 }
 
 export interface ConvertedStreamingOperation {
     type: "streaming";
-    streaming: EndpointWithExample;
-    nonStreaming: EndpointWithExample | undefined;
+    streaming: EndpointWithExample[];
+    nonStreaming: EndpointWithExample[];
 }
 
 export function convertOperation({
@@ -87,12 +86,12 @@ export function convertOperation({
     };
 
     if (convertToWebhook) {
-        const webhook = convertWebhookOperation({
+        const webhooks = convertWebhookOperation({
             context,
             operationContext,
             source: context.source
         });
-        return webhook != null ? { type: "webhook", value: webhook } : undefined;
+        return { type: "webhook", value: webhooks };
     }
 
     const streamingExtension = getFernStreamingExtension(operation);
@@ -126,13 +125,13 @@ export function convertOperation({
         };
     }
 
-    const convertedHttpOperation = convertHttpOperation({
+    const convertedHttpOperations = convertHttpOperation({
         context,
         operationContext,
         streamFormat: undefined,
         source: context.source
     });
-    return { type: "http", value: convertedHttpOperation };
+    return { type: "http", value: convertedHttpOperations };
 }
 
 function getSdkGroupAndMethod(

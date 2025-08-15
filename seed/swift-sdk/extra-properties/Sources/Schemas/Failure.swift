@@ -1,12 +1,12 @@
 import Foundation
 
 public struct Failure: Codable, Hashable, Sendable {
-    public let status: JSONValue
+    public let status: Failure
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        status: JSONValue,
+        status: Failure,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.status = status
@@ -15,7 +15,7 @@ public struct Failure: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.status = try container.decode(JSONValue.self, forKey: .status)
+        self.status = try container.decode(Failure.self, forKey: .status)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -23,6 +23,10 @@ public struct Failure: Codable, Hashable, Sendable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.status, forKey: .status)
+    }
+
+    public enum Failure: String, Codable, Hashable, CaseIterable, Sendable {
+        case failure
     }
 
     /// Keys for encoding/decoding struct properties.

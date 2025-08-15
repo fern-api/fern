@@ -4,7 +4,7 @@ public struct PaginatedConversationResponse: Codable, Hashable, Sendable {
     public let conversations: [Conversation]
     public let pages: CursorPages?
     public let totalCount: Int
-    public let type: JSONValue
+    public let type: ConversationList
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -12,7 +12,7 @@ public struct PaginatedConversationResponse: Codable, Hashable, Sendable {
         conversations: [Conversation],
         pages: CursorPages? = nil,
         totalCount: Int,
-        type: JSONValue,
+        type: ConversationList,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.conversations = conversations
@@ -27,7 +27,7 @@ public struct PaginatedConversationResponse: Codable, Hashable, Sendable {
         self.conversations = try container.decode([Conversation].self, forKey: .conversations)
         self.pages = try container.decodeIfPresent(CursorPages.self, forKey: .pages)
         self.totalCount = try container.decode(Int.self, forKey: .totalCount)
-        self.type = try container.decode(JSONValue.self, forKey: .type)
+        self.type = try container.decode(ConversationList.self, forKey: .type)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -38,6 +38,10 @@ public struct PaginatedConversationResponse: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.pages, forKey: .pages)
         try container.encode(self.totalCount, forKey: .totalCount)
         try container.encode(self.type, forKey: .type)
+    }
+
+    public enum ConversationList: String, Codable, Hashable, CaseIterable, Sendable {
+        case conversationList = "conversation.list"
     }
 
     /// Keys for encoding/decoding struct properties.

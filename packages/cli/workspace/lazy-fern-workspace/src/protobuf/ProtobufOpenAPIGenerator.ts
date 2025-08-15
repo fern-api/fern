@@ -1,9 +1,8 @@
-import { cp, readFile, readdir, unlink, writeFile } from "fs/promises";
-import tmp from "tmp-promise";
-
-import { AbsoluteFilePath, RelativeFilePath, join, relative } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
+import { cp, readdir, readFile, unlink, writeFile } from "fs/promises";
+import tmp from "tmp-promise";
 import { getProtobufYamlV1, getProtobufYamlV2 } from "./utils";
 
 const PROTOBUF_GENERATOR_CONFIG_FILENAME = "buf.gen.yaml";

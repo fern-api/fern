@@ -1,8 +1,7 @@
 import { CodeBlock as CommonCodeBlock } from "@fern-api/browser-compatible-base-generator";
 import { noop } from "@fern-api/core-utils";
-
-import { Statement } from "./Statement";
 import { AstNode, Writer } from "./core";
+import { Statement } from "./Statement";
 
 export declare namespace CodeBlock {
     /* Write arbitrary code */

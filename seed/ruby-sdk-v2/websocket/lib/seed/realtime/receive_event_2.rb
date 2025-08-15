@@ -6,6 +6,6 @@ module Seed
             field :gamma, String, optional: false, nullable: false
             field :delta, Integer, optional: false, nullable: false
             field :epsilon, Internal::Types::Boolean, optional: false, nullable: false
-
+        end
     end
 end

@@ -14,11 +14,12 @@ module Seed
                 _request = params
 
                 _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
+                if if _response.code >= "200" && _response.code < "300"
                     return
-
+                    
                 else
                     raise _response.body
+                end
             end
 
             # Update with JSON merge patch - complex types.
@@ -31,11 +32,12 @@ module Seed
                 _request = params
 
                 _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
+                if if _response.code >= "200" && _response.code < "300"
                     return
-
+                    
                 else
                     raise _response.body
+                end
             end
 
             # Regular PATCH endpoint without merge-patch semantics
@@ -45,12 +47,13 @@ module Seed
                 _request = params
 
                 _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
+                if if _response.code >= "200" && _response.code < "300"
                     return
-
+                    
                 else
                     raise _response.body
+                end
             end
-
+        end
     end
 end

@@ -1,9 +1,9 @@
 import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
-import { Parameter } from "./Parameter";
-import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { Parameter } from "./Parameter";
+import { Type } from "./Type";
 
 export declare namespace Function {
     interface Args {

@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/documents/upload",
+                "method": "POST",
+                "identifier_override": "endpoint_.uploadJsonDocument"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/multiple-request-bodies\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\" });\nawait client.uploadJsonDocument();\n"
+            }
+        }
+    ],
+    "types": {}
+}
