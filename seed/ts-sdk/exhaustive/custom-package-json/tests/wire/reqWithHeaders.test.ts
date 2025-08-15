@@ -26,6 +26,11 @@ describe("ReqWithHeaders", () => {
             "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
             body: "string",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 });

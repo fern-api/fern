@@ -14,7 +14,12 @@ describe("Urls", () => {
         server.mockEndpoint().get("/urls/MixedCase").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.endpoints.urls.withMixedCase();
-        expect(response).toEqual("string");
+        expect(response).toEqual({
+            body: "string",
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("noEndingSlash", async () => {
@@ -31,7 +36,12 @@ describe("Urls", () => {
             .build();
 
         const response = await client.endpoints.urls.noEndingSlash();
-        expect(response).toEqual("string");
+        expect(response).toEqual({
+            body: "string",
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("withEndingSlash", async () => {
@@ -48,7 +58,12 @@ describe("Urls", () => {
             .build();
 
         const response = await client.endpoints.urls.withEndingSlash();
-        expect(response).toEqual("string");
+        expect(response).toEqual({
+            body: "string",
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("withUnderscores", async () => {
@@ -65,6 +80,11 @@ describe("Urls", () => {
             .build();
 
         const response = await client.endpoints.urls.withUnderscores();
-        expect(response).toEqual("string");
+        expect(response).toEqual({
+            body: "string",
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 });

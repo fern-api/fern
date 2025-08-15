@@ -14,7 +14,12 @@ describe("Homepage", () => {
         server.mockEndpoint().get("/homepage-problems").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.homepage.getHomepageProblems();
-        expect(response).toEqual(["string", "string"]);
+        expect(response).toEqual({
+            body: ["string", "string"],
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("setHomepageProblems", async () => {
@@ -25,6 +30,11 @@ describe("Homepage", () => {
         server.mockEndpoint().post("/homepage-problems").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
 
         const response = await client.homepage.setHomepageProblems(["string", "string"]);
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 });
