@@ -2,7 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 
-import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
@@ -11,10 +11,11 @@ import {
     isCollectionType,
     isDateTimeOnlyType,
     isDateTimeType,
-    isDateType,
     isOptionalType,
     isUnknownType,
-    isUuidType
+    isUuidType,
+    typeSupportsHashAndEq,
+    extractNamedTypesFromTypeReference
 } from "../utils/primitiveTypeUtils";
 
 export class StructGenerator {
@@ -126,8 +127,14 @@ export class StructGenerator {
     private generateStructAttributes(): rust.Attribute[] {
         const attributes: rust.Attribute[] = [];
 
-        // Always add basic derives
-        const derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
+        // Basic derives - start with essential ones
+        let derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
+
+        // Only add Hash and Eq if all field types support them
+        if (this.canDeriveHashAndEq()) {
+            derives.push("Eq", "Hash");
+        }
+
         attributes.push(Attribute.derive(derives));
 
         return attributes;
@@ -244,44 +251,27 @@ export class StructGenerator {
         });
     }
 
-    private getCustomTypesUsedInFields(): { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] {
-        const customTypeNames: { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] = [];
+    private getCustomTypesUsedInFields(): {
+        snakeCase: { unsafeName: string };
+        pascalCase: { unsafeName: string };
+    }[] {
+        const customTypeNames: {
+            snakeCase: { unsafeName: string };
+            pascalCase: { unsafeName: string };
+        }[] = [];
         const visited = new Set<string>();
 
-        const extractNamedTypesRecursively = (typeRef: TypeReference) => {
-            if (typeRef.type === "named") {
-                const typeName = typeRef.name.originalName;
-                if (!visited.has(typeName)) {
-                    visited.add(typeName);
-                    customTypeNames.push({
-                        snakeCase: { unsafeName: typeRef.name.snakeCase.unsafeName },
-                        pascalCase: { unsafeName: typeRef.name.pascalCase.unsafeName }
-                    });
-                }
-            } else if (typeRef.type === "container") {
-                typeRef.container._visit({
-                    list: (listType) => extractNamedTypesRecursively(listType),
-                    set: (setType) => extractNamedTypesRecursively(setType),
-                    optional: (optionalType) => extractNamedTypesRecursively(optionalType),
-                    nullable: (nullableType) => extractNamedTypesRecursively(nullableType),
-                    map: (mapType) => {
-                        extractNamedTypesRecursively(mapType.keyType);
-                        extractNamedTypesRecursively(mapType.valueType);
-                    },
-                    literal: () => {
-                        // No named types in literals
-                    },
-                    _other: () => {
-                        // Unknown container type
-                    }
-                });
-            }
-        };
-
         this.objectTypeDeclaration.properties.forEach((property) => {
-            extractNamedTypesRecursively(property.valueType);
+            extractNamedTypesFromTypeReference(property.valueType, customTypeNames, visited);
         });
 
         return customTypeNames;
+    }
+
+    private canDeriveHashAndEq(): boolean {
+        // Check if all field types can support Hash and Eq derives
+        return this.objectTypeDeclaration.properties.every((property) => {
+            return typeSupportsHashAndEq(property.valueType, this.context);
+        });
     }
 }

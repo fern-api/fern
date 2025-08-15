@@ -10,7 +10,6 @@ import {
     HttpService,
     Pagination,
     PrimitiveTypeV1,
-    QueryParameter,
     Subpackage,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
@@ -74,7 +73,7 @@ export class SubClientGenerator {
 
     private generateImports(): UseStatement[] {
         const hasTypes = this.hasTypes(this.context);
-        const hasPagination = this.hasPaginatedEndpoints();
+        const hasHashMapInQueryParams = this.hasHashMapInQueryParams();
 
         const imports = [
             new UseStatement({
@@ -87,15 +86,11 @@ export class SubClientGenerator {
             })
         ];
 
-        if (hasPagination) {
+        if (hasHashMapInQueryParams) {
             imports.push(
                 new UseStatement({
-                    path: "crate",
-                    items: ["AsyncPaginator", "SyncPaginator", "PaginationResult"]
-                }),
-                new UseStatement({
-                    path: "std::sync",
-                    items: ["Arc"]
+                    path: "std::collections",
+                    items: ["HashMap"]
                 })
             );
         }
@@ -432,9 +427,12 @@ export class SubClientGenerator {
             const wireValue = queryParam.name.wireValue;
             const isOptionalType = this.isOptionalType(queryParam.valueType);
             const pattern = isOptionalType ? `Some(Some(value))` : `Some(value)`;
+            const valueExpression = this.isComplexType(queryParam.valueType)
+                ? "serde_json::to_string(&value).unwrap_or_default()"
+                : "value.to_string()";
 
             return `if let ${pattern} = ${paramName} {
-                query_params.push(("${wireValue}".to_string(), ${this.getQueryParameterConversion(queryParam, paramName)}));
+                query_params.push(("${wireValue}".to_string(), ${valueExpression}));
             }`;
         });
 
@@ -445,20 +443,6 @@ export class SubClientGenerator {
         }`;
     }
 
-    private hasQueryParameters(endpoint: HttpEndpoint): boolean {
-        return endpoint.queryParameters.length > 0;
-    }
-
-    private getQueryParameterConversion(queryParam: QueryParameter, paramName: string): string {
-        // Handle different types of query parameters
-        return "value.to_string()";
-    }
-
-    private getQueryParameterValue(queryParam: QueryParameter, paramName: string): string {
-        // For now, assume all query parameters are optional strings or can be converted to strings
-        return paramName;
-    }
-
     // =============================================================================
     // PAGINATION METHODS
     // =============================================================================
@@ -467,24 +451,23 @@ export class SubClientGenerator {
         const methods: rust.Client.SimpleMethod[] = [];
 
         if (endpoint.pagination) {
-            // Generate async paginated method
-            methods.push(this.generateAsyncPaginatedMethod(endpoint));
-
-            // Generate sync paginated method
-            methods.push(this.generateSyncPaginatedMethod(endpoint));
+            // Generate simple paginated method that follows the same pattern as regular methods
+            methods.push(this.generateSimplePaginatedMethod(endpoint));
         }
 
         return methods;
     }
 
-    private generateAsyncPaginatedMethod(endpoint: HttpEndpoint): rust.Client.SimpleMethod {
+    private generateSimplePaginatedMethod(endpoint: HttpEndpoint): rust.Client.SimpleMethod {
         const params = this.extractParametersFromEndpoint(endpoint);
         const parameters = this.buildMethodParameters(params);
-        const itemType = this.getItemTypeFromPagination(endpoint);
         const baseName = endpoint.name.snakeCase.safeName;
+        const httpMethod = this.getHttpMethod(endpoint);
+        const pathExpression = this.getPathExpression(endpoint);
+        const requestBody = this.getRequestBody(endpoint, params);
 
         const returnType = rust.Type.result(
-            rust.Type.reference(rust.reference({ name: `AsyncPaginator<${itemType.toString()}>` })),
+            this.getReturnType(endpoint),
             rust.Type.reference(rust.reference({ name: "ClientError" }))
         );
 
@@ -493,150 +476,54 @@ export class SubClientGenerator {
             parameters,
             returnType: returnType.toString(),
             isAsync: true,
-            body: this.generatePaginatedMethodBody(endpoint, true)
+            body: `self.http_client.execute_request(
+            Method::${httpMethod},
+            ${pathExpression},
+            ${requestBody},
+            ${this.buildQueryParameters(endpoint)},
+            options,
+        ).await`
         };
     }
-
-    private generateSyncPaginatedMethod(endpoint: HttpEndpoint): rust.Client.SimpleMethod {
-        const params = this.extractParametersFromEndpoint(endpoint);
-        const parameters = this.buildMethodParameters(params);
-        const itemType = this.getItemTypeFromPagination(endpoint);
-        const baseName = endpoint.name.snakeCase.safeName;
-
-        const returnType = rust.Type.result(
-            rust.Type.reference(rust.reference({ name: `SyncPaginator<${itemType.toString()}>` })),
-            rust.Type.reference(rust.reference({ name: "ClientError" }))
-        );
-
-        return {
-            name: `${baseName}_paginated_sync`,
-            parameters,
-            returnType: returnType.toString(),
-            isAsync: false,
-            body: this.generatePaginatedMethodBody(endpoint, false)
-        };
-    }
-
-    private generatePaginatedMethodBody(endpoint: HttpEndpoint, isAsync: boolean): string {
-        if (!endpoint.pagination) {
-            return `Err(ClientError::new("Pagination not supported for this endpoint"))`;
-        }
-
-        const httpMethod = this.getHttpMethod(endpoint);
-        const pathExpression = this.getPathExpression(endpoint);
-        const paginatorType = isAsync ? "AsyncPaginator" : "SyncPaginator";
-
-        return endpoint.pagination._visit({
-            cursor: (cursor) =>
-                this.generateCursorPaginationBody(endpoint, isAsync, httpMethod, pathExpression, paginatorType),
-            offset: (offset) =>
-                this.generateOffsetPaginationBody(endpoint, isAsync, httpMethod, pathExpression, paginatorType),
-            custom: (custom) =>
-                this.generateCustomPaginationBody(endpoint, isAsync, httpMethod, pathExpression, paginatorType),
-            _other: () => `Err(ClientError::new("Unknown pagination type"))`
-        });
-    }
-
-    private generateCursorPaginationBody(
-        endpoint: HttpEndpoint,
-        isAsync: boolean,
-        httpMethod: string,
-        pathExpression: string,
-        paginatorType: string
-    ): string {
-        const itemType = this.getItemTypeFromPagination(endpoint);
-        const clientRef = isAsync ? "Arc<HttpClient>" : "Arc<HttpClient>";
-
-        return `
-        let http_client = Arc::new(self.http_client.clone());
-        let page_loader = move |client: ${clientRef}, cursor: Option<String>| {
-            let client = client.clone();
-            ${isAsync ? "async move {" : ""}
-                // Implementation for cursor-based pagination
-                // This is a placeholder - real implementation would make HTTP request
-                // and extract cursor + items from response
-                Ok(PaginationResult {
-                    items: vec![],
-                    next_cursor: None,
-                    has_next_page: false,
-                })
-            ${isAsync ? "}" : ""}
-        };
-        
-        ${paginatorType}::new(http_client, page_loader, None)`;
-    }
-
-    private generateOffsetPaginationBody(
-        endpoint: HttpEndpoint,
-        isAsync: boolean,
-        httpMethod: string,
-        pathExpression: string,
-        paginatorType: string
-    ): string {
-        const itemType = this.getItemTypeFromPagination(endpoint);
-        const clientRef = isAsync ? "Arc<HttpClient>" : "Arc<HttpClient>";
-
-        return `
-        let http_client = Arc::new(self.http_client.clone());
-        let page_loader = move |client: ${clientRef}, offset: Option<String>| {
-            let client = client.clone();
-            ${isAsync ? "async move {" : ""}
-                // Implementation for offset-based pagination
-                // This is a placeholder - real implementation would make HTTP request
-                // and calculate next offset from response
-                Ok(PaginationResult {
-                    items: vec![],
-                    next_cursor: None,
-                    has_next_page: false,
-                })
-            ${isAsync ? "}" : ""}
-        };
-        
-        ${paginatorType}::new(http_client, page_loader, Some("0".to_string()))`;
-    }
-
-    private generateCustomPaginationBody(
-        endpoint: HttpEndpoint,
-        isAsync: boolean,
-        httpMethod: string,
-        pathExpression: string,
-        paginatorType: string
-    ): string {
-        return `Err(ClientError::new("Custom pagination not yet implemented"))`;
-    }
-
-    private getItemTypeFromPagination(endpoint: HttpEndpoint): rust.Type {
-        if (!endpoint.pagination) {
-            return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
-        }
-
-        // Extract item type from pagination results property
-        const resultsProperty = endpoint.pagination._visit({
-            cursor: (cursor) => cursor.results,
-            offset: (offset) => offset.results,
-            custom: (custom) => custom.results,
-            _other: () => null
-        });
-
-        if (resultsProperty && endpoint.response?.body) {
-            // This is simplified - in practice, you'd need to traverse the response
-            // structure to find the actual item type based on the results property path
-            return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
-        }
-
-        return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
-    }
-
-    private hasPaginatedEndpoints(): boolean {
-        const endpoints = this.service?.endpoints || [];
-        return endpoints.some((endpoint) => endpoint.pagination != null);
-    }
-
-    // =============================================================================
-    // UTILITY METHODS
-    // =============================================================================
 
     private hasTypes(context: SdkGeneratorContext): boolean {
         return Object.keys(context.ir.types).length > 0;
+    }
+
+    private hasHashMapInQueryParams(): boolean {
+        const endpoints = this.service?.endpoints || [];
+        return endpoints.some((endpoint) =>
+            endpoint.queryParameters.some((queryParam) => this.isCollectionType(queryParam.valueType))
+        );
+    }
+
+    private isCollectionType(typeRef: TypeReference): boolean {
+        return TypeReference._visit(typeRef, {
+            primitive: () => false,
+            named: () => false,
+            container: (container) => {
+                return container._visit({
+                    map: () => true,
+                    set: () => true,
+                    list: () => false,
+                    optional: (innerType) => this.isCollectionType(innerType),
+                    nullable: (innerType) => this.isCollectionType(innerType),
+                    literal: () => false,
+                    _other: () => false
+                });
+            },
+            unknown: () => false,
+            _other: () => false
+        });
+    }
+
+    private isComplexType(typeRef: TypeReference): boolean {
+        return TypeReference._visit(typeRef, {
+            primitive: () => false,
+            named: () => true,
+            container: () => true,
+            unknown: () => true,
+            _other: () => true
+        });
     }
 }
