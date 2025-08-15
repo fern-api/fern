@@ -403,7 +403,7 @@ async function generateLanguageSpecificDynamicIRs({
     snippetsConfig
 }: {
     workspace: FernWorkspace | undefined;
-    organization: string,
+    organization: string;
     context: TaskContext;
     snippetsConfig: SnippetsConfig;
 }): Promise<Record<string, DynamicIr> | undefined> {
