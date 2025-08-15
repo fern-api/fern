@@ -28,6 +28,8 @@ public final class CustomAuthClient: Sendable {
                 key: customAuthScheme,
                 header: "X-API-KEY"
             ),
+            bearerAuth: nil,
+            basicAuth: nil,
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,

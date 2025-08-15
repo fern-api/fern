@@ -24,6 +24,9 @@ public final class InferredAuthExplicitClient: Sendable {
     ) {
         self.init(
             baseURL: baseURL,
+            headerAuth: nil,
+            bearerAuth: nil,
+            basicAuth: nil,
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,

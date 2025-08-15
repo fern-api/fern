@@ -22,6 +22,9 @@ public final class MixedFileDirectoryClient: Sendable {
     ) {
         self.init(
             baseURL: baseURL,
+            headerAuth: nil,
+            bearerAuth: nil,
+            basicAuth: nil,
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,
