@@ -21,7 +21,12 @@ describe("Primitive", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnString("string");
-        expect(response).toEqual("string");
+        expect(response).toEqual({
+            body: "string",
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getAndReturnInt", async () => {
@@ -39,7 +44,12 @@ describe("Primitive", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnInt(1);
-        expect(response).toEqual(1);
+        expect(response).toEqual({
+            body: 1,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getAndReturnLong", async () => {
@@ -57,7 +67,12 @@ describe("Primitive", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnLong(1000000);
-        expect(response).toEqual(1000000);
+        expect(response).toEqual({
+            body: 1000000,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getAndReturnDouble", async () => {
@@ -75,7 +90,12 @@ describe("Primitive", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnDouble(1.1);
-        expect(response).toEqual(1.1);
+        expect(response).toEqual({
+            body: 1.1,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getAndReturnBool", async () => {
@@ -93,7 +113,12 @@ describe("Primitive", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnBool(true);
-        expect(response).toEqual(true);
+        expect(response).toEqual({
+            body: true,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getAndReturnDatetime", async () => {
@@ -111,7 +136,12 @@ describe("Primitive", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z");
-        expect(response).toEqual("2024-01-15T09:30:00Z");
+        expect(response).toEqual({
+            body: "2024-01-15T09:30:00Z",
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getAndReturnDate", async () => {
@@ -129,7 +159,12 @@ describe("Primitive", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnDate("2023-01-15");
-        expect(response).toEqual("2023-01-15");
+        expect(response).toEqual({
+            body: "2023-01-15",
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getAndReturnUUID", async () => {
@@ -147,7 +182,12 @@ describe("Primitive", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
-        expect(response).toEqual("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+        expect(response).toEqual({
+            body: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getAndReturnBase64", async () => {
@@ -165,6 +205,11 @@ describe("Primitive", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
-        expect(response).toEqual("SGVsbG8gd29ybGQh");
+        expect(response).toEqual({
+            body: "SGVsbG8gd29ybGQh",
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 });
