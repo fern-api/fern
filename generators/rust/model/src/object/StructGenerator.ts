@@ -7,6 +7,7 @@ import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fe
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import {
+    extractNamedTypesFromTypeReference,
     getInnerTypeFromOptional,
     isCollectionType,
     isDateTimeOnlyType,
@@ -14,8 +15,7 @@ import {
     isOptionalType,
     isUnknownType,
     isUuidType,
-    typeSupportsHashAndEq,
-    extractNamedTypesFromTypeReference
+    typeSupportsHashAndEq
 } from "../utils/primitiveTypeUtils";
 
 export class StructGenerator {

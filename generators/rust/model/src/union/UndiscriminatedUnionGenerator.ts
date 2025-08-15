@@ -12,12 +12,12 @@ import {
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import {
+    extractNamedTypesFromTypeReference,
     isCollectionType,
     isDateTimeType,
     isUnknownType,
     isUuidType,
-    typeSupportsHashAndEq,
-    extractNamedTypesFromTypeReference
+    typeSupportsHashAndEq
 } from "../utils/primitiveTypeUtils";
 
 export class UndiscriminatedUnionGenerator {

@@ -9,6 +9,9 @@ import {
     HttpEndpoint,
     HttpService,
     Pagination,
+    CursorPagination,
+    OffsetPagination,
+    ResponseProperty,
     PrimitiveTypeV1,
     Subpackage,
     TypeReference
@@ -433,7 +436,7 @@ export class SubClientGenerator {
         }`;
     }
 
-    private buildQueryParametersWithoutPagination(endpoint: HttpEndpoint, paginationConfig: any): string {
+    private buildQueryParametersWithoutPagination(endpoint: HttpEndpoint, paginationConfig: Pagination): string {
         const queryParams = endpoint.queryParameters;
         if (queryParams.length === 0) {
             return "None";
@@ -442,16 +445,53 @@ export class SubClientGenerator {
         // Get pagination param names to exclude
         const paginationParamNames = new Set<string>();
         if (paginationConfig) {
-            if (paginationConfig.page?.property?.name?.wireValue) {
-                paginationParamNames.add(paginationConfig.page.property.name.wireValue);
-            }
-            if (paginationConfig.step?.property?.name?.wireValue) {
-                paginationParamNames.add(paginationConfig.step.property.name.wireValue);
-            }
-            // For cursor pagination
-            if (paginationConfig.page?.property?.name?.originalName) {
-                paginationParamNames.add(paginationConfig.page.property.name.originalName);
-            }
+            paginationConfig._visit({
+                cursor: (cursor) => {
+                    cursor.page.property._visit({
+                        query: (query) => {
+                            paginationParamNames.add(query.name.wireValue);
+                        },
+                        body: (body) => {
+                            paginationParamNames.add(body.name.wireValue);
+                        },
+                        _other: () => {
+                            /* no-op */
+                        }
+                    });
+                },
+                offset: (offset) => {
+                    offset.page.property._visit({
+                        query: (query) => {
+                            paginationParamNames.add(query.name.wireValue);
+                        },
+                        body: (body) => {
+                            paginationParamNames.add(body.name.wireValue);
+                        },
+                        _other: () => {
+                            /* no-op */
+                        }
+                    });
+                    if (offset.step) {
+                        offset.step.property._visit({
+                            query: (query) => {
+                                paginationParamNames.add(query.name.wireValue);
+                            },
+                            body: (body) => {
+                                paginationParamNames.add(body.name.wireValue);
+                            },
+                            _other: () => {
+                                /* no-op */
+                            }
+                        });
+                    }
+                },
+                custom: () => {
+                    /* no-op */
+                },
+                _other: () => {
+                    /* no-op */
+                }
+            });
         }
 
         // Filter out pagination parameters
@@ -633,9 +673,9 @@ export class SubClientGenerator {
         httpMethod: string,
         pathExpression: string,
         requestBody: string,
-        cursor: any
+        cursor: CursorPagination
     ): string {
-        const queryParams = this.buildQueryParametersWithoutPagination(endpoint, cursor);
+        const queryParams = this.buildQueryParametersWithoutPagination(endpoint, Pagination.cursor(cursor));
         const params = this.extractParametersFromEndpoint(endpoint);
 
         // Generate cloning statements for reference parameters to avoid lifetime issues
@@ -693,9 +733,9 @@ export class SubClientGenerator {
         httpMethod: string,
         pathExpression: string,
         requestBody: string,
-        offset: any
+        offset: OffsetPagination
     ): string {
-        const queryParams = this.buildQueryParametersWithoutPagination(endpoint, offset);
+        const queryParams = this.buildQueryParametersWithoutPagination(endpoint, Pagination.offset(offset));
         const params = this.extractParametersFromEndpoint(endpoint);
 
         // Generate cloning statements for reference parameters to avoid lifetime issues
@@ -861,7 +901,7 @@ export class SubClientGenerator {
         });
     }
 
-    private generateGenericCursorExtraction(cursor: any): string {
+    private generateGenericCursorExtraction(cursor: CursorPagination): string {
         // Build field paths from the pagination configuration
         const resultsPath = this.buildResponseFieldPath(cursor.results);
         const cursorPath = cursor.next ? this.buildResponseFieldPath(cursor.next) : null;
@@ -882,7 +922,7 @@ export class SubClientGenerator {
                         let has_next_page = next_cursor.is_some();`;
     }
 
-    private generateGenericOffsetExtraction(offset: any, isInPaginationLoop: boolean = false): string {
+    private generateGenericOffsetExtraction(offset: OffsetPagination, isInPaginationLoop: boolean = false): string {
         const resultsPath = this.buildResponseFieldPath(offset.results);
         const hasNextPath = offset.hasNextPage ? this.buildResponseFieldPath(offset.hasNextPage) : null;
         const stepParamName = this.getStepParamName(offset);
@@ -941,8 +981,10 @@ export class SubClientGenerator {
                         let has_next_page = false; // Custom pagination requires manual implementation`;
     }
 
-    private buildResponseFieldPath(property: any): string {
-        if (!property) return '.get("data")'; // Default fallback
+    private buildResponseFieldPath(property: ResponseProperty): string {
+        if (!property) {
+            return '.get("data")'; // Default fallback
+        }
 
         // Extract the complete property path from the ResponseProperty structure
         const fieldPath = this.extractResponseFieldPath(property);
@@ -965,65 +1007,44 @@ export class SubClientGenerator {
         return '.get("data")';
     }
 
-    private extractResponseFieldPath(property: any): string[] {
-        if (!property) return ["data"];
+    private extractResponseFieldPath(property: ResponseProperty): string[] {
+        if (!property) {
+            return ["data"];
+        }
 
         const path: string[] = [];
 
         // If there's a propertyPath (nested properties), add them first
         if (property.propertyPath && Array.isArray(property.propertyPath)) {
-            property.propertyPath.forEach((pathItem: any) => {
-                if (typeof pathItem === "string") {
-                    path.push(pathItem);
-                } else if (pathItem?.wireValue) {
-                    path.push(pathItem.wireValue);
-                } else if (pathItem?.originalName) {
-                    path.push(pathItem.originalName);
-                }
+            property.propertyPath.forEach((pathItem) => {
+                path.push(pathItem.originalName);
             });
         }
 
-        // Then add the final property name
-        if (property.property) {
-            if (property.property.name?.wireValue) {
-                path.push(property.property.name.wireValue);
-            } else if (property.property.name?.originalName) {
-                path.push(property.property.name.originalName);
-            } else if (property.property.wireValue) {
-                path.push(property.property.wireValue);
-            } else if (property.property.originalName) {
-                path.push(property.property.originalName);
-            }
-        }
+        // Finally, add the property name itself
+        path.push(property.property.name.wireValue);
 
         // If path is still empty, use default
         return path.length > 0 ? path : ["data"];
     }
 
-    private getCursorParamName(cursor: any): string {
+    private getCursorParamName(cursor: CursorPagination): string {
         // Extract cursor parameter name from pagination configuration
-        if (cursor.page?.property?.name?.wireValue) {
-            return cursor.page.property.name.wireValue;
-        }
-        if (cursor.page?.property?.wireValue) {
-            return cursor.page.property.wireValue;
-        }
-        if (cursor.page?.name?.wireValue) {
-            return cursor.page.name.wireValue;
-        }
-        return "cursor"; // Default fallback
+        return cursor.page.property._visit({
+            query: (query) => query.name.wireValue,
+            body: (body) => body.name.wireValue,
+            _other: () => "cursor"
+        });
     }
 
-    private getStepParamName(offset: any): string {
+    private getStepParamName(offset: OffsetPagination): string {
         // Extract step parameter name from pagination configuration
-        if (offset.step?.property?.name?.wireValue) {
-            return offset.step.property.name.wireValue;
-        }
-        if (offset.step?.property?.wireValue) {
-            return offset.step.property.wireValue;
-        }
-        if (offset.step?.name?.wireValue) {
-            return offset.step.name.wireValue;
+        if (offset.step) {
+            return offset.step.property._visit({
+                query: (query) => query.name.wireValue,
+                body: (body) => body.name.wireValue,
+                _other: () => "step"
+            });
         }
         return "per_page"; // Default fallback
     }

@@ -1,4 +1,10 @@
-import { PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
+import {
+    PrimitiveTypeV1,
+    TypeReference,
+    NamedType,
+    UndiscriminatedUnionMember,
+    ObjectProperty
+} from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 /**
@@ -229,7 +235,7 @@ export function typeSupportsHashAndEq(
 }
 
 export function namedTypeSupportsHashAndEq(
-    namedType: any,
+    namedType: NamedType,
     context: ModelGeneratorContext,
     analysisStack: Set<string> = new Set()
 ): boolean {
@@ -248,14 +254,14 @@ export function namedTypeSupportsHashAndEq(
             return false; // Prevent infinite recursion
         }
         analysisStack.add(namedType.typeId);
-        const result = typeDeclaration.shape.members.every((member: any) =>
+        const result = typeDeclaration.shape.members.every((member: UndiscriminatedUnionMember) =>
             typeSupportsHashAndEq(member.type, context, analysisStack)
         );
         analysisStack.delete(namedType.typeId);
         return result;
     } else if (typeDeclaration.shape.type === "object") {
         // Objects with only hashable fields support Hash/Eq
-        return typeDeclaration.shape.properties.every((property: any) =>
+        return typeDeclaration.shape.properties.every((property: ObjectProperty) =>
             typeSupportsHashAndEq(property.valueType, context, analysisStack)
         );
     } else if (typeDeclaration.shape.type === "alias") {
