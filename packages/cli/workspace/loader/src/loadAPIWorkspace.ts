@@ -77,7 +77,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                 fromOpenAPI: definition.schema.fromOpenAPI,
                 settings: {
                     audiences: definition.audiences ?? [],
-                    useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? true,
+                    useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? false,
                     shouldUseUndiscriminatedUnionsWithLiterals:
                         definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
                     shouldUseIdiomaticRequestNames: definition.settings?.shouldUseIdiomaticRequestNames ?? false,
@@ -148,7 +148,7 @@ export async function loadSingleNamespaceAPIWorkspace({
             absoluteFilepathToOverrides,
             settings: {
                 audiences: definition.audiences ?? [],
-                useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? true,
+                useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? false,
                 shouldUseUndiscriminatedUnionsWithLiterals:
                     definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
                 shouldUseIdiomaticRequestNames: definition.settings?.shouldUseIdiomaticRequestNames ?? false,

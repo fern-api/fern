@@ -68,7 +68,7 @@ export interface ParseOpenAPIOptions {
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     disableExamples: false,
     discriminatedUnionV2: false,
-    useTitlesAsName: true,
+    useTitlesAsName: false,
     audiences: undefined,
     optionalAdditionalProperties: true,
     coerceEnumsToLiterals: true,

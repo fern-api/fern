@@ -244,7 +244,7 @@ types:
         docs: Preserves nullable schemas in API definition settings. Defaults to false, where nullable schemas are treated as optional.
       title-as-schema-name:
         type: optional<boolean>
-        docs: Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to true.
+        docs: Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to false.
       optional-additional-properties: optional<boolean>
       coerce-enums-to-literals: optional<boolean>
       idiomatic-request-names: optional<boolean>
@@ -331,9 +331,9 @@ types:
       overrides: optional<string>
       namespace: optional<string>
       settings: optional<OpenAPISettingsSchema>
-  
-  OpenRPCSpecSchema: 
-    properties:   
+
+  OpenRPCSpecSchema:
+    properties:
       openrpc: string
       overrides: optional<string>
       namespace: optional<string>
