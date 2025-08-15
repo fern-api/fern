@@ -28,6 +28,30 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/named-mixed/{id}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_service.namedPatchWithMixed"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedContentTypes;\n\nvar client = new SeedContentTypesClient();\nawait client.Service.NamedPatchWithMixedAsync(\n    \"id\",\n    new NamedMixedPatchRequest\n    {\n        AppId = \"appId\",\n        Instructions = \"instructions\",\n        Active = true,\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/optional-merge-patch-test",
+                "method": "PATCH",
+                "identifier_override": "endpoint_service.optionalMergePatchTest"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedContentTypes;\n\nvar client = new SeedContentTypesClient();\nawait client.Service.OptionalMergePatchTestAsync(\n    new OptionalMergePatchRequest\n    {\n        RequiredField = \"requiredField\",\n        OptionalString = \"optionalString\",\n        OptionalInteger = 1,\n        OptionalBoolean = true,\n        NullableString = \"nullableString\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/regular/{id}",
                 "method": "PATCH",
                 "identifier_override": "endpoint_service.regularPatch"

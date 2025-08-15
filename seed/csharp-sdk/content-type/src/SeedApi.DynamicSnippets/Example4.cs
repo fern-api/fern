@@ -3,7 +3,7 @@ using SeedContentTypes;
 
 namespace Usage;
 
-public class Example2
+public class Example4
 {
     public async global::System.Threading.Tasks.Task Do() {
         var client = new SeedContentTypesClient(
@@ -12,12 +12,11 @@ public class Example2
             }
         );
 
-        await client.Service.NamedPatchWithMixedAsync(
+        await client.Service.RegularPatchAsync(
             "id",
-            new NamedMixedPatchRequest{
-                AppId = "appId",
-                Instructions = "instructions",
-                Active = true
+            new RegularPatchRequest{
+                Field1 = "field1",
+                Field2 = 1
             }
         );
     }
