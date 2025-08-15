@@ -3,6 +3,7 @@ import { AbstractFormatter, AbstractWriter, NopFormatter } from "@fern-api/brows
 import { BaseRubyCustomConfigSchema } from "../../custom-config/BaseRubyCustomConfigSchema";
 
 type RequirePath = string;
+const TAB_SIZE = 2;
 
 export declare namespace Writer {
     interface Args {
@@ -33,5 +34,10 @@ export class Writer extends AbstractWriter {
      */
     public addRequire(requirePath: RequirePath): void {
         this.requires.add(requirePath);
+    }
+
+    // override abstract method
+    protected getTabSize(): number {
+        return TAB_SIZE;
     }
 }
