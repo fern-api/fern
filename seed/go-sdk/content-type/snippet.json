@@ -24,6 +24,28 @@
         },
         {
             "id": {
+                "path": "/named-mixed/{id}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_service.namedPatchWithMixed"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/content-type/fern\"\n\tfernclient \"github.com/content-type/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.NamedPatchWithMixed(\n\tcontext.TODO(),\n\t\"id\",\n\t\u0026fern.NamedMixedPatchRequest{\n\t\tAppId: fern.String(\n\t\t\t\"appId\",\n\t\t),\n\t\tInstructions: fern.String(\n\t\t\t\"instructions\",\n\t\t),\n\t\tActive: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/optional-merge-patch-test",
+                "method": "PATCH",
+                "identifier_override": "endpoint_service.optionalMergePatchTest"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/content-type/fern\"\n\tfernclient \"github.com/content-type/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.OptionalMergePatchTest(\n\tcontext.TODO(),\n\t\u0026fern.OptionalMergePatchRequest{\n\t\tRequiredField: \"requiredField\",\n\t\tOptionalString: fern.String(\n\t\t\t\"optionalString\",\n\t\t),\n\t\tOptionalInteger: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tOptionalBoolean: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tNullableString: fern.String(\n\t\t\t\"nullableString\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/regular/{id}",
                 "method": "PATCH",
                 "identifier_override": "endpoint_service.regularPatch"

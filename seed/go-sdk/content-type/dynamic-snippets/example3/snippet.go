@@ -13,18 +13,21 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Service.NamedPatchWithMixed(
+    client.Service.OptionalMergePatchTest(
         context.TODO(),
-        "id",
-        &fern.NamedMixedPatchRequest{
-            AppId: fern.String(
-                "appId",
+        &fern.OptionalMergePatchRequest{
+            RequiredField: "requiredField",
+            OptionalString: fern.String(
+                "optionalString",
             ),
-            Instructions: fern.String(
-                "instructions",
+            OptionalInteger: fern.Int(
+                1,
             ),
-            Active: fern.Bool(
+            OptionalBoolean: fern.Bool(
                 true,
+            ),
+            NullableString: fern.String(
+                "nullableString",
             ),
         },
     )
