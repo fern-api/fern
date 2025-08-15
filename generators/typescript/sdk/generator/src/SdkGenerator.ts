@@ -463,7 +463,8 @@ export class SdkGenerator {
             useBigInt: config.useBigInt,
             retainOriginalCasing: config.retainOriginalCasing,
             relativePackagePath: this.relativePackagePath,
-            relativeTestPath: this.relativeTestPath
+            relativeTestPath: this.relativeTestPath,
+            neverThrowErrors: config.neverThrowErrors
         });
         this.referenceConfigBuilder = new ReferenceConfigBuilder();
         this.generatorAgent = new TypeScriptGeneratorAgent({
