@@ -79,13 +79,10 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         try {
             File irFile = new File(generatorConfig.getIrFilepath());
 
-            // Read the IR JSON as a string first
             String irJson = java.nio.file.Files.readString(irFile.toPath());
 
-            // Preprocess the JSON to handle integer overflow in examples
             String processedJson = preprocessIntegerOverflow(irJson);
 
-            // Now deserialize with the standard ObjectMapper
             return ObjectMappers.JSON_MAPPER.readValue(processedJson, IntermediateRepresentation.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read ir", e);
