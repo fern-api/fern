@@ -10,7 +10,6 @@ import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
-import { dynamic } from "@fern-api/ir-sdk";
 import {
     DynamicIr,
     DynamicIrUpload,
@@ -26,6 +25,7 @@ import * as mime from "mime-types";
 import terminalLink from "terminal-link";
 import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { measureImageSizes } from "./measureImageSizes";
+import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
@@ -177,6 +177,7 @@ export async function publishDocs({
             if (dynamicSnippets) {
                 dynamicIRsByLanguage = await generateLanguageSpecificDynamicIRs({
                     workspace,
+                    organization,
                     context,
                     snippetsConfig
                 });
@@ -397,10 +398,12 @@ function parseBasePath(domain: string): string | undefined {
 
 async function generateLanguageSpecificDynamicIRs({
     workspace,
+    organization,
     context,
     snippetsConfig
 }: {
     workspace: FernWorkspace | undefined;
+    organization: string,
     context: TaskContext;
     snippetsConfig: SnippetsConfig;
 }): Promise<Record<string, DynamicIr> | undefined> {
@@ -458,36 +461,17 @@ async function generateLanguageSpecificDynamicIRs({
                         disableExamples: true,
                         smartCasing: generatorInvocation.smartCasing,
                         generationLanguage: generatorInvocation.language,
-                        generatorConfig: generatorInvocation.config as dynamic.GeneratorConfig
+                        generatorConfig: getDynamicGeneratorConfig({
+                            apiName: workspace.workspaceName ?? "",
+                            organization,
+                            generatorInvocation
+                        })
                     });
 
                     // include metadata along with the dynamic IR
                     if (dynamicIR) {
-                        let publishInfo = {};
-                        let githubRepo = "";
-                        if (generatorInvocation.outputMode.type === "github") {
-                            publishInfo = {
-                                ...generatorInvocation.outputMode.publishInfo
-                            };
-                            githubRepo = generatorInvocation.outputMode.repo;
-                        } else if (generatorInvocation.outputMode.type === "githubV2") {
-                            publishInfo = {
-                                ...generatorInvocation.outputMode.githubV2.publishInfo
-                            };
-                            githubRepo = generatorInvocation.outputMode.githubV2.repo;
-                        }
-
                         languageSpecificIRs[generatorInvocation.language] = {
-                            dynamicIR: {
-                                language: generatorInvocation.language,
-                                githubRepo,
-                                publishInfo: {
-                                    ...publishInfo
-                                },
-                                dynamicIR: {
-                                    ...dynamicIR
-                                }
-                            }
+                            dynamicIR
                         };
                     } else {
                         context.logger.debug(`Failed to create dynamic IR for ${generatorInvocation.language}`);
