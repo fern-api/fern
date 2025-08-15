@@ -13,7 +13,7 @@ const TOKEN_PARAMETER_NAME = "token";
 export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     public doGenerate(): RubyFile {
         const rootModule = this.context.getRootModule();
-        const class_ = ruby.class_({ name: this.context.getRootClientClassName() });
+        const class_ = ruby.class_({name: this.context.getRootClientClassName() });
 
         class_.addMethod(this.getInitializeMethod());
 

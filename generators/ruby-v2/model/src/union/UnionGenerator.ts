@@ -37,10 +37,8 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
     public doGenerate(): RubyFile {
         const classNode = ruby.class_({
             ...this.classReference,
-            superclass: ruby.classReference({
-                name: "Union",
-                modules: ["Internal", "Types"]
-            }),
+            superclass: this.context.getModelClassReference(),
+            namespace: new Set<ruby.Module_>(this.classReference.modules.map(module => ruby.module({ name: module }))),
             docstring: this.typeDeclaration.docs ?? undefined
         });
 
@@ -61,16 +59,20 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
             );
         }
 
-        const classWithTypesModule = this.context.getTypesModule();
-        classWithTypesModule.addStatement(classNode);
+        const rootModule = this.context.getRootModule();
+        let nestedModule = rootModule;
+        for (const moduleName of this.classReference.modules) {
+            const module = ruby.module({ name: moduleName });
+            nestedModule.addStatement(module);
+            nestedModule = module;
+        }
+        nestedModule.addStatement(classNode);
 
-        const classWithRootModule = this.context.getRootModule();
-        classWithRootModule.addStatement(classWithTypesModule);
         return new RubyFile({
             node: ruby.codeblock((writer) => {
                 writer.writeNode(ruby.comment({ docs: "frozen_string_literal: true" }));
                 writer.newLine();
-                classWithRootModule.write(writer);
+                rootModule.write(writer);
             }),
             directory: this.getFilepath(),
             filename: this.getFilename(),

@@ -58,6 +58,13 @@ export abstract class AbstractRubyGeneratorContext<
         });
     }
 
+    public getModelClassReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: "Model",
+            modules: ["Internal", "Types"]
+        });
+    }
+
     public abstract getCoreAsIsFiles(): string[];
 
     public abstract getLocationForTypeId(typeId: TypeId): RelativeFilePath;

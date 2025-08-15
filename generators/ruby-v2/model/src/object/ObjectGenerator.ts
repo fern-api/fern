@@ -5,6 +5,7 @@ import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { generateFields } from "./generateFields";
+import { wrapAstNodeInModules } from "../utils/wrapAstNodeInModules";
 
 export interface GeneratorContextLike {
     customConfig: unknown;
@@ -12,6 +13,7 @@ export interface GeneratorContextLike {
 
 export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: TypeDeclaration;
+    private readonly classReference: ruby.ClassReference;
     private readonly objectDeclaration: ObjectTypeDeclaration;
 
     public constructor(
@@ -21,6 +23,7 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
     ) {
         super(context);
         this.typeDeclaration = typeDeclaration;
+        this.classReference = this.context.typeMapper.convertToClassReference(typeDeclaration.name);
         this.objectDeclaration = objectDeclaration;
     }
 
@@ -38,25 +41,17 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
 
         const classNode = ruby.class_({
             name: this.typeDeclaration.name.name.pascalCase.safeName,
-            superclass: ruby.classReference({
-                name: "Model",
-                modules: ["Internal", "Types"]
-            }),
+            superclass: this.context.getModelClassReference(),
+            namespace: new Set<ruby.Module_>(this.classReference.modules.map(module => ruby.module({ name: module }))),
             docstring: this.typeDeclaration.docs ?? undefined,
             statements: statements
         });
-
-        const classWithTypesModule = this.context.getTypesModule();
-        classWithTypesModule.addStatement(classNode);
-
-        const classWithRootModule = this.context.getRootModule();
-        classWithRootModule.addStatement(classWithTypesModule);
 
         return new RubyFile({
             node: ruby.codeblock((writer) => {
                 writer.writeNode(ruby.comment({ docs: "frozen_string_literal: true" }));
                 writer.newLine();
-                classWithRootModule.write(writer);
+                wrapAstNodeInModules(classNode, this.classReference.modules).write(writer);
             }),
             directory: this.getFilepath(),
             filename: `${this.typeDeclaration.name.name.snakeCase.safeName}.rb`,
