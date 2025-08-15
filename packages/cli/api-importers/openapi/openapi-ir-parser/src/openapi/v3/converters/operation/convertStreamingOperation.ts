@@ -8,14 +8,14 @@ import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { FernStreamingExtension, StreamConditionEndpoint } from "../../extensions/getFernStreamingExtension";
 import { OperationContext } from "../contexts";
-import { getApplicationJsonSchemaMediaObject } from "../endpoint/getApplicationJsonSchema";
+import { getApplicationJsonSchemaMediaObjectFromContent } from "../endpoint/getApplicationJsonSchema";
 import { convertHttpOperation } from "./convertHttpOperation";
 
 const STREAM_SUFFIX = "stream";
 
 export interface StreamingEndpoints {
-    streaming: EndpointWithExample;
-    nonStreaming: EndpointWithExample | undefined;
+    streaming: EndpointWithExample[];
+    nonStreaming: EndpointWithExample[];
 }
 
 export function convertStreamingOperation({
@@ -26,18 +26,18 @@ export function convertStreamingOperation({
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
     streamingExtension: FernStreamingExtension;
-}): StreamingEndpoints | undefined {
+}): StreamingEndpoints {
     switch (streamingExtension.type) {
         case "stream": {
-            const streamingOperation = convertHttpOperation({
+            const streamingOperations = convertHttpOperation({
                 operationContext,
                 context,
                 streamFormat: streamingExtension.format,
                 source: context.source
             });
             return {
-                streaming: streamingOperation,
-                nonStreaming: undefined
+                streaming: streamingOperations,
+                nonStreaming: []
             };
         }
         case "streamCondition": {
@@ -57,7 +57,7 @@ export function convertStreamingOperation({
                 operation: operationContext.operation,
                 response: streamingExtension.responseStream
             });
-            const streamingOperation = convertHttpOperation({
+            const streamingOperations = convertHttpOperation({
                 operationContext: {
                     ...operationContext,
                     sdkMethodName:
@@ -80,9 +80,11 @@ export function convertStreamingOperation({
                 suffix: STREAM_SUFFIX,
                 source: context.source
             });
-            streamingOperation.examples = streamingOperation.examples.filter(
-                (example) => isStreamingExample(example, context) !== false
-            );
+            streamingOperations.forEach((streamingOperation) => {
+                streamingOperation.examples = streamingOperation.examples.filter(
+                    (example) => isStreamingExample(example, context) !== false
+                );
+            });
 
             const nonStreamingRequestBody = getRequestBody({
                 context,
@@ -94,7 +96,7 @@ export function convertStreamingOperation({
                 operation: operationContext.operation,
                 response: streamingExtension.response
             });
-            const nonStreamingOperation = convertHttpOperation({
+            const nonStreamingOperations = convertHttpOperation({
                 streamFormat: undefined,
                 operationContext: {
                     ...operationContext,
@@ -107,13 +109,15 @@ export function convertStreamingOperation({
                 context,
                 source: context.source
             });
-            nonStreamingOperation.examples = nonStreamingOperation.examples.filter(
-                (example) => isStreamingExample(example, context) !== true
-            );
+            nonStreamingOperations.forEach((nonStreamingOperation) => {
+                nonStreamingOperation.examples = nonStreamingOperation.examples.filter(
+                    (example) => isStreamingExample(example, context) !== true
+                );
+            });
 
             return {
-                streaming: streamingOperation,
-                nonStreaming: nonStreamingOperation
+                streaming: streamingOperations,
+                nonStreaming: nonStreamingOperations
             };
         }
         default:
@@ -145,7 +149,10 @@ function getRequestBody({
         ? context.resolveRequestBodyReference(operation.requestBody)
         : operation.requestBody;
 
-    const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content, context);
+    let jsonMediaObject = getApplicationJsonSchemaMediaObjectFromContent({
+        content: resolvedRequestBody.content,
+        context
+    });
 
     if (jsonMediaObject == null) {
         return undefined;

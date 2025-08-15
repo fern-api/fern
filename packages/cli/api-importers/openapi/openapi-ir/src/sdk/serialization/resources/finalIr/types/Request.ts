@@ -8,12 +8,14 @@ import * as core from "../../../../core";
 import { OctetStreamRequest } from "./OctetStreamRequest";
 import { MultipartRequest } from "./MultipartRequest";
 import { JsonRequest } from "./JsonRequest";
+import { FormUrlEncodedRequest } from "./FormUrlEncodedRequest";
 
 export const Request: core.serialization.Schema<serializers.Request.Raw, FernOpenapiIr.Request> = core.serialization
     .union("type", {
         octetStream: OctetStreamRequest,
         multipart: MultipartRequest,
         json: JsonRequest,
+        formUrlEncoded: FormUrlEncodedRequest,
     })
     .transform<FernOpenapiIr.Request>({
         transform: (value) => {
@@ -24,6 +26,8 @@ export const Request: core.serialization.Schema<serializers.Request.Raw, FernOpe
                     return FernOpenapiIr.Request.multipart(value);
                 case "json":
                     return FernOpenapiIr.Request.json(value);
+                case "formUrlEncoded":
+                    return FernOpenapiIr.Request.formUrlEncoded(value);
                 default:
                     return value as FernOpenapiIr.Request;
             }
@@ -32,7 +36,7 @@ export const Request: core.serialization.Schema<serializers.Request.Raw, FernOpe
     });
 
 export declare namespace Request {
-    export type Raw = Request.OctetStream | Request.Multipart | Request.Json;
+    export type Raw = Request.OctetStream | Request.Multipart | Request.Json | Request.FormUrlEncoded;
 
     export interface OctetStream extends OctetStreamRequest.Raw {
         type: "octetStream";
@@ -44,5 +48,9 @@ export declare namespace Request {
 
     export interface Json extends JsonRequest.Raw {
         type: "json";
+    }
+
+    export interface FormUrlEncoded extends FormUrlEncodedRequest.Raw {
+        type: "formUrlEncoded";
     }
 }

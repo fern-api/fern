@@ -42,28 +42,67 @@ export interface ApplicationJsonMediaObject {
     examples: NamedFullExample[];
 }
 
-export function getApplicationJsonSchemaMediaObject(
-    media: Record<string, OpenAPIV3.MediaTypeObject>,
-    context: AbstractOpenAPIV3ParserContext
-): ApplicationJsonMediaObject | undefined {
-    for (const contentType of Object.keys(media)) {
-        // See swagger.io/docs/specification/media-types for reference on "*/*"
-        if (contentType.includes("json") || contentType === "*/*") {
-            const mediaObject = media[contentType];
-            if (mediaObject == null) {
-                continue;
-            }
-            const schema = mediaObject.schema;
+export function isApplicationJsonMediaType(mediaType: string): boolean {
+    // See swagger.io/docs/specification/media-types for reference on "*/*"
+    return mediaType.includes("json") || mediaType === "*/*";
+}
 
-            return {
-                contentType: !contentType.includes("*") ? contentType : undefined,
-                schema: schema ?? {},
-                examples: getExamples(mediaObject, context)
-            };
+export function findApplicationJsonRequest({
+    content,
+    context
+}: {
+    content: Record<string, OpenAPIV3.MediaTypeObject>;
+    context: AbstractOpenAPIV3ParserContext;
+}): [string, OpenAPIV3.MediaTypeObject] | undefined {
+    for (const [mediaType, mediaTypeObject] of Object.entries(content)) {
+        const result = getApplicationJsonSchemaMediaObject({
+            mediaType,
+            mediaTypeObject,
+            context
+        });
+        if (result != null) {
+            return [mediaType, mediaTypeObject];
         }
     }
 
     return undefined;
+}
+
+export function getApplicationJsonSchemaMediaObject({
+    mediaType,
+    mediaTypeObject,
+    context
+}: {
+    mediaType: string;
+    mediaTypeObject: OpenAPIV3.MediaTypeObject;
+    context: AbstractOpenAPIV3ParserContext;
+}): ApplicationJsonMediaObject | undefined {
+    // See swagger.io/docs/specification/media-types for reference on "*/*"
+    if (!isApplicationJsonMediaType(mediaType)) {
+        return undefined;
+    }
+    const schema = mediaTypeObject.schema;
+
+    return {
+        contentType: !mediaType.includes("*") ? mediaType : undefined,
+        schema: schema ?? {},
+        examples: getExamples(mediaTypeObject, context)
+    };
+}
+
+export function getApplicationJsonSchemaMediaObjectFromContent({
+    content,
+    context
+}: {
+    content: Record<string, OpenAPIV3.MediaTypeObject>;
+    context: AbstractOpenAPIV3ParserContext;
+}): ApplicationJsonMediaObject | undefined {
+    const request = findApplicationJsonRequest({ content, context });
+    if (!request) {
+        return undefined;
+    }
+    const [mediaType, mediaTypeObject] = request;
+    return getApplicationJsonSchemaMediaObject({ mediaType, mediaTypeObject, context });
 }
 
 export function getSchemaMediaObject(

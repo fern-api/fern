@@ -58,6 +58,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "contentType": "application/octet-stream",
         "type": "octetStream"
       },
       "response": {
