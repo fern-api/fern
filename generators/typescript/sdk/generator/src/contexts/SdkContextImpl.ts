@@ -137,6 +137,7 @@ export declare namespace SdkContextImpl {
         relativeTestPath: string;
         formDataSupport: "Node16" | "Node18";
         useDefaultRequestParameterValues: boolean;
+        dangerouslyFlattenRequestParameters: boolean;
     }
 }
 
@@ -177,6 +178,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly inlinePathParameters: boolean;
     public readonly formDataSupport: "Node16" | "Node18";
     public readonly generateOAuthClients: boolean;
+            public readonly dangerouslyFlattenRequestParameters: boolean;
     public readonly omitUndefined: boolean;
     public readonly neverThrowErrors: boolean;
     public readonly importsManager: ImportsManager;
@@ -247,7 +249,8 @@ export class SdkContextImpl implements SdkContext {
         relativePackagePath,
         relativeTestPath,
         formDataSupport,
-        useDefaultRequestParameterValues
+        useDefaultRequestParameterValues,
+        dangerouslyFlattenRequestParameters
     }: SdkContextImpl.Init) {
         this.logger = logger;
         this.ir = ir;
@@ -259,6 +262,7 @@ export class SdkContextImpl implements SdkContext {
         this.inlineFileProperties = inlineFileProperties;
         this.inlinePathParameters = inlinePathParameters;
         this.formDataSupport = formDataSupport;
+        this.dangerouslyFlattenRequestParameters = dangerouslyFlattenRequestParameters;
         this.generateOAuthClients = generateOAuthClients;
         this.namespaceExport = typeDeclarationReferencer.namespaceExport;
         this.rootClientVariableName = ROOT_CLIENT_VARIABLE_NAME;

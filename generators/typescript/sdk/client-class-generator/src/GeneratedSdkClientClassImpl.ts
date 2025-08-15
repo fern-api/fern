@@ -96,6 +96,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         formDataSupport: "Node16" | "Node18";
         omitFernHeaders: boolean;
         useDefaultRequestParameterValues: boolean;
+        dangerouslyFlattenRequestParameters: boolean;
     }
 }
 
@@ -144,6 +145,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly service: HttpService | undefined;
     private readonly omitFernHeaders: boolean;
     private readonly useDefaultRequestParameterValues: boolean;
+            private readonly dangerouslyFlattenRequestParameters: boolean;
     private readonly anyEndpointWithAuth: boolean;
 
     constructor({
@@ -173,7 +175,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         fileResponseType,
         formDataSupport,
         omitFernHeaders,
-        useDefaultRequestParameterValues
+        useDefaultRequestParameterValues,
+        dangerouslyFlattenRequestParameters
     }: GeneratedSdkClientClassImpl.Init) {
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -195,6 +198,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
         this.omitFernHeaders = omitFernHeaders;
         this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
+        this.dangerouslyFlattenRequestParameters = dangerouslyFlattenRequestParameters;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -433,7 +437,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 requestBody,
                 generatedSdkClientClass: this,
                 retainOriginalCasing: this.retainOriginalCasing,
-                exportsManager: this.exportsManager
+                exportsManager: this.exportsManager,
+                dangerouslyFlattenRequestParameters: this.dangerouslyFlattenRequestParameters
             });
         }
         if (requestBody?.type === "fileUpload") {
@@ -450,7 +455,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 includeSerdeLayer: this.includeSerdeLayer,
                 allowExtraFields: this.allowExtraFields,
                 omitUndefined: this.omitUndefined,
-                formDataSupport: this.formDataSupport
+                formDataSupport: this.formDataSupport,
+                dangerouslyFlattenRequestParameters: this.dangerouslyFlattenRequestParameters
             });
         } else {
             return new GeneratedDefaultEndpointRequest({
@@ -462,7 +468,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 requestBody,
                 generatedSdkClientClass: this,
                 retainOriginalCasing: this.retainOriginalCasing,
-                exportsManager: this.exportsManager
+                exportsManager: this.exportsManager,
+                dangerouslyFlattenRequestParameters: this.dangerouslyFlattenRequestParameters
             });
         }
     }

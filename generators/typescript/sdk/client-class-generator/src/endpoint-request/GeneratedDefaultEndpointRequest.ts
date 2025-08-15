@@ -40,6 +40,7 @@ export declare namespace GeneratedDefaultEndpointRequest {
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         retainOriginalCasing: boolean;
         exportsManager: ExportsManager;
+        flattenRequestParameters: boolean;
     }
 }
 
@@ -59,6 +60,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private retainOriginalCasing: boolean;
     private exportsManager: ExportsManager;
+    private flattenRequestParameters: boolean;
 
     constructor({
         ir,
@@ -69,7 +71,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         requestBody,
         generatedSdkClientClass,
         retainOriginalCasing,
-        exportsManager
+        exportsManager,
+        flattenRequestParameters
     }: GeneratedDefaultEndpointRequest.Init) {
         this.ir = ir;
         this.packageId = packageId;
@@ -90,10 +93,11 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                               requestBodyReference,
                               service,
                               endpoint,
-                              sdkRequest
+                              sdkRequest,
+                              flattenRequestParameters
                           });
                       },
-                      wrapper: () => new RequestWrapperParameter({ packageId, service, endpoint, sdkRequest }),
+                      wrapper: () => new RequestWrapperParameter({ packageId, service, endpoint, sdkRequest, flattenRequestParameters }),
                       _other: () => {
                           throw new Error("Unknown SdkRequest: " + this.endpoint.sdkRequest?.shape.type);
                       }
@@ -101,6 +105,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 : undefined;
 
         this.exportsManager = exportsManager;
+        this.flattenRequestParameters = flattenRequestParameters;
     }
 
     public getRequestParameter(context: SdkContext): ts.TypeNode | undefined {
@@ -199,13 +204,49 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     public getFetcherRequestArgs(
         context: SdkContext
     ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType"> {
+        const body = this.getSerializedRequestBodyWithNullCheck(context);
+        const queryParams = this.getQueryParams(context).getReferenceTo();
+        
+        if (this.flattenRequestParameters) {
+            // Merge body and query parameters into a single flattened object
+            const mergedParams = this.mergeParams(queryParams, body);
+            return {
+                headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
+                queryParameters: undefined,
+                body: mergedParams,
+                contentType: this.requestBody?.contentType ?? this.getFallbackContentType(),
+                requestType: this.getRequestType()
+            };
+        }
+        
+        // Default: separate body and query parameters
         return {
             headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
-            queryParameters: this.getQueryParams(context).getReferenceTo(),
-            body: this.getSerializedRequestBodyWithNullCheck(context),
+            queryParameters: queryParams,
+            body,
             contentType: this.requestBody?.contentType ?? this.getFallbackContentType(),
             requestType: this.getRequestType()
         };
+    }
+
+    /**
+     * Merges query parameters and body into a single object.
+     * Query parameters are spread first, then body properties are spread.
+     */
+    private mergeParams(queryParams: ts.Expression | undefined, body: ts.Expression | undefined): ts.Expression {
+        const elements: ts.ObjectLiteralElementLike[] = [];
+        
+        // Add query parameters first (if they exist)
+        if (queryParams) {
+            elements.push(ts.factory.createSpreadAssignment(queryParams));
+        }
+        
+        // Add body properties (if they exist)
+        if (body) {
+            elements.push(ts.factory.createSpreadAssignment(body));
+        }
+        
+        return ts.factory.createObjectLiteralExpression(elements, false);
     }
 
     private getFallbackContentType(): string | undefined {

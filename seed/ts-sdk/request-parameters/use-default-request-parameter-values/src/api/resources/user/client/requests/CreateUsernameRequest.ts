@@ -5,12 +5,14 @@
 /**
  * @example
  *     {
+ *         tags: ["tags", "tags"],
  *         username: "username",
  *         password: "password",
  *         name: "test"
  *     }
  */
 export interface CreateUsernameRequest {
+    tags: string[];
     username: string;
     password: string;
     name: string;

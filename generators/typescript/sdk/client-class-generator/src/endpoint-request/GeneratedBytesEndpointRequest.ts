@@ -32,6 +32,7 @@ export declare namespace GeneratedBytesEndpointRequest {
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         retainOriginalCasing: boolean;
         exportsManager: ExportsManager;
+        flattenRequestParameters: boolean;
     }
 }
 
@@ -47,6 +48,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     private requestBody: HttpRequestBody.Bytes;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private retainOriginalCasing: boolean;
+    private flattenRequestParameters: boolean;
 
     constructor({
         ir,
@@ -55,7 +57,8 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         endpoint,
         requestBody,
         generatedSdkClientClass,
-        retainOriginalCasing
+        retainOriginalCasing,
+        flattenRequestParameters
     }: GeneratedBytesEndpointRequest.Init) {
         this.ir = ir;
         this.service = service;
@@ -63,6 +66,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         this.requestBody = requestBody;
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.flattenRequestParameters = flattenRequestParameters;
 
         if (this.endpoint.sdkRequest == null) {
             throw new Error("SdkRequest is not defined for bytes endpoint");
@@ -74,7 +78,8 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
                 packageId,
                 service,
                 endpoint,
-                sdkRequest: this.endpoint.sdkRequest
+                sdkRequest: this.endpoint.sdkRequest,
+                flattenRequestParameters
             });
         }
     }
@@ -231,17 +236,52 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     public getFetcherRequestArgs(
         context: SdkContext
     ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType" | "duplex"> {
+        const body = ts.factory.createPropertyAccessExpression(
+            ts.factory.createIdentifier(GeneratedBytesEndpointRequest.BINARY_UPLOAD_REQUEST_VARIABLE_NAME),
+            "body"
+        );
+        const queryParams = this.getQueryParams(context)?.getReferenceTo();
+        
+        if (this.flattenRequestParameters) {
+            // Merge body and query parameters into a single flattened object
+            const mergedParams = this.mergeParams(queryParams, body);
+            return {
+                headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
+                queryParameters: undefined,
+                contentType: this.requestBody.contentType,
+                requestType: "bytes",
+                body: mergedParams,
+                duplex: ts.factory.createStringLiteral("half")
+            };
+        }
+        
+        // Default: separate body and query parameters
         return {
             headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
-            queryParameters: this.getQueryParams(context)?.getReferenceTo(),
+            queryParameters: queryParams,
             contentType: this.requestBody.contentType,
             requestType: "bytes",
-            body: ts.factory.createPropertyAccessExpression(
-                ts.factory.createIdentifier(GeneratedBytesEndpointRequest.BINARY_UPLOAD_REQUEST_VARIABLE_NAME),
-                "body"
-            ),
+            body,
             duplex: ts.factory.createStringLiteral("half")
         };
+    }
+
+    /**
+     * Merges query parameters and body into a single object.
+     * Query parameters are spread first, then body is added as a named property.
+     */
+    private mergeParams(queryParams: ts.Expression | undefined, body: ts.Expression): ts.Expression {
+        const elements: ts.ObjectLiteralElementLike[] = [];
+        
+        // Add query parameters first (if they exist)
+        if (queryParams) {
+            elements.push(ts.factory.createSpreadAssignment(queryParams));
+        }
+        
+        // Add body as a named property
+        elements.push(ts.factory.createPropertyAssignment("body", body));
+        
+        return ts.factory.createObjectLiteralExpression(elements, false);
     }
 
     private initializeHeaders(context: SdkContext): ts.Statement[] {

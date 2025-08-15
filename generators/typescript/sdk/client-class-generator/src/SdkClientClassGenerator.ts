@@ -31,6 +31,7 @@ export declare namespace SdkClientClassGenerator {
         exportsManager: ExportsManager;
         omitFernHeaders: boolean;
         useDefaultRequestParameterValues: boolean;
+        dangerouslyFlattenRequestParameters: boolean;
     }
 
     export namespace generateService {
@@ -67,6 +68,7 @@ export class SdkClientClassGenerator {
     private exportsManager: ExportsManager;
     private omitFernHeaders: boolean;
     private useDefaultRequestParameterValues: boolean;
+            private dangerouslyFlattenRequestParameters: boolean;
     constructor({
         intermediateRepresentation,
         errorResolver,
@@ -90,7 +92,8 @@ export class SdkClientClassGenerator {
         exportsManager,
         formDataSupport,
         omitFernHeaders,
-        useDefaultRequestParameterValues
+        useDefaultRequestParameterValues,
+        dangerouslyFlattenRequestParameters
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -115,6 +118,7 @@ export class SdkClientClassGenerator {
         this.formDataSupport = formDataSupport;
         this.omitFernHeaders = omitFernHeaders;
         this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
+        this.dangerouslyFlattenRequestParameters = dangerouslyFlattenRequestParameters;
     }
 
     public generateService({
@@ -150,7 +154,8 @@ export class SdkClientClassGenerator {
             fileResponseType: this.fileResponseType,
             formDataSupport: this.formDataSupport,
             omitFernHeaders: this.omitFernHeaders,
-            useDefaultRequestParameterValues: this.useDefaultRequestParameterValues
+            useDefaultRequestParameterValues: this.useDefaultRequestParameterValues,
+            dangerouslyFlattenRequestParameters: this.dangerouslyFlattenRequestParameters
         });
     }
 }

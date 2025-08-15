@@ -40,6 +40,7 @@ export declare namespace GeneratedFileUploadEndpointRequest {
         allowExtraFields: boolean;
         omitUndefined: boolean;
         formDataSupport: "Node16" | "Node18";
+        flattenRequestParameters: boolean;
     }
 }
 
@@ -61,6 +62,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private allowExtraFields: boolean;
     private omitUndefined: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
+    private flattenRequestParameters: boolean;
 
     constructor({
         ir,
@@ -75,7 +77,8 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         includeSerdeLayer,
         allowExtraFields,
         omitUndefined,
-        formDataSupport
+        formDataSupport,
+        flattenRequestParameters
     }: GeneratedFileUploadEndpointRequest.Init) {
         this.ir = ir;
         this.service = service;
@@ -89,6 +92,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         this.allowExtraFields = allowExtraFields;
         this.omitUndefined = omitUndefined;
         this.formDataSupport = formDataSupport;
+        this.flattenRequestParameters = flattenRequestParameters;
         if (
             this.inlineFileProperties ||
             requestBody.properties.some((property) => property.type === "bodyProperty") ||
@@ -104,7 +108,8 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                 packageId,
                 service,
                 endpoint,
-                sdkRequest: this.endpoint.sdkRequest
+                sdkRequest: this.endpoint.sdkRequest,
+                flattenRequestParameters
             });
         }
     }
@@ -352,21 +357,56 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         context: SdkContext
     ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType" | "duplex"> {
         const queryParams = this.getQueryParams(context);
+        const body = context.coreUtilities.formDataUtils.getBody({
+            referenceToFormData: ts.factory.createIdentifier(
+                GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME
+            )
+        });
+        const duplex = context.coreUtilities.formDataUtils.getDuplexSetting({
+            referenceToFormData: ts.factory.createIdentifier(
+                GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME
+            )
+        });
+
+        if (this.flattenRequestParameters) {
+            // Merge body and query parameters into a single flattened object
+            const queryParamsRef = queryParams?.getReferenceTo();
+            const mergedParams = this.mergeParams(queryParamsRef, body);
+            return {
+                headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
+                queryParameters: undefined,
+                requestType: "file",
+                body: mergedParams,
+                duplex
+            };
+        }
+
+        // Default: separate body and query parameters
         return {
             headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
             queryParameters: queryParams != null ? queryParams.getReferenceTo() : undefined,
             requestType: "file",
-            body: context.coreUtilities.formDataUtils.getBody({
-                referenceToFormData: ts.factory.createIdentifier(
-                    GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME
-                )
-            }),
-            duplex: context.coreUtilities.formDataUtils.getDuplexSetting({
-                referenceToFormData: ts.factory.createIdentifier(
-                    GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME
-                )
-            })
+            body,
+            duplex
         };
+    }
+
+    /**
+     * Merges query parameters and body into a single object.
+     * Query parameters are spread first, then body is added as a named property.
+     */
+    private mergeParams(queryParams: ts.Expression | undefined, body: ts.Expression): ts.Expression {
+        const elements: ts.ObjectLiteralElementLike[] = [];
+        
+        // Add query parameters first (if they exist)
+        if (queryParams) {
+            elements.push(ts.factory.createSpreadAssignment(queryParams));
+        }
+        
+        // Add body as a named property
+        elements.push(ts.factory.createPropertyAssignment("body", body));
+        
+        return ts.factory.createObjectLiteralExpression(elements, false);
     }
 
     private initializeHeaders(context: SdkContext): ts.Statement[] {

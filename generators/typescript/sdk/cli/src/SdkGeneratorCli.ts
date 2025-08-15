@@ -72,6 +72,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             packagePath: parsed?.packagePath,
             omitFernHeaders: parsed?.omitFernHeaders ?? false,
             useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false,
+            dangerouslyFlattenRequestParameters: parsed?.dangerouslyFlattenRequestParameters ?? false,
             packageManager: parsed?.packageManager ?? "yarn"
         };
     }
@@ -163,6 +164,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 packagePath: customConfig.packagePath,
                 omitFernHeaders: customConfig.omitFernHeaders ?? false,
                 useDefaultRequestParameterValues: customConfig.useDefaultRequestParameterValues ?? false,
+                dangerouslyFlattenRequestParameters: customConfig.dangerouslyFlattenRequestParameters ?? false,
                 packageManager: customConfig.packageManager
             }
         });

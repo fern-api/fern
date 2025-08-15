@@ -18,6 +18,7 @@ export declare namespace AbstractRequestParameter {
         service: HttpService;
         endpoint: HttpEndpoint;
         sdkRequest: SdkRequest;
+        dangerouslyFlattenRequestParameters: boolean;
     }
 }
 
@@ -26,12 +27,14 @@ export abstract class AbstractRequestParameter implements RequestParameter {
     protected service: HttpService;
     protected endpoint: HttpEndpoint;
     protected sdkRequest: SdkRequest;
+            protected dangerouslyFlattenRequestParameters: boolean;
 
-    constructor({ packageId, service, endpoint, sdkRequest }: AbstractRequestParameter.Init) {
+    constructor({ packageId, service, endpoint, sdkRequest, flattenRequestParameters }: AbstractRequestParameter.Init) {
         this.packageId = packageId;
         this.service = service;
         this.endpoint = endpoint;
         this.sdkRequest = sdkRequest;
+        this.flattenRequestParameters = flattenRequestParameters;
     }
 
     public getParameterDeclaration(context: SdkContext): OptionalKind<ParameterDeclarationStructure> {
