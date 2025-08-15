@@ -2040,6 +2040,140 @@
                     "audiences": null,
                     "availability": null,
                     "docs": null
+                },
+                {
+                    "id": "endpoint_.uploadPdfDocument",
+                    "name": {
+                        "originalName": "uploadPdfDocument",
+                        "camelCase": {
+                            "unsafeName": "uploadPdfDocument",
+                            "safeName": "uploadPdfDocument"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "upload_pdf_document",
+                            "safeName": "upload_pdf_document"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UPLOAD_PDF_DOCUMENT",
+                            "safeName": "UPLOAD_PDF_DOCUMENT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "UploadPdfDocument",
+                            "safeName": "UploadPdfDocument"
+                        }
+                    },
+                    "displayName": "Upload document metadata (JSON) or document file",
+                    "auth": true,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "POST",
+                    "basePath": null,
+                    "path": {
+                        "head": "/documents/upload",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "documents/upload",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "bytes",
+                        "isOptional": false,
+                        "docs": null,
+                        "v2Examples": null,
+                        "contentType": "application/pdf"
+                    },
+                    "v2RequestBodies": null,
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "justRequestBody",
+                            "value": {
+                                "type": "bytes",
+                                "isOptional": false,
+                                "docs": null,
+                                "v2Examples": null,
+                                "contentType": null
+                            }
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
+                        "streamParameter": null
+                    },
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "UploadDocumentResponse",
+                                        "camelCase": {
+                                            "unsafeName": "uploadDocumentResponse",
+                                            "safeName": "uploadDocumentResponse"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "upload_document_response",
+                                            "safeName": "upload_document_response"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "UPLOAD_DOCUMENT_RESPONSE",
+                                            "safeName": "UPLOAD_DOCUMENT_RESPONSE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "UploadDocumentResponse",
+                                            "safeName": "UploadDocumentResponse"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:UploadDocumentResponse",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "docs": "Successful response",
+                                "v2Examples": null
+                            }
+                        },
+                        "status-code": 200
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "availability": null,
+                    "docs": null
                 }
             ],
             "audiences": null
@@ -2607,6 +2741,71 @@
                     "metadata": {
                         "includePathParameters": false,
                         "onlyPathParameters": false
+                    }
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            },
+            "endpoint_.uploadPdfDocument": {
+                "auth": {
+                    "type": "bearer",
+                    "token": {
+                        "originalName": "token",
+                        "camelCase": {
+                            "unsafeName": "token",
+                            "safeName": "token"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "token",
+                            "safeName": "token"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TOKEN",
+                            "safeName": "TOKEN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Token",
+                            "safeName": "Token"
+                        }
+                    }
+                },
+                "declaration": {
+                    "name": {
+                        "originalName": "uploadPdfDocument",
+                        "camelCase": {
+                            "unsafeName": "uploadPdfDocument",
+                            "safeName": "uploadPdfDocument"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "upload_pdf_document",
+                            "safeName": "upload_pdf_document"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UPLOAD_PDF_DOCUMENT",
+                            "safeName": "UPLOAD_PDF_DOCUMENT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "UploadPdfDocument",
+                            "safeName": "UploadPdfDocument"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "location": {
+                    "method": "POST",
+                    "path": "/documents/upload"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": {
+                        "type": "bytes"
                     }
                 },
                 "response": {
