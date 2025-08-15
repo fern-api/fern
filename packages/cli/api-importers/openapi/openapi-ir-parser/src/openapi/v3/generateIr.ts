@@ -117,20 +117,20 @@ export function generateIr({
             }
             switch (operation.type) {
                 case "async":
-                    endpointsWithExample.push(operation.sync);
-                    endpointsWithExample.push(operation.async);
+                    endpointsWithExample.push(...operation.sync);
+                    endpointsWithExample.push(...operation.async);
                     break;
                 case "http":
-                    endpointsWithExample.push(operation.value);
+                    endpointsWithExample.push(...operation.value);
                     break;
                 case "streaming":
-                    endpointsWithExample.push(operation.streaming);
+                    endpointsWithExample.push(...operation.streaming);
                     if (operation.nonStreaming) {
-                        endpointsWithExample.push(operation.nonStreaming);
+                        endpointsWithExample.push(...operation.nonStreaming);
                     }
                     break;
                 case "webhook":
-                    webhooksWithExample.push(operation.value);
+                    webhooksWithExample.push(...operation.value);
                     break;
                 default:
                     assertNever(operation);
@@ -148,7 +148,7 @@ export function generateIr({
             if (audiences.length > 0 && !audiences.some((audience) => webhookAudiences.includes(audience))) {
                 continue;
             }
-            webhooksWithExample.push(webhook.value);
+            webhooksWithExample.push(...webhook.value);
         }
     });
 
@@ -258,7 +258,7 @@ export function generateIr({
         return {
             ...endpointWithExample,
             request:
-                request?.type === "json"
+                request?.type === "json" || request?.type === "formUrlEncoded"
                     ? {
                           ...request,
                           schema: convertSchemaWithExampleToSchema(request.schema)
@@ -521,20 +521,24 @@ function getAllParentSchemaIds({
     return result;
 }
 
+function distinct<T>(array: T[]): T[] {
+    return [...new Set(array)];
+}
+
 function getAudiences({ operation }: { operation: ConvertedOperation }): string[] {
     let endpointAudiences: string[] = [];
     switch (operation.type) {
         case "async":
-            endpointAudiences = operation.async.audiences;
+            endpointAudiences = distinct(operation.async.flatMap((op) => op.audiences));
             break;
         case "http":
-            endpointAudiences = operation.value.audiences;
+            endpointAudiences = distinct(operation.value.flatMap((op) => op.audiences));
             break;
         case "streaming":
-            endpointAudiences = operation.streaming.audiences;
+            endpointAudiences = distinct(operation.streaming.flatMap((op) => op.audiences));
             break;
         case "webhook":
-            endpointAudiences = operation.value.audiences;
+            endpointAudiences = distinct(operation.value.flatMap((op) => op.audiences));
             break;
         default:
             assertNever(operation);

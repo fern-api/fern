@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient();\nawait client.Service.ListResourcesAsync(\n    new ListResourcesRequest\n    {\n        Page = 1,\n        PerPage = 1,\n        Sort = \"created_at\",\n        Order = \"desc\",\n        IncludeTotals = true,\n        Fields = \"fields\",\n        Search = \"search\",\n    }\n);\n"
+                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient(\"TOKEN\");\nawait client.Service.ListResourcesAsync(\n    new ListResourcesRequest\n    {\n        Page = 1,\n        PerPage = 1,\n        Sort = \"created_at\",\n        Order = \"desc\",\n        IncludeTotals = true,\n        Fields = \"fields\",\n        Search = \"search\",\n    }\n);\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient();\nawait client.Service.GetResourceAsync(\n    \"resourceId\",\n    new GetResourceRequest { IncludeMetadata = true, Format = \"json\" }\n);\n"
+                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient(\"TOKEN\");\nawait client.Service.GetResourceAsync(\n    \"resourceId\",\n    new GetResourceRequest { IncludeMetadata = true, Format = \"json\" }\n);\n"
             }
         },
         {
@@ -34,7 +34,115 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient();\nawait client.Service.SearchResourcesAsync(\n    new SearchResourcesRequest\n    {\n        Limit = 1,\n        Offset = 1,\n        Query = \"query\",\n        Filters = new Dictionary<string, object>()\n        {\n            {\n                \"filters\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n    }\n);\n"
+                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient(\"TOKEN\");\nawait client.Service.SearchResourcesAsync(\n    new SearchResourcesRequest\n    {\n        Limit = 1,\n        Offset = 1,\n        Query = \"query\",\n        Filters = new Dictionary<string, object>()\n        {\n            {\n                \"filters\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/users",
+                "method": "GET",
+                "identifier_override": "endpoint_service.listUsers"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient(\"TOKEN\");\nawait client.Service.ListUsersAsync(\n    new ListUsersRequest\n    {\n        Page = 1,\n        PerPage = 1,\n        IncludeTotals = true,\n        Sort = \"sort\",\n        Connection = \"connection\",\n        Q = \"q\",\n        SearchEngine = \"search_engine\",\n        Fields = \"fields\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getUserById"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient(\"TOKEN\");\nawait client.Service.GetUserByIdAsync(\n    \"userId\",\n    new GetUserRequest { Fields = \"fields\", IncludeFields = true }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/users",
+                "method": "POST",
+                "identifier_override": "endpoint_service.createUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient(\"TOKEN\");\nawait client.Service.CreateUserAsync(\n    new CreateUserRequest\n    {\n        Email = \"email\",\n        EmailVerified = true,\n        Username = \"username\",\n        Password = \"password\",\n        PhoneNumber = \"phone_number\",\n        PhoneVerified = true,\n        UserMetadata = new Dictionary<string, object>()\n        {\n            {\n                \"user_metadata\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n        AppMetadata = new Dictionary<string, object>()\n        {\n            {\n                \"app_metadata\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n        Connection = \"connection\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_service.updateUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient(\"TOKEN\");\nawait client.Service.UpdateUserAsync(\n    \"userId\",\n    new UpdateUserRequest\n    {\n        Email = \"email\",\n        EmailVerified = true,\n        Username = \"username\",\n        PhoneNumber = \"phone_number\",\n        PhoneVerified = true,\n        UserMetadata = new Dictionary<string, object>()\n        {\n            {\n                \"user_metadata\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n        AppMetadata = new Dictionary<string, object>()\n        {\n            {\n                \"app_metadata\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n        Password = \"password\",\n        Blocked = true,\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_service.deleteUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient(\"TOKEN\");\nawait client.Service.DeleteUserAsync(\"userId\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/connections",
+                "method": "GET",
+                "identifier_override": "endpoint_service.listConnections"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient(\"TOKEN\");\nawait client.Service.ListConnectionsAsync(\n    new ListConnectionsRequest\n    {\n        Strategy = \"strategy\",\n        Name = \"name\",\n        Fields = \"fields\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/connections/{connectionId}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getConnection"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient(\"TOKEN\");\nawait client.Service.GetConnectionAsync(\n    \"connectionId\",\n    new GetConnectionRequest { Fields = \"fields\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/clients",
+                "method": "GET",
+                "identifier_override": "endpoint_service.listClients"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient(\"TOKEN\");\nawait client.Service.ListClientsAsync(\n    new ListClientsRequest\n    {\n        Fields = \"fields\",\n        IncludeFields = true,\n        Page = 1,\n        PerPage = 1,\n        IncludeTotals = true,\n        IsGlobal = true,\n        IsFirstParty = true,\n        AppType = new List<string>() { \"app_type\", \"app_type\" },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/clients/{clientId}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getClient"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient(\"TOKEN\");\nawait client.Service.GetClientAsync(\n    \"clientId\",\n    new GetClientRequest { Fields = \"fields\", IncludeFields = true }\n);\n"
             }
         }
     ]

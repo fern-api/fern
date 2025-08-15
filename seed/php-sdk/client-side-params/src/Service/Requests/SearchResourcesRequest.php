@@ -19,10 +19,10 @@ class SearchResourcesRequest extends JsonSerializableType
     public int $offset;
 
     /**
-     * @var string $query
+     * @var ?string $query Search query text
      */
     #[JsonProperty('query')]
-    public string $query;
+    public ?string $query;
 
     /**
      * @var ?array<string, mixed> $filters
@@ -34,7 +34,7 @@ class SearchResourcesRequest extends JsonSerializableType
      * @param array{
      *   limit: int,
      *   offset: int,
-     *   query: string,
+     *   query?: ?string,
      *   filters?: ?array<string, mixed>,
      * } $values
      */
@@ -43,7 +43,7 @@ class SearchResourcesRequest extends JsonSerializableType
     ) {
         $this->limit = $values['limit'];
         $this->offset = $values['offset'];
-        $this->query = $values['query'];
+        $this->query = $values['query'] ?? null;
         $this->filters = $values['filters'] ?? null;
     }
 }

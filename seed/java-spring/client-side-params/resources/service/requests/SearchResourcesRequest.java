@@ -16,24 +16,26 @@ import java.lang.String;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = SearchResourcesRequest.Builder.class
 )
 public final class SearchResourcesRequest {
-  private final String query;
+  private final Optional<String> query;
 
   private final Optional<Map<String, Object>> filters;
 
-  private SearchResourcesRequest(String query, Optional<Map<String, Object>> filters) {
+  private SearchResourcesRequest(Optional<String> query, Optional<Map<String, Object>> filters) {
     this.query = query;
     this.filters = filters;
   }
 
+  /**
+   * @return Search query text
+   */
   @JsonProperty("query")
-  public String getQuery() {
+  public Optional<String> getQuery() {
     return query;
   }
 
@@ -62,66 +64,58 @@ public final class SearchResourcesRequest {
     return ObjectMappers.stringify(this);
   }
 
-  public static QueryStage builder() {
+  public static Builder builder() {
     return new Builder();
-  }
-
-  public interface QueryStage {
-    _FinalStage query(@NotNull String query);
-
-    Builder from(SearchResourcesRequest other);
-  }
-
-  public interface _FinalStage {
-    SearchResourcesRequest build();
-
-    _FinalStage filters(Optional<Map<String, Object>> filters);
-
-    _FinalStage filters(Map<String, Object> filters);
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements QueryStage, _FinalStage {
-    private String query;
+  public static final class Builder {
+    private Optional<String> query = Optional.empty();
 
     private Optional<Map<String, Object>> filters = Optional.empty();
 
     private Builder() {
     }
 
-    @java.lang.Override
     public Builder from(SearchResourcesRequest other) {
       query(other.getQuery());
       filters(other.getFilters());
       return this;
     }
 
-    @java.lang.Override
-    @JsonSetter("query")
-    public _FinalStage query(@NotNull String query) {
-      this.query = Objects.requireNonNull(query, "query must not be null");
+    /**
+     * <p>Search query text</p>
+     */
+    @JsonSetter(
+        value = "query",
+        nulls = Nulls.SKIP
+    )
+    public Builder query(Optional<String> query) {
+      this.query = query;
       return this;
     }
 
-    @java.lang.Override
-    public _FinalStage filters(Map<String, Object> filters) {
-      this.filters = Optional.ofNullable(filters);
+    public Builder query(String query) {
+      this.query = Optional.ofNullable(query);
       return this;
     }
 
-    @java.lang.Override
     @JsonSetter(
         value = "filters",
         nulls = Nulls.SKIP
     )
-    public _FinalStage filters(Optional<Map<String, Object>> filters) {
+    public Builder filters(Optional<Map<String, Object>> filters) {
       this.filters = filters;
       return this;
     }
 
-    @java.lang.Override
+    public Builder filters(Map<String, Object> filters) {
+      this.filters = Optional.ofNullable(filters);
+      return this;
+    }
+
     public SearchResourcesRequest build() {
       return new SearchResourcesRequest(query, filters);
     }

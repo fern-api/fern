@@ -7,6 +7,6 @@ module Seed
             discriminant :resource_type
 
             member -> { Seed::Service::User }, key: "USER"
-            member -> { Seed::Service::Organization }, key: "ORGANIZATION"
+            member -> { Seed::Service::Organization }, key: "ORGANIZATION"end
     end
 end

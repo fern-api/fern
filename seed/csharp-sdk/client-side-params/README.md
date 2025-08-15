@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedClientSideParams;
 
-var client = new SeedClientSideParamsClient();
+var client = new SeedClientSideParamsClient("TOKEN");
 await client.Service.SearchResourcesAsync(
     new SearchResourcesRequest
     {

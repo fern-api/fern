@@ -6,6 +6,6 @@ module Seed
             field :resource_type, String, optional: false, nullable: false
             field :name, String, optional: false, nullable: false
             field :scripts, Internal::Types::Array[Seed::Script], optional: false, nullable: false
-
+        end
     end
 end

@@ -1,4 +1,4 @@
-import { NamedFullExample, Source, Webhook, WebhookExampleCall, WebhookWithExample } from "@fern-api/openapi-ir";
+import { NamedFullExample, Source, WebhookExampleCall, WebhookWithExample } from "@fern-api/openapi-ir";
 
 import { getExtension } from "../../../../getExtension";
 import { convertToFullExample } from "../../../../schema/examples/convertToFullExample";
@@ -8,6 +8,7 @@ import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { OperationContext } from "../contexts";
 import { convertParameters } from "../endpoint/convertParameters";
 import { convertRequest } from "../endpoint/convertRequest";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 
 export function convertWebhookOperation({
     context,
@@ -17,7 +18,7 @@ export function convertWebhookOperation({
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
     source: Source;
-}): WebhookWithExample | undefined {
+}): WebhookWithExample[] {
     const { document, operation, path, method, baseBreadcrumbs, sdkMethodName } = operationContext;
     const payloadBreadcrumbs = [...baseBreadcrumbs, "Payload"];
 
@@ -32,48 +33,62 @@ export function convertWebhookOperation({
 
     if (operation.requestBody == null) {
         context.logger.error(`Skipping webhook ${method.toUpperCase()} ${path}: Missing a request body`);
-        return undefined;
+        return [];
+    }
+
+    const operationId = operation.operationId;
+    if (operationId == null) {
+        context.logger.error(`Skipping webhook ${path} because no operation id present`);
+        return [];
     }
 
     if (method !== "POST" && method !== "GET") {
         context.logger.error(`Skipping webhook ${method.toUpperCase()} ${path}: Not POST or GET`);
-        return undefined;
+        return [];
     }
 
-    const convertedPayload = convertRequest({
-        requestBody: operation.requestBody,
-        document,
-        context,
-        requestBreadcrumbs: [...baseBreadcrumbs, "Payload"],
-        source,
-        namespace: context.namespace
-    });
+    const resolvedRequestBody = isReferenceObject(operation.requestBody)
+        ? context.resolveRequestBodyReference(operation.requestBody)
+        : operation.requestBody;
 
-    if (convertedPayload == null || convertedPayload.type !== "json") {
-        context.logger.error(`Skipping webhook ${path} because non-json request body`);
-        return undefined;
-    }
+    return Object.entries(resolvedRequestBody.content)
+        .map(([mediaType, mediaTypeObject]) =>
+            convertRequest({
+                mediaType,
+                mediaTypeObject,
+                description: resolvedRequestBody.description,
+                document,
+                context,
+                requestBreadcrumbs: [...baseBreadcrumbs, "Payload"],
+                source,
+                namespace: context.namespace
+            })
+        )
+        .filter((request) => request != null)
+        .map((request) => {
+            if (request == null || (request.type !== "json" && request.type !== "formUrlEncoded")) {
+                context.logger.error(`Skipping webhook ${path} because non-json and non-formUrlEncoded request body`);
+                return undefined;
+            }
 
-    if (operation.operationId == null) {
-        context.logger.error(`Skipping webhook ${path} because no operation id present`);
-        return undefined;
-    }
-
-    return {
-        summary: operation.summary,
-        audiences: getExtension<string[]>(operation, FernOpenAPIExtension.AUDIENCES) ?? [],
-        sdkName: sdkMethodName,
-        namespace: context.namespace,
-        method,
-        operationId: operation.operationId,
-        tags: context.resolveTagsToTagIds(operation.tags),
-        headers: convertedParameters.headers,
-        generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs, context.options.preserveSchemaIds),
-        payload: convertedPayload.schema,
-        description: operation.description,
-        examples: convertWebhookExamples(convertedPayload.fullExamples),
-        source
-    };
+            const webhook: WebhookWithExample = {
+                summary: operation.summary,
+                audiences: getExtension<string[]>(operation, FernOpenAPIExtension.AUDIENCES) ?? [],
+                sdkName: sdkMethodName,
+                namespace: context.namespace,
+                method,
+                operationId,
+                tags: context.resolveTagsToTagIds(operation.tags),
+                headers: convertedParameters.headers,
+                generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs, context.options.preserveSchemaIds),
+                payload: request.schema,
+                description: operation.description,
+                examples: convertWebhookExamples(request.fullExamples),
+                source
+            };
+            return webhook;
+        })
+        .filter((request) => request != null);
 }
 
 function convertWebhookExamples(payloadExamples: NamedFullExample[] | undefined): WebhookExampleCall[] {

@@ -422,12 +422,23 @@ types:
       octetStream: OctetStreamRequest
       multipart: MultipartRequest
       json: JsonRequest
+      formUrlEncoded: FormUrlEncodedRequest
 
   OctetStreamRequest:
     extends:
       - commons.WithDescription
       - commons.WithSource
-    properties: {}
+    properties: 
+      contentType: optional<string>
+
+  FormUrlEncodedRequest:
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
+    properties:
+      schema: Schema
+      contentType: optional<string>
+      additionalProperties: boolean
 
   JsonRequest:
     extends:

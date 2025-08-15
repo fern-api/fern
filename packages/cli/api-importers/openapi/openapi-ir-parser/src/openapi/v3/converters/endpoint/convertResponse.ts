@@ -10,7 +10,7 @@ import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { OperationContext } from "../contexts";
 import { ERROR_NAMES_BY_STATUS_CODE } from "../convertToHttpError";
 import {
-    getApplicationJsonSchemaMediaObject,
+    getApplicationJsonSchemaMediaObjectFromContent,
     getSchemaMediaObject,
     getTextEventStreamObject
 } from "./getApplicationJsonSchema";
@@ -195,8 +195,11 @@ function convertResolvedResponse({
         }
     }
 
-    const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedResponse.content ?? {}, context);
-    if (jsonMediaObject != null) {
+    const jsonMediaObject = getApplicationJsonSchemaMediaObjectFromContent({
+        context,
+        content: resolvedResponse.content ?? {}
+    });
+    if (jsonMediaObject) {
         if (streamFormat != null) {
             switch (streamFormat) {
                 case "json":

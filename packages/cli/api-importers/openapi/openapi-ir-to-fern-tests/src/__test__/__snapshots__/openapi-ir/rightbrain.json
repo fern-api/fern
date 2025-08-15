@@ -22161,7 +22161,7 @@
         },
         "fullExamples": [],
         "additionalProperties": false,
-        "type": "json"
+        "type": "formUrlEncoded"
       },
       "response": {
         "description": "Successful Response",
@@ -25014,7 +25014,7 @@
         },
         "fullExamples": [],
         "additionalProperties": false,
-        "type": "json"
+        "type": "formUrlEncoded"
       },
       "response": {
         "description": "Successful Response",
@@ -27867,7 +27867,7 @@
         },
         "fullExamples": [],
         "additionalProperties": false,
-        "type": "json"
+        "type": "formUrlEncoded"
       },
       "response": {
         "description": "Successful Response",
@@ -30720,7 +30720,7 @@
         },
         "fullExamples": [],
         "additionalProperties": false,
-        "type": "json"
+        "type": "formUrlEncoded"
       },
       "response": {
         "description": "Successful Response",
@@ -33573,7 +33573,7 @@
         },
         "fullExamples": [],
         "additionalProperties": false,
-        "type": "json"
+        "type": "formUrlEncoded"
       },
       "response": {
         "description": "Successful Response",
@@ -36426,7 +36426,7 @@
         },
         "fullExamples": [],
         "additionalProperties": false,
-        "type": "json"
+        "type": "formUrlEncoded"
       },
       "response": {
         "description": "Successful Response",
@@ -39279,7 +39279,7 @@
         },
         "fullExamples": [],
         "additionalProperties": false,
-        "type": "json"
+        "type": "formUrlEncoded"
       },
       "response": {
         "description": "Successful Response",

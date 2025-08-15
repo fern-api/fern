@@ -2,11 +2,58 @@
 
 package clientsideparams
 
+type GetClientRequest struct {
+	// Comma-separated list of fields to include
+	Fields *string `json:"-" url:"fields,omitempty"`
+	// Whether specified fields are included or excluded
+	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
+}
+
+type GetConnectionRequest struct {
+	// Comma-separated list of fields to include
+	Fields *string `json:"-" url:"fields,omitempty"`
+}
+
 type GetResourceRequest struct {
 	// Include metadata in response
 	IncludeMetadata bool `json:"-" url:"include_metadata"`
 	// Response format
 	Format string `json:"-" url:"format"`
+}
+
+type GetUserRequest struct {
+	// Comma-separated list of fields to include or exclude
+	Fields *string `json:"-" url:"fields,omitempty"`
+	// true to include the fields specified, false to exclude them
+	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
+}
+
+type ListClientsRequest struct {
+	// Comma-separated list of fields to include
+	Fields *string `json:"-" url:"fields,omitempty"`
+	// Whether specified fields are included or excluded
+	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
+	// Page number (zero-based)
+	Page *int `json:"-" url:"page,omitempty"`
+	// Number of results per page
+	PerPage *int `json:"-" url:"per_page,omitempty"`
+	// Include total count in response
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+	// Filter by global clients
+	IsGlobal *bool `json:"-" url:"is_global,omitempty"`
+	// Filter by first party clients
+	IsFirstParty *bool `json:"-" url:"is_first_party,omitempty"`
+	// Filter by application type (spa, native, regular_web, non_interactive)
+	AppType []string `json:"-" url:"app_type,omitempty"`
+}
+
+type ListConnectionsRequest struct {
+	// Filter by strategy type (e.g., auth0, google-oauth2, samlp)
+	Strategy *string `json:"-" url:"strategy,omitempty"`
+	// Filter by connection name
+	Name *string `json:"-" url:"name,omitempty"`
+	// Comma-separated list of fields to include
+	Fields *string `json:"-" url:"fields,omitempty"`
 }
 
 type ListResourcesRequest struct {
@@ -26,11 +73,31 @@ type ListResourcesRequest struct {
 	Search *string `json:"-" url:"search,omitempty"`
 }
 
+type ListUsersRequest struct {
+	// Page index of the results to return. First page is 0.
+	Page *int `json:"-" url:"page,omitempty"`
+	// Number of results per page.
+	PerPage *int `json:"-" url:"per_page,omitempty"`
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+	// Field to sort by. Use field:order where order is 1 for ascending and -1 for descending.
+	Sort *string `json:"-" url:"sort,omitempty"`
+	// Connection filter
+	Connection *string `json:"-" url:"connection,omitempty"`
+	// Query string following Lucene query string syntax
+	Q *string `json:"-" url:"q,omitempty"`
+	// Search engine version (v1, v2, or v3)
+	SearchEngine *string `json:"-" url:"search_engine,omitempty"`
+	// Comma-separated list of fields to include or exclude
+	Fields *string `json:"-" url:"fields,omitempty"`
+}
+
 type SearchResourcesRequest struct {
 	// Maximum results to return
 	Limit int `json:"-" url:"limit"`
 	// Offset for pagination
-	Offset  int                    `json:"-" url:"offset"`
-	Query   string                 `json:"query" url:"-"`
+	Offset int `json:"-" url:"offset"`
+	// Search query text
+	Query   *string                `json:"query,omitempty" url:"-"`
 	Filters map[string]interface{} `json:"filters,omitempty" url:"-"`
 }

@@ -32,6 +32,7 @@ public final class AnyAuthClient: Sendable {
             bearerAuth: token.map {
                 .init(token: .staticToken($0))
             },
+            basicAuth: nil,
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,
@@ -65,6 +66,7 @@ public final class AnyAuthClient: Sendable {
             bearerAuth: token.map {
                 .init(token: .provider($0))
             },
+            basicAuth: nil,
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,

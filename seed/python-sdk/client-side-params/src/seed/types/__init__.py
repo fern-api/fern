@@ -2,6 +2,28 @@
 
 # isort: skip_file
 
-from .types import Resource, SearchResponse
+from .types import (
+    Client,
+    Connection,
+    CreateUserRequest,
+    Identity,
+    PaginatedClientResponse,
+    PaginatedUserResponse,
+    Resource,
+    SearchResponse,
+    UpdateUserRequest,
+    User,
+)
 
-__all__ = ["Resource", "SearchResponse"]
+__all__ = [
+    "Client",
+    "Connection",
+    "CreateUserRequest",
+    "Identity",
+    "PaginatedClientResponse",
+    "PaginatedUserResponse",
+    "Resource",
+    "SearchResponse",
+    "UpdateUserRequest",
+    "User",
+]

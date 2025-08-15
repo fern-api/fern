@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedClientSideParamsClient } from "@fern/client-side-params";
 
-const client = new SeedClientSideParamsClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedClientSideParamsClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.service.searchResources({
     limit: 1,
     offset: 1,

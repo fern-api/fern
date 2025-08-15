@@ -2,3 +2,11 @@
 
 require_relative "seed_client_side_params_client/types/types/resource"
 require_relative "seed_client_side_params_client/types/types/search_response"
+require_relative "seed_client_side_params_client/types/types/user"
+require_relative "seed_client_side_params_client/types/types/identity"
+require_relative "seed_client_side_params_client/types/types/paginated_user_response"
+require_relative "seed_client_side_params_client/types/types/create_user_request"
+require_relative "seed_client_side_params_client/types/types/update_user_request"
+require_relative "seed_client_side_params_client/types/types/connection"
+require_relative "seed_client_side_params_client/types/types/client"
+require_relative "seed_client_side_params_client/types/types/paginated_client_response"

@@ -5,11 +5,24 @@ package com.seed.clientSideParams.resources.service;
 
 import com.seed.clientSideParams.core.ClientOptions;
 import com.seed.clientSideParams.core.RequestOptions;
+import com.seed.clientSideParams.resources.service.requests.GetClientRequest;
+import com.seed.clientSideParams.resources.service.requests.GetConnectionRequest;
 import com.seed.clientSideParams.resources.service.requests.GetResourceRequest;
+import com.seed.clientSideParams.resources.service.requests.GetUserRequest;
+import com.seed.clientSideParams.resources.service.requests.ListClientsRequest;
+import com.seed.clientSideParams.resources.service.requests.ListConnectionsRequest;
 import com.seed.clientSideParams.resources.service.requests.ListResourcesRequest;
+import com.seed.clientSideParams.resources.service.requests.ListUsersRequest;
 import com.seed.clientSideParams.resources.service.requests.SearchResourcesRequest;
+import com.seed.clientSideParams.resources.types.types.Client;
+import com.seed.clientSideParams.resources.types.types.Connection;
+import com.seed.clientSideParams.resources.types.types.CreateUserRequest;
+import com.seed.clientSideParams.resources.types.types.PaginatedClientResponse;
+import com.seed.clientSideParams.resources.types.types.PaginatedUserResponse;
 import com.seed.clientSideParams.resources.types.types.Resource;
 import com.seed.clientSideParams.resources.types.types.SearchResponse;
+import com.seed.clientSideParams.resources.types.types.UpdateUserRequest;
+import com.seed.clientSideParams.resources.types.types.User;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -73,5 +86,186 @@ public class AsyncServiceClient {
     public CompletableFuture<SearchResponse> searchResources(
             SearchResourcesRequest request, RequestOptions requestOptions) {
         return this.rawClient.searchResources(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * List or search for users
+     */
+    public CompletableFuture<PaginatedUserResponse> listUsers() {
+        return this.rawClient.listUsers().thenApply(response -> response.body());
+    }
+
+    /**
+     * List or search for users
+     */
+    public CompletableFuture<PaginatedUserResponse> listUsers(ListUsersRequest request) {
+        return this.rawClient.listUsers(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * List or search for users
+     */
+    public CompletableFuture<PaginatedUserResponse> listUsers(ListUsersRequest request, RequestOptions requestOptions) {
+        return this.rawClient.listUsers(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public CompletableFuture<User> getUserById(String userId) {
+        return this.rawClient.getUserById(userId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public CompletableFuture<User> getUserById(String userId, GetUserRequest request) {
+        return this.rawClient.getUserById(userId, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public CompletableFuture<User> getUserById(String userId, GetUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient.getUserById(userId, request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Create a new user
+     */
+    public CompletableFuture<User> createUser(CreateUserRequest request) {
+        return this.rawClient.createUser(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Create a new user
+     */
+    public CompletableFuture<User> createUser(CreateUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient.createUser(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update a user
+     */
+    public CompletableFuture<User> updateUser(String userId) {
+        return this.rawClient.updateUser(userId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update a user
+     */
+    public CompletableFuture<User> updateUser(String userId, UpdateUserRequest request) {
+        return this.rawClient.updateUser(userId, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update a user
+     */
+    public CompletableFuture<User> updateUser(String userId, UpdateUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient.updateUser(userId, request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Delete a user
+     */
+    public CompletableFuture<Void> deleteUser(String userId) {
+        return this.rawClient.deleteUser(userId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Delete a user
+     */
+    public CompletableFuture<Void> deleteUser(String userId, RequestOptions requestOptions) {
+        return this.rawClient.deleteUser(userId, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * List all connections
+     */
+    public CompletableFuture<List<Connection>> listConnections() {
+        return this.rawClient.listConnections().thenApply(response -> response.body());
+    }
+
+    /**
+     * List all connections
+     */
+    public CompletableFuture<List<Connection>> listConnections(ListConnectionsRequest request) {
+        return this.rawClient.listConnections(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * List all connections
+     */
+    public CompletableFuture<List<Connection>> listConnections(
+            ListConnectionsRequest request, RequestOptions requestOptions) {
+        return this.rawClient.listConnections(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get a connection by ID
+     */
+    public CompletableFuture<Connection> getConnection(String connectionId) {
+        return this.rawClient.getConnection(connectionId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get a connection by ID
+     */
+    public CompletableFuture<Connection> getConnection(String connectionId, GetConnectionRequest request) {
+        return this.rawClient.getConnection(connectionId, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get a connection by ID
+     */
+    public CompletableFuture<Connection> getConnection(
+            String connectionId, GetConnectionRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getConnection(connectionId, request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * List all clients/applications
+     */
+    public CompletableFuture<PaginatedClientResponse> listClients() {
+        return this.rawClient.listClients().thenApply(response -> response.body());
+    }
+
+    /**
+     * List all clients/applications
+     */
+    public CompletableFuture<PaginatedClientResponse> listClients(ListClientsRequest request) {
+        return this.rawClient.listClients(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * List all clients/applications
+     */
+    public CompletableFuture<PaginatedClientResponse> listClients(
+            ListClientsRequest request, RequestOptions requestOptions) {
+        return this.rawClient.listClients(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get a client by ID
+     */
+    public CompletableFuture<Client> getClient(String clientId) {
+        return this.rawClient.getClient(clientId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get a client by ID
+     */
+    public CompletableFuture<Client> getClient(String clientId, GetClientRequest request) {
+        return this.rawClient.getClient(clientId, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get a client by ID
+     */
+    public CompletableFuture<Client> getClient(
+            String clientId, GetClientRequest request, RequestOptions requestOptions) {
+        return this.rawClient.getClient(clientId, request, requestOptions).thenApply(response -> response.body());
     }
 }

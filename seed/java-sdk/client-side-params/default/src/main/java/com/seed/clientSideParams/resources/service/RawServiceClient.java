@@ -3,6 +3,7 @@
  */
 package com.seed.clientSideParams.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.clientSideParams.core.ClientOptions;
 import com.seed.clientSideParams.core.MediaTypes;
@@ -12,11 +13,24 @@ import com.seed.clientSideParams.core.RequestOptions;
 import com.seed.clientSideParams.core.SeedClientSideParamsApiException;
 import com.seed.clientSideParams.core.SeedClientSideParamsException;
 import com.seed.clientSideParams.core.SeedClientSideParamsHttpResponse;
+import com.seed.clientSideParams.resources.service.requests.GetClientRequest;
+import com.seed.clientSideParams.resources.service.requests.GetConnectionRequest;
 import com.seed.clientSideParams.resources.service.requests.GetResourceRequest;
+import com.seed.clientSideParams.resources.service.requests.GetUserRequest;
+import com.seed.clientSideParams.resources.service.requests.ListClientsRequest;
+import com.seed.clientSideParams.resources.service.requests.ListConnectionsRequest;
 import com.seed.clientSideParams.resources.service.requests.ListResourcesRequest;
+import com.seed.clientSideParams.resources.service.requests.ListUsersRequest;
 import com.seed.clientSideParams.resources.service.requests.SearchResourcesRequest;
+import com.seed.clientSideParams.resources.types.types.Client;
+import com.seed.clientSideParams.resources.types.types.Connection;
+import com.seed.clientSideParams.resources.types.types.CreateUserRequest;
+import com.seed.clientSideParams.resources.types.types.PaginatedClientResponse;
+import com.seed.clientSideParams.resources.types.types.PaginatedUserResponse;
 import com.seed.clientSideParams.resources.types.types.Resource;
 import com.seed.clientSideParams.resources.types.types.SearchResponse;
+import com.seed.clientSideParams.resources.types.types.UpdateUserRequest;
+import com.seed.clientSideParams.resources.types.types.User;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -161,7 +175,9 @@ public class RawServiceClient {
         QueryStringMapper.addQueryParameter(
                 httpUrl, "offset", request.getOffset().orElse(0), false);
         Map<String, Object> properties = new HashMap<>();
-        properties.put("query", request.getQuery());
+        if (request.getQuery().isPresent()) {
+            properties.put("query", request.getQuery());
+        }
         if (request.getFilters().isPresent()) {
             properties.put("filters", request.getFilters());
         }
@@ -188,6 +204,547 @@ public class RawServiceClient {
             if (response.isSuccessful()) {
                 return new SeedClientSideParamsHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), SearchResponse.class), response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedClientSideParamsApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedClientSideParamsException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * List or search for users
+     */
+    public SeedClientSideParamsHttpResponse<PaginatedUserResponse> listUsers() {
+        return listUsers(ListUsersRequest.builder().build());
+    }
+
+    /**
+     * List or search for users
+     */
+    public SeedClientSideParamsHttpResponse<PaginatedUserResponse> listUsers(ListUsersRequest request) {
+        return listUsers(request, null);
+    }
+
+    /**
+     * List or search for users
+     */
+    public SeedClientSideParamsHttpResponse<PaginatedUserResponse> listUsers(
+            ListUsersRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users");
+        if (request.getPage().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "page", request.getPage().get(), false);
+        }
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "per_page", request.getPerPage().orElse(50), false);
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "include_totals", request.getIncludeTotals().orElse(false), false);
+        if (request.getSort().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "sort", request.getSort().get(), false);
+        }
+        if (request.getConnection().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "connection", request.getConnection().get(), false);
+        }
+        if (request.getQ().isPresent()) {
+            QueryStringMapper.addQueryParameter(httpUrl, "q", request.getQ().get(), false);
+        }
+        if (request.getSearchEngine().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "search_engine", request.getSearchEngine().get(), false);
+        }
+        if (request.getFields().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "fields", request.getFields().get(), false);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedClientSideParamsHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PaginatedUserResponse.class),
+                        response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedClientSideParamsApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedClientSideParamsException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public SeedClientSideParamsHttpResponse<User> getUserById(String userId) {
+        return getUserById(userId, GetUserRequest.builder().build());
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public SeedClientSideParamsHttpResponse<User> getUserById(String userId, GetUserRequest request) {
+        return getUserById(userId, request, null);
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public SeedClientSideParamsHttpResponse<User> getUserById(
+            String userId, GetUserRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .addPathSegment(userId);
+        if (request.getFields().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "fields", request.getFields().get(), false);
+        }
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "include_fields", request.getIncludeFields().orElse(true), false);
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedClientSideParamsHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), User.class), response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedClientSideParamsApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedClientSideParamsException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Create a new user
+     */
+    public SeedClientSideParamsHttpResponse<User> createUser(CreateUserRequest request) {
+        return createUser(request, null);
+    }
+
+    /**
+     * Create a new user
+     */
+    public SeedClientSideParamsHttpResponse<User> createUser(CreateUserRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedClientSideParamsException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedClientSideParamsHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), User.class), response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedClientSideParamsApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedClientSideParamsException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Update a user
+     */
+    public SeedClientSideParamsHttpResponse<User> updateUser(String userId) {
+        return updateUser(userId, UpdateUserRequest.builder().build());
+    }
+
+    /**
+     * Update a user
+     */
+    public SeedClientSideParamsHttpResponse<User> updateUser(String userId, UpdateUserRequest request) {
+        return updateUser(userId, request, null);
+    }
+
+    /**
+     * Update a user
+     */
+    public SeedClientSideParamsHttpResponse<User> updateUser(
+            String userId, UpdateUserRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .addPathSegment(userId)
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedClientSideParamsException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("PATCH", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedClientSideParamsHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), User.class), response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedClientSideParamsApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedClientSideParamsException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Delete a user
+     */
+    public SeedClientSideParamsHttpResponse<Void> deleteUser(String userId) {
+        return deleteUser(userId, null);
+    }
+
+    /**
+     * Delete a user
+     */
+    public SeedClientSideParamsHttpResponse<Void> deleteUser(String userId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .addPathSegment(userId)
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("DELETE", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedClientSideParamsHttpResponse<>(null, response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedClientSideParamsApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedClientSideParamsException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * List all connections
+     */
+    public SeedClientSideParamsHttpResponse<List<Connection>> listConnections() {
+        return listConnections(ListConnectionsRequest.builder().build());
+    }
+
+    /**
+     * List all connections
+     */
+    public SeedClientSideParamsHttpResponse<List<Connection>> listConnections(ListConnectionsRequest request) {
+        return listConnections(request, null);
+    }
+
+    /**
+     * List all connections
+     */
+    public SeedClientSideParamsHttpResponse<List<Connection>> listConnections(
+            ListConnectionsRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("connections");
+        if (request.getStrategy().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "strategy", request.getStrategy().get(), false);
+        }
+        if (request.getName().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "name", request.getName().get(), false);
+        }
+        if (request.getFields().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "fields", request.getFields().get(), false);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedClientSideParamsHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(
+                                responseBody.string(), new TypeReference<List<Connection>>() {}),
+                        response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedClientSideParamsApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedClientSideParamsException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Get a connection by ID
+     */
+    public SeedClientSideParamsHttpResponse<Connection> getConnection(String connectionId) {
+        return getConnection(connectionId, GetConnectionRequest.builder().build());
+    }
+
+    /**
+     * Get a connection by ID
+     */
+    public SeedClientSideParamsHttpResponse<Connection> getConnection(
+            String connectionId, GetConnectionRequest request) {
+        return getConnection(connectionId, request, null);
+    }
+
+    /**
+     * Get a connection by ID
+     */
+    public SeedClientSideParamsHttpResponse<Connection> getConnection(
+            String connectionId, GetConnectionRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("connections")
+                .addPathSegment(connectionId);
+        if (request.getFields().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "fields", request.getFields().get(), false);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedClientSideParamsHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Connection.class), response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedClientSideParamsApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedClientSideParamsException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * List all clients/applications
+     */
+    public SeedClientSideParamsHttpResponse<PaginatedClientResponse> listClients() {
+        return listClients(ListClientsRequest.builder().build());
+    }
+
+    /**
+     * List all clients/applications
+     */
+    public SeedClientSideParamsHttpResponse<PaginatedClientResponse> listClients(ListClientsRequest request) {
+        return listClients(request, null);
+    }
+
+    /**
+     * List all clients/applications
+     */
+    public SeedClientSideParamsHttpResponse<PaginatedClientResponse> listClients(
+            ListClientsRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("clients");
+        if (request.getFields().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "fields", request.getFields().get(), false);
+        }
+        if (request.getIncludeFields().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "include_fields", request.getIncludeFields().get(), false);
+        }
+        if (request.getPage().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "page", request.getPage().get(), false);
+        }
+        if (request.getPerPage().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "per_page", request.getPerPage().get(), false);
+        }
+        if (request.getIncludeTotals().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "include_totals", request.getIncludeTotals().get(), false);
+        }
+        if (request.getIsGlobal().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "is_global", request.getIsGlobal().get(), false);
+        }
+        if (request.getIsFirstParty().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "is_first_party", request.getIsFirstParty().get(), false);
+        }
+        if (request.getAppType().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "app_type", request.getAppType().get(), false);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedClientSideParamsHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PaginatedClientResponse.class),
+                        response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedClientSideParamsApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedClientSideParamsException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Get a client by ID
+     */
+    public SeedClientSideParamsHttpResponse<Client> getClient(String clientId) {
+        return getClient(clientId, GetClientRequest.builder().build());
+    }
+
+    /**
+     * Get a client by ID
+     */
+    public SeedClientSideParamsHttpResponse<Client> getClient(String clientId, GetClientRequest request) {
+        return getClient(clientId, request, null);
+    }
+
+    /**
+     * Get a client by ID
+     */
+    public SeedClientSideParamsHttpResponse<Client> getClient(
+            String clientId, GetClientRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("clients")
+                .addPathSegment(clientId);
+        if (request.getFields().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "fields", request.getFields().get(), false);
+        }
+        if (request.getIncludeFields().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "include_fields", request.getIncludeFields().get(), false);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedClientSideParamsHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Client.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedClientSideParamsApiException(

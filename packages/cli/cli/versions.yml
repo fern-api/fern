@@ -1,5 +1,68 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |
+        Split OpenAPI endpoints with multiple request bodies into multiple endpoints using `x-fern-sdk-method-name`.
+        For example, take the following OpenAPI spec:
+        ```yml
+        paths:
+          /documents/upload:
+            post:
+              summary: Upload document metadata (JSON) or document file
+              operationId: uploadDocument
+              requestBody:
+                content:
+                  application/json:
+                    x-fern-sdk-method-name: uploadJsonDocument
+                    schema:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        author:
+                          type: string
+                        tags:
+                          type: array
+                          items:
+                            type: string
+                  application/pdf:
+                    x-fern-sdk-method-name: uploadPdfDocument
+                    schema:
+                      type: string
+                      format: binary
+        ```
+
+        The OpenAPI spec becomes the following Fern Definition:
+
+        ```yml
+        service:
+          endpoints:
+            uploadJsonDocument:
+              method: POST
+              path: /documents/upload
+              request:
+                body:
+                  properties:
+                    author: optional<string>
+                    tags: optional<list<string>>
+                    title: optional<string>
+                content-type: application/json
+                name: UploadDocumentRequest
+                ...
+            uploadPdfDocument:
+              method: POST
+              path: /documents/upload
+              request:
+                body: bytes
+                content-type: application/pdf
+              ...
+        ```
+
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-14"
+  version: 0.66.15
+
+- changelogEntry:
     - summary: Specify generator metadata for Swift.
       type: fix
   irVersion: 59
@@ -35,7 +98,7 @@
   version: 0.66.11
 
 - changelogEntry:
-    - summary: Add 'vendor' to set of reservved keywords for go.
+    - summary: Add 'vendor' to set of reserved keywords for go.
       type: fix
   irVersion: 59
   createdAt: "2025-08-11"
