@@ -62,7 +62,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private allowExtraFields: boolean;
     private omitUndefined: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
-                private dangerouslyFlattenRequestParameters: boolean;
+    private dangerouslyFlattenRequestParameters: boolean;
 
     constructor({
         ir,

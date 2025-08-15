@@ -60,7 +60,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private retainOriginalCasing: boolean;
     private exportsManager: ExportsManager;
-            private dangerouslyFlattenRequestParameters: boolean;
+    private dangerouslyFlattenRequestParameters: boolean;
 
     constructor({
         ir,

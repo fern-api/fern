@@ -145,7 +145,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly service: HttpService | undefined;
     private readonly omitFernHeaders: boolean;
     private readonly useDefaultRequestParameterValues: boolean;
-            private readonly dangerouslyFlattenRequestParameters: boolean;
+    private readonly dangerouslyFlattenRequestParameters: boolean;
     private readonly anyEndpointWithAuth: boolean;
 
     constructor({

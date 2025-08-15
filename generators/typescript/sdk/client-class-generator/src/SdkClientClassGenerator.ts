@@ -68,7 +68,7 @@ export class SdkClientClassGenerator {
     private exportsManager: ExportsManager;
     private omitFernHeaders: boolean;
     private useDefaultRequestParameterValues: boolean;
-            private dangerouslyFlattenRequestParameters: boolean;
+    private dangerouslyFlattenRequestParameters: boolean;
     constructor({
         intermediateRepresentation,
         errorResolver,

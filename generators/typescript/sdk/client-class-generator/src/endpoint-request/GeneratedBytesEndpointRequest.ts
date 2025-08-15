@@ -48,7 +48,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     private requestBody: HttpRequestBody.Bytes;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private retainOriginalCasing: boolean;
-            private dangerouslyFlattenRequestParameters: boolean;
+    private dangerouslyFlattenRequestParameters: boolean;
 
     constructor({
         ir,

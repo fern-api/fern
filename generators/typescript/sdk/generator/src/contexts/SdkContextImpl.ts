@@ -178,7 +178,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly inlinePathParameters: boolean;
     public readonly formDataSupport: "Node16" | "Node18";
     public readonly generateOAuthClients: boolean;
-            public readonly dangerouslyFlattenRequestParameters: boolean;
+    public readonly dangerouslyFlattenRequestParameters: boolean;
     public readonly omitUndefined: boolean;
     public readonly neverThrowErrors: boolean;
     public readonly importsManager: ImportsManager;
