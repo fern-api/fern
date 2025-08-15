@@ -41,6 +41,7 @@ type Config struct {
 	ClientConstructorName        string
 	ImportPath                   string
 	PackageName                  string
+	PackagePath                  string
 	ExportedClientName           string
 	PackageLayout                PackageLayout
 	UnionVersion                 UnionVersion
@@ -84,6 +85,7 @@ func NewConfig(
 	clientConstructorName string,
 	importPath string,
 	packageName string,
+	packagePath string,
 	exportedClientName string,
 	packageLayout string,
 	unionVersion string,
@@ -115,6 +117,7 @@ func NewConfig(
 		ClientConstructorName:        clientConstructorName,
 		ImportPath:                   importPath,
 		PackageName:                  packageName,
+		PackagePath:                  packagePath,
 		ExportedClientName:           exportedClientName,
 		PackageLayout:                pl,
 		UnionVersion:                 uv,

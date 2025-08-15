@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -133,29 +134,26 @@ func (g *Generator) Generate(mode Mode) ([]*File, error) {
 	if err != nil {
 		return nil, err
 	}
+    if g.config.PackagePath == "" {
+        return files, nil
+    }
 
-	// Define keywords and the string to prepend
-	keywords := []string{"core", "internal", "option", "client"}
-	prependString := "inhereplease/"
+ //    for i, file := range files {
+	// 	fmt.Printf("File %d, at %s\n", i, file.Path)
+	// }
 
-	// Loop over the array and modify paths
+	// Somewhat hacky fix; prefix packagePath to all .go file paths after the fact
 	for i := range files {
-		for _, keyword := range keywords {
-			if strings.HasPrefix(files[i].Path, keyword) {
-				files[i].Path = prependString + files[i].Path
-				break // Stop after first match
-			}
-		}
+	    if strings.HasSuffix(files[i].Path, ".go") {
+	        files[i].Path = path.Join(g.config.PackagePath, files[i].Path)
+	    }
 	}
 
-	for i, file := range files {
-		fmt.Printf("File %d, at %s\n", i, file.Path)
-	}
-	for i, file := range files {
-		fmt.Printf("File %d\nAt %s\n%s\n\n\n", i, file.Path, file.Content)
-	}
+	fmt.Println("\n\n\n----------------- GO-V1 SDK OUTPUT -----------------")
 
-
+	// for i, file := range files {
+	// 	fmt.Printf("File %d\nAt %s\n%s\n\n\n", i, file.Path, file.Content)
+	// }
 
 	return files, nil
 }
