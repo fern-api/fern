@@ -5,6 +5,7 @@ pub mod api_client_builder;
 pub mod http_client;
 pub mod request_options;
 pub mod client_error;
+pub mod pagination;
 pub mod types;
 
 pub use client::{OauthClientCredentialsWithVariablesClient, AuthClient, NestedNoAuthClient, ApiClient, NestedClient, ApiClient, ServiceClient, SimpleClient};
@@ -15,4 +16,5 @@ pub use api_client_builder::{*};
 pub use http_client::{*};
 pub use request_options::{*};
 pub use client_error::{*};
+pub use pagination::{*};
 

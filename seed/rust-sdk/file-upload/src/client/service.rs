@@ -40,19 +40,19 @@ impl ServiceClient {
             {
             let mut query_params = Vec::new();
             if let Some(Some(value)) = maybe_string {
-                query_params.push(("maybeString".to_string(), value.to_string()));
+                query_params.push(("maybeString".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(value) = integer {
                 query_params.push(("integer".to_string(), value.to_string()));
             }
             if let Some(Some(value)) = maybe_integer {
-                query_params.push(("maybeInteger".to_string(), value.to_string()));
+                query_params.push(("maybeInteger".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(value) = list_of_strings {
                 query_params.push(("listOfStrings".to_string(), value.to_string()));
             }
             if let Some(Some(value)) = optional_list_of_strings {
-                query_params.push(("optionalListOfStrings".to_string(), value.to_string()));
+                query_params.push(("optionalListOfStrings".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             Some(query_params)
         },

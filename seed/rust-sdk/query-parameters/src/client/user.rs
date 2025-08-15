@@ -1,5 +1,6 @@
 use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
 use reqwest::{Method};
+use std::collections::{HashMap};
 use crate::{types::*};
 
 pub struct UserClient {
@@ -35,28 +36,28 @@ impl UserClient {
                 query_params.push(("bytes".to_string(), value.to_string()));
             }
             if let Some(value) = user {
-                query_params.push(("user".to_string(), value.to_string()));
+                query_params.push(("user".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(value) = user_list {
-                query_params.push(("userList".to_string(), value.to_string()));
+                query_params.push(("userList".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(Some(value)) = optional_deadline {
-                query_params.push(("optionalDeadline".to_string(), value.to_string()));
+                query_params.push(("optionalDeadline".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(value) = key_value {
-                query_params.push(("keyValue".to_string(), value.to_string()));
+                query_params.push(("keyValue".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(Some(value)) = optional_string {
-                query_params.push(("optionalString".to_string(), value.to_string()));
+                query_params.push(("optionalString".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(value) = nested_user {
-                query_params.push(("nestedUser".to_string(), value.to_string()));
+                query_params.push(("nestedUser".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(Some(value)) = optional_user {
-                query_params.push(("optionalUser".to_string(), value.to_string()));
+                query_params.push(("optionalUser".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(value) = exclude_user {
-                query_params.push(("excludeUser".to_string(), value.to_string()));
+                query_params.push(("excludeUser".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(value) = filter {
                 query_params.push(("filter".to_string(), value.to_string()));

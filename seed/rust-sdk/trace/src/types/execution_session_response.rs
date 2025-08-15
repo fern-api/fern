@@ -2,7 +2,7 @@ use crate::language::Language;
 use crate::execution_session_status::ExecutionSessionStatus;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct ExecutionSessionResponse {
     #[serde(rename = "sessionId")]
     pub session_id: String,

@@ -23,7 +23,7 @@ impl PlaylistClient {
                 query_params.push(("datetime".to_string(), value.to_string()));
             }
             if let Some(Some(value)) = optional_datetime {
-                query_params.push(("optionalDatetime".to_string(), value.to_string()));
+                query_params.push(("optionalDatetime".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             Some(query_params)
         },
@@ -39,7 +39,7 @@ impl PlaylistClient {
             {
             let mut query_params = Vec::new();
             if let Some(Some(value)) = limit {
-                query_params.push(("limit".to_string(), value.to_string()));
+                query_params.push(("limit".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(value) = other_field {
                 query_params.push(("otherField".to_string(), value.to_string()));
@@ -48,7 +48,7 @@ impl PlaylistClient {
                 query_params.push(("multiLineDocs".to_string(), value.to_string()));
             }
             if let Some(Some(value)) = optional_multiple_field {
-                query_params.push(("optionalMultipleField".to_string(), value.to_string()));
+                query_params.push(("optionalMultipleField".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(value) = multiple_field {
                 query_params.push(("multipleField".to_string(), value.to_string()));

@@ -4,7 +4,7 @@ use crate::submission_file_info::SubmissionFileInfo;
 use crate::problem_id::ProblemId;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct SubmitRequestV2 {
     #[serde(rename = "submissionId")]
     pub submission_id: SubmissionId,
