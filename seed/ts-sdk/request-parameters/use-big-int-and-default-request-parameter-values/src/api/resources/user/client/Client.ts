@@ -4,9 +4,9 @@
 
 import * as core from "../../../../core/index.js";
 import * as SeedRequestParameters from "../../../index.js";
+import { toJson } from "../../../../core/json.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import { toJson } from "../../../../core/json.js";
 
 export declare namespace User {
     export interface Options {
@@ -44,6 +44,7 @@ export class User {
      *
      * @example
      *     await client.user.createUsername({
+     *         tags: ["tags", "tags"],
      *         username: "username",
      *         password: "password",
      *         name: "test"
@@ -60,6 +61,9 @@ export class User {
         request: SeedRequestParameters.CreateUsernameRequest,
         requestOptions?: User.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
+        const { tags, ..._body } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        _queryParams["tags"] = toJson(tags);
         var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -70,9 +74,9 @@ export class User {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             requestType: "json",
-            body: request,
+            body: _body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

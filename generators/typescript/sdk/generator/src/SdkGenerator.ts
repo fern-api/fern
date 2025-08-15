@@ -148,6 +148,7 @@ export declare namespace SdkGenerator {
         packagePath: string | undefined;
         omitFernHeaders: boolean;
         useDefaultRequestParameterValues: boolean;
+        dangerouslyFlattenRequestParameters: boolean;
         packageManager: "pnpm" | "yarn";
     }
 }
@@ -433,7 +434,8 @@ export class SdkGenerator {
             exportsManager: this.exportsManager,
             formDataSupport: config.formDataSupport,
             omitFernHeaders: config.omitFernHeaders,
-            useDefaultRequestParameterValues: config.useDefaultRequestParameterValues
+            useDefaultRequestParameterValues: config.useDefaultRequestParameterValues,
+            dangerouslyFlattenRequestParameters: config.dangerouslyFlattenRequestParameters
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation,
@@ -1575,7 +1577,8 @@ export class SdkGenerator {
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath,
             formDataSupport: this.config.formDataSupport,
-            useDefaultRequestParameterValues: this.config.useDefaultRequestParameterValues
+            useDefaultRequestParameterValues: this.config.useDefaultRequestParameterValues,
+            dangerouslyFlattenRequestParameters: this.config.dangerouslyFlattenRequestParameters
         });
     }
 

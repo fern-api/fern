@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.8.2
+  changelogEntry:
+    - summary: |
+        Add a new flag to the SDK generator: `dangerouslyFlattenRequestParameters`.
+        When enabled, the SDK will flatten request parameters into a single object.
+        The flag is named `dangerouslyFlattenRequestParameters` because body and query
+        parameters could have the same name, which may cause collisions and break the
+        SDK if duplicate keys are present. Use this flag with caution.
+      type: feat
+  createdAt: '2025-08-15'
+  irVersion: 59
+
 - version: 2.8.1
   changelogEntry:
     - summary: |
