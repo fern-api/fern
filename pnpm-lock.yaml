@@ -2521,6 +2521,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../packages/configs
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../../../packages/cli/logger
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045
@@ -3200,6 +3203,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../packages/commons/fs-utils
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../../../packages/cli/logger
       '@fern-api/typescript-ast':
         specifier: workspace:*
         version: link:../../../typescript-v2/ast
