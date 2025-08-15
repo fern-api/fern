@@ -35,7 +35,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             superclass: ruby.classReference({
                 name: "Model",
                 modules: ["Internal", "Types"]
-            }),
+            })
         });
 
         const rootModule = this.context.getRootModule();

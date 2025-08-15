@@ -93,9 +93,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
 }
 
 function firstCharUpperCase(st: string): string {
-    return st.length < 1
-        ? st
-        : st.charAt(0).toUpperCase() + st.substring(1);
+    return st.length < 1 ? st : st.charAt(0).toUpperCase() + st.substring(1);
 }
 
 function replaceTemplate({ contents, variables }: { contents: string; variables: Record<string, unknown> }): string {
