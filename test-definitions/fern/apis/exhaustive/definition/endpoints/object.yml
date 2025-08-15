@@ -10,6 +10,21 @@ service:
       method: POST
       request: objects.ObjectWithOptionalField
       response: objects.ObjectWithOptionalField
+      examples:
+        - name: WithLargeInteger
+          request:
+            string: "test"
+            integer: 21991583578  # Large value that exceeds Integer.MAX_VALUE (2147483647)
+            long: 9223372036854775807
+            double: 3.14
+            bool: true
+          response:
+            body:
+              string: "test"
+              integer: 21991583578  # This tests our integer overflow fix
+              long: 9223372036854775807
+              double: 3.14
+              bool: true
 
     getAndReturnWithRequiredField:
       path: /get-and-return-with-required-field

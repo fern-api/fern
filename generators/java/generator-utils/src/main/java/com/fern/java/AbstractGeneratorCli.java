@@ -100,33 +100,78 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
      * modifying actual schema definitions.
      */
     private static String preprocessIntegerOverflow(String json) {
-        String pattern = "(?<!\")(\"integer\"\\s*:\\s*)(-?\\d{10,})(?!\\d)";
+        // Pattern to match "integer": large_number_value patterns
+        String integerPattern = "(?<!\")(\"integer\"\\s*:\\s*)(-?\\d{10,})(?!\\d)";
+        
+        // Pattern to match long values that might be strings when they should be numbers 
+        String longStringPattern = "(?<!\")(\"long\"\\s*:\\s*)\"(-?\\d+)\"";
 
-        java.util.regex.Pattern p = java.util.regex.Pattern.compile(pattern);
-        java.util.regex.Matcher m = p.matcher(json);
-
+        java.util.regex.Pattern intPattern = java.util.regex.Pattern.compile(integerPattern);
+        java.util.regex.Pattern longPattern = java.util.regex.Pattern.compile(longStringPattern);
+        
         StringBuffer sb = new StringBuffer();
         int modifications = 0;
 
-        while (m.find()) {
-            String numberStr = m.group(2);
+        // First pass: convert integer overflow to long
+        java.util.regex.Matcher intMatcher = intPattern.matcher(json);
+        while (intMatcher.find()) {
+            String numberStr = intMatcher.group(2);
             try {
                 long value = Long.parseLong(numberStr);
 
                 if (value > Integer.MAX_VALUE || value < Integer.MIN_VALUE) {
                     // Convert to "long" field to preserve the original value
                     log.info("Integer overflow detected in IR example value: {}. Converting to long type to preserve value.", value);
-                    m.appendReplacement(sb, "\"long\": " + value);
+                    intMatcher.appendReplacement(sb, "\"long\": " + value);
                     modifications++;
                 } else {
-                    m.appendReplacement(sb, m.group(0));
+                    intMatcher.appendReplacement(sb, intMatcher.group(0));
                 }
             } catch (NumberFormatException e) {
                 log.warn("Failed to parse potential integer value: '{}'. Preserving original.", numberStr);
-                m.appendReplacement(sb, m.group(0));
+                intMatcher.appendReplacement(sb, intMatcher.group(0));
             }
         }
-        m.appendTail(sb);
+        intMatcher.appendTail(sb);
+
+        // Second pass: fix any long values that are incorrectly quoted as strings
+        String firstPassResult = sb.toString();
+        sb = new StringBuffer();
+        java.util.regex.Matcher longMatcher = longPattern.matcher(firstPassResult);
+        while (longMatcher.find()) {
+            String numberStr = longMatcher.group(2);
+            try {
+                Long.parseLong(numberStr); // Validate it's a valid long
+                log.debug("Converting quoted long value to unquoted: {}", numberStr);
+                longMatcher.appendReplacement(sb, "\"long\": " + numberStr);
+            } catch (NumberFormatException e) {
+                longMatcher.appendReplacement(sb, longMatcher.group(0));
+            }
+        }
+        longMatcher.appendTail(sb);
+
+        // Third pass: Handle cases where large integers become string values in the JSON
+        // This can happen when Jackson initially serializes large integers as strings
+        String secondPassResult = sb.toString();
+        sb = new StringBuffer();
+        
+        // Pattern to match any numeric value that should be unquoted but is quoted
+        // This handles cases where our conversion created quoted numbers
+        String quotedNumberPattern = "(?<!\")(\\\"(-?\\d{10,})\\\")(?!\\w)";
+        java.util.regex.Pattern quotedPattern = java.util.regex.Pattern.compile(quotedNumberPattern);
+        java.util.regex.Matcher quotedMatcher = quotedPattern.matcher(secondPassResult);
+        
+        while (quotedMatcher.find()) {
+            String numberStr = quotedMatcher.group(2);
+            try {
+                Long.parseLong(numberStr); // Validate it's a valid long
+                log.debug("Removing quotes from large number: {}", numberStr);
+                quotedMatcher.appendReplacement(sb, numberStr);
+            } catch (NumberFormatException e) {
+                quotedMatcher.appendReplacement(sb, quotedMatcher.group(0));
+            }
+        }
+        quotedMatcher.appendTail(sb);
 
         if (modifications > 0) {
             log.info("Converted {} integer overflow value(s) to long type in IR", modifications);
