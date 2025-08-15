@@ -21,6 +21,11 @@ describe("Enum", () => {
             .build();
 
         const response = await client.endpoints.enum.getAndReturnEnum("SUNNY");
-        expect(response).toEqual("SUNNY");
+        expect(response).toEqual({
+            body: "SUNNY",
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 });

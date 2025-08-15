@@ -14,7 +14,12 @@ describe("Params", () => {
         server.mockEndpoint().get("/params/path/param").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.endpoints.params.getWithPath("param");
-        expect(response).toEqual("string");
+        expect(response).toEqual({
+            body: "string",
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getWithInlinePath", async () => {
@@ -27,7 +32,12 @@ describe("Params", () => {
         const response = await client.endpoints.params.getWithInlinePath({
             param: "param",
         });
-        expect(response).toEqual("string");
+        expect(response).toEqual({
+            body: "string",
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getWithQuery", async () => {
@@ -40,7 +50,12 @@ describe("Params", () => {
             query: "query",
             number: 1,
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getWithAllowMultipleQuery", async () => {
@@ -53,7 +68,12 @@ describe("Params", () => {
             query: "query",
             number: 1,
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getWithPathAndQuery", async () => {
@@ -65,7 +85,12 @@ describe("Params", () => {
         const response = await client.endpoints.params.getWithPathAndQuery("param", {
             query: "query",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getWithInlinePathAndQuery", async () => {
@@ -78,7 +103,12 @@ describe("Params", () => {
             param: "param",
             query: "query",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("modifyWithPath", async () => {
@@ -96,7 +126,12 @@ describe("Params", () => {
             .build();
 
         const response = await client.endpoints.params.modifyWithPath("param", "string");
-        expect(response).toEqual("string");
+        expect(response).toEqual({
+            body: "string",
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("modifyWithInlinePath", async () => {
@@ -117,6 +152,11 @@ describe("Params", () => {
             param: "param",
             body: "string",
         });
-        expect(response).toEqual("string");
+        expect(response).toEqual({
+            body: "string",
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 });

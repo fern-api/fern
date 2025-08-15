@@ -26,15 +26,20 @@ describe("Migration", () => {
         const response = await client.migration.getAttemptedMigrations({
             adminKeyHeader: "admin-key-header",
         });
-        expect(response).toEqual([
-            {
-                name: "name",
-                status: "RUNNING",
-            },
-            {
-                name: "name",
-                status: "RUNNING",
-            },
-        ]);
+        expect(response).toEqual({
+            body: [
+                {
+                    name: "name",
+                    status: "RUNNING",
+                },
+                {
+                    name: "name",
+                    status: "RUNNING",
+                },
+            ],
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 });

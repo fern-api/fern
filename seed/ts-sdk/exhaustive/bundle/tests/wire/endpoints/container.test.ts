@@ -21,7 +21,12 @@ describe("Container", () => {
             .build();
 
         const response = await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"]);
-        expect(response).toEqual(["string", "string"]);
+        expect(response).toEqual({
+            body: ["string", "string"],
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getAndReturnListOfObjects", async () => {
@@ -46,14 +51,19 @@ describe("Container", () => {
                 string: "string",
             },
         ]);
-        expect(response).toEqual([
-            {
-                string: "string",
-            },
-            {
-                string: "string",
-            },
-        ]);
+        expect(response).toEqual({
+            body: [
+                {
+                    string: "string",
+                },
+                {
+                    string: "string",
+                },
+            ],
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getAndReturnSetOfPrimitives", async () => {
@@ -71,7 +81,12 @@ describe("Container", () => {
             .build();
 
         const response = await client.endpoints.container.getAndReturnSetOfPrimitives(["string"]);
-        expect(response).toEqual(["string"]);
+        expect(response).toEqual({
+            body: ["string"],
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getAndReturnSetOfObjects", async () => {
@@ -93,11 +108,16 @@ describe("Container", () => {
                 string: "string",
             },
         ]);
-        expect(response).toEqual([
-            {
-                string: "string",
-            },
-        ]);
+        expect(response).toEqual({
+            body: [
+                {
+                    string: "string",
+                },
+            ],
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getAndReturnMapPrimToPrim", async () => {
@@ -118,7 +138,12 @@ describe("Container", () => {
             string: "string",
         });
         expect(response).toEqual({
-            string: "string",
+            body: {
+                string: "string",
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 
@@ -142,9 +167,14 @@ describe("Container", () => {
             },
         });
         expect(response).toEqual({
-            string: {
-                string: "string",
+            body: {
+                string: {
+                    string: "string",
+                },
             },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 
@@ -166,7 +196,12 @@ describe("Container", () => {
             string: "string",
         });
         expect(response).toEqual({
-            string: "string",
+            body: {
+                string: "string",
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 });
