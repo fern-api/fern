@@ -27,6 +27,32 @@
             }
         },
         {
+            "example_identifier": "bff21cd9",
+            "id": {
+                "method": "PATCH",
+                "path": "/named-mixed/{id}",
+                "identifier_override": "endpoint_service.namedPatchWithMixed"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.NamedMixedPatchRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().namedPatchWithMixed(\n            \"id\",\n            NamedMixedPatchRequest\n                .builder()\n                .appId(\"appId\")\n                .instructions(\"instructions\")\n                .active(true)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.NamedMixedPatchRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().namedPatchWithMixed(\n            \"id\",\n            NamedMixedPatchRequest\n                .builder()\n                .appId(\"appId\")\n                .instructions(\"instructions\")\n                .active(true)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "b73e1d69",
+            "id": {
+                "method": "PATCH",
+                "path": "/optional-merge-patch-test",
+                "identifier_override": "endpoint_service.optionalMergePatchTest"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.OptionalMergePatchRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().optionalMergePatchTest(\n            OptionalMergePatchRequest\n                .builder()\n                .requiredField(\"requiredField\")\n                .optionalString(\"optionalString\")\n                .optionalInteger(1)\n                .optionalBoolean(true)\n                .nullableString(\"nullableString\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.OptionalMergePatchRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().optionalMergePatchTest(\n            OptionalMergePatchRequest\n                .builder()\n                .requiredField(\"requiredField\")\n                .optionalString(\"optionalString\")\n                .optionalInteger(1)\n                .optionalBoolean(true)\n                .nullableString(\"nullableString\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "694ff87e",
             "id": {
                 "method": "PATCH",
