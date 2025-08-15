@@ -3,14 +3,9 @@
  */
 
 import * as core from "../../../../../core/index.js";
+import * as SeedFileUpload from "../../../../index.js";
 
 export interface InlineTypeRequest {
     file: core.file.Uploadable.FileLike;
-    request: InlineTypeRequest.Request;
-}
-
-export namespace InlineTypeRequest {
-    export interface Request {
-        bar: string;
-    }
+    request: SeedFileUpload.MyInlineType;
 }
