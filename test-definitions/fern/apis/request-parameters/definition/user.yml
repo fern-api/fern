@@ -30,7 +30,6 @@ service:
         query-parameters:
           tags:
             type: list<string>
-            default: ['test']
     getUsername:
       path: ''
       method: GET
