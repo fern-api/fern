@@ -41,12 +41,10 @@ export abstract class FernDocsBuilder {
         navigation: docsYml.RawSchemas.VersionFileConfig;
     }): void;
 
-    public abstract getNavigationBuilder(
-        args?: {
-            tabId: docsYml.RawSchemas.TabId;
-            tabConfig: docsYml.RawSchemas.TabConfig;
-        }
-    ): FernDocsNavigationBuilder;
+    public abstract getNavigationBuilder(args?: {
+        tabId: docsYml.RawSchemas.TabId;
+        tabConfig: docsYml.RawSchemas.TabConfig;
+    }): FernDocsNavigationBuilder;
 
     public abstract addNavbarLink({ link }: { link: docsYml.RawSchemas.NavbarLink }): void;
 
