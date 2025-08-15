@@ -40,7 +40,7 @@ export declare namespace GeneratedDefaultEndpointRequest {
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         retainOriginalCasing: boolean;
         exportsManager: ExportsManager;
-        flattenRequestParameters: boolean;
+        dangerouslyFlattenRequestParameters: boolean;
     }
 }
 
@@ -60,7 +60,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private retainOriginalCasing: boolean;
     private exportsManager: ExportsManager;
-    private flattenRequestParameters: boolean;
+            private dangerouslyFlattenRequestParameters: boolean;
 
     constructor({
         ir,
@@ -72,7 +72,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         generatedSdkClientClass,
         retainOriginalCasing,
         exportsManager,
-        flattenRequestParameters
+        dangerouslyFlattenRequestParameters
     }: GeneratedDefaultEndpointRequest.Init) {
         this.ir = ir;
         this.packageId = packageId;
@@ -94,10 +94,10 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                               service,
                               endpoint,
                               sdkRequest,
-                              flattenRequestParameters
+                              dangerouslyFlattenRequestParameters
                           });
                       },
-                      wrapper: () => new RequestWrapperParameter({ packageId, service, endpoint, sdkRequest, flattenRequestParameters }),
+                      wrapper: () => new RequestWrapperParameter({ packageId, service, endpoint, sdkRequest, dangerouslyFlattenRequestParameters }),
                       _other: () => {
                           throw new Error("Unknown SdkRequest: " + this.endpoint.sdkRequest?.shape.type);
                       }
@@ -105,7 +105,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 : undefined;
 
         this.exportsManager = exportsManager;
-        this.flattenRequestParameters = flattenRequestParameters;
+        this.dangerouslyFlattenRequestParameters = dangerouslyFlattenRequestParameters;
     }
 
     public getRequestParameter(context: SdkContext): ts.TypeNode | undefined {
@@ -207,7 +207,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         const body = this.getSerializedRequestBodyWithNullCheck(context);
         const queryParams = this.getQueryParams(context).getReferenceTo();
         
-        if (this.flattenRequestParameters) {
+        if (this.dangerouslyFlattenRequestParameters) {
             // Merge body and query parameters into a single flattened object
             const mergedParams = this.mergeParams(queryParams, body);
             return {

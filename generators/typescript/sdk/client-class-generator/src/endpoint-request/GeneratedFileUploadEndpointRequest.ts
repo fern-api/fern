@@ -40,7 +40,7 @@ export declare namespace GeneratedFileUploadEndpointRequest {
         allowExtraFields: boolean;
         omitUndefined: boolean;
         formDataSupport: "Node16" | "Node18";
-        flattenRequestParameters: boolean;
+                    dangerouslyFlattenRequestParameters: boolean;
     }
 }
 
@@ -62,7 +62,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private allowExtraFields: boolean;
     private omitUndefined: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
-    private flattenRequestParameters: boolean;
+                private dangerouslyFlattenRequestParameters: boolean;
 
     constructor({
         ir,
@@ -78,7 +78,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         allowExtraFields,
         omitUndefined,
         formDataSupport,
-        flattenRequestParameters
+        dangerouslyFlattenRequestParameters
     }: GeneratedFileUploadEndpointRequest.Init) {
         this.ir = ir;
         this.service = service;
@@ -92,7 +92,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         this.allowExtraFields = allowExtraFields;
         this.omitUndefined = omitUndefined;
         this.formDataSupport = formDataSupport;
-        this.flattenRequestParameters = flattenRequestParameters;
+        this.dangerouslyFlattenRequestParameters = dangerouslyFlattenRequestParameters;
         if (
             this.inlineFileProperties ||
             requestBody.properties.some((property) => property.type === "bodyProperty") ||
@@ -109,7 +109,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                 service,
                 endpoint,
                 sdkRequest: this.endpoint.sdkRequest,
-                flattenRequestParameters
+                dangerouslyFlattenRequestParameters
             });
         }
     }
@@ -368,7 +368,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             )
         });
 
-        if (this.flattenRequestParameters) {
+        if (this.dangerouslyFlattenRequestParameters) {
             // Merge body and query parameters into a single flattened object
             const queryParamsRef = queryParams?.getReferenceTo();
             const mergedParams = this.mergeParams(queryParamsRef, body);

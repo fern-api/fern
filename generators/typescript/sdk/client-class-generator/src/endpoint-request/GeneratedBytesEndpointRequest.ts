@@ -32,7 +32,7 @@ export declare namespace GeneratedBytesEndpointRequest {
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         retainOriginalCasing: boolean;
         exportsManager: ExportsManager;
-        flattenRequestParameters: boolean;
+        dangerouslyFlattenRequestParameters: boolean;
     }
 }
 
@@ -48,7 +48,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     private requestBody: HttpRequestBody.Bytes;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private retainOriginalCasing: boolean;
-    private flattenRequestParameters: boolean;
+            private dangerouslyFlattenRequestParameters: boolean;
 
     constructor({
         ir,
@@ -58,7 +58,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         requestBody,
         generatedSdkClientClass,
         retainOriginalCasing,
-        flattenRequestParameters
+        dangerouslyFlattenRequestParameters
     }: GeneratedBytesEndpointRequest.Init) {
         this.ir = ir;
         this.service = service;
@@ -66,7 +66,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         this.requestBody = requestBody;
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.retainOriginalCasing = retainOriginalCasing;
-        this.flattenRequestParameters = flattenRequestParameters;
+        this.dangerouslyFlattenRequestParameters = dangerouslyFlattenRequestParameters;
 
         if (this.endpoint.sdkRequest == null) {
             throw new Error("SdkRequest is not defined for bytes endpoint");
@@ -79,7 +79,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
                 service,
                 endpoint,
                 sdkRequest: this.endpoint.sdkRequest,
-                flattenRequestParameters
+                dangerouslyFlattenRequestParameters
             });
         }
     }
@@ -242,7 +242,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         );
         const queryParams = this.getQueryParams(context)?.getReferenceTo();
         
-        if (this.flattenRequestParameters) {
+        if (this.dangerouslyFlattenRequestParameters) {
             // Merge body and query parameters into a single flattened object
             const mergedParams = this.mergeParams(queryParams, body);
             return {

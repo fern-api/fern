@@ -236,7 +236,7 @@ fixtures:
         useBigInt: true
       outputFolder: use-big-int-and-default-request-parameter-values
     - customConfig:
-        flattenRequestParameters: true
+        dangerouslyFlattenRequestParameters: true
       outputFolder: flatten-request-parameters
   trace:
     - customConfig: null

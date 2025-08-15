@@ -29,12 +29,12 @@ export abstract class AbstractRequestParameter implements RequestParameter {
     protected sdkRequest: SdkRequest;
             protected dangerouslyFlattenRequestParameters: boolean;
 
-    constructor({ packageId, service, endpoint, sdkRequest, flattenRequestParameters }: AbstractRequestParameter.Init) {
+    constructor({ packageId, service, endpoint, sdkRequest, dangerouslyFlattenRequestParameters }: AbstractRequestParameter.Init) {
         this.packageId = packageId;
         this.service = service;
         this.endpoint = endpoint;
         this.sdkRequest = sdkRequest;
-        this.flattenRequestParameters = flattenRequestParameters;
+        this.dangerouslyFlattenRequestParameters = dangerouslyFlattenRequestParameters;
     }
 
     public getParameterDeclaration(context: SdkContext): OptionalKind<ParameterDeclarationStructure> {
