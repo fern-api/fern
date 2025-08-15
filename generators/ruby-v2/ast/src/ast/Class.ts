@@ -89,8 +89,7 @@ export class Class_ extends Module_ {
             writer.dedent();
         }
 
-        writer.write("end");
-        writer.newLine();
+        writer.writeLine("end");
     }
 
     private hasBody(): boolean {
