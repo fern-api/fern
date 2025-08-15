@@ -51,6 +51,7 @@ import { validateDocsBrokenLinks } from "./commands/validate/validateDocsBrokenL
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces";
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
+import { listGenerators } from "./commands/list-generators/listGenerators";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { RUNTIME } from "./runtime";
@@ -187,6 +188,7 @@ async function tryRunCli(cliContext: CliContext) {
     addGenerateJsonschemaCommand(cli, cliContext);
     addWriteDocsDefinitionCommand(cli, cliContext);
     addExportCommand(cli, cliContext);
+    addListGeneratorsCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -1392,6 +1394,27 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
                 cliContext,
                 outputPath: resolve(cwd(), argv.outputPath)
+            });
+        }
+    );
+}
+
+function addListGeneratorsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "list-generators",
+        "List all available generators",
+        (yargs) =>
+            yargs.option("type", {
+                choices: ["sdk", "model", "server", "other"],
+                description: "Filter generators by type"
+            }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern list-generators"
+            });
+            await listGenerators({
+                cliContext,
+                typeFilter: argv.type
             });
         }
     );

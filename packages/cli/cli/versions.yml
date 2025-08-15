@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Add `fern list-generators` command to list all available generators from the Fern Registry with optional type filtering.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-15"
+  version: 0.66.16
+  
+- changelogEntry:
     - summary: |
         Split OpenAPI endpoints with multiple request bodies into multiple endpoints using `x-fern-sdk-method-name`.
         For example, take the following OpenAPI spec:
