@@ -8,7 +8,7 @@
   createdAt: '2025-08-15'
   irVersion: 58
   version: 1.7.3
-  - changelogEntry:
+- changelogEntry:
     - summary: |
         Improved JSON Merge Patch support with better type distinction and naming. 
         - Renamed `TriStateOptional<T>` to `OptionalNullable<T>` for better clarity

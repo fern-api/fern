@@ -56,7 +56,8 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
             AbstractGeneratorContext<?, ?> generatorContext) {
         super(className, generatorContext);
         this.objectTypeDeclaration = objectTypeDeclaration;
-        this.optionalNullableClassName = generatorContext.getPoetClassNameFactory().getCoreClassName("OptionalNullable");
+        this.optionalNullableClassName =
+                generatorContext.getPoetClassNameFactory().getCoreClassName("OptionalNullable");
     }
 
     @Override
@@ -481,7 +482,9 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(String.class)
-                .addStatement("return $T.stringify(this)", generatorContext.getPoetClassNameFactory().getObjectMapperClassName())
+                .addStatement(
+                        "return $T.stringify(this)",
+                        generatorContext.getPoetClassNameFactory().getObjectMapperClassName())
                 .build();
     }
 
