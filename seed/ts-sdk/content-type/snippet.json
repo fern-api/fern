@@ -24,6 +24,28 @@
         },
         {
             "id": {
+                "path": "/named-mixed/{id}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_service.namedPatchWithMixed"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.namedPatchWithMixed(\"id\", {\n    appId: \"appId\",\n    instructions: \"instructions\",\n    active: true\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/optional-merge-patch-test",
+                "method": "PATCH",
+                "identifier_override": "endpoint_service.optionalMergePatchTest"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.optionalMergePatchTest({\n    requiredField: \"requiredField\",\n    optionalString: \"optionalString\",\n    optionalInteger: 1,\n    optionalBoolean: true,\n    nullableString: \"nullableString\"\n});\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/regular/{id}",
                 "method": "PATCH",
                 "identifier_override": "endpoint_service.regularPatch"
