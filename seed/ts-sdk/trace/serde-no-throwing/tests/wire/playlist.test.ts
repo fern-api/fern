@@ -34,10 +34,15 @@ describe("Playlist", () => {
             },
         });
         expect(response).toEqual({
-            playlistId: "playlist_id",
-            ownerId: "owner-id",
-            name: "name",
-            problems: ["problems", "problems"],
+            body: {
+                playlistId: "playlist_id",
+                ownerId: "owner-id",
+                name: "name",
+                problems: ["problems", "problems"],
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 
@@ -58,20 +63,25 @@ describe("Playlist", () => {
             optionalMultipleField: "optionalMultipleField",
             multipleField: "multipleField",
         });
-        expect(response).toEqual([
-            {
-                playlistId: "playlist_id",
-                ownerId: "owner-id",
-                name: "name",
-                problems: ["problems", "problems"],
-            },
-            {
-                playlistId: "playlist_id",
-                ownerId: "owner-id",
-                name: "name",
-                problems: ["problems", "problems"],
-            },
-        ]);
+        expect(response).toEqual({
+            body: [
+                {
+                    playlistId: "playlist_id",
+                    ownerId: "owner-id",
+                    name: "name",
+                    problems: ["problems", "problems"],
+                },
+                {
+                    playlistId: "playlist_id",
+                    ownerId: "owner-id",
+                    name: "name",
+                    problems: ["problems", "problems"],
+                },
+            ],
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getPlaylist", async () => {
@@ -94,10 +104,15 @@ describe("Playlist", () => {
 
         const response = await client.playlist.getPlaylist(1, "playlistId");
         expect(response).toEqual({
-            playlistId: "playlist_id",
-            ownerId: "owner-id",
-            name: "name",
-            problems: ["problems", "problems"],
+            body: {
+                playlistId: "playlist_id",
+                ownerId: "owner-id",
+                name: "name",
+                problems: ["problems", "problems"],
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 
@@ -125,10 +140,15 @@ describe("Playlist", () => {
             problems: ["problems", "problems"],
         });
         expect(response).toEqual({
-            playlistId: "playlist_id",
-            ownerId: "owner-id",
-            name: "name",
-            problems: ["problems", "problems"],
+            body: {
+                playlistId: "playlist_id",
+                ownerId: "owner-id",
+                name: "name",
+                problems: ["problems", "problems"],
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 
@@ -139,6 +159,11 @@ describe("Playlist", () => {
         server.mockEndpoint().delete("/v2/playlist/1/playlist_id").respondWith().statusCode(200).build();
 
         const response = await client.playlist.deletePlaylist(1, "playlist_id");
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 });

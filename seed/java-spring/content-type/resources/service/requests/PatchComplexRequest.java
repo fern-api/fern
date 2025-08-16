@@ -7,6 +7,7 @@ package resources.service.requests;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import core.OptionalNullable;
@@ -140,15 +141,15 @@ public final class PatchComplexRequest {
       ignoreUnknown = true
   )
   public static final class Builder {
-    private Optional<String> name;
+    private Optional<String> name = Optional.empty();
 
-    private Optional<Integer> age;
+    private Optional<Integer> age = Optional.empty();
 
-    private Optional<Boolean> active;
+    private Optional<Boolean> active = Optional.empty();
 
-    private Optional<Map<String, Object>> metadata;
+    private Optional<Map<String, Object>> metadata = Optional.empty();
 
-    private Optional<List<String>> tags;
+    private Optional<List<String>> tags = Optional.empty();
 
     private OptionalNullable<String> email = OptionalNullable.absent();
 
@@ -163,28 +164,48 @@ public final class PatchComplexRequest {
     private Builder() {
     }
 
-    public Builder name(Optional<String> value) {
-      this.name = value;
+    @JsonSetter(
+        value = "name",
+        nulls = Nulls.SKIP
+    )
+    public Builder name(String value) {
+      this.name = Optional.ofNullable(value);
       return this;
     }
 
-    public Builder age(Optional<Integer> value) {
-      this.age = value;
+    @JsonSetter(
+        value = "age",
+        nulls = Nulls.SKIP
+    )
+    public Builder age(Integer value) {
+      this.age = Optional.ofNullable(value);
       return this;
     }
 
-    public Builder active(Optional<Boolean> value) {
-      this.active = value;
+    @JsonSetter(
+        value = "active",
+        nulls = Nulls.SKIP
+    )
+    public Builder active(Boolean value) {
+      this.active = Optional.ofNullable(value);
       return this;
     }
 
-    public Builder metadata(Optional<Map<String, Object>> value) {
-      this.metadata = value;
+    @JsonSetter(
+        value = "metadata",
+        nulls = Nulls.SKIP
+    )
+    public Builder metadata(Map<String, Object> value) {
+      this.metadata = Optional.ofNullable(value);
       return this;
     }
 
-    public Builder tags(Optional<List<String>> value) {
-      this.tags = value;
+    @JsonSetter(
+        value = "tags",
+        nulls = Nulls.SKIP
+    )
+    public Builder tags(List<String> value) {
+      this.tags = Optional.ofNullable(value);
       return this;
     }
 

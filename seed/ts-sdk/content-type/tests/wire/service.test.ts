@@ -61,6 +61,50 @@ describe("Service", () => {
         expect(response).toEqual(undefined);
     });
 
+    test("namedPatchWithMixed", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedContentTypesClient({ environment: server.baseUrl });
+        const rawRequestBody = { appId: "appId", instructions: "instructions", active: true };
+
+        server.mockEndpoint().patch("/named-mixed/id").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
+
+        const response = await client.service.namedPatchWithMixed("id", {
+            appId: "appId",
+            instructions: "instructions",
+            active: true,
+        });
+        expect(response).toEqual(undefined);
+    });
+
+    test("optionalMergePatchTest", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedContentTypesClient({ environment: server.baseUrl });
+        const rawRequestBody = {
+            requiredField: "requiredField",
+            optionalString: "optionalString",
+            optionalInteger: 1,
+            optionalBoolean: true,
+            nullableString: "nullableString",
+        };
+
+        server
+            .mockEndpoint()
+            .patch("/optional-merge-patch-test")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .build();
+
+        const response = await client.service.optionalMergePatchTest({
+            requiredField: "requiredField",
+            optionalString: "optionalString",
+            optionalInteger: 1,
+            optionalBoolean: true,
+            nullableString: "nullableString",
+        });
+        expect(response).toEqual(undefined);
+    });
+
     test("regularPatch", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedContentTypesClient({ environment: server.baseUrl });

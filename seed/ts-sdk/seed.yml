@@ -14,7 +14,7 @@ publish:
 test:
   docker:
     image: fernapi/fern-typescript-sdk:latest
-    command: 
+    command:
       - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLatest
   local:
     workingDirectory: generators/typescript
@@ -164,6 +164,9 @@ fixtures:
       outputMode: local_files
       customConfig:
         outputSourceFiles: false
+    - customConfig:
+        neverThrowErrors: true
+      outputFolder: never-throw-errors
   error-property:
     - customConfig:
         private: true

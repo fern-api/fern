@@ -7,7 +7,7 @@ end"
 
 exports[`Module > type definitions > writes module with method type definitions 1`] = `
 "module Foobar
-    def build: (name: String) -> instance
+  def build: (name: String) -> instance
 end"
 `;
 
@@ -23,8 +23,8 @@ exports[`Module > writes empty module 1`] = `
 
 exports[`Module > writes module with a body 1`] = `
 "module Foobar
-    # @return [instance]
-    def build(name:); end
+  # @return [instance]
+  def build(name:); end
 end
 "
 `;

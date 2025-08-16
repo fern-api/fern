@@ -55,8 +55,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             : new GeneratorNotificationService(config.environment);
 
         try {
-            const customConfig = this.parseCustomConfig(config.customConfig);
-
             const logger = createLogger((level, ...message) => {
                 CONSOLE_LOGGER.log(level, ...message);
 
@@ -68,6 +66,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     })
                 );
             });
+            const customConfig = this.parseCustomConfig(config.customConfig, logger);
 
             const npmPackage = constructNpmPackage({
                 generatorConfig: config,
@@ -204,7 +203,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         }
     }
 
-    protected abstract parseCustomConfig(customConfig: unknown): CustomConfig;
+    protected abstract parseCustomConfig(customConfig: unknown, logger: Logger): CustomConfig;
     protected abstract generateTypescriptProject(args: {
         config: FernGeneratorExec.GeneratorConfig;
         customConfig: CustomConfig;

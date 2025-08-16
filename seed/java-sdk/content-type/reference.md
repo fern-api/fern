@@ -222,6 +222,191 @@ client.service().patchComplex(
 </dl>
 </details>
 
+<details><summary><code>client.service.namedPatchWithMixed(id, request)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Named request with mixed optional/nullable fields and merge-patch content type.
+This should trigger the NPE issue when optional fields aren't initialized.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.service().namedPatchWithMixed(
+    "id",
+    NamedMixedPatchRequest
+        .builder()
+        .appId("appId")
+        .instructions("instructions")
+        .active(true)
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**appId:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**instructions:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**active:** `Optional<Boolean>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service.optionalMergePatchTest(request)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+This endpoint should:
+1. Not NPE when fields are not provided (tests initialization)
+2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.service().optionalMergePatchTest(
+    OptionalMergePatchRequest
+        .builder()
+        .requiredField("requiredField")
+        .optionalString("optionalString")
+        .optionalInteger(1)
+        .optionalBoolean(true)
+        .nullableString("nullableString")
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requiredField:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**optionalString:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**optionalInteger:** `Optional<Integer>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**optionalBoolean:** `Optional<Boolean>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**nullableString:** `Optional<String>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.service.regularPatch(id, request)</code></summary>
 <dl>
 <dd>

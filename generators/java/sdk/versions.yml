@@ -1,3 +1,11 @@
+- version: 2.41.1
+  changelogEntry:
+    - summary: |
+        Fix integer overflow when processing OpenAPI specs with large integer values in examples. Values exceeding Java's Integer range are automatically converted to long type to prevent generation failures.
+      type: fix
+  createdAt: '2025-08-15'
+  irVersion: 58
+
 - version: 2.41.0
   changelogEntry:
     - summary: |

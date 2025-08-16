@@ -44,7 +44,12 @@ describe("ContentType", () => {
             },
             bigint: "1000000",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("postJsonPatchContentWithCharsetType", async () => {
@@ -85,6 +90,11 @@ describe("ContentType", () => {
             },
             bigint: "1000000",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 });

@@ -35,10 +35,15 @@ describe("Playlist", () => {
             },
         });
         expect(response).toEqual({
-            playlist_id: SeedTrace.PlaylistId("playlist_id"),
-            "owner-id": SeedTrace.UserId("owner-id"),
-            name: "name",
-            problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
+            body: {
+                playlist_id: SeedTrace.PlaylistId("playlist_id"),
+                "owner-id": SeedTrace.UserId("owner-id"),
+                name: "name",
+                problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 
@@ -59,20 +64,25 @@ describe("Playlist", () => {
             optionalMultipleField: "optionalMultipleField",
             multipleField: "multipleField",
         });
-        expect(response).toEqual([
-            {
-                playlist_id: SeedTrace.PlaylistId("playlist_id"),
-                "owner-id": SeedTrace.UserId("owner-id"),
-                name: "name",
-                problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
-            },
-            {
-                playlist_id: SeedTrace.PlaylistId("playlist_id"),
-                "owner-id": SeedTrace.UserId("owner-id"),
-                name: "name",
-                problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
-            },
-        ]);
+        expect(response).toEqual({
+            body: [
+                {
+                    playlist_id: SeedTrace.PlaylistId("playlist_id"),
+                    "owner-id": SeedTrace.UserId("owner-id"),
+                    name: "name",
+                    problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
+                },
+                {
+                    playlist_id: SeedTrace.PlaylistId("playlist_id"),
+                    "owner-id": SeedTrace.UserId("owner-id"),
+                    name: "name",
+                    problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
+                },
+            ],
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getPlaylist", async () => {
@@ -95,10 +105,15 @@ describe("Playlist", () => {
 
         const response = await client.playlist.getPlaylist(1, SeedTrace.PlaylistId("playlistId"));
         expect(response).toEqual({
-            playlist_id: SeedTrace.PlaylistId("playlist_id"),
-            "owner-id": SeedTrace.UserId("owner-id"),
-            name: "name",
-            problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
+            body: {
+                playlist_id: SeedTrace.PlaylistId("playlist_id"),
+                "owner-id": SeedTrace.UserId("owner-id"),
+                name: "name",
+                problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 
@@ -126,10 +141,15 @@ describe("Playlist", () => {
             problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
         });
         expect(response).toEqual({
-            playlist_id: SeedTrace.PlaylistId("playlist_id"),
-            "owner-id": SeedTrace.UserId("owner-id"),
-            name: "name",
-            problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
+            body: {
+                playlist_id: SeedTrace.PlaylistId("playlist_id"),
+                "owner-id": SeedTrace.UserId("owner-id"),
+                name: "name",
+                problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 
@@ -140,6 +160,11 @@ describe("Playlist", () => {
         server.mockEndpoint().delete("/v2/playlist/1/playlist_id").respondWith().statusCode(200).build();
 
         const response = await client.playlist.deletePlaylist(1, SeedTrace.PlaylistId("playlist_id"));
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 });

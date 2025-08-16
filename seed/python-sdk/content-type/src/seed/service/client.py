@@ -153,6 +153,115 @@ class ServiceClient:
         )
         return _response.data
 
+    def named_patch_with_mixed(
+        self,
+        id: str,
+        *,
+        app_id: typing.Optional[str] = OMIT,
+        instructions: typing.Optional[str] = OMIT,
+        active: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Named request with mixed optional/nullable fields and merge-patch content type.
+        This should trigger the NPE issue when optional fields aren't initialized.
+
+        Parameters
+        ----------
+        id : str
+
+        app_id : typing.Optional[str]
+
+        instructions : typing.Optional[str]
+
+        active : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import SeedContentTypes
+
+        client = SeedContentTypes(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.named_patch_with_mixed(
+            id="id",
+            app_id="appId",
+            instructions="instructions",
+            active=True,
+        )
+        """
+        _response = self._raw_client.named_patch_with_mixed(
+            id, app_id=app_id, instructions=instructions, active=active, request_options=request_options
+        )
+        return _response.data
+
+    def optional_merge_patch_test(
+        self,
+        *,
+        required_field: str,
+        optional_string: typing.Optional[str] = OMIT,
+        optional_integer: typing.Optional[int] = OMIT,
+        optional_boolean: typing.Optional[bool] = OMIT,
+        nullable_string: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+        This endpoint should:
+        1. Not NPE when fields are not provided (tests initialization)
+        2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
+
+        Parameters
+        ----------
+        required_field : str
+
+        optional_string : typing.Optional[str]
+
+        optional_integer : typing.Optional[int]
+
+        optional_boolean : typing.Optional[bool]
+
+        nullable_string : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import SeedContentTypes
+
+        client = SeedContentTypes(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.optional_merge_patch_test(
+            required_field="requiredField",
+            optional_string="optionalString",
+            optional_integer=1,
+            optional_boolean=True,
+            nullable_string="nullableString",
+        )
+        """
+        _response = self._raw_client.optional_merge_patch_test(
+            required_field=required_field,
+            optional_string=optional_string,
+            optional_integer=optional_integer,
+            optional_boolean=optional_boolean,
+            nullable_string=nullable_string,
+            request_options=request_options,
+        )
+        return _response.data
+
     def regular_patch(
         self,
         id: str,
@@ -353,6 +462,131 @@ class AsyncServiceClient:
             bio=bio,
             profile_image_url=profile_image_url,
             settings=settings,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def named_patch_with_mixed(
+        self,
+        id: str,
+        *,
+        app_id: typing.Optional[str] = OMIT,
+        instructions: typing.Optional[str] = OMIT,
+        active: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Named request with mixed optional/nullable fields and merge-patch content type.
+        This should trigger the NPE issue when optional fields aren't initialized.
+
+        Parameters
+        ----------
+        id : str
+
+        app_id : typing.Optional[str]
+
+        instructions : typing.Optional[str]
+
+        active : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedContentTypes
+
+        client = AsyncSeedContentTypes(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.named_patch_with_mixed(
+                id="id",
+                app_id="appId",
+                instructions="instructions",
+                active=True,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.named_patch_with_mixed(
+            id, app_id=app_id, instructions=instructions, active=active, request_options=request_options
+        )
+        return _response.data
+
+    async def optional_merge_patch_test(
+        self,
+        *,
+        required_field: str,
+        optional_string: typing.Optional[str] = OMIT,
+        optional_integer: typing.Optional[int] = OMIT,
+        optional_boolean: typing.Optional[bool] = OMIT,
+        nullable_string: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+        This endpoint should:
+        1. Not NPE when fields are not provided (tests initialization)
+        2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
+
+        Parameters
+        ----------
+        required_field : str
+
+        optional_string : typing.Optional[str]
+
+        optional_integer : typing.Optional[int]
+
+        optional_boolean : typing.Optional[bool]
+
+        nullable_string : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedContentTypes
+
+        client = AsyncSeedContentTypes(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.optional_merge_patch_test(
+                required_field="requiredField",
+                optional_string="optionalString",
+                optional_integer=1,
+                optional_boolean=True,
+                nullable_string="nullableString",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.optional_merge_patch_test(
+            required_field=required_field,
+            optional_string=optional_string,
+            optional_integer=optional_integer,
+            optional_boolean=optional_boolean,
+            nullable_string=nullable_string,
             request_options=request_options,
         )
         return _response.data

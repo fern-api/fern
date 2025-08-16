@@ -34,28 +34,33 @@ describe("Problem", () => {
             .build();
 
         const response = await client.v2.problem.getLightweightProblems();
-        expect(response).toEqual([
-            {
-                problemId: SeedTrace.ProblemId("problemId"),
-                problemName: "problemName",
-                problemVersion: 1,
-                variableTypes: [
-                    {
-                        type: "integerType",
-                    },
-                ],
-            },
-            {
-                problemId: SeedTrace.ProblemId("problemId"),
-                problemName: "problemName",
-                problemVersion: 1,
-                variableTypes: [
-                    {
-                        type: "integerType",
-                    },
-                ],
-            },
-        ]);
+        expect(response).toEqual({
+            body: [
+                {
+                    problemId: SeedTrace.ProblemId("problemId"),
+                    problemName: "problemName",
+                    problemVersion: 1,
+                    variableTypes: [
+                        {
+                            type: "integerType",
+                        },
+                    ],
+                },
+                {
+                    problemId: SeedTrace.ProblemId("problemId"),
+                    problemName: "problemName",
+                    problemVersion: 1,
+                    variableTypes: [
+                        {
+                            type: "integerType",
+                        },
+                    ],
+                },
+            ],
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getProblems", async () => {
@@ -391,145 +396,70 @@ describe("Problem", () => {
             .build();
 
         const response = await client.v2.problem.getProblems();
-        expect(response).toEqual([
-            {
-                problemId: SeedTrace.ProblemId("problemId"),
-                problemDescription: {
-                    boards: [
-                        {
-                            type: "html",
-                            value: "boards",
-                        },
-                        {
-                            type: "html",
-                            value: "boards",
-                        },
-                    ],
-                },
-                problemName: "problemName",
-                problemVersion: 1,
-                supportedLanguages: ["JAVA"],
-                customFiles: {
-                    type: "basic",
-                    methodName: "methodName",
-                    signature: {
-                        parameters: [
+        expect(response).toEqual({
+            body: [
+                {
+                    problemId: SeedTrace.ProblemId("problemId"),
+                    problemDescription: {
+                        boards: [
                             {
-                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                                name: "name",
-                                variableType: {
-                                    type: "integerType",
-                                },
+                                type: "html",
+                                value: "boards",
                             },
                             {
-                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                                name: "name",
-                                variableType: {
-                                    type: "integerType",
-                                },
+                                type: "html",
+                                value: "boards",
                             },
                         ],
-                        returnType: {
-                            type: "integerType",
-                        },
                     },
-                    additionalFiles: {
-                        ["JAVA"]: {
-                            files: [
+                    problemName: "problemName",
+                    problemVersion: 1,
+                    supportedLanguages: ["JAVA"],
+                    customFiles: {
+                        type: "basic",
+                        methodName: "methodName",
+                        signature: {
+                            parameters: [
                                 {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
+                                    parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                    name: "name",
+                                    variableType: {
+                                        type: "integerType",
+                                    },
                                 },
                                 {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
+                                    parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                    name: "name",
+                                    variableType: {
+                                        type: "integerType",
+                                    },
                                 },
                             ],
+                            returnType: {
+                                type: "integerType",
+                            },
                         },
-                    },
-                    basicTestCaseTemplate: {
-                        templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
-                        name: "name",
-                        description: {
-                            boards: [
-                                {
-                                    type: "html",
-                                    value: "boards",
-                                },
-                                {
-                                    type: "html",
-                                    value: "boards",
-                                },
-                            ],
+                        additionalFiles: {
+                            ["JAVA"]: {
+                                files: [
+                                    {
+                                        filename: "filename",
+                                        directory: "directory",
+                                        contents: "contents",
+                                        editable: true,
+                                    },
+                                    {
+                                        filename: "filename",
+                                        directory: "directory",
+                                        contents: "contents",
+                                        editable: true,
+                                    },
+                                ],
+                            },
                         },
-                        expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
-                    },
-                },
-                generatedFiles: {
-                    generatedTestCaseFiles: {
-                        ["JAVA"]: {
-                            files: [
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                            ],
-                        },
-                    },
-                    generatedTemplateFiles: {
-                        ["JAVA"]: {
-                            files: [
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                            ],
-                        },
-                    },
-                    other: {
-                        ["JAVA"]: {
-                            files: [
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                            ],
-                        },
-                    },
-                },
-                customTestCaseTemplates: [
-                    {
-                        templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
-                        name: "name",
-                        implementation: {
+                        basicTestCaseTemplate: {
+                            templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
+                            name: "name",
                             description: {
                                 boards: [
                                     {
@@ -542,285 +472,285 @@ describe("Problem", () => {
                                     },
                                 ],
                             },
-                            function: {
-                                type: "withActualResult",
-                                getActualResult: {
-                                    signature: {
-                                        parameters: [
-                                            {
-                                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                                                name: "name",
-                                                variableType: {
-                                                    type: "integerType",
-                                                },
-                                            },
-                                            {
-                                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                                                name: "name",
-                                                variableType: {
-                                                    type: "integerType",
-                                                },
-                                            },
-                                        ],
-                                        returnType: {
-                                            type: "integerType",
-                                        },
-                                    },
-                                    code: {
-                                        codeByLanguage: {
-                                            ["JAVA"]: {
-                                                impl: "impl",
-                                                imports: undefined,
-                                            },
-                                        },
-                                    },
-                                },
-                                assertCorrectnessCheck: {
-                                    type: "deepEquality",
-                                    expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
-                                },
-                            },
+                            expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
                         },
                     },
-                    {
-                        templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
-                        name: "name",
-                        implementation: {
-                            description: {
-                                boards: [
+                    generatedFiles: {
+                        generatedTestCaseFiles: {
+                            ["JAVA"]: {
+                                files: [
                                     {
-                                        type: "html",
-                                        value: "boards",
+                                        filename: "filename",
+                                        directory: "directory",
+                                        contents: "contents",
+                                        editable: true,
                                     },
                                     {
-                                        type: "html",
-                                        value: "boards",
+                                        filename: "filename",
+                                        directory: "directory",
+                                        contents: "contents",
+                                        editable: true,
                                     },
                                 ],
                             },
-                            function: {
-                                type: "withActualResult",
-                                getActualResult: {
-                                    signature: {
-                                        parameters: [
-                                            {
-                                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                                                name: "name",
-                                                variableType: {
-                                                    type: "integerType",
+                        },
+                        generatedTemplateFiles: {
+                            ["JAVA"]: {
+                                files: [
+                                    {
+                                        filename: "filename",
+                                        directory: "directory",
+                                        contents: "contents",
+                                        editable: true,
+                                    },
+                                    {
+                                        filename: "filename",
+                                        directory: "directory",
+                                        contents: "contents",
+                                        editable: true,
+                                    },
+                                ],
+                            },
+                        },
+                        other: {
+                            ["JAVA"]: {
+                                files: [
+                                    {
+                                        filename: "filename",
+                                        directory: "directory",
+                                        contents: "contents",
+                                        editable: true,
+                                    },
+                                    {
+                                        filename: "filename",
+                                        directory: "directory",
+                                        contents: "contents",
+                                        editable: true,
+                                    },
+                                ],
+                            },
+                        },
+                    },
+                    customTestCaseTemplates: [
+                        {
+                            templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
+                            name: "name",
+                            implementation: {
+                                description: {
+                                    boards: [
+                                        {
+                                            type: "html",
+                                            value: "boards",
+                                        },
+                                        {
+                                            type: "html",
+                                            value: "boards",
+                                        },
+                                    ],
+                                },
+                                function: {
+                                    type: "withActualResult",
+                                    getActualResult: {
+                                        signature: {
+                                            parameters: [
+                                                {
+                                                    parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                                    name: "name",
+                                                    variableType: {
+                                                        type: "integerType",
+                                                    },
+                                                },
+                                                {
+                                                    parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                                    name: "name",
+                                                    variableType: {
+                                                        type: "integerType",
+                                                    },
+                                                },
+                                            ],
+                                            returnType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                        code: {
+                                            codeByLanguage: {
+                                                ["JAVA"]: {
+                                                    impl: "impl",
+                                                    imports: undefined,
                                                 },
                                             },
-                                            {
-                                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                                                name: "name",
-                                                variableType: {
-                                                    type: "integerType",
+                                        },
+                                    },
+                                    assertCorrectnessCheck: {
+                                        type: "deepEquality",
+                                        expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
+                                    },
+                                },
+                            },
+                        },
+                        {
+                            templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
+                            name: "name",
+                            implementation: {
+                                description: {
+                                    boards: [
+                                        {
+                                            type: "html",
+                                            value: "boards",
+                                        },
+                                        {
+                                            type: "html",
+                                            value: "boards",
+                                        },
+                                    ],
+                                },
+                                function: {
+                                    type: "withActualResult",
+                                    getActualResult: {
+                                        signature: {
+                                            parameters: [
+                                                {
+                                                    parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                                    name: "name",
+                                                    variableType: {
+                                                        type: "integerType",
+                                                    },
+                                                },
+                                                {
+                                                    parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                                    name: "name",
+                                                    variableType: {
+                                                        type: "integerType",
+                                                    },
+                                                },
+                                            ],
+                                            returnType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                        code: {
+                                            codeByLanguage: {
+                                                ["JAVA"]: {
+                                                    impl: "impl",
+                                                    imports: undefined,
                                                 },
                                             },
-                                        ],
-                                        returnType: {
-                                            type: "integerType",
                                         },
                                     },
-                                    code: {
-                                        codeByLanguage: {
-                                            ["JAVA"]: {
-                                                impl: "impl",
-                                                imports: undefined,
-                                            },
-                                        },
+                                    assertCorrectnessCheck: {
+                                        type: "deepEquality",
+                                        expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
                                     },
                                 },
-                                assertCorrectnessCheck: {
-                                    type: "deepEquality",
-                                    expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
-                                },
                             },
-                        },
-                    },
-                ],
-                testcases: [
-                    {
-                        metadata: {
-                            id: SeedTrace.v2.TestCaseId("id"),
-                            name: "name",
-                            hidden: true,
-                        },
-                        implementation: {
-                            type: "templateId",
-                            value: SeedTrace.v2.TestCaseTemplateId("implementation"),
-                        },
-                        arguments: {
-                            arguments: {
-                                type: "integerValue",
-                                value: 1,
-                            },
-                        },
-                        expects: {
-                            expectedStdout: "expectedStdout",
-                        },
-                    },
-                    {
-                        metadata: {
-                            id: SeedTrace.v2.TestCaseId("id"),
-                            name: "name",
-                            hidden: true,
-                        },
-                        implementation: {
-                            type: "templateId",
-                            value: SeedTrace.v2.TestCaseTemplateId("implementation"),
-                        },
-                        arguments: {
-                            arguments: {
-                                type: "integerValue",
-                                value: 1,
-                            },
-                        },
-                        expects: {
-                            expectedStdout: "expectedStdout",
-                        },
-                    },
-                ],
-                isPublic: true,
-            },
-            {
-                problemId: SeedTrace.ProblemId("problemId"),
-                problemDescription: {
-                    boards: [
-                        {
-                            type: "html",
-                            value: "boards",
-                        },
-                        {
-                            type: "html",
-                            value: "boards",
                         },
                     ],
-                },
-                problemName: "problemName",
-                problemVersion: 1,
-                supportedLanguages: ["JAVA"],
-                customFiles: {
-                    type: "basic",
-                    methodName: "methodName",
-                    signature: {
-                        parameters: [
-                            {
-                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                    testcases: [
+                        {
+                            metadata: {
+                                id: SeedTrace.v2.TestCaseId("id"),
                                 name: "name",
-                                variableType: {
-                                    type: "integerType",
+                                hidden: true,
+                            },
+                            implementation: {
+                                type: "templateId",
+                                value: SeedTrace.v2.TestCaseTemplateId("implementation"),
+                            },
+                            arguments: {
+                                arguments: {
+                                    type: "integerValue",
+                                    value: 1,
                                 },
                             },
-                            {
-                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                            expects: {
+                                expectedStdout: "expectedStdout",
+                            },
+                        },
+                        {
+                            metadata: {
+                                id: SeedTrace.v2.TestCaseId("id"),
                                 name: "name",
-                                variableType: {
-                                    type: "integerType",
+                                hidden: true,
+                            },
+                            implementation: {
+                                type: "templateId",
+                                value: SeedTrace.v2.TestCaseTemplateId("implementation"),
+                            },
+                            arguments: {
+                                arguments: {
+                                    type: "integerValue",
+                                    value: 1,
                                 },
+                            },
+                            expects: {
+                                expectedStdout: "expectedStdout",
+                            },
+                        },
+                    ],
+                    isPublic: true,
+                },
+                {
+                    problemId: SeedTrace.ProblemId("problemId"),
+                    problemDescription: {
+                        boards: [
+                            {
+                                type: "html",
+                                value: "boards",
+                            },
+                            {
+                                type: "html",
+                                value: "boards",
                             },
                         ],
-                        returnType: {
-                            type: "integerType",
-                        },
                     },
-                    additionalFiles: {
-                        ["JAVA"]: {
-                            files: [
+                    problemName: "problemName",
+                    problemVersion: 1,
+                    supportedLanguages: ["JAVA"],
+                    customFiles: {
+                        type: "basic",
+                        methodName: "methodName",
+                        signature: {
+                            parameters: [
                                 {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
+                                    parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                    name: "name",
+                                    variableType: {
+                                        type: "integerType",
+                                    },
                                 },
                                 {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
+                                    parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                    name: "name",
+                                    variableType: {
+                                        type: "integerType",
+                                    },
                                 },
                             ],
+                            returnType: {
+                                type: "integerType",
+                            },
                         },
-                    },
-                    basicTestCaseTemplate: {
-                        templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
-                        name: "name",
-                        description: {
-                            boards: [
-                                {
-                                    type: "html",
-                                    value: "boards",
-                                },
-                                {
-                                    type: "html",
-                                    value: "boards",
-                                },
-                            ],
+                        additionalFiles: {
+                            ["JAVA"]: {
+                                files: [
+                                    {
+                                        filename: "filename",
+                                        directory: "directory",
+                                        contents: "contents",
+                                        editable: true,
+                                    },
+                                    {
+                                        filename: "filename",
+                                        directory: "directory",
+                                        contents: "contents",
+                                        editable: true,
+                                    },
+                                ],
+                            },
                         },
-                        expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
-                    },
-                },
-                generatedFiles: {
-                    generatedTestCaseFiles: {
-                        ["JAVA"]: {
-                            files: [
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                            ],
-                        },
-                    },
-                    generatedTemplateFiles: {
-                        ["JAVA"]: {
-                            files: [
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                            ],
-                        },
-                    },
-                    other: {
-                        ["JAVA"]: {
-                            files: [
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                            ],
-                        },
-                    },
-                },
-                customTestCaseTemplates: [
-                    {
-                        templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
-                        name: "name",
-                        implementation: {
+                        basicTestCaseTemplate: {
+                            templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
+                            name: "name",
                             description: {
                                 boards: [
                                     {
@@ -833,148 +763,228 @@ describe("Problem", () => {
                                     },
                                 ],
                             },
-                            function: {
-                                type: "withActualResult",
-                                getActualResult: {
-                                    signature: {
-                                        parameters: [
-                                            {
-                                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                                                name: "name",
-                                                variableType: {
-                                                    type: "integerType",
-                                                },
-                                            },
-                                            {
-                                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                                                name: "name",
-                                                variableType: {
-                                                    type: "integerType",
-                                                },
-                                            },
-                                        ],
-                                        returnType: {
-                                            type: "integerType",
-                                        },
-                                    },
-                                    code: {
-                                        codeByLanguage: {
-                                            ["JAVA"]: {
-                                                impl: "impl",
-                                                imports: undefined,
-                                            },
-                                        },
-                                    },
-                                },
-                                assertCorrectnessCheck: {
-                                    type: "deepEquality",
-                                    expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
-                                },
-                            },
+                            expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
                         },
                     },
-                    {
-                        templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
-                        name: "name",
-                        implementation: {
-                            description: {
-                                boards: [
+                    generatedFiles: {
+                        generatedTestCaseFiles: {
+                            ["JAVA"]: {
+                                files: [
                                     {
-                                        type: "html",
-                                        value: "boards",
+                                        filename: "filename",
+                                        directory: "directory",
+                                        contents: "contents",
+                                        editable: true,
                                     },
                                     {
-                                        type: "html",
-                                        value: "boards",
+                                        filename: "filename",
+                                        directory: "directory",
+                                        contents: "contents",
+                                        editable: true,
                                     },
                                 ],
                             },
-                            function: {
-                                type: "withActualResult",
-                                getActualResult: {
-                                    signature: {
-                                        parameters: [
-                                            {
-                                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                                                name: "name",
-                                                variableType: {
-                                                    type: "integerType",
+                        },
+                        generatedTemplateFiles: {
+                            ["JAVA"]: {
+                                files: [
+                                    {
+                                        filename: "filename",
+                                        directory: "directory",
+                                        contents: "contents",
+                                        editable: true,
+                                    },
+                                    {
+                                        filename: "filename",
+                                        directory: "directory",
+                                        contents: "contents",
+                                        editable: true,
+                                    },
+                                ],
+                            },
+                        },
+                        other: {
+                            ["JAVA"]: {
+                                files: [
+                                    {
+                                        filename: "filename",
+                                        directory: "directory",
+                                        contents: "contents",
+                                        editable: true,
+                                    },
+                                    {
+                                        filename: "filename",
+                                        directory: "directory",
+                                        contents: "contents",
+                                        editable: true,
+                                    },
+                                ],
+                            },
+                        },
+                    },
+                    customTestCaseTemplates: [
+                        {
+                            templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
+                            name: "name",
+                            implementation: {
+                                description: {
+                                    boards: [
+                                        {
+                                            type: "html",
+                                            value: "boards",
+                                        },
+                                        {
+                                            type: "html",
+                                            value: "boards",
+                                        },
+                                    ],
+                                },
+                                function: {
+                                    type: "withActualResult",
+                                    getActualResult: {
+                                        signature: {
+                                            parameters: [
+                                                {
+                                                    parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                                    name: "name",
+                                                    variableType: {
+                                                        type: "integerType",
+                                                    },
+                                                },
+                                                {
+                                                    parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                                    name: "name",
+                                                    variableType: {
+                                                        type: "integerType",
+                                                    },
+                                                },
+                                            ],
+                                            returnType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                        code: {
+                                            codeByLanguage: {
+                                                ["JAVA"]: {
+                                                    impl: "impl",
+                                                    imports: undefined,
                                                 },
                                             },
-                                            {
-                                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                                                name: "name",
-                                                variableType: {
-                                                    type: "integerType",
+                                        },
+                                    },
+                                    assertCorrectnessCheck: {
+                                        type: "deepEquality",
+                                        expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
+                                    },
+                                },
+                            },
+                        },
+                        {
+                            templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
+                            name: "name",
+                            implementation: {
+                                description: {
+                                    boards: [
+                                        {
+                                            type: "html",
+                                            value: "boards",
+                                        },
+                                        {
+                                            type: "html",
+                                            value: "boards",
+                                        },
+                                    ],
+                                },
+                                function: {
+                                    type: "withActualResult",
+                                    getActualResult: {
+                                        signature: {
+                                            parameters: [
+                                                {
+                                                    parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                                    name: "name",
+                                                    variableType: {
+                                                        type: "integerType",
+                                                    },
+                                                },
+                                                {
+                                                    parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                                    name: "name",
+                                                    variableType: {
+                                                        type: "integerType",
+                                                    },
+                                                },
+                                            ],
+                                            returnType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                        code: {
+                                            codeByLanguage: {
+                                                ["JAVA"]: {
+                                                    impl: "impl",
+                                                    imports: undefined,
                                                 },
                                             },
-                                        ],
-                                        returnType: {
-                                            type: "integerType",
                                         },
                                     },
-                                    code: {
-                                        codeByLanguage: {
-                                            ["JAVA"]: {
-                                                impl: "impl",
-                                                imports: undefined,
-                                            },
-                                        },
+                                    assertCorrectnessCheck: {
+                                        type: "deepEquality",
+                                        expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
                                     },
                                 },
-                                assertCorrectnessCheck: {
-                                    type: "deepEquality",
-                                    expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
+                            },
+                        },
+                    ],
+                    testcases: [
+                        {
+                            metadata: {
+                                id: SeedTrace.v2.TestCaseId("id"),
+                                name: "name",
+                                hidden: true,
+                            },
+                            implementation: {
+                                type: "templateId",
+                                value: SeedTrace.v2.TestCaseTemplateId("implementation"),
+                            },
+                            arguments: {
+                                arguments: {
+                                    type: "integerValue",
+                                    value: 1,
                                 },
                             },
-                        },
-                    },
-                ],
-                testcases: [
-                    {
-                        metadata: {
-                            id: SeedTrace.v2.TestCaseId("id"),
-                            name: "name",
-                            hidden: true,
-                        },
-                        implementation: {
-                            type: "templateId",
-                            value: SeedTrace.v2.TestCaseTemplateId("implementation"),
-                        },
-                        arguments: {
-                            arguments: {
-                                type: "integerValue",
-                                value: 1,
+                            expects: {
+                                expectedStdout: "expectedStdout",
                             },
                         },
-                        expects: {
-                            expectedStdout: "expectedStdout",
-                        },
-                    },
-                    {
-                        metadata: {
-                            id: SeedTrace.v2.TestCaseId("id"),
-                            name: "name",
-                            hidden: true,
-                        },
-                        implementation: {
-                            type: "templateId",
-                            value: SeedTrace.v2.TestCaseTemplateId("implementation"),
-                        },
-                        arguments: {
+                        {
+                            metadata: {
+                                id: SeedTrace.v2.TestCaseId("id"),
+                                name: "name",
+                                hidden: true,
+                            },
+                            implementation: {
+                                type: "templateId",
+                                value: SeedTrace.v2.TestCaseTemplateId("implementation"),
+                            },
                             arguments: {
-                                type: "integerValue",
-                                value: 1,
+                                arguments: {
+                                    type: "integerValue",
+                                    value: 1,
+                                },
+                            },
+                            expects: {
+                                expectedStdout: "expectedStdout",
                             },
                         },
-                        expects: {
-                            expectedStdout: "expectedStdout",
-                        },
-                    },
-                ],
-                isPublic: true,
-            },
-        ]);
+                    ],
+                    isPublic: true,
+                },
+            ],
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getLatestProblem", async () => {
@@ -1150,143 +1160,68 @@ describe("Problem", () => {
 
         const response = await client.v2.problem.getLatestProblem(SeedTrace.ProblemId("problemId"));
         expect(response).toEqual({
-            problemId: SeedTrace.ProblemId("problemId"),
-            problemDescription: {
-                boards: [
-                    {
-                        type: "html",
-                        value: "boards",
-                    },
-                    {
-                        type: "html",
-                        value: "boards",
-                    },
-                ],
-            },
-            problemName: "problemName",
-            problemVersion: 1,
-            supportedLanguages: ["JAVA"],
-            customFiles: {
-                type: "basic",
-                methodName: "methodName",
-                signature: {
-                    parameters: [
+            body: {
+                problemId: SeedTrace.ProblemId("problemId"),
+                problemDescription: {
+                    boards: [
                         {
-                            parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                            name: "name",
-                            variableType: {
-                                type: "integerType",
-                            },
+                            type: "html",
+                            value: "boards",
                         },
                         {
-                            parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                            name: "name",
-                            variableType: {
-                                type: "integerType",
-                            },
+                            type: "html",
+                            value: "boards",
                         },
                     ],
-                    returnType: {
-                        type: "integerType",
-                    },
                 },
-                additionalFiles: {
-                    ["JAVA"]: {
-                        files: [
+                problemName: "problemName",
+                problemVersion: 1,
+                supportedLanguages: ["JAVA"],
+                customFiles: {
+                    type: "basic",
+                    methodName: "methodName",
+                    signature: {
+                        parameters: [
                             {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
+                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                name: "name",
+                                variableType: {
+                                    type: "integerType",
+                                },
                             },
                             {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
+                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                name: "name",
+                                variableType: {
+                                    type: "integerType",
+                                },
                             },
                         ],
+                        returnType: {
+                            type: "integerType",
+                        },
                     },
-                },
-                basicTestCaseTemplate: {
-                    templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
-                    name: "name",
-                    description: {
-                        boards: [
-                            {
-                                type: "html",
-                                value: "boards",
-                            },
-                            {
-                                type: "html",
-                                value: "boards",
-                            },
-                        ],
+                    additionalFiles: {
+                        ["JAVA"]: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
                     },
-                    expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
-                },
-            },
-            generatedFiles: {
-                generatedTestCaseFiles: {
-                    ["JAVA"]: {
-                        files: [
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                        ],
-                    },
-                },
-                generatedTemplateFiles: {
-                    ["JAVA"]: {
-                        files: [
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                        ],
-                    },
-                },
-                other: {
-                    ["JAVA"]: {
-                        files: [
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                        ],
-                    },
-                },
-            },
-            customTestCaseTemplates: [
-                {
-                    templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
-                    name: "name",
-                    implementation: {
+                    basicTestCaseTemplate: {
+                        templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
+                        name: "name",
                         description: {
                             boards: [
                                 {
@@ -1299,146 +1234,226 @@ describe("Problem", () => {
                                 },
                             ],
                         },
-                        function: {
-                            type: "withActualResult",
-                            getActualResult: {
-                                signature: {
-                                    parameters: [
-                                        {
-                                            parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                                            name: "name",
-                                            variableType: {
-                                                type: "integerType",
-                                            },
-                                        },
-                                        {
-                                            parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                                            name: "name",
-                                            variableType: {
-                                                type: "integerType",
-                                            },
-                                        },
-                                    ],
-                                    returnType: {
-                                        type: "integerType",
-                                    },
-                                },
-                                code: {
-                                    codeByLanguage: {
-                                        ["JAVA"]: {
-                                            impl: "impl",
-                                            imports: "imports",
-                                        },
-                                    },
-                                },
-                            },
-                            assertCorrectnessCheck: {
-                                type: "deepEquality",
-                                expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
-                            },
-                        },
+                        expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
                     },
                 },
-                {
-                    templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
-                    name: "name",
-                    implementation: {
-                        description: {
-                            boards: [
+                generatedFiles: {
+                    generatedTestCaseFiles: {
+                        ["JAVA"]: {
+                            files: [
                                 {
-                                    type: "html",
-                                    value: "boards",
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
                                 },
                                 {
-                                    type: "html",
-                                    value: "boards",
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
                                 },
                             ],
                         },
-                        function: {
-                            type: "withActualResult",
-                            getActualResult: {
-                                signature: {
-                                    parameters: [
-                                        {
-                                            parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                                            name: "name",
-                                            variableType: {
-                                                type: "integerType",
+                    },
+                    generatedTemplateFiles: {
+                        ["JAVA"]: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                    other: {
+                        ["JAVA"]: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                },
+                customTestCaseTemplates: [
+                    {
+                        templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
+                        name: "name",
+                        implementation: {
+                            description: {
+                                boards: [
+                                    {
+                                        type: "html",
+                                        value: "boards",
+                                    },
+                                    {
+                                        type: "html",
+                                        value: "boards",
+                                    },
+                                ],
+                            },
+                            function: {
+                                type: "withActualResult",
+                                getActualResult: {
+                                    signature: {
+                                        parameters: [
+                                            {
+                                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                            {
+                                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                        ],
+                                        returnType: {
+                                            type: "integerType",
+                                        },
+                                    },
+                                    code: {
+                                        codeByLanguage: {
+                                            ["JAVA"]: {
+                                                impl: "impl",
+                                                imports: "imports",
                                             },
                                         },
-                                        {
-                                            parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                                            name: "name",
-                                            variableType: {
-                                                type: "integerType",
+                                    },
+                                },
+                                assertCorrectnessCheck: {
+                                    type: "deepEquality",
+                                    expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
+                                },
+                            },
+                        },
+                    },
+                    {
+                        templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
+                        name: "name",
+                        implementation: {
+                            description: {
+                                boards: [
+                                    {
+                                        type: "html",
+                                        value: "boards",
+                                    },
+                                    {
+                                        type: "html",
+                                        value: "boards",
+                                    },
+                                ],
+                            },
+                            function: {
+                                type: "withActualResult",
+                                getActualResult: {
+                                    signature: {
+                                        parameters: [
+                                            {
+                                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                            {
+                                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                        ],
+                                        returnType: {
+                                            type: "integerType",
+                                        },
+                                    },
+                                    code: {
+                                        codeByLanguage: {
+                                            ["JAVA"]: {
+                                                impl: "impl",
+                                                imports: "imports",
                                             },
                                         },
-                                    ],
-                                    returnType: {
-                                        type: "integerType",
                                     },
                                 },
-                                code: {
-                                    codeByLanguage: {
-                                        ["JAVA"]: {
-                                            impl: "impl",
-                                            imports: "imports",
-                                        },
-                                    },
+                                assertCorrectnessCheck: {
+                                    type: "deepEquality",
+                                    expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
                                 },
                             },
-                            assertCorrectnessCheck: {
-                                type: "deepEquality",
-                                expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
+                        },
+                    },
+                ],
+                testcases: [
+                    {
+                        metadata: {
+                            id: SeedTrace.v2.TestCaseId("id"),
+                            name: "name",
+                            hidden: true,
+                        },
+                        implementation: {
+                            type: "templateId",
+                            value: SeedTrace.v2.TestCaseTemplateId("implementation"),
+                        },
+                        arguments: {
+                            arguments: {
+                                type: "integerValue",
+                                value: 1,
                             },
                         },
-                    },
-                },
-            ],
-            testcases: [
-                {
-                    metadata: {
-                        id: SeedTrace.v2.TestCaseId("id"),
-                        name: "name",
-                        hidden: true,
-                    },
-                    implementation: {
-                        type: "templateId",
-                        value: SeedTrace.v2.TestCaseTemplateId("implementation"),
-                    },
-                    arguments: {
-                        arguments: {
-                            type: "integerValue",
-                            value: 1,
+                        expects: {
+                            expectedStdout: "expectedStdout",
                         },
                     },
-                    expects: {
-                        expectedStdout: "expectedStdout",
-                    },
-                },
-                {
-                    metadata: {
-                        id: SeedTrace.v2.TestCaseId("id"),
-                        name: "name",
-                        hidden: true,
-                    },
-                    implementation: {
-                        type: "templateId",
-                        value: SeedTrace.v2.TestCaseTemplateId("implementation"),
-                    },
-                    arguments: {
+                    {
+                        metadata: {
+                            id: SeedTrace.v2.TestCaseId("id"),
+                            name: "name",
+                            hidden: true,
+                        },
+                        implementation: {
+                            type: "templateId",
+                            value: SeedTrace.v2.TestCaseTemplateId("implementation"),
+                        },
                         arguments: {
-                            type: "integerValue",
-                            value: 1,
+                            arguments: {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                        },
+                        expects: {
+                            expectedStdout: "expectedStdout",
                         },
                     },
-                    expects: {
-                        expectedStdout: "expectedStdout",
-                    },
-                },
-            ],
-            isPublic: true,
+                ],
+                isPublic: true,
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 
@@ -1615,143 +1630,68 @@ describe("Problem", () => {
 
         const response = await client.v2.problem.getProblemVersion(SeedTrace.ProblemId("problemId"), 1);
         expect(response).toEqual({
-            problemId: SeedTrace.ProblemId("problemId"),
-            problemDescription: {
-                boards: [
-                    {
-                        type: "html",
-                        value: "boards",
-                    },
-                    {
-                        type: "html",
-                        value: "boards",
-                    },
-                ],
-            },
-            problemName: "problemName",
-            problemVersion: 1,
-            supportedLanguages: ["JAVA"],
-            customFiles: {
-                type: "basic",
-                methodName: "methodName",
-                signature: {
-                    parameters: [
+            body: {
+                problemId: SeedTrace.ProblemId("problemId"),
+                problemDescription: {
+                    boards: [
                         {
-                            parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                            name: "name",
-                            variableType: {
-                                type: "integerType",
-                            },
+                            type: "html",
+                            value: "boards",
                         },
                         {
-                            parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                            name: "name",
-                            variableType: {
-                                type: "integerType",
-                            },
+                            type: "html",
+                            value: "boards",
                         },
                     ],
-                    returnType: {
-                        type: "integerType",
-                    },
                 },
-                additionalFiles: {
-                    ["JAVA"]: {
-                        files: [
+                problemName: "problemName",
+                problemVersion: 1,
+                supportedLanguages: ["JAVA"],
+                customFiles: {
+                    type: "basic",
+                    methodName: "methodName",
+                    signature: {
+                        parameters: [
                             {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
+                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                name: "name",
+                                variableType: {
+                                    type: "integerType",
+                                },
                             },
                             {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
+                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                name: "name",
+                                variableType: {
+                                    type: "integerType",
+                                },
                             },
                         ],
+                        returnType: {
+                            type: "integerType",
+                        },
                     },
-                },
-                basicTestCaseTemplate: {
-                    templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
-                    name: "name",
-                    description: {
-                        boards: [
-                            {
-                                type: "html",
-                                value: "boards",
-                            },
-                            {
-                                type: "html",
-                                value: "boards",
-                            },
-                        ],
+                    additionalFiles: {
+                        ["JAVA"]: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
                     },
-                    expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
-                },
-            },
-            generatedFiles: {
-                generatedTestCaseFiles: {
-                    ["JAVA"]: {
-                        files: [
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                        ],
-                    },
-                },
-                generatedTemplateFiles: {
-                    ["JAVA"]: {
-                        files: [
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                        ],
-                    },
-                },
-                other: {
-                    ["JAVA"]: {
-                        files: [
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                        ],
-                    },
-                },
-            },
-            customTestCaseTemplates: [
-                {
-                    templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
-                    name: "name",
-                    implementation: {
+                    basicTestCaseTemplate: {
+                        templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
+                        name: "name",
                         description: {
                             boards: [
                                 {
@@ -1764,146 +1704,226 @@ describe("Problem", () => {
                                 },
                             ],
                         },
-                        function: {
-                            type: "withActualResult",
-                            getActualResult: {
-                                signature: {
-                                    parameters: [
-                                        {
-                                            parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                                            name: "name",
-                                            variableType: {
-                                                type: "integerType",
-                                            },
-                                        },
-                                        {
-                                            parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                                            name: "name",
-                                            variableType: {
-                                                type: "integerType",
-                                            },
-                                        },
-                                    ],
-                                    returnType: {
-                                        type: "integerType",
-                                    },
-                                },
-                                code: {
-                                    codeByLanguage: {
-                                        ["JAVA"]: {
-                                            impl: "impl",
-                                            imports: "imports",
-                                        },
-                                    },
-                                },
-                            },
-                            assertCorrectnessCheck: {
-                                type: "deepEquality",
-                                expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
-                            },
-                        },
+                        expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
                     },
                 },
-                {
-                    templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
-                    name: "name",
-                    implementation: {
-                        description: {
-                            boards: [
+                generatedFiles: {
+                    generatedTestCaseFiles: {
+                        ["JAVA"]: {
+                            files: [
                                 {
-                                    type: "html",
-                                    value: "boards",
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
                                 },
                                 {
-                                    type: "html",
-                                    value: "boards",
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
                                 },
                             ],
                         },
-                        function: {
-                            type: "withActualResult",
-                            getActualResult: {
-                                signature: {
-                                    parameters: [
-                                        {
-                                            parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                                            name: "name",
-                                            variableType: {
-                                                type: "integerType",
+                    },
+                    generatedTemplateFiles: {
+                        ["JAVA"]: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                    other: {
+                        ["JAVA"]: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                },
+                customTestCaseTemplates: [
+                    {
+                        templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
+                        name: "name",
+                        implementation: {
+                            description: {
+                                boards: [
+                                    {
+                                        type: "html",
+                                        value: "boards",
+                                    },
+                                    {
+                                        type: "html",
+                                        value: "boards",
+                                    },
+                                ],
+                            },
+                            function: {
+                                type: "withActualResult",
+                                getActualResult: {
+                                    signature: {
+                                        parameters: [
+                                            {
+                                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                            {
+                                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                        ],
+                                        returnType: {
+                                            type: "integerType",
+                                        },
+                                    },
+                                    code: {
+                                        codeByLanguage: {
+                                            ["JAVA"]: {
+                                                impl: "impl",
+                                                imports: "imports",
                                             },
                                         },
-                                        {
-                                            parameterId: SeedTrace.v2.ParameterId("parameterId"),
-                                            name: "name",
-                                            variableType: {
-                                                type: "integerType",
+                                    },
+                                },
+                                assertCorrectnessCheck: {
+                                    type: "deepEquality",
+                                    expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
+                                },
+                            },
+                        },
+                    },
+                    {
+                        templateId: SeedTrace.v2.TestCaseTemplateId("templateId"),
+                        name: "name",
+                        implementation: {
+                            description: {
+                                boards: [
+                                    {
+                                        type: "html",
+                                        value: "boards",
+                                    },
+                                    {
+                                        type: "html",
+                                        value: "boards",
+                                    },
+                                ],
+                            },
+                            function: {
+                                type: "withActualResult",
+                                getActualResult: {
+                                    signature: {
+                                        parameters: [
+                                            {
+                                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                            {
+                                                parameterId: SeedTrace.v2.ParameterId("parameterId"),
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                        ],
+                                        returnType: {
+                                            type: "integerType",
+                                        },
+                                    },
+                                    code: {
+                                        codeByLanguage: {
+                                            ["JAVA"]: {
+                                                impl: "impl",
+                                                imports: "imports",
                                             },
                                         },
-                                    ],
-                                    returnType: {
-                                        type: "integerType",
                                     },
                                 },
-                                code: {
-                                    codeByLanguage: {
-                                        ["JAVA"]: {
-                                            impl: "impl",
-                                            imports: "imports",
-                                        },
-                                    },
+                                assertCorrectnessCheck: {
+                                    type: "deepEquality",
+                                    expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
                                 },
                             },
-                            assertCorrectnessCheck: {
-                                type: "deepEquality",
-                                expectedValueParameterId: SeedTrace.v2.ParameterId("expectedValueParameterId"),
+                        },
+                    },
+                ],
+                testcases: [
+                    {
+                        metadata: {
+                            id: SeedTrace.v2.TestCaseId("id"),
+                            name: "name",
+                            hidden: true,
+                        },
+                        implementation: {
+                            type: "templateId",
+                            value: SeedTrace.v2.TestCaseTemplateId("implementation"),
+                        },
+                        arguments: {
+                            arguments: {
+                                type: "integerValue",
+                                value: 1,
                             },
                         },
-                    },
-                },
-            ],
-            testcases: [
-                {
-                    metadata: {
-                        id: SeedTrace.v2.TestCaseId("id"),
-                        name: "name",
-                        hidden: true,
-                    },
-                    implementation: {
-                        type: "templateId",
-                        value: SeedTrace.v2.TestCaseTemplateId("implementation"),
-                    },
-                    arguments: {
-                        arguments: {
-                            type: "integerValue",
-                            value: 1,
+                        expects: {
+                            expectedStdout: "expectedStdout",
                         },
                     },
-                    expects: {
-                        expectedStdout: "expectedStdout",
-                    },
-                },
-                {
-                    metadata: {
-                        id: SeedTrace.v2.TestCaseId("id"),
-                        name: "name",
-                        hidden: true,
-                    },
-                    implementation: {
-                        type: "templateId",
-                        value: SeedTrace.v2.TestCaseTemplateId("implementation"),
-                    },
-                    arguments: {
+                    {
+                        metadata: {
+                            id: SeedTrace.v2.TestCaseId("id"),
+                            name: "name",
+                            hidden: true,
+                        },
+                        implementation: {
+                            type: "templateId",
+                            value: SeedTrace.v2.TestCaseTemplateId("implementation"),
+                        },
                         arguments: {
-                            type: "integerValue",
-                            value: 1,
+                            arguments: {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                        },
+                        expects: {
+                            expectedStdout: "expectedStdout",
                         },
                     },
-                    expects: {
-                        expectedStdout: "expectedStdout",
-                    },
-                },
-            ],
-            isPublic: true,
+                ],
+                isPublic: true,
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 });

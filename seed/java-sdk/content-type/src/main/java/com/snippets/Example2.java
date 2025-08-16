@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.contentTypes.SeedContentTypesClient;
-import com.seed.contentTypes.resources.service.requests.RegularPatchRequest;
+import com.seed.contentTypes.resources.service.requests.NamedMixedPatchRequest;
 
 public class Example2 {
     public static void main(String[] args) {
@@ -10,12 +10,13 @@ public class Example2 {
             .url("https://api.fern.com")
             .build();
 
-        client.service().regularPatch(
+        client.service().namedPatchWithMixed(
             "id",
-            RegularPatchRequest
+            NamedMixedPatchRequest
                 .builder()
-                .field1("field1")
-                .field2(1)
+                .appId("appId")
+                .instructions("instructions")
+                .active(true)
                 .build()
         );
     }

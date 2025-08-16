@@ -26,10 +26,15 @@ describe("Submission", () => {
 
         const response = await client.submission.createExecutionSession("JAVA");
         expect(response).toEqual({
-            sessionId: "sessionId",
-            executionSessionUrl: "executionSessionUrl",
-            language: "JAVA",
-            status: "CREATING_CONTAINER",
+            body: {
+                sessionId: "sessionId",
+                executionSessionUrl: "executionSessionUrl",
+                language: "JAVA",
+                status: "CREATING_CONTAINER",
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 
@@ -53,10 +58,15 @@ describe("Submission", () => {
 
         const response = await client.submission.getExecutionSession("sessionId");
         expect(response).toEqual({
-            sessionId: "sessionId",
-            executionSessionUrl: "executionSessionUrl",
-            language: "JAVA",
-            status: "CREATING_CONTAINER",
+            body: {
+                sessionId: "sessionId",
+                executionSessionUrl: "executionSessionUrl",
+                language: "JAVA",
+                status: "CREATING_CONTAINER",
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 
@@ -67,7 +77,12 @@ describe("Submission", () => {
         server.mockEndpoint().delete("/sessions/stop/sessionId").respondWith().statusCode(200).build();
 
         const response = await client.submission.stopExecutionSession("sessionId");
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getExecutionSessionsState", async () => {
@@ -98,18 +113,23 @@ describe("Submission", () => {
 
         const response = await client.submission.getExecutionSessionsState();
         expect(response).toEqual({
-            states: {
+            body: {
                 states: {
-                    lastTimeContacted: "lastTimeContacted",
-                    sessionId: "sessionId",
-                    isWarmInstance: true,
-                    awsTaskId: "awsTaskId",
-                    language: "JAVA",
-                    status: "CREATING_CONTAINER",
+                    states: {
+                        lastTimeContacted: "lastTimeContacted",
+                        sessionId: "sessionId",
+                        isWarmInstance: true,
+                        awsTaskId: "awsTaskId",
+                        language: "JAVA",
+                        status: "CREATING_CONTAINER",
+                    },
                 },
+                numWarmingInstances: 1,
+                warmingSessionIds: ["warmingSessionIds", "warmingSessionIds"],
             },
-            numWarmingInstances: 1,
-            warmingSessionIds: ["warmingSessionIds", "warmingSessionIds"],
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 });

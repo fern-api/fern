@@ -1,6 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix NPE in merge-patch requests with optional fields. Optional fields in builders 
+        are now initialized to Optional.empty() and JsonSetter annotations include 
+        nulls=SKIP to properly handle absent and null values in JSON payloads.
+      type: fix
+  createdAt: '2025-08-15'
+  irVersion: 58
+  version: 1.7.4
+- changelogEntry:
+    - summary: |
+        Fix package-prefix configuration not being respected in merge patch generators.
+        OptionalNullable and ObjectMappers classes now correctly use the configured 
+        package-prefix instead of hardcoded "core" package names.
+      type: fix
+  createdAt: '2025-08-15'
+  irVersion: 58
+  version: 1.7.3
+- changelogEntry:
+    - summary: |
         Improved JSON Merge Patch support with better type distinction and naming. 
         - Renamed `TriStateOptional<T>` to `OptionalNullable<T>` for better clarity
         - Fixed type mapping for merge-patch requests to properly handle:

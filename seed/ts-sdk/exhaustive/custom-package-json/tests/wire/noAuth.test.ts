@@ -23,6 +23,11 @@ describe("NoAuth", () => {
         const response = await client.noAuth.postWithNoAuth({
             key: "value",
         });
-        expect(response).toEqual(true);
+        expect(response).toEqual({
+            body: true,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 });
