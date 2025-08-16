@@ -1,13 +1,13 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]
 pub enum WeirdNumber {
         Integer(i32),
 
-        Nullable(Option<f32>),
+        Nullable1(Option<f32>),
 
-        Optional(Option<Option<String>>),
+        Optional2(Option<Option<String>>),
 
         Double(f64),
 }
@@ -17,12 +17,12 @@ impl WeirdNumber {
         matches!(self, Self::Integer(_))
     }
 
-    pub fn is_nullable(&self) -> bool {
-        matches!(self, Self::Nullable(_))
+    pub fn is_nullable1(&self) -> bool {
+        matches!(self, Self::Nullable1(_))
     }
 
-    pub fn is_optional(&self) -> bool {
-        matches!(self, Self::Optional(_))
+    pub fn is_optional2(&self) -> bool {
+        matches!(self, Self::Optional2(_))
     }
 
     pub fn is_double(&self) -> bool {
@@ -44,30 +44,30 @@ impl WeirdNumber {
                 }
     }
 
-    pub fn as_nullable(&self) -> Option<&Option<f32>> {
+    pub fn as_nullable1(&self) -> Option<&Option<f32>> {
         match self {
-                    Self::Nullable(value) => Some(value),
+                    Self::Nullable1(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_nullable(self) -> Option<Option<f32>> {
+    pub fn into_nullable1(self) -> Option<Option<f32>> {
         match self {
-                    Self::Nullable(value) => Some(value),
+                    Self::Nullable1(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn as_optional(&self) -> Option<&Option<Option<String>>> {
+    pub fn as_optional2(&self) -> Option<&Option<Option<String>>> {
         match self {
-                    Self::Optional(value) => Some(value),
+                    Self::Optional2(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_optional(self) -> Option<Option<Option<String>>> {
+    pub fn into_optional2(self) -> Option<Option<Option<String>>> {
         match self {
-                    Self::Optional(value) => Some(value),
+                    Self::Optional2(value) => Some(value),
                     _ => None,
                 }
     }

@@ -117,8 +117,14 @@ export class AliasGenerator {
         return attributes;
     }
 
-    private getCustomTypesUsedInAlias(): { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] {
-        const customTypeNames: { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] = [];
+    private getCustomTypesUsedInAlias(): {
+        snakeCase: { unsafeName: string };
+        pascalCase: { unsafeName: string };
+    }[] {
+        const customTypeNames: {
+            snakeCase: { unsafeName: string };
+            pascalCase: { unsafeName: string };
+        }[] = [];
         const visited = new Set<string>();
 
         const extractNamedTypesRecursively = (typeRef: TypeReference) => {

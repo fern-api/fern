@@ -1,7 +1,7 @@
 use crate::starting_after_paging::StartingAfterPaging;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct CursorPages {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub next: Option<StartingAfterPaging>,

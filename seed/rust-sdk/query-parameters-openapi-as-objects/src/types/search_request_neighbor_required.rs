@@ -2,7 +2,7 @@ use crate::user::User;
 use crate::nested_user::NestedUser;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]
 pub enum SearchRequestNeighborRequired {
         User(User),

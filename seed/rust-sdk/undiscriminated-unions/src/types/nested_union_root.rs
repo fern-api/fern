@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 pub enum NestedUnionRoot {
         String(String),
 
-        List(Vec<String>),
+        List1(Vec<String>),
 
         NestedUnionL1(NestedUnionL1),
 }
@@ -16,8 +16,8 @@ impl NestedUnionRoot {
         matches!(self, Self::String(_))
     }
 
-    pub fn is_list(&self) -> bool {
-        matches!(self, Self::List(_))
+    pub fn is_list1(&self) -> bool {
+        matches!(self, Self::List1(_))
     }
 
     pub fn is_nestedunionl1(&self) -> bool {
@@ -39,16 +39,16 @@ impl NestedUnionRoot {
                 }
     }
 
-    pub fn as_list(&self) -> Option<&Vec<String>> {
+    pub fn as_list1(&self) -> Option<&Vec<String>> {
         match self {
-                    Self::List(value) => Some(value),
+                    Self::List1(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_list(self) -> Option<Vec<String>> {
+    pub fn into_list1(self) -> Option<Vec<String>> {
         match self {
-                    Self::List(value) => Some(value),
+                    Self::List1(value) => Some(value),
                     _ => None,
                 }
     }

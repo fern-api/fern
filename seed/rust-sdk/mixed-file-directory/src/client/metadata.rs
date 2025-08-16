@@ -20,7 +20,7 @@ impl MetadataClient {
             {
             let mut query_params = Vec::new();
             if let Some(value) = id {
-                query_params.push(("id".to_string(), value.to_string()));
+                query_params.push(("id".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             Some(query_params)
         },

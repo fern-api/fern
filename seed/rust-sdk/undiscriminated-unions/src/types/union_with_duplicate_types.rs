@@ -6,11 +6,11 @@ use serde::{Deserialize, Serialize};
 pub enum UnionWithDuplicateTypes {
         String(String),
 
-        List(Vec<String>),
+        List1(Vec<String>),
 
         Integer(i32),
 
-        Set(std::collections::HashSet<String>),
+        Set3(std::collections::HashSet<String>),
 }
 
 impl UnionWithDuplicateTypes {
@@ -18,16 +18,16 @@ impl UnionWithDuplicateTypes {
         matches!(self, Self::String(_))
     }
 
-    pub fn is_list(&self) -> bool {
-        matches!(self, Self::List(_))
+    pub fn is_list1(&self) -> bool {
+        matches!(self, Self::List1(_))
     }
 
     pub fn is_integer(&self) -> bool {
         matches!(self, Self::Integer(_))
     }
 
-    pub fn is_set(&self) -> bool {
-        matches!(self, Self::Set(_))
+    pub fn is_set3(&self) -> bool {
+        matches!(self, Self::Set3(_))
     }
 
 
@@ -45,16 +45,16 @@ impl UnionWithDuplicateTypes {
                 }
     }
 
-    pub fn as_list(&self) -> Option<&Vec<String>> {
+    pub fn as_list1(&self) -> Option<&Vec<String>> {
         match self {
-                    Self::List(value) => Some(value),
+                    Self::List1(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_list(self) -> Option<Vec<String>> {
+    pub fn into_list1(self) -> Option<Vec<String>> {
         match self {
-                    Self::List(value) => Some(value),
+                    Self::List1(value) => Some(value),
                     _ => None,
                 }
     }
@@ -73,16 +73,16 @@ impl UnionWithDuplicateTypes {
                 }
     }
 
-    pub fn as_set(&self) -> Option<&std::collections::HashSet<String>> {
+    pub fn as_set3(&self) -> Option<&std::collections::HashSet<String>> {
         match self {
-                    Self::Set(value) => Some(value),
+                    Self::Set3(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_set(self) -> Option<std::collections::HashSet<String>> {
+    pub fn into_set3(self) -> Option<std::collections::HashSet<String>> {
         match self {
-                    Self::Set(value) => Some(value),
+                    Self::Set3(value) => Some(value),
                     _ => None,
                 }
     }

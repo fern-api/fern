@@ -6,4 +6,4 @@ groups:
         version: 0.0.0
         output:
           location: local-file-system
-          path: ./generated 
+          path: ./generated

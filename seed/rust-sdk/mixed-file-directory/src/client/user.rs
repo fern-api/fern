@@ -20,7 +20,7 @@ impl UserClient {
             {
             let mut query_params = Vec::new();
             if let Some(Some(value)) = limit {
-                query_params.push(("limit".to_string(), value.to_string()));
+                query_params.push(("limit".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             Some(query_params)
         },
