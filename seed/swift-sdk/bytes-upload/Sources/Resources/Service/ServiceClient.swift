@@ -8,10 +8,11 @@ public final class ServiceClient: Sendable {
     }
 
     public func upload(request: Data, requestOptions: RequestOptions? = nil) async throws -> Void {
-        return try await httpClient.performFileUpload(
+        return try await httpClient.performRequest(
             method: .post,
             path: "/upload-content",
-            fileData: request,
+            contentType: .applicationOctetStream,
+            body: request,
             requestOptions: requestOptions
         )
     }
