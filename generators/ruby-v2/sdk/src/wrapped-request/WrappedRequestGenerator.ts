@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/path-utils";
+import { RelativeFilePath, join } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { generateFields } from "@fern-api/ruby-model";
@@ -32,10 +32,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
 
         const class_ = ruby.class_({
             name: this.wrapper.wrapperName.pascalCase.safeName,
-            superclass: ruby.classReference({
-                name: "Model",
-                modules: ["Internal", "Types"]
-            })
+            superclass: this.context.getModelClassReference()
         });
 
         const rootModule = this.context.getRootModule();
@@ -125,15 +122,6 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
     }
 
     protected getFilepath(): RelativeFilePath {
-        const subpackage = this.context.getSubpackageForServiceId(this.serviceId);
-        const serviceDir = RelativeFilePath.of(
-            [
-                "lib",
-                this.context.getRootFolderName(),
-                ...subpackage.fernFilepath.allParts.map((path) => path.snakeCase.safeName),
-                "types"
-            ].join("/")
-        );
-        return serviceDir;
+        return join(this.context.getServiceDirectory(this.serviceId), RelativeFilePath.of("types"));
     }
 }
