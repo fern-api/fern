@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\Object\Types\NestedObjectWithRequiredField;
+use Seed\Types\Object\Types\NestedObjectWithOptionalField;
 use Seed\Types\Object\Types\ObjectWithOptionalField;
 use DateTime;
 
@@ -13,9 +13,8 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->object->getAndReturnNestedWithRequiredField(
-    'string',
-    new NestedObjectWithRequiredField([
+$client->endpoints->object->getAndReturnNestedWithOptionalField(
+    new NestedObjectWithOptionalField([
         'string' => 'string',
         'nestedObject' => new ObjectWithOptionalField([
             'string' => 'string',
