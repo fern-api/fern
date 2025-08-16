@@ -6,15 +6,15 @@ use serde::{Deserialize, Serialize};
 pub enum MyUnion {
         String(String),
 
-        List(Vec<String>),
+        List1(Vec<String>),
 
         Integer(i32),
 
-        List(Vec<i32>),
+        List3(Vec<i32>),
 
-        List(Vec<Vec<i32>>),
+        List4(Vec<Vec<i32>>),
 
-        Set(std::collections::HashSet<String>),
+        Set5(std::collections::HashSet<String>),
 }
 
 impl MyUnion {
@@ -22,24 +22,24 @@ impl MyUnion {
         matches!(self, Self::String(_))
     }
 
-    pub fn is_list(&self) -> bool {
-        matches!(self, Self::List(_))
+    pub fn is_list1(&self) -> bool {
+        matches!(self, Self::List1(_))
     }
 
     pub fn is_integer(&self) -> bool {
         matches!(self, Self::Integer(_))
     }
 
-    pub fn is_list(&self) -> bool {
-        matches!(self, Self::List(_))
+    pub fn is_list3(&self) -> bool {
+        matches!(self, Self::List3(_))
     }
 
-    pub fn is_list(&self) -> bool {
-        matches!(self, Self::List(_))
+    pub fn is_list4(&self) -> bool {
+        matches!(self, Self::List4(_))
     }
 
-    pub fn is_set(&self) -> bool {
-        matches!(self, Self::Set(_))
+    pub fn is_set5(&self) -> bool {
+        matches!(self, Self::Set5(_))
     }
 
 
@@ -57,16 +57,16 @@ impl MyUnion {
                 }
     }
 
-    pub fn as_list(&self) -> Option<&Vec<String>> {
+    pub fn as_list1(&self) -> Option<&Vec<String>> {
         match self {
-                    Self::List(value) => Some(value),
+                    Self::List1(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_list(self) -> Option<Vec<String>> {
+    pub fn into_list1(self) -> Option<Vec<String>> {
         match self {
-                    Self::List(value) => Some(value),
+                    Self::List1(value) => Some(value),
                     _ => None,
                 }
     }
@@ -85,44 +85,44 @@ impl MyUnion {
                 }
     }
 
-    pub fn as_list(&self) -> Option<&Vec<i32>> {
+    pub fn as_list3(&self) -> Option<&Vec<i32>> {
         match self {
-                    Self::List(value) => Some(value),
+                    Self::List3(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_list(self) -> Option<Vec<i32>> {
+    pub fn into_list3(self) -> Option<Vec<i32>> {
         match self {
-                    Self::List(value) => Some(value),
+                    Self::List3(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn as_list(&self) -> Option<&Vec<Vec<i32>>> {
+    pub fn as_list4(&self) -> Option<&Vec<Vec<i32>>> {
         match self {
-                    Self::List(value) => Some(value),
+                    Self::List4(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_list(self) -> Option<Vec<Vec<i32>>> {
+    pub fn into_list4(self) -> Option<Vec<Vec<i32>>> {
         match self {
-                    Self::List(value) => Some(value),
+                    Self::List4(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn as_set(&self) -> Option<&std::collections::HashSet<String>> {
+    pub fn as_set5(&self) -> Option<&std::collections::HashSet<String>> {
         match self {
-                    Self::Set(value) => Some(value),
+                    Self::Set5(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_set(self) -> Option<std::collections::HashSet<String>> {
+    pub fn into_set5(self) -> Option<std::collections::HashSet<String>> {
         match self {
-                    Self::Set(value) => Some(value),
+                    Self::Set5(value) => Some(value),
                     _ => None,
                 }
     }

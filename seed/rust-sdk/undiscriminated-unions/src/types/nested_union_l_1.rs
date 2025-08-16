@@ -7,9 +7,9 @@ use serde::{Deserialize, Serialize};
 pub enum NestedUnionL1 {
         Integer(i32),
 
-        Set(std::collections::HashSet<String>),
+        Set1(std::collections::HashSet<String>),
 
-        List(Vec<String>),
+        List2(Vec<String>),
 
         NestedUnionL2(NestedUnionL2),
 }
@@ -19,12 +19,12 @@ impl NestedUnionL1 {
         matches!(self, Self::Integer(_))
     }
 
-    pub fn is_set(&self) -> bool {
-        matches!(self, Self::Set(_))
+    pub fn is_set1(&self) -> bool {
+        matches!(self, Self::Set1(_))
     }
 
-    pub fn is_list(&self) -> bool {
-        matches!(self, Self::List(_))
+    pub fn is_list2(&self) -> bool {
+        matches!(self, Self::List2(_))
     }
 
     pub fn is_nestedunionl2(&self) -> bool {
@@ -46,30 +46,30 @@ impl NestedUnionL1 {
                 }
     }
 
-    pub fn as_set(&self) -> Option<&std::collections::HashSet<String>> {
+    pub fn as_set1(&self) -> Option<&std::collections::HashSet<String>> {
         match self {
-                    Self::Set(value) => Some(value),
+                    Self::Set1(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_set(self) -> Option<std::collections::HashSet<String>> {
+    pub fn into_set1(self) -> Option<std::collections::HashSet<String>> {
         match self {
-                    Self::Set(value) => Some(value),
+                    Self::Set1(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn as_list(&self) -> Option<&Vec<String>> {
+    pub fn as_list2(&self) -> Option<&Vec<String>> {
         match self {
-                    Self::List(value) => Some(value),
+                    Self::List2(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_list(self) -> Option<Vec<String>> {
+    pub fn into_list2(self) -> Option<Vec<String>> {
         match self {
-                    Self::List(value) => Some(value),
+                    Self::List2(value) => Some(value),
                     _ => None,
                 }
     }

@@ -20,19 +20,19 @@ impl NullableClient {
             {
             let mut query_params = Vec::new();
             if let Some(Some(value)) = usernames {
-                query_params.push(("usernames".to_string(), value.to_string()));
+                query_params.push(("usernames".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(Some(value)) = avatar {
-                query_params.push(("avatar".to_string(), value.to_string()));
+                query_params.push(("avatar".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(Some(value)) = activated {
-                query_params.push(("activated".to_string(), value.to_string()));
+                query_params.push(("activated".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(Some(value)) = tags {
-                query_params.push(("tags".to_string(), value.to_string()));
+                query_params.push(("tags".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(Some(value)) = extra {
-                query_params.push(("extra".to_string(), value.to_string()));
+                query_params.push(("extra".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             Some(query_params)
         },

@@ -64,8 +64,9 @@ export class EnumGenerator {
     private generateEnumAttributes(): rust.Attribute[] {
         const attributes: rust.Attribute[] = [];
 
-        // Always add basic derives
-        const derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
+        // Always add basic derives including Hash and Eq for maximum compatibility
+        // Hash and Eq are needed when enums are used as HashMap keys
+        const derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq", "Eq", "Hash"];
         attributes.push(Attribute.derive(derives));
 
         return attributes;

@@ -1,13 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - version: 0.0.1
-  createdAt: '2025-08-11'
+  createdAt: "2025-08-11"
   changelogEntry:
     - type: feat
       summary: First stable release with core model generation functionality.
   irVersion: 58
 
 - version: 0.0.0
-  createdAt: '2025-07-25'
+  createdAt: "2025-07-25"
   changelogEntry:
     - type: feat
       summary: Initial release.

@@ -3,12 +3,12 @@ import { NamedFullExample, Source, WebhookExampleCall, WebhookWithExample } from
 import { getExtension } from "../../../../getExtension";
 import { convertToFullExample } from "../../../../schema/examples/convertToFullExample";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { OperationContext } from "../contexts";
 import { convertParameters } from "../endpoint/convertParameters";
 import { convertRequest } from "../endpoint/convertRequest";
-import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 
 export function convertWebhookOperation({
     context,
