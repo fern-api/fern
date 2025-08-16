@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.7.0
+  createdAt: "2025-08-16"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Added sanitization for literal enum values to generate valid and readable names.
+  irVersion: 59
+
 - version: 0.6.0
   createdAt: "2025-08-16"
   changelogEntry:
