@@ -89,9 +89,6 @@ class ObjectClient:
 
         Examples
         --------
-        import datetime
-        import uuid
-
         from seed import SeedExhaustive
 
         client = SeedExhaustive(
@@ -99,25 +96,11 @@ class ObjectClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.object.get_and_return_with_optional_field(
-            string="string",
-            integer=1,
-            long_=1000000,
-            double=1.1,
+            string="test",
+            integer=21991583578,
+            long_=9223372036854776000,
+            double=3.14,
             bool_=True,
-            datetime=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            date=datetime.date.fromisoformat(
-                "2023-01-15",
-            ),
-            uuid_=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            base_64="SGVsbG8gd29ybGQh",
-            list_=["list", "list"],
-            set_={"set"},
-            map_={1: "map"},
-            bigint=1000000,
         )
         """
         _response = self._raw_client.get_and_return_with_optional_field(
@@ -419,6 +402,95 @@ class ObjectClient:
         )
         return _response.data
 
+    def test_integer_overflow_edge_cases(
+        self,
+        *,
+        string: typing.Optional[str] = OMIT,
+        integer: typing.Optional[int] = OMIT,
+        long_: typing.Optional[int] = OMIT,
+        double: typing.Optional[float] = OMIT,
+        bool_: typing.Optional[bool] = OMIT,
+        datetime: typing.Optional[dt.datetime] = OMIT,
+        date: typing.Optional[dt.date] = OMIT,
+        uuid_: typing.Optional[uuid.UUID] = OMIT,
+        base_64: typing.Optional[str] = OMIT,
+        list_: typing.Optional[typing.Sequence[str]] = OMIT,
+        set_: typing.Optional[typing.Set[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
+        bigint: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ObjectWithOptionalField:
+        """
+        Parameters
+        ----------
+        string : typing.Optional[str]
+            This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
+
+        integer : typing.Optional[int]
+
+        long_ : typing.Optional[int]
+
+        double : typing.Optional[float]
+
+        bool_ : typing.Optional[bool]
+
+        datetime : typing.Optional[dt.datetime]
+
+        date : typing.Optional[dt.date]
+
+        uuid_ : typing.Optional[uuid.UUID]
+
+        base_64 : typing.Optional[str]
+
+        list_ : typing.Optional[typing.Sequence[str]]
+
+        set_ : typing.Optional[typing.Set[str]]
+
+        map_ : typing.Optional[typing.Dict[int, str]]
+
+        bigint : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithOptionalField
+
+        Examples
+        --------
+        from seed import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.object.test_integer_overflow_edge_cases(
+            string="boundary-test",
+            integer=2147483647,
+            long_=9223372036854776000,
+            double=1.7976931348623157e308,
+            bool_=True,
+        )
+        """
+        _response = self._raw_client.test_integer_overflow_edge_cases(
+            string=string,
+            integer=integer,
+            long_=long_,
+            double=double,
+            bool_=bool_,
+            datetime=datetime,
+            date=date,
+            uuid_=uuid_,
+            base_64=base_64,
+            list_=list_,
+            set_=set_,
+            map_=map_,
+            bigint=bigint,
+            request_options=request_options,
+        )
+        return _response.data
+
 
 class AsyncObjectClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -493,8 +565,6 @@ class AsyncObjectClient:
         Examples
         --------
         import asyncio
-        import datetime
-        import uuid
 
         from seed import AsyncSeedExhaustive
 
@@ -506,25 +576,11 @@ class AsyncObjectClient:
 
         async def main() -> None:
             await client.endpoints.object.get_and_return_with_optional_field(
-                string="string",
-                integer=1,
-                long_=1000000,
-                double=1.1,
+                string="test",
+                integer=21991583578,
+                long_=9223372036854776000,
+                double=3.14,
                 bool_=True,
-                datetime=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                date=datetime.date.fromisoformat(
-                    "2023-01-15",
-                ),
-                uuid_=uuid.UUID(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-                base_64="SGVsbG8gd29ybGQh",
-                list_=["list", "list"],
-                set_={"set"},
-                map_={1: "map"},
-                bigint=1000000,
             )
 
 
@@ -865,5 +921,102 @@ class AsyncObjectClient:
         """
         _response = await self._raw_client.get_and_return_nested_with_required_field_as_list(
             request=request, request_options=request_options
+        )
+        return _response.data
+
+    async def test_integer_overflow_edge_cases(
+        self,
+        *,
+        string: typing.Optional[str] = OMIT,
+        integer: typing.Optional[int] = OMIT,
+        long_: typing.Optional[int] = OMIT,
+        double: typing.Optional[float] = OMIT,
+        bool_: typing.Optional[bool] = OMIT,
+        datetime: typing.Optional[dt.datetime] = OMIT,
+        date: typing.Optional[dt.date] = OMIT,
+        uuid_: typing.Optional[uuid.UUID] = OMIT,
+        base_64: typing.Optional[str] = OMIT,
+        list_: typing.Optional[typing.Sequence[str]] = OMIT,
+        set_: typing.Optional[typing.Set[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
+        bigint: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ObjectWithOptionalField:
+        """
+        Parameters
+        ----------
+        string : typing.Optional[str]
+            This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
+
+        integer : typing.Optional[int]
+
+        long_ : typing.Optional[int]
+
+        double : typing.Optional[float]
+
+        bool_ : typing.Optional[bool]
+
+        datetime : typing.Optional[dt.datetime]
+
+        date : typing.Optional[dt.date]
+
+        uuid_ : typing.Optional[uuid.UUID]
+
+        base_64 : typing.Optional[str]
+
+        list_ : typing.Optional[typing.Sequence[str]]
+
+        set_ : typing.Optional[typing.Set[str]]
+
+        map_ : typing.Optional[typing.Dict[int, str]]
+
+        bigint : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithOptionalField
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.endpoints.object.test_integer_overflow_edge_cases(
+                string="boundary-test",
+                integer=2147483647,
+                long_=9223372036854776000,
+                double=1.7976931348623157e308,
+                bool_=True,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.test_integer_overflow_edge_cases(
+            string=string,
+            integer=integer,
+            long_=long_,
+            double=double,
+            bool_=bool_,
+            datetime=datetime,
+            date=date,
+            uuid_=uuid_,
+            base_64=base_64,
+            list_=list_,
+            set_=set_,
+            map_=map_,
+            bigint=bigint,
+            request_options=request_options,
         )
         return _response.data
