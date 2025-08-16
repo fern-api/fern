@@ -33,21 +33,26 @@ export class LiteralEnumGenerator {
      * Sanitizes a literal value to produce a clean alphanumeric string suitable for Swift identifiers.
      * Uses "value" as fallback for anything that doesn't result in a clean identifier.
      */
-    public static sanitizeLiteralValue(literalValue: string): string {
-        if (literalValue === "") {
+    public static sanitizeLiteralValue(originalValue: string): string {
+        if (originalValue === "") {
             return "empty";
         }
-        // Keep only letters and digits (no underscores)
-        let sanitized = literalValue.replace(/[^a-zA-Z0-9]/g, "");
+        let sanitizedValue = originalValue;
+        const isAlreadyValid = /^[a-zA-Z][a-zA-Z0-9]*$/.test(originalValue);
+        if (!isAlreadyValid) {
+            // Remove invalid characters from the left first to avoid unwanted capitalization
+            sanitizedValue = sanitizedValue.replace(/^[^a-zA-Z0-9]+/, "");
+            // Apply camelCase to preserve word boundaries
+            sanitizedValue = camelCase(sanitizedValue);
+        }
         // If it starts with a digit, use "value"
-        if (/^\d/.test(sanitized)) {
+        if (/^\d/.test(sanitizedValue)) {
             return "value";
         }
-        // If sanitization resulted in empty string, use "value"
-        if (sanitized === "") {
+        if (sanitizedValue === "") {
             return "value";
         }
-        return sanitized;
+        return sanitizedValue;
     }
 
     private readonly name: string;

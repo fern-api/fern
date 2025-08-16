@@ -43,32 +43,32 @@ describe("LiteralEnumGenerator.sanitizeLiteralValue", () => {
     describe("special characters", () => {
         it("should handle spaces", () => {
             const result = LiteralEnumGenerator.sanitizeLiteralValue("hello world");
-            expect(result).toMatchInlineSnapshot(`"helloworld"`);
+            expect(result).toMatchInlineSnapshot(`"helloWorld"`);
         });
 
         it("should handle hyphens", () => {
             const result = LiteralEnumGenerator.sanitizeLiteralValue("hello-world");
-            expect(result).toMatchInlineSnapshot(`"helloworld"`);
+            expect(result).toMatchInlineSnapshot(`"helloWorld"`);
         });
 
         it("should handle underscores", () => {
             const result = LiteralEnumGenerator.sanitizeLiteralValue("hello_world");
-            expect(result).toMatchInlineSnapshot(`"helloworld"`);
+            expect(result).toMatchInlineSnapshot(`"helloWorld"`);
         });
 
         it("should handle dots", () => {
             const result = LiteralEnumGenerator.sanitizeLiteralValue("com.example.app");
-            expect(result).toMatchInlineSnapshot(`"comexampleapp"`);
+            expect(result).toMatchInlineSnapshot(`"comExampleApp"`);
         });
 
         it("should handle forward slashes", () => {
             const result = LiteralEnumGenerator.sanitizeLiteralValue("application/json");
-            expect(result).toMatchInlineSnapshot(`"applicationjson"`);
+            expect(result).toMatchInlineSnapshot(`"applicationJson"`);
         });
 
         it("should handle colons", () => {
             const result = LiteralEnumGenerator.sanitizeLiteralValue("http://example.com");
-            expect(result).toMatchInlineSnapshot(`"httpexamplecom"`);
+            expect(result).toMatchInlineSnapshot(`"httpExampleCom"`);
         });
     });
 
@@ -80,12 +80,12 @@ describe("LiteralEnumGenerator.sanitizeLiteralValue", () => {
 
         it("should handle question marks", () => {
             const result = LiteralEnumGenerator.sanitizeLiteralValue("are you sure?");
-            expect(result).toMatchInlineSnapshot(`"areyousure"`);
+            expect(result).toMatchInlineSnapshot(`"areYouSure"`);
         });
 
         it("should handle parentheses", () => {
             const result = LiteralEnumGenerator.sanitizeLiteralValue("func(arg)");
-            expect(result).toMatchInlineSnapshot(`"funcarg"`);
+            expect(result).toMatchInlineSnapshot(`"funcArg"`);
         });
 
         it("should handle brackets", () => {
@@ -95,7 +95,7 @@ describe("LiteralEnumGenerator.sanitizeLiteralValue", () => {
 
         it("should handle braces", () => {
             const result = LiteralEnumGenerator.sanitizeLiteralValue("{key: value}");
-            expect(result).toMatchInlineSnapshot(`"keyvalue"`);
+            expect(result).toMatchInlineSnapshot(`"keyValue"`);
         });
 
         it("should handle at symbols", () => {
@@ -120,7 +120,7 @@ describe("LiteralEnumGenerator.sanitizeLiteralValue", () => {
 
         it("should handle ampersands", () => {
             const result = LiteralEnumGenerator.sanitizeLiteralValue("rock&roll");
-            expect(result).toMatchInlineSnapshot(`"rockroll"`);
+            expect(result).toMatchInlineSnapshot(`"rockRoll"`);
         });
 
         it("should handle asterisks", () => {
@@ -135,7 +135,7 @@ describe("LiteralEnumGenerator.sanitizeLiteralValue", () => {
 
         it("should handle equals signs", () => {
             const result = LiteralEnumGenerator.sanitizeLiteralValue("a=b");
-            expect(result).toMatchInlineSnapshot(`"ab"`);
+            expect(result).toMatchInlineSnapshot(`"aB"`);
         });
 
         it("should handle less than and greater than", () => {
@@ -147,7 +147,7 @@ describe("LiteralEnumGenerator.sanitizeLiteralValue", () => {
     describe("Unicode and international characters", () => {
         it("should handle accented characters", () => {
             const result = LiteralEnumGenerator.sanitizeLiteralValue("café");
-            expect(result).toMatchInlineSnapshot(`"caf"`);
+            expect(result).toMatchInlineSnapshot(`"cafe"`);
         });
 
         it("should handle emoji", () => {
@@ -226,17 +226,17 @@ describe("LiteralEnumGenerator.sanitizeLiteralValue", () => {
 
         it("should handle backslashes", () => {
             const result = LiteralEnumGenerator.sanitizeLiteralValue("path\\to\\file");
-            expect(result).toMatchInlineSnapshot(`"pathtofile"`);
+            expect(result).toMatchInlineSnapshot(`"pathToFile"`);
         });
 
         it("should handle quotes", () => {
             const result = LiteralEnumGenerator.sanitizeLiteralValue('"quoted string"');
-            expect(result).toMatchInlineSnapshot(`"quotedstring"`);
+            expect(result).toMatchInlineSnapshot(`"quotedString"`);
         });
 
         it("should handle single quotes", () => {
             const result = LiteralEnumGenerator.sanitizeLiteralValue("'single quoted'");
-            expect(result).toMatchInlineSnapshot(`"singlequoted"`);
+            expect(result).toMatchInlineSnapshot(`"singleQuoted"`);
         });
 
         it("should handle backticks", () => {
