@@ -171,6 +171,48 @@ describe("LiteralEnumGenerator.sanitizeLiteralValue", () => {
         });
     });
 
+    describe("already valid values", () => {
+        it("should pass through simple lowercase strings unchanged", () => {
+            const result = LiteralEnumGenerator.sanitizeLiteralValue("hello");
+            expect(result).toMatchInlineSnapshot(`"hello"`);
+        });
+
+        it("should pass through simple uppercase strings unchanged", () => {
+            const result = LiteralEnumGenerator.sanitizeLiteralValue("HELLO");
+            expect(result).toMatchInlineSnapshot(`"HELLO"`);
+        });
+
+        it("should pass through mixed case strings unchanged", () => {
+            const result = LiteralEnumGenerator.sanitizeLiteralValue("HelloWorld");
+            expect(result).toMatchInlineSnapshot(`"HelloWorld"`);
+        });
+
+        it("should pass through strings with trailing digits unchanged", () => {
+            const result = LiteralEnumGenerator.sanitizeLiteralValue("value123");
+            expect(result).toMatchInlineSnapshot(`"value123"`);
+        });
+
+        it("should pass through single letter unchanged", () => {
+            const result = LiteralEnumGenerator.sanitizeLiteralValue("a");
+            expect(result).toMatchInlineSnapshot(`"a"`);
+        });
+
+        it("should pass through camelCase strings unchanged", () => {
+            const result = LiteralEnumGenerator.sanitizeLiteralValue("camelCaseString");
+            expect(result).toMatchInlineSnapshot(`"camelCaseString"`);
+        });
+
+        it("should pass through mixed letters and digits unchanged", () => {
+            const result = LiteralEnumGenerator.sanitizeLiteralValue("abc123def456");
+            expect(result).toMatchInlineSnapshot(`"abc123def456"`);
+        });
+
+        it("should pass through reserved keywords unchanged", () => {
+            const result = LiteralEnumGenerator.sanitizeLiteralValue("class");
+            expect(result).toMatchInlineSnapshot(`"class"`);
+        });
+    });
+
     describe("edge cases", () => {
         it("should handle mixed problematic characters", () => {
             const result = LiteralEnumGenerator.sanitizeLiteralValue("123-hello world!@#$%^&*()");
