@@ -36,8 +36,25 @@ export class LiteralEnumGenerator {
         if (literalValue === "") {
             return "empty";
         }
-        // TODO: Handle other bad values like those starting with numbers, etc.
-        return literalValue;
+
+        // Step 1: Replace invalid characters with underscores or remove them
+        // Keep letters, digits, and underscores. Replace everything else with underscores.
+        let sanitized = literalValue.replace(/[^a-zA-Z0-9_]/g, "_");
+
+        // Step 2: Remove consecutive underscores and leading/trailing underscores
+        sanitized = sanitized.replace(/_+/g, "_").replace(/^_+|_+$/g, "");
+
+        // Step 3: Handle the case where sanitization resulted in an empty string
+        if (sanitized === "") {
+            return "value";
+        }
+
+        // Step 4: Ensure it starts with a letter or underscore (not a digit)
+        if (/^\d/.test(sanitized)) {
+            sanitized = "value_" + sanitized;
+        }
+
+        return sanitized;
     }
 
     private readonly name: string;
