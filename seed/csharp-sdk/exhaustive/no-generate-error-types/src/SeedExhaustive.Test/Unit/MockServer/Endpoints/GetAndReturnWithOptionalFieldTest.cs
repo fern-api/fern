@@ -11,7 +11,7 @@ namespace SeedExhaustive.Test.Unit.MockServer.Endpoints;
 public class GetAndReturnWithOptionalFieldTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest_1()
     {
         const string requestJson = """
             {
@@ -98,6 +98,60 @@ public class GetAndReturnWithOptionalFieldTest : BaseMockServerTest
                 Set = new HashSet<string>() { "set" },
                 Map = new Dictionary<int, string>() { { 1, "map" } },
                 Bigint = "1000000",
+            }
+        );
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
+        );
+    }
+
+    [Test]
+    public async global::System.Threading.Tasks.Task MockServerTest_2()
+    {
+        const string requestJson = """
+            {
+              "string": "test",
+              "integer": 21991583578,
+              "long": 9223372036854776000,
+              "double": 3.14,
+              "bool": true
+            }
+            """;
+
+        const string mockResponse = """
+            {
+              "string": "test",
+              "integer": 21991583578,
+              "long": 9223372036854776000,
+              "double": 3.14,
+              "bool": true
+            }
+            """;
+
+        Server
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/object/get-and-return-with-optional-field")
+                    .UsingPost()
+                    .WithBodyAsJson(requestJson)
+            )
+            .RespondWith(
+                WireMock
+                    .ResponseBuilders.Response.Create()
+                    .WithStatusCode(200)
+                    .WithBody(mockResponse)
+            );
+
+        var response = await Client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
+            new ObjectWithOptionalField
+            {
+                String = "test",
+                Integer = 21991583578,
+                Long = 9223372036854776000,
+                Double = 3.14,
+                Bool = true,
             }
         );
         Assert.That(

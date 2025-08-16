@@ -14,7 +14,9 @@ public class Example40
             }
         );
 
-        await client.Endpoints.Urls.WithMixedCaseAsync();
+        await client.Endpoints.Primitive.GetAndReturnBoolAsync(
+            true
+        );
     }
 
 }
