@@ -4,3 +4,4 @@ export * as getAndReturnWithMapOfMap from "./getAndReturnWithMapOfMap.js";
 export * as getAndReturnNestedWithOptionalField from "./getAndReturnNestedWithOptionalField.js";
 export * as getAndReturnNestedWithRequiredField from "./getAndReturnNestedWithRequiredField.js";
 export * as getAndReturnNestedWithRequiredFieldAsList from "./getAndReturnNestedWithRequiredFieldAsList.js";
+export * as testIntegerOverflowEdgeCases from "./testIntegerOverflowEdgeCases.js";

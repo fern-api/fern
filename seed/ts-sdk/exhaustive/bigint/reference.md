@@ -831,21 +831,11 @@ await client.endpoints.httpMethods.testDelete("id");
 
 ```typescript
 await client.endpoints.object.getAndReturnWithOptionalField({
-    string: "string",
-    integer: 1,
-    long: BigInt("1000000"),
-    double: 1.1,
+    string: "test",
+    integer: 21991583578,
+    long: BigInt("9223372036854776000"),
+    double: 3.14,
     bool: true,
-    datetime: "2024-01-15T09:30:00Z",
-    date: "2023-01-15",
-    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    base64: "SGVsbG8gd29ybGQh",
-    list: ["list", "list"],
-    set: ["set"],
-    map: {
-        1: "map",
-    },
-    bigint: BigInt("1000000"),
 });
 ```
 
@@ -1198,6 +1188,60 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([
 <dd>
 
 **request:** `SeedExhaustive.NestedObjectWithRequiredField[]`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Object_.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">testIntegerOverflowEdgeCases</a>({ ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.object.testIntegerOverflowEdgeCases({
+    string: "boundary-test",
+    integer: 2147483647,
+    long: BigInt("9223372036854776000"),
+    double: 1.7976931348623157e308,
+    bool: true,
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.ObjectWithOptionalField`
 
 </dd>
 </dl>
