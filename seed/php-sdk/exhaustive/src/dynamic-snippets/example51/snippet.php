@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\Object\Types\NestedObjectWithRequiredField;
+use Seed\InlinedRequests\Requests\PostWithObjectBody;
 use Seed\Types\Object\Types\ObjectWithOptionalField;
 use DateTime;
 
@@ -13,10 +13,10 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->object->getAndReturnNestedWithRequiredField(
-    'string',
-    new NestedObjectWithRequiredField([
+$client->inlinedRequests->postWithObjectBodyandResponse(
+    new PostWithObjectBody([
         'string' => 'string',
+        'integer' => 1,
         'nestedObject' => new ObjectWithOptionalField([
             'string' => 'string',
             'integer' => 1,
