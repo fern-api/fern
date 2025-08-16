@@ -65,6 +65,31 @@ async fn main() -> Result<(), ClientError> {
 }
 ```
 
+## Pagination
+
+For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
+
+```rust
+use seed_single_url_environment_no_default::{ClientConfig, SingleUrlEnvironmentNoDefaultClient};
+use futures::{StreamExt};
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        base_url: " ".to_string(),
+        api_key: Some("your-api-key".to_string())
+    };
+    let client = SingleUrlEnvironmentNoDefaultClient::new(config).expect("Failed to build client");
+    let mut paginated_stream = client.dummy.get_dummy().await?;
+    while let Some(item) = paginated_stream.next().await {
+            match item {
+                Ok(data) => println!("Received item: {:?}", data),
+                Err(e) => eprintln!("Error fetching page: {}", e),
+            }
+        }
+}
+```
+
 ## Advanced
 
 ### Retries
