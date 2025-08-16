@@ -153,7 +153,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             returnType: ruby.Type.class_(
                 ruby.classReference({
                     name: "Client",
-                    modules: [rootModule.name, subpackage.name.pascalCase.safeName],
+                    // modules: [rootModule.name, subpackage.name.pascalCase.safeName],
+                    modules: [rootModule.name, ...subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName)],
                     fullyQualified: true
                 })
             ),

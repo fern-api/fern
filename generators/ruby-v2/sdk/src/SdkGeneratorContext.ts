@@ -1,5 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { RelativeFilePath } from "@fern-api/path-utils";
+import { RelativeFilePath, join } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { ClassReference } from "@fern-api/ruby-ast/src/ast/ClassReference";
 import { AbstractRubyGeneratorContext, AsIsFiles, RubyProject } from "@fern-api/ruby-base";
@@ -20,6 +20,7 @@ const ROOT_TYPES_FOLDER = "types";
 export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomConfigSchema> {
     public readonly project: RubyProject;
     public readonly endpointGenerator: EndpointGenerator;
+    private readonly serviceIdToSubpackage: Map<ServiceId, Subpackage>;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -30,10 +31,12 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         super(ir, config, customConfig ?? {}, generatorNotificationService);
         this.project = new RubyProject({ context: this });
         this.endpointGenerator = new EndpointGenerator({ context: this });
-    }
-
-    public getRootFolderPath(): RelativeFilePath {
-        return RelativeFilePath.of(["lib", this.getRootFolderName()].join("/"));
+        this.serviceIdToSubpackage = new Map()
+        for (const [_, subpackage] of Object.entries(this.ir.subpackages)) {
+            if (subpackage.service != null) {
+                this.serviceIdToSubpackage.set(subpackage.service, subpackage);
+            }
+        }
     }
 
     public getLocationForTypeId(typeId: TypeId): RelativeFilePath {
@@ -41,13 +44,14 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         if (typeDeclaration.name.fernFilepath.allParts.length === 0) {
             return RelativeFilePath.of(["lib", this.getRootFolderName(), ROOT_TYPES_FOLDER].join("/"));
         }
-        return RelativeFilePath.of(
-            [
-                "lib",
-                this.getRootFolderName(),
-                ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.snakeCase.safeName)
-            ].join("/")
+        return join(
+            RelativeFilePath.of("lib"),
+            this.getDirectoryForTypeId(typeId)
         );
+    }
+
+    public getRootFolderPath(): RelativeFilePath {
+        return RelativeFilePath.of(["lib", this.getRootFolderName()].join("/"));
     }
 
     public getLocationForSubpackageId(subpackageId: SubpackageId): RelativeFilePath {
@@ -78,12 +82,24 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     }
 
     public getSubpackageForServiceId(serviceId: ServiceId): Subpackage {
-        for (const [_, subpackage] of Object.entries(this.ir.subpackages)) {
-            if (subpackage.service === serviceId) {
-                return subpackage;
-            }
+        const subpackage = this.serviceIdToSubpackage.get(serviceId);
+        if (subpackage != null) {
+            return subpackage;
         }
         throw new Error(`No subpackage found for service ${serviceId}`);
+    }
+
+    public getServiceDirectory(serviceId: ServiceId): RelativeFilePath {
+        const subpackage = this.getSubpackageForServiceId(serviceId);
+        return join(
+            RelativeFilePath.of("lib"),
+            ...subpackage.fernFilepath.allParts.map((path) => RelativeFilePath.of(path.snakeCase.safeName))
+        );
+    }
+
+    public getServiceModules(serviceId: ServiceId): string[] {
+        const subpackage = this.getSubpackageForServiceId(serviceId);
+        return subpackage.fernFilepath.allParts.map((path) => path.pascalCase.safeName);
     }
 
     /**

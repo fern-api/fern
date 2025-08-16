@@ -5,7 +5,6 @@ import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { generateFields } from "./generateFields";
-import { wrapAstNodeInModules } from "../utils/wrapAstNodeInModules";
 
 export interface GeneratorContextLike {
     customConfig: unknown;
@@ -51,7 +50,7 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
             node: ruby.codeblock((writer) => {
                 writer.writeNode(ruby.comment({ docs: "frozen_string_literal: true" }));
                 writer.newLine();
-                wrapAstNodeInModules(classNode, this.classReference.modules).write(writer);
+                ruby.wrapInModules(classNode, this.classReference.modules).write(writer);
             }),
             directory: this.getFilepath(),
             filename: `${this.typeDeclaration.name.name.snakeCase.safeName}.rb`,

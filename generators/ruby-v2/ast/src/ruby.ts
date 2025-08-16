@@ -1,4 +1,6 @@
+import { ruby } from ".";
 import {
+    AstNode,
     Class_,
     ClassInstantiation,
     ClassReference,
@@ -110,4 +112,14 @@ export function positionalArgument(args: PositionalArgument.Args): PositionalArg
 
 export function ifElse(args: IfElse.Args): IfElse {
     return new IfElse(args);
+}
+
+export function wrapInModules(node: AstNode, moduleNames: string[]): AstNode {
+    let topLevelNode: AstNode = node;
+    for (const moduleName of moduleNames.reverse()) {
+        const module = ruby.module({ name: moduleName });
+        module.addStatement(topLevelNode);
+        topLevelNode = module;
+    }
+    return topLevelNode;
 }

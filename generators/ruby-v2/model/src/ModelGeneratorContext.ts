@@ -1,18 +1,15 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { AbstractRubyGeneratorContext, AsIsFiles } from "@fern-api/ruby-base";
 
-import { TypeId } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { TypeId, TypeDeclaration, FernFilepath, Name } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 
 export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCustomConfigSchema> {
     public getLocationForTypeId(typeId: TypeId): RelativeFilePath {
-        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        return RelativeFilePath.of(
-            [
-                "lib",
-                this.getRootFolderName(),
-                ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)
-            ].join("/")
+        return join(
+            RelativeFilePath.of("lib"),
+            this.getDirectoryForTypeId(typeId)
         );
     }
 

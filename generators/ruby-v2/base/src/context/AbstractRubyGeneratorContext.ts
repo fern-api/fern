@@ -3,9 +3,9 @@ import {
     FernGeneratorExec,
     GeneratorNotificationService
 } from "@fern-api/browser-compatible-base-generator";
-import { RelativeFilePath } from "@fern-api/path-utils";
+import { RelativeFilePath, join } from "@fern-api/path-utils";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
-import { IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
+import { Name, IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
 import { capitalize, snakeCase } from "lodash-es";
 import { RubyTypeMapper } from "./RubyTypeMapper";
 
@@ -65,7 +65,47 @@ export abstract class AbstractRubyGeneratorContext<
         });
     }
 
-    public abstract getCoreAsIsFiles(): string[];
+    public getDirectoryForTypeId(typeId: TypeId): RelativeFilePath {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return join(
+            ...this.finalizedFernFilePathParts(typeDeclaration).map((path) => RelativeFilePath.of(path.pascalCase.safeName))
+        );
+    }
 
-    public abstract getLocationForTypeId(typeId: TypeId): RelativeFilePath;
+    public getModuleNamesForTypeId(typeId: TypeId): string[] {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return this.finalizedFernFilePathParts(typeDeclaration).map((path) => path.pascalCase.safeName);
+    }
+
+    private finalizedFernFilePathParts(typeDeclaration: TypeDeclaration): Name[] {
+        const rawParts = typeDeclaration.name.fernFilepath.allParts;
+        const firstPart = rawParts[0];
+        const remainingParts = rawParts.slice(1);
+        if (firstPart === undefined) {
+            return [typesName];
+        }
+        return [firstPart, typesName, ...remainingParts];
+    }
+
+    public abstract getCoreAsIsFiles(): string[];
 }
+
+const typesName: Name = {
+    originalName: "types",
+    camelCase: {
+        unsafeName: "types",
+        safeName: "types"
+    },
+    pascalCase: {
+        unsafeName: "Types",
+        safeName: "Types"
+    },
+    snakeCase: {
+        unsafeName: "types",
+        safeName: "types"
+    },
+    screamingSnakeCase: {
+        unsafeName: "TYPES",
+        safeName: "TYPES"
+    }
+};
