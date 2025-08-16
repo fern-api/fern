@@ -29,28 +29,4 @@ features:
 
   - id: PAGINATION
     description: |
-      List endpoints return an `AsyncPaginator` or `SyncPaginator` that handles pagination automatically. Use the `_paginated()` method variant for async streaming iteration or `_paginated_sync()` for synchronous iteration.
-      
-      For async streaming:
-      ```rust
-      use futures::StreamExt;
-      
-      let mut users_stream = client.users().list_paginated().await?;
-      while let Some(user) = users_stream.next().await {
-          match user {
-              Ok(user) => println!("{}", user.name),
-              Err(e) => eprintln!("Error: {}", e),
-          }
-      }
-      ```
-      
-      For sync iteration:
-      ```rust
-      let users_paginator = client.users().list_paginated_sync()?;
-      for user in users_paginator {
-          match user {
-              Ok(user) => println!("{}", user.name),
-              Err(e) => eprintln!("Error: {}", e),
-          }
-      }
-      ```
+      For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
