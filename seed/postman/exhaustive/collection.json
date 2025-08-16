@@ -1305,7 +1305,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
+                  "raw": "{\n    \"string\": \"test\",\n    \"integer\": 21991583578,\n    \"long\": 9223372036854776000,\n    \"double\": 3.14,\n    \"bool\": true\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1314,6 +1314,47 @@
                 }
               },
               "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/object/get-and-return-with-optional-field",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "object",
+                        "get-and-return-with-optional-field"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"test\",\n    \"integer\": 21991583578,\n    \"long\": 9223372036854776000,\n    \"double\": 3.14,\n    \"bool\": true\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": \"test\",\n    \"integer\": 21991583578,\n    \"long\": 9223372036854776000,\n    \"double\": 3.14,\n    \"bool\": true\n}",
+                  "_postman_previewlanguage": "json"
+                },
                 {
                   "name": "Success",
                   "status": "OK",
@@ -1767,6 +1808,291 @@
                   },
                   "description": null,
                   "body": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"list\",\n            \"list\"\n        ],\n        \"set\": [\n            \"set\"\n        ],\n        \"map\": {\n            \"1\": \"map\"\n        },\n        \"bigint\": \"1000000\"\n    }\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            },
+            {
+              "_type": "endpoint",
+              "name": "Test Integer Overflow Edge Cases",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/object/test-integer-overflow-edge-cases",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "object",
+                    "test-integer-overflow-edge-cases"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": \"boundary-test\",\n    \"integer\": 2147483647,\n    \"long\": 9223372036854776000,\n    \"double\": 1.7976931348623157e+308,\n    \"bool\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/object/test-integer-overflow-edge-cases",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "object",
+                        "test-integer-overflow-edge-cases"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"boundary-test\",\n    \"integer\": 2147483647,\n    \"long\": 9223372036854776000,\n    \"double\": 1.7976931348623157e+308,\n    \"bool\": true\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": \"boundary-test\",\n    \"integer\": 2147483647,\n    \"long\": 9223372036854776000,\n    \"double\": 1.7976931348623157e+308,\n    \"bool\": true\n}",
+                  "_postman_previewlanguage": "json"
+                },
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/object/test-integer-overflow-edge-cases",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "object",
+                        "test-integer-overflow-edge-cases"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"just-over-boundary\",\n    \"integer\": 2147483648,\n    \"long\": 2147483648,\n    \"double\": 2,\n    \"bool\": false\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": \"just-over-boundary\",\n    \"integer\": 2147483648,\n    \"long\": 2147483648,\n    \"double\": 2,\n    \"bool\": false\n}",
+                  "_postman_previewlanguage": "json"
+                },
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/object/test-integer-overflow-edge-cases",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "object",
+                        "test-integer-overflow-edge-cases"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"just-under-boundary\",\n    \"integer\": -2147483649,\n    \"long\": -2147483649,\n    \"double\": -2,\n    \"bool\": true\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": \"just-under-boundary\",\n    \"integer\": -2147483649,\n    \"long\": -2147483649,\n    \"double\": -2,\n    \"bool\": true\n}",
+                  "_postman_previewlanguage": "json"
+                },
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/object/test-integer-overflow-edge-cases",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "object",
+                        "test-integer-overflow-edge-cases"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"large-positive\",\n    \"integer\": 1000000000000,\n    \"long\": 1000000000000,\n    \"double\": 1000000000000,\n    \"bool\": false\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": \"large-positive\",\n    \"integer\": 1000000000000,\n    \"long\": 1000000000000,\n    \"double\": 1000000000000,\n    \"bool\": false\n}",
+                  "_postman_previewlanguage": "json"
+                },
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/object/test-integer-overflow-edge-cases",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "object",
+                        "test-integer-overflow-edge-cases"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"large-negative\",\n    \"integer\": -1000000000000,\n    \"long\": -1000000000000,\n    \"double\": -1000000000000,\n    \"bool\": true\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": \"large-negative\",\n    \"integer\": -1000000000000,\n    \"long\": -1000000000000,\n    \"double\": -1000000000000,\n    \"bool\": true\n}",
+                  "_postman_previewlanguage": "json"
+                },
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/object/test-integer-overflow-edge-cases",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "object",
+                        "test-integer-overflow-edge-cases"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
