@@ -13,7 +13,12 @@ describe("Sysprop", () => {
         server.mockEndpoint().put("/sysprop/num-warm-instances/JAVA/1").respondWith().statusCode(200).build();
 
         const response = await client.sysprop.setNumWarmInstances("JAVA", 1);
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getNumWarmInstances", async () => {
@@ -31,7 +36,12 @@ describe("Sysprop", () => {
 
         const response = await client.sysprop.getNumWarmInstances();
         expect(response).toEqual({
-            ["JAVA"]: 1,
+            body: {
+                ["JAVA"]: 1,
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 });

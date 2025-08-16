@@ -41,6 +41,7 @@ export declare namespace JestTestGenerator {
         retainOriginalCasing: boolean;
         relativePackagePath: string;
         relativeTestPath: string;
+        neverThrowErrors: boolean;
     }
 }
 
@@ -55,6 +56,7 @@ export class JestTestGenerator {
     private readonly retainOriginalCasing: boolean;
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
+    private readonly neverThrowErrors: boolean;
 
     constructor({
         ir,
@@ -66,7 +68,8 @@ export class JestTestGenerator {
         useBigInt,
         retainOriginalCasing,
         relativePackagePath,
-        relativeTestPath
+        relativeTestPath,
+        neverThrowErrors
     }: JestTestGenerator.Args) {
         this.ir = ir;
         this.dependencyManager = dependencyManager;
@@ -78,6 +81,7 @@ export class JestTestGenerator {
         this.retainOriginalCasing = retainOriginalCasing;
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
+        this.neverThrowErrors = neverThrowErrors;
     }
 
     private async addJestConfigs(): Promise<void> {
@@ -638,7 +642,11 @@ describe("${serviceName}", () => {
         const rawRequestBody = this.getRequestExample(example.request);
         const rawResponseBody = this.getResponseExample(example.response);
         const responseStatusCode = getExampleResponseStatusCode(example.response);
-        const expected = getExpectedResponseBody(example.response, context);
+        const expected = getExpectedResponseBody({
+            response: example.response,
+            context,
+            neverThrowErrors: this.neverThrowErrors
+        });
 
         const generateEnvironment = () => {
             if (!this.ir.environments) {
@@ -987,8 +995,16 @@ function getExampleResponseStatusCode(response: ExampleResponse): number {
     });
 }
 
-function getExpectedResponseBody(response: ExampleResponse, context: SdkContext): Code {
-    return response._visit({
+function getExpectedResponseBody({
+    response,
+    context,
+    neverThrowErrors
+}: {
+    response: ExampleResponse;
+    context: SdkContext;
+    neverThrowErrors: boolean;
+}): Code {
+    const result = response._visit({
         ok: (response) => {
             return response._visit({
                 body: (value) => {
@@ -1018,4 +1034,13 @@ function getExpectedResponseBody(response: ExampleResponse, context: SdkContext)
             throw new Error("Unsupported response type");
         }
     });
+    if (neverThrowErrors) {
+        return code`{
+            body: ${result},
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        }`;
+    }
+    return result;
 }

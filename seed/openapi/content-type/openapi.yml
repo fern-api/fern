@@ -85,6 +85,83 @@ paths:
                   type: object
                   additionalProperties: true
                   nullable: true
+  /named-mixed/{id}:
+    patch:
+      description: >-
+        Named request with mixed optional/nullable fields and merge-patch
+        content type.
+
+        This should trigger the NPE issue when optional fields aren't
+        initialized.
+      operationId: service_namedPatchWithMixed
+      tags:
+        - Service
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                appId:
+                  type: string
+                  nullable: true
+                instructions:
+                  type: string
+                  nullable: true
+                active:
+                  type: boolean
+                  nullable: true
+  /optional-merge-patch-test:
+    patch:
+      description: >-
+        Test endpoint to verify Optional field initialization and JsonSetter
+        with Nulls.SKIP.
+
+        This endpoint should:
+
+        1. Not NPE when fields are not provided (tests initialization)
+
+        2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
+      operationId: service_optionalMergePatchTest
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requiredField:
+                  type: string
+                optionalString:
+                  type: string
+                  nullable: true
+                optionalInteger:
+                  type: integer
+                  nullable: true
+                optionalBoolean:
+                  type: boolean
+                  nullable: true
+                nullableString:
+                  type: string
+                  nullable: true
+              required:
+                - requiredField
   /regular/{id}:
     patch:
       description: Regular PATCH endpoint without merge-patch semantics

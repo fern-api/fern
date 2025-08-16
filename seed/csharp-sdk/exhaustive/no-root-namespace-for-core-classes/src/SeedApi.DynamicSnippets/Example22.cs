@@ -1,6 +1,7 @@
 using global::System.Threading.Tasks;
 using SeedExhaustive;
 using SeedExhaustive.Core;
+using SeedExhaustive.Types;
 
 namespace Usage;
 
@@ -14,8 +15,14 @@ public class Example22
             }
         );
 
-        await client.Endpoints.Params.GetWithPathAsync(
-            "param"
+        await client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(
+            new ObjectWithOptionalField{
+                String = "boundary-test",
+                Integer = 2147483647,
+                Long = 9223372036854776000l,
+                Double = 1.7976931348623157e+308,
+                Bool = true
+            }
         );
     }
 

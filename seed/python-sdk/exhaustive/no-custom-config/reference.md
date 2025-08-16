@@ -1262,9 +1262,6 @@ client.endpoints.http_methods.test_delete(
 <dd>
 
 ```python
-import datetime
-import uuid
-
 from seed import SeedExhaustive
 
 client = SeedExhaustive(
@@ -1272,25 +1269,11 @@ client = SeedExhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 client.endpoints.object.get_and_return_with_optional_field(
-    string="string",
-    integer=1,
-    long_=1000000,
-    double=1.1,
+    string="test",
+    integer=21991583578,
+    long_=9223372036854776000,
+    double=3.14,
     bool_=True,
-    datetime=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    date=datetime.date.fromisoformat(
-        "2023-01-15",
-    ),
-    uuid_=uuid.UUID(
-        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ),
-    base_64="SGVsbG8gd29ybGQh",
-    list_=["list", "list"],
-    set_={"set"},
-    map_={1: "map"},
-    bigint=1000000,
 )
 
 ```
@@ -1820,6 +1803,163 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(
 <dd>
 
 **request:** `typing.Sequence[NestedObjectWithRequiredField]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">test_integer_overflow_edge_cases</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.object.test_integer_overflow_edge_cases(
+    string="large-negative",
+    integer=-1000000000000,
+    long_=-1000000000000,
+    double=-1000000000000.0,
+    bool_=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**string:** `typing.Optional[str]` — This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**integer:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**long_:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**double:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bool_:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**datetime:** `typing.Optional[dt.datetime]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**date:** `typing.Optional[dt.date]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**uuid_:** `typing.Optional[uuid.UUID]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**base_64:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**list_:** `typing.Optional[typing.Sequence[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**set_:** `typing.Optional[typing.Set[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**map_:** `typing.Optional[typing.Dict[int, str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bigint:** `typing.Optional[str]` 
     
 </dd>
 </dl>

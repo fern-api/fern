@@ -13,6 +13,11 @@ describe("V2", () => {
         server.mockEndpoint().get("").respondWith().statusCode(200).build();
 
         const response = await client.v2.test();
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 });

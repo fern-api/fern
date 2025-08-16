@@ -15,7 +15,12 @@ describe("Homepage", () => {
         server.mockEndpoint().get("/homepage-problems").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.homepage.getHomepageProblems();
-        expect(response).toEqual([SeedTrace.ProblemId("string"), SeedTrace.ProblemId("string")]);
+        expect(response).toEqual({
+            body: [SeedTrace.ProblemId("string"), SeedTrace.ProblemId("string")],
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("setHomepageProblems", async () => {
@@ -29,6 +34,11 @@ describe("Homepage", () => {
             SeedTrace.ProblemId("string"),
             SeedTrace.ProblemId("string"),
         ]);
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 });

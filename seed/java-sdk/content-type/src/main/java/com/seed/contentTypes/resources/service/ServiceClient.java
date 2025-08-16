@@ -5,6 +5,8 @@ package com.seed.contentTypes.resources.service;
 
 import com.seed.contentTypes.core.ClientOptions;
 import com.seed.contentTypes.core.RequestOptions;
+import com.seed.contentTypes.resources.service.requests.NamedMixedPatchRequest;
+import com.seed.contentTypes.resources.service.requests.OptionalMergePatchRequest;
 import com.seed.contentTypes.resources.service.requests.PatchComplexRequest;
 import com.seed.contentTypes.resources.service.requests.PatchProxyRequest;
 import com.seed.contentTypes.resources.service.requests.RegularPatchRequest;
@@ -68,6 +70,46 @@ public class ServiceClient {
      */
     public void patchComplex(String id, PatchComplexRequest request, RequestOptions requestOptions) {
         this.rawClient.patchComplex(id, request, requestOptions).body();
+    }
+
+    /**
+     * Named request with mixed optional/nullable fields and merge-patch content type.
+     * This should trigger the NPE issue when optional fields aren't initialized.
+     */
+    public void namedPatchWithMixed(String id, NamedMixedPatchRequest request) {
+        this.rawClient.namedPatchWithMixed(id, request).body();
+    }
+
+    /**
+     * Named request with mixed optional/nullable fields and merge-patch content type.
+     * This should trigger the NPE issue when optional fields aren't initialized.
+     */
+    public void namedPatchWithMixed(String id, NamedMixedPatchRequest request, RequestOptions requestOptions) {
+        this.rawClient.namedPatchWithMixed(id, request, requestOptions).body();
+    }
+
+    /**
+     * Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+     * This endpoint should:
+     * <ol>
+     * <li>Not NPE when fields are not provided (tests initialization)</li>
+     * <li>Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)</li>
+     * </ol>
+     */
+    public void optionalMergePatchTest(OptionalMergePatchRequest request) {
+        this.rawClient.optionalMergePatchTest(request).body();
+    }
+
+    /**
+     * Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+     * This endpoint should:
+     * <ol>
+     * <li>Not NPE when fields are not provided (tests initialization)</li>
+     * <li>Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)</li>
+     * </ol>
+     */
+    public void optionalMergePatchTest(OptionalMergePatchRequest request, RequestOptions requestOptions) {
+        this.rawClient.optionalMergePatchTest(request, requestOptions).body();
     }
 
     /**

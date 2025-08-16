@@ -10,34 +10,18 @@ describe("Object_", () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = {
-            string: "string",
-            integer: 1,
-            long: 1000000,
-            double: 1.1,
+            string: "test",
+            integer: 21991583578,
+            long: 9223372036854776000,
+            double: 3.14,
             bool: true,
-            datetime: "2024-01-15T09:30:00Z",
-            date: "2023-01-15",
-            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            base64: "SGVsbG8gd29ybGQh",
-            list: ["list", "list"],
-            set: ["set"],
-            map: { "1": "map" },
-            bigint: "1000000",
         };
         const rawResponseBody = {
-            string: "string",
-            integer: 1,
-            long: 1000000,
-            double: 1.1,
+            string: "test",
+            integer: 21991583578,
+            long: 9223372036854776000,
+            double: 3.14,
             bool: true,
-            datetime: "2024-01-15T09:30:00Z",
-            date: "2023-01-15",
-            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            base64: "SGVsbG8gd29ybGQh",
-            list: ["list", "list"],
-            set: ["set"],
-            map: { "1": "map" },
-            bigint: "1000000",
         };
         server
             .mockEndpoint()
@@ -49,38 +33,23 @@ describe("Object_", () => {
             .build();
 
         const response = await client.endpoints.object.getAndReturnWithOptionalField({
-            string: "string",
-            integer: 1,
-            long: 1000000,
-            double: 1.1,
+            string: "test",
+            integer: 21991583578,
+            long: 9223372036854776000,
+            double: 3.14,
             bool: true,
-            datetime: "2024-01-15T09:30:00Z",
-            date: "2023-01-15",
-            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            base64: "SGVsbG8gd29ybGQh",
-            list: ["list", "list"],
-            set: ["set"],
-            map: {
-                1: "map",
-            },
-            bigint: "1000000",
         });
         expect(response).toEqual({
-            string: "string",
-            integer: 1,
-            long: 1000000,
-            double: 1.1,
-            bool: true,
-            datetime: "2024-01-15T09:30:00Z",
-            date: "2023-01-15",
-            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            base64: "SGVsbG8gd29ybGQh",
-            list: ["list", "list"],
-            set: ["set"],
-            map: {
-                1: "map",
+            body: {
+                string: "test",
+                integer: 21991583578,
+                long: 9223372036854776000,
+                double: 3.14,
+                bool: true,
             },
-            bigint: "1000000",
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 
@@ -102,7 +71,12 @@ describe("Object_", () => {
             string: "string",
         });
         expect(response).toEqual({
-            string: "string",
+            body: {
+                string: "string",
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 
@@ -128,11 +102,16 @@ describe("Object_", () => {
             },
         });
         expect(response).toEqual({
-            map: {
+            body: {
                 map: {
-                    map: "map",
+                    map: {
+                        map: "map",
+                    },
                 },
             },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 
@@ -205,24 +184,29 @@ describe("Object_", () => {
             },
         });
         expect(response).toEqual({
-            string: "string",
-            NestedObject: {
+            body: {
                 string: "string",
-                integer: 1,
-                long: 1000000,
-                double: 1.1,
-                bool: true,
-                datetime: "2024-01-15T09:30:00Z",
-                date: "2023-01-15",
-                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                base64: "SGVsbG8gd29ybGQh",
-                list: ["list", "list"],
-                set: ["set"],
-                map: {
-                    1: "map",
+                NestedObject: {
+                    string: "string",
+                    integer: 1,
+                    long: 1000000,
+                    double: 1.1,
+                    bool: true,
+                    datetime: "2024-01-15T09:30:00Z",
+                    date: "2023-01-15",
+                    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    base64: "SGVsbG8gd29ybGQh",
+                    list: ["list", "list"],
+                    set: ["set"],
+                    map: {
+                        1: "map",
+                    },
+                    bigint: "1000000",
                 },
-                bigint: "1000000",
             },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 
@@ -295,24 +279,29 @@ describe("Object_", () => {
             },
         });
         expect(response).toEqual({
-            string: "string",
-            NestedObject: {
+            body: {
                 string: "string",
-                integer: 1,
-                long: 1000000,
-                double: 1.1,
-                bool: true,
-                datetime: "2024-01-15T09:30:00Z",
-                date: "2023-01-15",
-                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                base64: "SGVsbG8gd29ybGQh",
-                list: ["list", "list"],
-                set: ["set"],
-                map: {
-                    1: "map",
+                NestedObject: {
+                    string: "string",
+                    integer: 1,
+                    long: 1000000,
+                    double: 1.1,
+                    bool: true,
+                    datetime: "2024-01-15T09:30:00Z",
+                    date: "2023-01-15",
+                    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    base64: "SGVsbG8gd29ybGQh",
+                    list: ["list", "list"],
+                    set: ["set"],
+                    map: {
+                        1: "map",
+                    },
+                    bigint: "1000000",
                 },
-                bigint: "1000000",
             },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 
@@ -427,24 +416,76 @@ describe("Object_", () => {
             },
         ]);
         expect(response).toEqual({
-            string: "string",
-            NestedObject: {
+            body: {
                 string: "string",
-                integer: 1,
-                long: 1000000,
-                double: 1.1,
-                bool: true,
-                datetime: "2024-01-15T09:30:00Z",
-                date: "2023-01-15",
-                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                base64: "SGVsbG8gd29ybGQh",
-                list: ["list", "list"],
-                set: ["set"],
-                map: {
-                    1: "map",
+                NestedObject: {
+                    string: "string",
+                    integer: 1,
+                    long: 1000000,
+                    double: 1.1,
+                    bool: true,
+                    datetime: "2024-01-15T09:30:00Z",
+                    date: "2023-01-15",
+                    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    base64: "SGVsbG8gd29ybGQh",
+                    list: ["list", "list"],
+                    set: ["set"],
+                    map: {
+                        1: "map",
+                    },
+                    bigint: "1000000",
                 },
-                bigint: "1000000",
             },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
+    });
+
+    test("testIntegerOverflowEdgeCases", async () => {
+        const server = mockServerPool.createServer();
+        const client = new FiddleClient({ token: "test", environment: server.baseUrl });
+        const rawRequestBody = {
+            string: "boundary-test",
+            integer: 2147483647,
+            long: 9223372036854776000,
+            double: 1.7976931348623157e308,
+            bool: true,
+        };
+        const rawResponseBody = {
+            string: "boundary-test",
+            integer: 2147483647,
+            long: 9223372036854776000,
+            double: 1.7976931348623157e308,
+            bool: true,
+        };
+        server
+            .mockEndpoint()
+            .post("/object/test-integer-overflow-edge-cases")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.endpoints.object.testIntegerOverflowEdgeCases({
+            string: "boundary-test",
+            integer: 2147483647,
+            long: 9223372036854776000,
+            double: 1.7976931348623157e308,
+            bool: true,
+        });
+        expect(response).toEqual({
+            body: {
+                string: "boundary-test",
+                integer: 2147483647,
+                long: 9223372036854776000,
+                double: 1.7976931348623157e308,
+                bool: true,
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 });

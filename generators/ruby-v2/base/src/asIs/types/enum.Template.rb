@@ -4,8 +4,8 @@ module <%= gem_namespace %>
   module Internal
     module Types
       # Module for defining enums
-      class Enum
-        extends <%= gem_namespace %>::Internal::Types::Type
+      module Enum
+        include <%= gem_namespace %>::Internal::Types::Type
 
         # @api private
         #

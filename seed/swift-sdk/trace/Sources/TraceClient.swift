@@ -32,9 +32,11 @@ public final class TraceClient: Sendable {
     ) {
         self.init(
             baseURL: baseURL,
+            headerAuth: nil,
             bearerAuth: token.map {
                 .init(token: .staticToken($0))
             },
+            basicAuth: nil,
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,
@@ -60,9 +62,11 @@ public final class TraceClient: Sendable {
     ) {
         self.init(
             baseURL: baseURL,
+            headerAuth: nil,
             bearerAuth: token.map {
                 .init(token: .provider($0))
             },
+            basicAuth: nil,
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,

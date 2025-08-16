@@ -72,6 +72,46 @@ func (c *Client) PatchComplex(
 	return nil
 }
 
+// Named request with mixed optional/nullable fields and merge-patch content type.
+// This should trigger the NPE issue when optional fields aren't initialized.
+func (c *Client) NamedPatchWithMixed(
+	ctx context.Context,
+	id string,
+	request *fern.NamedMixedPatchRequest,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.NamedPatchWithMixed(
+		ctx,
+		id,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+// This endpoint should:
+// 1. Not NPE when fields are not provided (tests initialization)
+// 2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
+func (c *Client) OptionalMergePatchTest(
+	ctx context.Context,
+	request *fern.OptionalMergePatchRequest,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.OptionalMergePatchTest(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 // Regular PATCH endpoint without merge-patch semantics
 func (c *Client) RegularPatch(
 	ctx context.Context,

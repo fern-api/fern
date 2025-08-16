@@ -329,6 +329,97 @@ class RawObjectClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def test_integer_overflow_edge_cases(
+        self,
+        *,
+        string: typing.Optional[str] = OMIT,
+        integer: typing.Optional[int] = OMIT,
+        long_: typing.Optional[int] = OMIT,
+        double: typing.Optional[float] = OMIT,
+        bool_: typing.Optional[bool] = OMIT,
+        datetime: typing.Optional[dt.datetime] = OMIT,
+        date: typing.Optional[dt.date] = OMIT,
+        uuid_: typing.Optional[uuid.UUID] = OMIT,
+        base_64: typing.Optional[str] = OMIT,
+        list_: typing.Optional[typing.Sequence[str]] = OMIT,
+        set_: typing.Optional[typing.Set[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
+        bigint: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[ObjectWithOptionalField]:
+        """
+        Parameters
+        ----------
+        string : typing.Optional[str]
+            This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
+
+        integer : typing.Optional[int]
+
+        long_ : typing.Optional[int]
+
+        double : typing.Optional[float]
+
+        bool_ : typing.Optional[bool]
+
+        datetime : typing.Optional[dt.datetime]
+
+        date : typing.Optional[dt.date]
+
+        uuid_ : typing.Optional[uuid.UUID]
+
+        base_64 : typing.Optional[str]
+
+        list_ : typing.Optional[typing.Sequence[str]]
+
+        set_ : typing.Optional[typing.Set[str]]
+
+        map_ : typing.Optional[typing.Dict[int, str]]
+
+        bigint : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ObjectWithOptionalField]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "object/test-integer-overflow-edge-cases",
+            method="POST",
+            json={
+                "string": string,
+                "integer": integer,
+                "long": long_,
+                "double": double,
+                "bool": bool_,
+                "datetime": datetime,
+                "date": date,
+                "uuid": uuid_,
+                "base64": base_64,
+                "list": list_,
+                "set": set_,
+                "map": map_,
+                "bigint": bigint,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ObjectWithOptionalField,
+                    construct_type(
+                        type_=ObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawObjectClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -629,6 +720,97 @@ class AsyncRawObjectClient:
                     NestedObjectWithRequiredField,
                     construct_type(
                         type_=NestedObjectWithRequiredField,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def test_integer_overflow_edge_cases(
+        self,
+        *,
+        string: typing.Optional[str] = OMIT,
+        integer: typing.Optional[int] = OMIT,
+        long_: typing.Optional[int] = OMIT,
+        double: typing.Optional[float] = OMIT,
+        bool_: typing.Optional[bool] = OMIT,
+        datetime: typing.Optional[dt.datetime] = OMIT,
+        date: typing.Optional[dt.date] = OMIT,
+        uuid_: typing.Optional[uuid.UUID] = OMIT,
+        base_64: typing.Optional[str] = OMIT,
+        list_: typing.Optional[typing.Sequence[str]] = OMIT,
+        set_: typing.Optional[typing.Set[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
+        bigint: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[ObjectWithOptionalField]:
+        """
+        Parameters
+        ----------
+        string : typing.Optional[str]
+            This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
+
+        integer : typing.Optional[int]
+
+        long_ : typing.Optional[int]
+
+        double : typing.Optional[float]
+
+        bool_ : typing.Optional[bool]
+
+        datetime : typing.Optional[dt.datetime]
+
+        date : typing.Optional[dt.date]
+
+        uuid_ : typing.Optional[uuid.UUID]
+
+        base_64 : typing.Optional[str]
+
+        list_ : typing.Optional[typing.Sequence[str]]
+
+        set_ : typing.Optional[typing.Set[str]]
+
+        map_ : typing.Optional[typing.Dict[int, str]]
+
+        bigint : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ObjectWithOptionalField]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "object/test-integer-overflow-edge-cases",
+            method="POST",
+            json={
+                "string": string,
+                "integer": integer,
+                "long": long_,
+                "double": double,
+                "bool": bool_,
+                "datetime": datetime,
+                "date": date,
+                "uuid": uuid_,
+                "base64": base_64,
+                "list": list_,
+                "set": set_,
+                "map": map_,
+                "bigint": bigint,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ObjectWithOptionalField,
+                    construct_type(
+                        type_=ObjectWithOptionalField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

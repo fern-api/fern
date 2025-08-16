@@ -22,7 +22,12 @@ describe("Admin", () => {
         const response = await client.admin.updateTestSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
             type: "stopped",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("sendTestSubmissionUpdate", async () => {
@@ -48,7 +53,12 @@ describe("Admin", () => {
                 value: "QUEUEING_SUBMISSION",
             },
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("updateWorkspaceSubmissionStatus", async () => {
@@ -67,7 +77,12 @@ describe("Admin", () => {
         const response = await client.admin.updateWorkspaceSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
             type: "stopped",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("sendWorkspaceSubmissionUpdate", async () => {
@@ -93,7 +108,12 @@ describe("Admin", () => {
                 value: "QUEUEING_SUBMISSION",
             },
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("storeTracedTestCase", async () => {
@@ -253,7 +273,12 @@ describe("Admin", () => {
                 },
             ],
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("storeTracedTestCaseV2", async () => {
@@ -398,7 +423,12 @@ describe("Admin", () => {
                 },
             ],
         );
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("storeTracedWorkspace", async () => {
@@ -561,7 +591,12 @@ describe("Admin", () => {
                 },
             ],
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("storeTracedWorkspaceV2", async () => {
@@ -702,6 +737,11 @@ describe("Admin", () => {
                 stdout: "stdout",
             },
         ]);
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 });
