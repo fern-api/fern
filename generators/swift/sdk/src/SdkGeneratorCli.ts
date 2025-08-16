@@ -5,6 +5,7 @@ import { AbstractSwiftGeneratorCli, SwiftFile } from "@fern-api/swift-base";
 import {
     AliasGenerator,
     DiscriminatedUnionGenerator,
+    LiteralEnumGenerator,
     ObjectGenerator,
     StringEnumGenerator,
     UndiscriminatedUnionGenerator
@@ -149,17 +150,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         // Swift does not support literal aliases, so we need to generate a custom type for them
                         const literalType = atd.aliasOf.container.literal;
                         if (literalType.type === "string") {
-                            const generator = new StringEnumGenerator({
+                            const generator = new LiteralEnumGenerator({
                                 name,
-                                source: {
-                                    type: "custom",
-                                    values: [
-                                        {
-                                            unsafeName: camelCase(literalType.string),
-                                            rawValue: literalType.string
-                                        }
-                                    ]
-                                },
+                                literalValue: literalType.string,
                                 docsContent: typeDeclaration.docs
                             });
                             const enum_ = generator.generate();
