@@ -30,30 +30,23 @@ export class LiteralEnumGenerator {
     }
 
     /**
-     * Sanitizes a literal value to ensure it is a valid Swift identifier.
+     * Sanitizes a literal value to produce a clean alphanumeric string suitable for Swift identifiers.
+     * Uses "value" as fallback for anything that doesn't result in a clean identifier.
      */
     public static sanitizeLiteralValue(literalValue: string): string {
         if (literalValue === "") {
             return "empty";
         }
-
-        // Step 1: Replace invalid characters with underscores or remove them
-        // Keep letters, digits, and underscores. Replace everything else with underscores.
-        let sanitized = literalValue.replace(/[^a-zA-Z0-9_]/g, "_");
-
-        // Step 2: Remove consecutive underscores and leading/trailing underscores
-        sanitized = sanitized.replace(/_+/g, "_").replace(/^_+|_+$/g, "");
-
-        // Step 3: Handle the case where sanitization resulted in an empty string
+        // Keep only letters and digits (no underscores)
+        let sanitized = literalValue.replace(/[^a-zA-Z0-9]/g, "");
+        // If it starts with a digit, use "value"
+        if (/^\d/.test(sanitized)) {
+            return "value";
+        }
+        // If sanitization resulted in empty string, use "value"
         if (sanitized === "") {
             return "value";
         }
-
-        // Step 4: Ensure it starts with a letter or underscore (not a digit)
-        if (/^\d/.test(sanitized)) {
-            sanitized = "value_" + sanitized;
-        }
-
         return sanitized;
     }
 
