@@ -1,6 +1,6 @@
 using global::System.Threading.Tasks;
 using SeedExhaustive;
-using SeedExhaustive.Endpoints.Params;
+using SeedExhaustive.Types.Object;
 
 namespace Usage;
 
@@ -14,10 +14,13 @@ public class Example25
             }
         );
 
-        await client.Endpoints.Params.GetWithPathAndQueryAsync(
-            "param",
-            new GetWithPathAndQuery{
-                Query = "query"
+        await client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(
+            new ObjectWithOptionalField{
+                String = "large-positive",
+                Integer = 1000000000000,
+                Long = 1000000000000l,
+                Double = 1000000000000,
+                Bool = false
             }
         );
     }
