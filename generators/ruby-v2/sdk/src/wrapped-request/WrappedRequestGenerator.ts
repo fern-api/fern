@@ -78,11 +78,6 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             });
         }
 
-        const statements = generateFields({
-            properties,
-            context: this.context
-        });
-
         this.endpoint.requestBody?._visit({
             reference: (reference) => {
                 properties.push({
@@ -108,6 +103,11 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             fileUpload: () => undefined,
             bytes: () => undefined,
             _other: () => undefined
+        });
+
+        const statements = generateFields({
+            properties,
+            context: this.context
         });
 
         class_.addStatements(statements);
