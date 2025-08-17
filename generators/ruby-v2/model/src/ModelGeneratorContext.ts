@@ -1,19 +1,33 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { AbstractRubyGeneratorContext, AsIsFiles } from "@fern-api/ruby-base";
+import { ruby } from "@fern-api/ruby-ast";
 
-import { TypeId } from "@fern-fern/ir-sdk/api";
+import { TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 
 export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCustomConfigSchema> {
     public getLocationForTypeId(typeId: TypeId): RelativeFilePath {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        return RelativeFilePath.of(
-            [
-                "lib",
-                this.getRootFolderName(),
-                ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)
-            ].join("/")
+        return join(
+            RelativeFilePath.of("lib"),
+            RelativeFilePath.of(this.getRootFolderName()),
+            ...this.snakeNames(typeDeclaration).map(RelativeFilePath.of),
+            RelativeFilePath.of(this.typesDirName)
         );
+    }
+
+    public getModuleNamesForTypeId(typeId: TypeId): string[] {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return [
+            this.getRootModule().name,
+            ...this.pascalNames(typeDeclaration),
+            this.getTypesModule().name
+        ];
+    }
+
+    public getModulesForTypeId(typeId: TypeId): ruby.Module_[] {
+        const modules = this.getModuleNamesForTypeId(typeId);
+        return modules.map((name) => ruby.module({ name }));
     }
 
     public getCoreAsIsFiles(): string[] {
