@@ -38,18 +38,6 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             })
         });
 
-        const rootModule = this.context.getRootModule();
-
-        let nestedModule = rootModule;
-        for (const filepath of this.context.getSubpackageForServiceId(this.serviceId).fernFilepath.allParts) {
-            const module = ruby.module({
-                name: filepath.pascalCase.safeName
-            });
-            nestedModule.addStatement(module);
-            nestedModule = module;
-        }
-        nestedModule.addStatement(class_);
-
         for (const pathParameter of this.endpoint.allPathParameters) {
             properties.push({
                 ...pathParameter,
@@ -116,7 +104,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             node: ruby.codeblock((writer) => {
                 ruby.comment({ docs: "frozen_string_literal: true" });
                 writer.newLine();
-                rootModule.write(writer);
+                ruby.wrapInModules(class_, this.getModules()).write(writer);
             }),
             directory: this.getFilepath(),
             filename: `${this.wrapper.wrapperName.snakeCase.safeName}.rb`,
@@ -135,5 +123,14 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             ].join("/")
         );
         return serviceDir;
+    }
+
+    protected getModules(): ruby.Module_[] {
+        return [
+            this.context.getRootModule(),
+            ...this.context.getSubpackageForServiceId(this.serviceId).fernFilepath.allParts.map(part =>
+                ruby.module({name: part.pascalCase.safeName})),
+            this.context.getTypesModule()
+        ];
     }
 }
