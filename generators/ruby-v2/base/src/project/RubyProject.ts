@@ -1,5 +1,5 @@
 import { AbstractProject, File } from "@fern-api/base-generator";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 import dedent from "dedent";
 import { mkdir, readFile, writeFile } from "fs/promises";
@@ -28,10 +28,14 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await this.writeRawFiles();
         await this.createAsIsFiles();
         await this.writeAsIsFiles();
+        await this.createModuleFile();
     }
 
     private async createGemfile(): Promise<void> {
         const gemfile = new Gemfile({ context: this.context });
+        this.context.logger.debug(`Gemfile base path ${this.absolutePathToOutputDirectory}`);
+        this.context.logger.debug(`Gemfile filename ${GEMFILE_FILENAME}`);
+        this.context.logger.debug(`Gemfile filename relative ${RelativeFilePath.of(GEMFILE_FILENAME)}`);
         await writeFile(
             join(this.absolutePathToOutputDirectory, RelativeFilePath.of(GEMFILE_FILENAME)),
             await gemfile.toString()
@@ -44,6 +48,11 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
             join(this.absolutePathToOutputDirectory, RelativeFilePath.of(RAKEFILE_FILENAME)),
             await rakefile.toString()
         );
+    }
+
+    private async createModuleFile(): Promise<void> {
+        const moduleFile = new ModuleFile({ context: this.context, project: this });
+        moduleFile.writeFile();
     }
 
     private async createAsIsFiles(): Promise<void> {
@@ -89,6 +98,23 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
     private async mkdir(absolutePathToDirectory: AbsoluteFilePath): Promise<void> {
         this.context.logger.debug(`mkdir ${absolutePathToDirectory}`);
         await mkdir(absolutePathToDirectory, { recursive: true });
+    }
+
+    public getAllRubyAbsoluteFilePaths(): AbsoluteFilePath[] {
+        return [
+            ...this.coreFiles.map((file) => this.filePathFromRubyFile(file)),
+            ...this.rawFiles.map((file) => this.filePathFromRubyFile(file))
+        ];
+    }
+
+    private filePathFromRubyFile(file: File): AbsoluteFilePath {
+        return AbsoluteFilePath.of(
+            join(
+                this.absolutePathToOutputDirectory,
+                file.directory,
+                RelativeFilePath.of(file.filename.replaceAll(".rb", ""))
+            )
+        );
     }
 }
 
@@ -151,5 +177,39 @@ class Rakefile {
               puts "No tests for now"
             end
         `;
+    }
+}
+
+declare namespace ModuleFile {
+    interface Args {
+        context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+        project: RubyProject;
+    }
+}
+
+class ModuleFile {
+    private context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+    private project: RubyProject;
+    public readonly filePath: AbsoluteFilePath;
+    public readonly fileName: string;
+
+    public constructor({ context, project }: ModuleFile.Args) {
+        this.context = context;
+        this.project = project;
+        this.filePath = join(project.absolutePathToOutputDirectory, RelativeFilePath.of("lib"));
+        this.fileName = this.context.getRootFolderName() + ".rb";
+    }
+
+    public toString(): string {
+        let contents = "";
+        const rubyFilePaths = this.project.getAllRubyAbsoluteFilePaths();
+        rubyFilePaths.forEach((filePath) => {
+            contents += `require_relative '${relative(this.filePath, filePath)}'\n`;
+        });
+        return dedent`${contents}`;
+    }
+
+    public async writeFile(): Promise<void> {
+        await writeFile(join(this.filePath, RelativeFilePath.of(this.fileName)), this.toString());
     }
 }
