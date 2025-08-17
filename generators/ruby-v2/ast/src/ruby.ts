@@ -115,7 +115,7 @@ export function ifElse(args: IfElse.Args): IfElse {
 
 export function wrapInModules(node: AstNode, modules: Module_[]): AstNode {
     let topLevelNode: AstNode = node;
-    for (const module of modules.reverse()) {
+    for (const module of modules.toReversed()) {
         module.addStatement(topLevelNode);
         topLevelNode = module;
     }
