@@ -15,6 +15,8 @@ export abstract class AbstractRubyGeneratorContext<
     public readonly ir: IntermediateRepresentation;
     public readonly customConfig: CustomConfig;
     public readonly typeMapper: RubyTypeMapper;
+    public readonly typesDirName: string = "types";
+    public readonly typesModuleName: string = "Types";
 
     public constructor(
         ir: IntermediateRepresentation,
@@ -58,7 +60,19 @@ export abstract class AbstractRubyGeneratorContext<
         });
     }
 
+    protected snakeNames(typeDeclaration: TypeDeclaration): string[] {
+        return typeDeclaration.name.fernFilepath.allParts.map((path) => path.snakeCase.safeName);
+    }
+
+    protected pascalNames(typeDeclaration: TypeDeclaration): string[] {
+        return typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName);
+    }
+
     public abstract getCoreAsIsFiles(): string[];
 
     public abstract getLocationForTypeId(typeId: TypeId): RelativeFilePath;
+
+    public abstract getModuleNamesForTypeId(typeId: TypeId): string[];
+
+    public abstract getModulesForTypeId(typeId: TypeId): ruby.Module_[];
 }

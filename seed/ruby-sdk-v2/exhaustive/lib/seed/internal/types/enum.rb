@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module seed
+module Seed
   module Internal
     module Types
       # Module for defining enums
-      class Enum
-        extends seed::Internal::Types::Type
+      module Enum
+        include Seed::Internal::Types::Type
 
         # @api private
         #
