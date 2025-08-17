@@ -65,7 +65,9 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
             node: ruby.codeblock((writer) => {
                 ruby.comment({ docs: "frozen_string_literal: true" }).write(writer);
                 writer.newLine();
-                ruby.wrapInModules(classNode, this.context.getModulesForTypeId(this.typeDeclaration.name.typeId)).write(writer);
+                ruby.wrapInModules(classNode, this.context.getModulesForTypeId(this.typeDeclaration.name.typeId)).write(
+                    writer
+                );
             }),
             directory: this.getFilepath(),
             filename: this.getFilename(),

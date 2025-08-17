@@ -128,8 +128,9 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
     protected getModules(): ruby.Module_[] {
         return [
             this.context.getRootModule(),
-            ...this.context.getSubpackageForServiceId(this.serviceId).fernFilepath.allParts.map(part =>
-                ruby.module({name: part.pascalCase.safeName})),
+            ...this.context
+                .getSubpackageForServiceId(this.serviceId)
+                .fernFilepath.allParts.map((part) => ruby.module({ name: part.pascalCase.safeName })),
             this.context.getTypesModule()
         ];
     }

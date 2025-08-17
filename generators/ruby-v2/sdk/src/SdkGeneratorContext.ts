@@ -48,11 +48,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
 
     public getModuleNamesForTypeId(typeId: TypeId): string[] {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        return [
-            this.getRootModule().name,
-            ...this.pascalNames(typeDeclaration),
-            this.getTypesModule().name
-        ];
+        return [this.getRootModule().name, ...this.pascalNames(typeDeclaration), this.getTypesModule().name];
     }
 
     public getModulesForTypeId(typeId: TypeId): ruby.Module_[] {
