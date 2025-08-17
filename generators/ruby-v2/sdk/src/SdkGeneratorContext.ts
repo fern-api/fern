@@ -1,5 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { RelativeFilePath, join } from "@fern-api/path-utils";
+import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { ClassReference } from "@fern-api/ruby-ast/src/ast/ClassReference";
 import { AbstractRubyGeneratorContext, AsIsFiles, RubyProject } from "@fern-api/ruby-base";

@@ -1,6 +1,6 @@
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
-import { AbstractRubyGeneratorContext, AsIsFiles } from "@fern-api/ruby-base";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
+import { AbstractRubyGeneratorContext, AsIsFiles } from "@fern-api/ruby-base";
 
 import { TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
