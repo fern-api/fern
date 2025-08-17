@@ -46,17 +46,11 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
             statements: statements
         });
 
-        const classWithTypesModule = this.context.getTypesModule();
-        classWithTypesModule.addStatement(classNode);
-
-        const classWithRootModule = this.context.getRootModule();
-        classWithRootModule.addStatement(classWithTypesModule);
-
         return new RubyFile({
             node: ruby.codeblock((writer) => {
                 writer.writeNode(ruby.comment({ docs: "frozen_string_literal: true" }));
                 writer.newLine();
-                classWithRootModule.write(writer);
+                ruby.wrapInModules(classNode, this.context.getModulesForTypeId(this.typeDeclaration.name.typeId));
             }),
             directory: this.getFilepath(),
             filename: `${this.typeDeclaration.name.name.snakeCase.safeName}.rb`,
