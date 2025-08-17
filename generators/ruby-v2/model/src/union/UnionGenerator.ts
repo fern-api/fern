@@ -61,17 +61,11 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
             );
         }
 
-        // const classWithTypesModule = this.context.getTypesModule();
-        // classWithTypesModule.addStatement(classNode);
-
-        // const classWithRootModule = this.context.getRootModule();
-        // classWithRootModule.addStatement(classWithTypesModule);
-
         return new RubyFile({
             node: ruby.codeblock((writer) => {
-                writer.writeNode(ruby.comment({ docs: "frozen_string_literal: true" }));
+                ruby.comment({ docs: "frozen_string_literal: true" }).write(writer);
                 writer.newLine();
-                writer.writeNode(ruby.wrapInModules(classNode, this.context.getModulesForTypeId(this.typeDeclaration.name.typeId)));
+                ruby.wrapInModules(classNode, this.context.getModulesForTypeId(this.typeDeclaration.name.typeId)).write(writer);
             }),
             directory: this.getFilepath(),
             filename: this.getFilename(),
