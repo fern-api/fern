@@ -215,6 +215,14 @@ class ModuleFile {
         this.fileName = this.context.getRootFolderName() + ".rb";
     }
 
+    private getAbsoluteFilePathForTypeDeclaration(typeDeclaration: TypeDeclaration): AbsoluteFilePath {
+        return join(
+            this.project.absolutePathToOutputDirectory,
+            this.context.getLocationForTypeId(typeDeclaration.name.typeId),
+            RelativeFilePath.of(this.context.getFileNameForTypeId(typeDeclaration.name.typeId).replaceAll(".rb", ""))
+        );
+    }
+
     public toString(): string {
         let contents = this.baseContents;
         const visitedPaths = new Set<string>();
@@ -243,9 +251,22 @@ class ModuleFile {
         contents += "\n";
         contents += `# API Types\n`;
         const typeDeclarations = this.context.getAllTypeDeclarations();
-        const sortedTypeDeclarations = topologicalSort(typeDeclarations, compareTypeDeclarations);
         const rubyFilePaths = this.project.getRawAbsoluteFilePaths();
-        sortedTypeDeclarations.forEach((typeDeclaration) => {
+        const filteredTypeDeclarations = typeDeclarations.filter((typeDeclaration) => {
+            const absoluteFilePath = this.getAbsoluteFilePathForTypeDeclaration(typeDeclaration);
+            return rubyFilePaths.includes(absoluteFilePath);
+        });
+
+        const { sorted, cycles } = topologicalSortWithCycleDetection(filteredTypeDeclarations, dependsOn);
+        if (cycles.length > 0) {
+            const cycleDescriptions = cycles.map(cycle => 
+                cycle.map(typeDeclaration => typeDeclaration.name.typeId).join(" --> ")
+            );
+            cycleDescriptions.forEach(cycleDescription => {
+                this.context.logger.warn(`Circular dependency detected: ${cycleDescription}`);
+            });
+        }
+        sorted.forEach((typeDeclaration) => {
             const typeFilePath = join(
                 this.project.absolutePathToOutputDirectory,
                 this.context.getLocationForTypeId(typeDeclaration.name.typeId),
@@ -253,10 +274,8 @@ class ModuleFile {
                     this.context.getFileNameForTypeId(typeDeclaration.name.typeId).replaceAll(".rb", "")
                 )
             );
-            if (rubyFilePaths.includes(typeFilePath)) {
-                contents += `require_relative '${relative(this.filePath, typeFilePath)}'\n`;
-                visitedPaths.add(typeFilePath);
-            }
+            contents += `require_relative '${relative(this.filePath, typeFilePath)}'\n`;
+            visitedPaths.add(typeFilePath);
         });
 
         contents += "\n";
@@ -275,81 +294,96 @@ class ModuleFile {
     }
 }
 
-function compareTypeDeclarations(a: TypeDeclaration, b: TypeDeclaration): number {
-    if (dependsOn(a, b)) {
-        return -1;
-    }
-    if (dependsOn(b, a)) {
-        return 1;
-    }
-    return 0;
-}
-
 function dependsOn(a: TypeDeclaration, b: TypeDeclaration): boolean {
+    if (a.name.typeId === b.name.typeId) {
+        return false;
+    }
     return a.referencedTypes.has(b.name.typeId);
 }
 
 /**
- * Sorts an array using a comparator that only works for consecutive values.
- *
- * @param arr - The array to sort
- * @param compareConsecutive - A comparator function that returns:
- *   - negative number if a < b (when a and b are consecutive in sorted order)
- *   - positive number if a > b (when a and b are consecutive in sorted order)
- *   - 0 if a and b are not consecutive (cannot determine their relative order)
- *
- * The algorithm builds a sorted chain by finding consecutive relationships
- * and linking them together. For example, with values [1,2,3]:
- * - compare(1,2) returns -1 (1 comes before 2)
- * - compare(2,3) returns -1 (2 comes before 3)
- * - compare(1,3) returns 0 (1 and 3 are not consecutive)
- *
- * @returns A new sorted array
+ * Topological sort for a directed acyclic graph (DAG).
+ * Sorts nodes so that if A depends on B, then B comes before A in the result.
+ * 
+ * @param nodes - Array of nodes to sort
+ * @param dependsOn - Function that returns true if first node depends on second node
+ * @returns Topologically sorted array
  */
-function topologicalSort<T>(arr: T[], compareConsecutive: (a: T, b: T) => number): T[] {
-    if (arr.length === 0) {
-        return [];
-    }
-
+function topologicalSort<T>(context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>, nodes: T[], dependsOn: (a: T, b: T) => boolean): T[] {
     const result: T[] = [];
-    const remaining = [...arr];
-
-    while (remaining.length > 0) {
-        // Start a new chain with any remaining element
-        const sorted: T[] = [];
-        let current = defined(remaining.pop());
-        sorted.push(current);
-
-        let foundInThisPass = true;
-        while (foundInThisPass && remaining.length > 0) {
-            foundInThisPass = false;
-
-            // Try to find what comes before current chain start
-            for (let i = 0; i < remaining.length; i++) {
-                if (compareConsecutive(defined(remaining[i]), defined(sorted[0])) < 0) {
-                    sorted.unshift(defined(remaining.splice(i, 1)[0]));
-                    foundInThisPass = true;
-                    break;
-                }
-            }
-
-            // Try to find what comes after current chain end
-            if (!foundInThisPass) {
-                for (let i = 0; i < remaining.length; i++) {
-                    if (compareConsecutive(defined(sorted[sorted.length - 1]), defined(remaining[i])) < 0) {
-                        sorted.push(defined(remaining.splice(i, 1)[0]));
-                        foundInThisPass = true;
-                        break;
-                    }
-                }
+    const visited = new Set<T>();
+    const visiting = new Set<T>();
+    
+    function visit(node: T): void {
+        if (visiting.has(node)) {
+            context.logger.warn(`Circular dependency detected for ${Array.from(visiting).join("-->")}`);
+            return;
+        }
+        if (visited.has(node)) return;
+        
+        // visiting.add(node);
+        
+        // Visit all dependencies first
+        for (const other of nodes) {
+            if (dependsOn(node, other)) {
+                visit(other);
             }
         }
+        
+        visiting.delete(node);
+        visited.add(node);
+        result.push(node);
+    }
 
-        // Add this chain to results
-        result.push(...sorted);
+    // Visit all nodes
+    for (const node of nodes) {
+        if (!visited.has(node)) {
+            visit(node);
+        }
     }
 
     return result;
+}
+
+function topologicalSortWithCycleDetection<T>(
+    nodes: T[], 
+    dependsOn: (a: T, b: T) => boolean
+): { sorted: T[], cycles: T[][] } {
+    const result: T[] = [];
+    const visited = new Set<T>();
+    const cycles: T[][] = [];
+    
+    function visit(node: T, path: T[]): void {
+        const cycleStart = path.indexOf(node);
+        if (cycleStart !== -1) {
+            // Found cycle - extract it
+            const cycle = path.slice(cycleStart);
+            cycle.push(node); // Complete the cycle
+            cycles.push(cycle);
+            return;
+        }
+        
+        if (visited.has(node)) return;
+        
+        const newPath = [...path, node];
+        
+        for (const other of nodes) {
+            if (dependsOn(node, other)) {
+                visit(other, newPath);
+            }
+        }
+        
+        visited.add(node);
+        result.push(node);
+    }
+    
+    for (const node of nodes) {
+        if (!visited.has(node)) {
+            visit(node, []);
+        }
+    }
+    
+    return { sorted: result, cycles };
 }
 
 function defined<T>(t: T | undefined | null): T {
