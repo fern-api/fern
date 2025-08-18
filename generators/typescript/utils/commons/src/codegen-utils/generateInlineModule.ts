@@ -14,47 +14,39 @@ import { InlineConsts } from "./inlineConsts";
 export function generateInlinePropertiesModule({
     generateStatements,
     getTypeDeclaration,
-    parentTypeName,
     properties
-}: InlinePropertiesParams): ModuleDeclarationStructure | undefined {
+}: InlinePropertiesParams): (string | WriterFunction | StatementStructures)[] {
     const inlineProperties = getInlineProperties(properties, getTypeDeclaration);
     if (inlineProperties.length === 0) {
-        return;
+        return [];
     }
-    return {
-        kind: StructureKind.Module,
-        name: parentTypeName,
-        isExported: true,
-        hasDeclareKeyword: false,
-        declarationKind: ModuleDeclarationKind.Namespace,
-        statements: inlineProperties.flatMap(
-            ([propertyName, typeReference, typeDeclaration]: [string, TypeReference, TypeDeclaration]) => {
-                return generateTypeVisitor(typeReference, {
-                    named: () => generateStatements(typeDeclaration.name, propertyName),
-                    list: () => propertyListOrSetStatementGenerator(propertyName, typeDeclaration, generateStatements),
-                    set: () => propertyListOrSetStatementGenerator(propertyName, typeDeclaration, generateStatements),
-                    map: () => {
-                        const statements: StatementStructures[] = [];
-                        const mapModule: ModuleDeclarationStructure = {
-                            kind: StructureKind.Module,
-                            declarationKind: ModuleDeclarationKind.Namespace,
-                            isExported: true,
-                            hasDeclareKeyword: false,
-                            name: propertyName,
-                            statements: generateStatements(typeDeclaration.name, InlineConsts.MAP_VALUE_TYPE_NAME)
-                        };
+    return inlineProperties.flatMap(
+        ([propertyName, typeReference, typeDeclaration]: [string, TypeReference, TypeDeclaration]) => {
+            return generateTypeVisitor(typeReference, {
+                named: () => generateStatements(typeDeclaration.name, propertyName),
+                list: () => propertyListOrSetStatementGenerator(propertyName, typeDeclaration, generateStatements),
+                set: () => propertyListOrSetStatementGenerator(propertyName, typeDeclaration, generateStatements),
+                map: () => {
+                    const statements: StatementStructures[] = [];
+                    const mapModule: ModuleDeclarationStructure = {
+                        kind: StructureKind.Module,
+                        declarationKind: ModuleDeclarationKind.Namespace,
+                        isExported: true,
+                        hasDeclareKeyword: false,
+                        name: propertyName,
+                        statements: generateStatements(typeDeclaration.name, InlineConsts.MAP_VALUE_TYPE_NAME)
+                    };
 
-                        statements.push(mapModule);
-                        return statements;
-                    },
-                    other: () => {
-                        throw new Error(`Only named, list, map, and set properties can be inlined.
+                    statements.push(mapModule);
+                    return statements;
+                },
+                other: () => {
+                    throw new Error(`Only named, list, map, and set properties can be inlined.
                               Property: ${JSON.stringify(propertyName)}`);
-                    }
-                });
-            }
-        )
-    };
+                }
+            });
+        }
+    );
 }
 
 function propertyListOrSetStatementGenerator(
@@ -172,7 +164,6 @@ function getInlineTypeDeclaration(
 export interface InlinePropertiesParams {
     generateStatements: GenerateStatements;
     getTypeDeclaration: GetTypeDeclaration;
-    parentTypeName: string;
     properties: Property[];
 }
 

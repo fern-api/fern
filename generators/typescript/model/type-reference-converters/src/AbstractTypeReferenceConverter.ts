@@ -8,7 +8,7 @@ import {
     ShapeType,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { TypeReferenceNode } from "@fern-typescript/commons";
+import { getTextOfTsNode, TypeReferenceNode } from "@fern-typescript/commons";
 import { BaseContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -210,12 +210,42 @@ export abstract class AbstractTypeReferenceConverter<T> {
         return this.context.type.isNullable(typeReference);
     }
 
-    protected generateNonOptionalTypeReferenceNode(typeNode: ts.TypeNode): TypeReferenceNode {
+    protected generateNonOptionalTypeReferenceNode({
+        typeNode,
+        requestTypeNode,
+        responseTypeNode
+    }: {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    }): TypeReferenceNode {
         return {
             isOptional: false,
             typeNode,
-            typeNodeWithoutUndefined: typeNode
+            typeNodeWithoutUndefined: typeNode,
+            requestTypeNode: requestTypeNode,
+            requestTypeNodeWithoutUndefined: requestTypeNode,
+            responseTypeNode: responseTypeNode,
+            responseTypeNodeWithoutUndefined: responseTypeNode
         };
+    }
+
+    protected addRequestToTypeNode(typeNode: ts.TypeNode): ts.TypeNode {
+        return ts.factory.createTypeReferenceNode(
+            ts.factory.createQualifiedName(
+                ts.factory.createIdentifier(getTextOfTsNode(typeNode)),
+                ts.factory.createIdentifier("Request")
+            )
+        );
+    }
+
+    protected addResponseToTypeNode(typeNode: ts.TypeNode): ts.TypeNode {
+        return ts.factory.createTypeReferenceNode(
+            ts.factory.createQualifiedName(
+                ts.factory.createIdentifier(getTextOfTsNode(typeNode)),
+                ts.factory.createIdentifier("Response")
+            )
+        );
     }
 }
 

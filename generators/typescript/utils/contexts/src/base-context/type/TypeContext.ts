@@ -37,4 +37,6 @@ export interface TypeContext {
     isOptional: (typeReference: TypeReference) => boolean;
     isLiteral: (typeReference: TypeReference) => boolean;
     hasDefaultValue: (typeReference: TypeReference) => boolean;
+    needsRequestResponseTypeVariant: (typeReference: TypeReference) => { request: boolean; response: boolean };
+    needsRequestResponseTypeVariantById: (typeId: TypeId) => { request: boolean; response: boolean };
 }

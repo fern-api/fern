@@ -296,4 +296,18 @@ export class TypeContextImpl implements TypeContext {
                 return false;
         }
     }
+
+    public needsRequestResponseTypeVariant(): { request: boolean; response: boolean } {
+        return {
+            request: false,
+            response: false
+        };
+    }
+
+    public needsRequestResponseTypeVariantById(): { request: boolean; response: boolean } {
+        return {
+            request: false,
+            response: false
+        };
+    }
 }

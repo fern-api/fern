@@ -22,15 +22,16 @@ export declare namespace AbstractGeneratedType {
 const EXAMPLE_PREFIX = "    ";
 
 export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> implements BaseGeneratedType<Context> {
-    protected typeName: string;
-    protected shape: Shape;
-    protected examples: ExampleType[];
-    protected fernFilepath: FernFilepath;
-    protected getReferenceToSelf: (context: Context) => Reference;
-    protected includeSerdeLayer: boolean;
-    protected noOptionalProperties: boolean;
-    protected retainOriginalCasing: boolean;
-    protected enableInlineTypes: boolean;
+    protected readonly typeName: string;
+    protected readonly shape: Shape;
+    protected readonly examples: ExampleType[];
+    protected readonly fernFilepath: FernFilepath;
+    protected readonly getReferenceToSelf: (context: Context) => Reference;
+    protected readonly includeSerdeLayer: boolean;
+    protected readonly noOptionalProperties: boolean;
+    protected readonly retainOriginalCasing: boolean;
+    protected readonly enableInlineTypes: boolean;
+    protected readonly generateReadonlyWriteonlyTypes: boolean;
 
     private docs: string | undefined;
 
@@ -56,6 +57,7 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
         this.noOptionalProperties = noOptionalProperties;
         this.retainOriginalCasing = retainOriginalCasing;
         this.enableInlineTypes = enableInlineTypes;
+        this.generateReadonlyWriteonlyTypes = true;
     }
 
     protected getDocs(context: Context): string | undefined {

@@ -61,13 +61,32 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
             );
         }
 
+        const needsRequestResponseTypeVariant = this.context.type.needsRequestResponseTypeVariantById(typeName.typeId);
+        const requestTypeNodeWithoutUndefined = needsRequestResponseTypeVariant.request
+            ? this.addRequestToTypeNode(typeNodeWithoutUndefined)
+            : undefined;
+        const responseTypeNodeWithoutUndefined = needsRequestResponseTypeVariant.response
+            ? this.addResponseToTypeNode(typeNodeWithoutUndefined)
+            : undefined;
         if (!isOptional) {
-            return this.generateNonOptionalTypeReferenceNode(typeNodeWithoutUndefined);
+            return this.generateNonOptionalTypeReferenceNode({
+                typeNode: typeNodeWithoutUndefined,
+                requestTypeNode: requestTypeNodeWithoutUndefined,
+                responseTypeNode: responseTypeNodeWithoutUndefined
+            });
         } else {
             return {
                 isOptional: true,
                 typeNodeWithoutUndefined,
-                typeNode: this.addUndefinedToTypeNode(typeNodeWithoutUndefined)
+                typeNode: this.addUndefinedToTypeNode(typeNodeWithoutUndefined),
+                requestTypeNode: requestTypeNodeWithoutUndefined
+                    ? this.addUndefinedToTypeNode(requestTypeNodeWithoutUndefined)
+                    : undefined,
+                requestTypeNodeWithoutUndefined: requestTypeNodeWithoutUndefined,
+                responseTypeNode: responseTypeNodeWithoutUndefined
+                    ? this.addUndefinedToTypeNode(responseTypeNodeWithoutUndefined)
+                    : undefined,
+                responseTypeNodeWithoutUndefined: responseTypeNodeWithoutUndefined
             };
         }
     }
@@ -127,65 +146,106 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
     }
 
     protected override string(): TypeReferenceNode {
-        return this.generateNonOptionalTypeReferenceNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword));
+        return this.generateNonOptionalTypeReferenceNode({
+            typeNode: ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+            requestTypeNode: undefined,
+            responseTypeNode: undefined
+        });
     }
 
     protected override boolean(): TypeReferenceNode {
-        return this.generateNonOptionalTypeReferenceNode(
-            ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword)
-        );
+        return this.generateNonOptionalTypeReferenceNode({
+            typeNode: ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword),
+            requestTypeNode: undefined,
+            responseTypeNode: undefined
+        });
     }
 
     protected override number(): TypeReferenceNode {
-        return this.generateNonOptionalTypeReferenceNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword));
+        return this.generateNonOptionalTypeReferenceNode({
+            typeNode: ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
+            requestTypeNode: undefined,
+            responseTypeNode: undefined
+        });
     }
 
     protected override long(): TypeReferenceNode {
         if (this.useBigInt) {
             if (this.includeSerdeLayer) {
-                return this.generateNonOptionalTypeReferenceNode(
-                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword)
-                );
+                return this.generateNonOptionalTypeReferenceNode({
+                    typeNode: ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword),
+                    requestTypeNode: undefined,
+                    responseTypeNode: undefined
+                });
             }
-            return this.generateNonOptionalTypeReferenceNode(
-                ts.factory.createUnionTypeNode([
+            return this.generateNonOptionalTypeReferenceNode({
+                typeNode: ts.factory.createUnionTypeNode([
                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword)
-                ])
-            );
+                ]),
+                requestTypeNode: undefined,
+                responseTypeNode: undefined
+            });
         }
-        return this.generateNonOptionalTypeReferenceNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword));
+        return this.generateNonOptionalTypeReferenceNode({
+            typeNode: ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
+            requestTypeNode: undefined,
+            responseTypeNode: undefined
+        });
     }
 
     protected override bigInteger(): TypeReferenceNode {
         if (this.useBigInt) {
             if (this.includeSerdeLayer) {
-                return this.generateNonOptionalTypeReferenceNode(
-                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword)
-                );
+                return this.generateNonOptionalTypeReferenceNode({
+                    typeNode: ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword),
+                    requestTypeNode: undefined,
+                    responseTypeNode: undefined
+                });
             }
-            return this.generateNonOptionalTypeReferenceNode(
-                ts.factory.createUnionTypeNode([
+            return this.generateNonOptionalTypeReferenceNode({
+                typeNode: ts.factory.createUnionTypeNode([
                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword)
-                ])
-            );
+                ]),
+                requestTypeNode: undefined,
+                responseTypeNode: undefined
+            });
         }
-        return this.generateNonOptionalTypeReferenceNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword));
+        return this.generateNonOptionalTypeReferenceNode({
+            typeNode: ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+            requestTypeNode: undefined,
+            responseTypeNode: undefined
+        });
     }
 
     protected override nullable(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
-        return this.generateNonOptionalTypeReferenceNode(
-            this.addNullToTypeNode(this.convert({ ...params, typeReference: itemType }).typeNode)
-        );
+        return this.generateNonOptionalTypeReferenceNode({
+            typeNode: this.addNullToTypeNode(this.convert({ ...params, typeReference: itemType }).typeNode),
+            requestTypeNode: undefined,
+            responseTypeNode: undefined
+        });
     }
 
     protected override optional(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
         const referencedToValueType = this.convert({ ...params, typeReference: itemType }).typeNode;
+        const needsRequestResponseTypeVariant = this.context.type.needsRequestResponseTypeVariant(itemType);
         return {
             isOptional: true,
             typeNode: this.addUndefinedToTypeNode(referencedToValueType),
-            typeNodeWithoutUndefined: referencedToValueType
+            typeNodeWithoutUndefined: referencedToValueType,
+            requestTypeNode: needsRequestResponseTypeVariant.request
+                ? this.addUndefinedToTypeNode(this.addRequestToTypeNode(referencedToValueType))
+                : undefined,
+            requestTypeNodeWithoutUndefined: needsRequestResponseTypeVariant.request
+                ? this.addRequestToTypeNode(referencedToValueType)
+                : undefined,
+            responseTypeNode: needsRequestResponseTypeVariant.response
+                ? this.addUndefinedToTypeNode(this.addResponseToTypeNode(referencedToValueType))
+                : undefined,
+            responseTypeNodeWithoutUndefined: needsRequestResponseTypeVariant.response
+                ? this.addResponseToTypeNode(referencedToValueType)
+                : undefined
         };
     }
 
@@ -205,7 +265,11 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         return {
             isOptional: true,
             typeNode,
-            typeNodeWithoutUndefined: typeNode
+            typeNodeWithoutUndefined: typeNode,
+            requestTypeNode: undefined,
+            requestTypeNodeWithoutUndefined: undefined,
+            responseTypeNode: undefined,
+            responseTypeNodeWithoutUndefined: undefined
         };
     }
 
@@ -214,14 +278,25 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         return {
             isOptional: true,
             typeNode,
-            typeNodeWithoutUndefined: typeNode
+            typeNodeWithoutUndefined: typeNode,
+            requestTypeNode: undefined,
+            requestTypeNodeWithoutUndefined: undefined,
+            responseTypeNode: undefined,
+            responseTypeNodeWithoutUndefined: undefined
         };
     }
 
     protected override list(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
-        return this.generateNonOptionalTypeReferenceNode(
-            ts.factory.createArrayTypeNode(this.convert({ ...params, typeReference: itemType }).typeNode)
-        );
+        const itemTypeNode = this.convert({ ...params, typeReference: itemType });
+        return this.generateNonOptionalTypeReferenceNode({
+            typeNode: ts.factory.createArrayTypeNode(itemTypeNode.typeNode),
+            requestTypeNode: itemTypeNode.requestTypeNode
+                ? ts.factory.createArrayTypeNode(itemTypeNode.requestTypeNode)
+                : undefined,
+            responseTypeNode: itemTypeNode.responseTypeNode
+                ? ts.factory.createArrayTypeNode(itemTypeNode.responseTypeNode)
+                : undefined
+        });
     }
 
     protected override literal(literal: Literal): TypeReferenceNode {
@@ -231,7 +306,11 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
                 return {
                     isOptional: false,
                     typeNode,
-                    typeNodeWithoutUndefined: typeNode
+                    typeNodeWithoutUndefined: typeNode,
+                    requestTypeNode: undefined,
+                    requestTypeNodeWithoutUndefined: undefined,
+                    responseTypeNode: undefined,
+                    responseTypeNodeWithoutUndefined: undefined
                 };
             },
             boolean: (value) => {
@@ -241,7 +320,11 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
                 return {
                     isOptional: false,
                     typeNode,
-                    typeNodeWithoutUndefined: typeNode
+                    typeNodeWithoutUndefined: typeNode,
+                    requestTypeNode: undefined,
+                    requestTypeNodeWithoutUndefined: undefined,
+                    responseTypeNode: undefined,
+                    responseTypeNodeWithoutUndefined: undefined
                 };
             },
             _other: () => {
@@ -255,21 +338,47 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
     }
 
     protected override mapWithNonEnumKeys(map: MapType, params: ConvertTypeReferenceParams): TypeReferenceNode {
-        return this.generateNonOptionalTypeReferenceNode(
-            ts.factory.createTypeReferenceNode("Record", [
-                this.convert({ ...params, typeReference: map.keyType }).typeNode,
-                this.convert({ ...params, typeReference: map.valueType }).typeNode
-            ])
-        );
+        const keyTypeNode = this.convert({ ...params, typeReference: map.keyType });
+        const valueTypeNode = this.convert({ ...params, typeReference: map.valueType });
+        return this.generateNonOptionalTypeReferenceNode({
+            typeNode: ts.factory.createTypeReferenceNode("Record", [keyTypeNode.typeNode, valueTypeNode.typeNode]),
+            requestTypeNode:
+                keyTypeNode.requestTypeNode || valueTypeNode.requestTypeNode
+                    ? ts.factory.createTypeReferenceNode("Record", [
+                          keyTypeNode.requestTypeNode ?? keyTypeNode.typeNode,
+                          valueTypeNode.requestTypeNode ?? valueTypeNode.typeNode
+                      ])
+                    : undefined,
+            responseTypeNode:
+                keyTypeNode.responseTypeNode || valueTypeNode.responseTypeNode
+                    ? ts.factory.createTypeReferenceNode("Record", [
+                          keyTypeNode.responseTypeNode ?? keyTypeNode.typeNode,
+                          valueTypeNode.responseTypeNode ?? valueTypeNode.typeNode
+                      ])
+                    : undefined
+        });
     }
 
     protected mapWithOptionalValues(map: MapType, params: ConvertTypeReferenceParams): TypeReferenceNode {
         const valueType = this.convert({ ...params, typeReference: map.valueType });
-        return this.generateNonOptionalTypeReferenceNode(
-            ts.factory.createTypeReferenceNode("Record", [
-                this.convert({ ...params, typeReference: map.keyType }).typeNode,
-                (valueType.isOptional ? valueType : this.optional(map.valueType, params)).typeNode
-            ])
-        );
+        const keyType = this.convert({ ...params, typeReference: map.keyType });
+        const optionalValueTypeNode = valueType.isOptional ? valueType : this.optional(map.valueType, params);
+        return this.generateNonOptionalTypeReferenceNode({
+            typeNode: ts.factory.createTypeReferenceNode("Record", [keyType.typeNode, optionalValueTypeNode.typeNode]),
+            requestTypeNode:
+                keyType.requestTypeNode || optionalValueTypeNode.requestTypeNode
+                    ? ts.factory.createTypeReferenceNode("Record", [
+                          keyType.requestTypeNode ?? keyType.typeNode,
+                          optionalValueTypeNode.requestTypeNode ?? optionalValueTypeNode.typeNode
+                      ])
+                    : undefined,
+            responseTypeNode:
+                keyType.responseTypeNode || optionalValueTypeNode.responseTypeNode
+                    ? ts.factory.createTypeReferenceNode("Record", [
+                          keyType.responseTypeNode ?? keyType.typeNode,
+                          optionalValueTypeNode.responseTypeNode ?? optionalValueTypeNode.typeNode
+                      ])
+                    : undefined
+        });
     }
 }

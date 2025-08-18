@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_.createUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedCsharpAccessClient } from \"@fern/property-access\";\n\nconst client = new SeedCsharpAccessClient({ environment: \"YOUR_BASE_URL\" });\nawait client.createUser({\n    id: \"id\",\n    email: \"email\",\n    password: \"password\",\n    profile: {\n        name: \"name\",\n        verification: {\n            verified: \"verified\"\n        },\n        ssn: \"ssn\"\n    }\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

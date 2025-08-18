@@ -20,7 +20,8 @@ export class RequestBodyParameter extends AbstractRequestParameter {
     }
 
     public getType(context: SdkContext): ts.TypeNode {
-        return context.type.getReferenceToType(this.requestBodyReference.requestBodyType).typeNode;
+        const type = context.type.getReferenceToType(this.requestBodyReference.requestBodyType);
+        return type.requestTypeNode ?? type.typeNode;
     }
 
     public getInitialStatements(): ts.Statement[] {
@@ -75,7 +76,7 @@ export class RequestBodyParameter extends AbstractRequestParameter {
     protected getParameterType(context: SdkContext): { type: ts.TypeNode; hasQuestionToken: boolean } {
         const type = context.type.getReferenceToType(this.requestBodyReference.requestBodyType);
         return {
-            type: type.typeNodeWithoutUndefined,
+            type: type.requestTypeNodeWithoutUndefined ?? type.typeNodeWithoutUndefined,
             hasQuestionToken: type.isOptional
         };
     }

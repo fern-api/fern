@@ -1,8 +1,10 @@
+import { assertNever } from "@fern-api/core-utils";
 import {
     DeclaredTypeName,
     ExampleTypeReference,
     ResolvedTypeReference,
     TypeDeclaration,
+    TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { ExportsManager, ImportsManager, NpmPackage, Reference, TypeReferenceNode } from "@fern-typescript/commons";
@@ -15,7 +17,6 @@ import {
 } from "@fern-typescript/type-reference-converters";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { SourceFile, ts } from "ts-morph";
-
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 
 export declare namespace TypeContextImpl {
@@ -318,6 +319,112 @@ export class TypeContextImpl implements TypeContext {
             }
             default:
                 return false;
+        }
+    }
+
+    public needsRequestResponseTypeVariant(typeReference: TypeReference): { request: boolean; response: boolean } {
+        switch (typeReference.type) {
+            case "named": {
+                return this.needsRequestResponseTypeVariantById(typeReference.typeId);
+            }
+            case "container": {
+                if (typeReference.container.type === "optional") {
+                    return this.needsRequestResponseTypeVariant(typeReference.container.optional);
+                }
+                if (typeReference.container.type === "nullable") {
+                    return this.needsRequestResponseTypeVariant(typeReference.container.nullable);
+                }
+                if (typeReference.container.type === "list") {
+                    return this.needsRequestResponseTypeVariant(typeReference.container.list);
+                }
+                if (typeReference.container.type === "map") {
+                    const keyResult = this.needsRequestResponseTypeVariant(typeReference.container.keyType);
+                    const valueResult = this.needsRequestResponseTypeVariant(typeReference.container.valueType);
+                    return {
+                        request: keyResult.request || valueResult.request,
+                        response: keyResult.response || valueResult.response
+                    };
+                }
+                return { request: false, response: false };
+            }
+            case "primitive":
+                return { request: false, response: false };
+            case "unknown":
+                return { request: false, response: false };
+            default:
+                assertNever(typeReference);
+        }
+    }
+
+    public needsRequestResponseTypeVariantById(typeId: TypeId): { request: boolean; response: boolean } {
+        const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeId);
+        switch (typeDeclaration.shape.type) {
+            case "object": {
+                let request = false;
+                let response = false;
+                // Check properties
+                for (const prop of typeDeclaration.shape.properties) {
+                    if (prop.propertyAccess === "READ_ONLY") {
+                        request = true;
+                    }
+                    if (prop.propertyAccess === "WRITE_ONLY") {
+                        response = true;
+                    }
+                    const result = this.needsRequestResponseTypeVariant(prop.valueType);
+                    request = request || result.request;
+                    response = response || result.response;
+                }
+                // Check extends
+                if (typeDeclaration.shape.extends != null) {
+                    for (const extTypeName of typeDeclaration.shape.extends) {
+                        const extTypeRef = { type: "named", typeId: extTypeName.typeId } as TypeReference;
+                        const result = this.needsRequestResponseTypeVariant(extTypeRef);
+                        request = request || result.request;
+                        response = response || result.response;
+                    }
+                }
+                return { request, response };
+            }
+            case "union": {
+                let request = false;
+                let response = false;
+                for (const member of typeDeclaration.shape.types) {
+                    switch (member.shape.propertiesType) {
+                        case "noProperties":
+                            break;
+                        case "singleProperty": {
+                            const result = this.needsRequestResponseTypeVariant(member.shape.type);
+                            request = request || result.request;
+                            response = response || result.response;
+                            break;
+                        }
+                        case "samePropertiesAsObject": {
+                            const result = this.needsRequestResponseTypeVariantById(member.shape.typeId);
+                            request = request || result.request;
+                            response = response || result.response;
+                            break;
+                        }
+                    }
+                }
+                return { request, response };
+            }
+            case "undiscriminatedUnion": {
+                let request = false;
+                let response = false;
+                for (const member of typeDeclaration.shape.members) {
+                    const result = this.needsRequestResponseTypeVariant(member.type);
+                    request = request || result.request;
+                    response = response || result.response;
+                }
+                return { request, response };
+            }
+            case "enum":
+                return { request: false, response: false };
+            case "alias": {
+                return this.needsRequestResponseTypeVariant(typeDeclaration.shape.aliasOf);
+            }
+            default:
+                assertNever(typeDeclaration.shape);
         }
     }
 }

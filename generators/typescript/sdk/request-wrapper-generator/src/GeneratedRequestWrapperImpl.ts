@@ -38,10 +38,12 @@ import {
 } from "@fern-typescript/contexts";
 import {
     InterfaceDeclarationStructure,
+    ModuleDeclarationKind,
     ModuleDeclarationStructure,
-    PropertySignatureStructure,
+    StatementStructures,
     StructureKind,
-    ts
+    ts,
+    WriterFunction
 } from "ts-morph";
 import { RequestWrapperExampleGenerator } from "./RequestWrapperExampleGenerator";
 
@@ -170,7 +172,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         if (requestBody == null) {
             return;
         }
-        const iModule = this.generateModule(requestBody, context);
+        const iModule = this.generateModule({ requestBody, context });
         if (iModule) {
             context.sourceFile.addModule(iModule);
         }
@@ -335,15 +337,51 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return context.type.getReferenceToInlinePropertyType(property.valueType, propParentTypeName, propName);
     }
 
-    private generateModule(requestBody: HttpRequestBody, context: SdkContext): ModuleDeclarationStructure | undefined {
+    private generateModule({
+        requestBody,
+        context
+    }: {
+        requestBody: HttpRequestBody;
+        context: SdkContext;
+    }): ModuleDeclarationStructure | undefined {
         if (!this.enableInlineTypes) {
             return undefined;
+        }
+
+        const inlineTypeStatements = this.generateInlineTypes({
+            requestBody,
+            context
+        });
+
+        if (inlineTypeStatements.length === 0) {
+            return undefined;
+        }
+
+        const module: ModuleDeclarationStructure = {
+            kind: StructureKind.Module,
+            name: this.wrapperName,
+            isExported: true,
+            hasDeclareKeyword: false,
+            declarationKind: ModuleDeclarationKind.Namespace,
+            statements: [...inlineTypeStatements]
+        };
+        return module;
+    }
+
+    private generateInlineTypes({
+        requestBody,
+        context
+    }: {
+        requestBody: HttpRequestBody;
+        context: SdkContext;
+    }): (string | WriterFunction | StatementStructures)[] {
+        if (!this.enableInlineTypes) {
+            return [];
         }
 
         return requestBody._visit({
             inlinedRequestBody: (inlinedRequestBody: FernIr.InlinedRequestBody) => {
                 return generateInlinePropertiesModule({
-                    parentTypeName: this.wrapperName,
                     properties: inlinedRequestBody.properties.map((prop) => ({
                         propertyName: prop.name.name.pascalCase.safeName,
                         typeReference: prop.valueType
@@ -353,10 +391,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     getTypeDeclaration: (namedType) => context.type.getTypeDeclaration(namedType)
                 });
             },
-            reference: () => undefined,
+            reference: () => [],
             fileUpload: (fileUploadBody: FernIr.FileUploadRequest) => {
                 return generateInlinePropertiesModule({
-                    parentTypeName: this.wrapperName,
                     properties: fileUploadBody.properties
                         .filter((prop) => prop.type === "bodyProperty")
                         .map((prop) => ({
@@ -368,8 +405,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     getTypeDeclaration: (namedType) => context.type.getTypeDeclaration(namedType)
                 });
             },
-            bytes: () => undefined,
-            _other: () => undefined
+            bytes: () => [],
+            _other: () => []
         });
     }
 

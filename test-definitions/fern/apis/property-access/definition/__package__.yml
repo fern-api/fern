@@ -1,0 +1,50 @@
+types:
+  User:
+    docs: User object
+    properties:
+      id:
+        docs: The unique identifier for the user.
+        type: string
+        access: read-only
+      email:
+        docs: The email address of the user.
+        type: string
+        access: read-only
+      password:
+        docs: The password for the user.
+        type: string
+        access: write-only
+      profile:
+        docs: User profile object
+        type: UserProfile
+
+  UserProfile:
+    docs: User profile object
+    properties:
+      name:
+        docs: The name of the user.
+        type: string
+      verification:
+        docs: User profile verification object
+        type: UserProfileVerification
+      ssn:
+        docs: The social security number of the user.
+        type: string
+        access: write-only
+
+  UserProfileVerification:
+    docs: User profile verification object
+    properties:
+      verified:
+        docs: User profile verification status
+        type: string
+        access: read-only
+service:
+  auth: false
+  base-path: /users
+  endpoints:
+    createUser:
+      method: POST
+      path: ""
+      request: User
+      response: User

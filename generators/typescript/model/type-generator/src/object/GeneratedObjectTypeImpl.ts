@@ -10,6 +10,7 @@ import {
 import { BaseContext, GeneratedObjectType } from "@fern-typescript/contexts";
 import {
     InterfaceDeclarationStructure,
+    ModuleDeclarationKind,
     ModuleDeclarationStructure,
     PropertySignatureStructure,
     StatementStructures,
@@ -17,15 +18,18 @@ import {
     ts,
     WriterFunction
 } from "ts-morph";
-
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
 interface Property {
     name: string;
     type: ts.TypeNode;
+    requestType: ts.TypeNode | undefined;
+    responseType: ts.TypeNode | undefined;
     hasQuestionToken: boolean;
     docs: string | undefined;
     irProperty: ObjectProperty | undefined;
+    isReadonly: boolean;
+    isWriteOnly: boolean;
 }
 
 export class GeneratedObjectTypeImpl<Context extends BaseContext>
@@ -92,7 +96,13 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                 type: this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined,
                 hasQuestionToken: !this.noOptionalProperties && value.isOptional,
                 docs: property.docs,
-                irProperty: property
+                irProperty: property,
+                isReadonly: property.propertyAccess === "READ_ONLY",
+                isWriteOnly: property.propertyAccess === "WRITE_ONLY",
+                requestType: this.noOptionalProperties ? value.requestTypeNode : value.requestTypeNodeWithoutUndefined,
+                responseType: this.noOptionalProperties
+                    ? value.responseTypeNode
+                    : value.responseTypeNodeWithoutUndefined
             };
             return propertyNode;
         });
@@ -102,7 +112,11 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                 type: ts.factory.createTypeReferenceNode("any"),
                 hasQuestionToken: false,
                 docs: "Accepts any additional properties",
-                irProperty: undefined
+                irProperty: undefined,
+                isReadonly: false,
+                isWriteOnly: false,
+                requestType: undefined,
+                responseType: undefined
             });
         }
         return props;
@@ -219,8 +233,140 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         if (!this.enableInlineTypes) {
             return undefined;
         }
+
+        const requestResponseStatements = this.generateRequestResponseModuleStatements(context);
+
+        const inlineTypeStatements = this.generateInlineTypeModuleStatements(context);
+
+        const moduleStatements = [...inlineTypeStatements, ...requestResponseStatements];
+        if (moduleStatements.length === 0) {
+            return undefined;
+        }
+        const module: ModuleDeclarationStructure = {
+            kind: StructureKind.Module,
+            name: this.typeName,
+            isExported: true,
+            hasDeclareKeyword: false,
+            declarationKind: ModuleDeclarationKind.Namespace,
+            statements: moduleStatements
+        };
+        return module;
+    }
+
+    private generateRequestResponseModuleStatements(
+        context: Context
+    ): (string | WriterFunction | StatementStructures)[] {
+        if (!this.generateReadonlyWriteonlyTypes) {
+            return [];
+        }
+
+        const properties = this.generatePropertiesInternal(context);
+        const propertiesToOmitFromResponse = properties
+            .filter((prop) => prop.isWriteOnly || prop.responseType)
+            .map((prop) => prop.name);
+        const propertiesToOmitFromRequest = properties
+            .filter((prop) => prop.isReadonly || prop.requestType)
+            .map((prop) => prop.name);
+        const needsRequestTypeVariants = properties.filter((prop) => prop.requestType);
+        const needsResponseTypeVariants = properties.filter((prop) => prop.responseType);
+
+        const statements: (string | WriterFunction | StatementStructures)[] = [];
+        const requestTypeIntersections: ts.TypeNode[] = [];
+        if (propertiesToOmitFromRequest.length > 0) {
+            requestTypeIntersections.push(
+                ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Omit"), [
+                    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(this.typeName), undefined),
+                    ts.factory.createUnionTypeNode(
+                        propertiesToOmitFromRequest.map((prop) =>
+                            ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(prop))
+                        )
+                    )
+                ])
+            );
+        }
+
+        if (needsRequestTypeVariants.length > 0) {
+            requestTypeIntersections.push(
+                ts.factory.createTypeLiteralNode(
+                    needsRequestTypeVariants.map((prop) => {
+                        return ts.factory.createPropertySignature(
+                            undefined,
+                            ts.factory.createIdentifier(prop.name),
+                            undefined,
+                            prop.requestType
+                        );
+                    })
+                )
+            );
+        }
+        if (requestTypeIntersections.length > 0) {
+            statements.push(
+                getTextOfTsNode(
+                    ts.factory.createTypeAliasDeclaration(
+                        undefined,
+                        [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
+                        ts.factory.createIdentifier("Request"),
+                        undefined,
+                        requestTypeIntersections.length === 1
+                            ? (requestTypeIntersections[0] as ts.TypeNode)
+                            : ts.factory.createIntersectionTypeNode(requestTypeIntersections)
+                    )
+                )
+            );
+        }
+
+        const responseTypeIntersections: ts.TypeNode[] = [];
+        if (propertiesToOmitFromResponse.length > 0) {
+            responseTypeIntersections.push(
+                ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Omit"), [
+                    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(this.typeName), undefined),
+                    ts.factory.createUnionTypeNode(
+                        propertiesToOmitFromResponse.map((prop) =>
+                            ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(prop))
+                        )
+                    )
+                ])
+            );
+        }
+
+        if (needsResponseTypeVariants.length > 0) {
+            responseTypeIntersections.push(
+                ts.factory.createTypeLiteralNode(
+                    needsResponseTypeVariants.map((prop) => {
+                        return ts.factory.createPropertySignature(
+                            undefined,
+                            ts.factory.createIdentifier(prop.name),
+                            undefined,
+                            prop.responseType
+                        );
+                    })
+                )
+            );
+        }
+        if (responseTypeIntersections.length > 0) {
+            statements.push(
+                getTextOfTsNode(
+                    ts.factory.createTypeAliasDeclaration(
+                        undefined,
+                        [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
+                        ts.factory.createIdentifier("Response"),
+                        undefined,
+                        responseTypeIntersections.length === 1
+                            ? (responseTypeIntersections[0] as ts.TypeNode)
+                            : ts.factory.createIntersectionTypeNode(responseTypeIntersections)
+                    )
+                )
+            );
+        }
+
+        return statements;
+    }
+
+    private generateInlineTypeModuleStatements(context: Context): (string | WriterFunction | StatementStructures)[] {
+        if (!this.enableInlineTypes) {
+            return [];
+        }
         return generateInlinePropertiesModule({
-            parentTypeName: this.typeName,
             properties: this.shape.properties.map((prop) => ({
                 propertyName: prop.name.name.pascalCase.safeName,
                 typeReference: prop.valueType
