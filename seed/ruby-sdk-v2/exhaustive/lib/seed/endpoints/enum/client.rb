@@ -14,7 +14,7 @@ module Seed
         def get_and_return_enum(request_options: {}, **params)
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
-            path: "/enum"
+            path: "/enum",
             body: Seed::Types::Enum::Types::WeatherReport.new(params[:request]).to_h,
           )
           _response = @client.send(_request)

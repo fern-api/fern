@@ -7,7 +7,7 @@ module Seed
       #
       # An abstract model that all data objects will inherit from
       class Model
-        include Type
+        extend Type
 
         class << self
           # The defined fields for this model

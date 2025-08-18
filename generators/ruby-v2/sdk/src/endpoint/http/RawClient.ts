@@ -49,7 +49,7 @@ export class RawClient {
                     writer.writeLine(`method: ${endpoint.method.toUpperCase()},`);
                     writer.write(`path: `);
                     this.writePathString({ writer, endpoint, pathParameterReferences: pathParameterReferences ?? {} });
-                    writer.writeLine();
+                    writer.writeLine(",");
                     if (headerBagReference != null) {
                         writer.writeLine(`headers: ${headerBagReference},`);
                     }
