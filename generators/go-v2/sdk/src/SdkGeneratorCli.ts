@@ -9,6 +9,7 @@ import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ClientGenerator } from "./client/ClientGenerator";
 import { RawClientGenerator } from "./raw-client/RawClientGenerator";
+import { buildReference } from "./reference/buildReference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
@@ -67,6 +68,8 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
                 context.logger.warn("Failed to generate README.md, this is OK.");
             }
         }
+
+        await this.generateReference({ context });
 
         await context.project.persist();
     }
@@ -191,5 +194,13 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
             default:
                 return hasSnippetFilepath;
         }
+    }
+
+    private async generateReference({ context }: { context: SdkGeneratorContext }): Promise<void> {
+        const builder = buildReference({ context });
+        const content = await context.generatorAgent.generateReference(builder);
+        context.project.addRawFiles(
+            new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)
+        );
     }
 }
