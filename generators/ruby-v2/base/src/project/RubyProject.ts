@@ -259,10 +259,10 @@ class ModuleFile {
 
         const { sorted, cycles } = topologicalSortWithCycleDetection(filteredTypeDeclarations, dependsOn);
         if (cycles.length > 0) {
-            const cycleDescriptions = cycles.map(cycle => 
-                cycle.map(typeDeclaration => typeDeclaration.name.typeId).join(" --> ")
+            const cycleDescriptions = cycles.map((cycle) =>
+                cycle.map((typeDeclaration) => typeDeclaration.name.typeId).join(" --> ")
             );
-            cycleDescriptions.forEach(cycleDescription => {
+            cycleDescriptions.forEach((cycleDescription) => {
                 this.context.logger.warn(`Circular dependency detected: ${cycleDescription}`);
             });
         }
@@ -304,32 +304,38 @@ function dependsOn(a: TypeDeclaration, b: TypeDeclaration): boolean {
 /**
  * Topological sort for a directed acyclic graph (DAG).
  * Sorts nodes so that if A depends on B, then B comes before A in the result.
- * 
+ *
  * @param nodes - Array of nodes to sort
  * @param dependsOn - Function that returns true if first node depends on second node
  * @returns Topologically sorted array
  */
-function topologicalSort<T>(context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>, nodes: T[], dependsOn: (a: T, b: T) => boolean): T[] {
+function topologicalSort<T>(
+    context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>,
+    nodes: T[],
+    dependsOn: (a: T, b: T) => boolean
+): T[] {
     const result: T[] = [];
     const visited = new Set<T>();
     const visiting = new Set<T>();
-    
+
     function visit(node: T): void {
         if (visiting.has(node)) {
             context.logger.warn(`Circular dependency detected for ${Array.from(visiting).join("-->")}`);
             return;
         }
-        if (visited.has(node)) return;
-        
-        // visiting.add(node);
-        
+        if (visited.has(node)) {
+            return;
+        }
+
+        visiting.add(node);
+
         // Visit all dependencies first
         for (const other of nodes) {
             if (dependsOn(node, other)) {
                 visit(other);
             }
         }
-        
+
         visiting.delete(node);
         visited.add(node);
         result.push(node);
@@ -346,13 +352,13 @@ function topologicalSort<T>(context: AbstractRubyGeneratorContext<BaseRubyCustom
 }
 
 function topologicalSortWithCycleDetection<T>(
-    nodes: T[], 
+    nodes: T[],
     dependsOn: (a: T, b: T) => boolean
-): { sorted: T[], cycles: T[][] } {
+): { sorted: T[]; cycles: T[][] } {
     const result: T[] = [];
     const visited = new Set<T>();
     const cycles: T[][] = [];
-    
+
     function visit(node: T, path: T[]): void {
         const cycleStart = path.indexOf(node);
         if (cycleStart !== -1) {
@@ -362,36 +368,28 @@ function topologicalSortWithCycleDetection<T>(
             cycles.push(cycle);
             return;
         }
-        
-        if (visited.has(node)) return;
-        
+
+        if (visited.has(node)) {
+            return;
+        }
+
         const newPath = [...path, node];
-        
+
         for (const other of nodes) {
             if (dependsOn(node, other)) {
                 visit(other, newPath);
             }
         }
-        
+
         visited.add(node);
         result.push(node);
     }
-    
+
     for (const node of nodes) {
         if (!visited.has(node)) {
             visit(node, []);
         }
     }
-    
-    return { sorted: result, cycles };
-}
 
-function defined<T>(t: T | undefined | null): T {
-    if (t === undefined) {
-        throw new Error("Expected value to be defined but got undefined.");
-    }
-    if (t === null) {
-        throw new Error("Expected value to be defined but got null.");
-    }
-    return t;
+    return { sorted: result, cycles };
 }
