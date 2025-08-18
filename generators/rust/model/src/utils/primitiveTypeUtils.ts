@@ -1,9 +1,9 @@
 import {
+    NamedType,
+    ObjectProperty,
     PrimitiveTypeV1,
     TypeReference,
-    NamedType,
-    UndiscriminatedUnionMember,
-    ObjectProperty
+    UndiscriminatedUnionMember
 } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 

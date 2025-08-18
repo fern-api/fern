@@ -1,6 +1,7 @@
 import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
+import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import dedent from "dedent";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
@@ -100,11 +101,12 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await mkdir(absolutePathToDirectory, { recursive: true });
     }
 
-    public getAllRubyAbsoluteFilePaths(): AbsoluteFilePath[] {
-        return [
-            ...this.coreFiles.map((file) => this.filePathFromRubyFile(file)),
-            ...this.rawFiles.map((file) => this.filePathFromRubyFile(file))
-        ];
+    public getCoreAbsoluteFilePaths(): AbsoluteFilePath[] {
+        return this.coreFiles.map((file) => this.filePathFromRubyFile(file));
+    }
+
+    public getRawAbsoluteFilePaths(): AbsoluteFilePath[] {
+        return this.rawFiles.map((file) => this.filePathFromRubyFile(file));
     }
 
     private filePathFromRubyFile(file: File): AbsoluteFilePath {
@@ -202,9 +204,30 @@ class ModuleFile {
 
     public toString(): string {
         let contents = "";
-        const rubyFilePaths = this.project.getAllRubyAbsoluteFilePaths();
-        rubyFilePaths.forEach((filePath) => {
+
+        const coreFilePaths = this.project.getCoreAbsoluteFilePaths();
+        coreFilePaths.forEach((filePath) => {
             contents += `require_relative '${relative(this.filePath, filePath)}'\n`;
+        });
+
+        const visitedPaths = new Set<string>();
+        const typeDeclarations = this.context.getAllTypeDeclarations();
+        typeDeclarations.sort(compareTypeDeclarations);
+        typeDeclarations.forEach((typeDeclaration) => {
+            const typeFilePath = join(
+                this.project.absolutePathToOutputDirectory,
+                this.context.getLocationForTypeId(typeDeclaration.name.typeId),
+                RelativeFilePath.of(this.context.getFileNameForTypeId(typeDeclaration.name.typeId).replaceAll(".rb", ""))
+            );
+            contents += `require_relative '${relative(this.filePath, typeFilePath)}'\n`;
+            visitedPaths.add(typeFilePath);
+        });
+
+        const rubyFilePaths = this.project.getRawAbsoluteFilePaths();
+        rubyFilePaths.forEach((filePath) => {
+            if (!visitedPaths.has(filePath.toString())) {
+                contents += `require_relative '${relative(this.filePath, filePath)}'\n`;
+            }
         });
         return dedent`${contents}`;
     }
@@ -212,4 +235,18 @@ class ModuleFile {
     public async writeFile(): Promise<void> {
         await writeFile(join(this.filePath, RelativeFilePath.of(this.fileName)), this.toString());
     }
+}
+
+function compareTypeDeclarations(a: TypeDeclaration, b: TypeDeclaration): number {
+    if (dependsOn(a, b)) {
+        return -1;
+    }
+    if (dependsOn(b, a)) {
+        return 1;
+    }
+    return 0;
+}
+
+function dependsOn(a: TypeDeclaration, b: TypeDeclaration): boolean {
+    return a.referencedTypes.has(b.name.typeId);
 }

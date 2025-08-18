@@ -45,7 +45,7 @@ export class EnumGenerator extends FileGenerator<RubyFile, ModelCustomConfigSche
                 ).write(writer);
             }),
             directory: this.getFilepath(),
-            filename: `${this.typeDeclaration.name.name.snakeCase.safeName}.rb`,
+            filename: this.context.getFileNameForTypeId(this.typeDeclaration.name.typeId),
             customConfig: this.context.customConfig
         });
     }
