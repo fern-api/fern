@@ -1,5 +1,4 @@
 import { AbstractProject, File } from "@fern-api/base-generator";
-import { assertDefined } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
@@ -120,12 +119,10 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
     }
 
     private filePathFromRubyFile(file: File): AbsoluteFilePath {
-        return AbsoluteFilePath.of(
-            join(
-                this.absolutePathToOutputDirectory,
-                file.directory,
-                RelativeFilePath.of(file.filename.replaceAll(".rb", ""))
-            )
+        return join(
+            this.absolutePathToOutputDirectory,
+            file.directory,
+            RelativeFilePath.of(file.filename.replaceAll(".rb", ""))
         );
     }
 }
