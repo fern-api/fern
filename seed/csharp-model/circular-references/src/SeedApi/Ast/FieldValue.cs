@@ -225,12 +225,12 @@ public record FieldValue
             {
                 "primitive_value" => json.GetProperty("value")
                     .Deserialize<SeedApi.PrimitiveValue>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedApi.PrimitiveValue"),
+                ?? throw new JsonException("Failed to deserialize SeedApi.PrimitiveValue"),
                 "object_value" => json.Deserialize<SeedApi.ObjectValue>(options)
                     ?? throw new JsonException("Failed to deserialize SeedApi.ObjectValue"),
                 "container_value" => json.GetProperty("value")
                     .Deserialize<SeedApi.ContainerValue>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedApi.ContainerValue"),
+                ?? throw new JsonException("Failed to deserialize SeedApi.ContainerValue"),
                 _ => json.Deserialize<object?>(options),
             };
             return new FieldValue(discriminator, value);

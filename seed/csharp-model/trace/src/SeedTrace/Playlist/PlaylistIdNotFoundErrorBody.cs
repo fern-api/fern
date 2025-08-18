@@ -130,7 +130,7 @@ public record PlaylistIdNotFoundErrorBody
             var value = discriminator switch
             {
                 "playlistId" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
             return new PlaylistIdNotFoundErrorBody(discriminator, value);
