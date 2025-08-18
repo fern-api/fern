@@ -2086,8 +2086,8 @@ importers:
         specifier: workspace:*
         version: link:../codegen
       '@fern-fern/ir-sdk':
-        specifier: ^58.2.0
-        version: 58.2.0
+        specifier: 59.0.0
+        version: 59.0.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -2147,8 +2147,8 @@ importers:
         specifier: workspace:*
         version: link:../base
       '@fern-fern/ir-sdk':
-        specifier: ^58.2.0
-        version: 58.2.0
+        specifier: 59.0.0
+        version: 59.0.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -2220,8 +2220,8 @@ importers:
         specifier: ^0.0.1045
         version: 0.0.1045
       '@fern-fern/ir-sdk':
-        specifier: ^58.2.0
-        version: 58.2.0
+        specifier: 59.0.0
+        version: 59.0.0
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12

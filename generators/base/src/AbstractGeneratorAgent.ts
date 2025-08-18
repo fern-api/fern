@@ -113,7 +113,9 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
 
     private async readFeatureConfig(): Promise<FernGeneratorCli.FeatureConfig> {
         this.logger.debug("Reading feature configuration ...");
-        return yaml.load(await this.getFeaturesConfig()) as FernGeneratorCli.FeatureConfig;
+        const rawYaml = await this.getFeaturesConfig();
+        const loaded = yaml.load(rawYaml) as FernGeneratorCli.FeatureConfig;
+        return loaded;
     }
 
     private getRemote(): FernGeneratorCli.Remote | undefined {

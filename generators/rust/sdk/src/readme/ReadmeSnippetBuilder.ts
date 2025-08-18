@@ -16,6 +16,7 @@ interface EndpointWithFilepath {
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CLIENT_VARIABLE_NAME = "client";
     private static ERRORS_FEATURE_ID: FernGeneratorCli.FeatureId = "ERRORS";
+    private static PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {};
@@ -57,6 +58,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         // Timeouts
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
 
+        // Pagination
+        snippets[ReadmeSnippetBuilder.PAGINATION_FEATURE_ID] = this.buildPaginationSnippets();
+
         return snippets;
     }
 
@@ -89,6 +93,20 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const timeoutEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Timeouts);
         return timeoutEndpoints.map((endpoint) => {
             const codeString = this.buildTimeoutCode(endpoint);
+            return this.writeCode(codeString);
+        });
+    }
+
+    private buildPaginationSnippets(): string[] {
+        let paginationEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.PAGINATION_FEATURE_ID);
+
+        // If no endpoints are explicitly configured for pagination, auto-detect paginated endpoints
+        if (paginationEndpoints.length === 0) {
+            paginationEndpoints = this.getPaginatedEndpoints();
+        }
+
+        return paginationEndpoints.map((endpoint) => {
+            const codeString = this.buildPaginationCode(endpoint);
             return this.writeCode(codeString);
         });
     }
@@ -142,6 +160,21 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private lookupEndpointById(endpointId: EndpointId): EndpointWithFilepath | undefined {
         return this.endpointsById[endpointId];
+    }
+
+    private getPaginatedEndpoints(): EndpointWithFilepath[] {
+        const paginatedEndpoints: EndpointWithFilepath[] = [];
+        for (const service of Object.values(this.context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.pagination) {
+                    paginatedEndpoints.push({
+                        endpoint,
+                        fernFilepath: service.name.fernFilepath
+                    });
+                }
+            }
+        }
+        return paginatedEndpoints;
     }
 
     private getMethodCall(endpoint: EndpointWithFilepath): string {
@@ -235,7 +268,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return [configVar, clientVar, matchStatement, Statement.return(Expression.ok(Expression.raw("()")))];
     }
 
-    private getClientName(endpoint?: EndpointWithFilepath): string {
+    private getClientName(_endpoint?: EndpointWithFilepath): string {
         // Always use the main client name derived from package name
         // This ensures we show the root client (e.g., OauthClientCredentialsClient)
         // rather than individual service clients (e.g., AuthClient)
@@ -251,8 +284,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getClientConfigStruct(
-        sectionType: "error" | "retry" | "timeout",
-        endpoint?: EndpointWithFilepath
+        sectionType: "error" | "retry" | "timeout" | "pagination",
+        _endpoint?: EndpointWithFilepath
     ): Expression {
         const fields: Array<{ name: string; value: Expression }> = [];
 
@@ -292,6 +325,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                     name: "timeout",
                     value: Expression.raw("Duration::from_secs(30)")
                 });
+                break;
+            case "pagination":
+                // No additional fields needed for pagination
                 break;
             // error section doesn't need additional fields
         }
@@ -397,6 +433,72 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         // Just show client initialization - no complex method calls
         return [configVar, clientVar];
+    }
+
+    private buildPaginationCode(endpoint: EndpointWithFilepath): string {
+        const writer = new Writer();
+
+        const useStatements = [
+            new UseStatement({ path: this.packageName, items: ["ClientConfig", this.getClientName(endpoint)] }),
+            new UseStatement({ path: "futures", items: ["StreamExt"] })
+        ];
+
+        // Write use statements
+        useStatements.forEach((useStmt) => {
+            useStmt.write(writer);
+            writer.newLine();
+        });
+        writer.newLine();
+
+        const mainFunction = rust.standaloneFunction({
+            name: "main",
+            parameters: [],
+            isAsync: true,
+            attributes: [rust.attribute({ name: "tokio::main" })],
+            body: CodeBlock.fromStatements(this.buildPaginationBody(endpoint))
+        });
+
+        mainFunction.write(writer);
+        return writer.toString().trim() + "\n";
+    }
+
+    private buildPaginationBody(endpoint: EndpointWithFilepath): Statement[] {
+        // Build client using ClientConfig pattern
+        const configVar = Statement.let({
+            name: "config",
+            value: this.getClientConfigStruct("pagination", endpoint)
+        });
+
+        const clientBuild = Expression.methodCall({
+            target: Expression.raw(`${this.getClientName(endpoint)}::new(config)`),
+            method: "expect",
+            args: [Expression.stringLiteral("Failed to build client")]
+        });
+
+        const clientVar = Statement.let({
+            name: "client",
+            value: clientBuild
+        });
+
+        // Generate pagination example based on the actual endpoint
+        const methodCall = this.getMethodCall(endpoint);
+        const paginatedMethodCall = `${methodCall}().await?`;
+
+        // Create pagination stream example
+        const streamVar = Statement.let({
+            name: "mut paginated_stream",
+            value: Expression.raw(paginatedMethodCall)
+        });
+
+        // Create the while loop for streaming pagination
+        const whileLoop = Statement.raw(`while let Some(item) = paginated_stream.next().await {
+            match item {
+                Ok(data) => println!("Received item: {:?}", data),
+                Err(e) => eprintln!("Error fetching page: {}", e),
+            }
+        }`);
+
+        return [configVar, clientVar, streamVar, whileLoop];
     }
 
     private writeCode(code: string): string {

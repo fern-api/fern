@@ -2,9 +2,8 @@ import { noop } from "@fern-api/core-utils";
 import { LocalTypeRegistry } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { TypeReference } from "@fern-fern/ir-sdk/api";
-import { camelCase } from "lodash-es";
 
-import { StringEnumGenerator } from "../../enum";
+import { LiteralEnumGenerator } from "../../literal";
 import { LocalSymbolRegistry } from "./LocalSymbolRegistry";
 import type { StructGenerator } from "./StructGenerator";
 
@@ -63,21 +62,15 @@ export class LocalContext implements LocalTypeRegistry {
                             literal: (literal) => {
                                 literal._visit({
                                     string: (literalValue) => {
-                                        const enumName =
-                                            symbolRegistry.registerStringLiteralSymbolIfNotExists(literalValue);
-                                        const stringEnumGenerator = new StringEnumGenerator({
+                                        const enumName = symbolRegistry.registerStringLiteralSymbolIfNotExists(
+                                            LiteralEnumGenerator.generateName(literalValue),
+                                            literalValue
+                                        );
+                                        const literalEnumGenerator = new LiteralEnumGenerator({
                                             name: enumName,
-                                            source: {
-                                                type: "custom",
-                                                values: [
-                                                    {
-                                                        unsafeName: camelCase(literalValue),
-                                                        rawValue: literalValue
-                                                    }
-                                                ]
-                                            }
+                                            literalValue
                                         });
-                                        enumsByLiteralValue.set(literalValue, stringEnumGenerator.generate());
+                                        enumsByLiteralValue.set(literalValue, literalEnumGenerator.generate());
                                     },
                                     boolean: noop,
                                     _other: noop

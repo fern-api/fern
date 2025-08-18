@@ -3,7 +3,7 @@ use crate::user_id::UserId;
 use crate::playlist_create_request::PlaylistCreateRequest;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct Playlist {
     #[serde(flatten)]
     pub playlist_create_request_fields: PlaylistCreateRequest,

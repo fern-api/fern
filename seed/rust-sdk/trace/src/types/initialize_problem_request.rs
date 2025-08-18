@@ -1,7 +1,7 @@
 use crate::problem_id::ProblemId;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct InitializeProblemRequest {
     #[serde(rename = "problemId")]
     pub problem_id: ProblemId,

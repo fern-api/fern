@@ -1,12 +1,13 @@
+use crate::json_like::JsonLike;
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
 pub enum JsonLike {
-        List(Vec<JsonLike>),
+        JsonLikeList(Vec<JsonLike>),
 
-        Map(HashMap<String, JsonLike>),
+        Map1(HashMap<String, JsonLike>),
 
         String(String),
 
@@ -16,12 +17,12 @@ pub enum JsonLike {
 }
 
 impl JsonLike {
-    pub fn is_list(&self) -> bool {
-        matches!(self, Self::List(_))
+    pub fn is_jsonlikelist(&self) -> bool {
+        matches!(self, Self::JsonLikeList(_))
     }
 
-    pub fn is_map(&self) -> bool {
-        matches!(self, Self::Map(_))
+    pub fn is_map1(&self) -> bool {
+        matches!(self, Self::Map1(_))
     }
 
     pub fn is_string(&self) -> bool {
@@ -37,30 +38,30 @@ impl JsonLike {
     }
 
 
-    pub fn as_list(&self) -> Option<&Vec<JsonLike>> {
+    pub fn as_jsonlikelist(&self) -> Option<&Vec<JsonLike>> {
         match self {
-                    Self::List(value) => Some(value),
+                    Self::JsonLikeList(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_list(self) -> Option<Vec<JsonLike>> {
+    pub fn into_jsonlikelist(self) -> Option<Vec<JsonLike>> {
         match self {
-                    Self::List(value) => Some(value),
+                    Self::JsonLikeList(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn as_map(&self) -> Option<&HashMap<String, JsonLike>> {
+    pub fn as_map1(&self) -> Option<&HashMap<String, JsonLike>> {
         match self {
-                    Self::Map(value) => Some(value),
+                    Self::Map1(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_map(self) -> Option<HashMap<String, JsonLike>> {
+    pub fn into_map1(self) -> Option<HashMap<String, JsonLike>> {
         match self {
-                    Self::Map(value) => Some(value),
+                    Self::Map1(value) => Some(value),
                     _ => None,
                 }
     }

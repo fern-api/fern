@@ -66,4 +66,14 @@ public final class ObjectClient: Sendable {
             responseType: NestedObjectWithRequiredField.self
         )
     }
+
+    public func testIntegerOverflowEdgeCases(request: ObjectWithOptionalField, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/object/test-integer-overflow-edge-cases",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: ObjectWithOptionalField.self
+        )
+    }
 }

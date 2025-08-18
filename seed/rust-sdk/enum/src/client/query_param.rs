@@ -20,16 +20,16 @@ impl QueryParamClient {
             {
             let mut query_params = Vec::new();
             if let Some(value) = operand {
-                query_params.push(("operand".to_string(), value.to_string()));
+                query_params.push(("operand".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(Some(value)) = maybe_operand {
-                query_params.push(("maybeOperand".to_string(), value.to_string()));
+                query_params.push(("maybeOperand".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(value) = operand_or_color {
-                query_params.push(("operandOrColor".to_string(), value.to_string()));
+                query_params.push(("operandOrColor".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(Some(value)) = maybe_operand_or_color {
-                query_params.push(("maybeOperandOrColor".to_string(), value.to_string()));
+                query_params.push(("maybeOperandOrColor".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             Some(query_params)
         },
@@ -45,16 +45,16 @@ impl QueryParamClient {
             {
             let mut query_params = Vec::new();
             if let Some(value) = operand {
-                query_params.push(("operand".to_string(), value.to_string()));
+                query_params.push(("operand".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(Some(value)) = maybe_operand {
-                query_params.push(("maybeOperand".to_string(), value.to_string()));
+                query_params.push(("maybeOperand".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(value) = operand_or_color {
-                query_params.push(("operandOrColor".to_string(), value.to_string()));
+                query_params.push(("operandOrColor".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(Some(value)) = maybe_operand_or_color {
-                query_params.push(("maybeOperandOrColor".to_string(), value.to_string()));
+                query_params.push(("maybeOperandOrColor".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             Some(query_params)
         },

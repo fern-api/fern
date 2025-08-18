@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module seed
+module Seed
   module Internal
     module Types
       # @abstract
       #
       # An abstract model that all data objects will inherit from
       class Model
-        extend Type
+        include Type
 
         class << self
           # The defined fields for this model
@@ -16,7 +16,7 @@ module seed
           #
           # @return [Hash<Symbol, Field>]
           def fields
-            @fields ||= if self < seed::Internal::Types::Model
+            @fields ||= if self < Seed::Internal::Types::Model
                           superclass.fields.dup
                         else
                           {}
