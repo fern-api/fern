@@ -87,11 +87,11 @@ export class ObjectSchemaConverter extends AbstractConverter<
                 if (typeof allOfSchema.additionalProperties === "boolean" && allOfSchema.additionalProperties) {
                     hasAdditionalProperties = true;
                 }
-                
+
                 // if the allOf schema has no properties that are required in the base schema, add the reference to the extends_
                 if (
-                    (!objectHasRequiredProperties) || 
-                    (Object.keys(allOfSchema.properties ?? {}).every((key) => !this.schema.required?.includes(key)))
+                    !objectHasRequiredProperties ||
+                    Object.keys(allOfSchema.properties ?? {}).every((key) => !this.schema.required?.includes(key))
                 ) {
                     this.addTypeReferenceToExtends({
                         reference: allOfSchemaOrReference,
