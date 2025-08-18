@@ -25,7 +25,7 @@ function getImportPath({
     config: FernGeneratorExec.config.GeneratorConfig;
     customConfig: BaseGoCustomConfigSchema | undefined;
 }): string {
-    let importPath = (
+    const importPath = (
         customConfig?.importPath ??
         customConfig?.module?.path ??
         (config.output.mode.type === "github"

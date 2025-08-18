@@ -167,7 +167,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 		writer := newFileWriter(
 			fileInfo.filename,
 			fileInfo.packageName,
-			g.config.ImportPath,
+			g.config.FullImportPath,
 			g.config.Whitelabel,
 			g.config.AlwaysSendRequiredProperties,
 			g.config.InlinePathParameters,
@@ -236,13 +236,13 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 }
 
 func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) ([]*File, error) {
-	if g.config.ImportPath == "" {
+	if g.config.FullImportPath == "" {
 		// If an import path is not configured, we need to validate that none of types
 		// import types from another package.
 		for _, typeDeclaration := range ir.Types {
-			typeImportPath := fernFilepathToImportPath(g.config.ImportPath, typeDeclaration.Name.FernFilepath)
+			typeImportPath := fernFilepathToImportPath(g.config.FullImportPath, typeDeclaration.Name.FernFilepath)
 			for _, referencedType := range declaredTypeNamesForTypeIDs(ir, typeDeclaration.ReferencedTypes) {
-				referencedImportPath := fernFilepathToImportPath(g.config.ImportPath, referencedType.FernFilepath)
+				referencedImportPath := fernFilepathToImportPath(g.config.FullImportPath, referencedType.FernFilepath)
 				if typeImportPath != referencedImportPath {
 					return nil, fmt.Errorf(
 						"%s references %s from another package, but a generator import path was not specified",
@@ -269,7 +269,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	}
 	exportedClientName := getExportedClientName(ir, g.config.ExportedClientName, g.config.ClientName)
 	rootPackageName := getRootPackageName(ir, g.config.PackageName)
-	cycleInfo, err := cycleInfoFromIR(ir, g.config.ImportPath)
+	cycleInfo, err := cycleInfoFromIR(ir, g.config.FullImportPath)
 	if err != nil {
 		return nil, err
 	}
@@ -388,7 +388,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		writer := newFileWriter(
 			fileInfo.filename,
 			fileInfo.packageName,
-			g.config.ImportPath,
+			g.config.FullImportPath,
 			g.config.Whitelabel,
 			g.config.AlwaysSendRequiredProperties,
 			g.config.InlinePathParameters,
@@ -421,7 +421,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			writer = newFileWriter(
 				fileInfo.filename,
 				fileInfo.packageName,
-				g.config.ImportPath,
+				g.config.FullImportPath,
 				g.config.Whitelabel,
 				g.config.AlwaysSendRequiredProperties,
 				g.config.InlinePathParameters,
@@ -448,7 +448,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		writer = newFileWriter(
 			fileInfo.filename,
 			fileInfo.packageName,
-			g.config.ImportPath,
+			g.config.FullImportPath,
 			g.config.Whitelabel,
 			g.config.AlwaysSendRequiredProperties,
 			g.config.InlinePathParameters,
@@ -470,7 +470,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		}
 		files = append(files, file)
 		rootClientInstantiation = generatedClientInstantiation(
-			g.config.ImportPath,
+			g.config.FullImportPath,
 			generatedAuth,
 			generatedEnvironment,
 			exportedClientName,
@@ -482,7 +482,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			writer = newFileWriter(
 				fileInfo.filename,
 				fileInfo.packageName,
-				g.config.ImportPath,
+				g.config.FullImportPath,
 				g.config.Whitelabel,
 				g.config.AlwaysSendRequiredProperties,
 				g.config.InlinePathParameters,
@@ -506,7 +506,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			writer = newFileWriter(
 				fileInfo.filename,
 				fileInfo.packageName,
-				g.config.ImportPath,
+				g.config.FullImportPath,
 				g.config.Whitelabel,
 				g.config.AlwaysSendRequiredProperties,
 				g.config.InlinePathParameters,
@@ -533,7 +533,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			writer = newFileWriter(
 				fileInfo.filename,
 				fileInfo.packageName,
-				g.config.ImportPath,
+				g.config.FullImportPath,
 				g.config.Whitelabel,
 				g.config.AlwaysSendRequiredProperties,
 				g.config.InlinePathParameters,
@@ -559,7 +559,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		writer = newFileWriter(
 			fileInfo.filename,
 			fileInfo.packageName,
-			g.config.ImportPath,
+			g.config.FullImportPath,
 			g.config.Whitelabel,
 			g.config.AlwaysSendRequiredProperties,
 			g.config.InlinePathParameters,
@@ -584,32 +584,32 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, newOptionalTestFile(g.coordinator))
 		}
 		files = append(files, newApiErrorFile(g.coordinator))
-		files = append(files, newCallerFile(g.coordinator, g.config.ImportPath))
-		files = append(files, newCallerTestFile(g.coordinator, g.config.ImportPath))
-		files = append(files, newErrorDecoderFile(g.coordinator, g.config.ImportPath))
-		files = append(files, newErrorDecoderTestFile(g.coordinator, g.config.ImportPath))
+		files = append(files, newCallerFile(g.coordinator, g.config.FullImportPath))
+		files = append(files, newCallerTestFile(g.coordinator, g.config.FullImportPath))
+		files = append(files, newErrorDecoderFile(g.coordinator, g.config.FullImportPath))
+		files = append(files, newErrorDecoderTestFile(g.coordinator, g.config.FullImportPath))
 		files = append(files, newFileParamFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newHttpCoreFile(g.coordinator))
 		files = append(files, newHttpInternalFile(g.coordinator))
 		files = append(files, newPointerFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newQueryFile(g.coordinator))
 		files = append(files, newQueryTestFile(g.coordinator))
-		files = append(files, newRetrierFile(g.coordinator, g.config.ImportPath))
-		files = append(files, newRetrierTestFile(g.coordinator, g.config.ImportPath))
+		files = append(files, newRetrierFile(g.coordinator, g.config.FullImportPath))
+		files = append(files, newRetrierTestFile(g.coordinator, g.config.FullImportPath))
 		if needsFileUploadHelpers(ir) {
 			files = append(files, newMultipartFile(g.coordinator))
 			files = append(files, newMultipartTestFile(g.coordinator))
 		}
 		if ir.SdkConfig.HasStreamingEndpoints {
 			files = append(files, newStreamFile(g.coordinator))
-			files = append(files, newStreamerFile(g.coordinator, g.config.ImportPath))
+			files = append(files, newStreamerFile(g.coordinator, g.config.FullImportPath))
 		}
 		if generatedPagination {
 			files = append(files, newPageFile(g.coordinator))
-			files = append(files, newPagerFile(g.coordinator, g.config.ImportPath))
+			files = append(files, newPagerFile(g.coordinator, g.config.FullImportPath))
 			files = append(files, newPagerTestFile(g.coordinator))
 		}
-		clientTestFile, err := newClientTestFile(g.config.ImportPath, rootPackageName, g.coordinator, g.config.PackageLayout, g.config.ClientName, g.config.ClientConstructorName)
+		clientTestFile, err := newClientTestFile(g.config.FullImportPath, rootPackageName, g.coordinator, g.config.PackageLayout, g.config.ClientName, g.config.ClientConstructorName)
 		if err != nil {
 			return nil, err
 		}
@@ -619,7 +619,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			writer := newFileWriter(
 				fileInfo.filename,
 				fileInfo.packageName,
-				g.config.ImportPath,
+				g.config.FullImportPath,
 				g.config.Whitelabel,
 				g.config.AlwaysSendRequiredProperties,
 				g.config.InlinePathParameters,
@@ -790,7 +790,7 @@ func (g *Generator) generateRootService(
 	writer := newFileWriter(
 		fileInfo.filename,
 		fileInfo.packageName,
-		g.config.ImportPath,
+		g.config.FullImportPath,
 		g.config.Whitelabel,
 		g.config.AlwaysSendRequiredProperties,
 		g.config.InlinePathParameters,
@@ -840,7 +840,7 @@ func (g *Generator) generateService(
 	writer := newFileWriter(
 		fileInfo.filename,
 		fileInfo.packageName,
-		g.config.ImportPath,
+		g.config.FullImportPath,
 		g.config.Whitelabel,
 		g.config.AlwaysSendRequiredProperties,
 		g.config.InlinePathParameters,
@@ -893,7 +893,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 	writer := newFileWriter(
 		fileInfo.filename,
 		fileInfo.packageName,
-		g.config.ImportPath,
+		g.config.FullImportPath,
 		g.config.Whitelabel,
 		g.config.AlwaysSendRequiredProperties,
 		g.config.InlinePathParameters,
@@ -941,7 +941,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 	writer := newFileWriter(
 		fileInfo.filename,
 		fileInfo.packageName,
-		g.config.ImportPath,
+		g.config.FullImportPath,
 		g.config.Whitelabel,
 		g.config.AlwaysSendRequiredProperties,
 		g.config.InlinePathParameters,

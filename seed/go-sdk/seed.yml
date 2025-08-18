@@ -87,6 +87,9 @@ fixtures:
     - outputFolder: package-path
       customConfig:
         packagePath: inhereplease
+    - outputFolder: deep-package-path
+      customConfig:
+        packagePath: all/the/way/in/here/please
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1

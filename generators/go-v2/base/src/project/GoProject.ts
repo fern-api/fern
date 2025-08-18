@@ -64,12 +64,9 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
 
     private async writeGoFiles({ files }: { files: GoFile[] }): Promise<AbsoluteFilePath> {
         await this.mkdir(this.absolutePathToOutputDirectory);
-        let outputDir;
-        if (this.context.customConfig.packagePath) {
-            outputDir = path.join(this.absolutePathToOutputDirectory, this.context.customConfig.packagePath);
-        } else {
-            outputDir = this.absolutePathToOutputDirectory;
-        }
+        const outputDir = this.context.customConfig.packagePath
+            ? path.join(this.absolutePathToOutputDirectory, this.context.customConfig.packagePath)
+            : this.absolutePathToOutputDirectory;
 
         await Promise.all(files.map(async (file) => await file.write(AbsoluteFilePath.of(outputDir))));
         if (files.length > 0) {
