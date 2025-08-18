@@ -6,10 +6,10 @@ using SeedExhaustive.Types.Union;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Union;
 
-[NUnit.Framework.TestFixture]
-public class GetAndReturnUnionTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
+[TestFixture]
+public class GetAndReturnUnionTest : BaseMockServerTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
@@ -44,20 +44,11 @@ public class GetAndReturnUnionTest : SeedExhaustive.Test.Unit.MockServer.BaseMoc
             );
 
         var response = await Client.Endpoints.Union.GetAndReturnUnionAsync(
-            new SeedExhaustive.Types.Union.Animal(
-                new SeedExhaustive.Types.Union.Animal.Dog(
-                    new SeedExhaustive.Types.Union.Dog { Name = "name", LikesToWoof = true }
-                )
-            )
+            new Animal(new Animal.Dog(new Dog { Name = "name", LikesToWoof = true }))
         );
         Assert.That(
             response,
-            Is.EqualTo(
-                    SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Union.Animal>(
-                        mockResponse
-                    )
-                )
-                .UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<Animal>(mockResponse)).UsingDefaults()
         );
     }
 }

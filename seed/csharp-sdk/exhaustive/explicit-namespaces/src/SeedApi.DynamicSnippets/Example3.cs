@@ -7,16 +7,16 @@ namespace Usage;
 public class Example3
 {
     public async global::System.Threading.Tasks.Task Do() {
-        var client = new SeedExhaustive.SeedExhaustiveClient(
+        var client = new SeedExhaustiveClient(
             token: "<token>",
-            clientOptions: new SeedExhaustive.ClientOptions{
+            clientOptions: new ClientOptions{
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Endpoints.Container.GetAndReturnSetOfObjectsAsync(
-            new HashSet<SeedExhaustive.Types.Object.ObjectWithRequiredField>(){
-                new SeedExhaustive.Types.Object.ObjectWithRequiredField{
+            new HashSet<ObjectWithRequiredField>(){
+                new ObjectWithRequiredField{
                     String = "string"
                 },
             }

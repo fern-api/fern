@@ -5,10 +5,10 @@ using SeedExhaustive.Test.Unit.MockServer;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Params;
 
-[NUnit.Framework.TestFixture]
-public class ModifyWithPathTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
+[TestFixture]
+public class ModifyWithPathTest : BaseMockServerTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
@@ -35,9 +35,6 @@ public class ModifyWithPathTest : SeedExhaustive.Test.Unit.MockServer.BaseMockSe
             );
 
         var response = await Client.Endpoints.Params.ModifyWithPathAsync("param", "string");
-        Assert.That(
-            response,
-            Is.EqualTo(SeedExhaustive.Core.JsonUtils.Deserialize<string>(mockResponse))
-        );
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

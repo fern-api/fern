@@ -9,9 +9,9 @@ namespace SeedExhaustive.Endpoints.Container;
 
 public partial class ContainerClient
 {
-    private SeedExhaustive.Core.RawClient _client;
+    private RawClient _client;
 
-    internal ContainerClient(SeedExhaustive.Core.RawClient client)
+    internal ContainerClient(RawClient client)
     {
         _client = client;
     }
@@ -23,16 +23,16 @@ public partial class ContainerClient
     /// </code></example>
     public async Task<IEnumerable<string>> GetAndReturnListOfPrimitivesAsync(
         IEnumerable<string> request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/container/list-of-primitives",
                     Body = request,
                     Options = options,
@@ -45,22 +45,17 @@ public partial class ContainerClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<IEnumerable<string>>(
-                    responseBody
-                )!;
+                return JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -70,27 +65,25 @@ public partial class ContainerClient
 
     /// <example><code>
     /// await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
-    ///     new List&lt;SeedExhaustive.Types.Object.ObjectWithRequiredField&gt;()
+    ///     new List&lt;ObjectWithRequiredField&gt;()
     ///     {
-    ///         new SeedExhaustive.Types.Object.ObjectWithRequiredField { String = "string" },
-    ///         new SeedExhaustive.Types.Object.ObjectWithRequiredField { String = "string" },
+    ///         new ObjectWithRequiredField { String = "string" },
+    ///         new ObjectWithRequiredField { String = "string" },
     ///     }
     /// );
     /// </code></example>
-    public async Task<
-        IEnumerable<SeedExhaustive.Types.Object.ObjectWithRequiredField>
-    > GetAndReturnListOfObjectsAsync(
-        IEnumerable<SeedExhaustive.Types.Object.ObjectWithRequiredField> request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+    public async Task<IEnumerable<ObjectWithRequiredField>> GetAndReturnListOfObjectsAsync(
+        IEnumerable<ObjectWithRequiredField> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/container/list-of-objects",
                     Body = request,
                     Options = options,
@@ -103,22 +96,17 @@ public partial class ContainerClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<
-                    IEnumerable<SeedExhaustive.Types.Object.ObjectWithRequiredField>
-                >(responseBody)!;
+                return JsonUtils.Deserialize<IEnumerable<ObjectWithRequiredField>>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -133,16 +121,16 @@ public partial class ContainerClient
     /// </code></example>
     public async Task<HashSet<string>> GetAndReturnSetOfPrimitivesAsync(
         HashSet<string> request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/container/set-of-primitives",
                     Body = request,
                     Options = options,
@@ -155,20 +143,17 @@ public partial class ContainerClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<HashSet<string>>(responseBody)!;
+                return JsonUtils.Deserialize<HashSet<string>>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -178,26 +163,21 @@ public partial class ContainerClient
 
     /// <example><code>
     /// await client.Endpoints.Container.GetAndReturnSetOfObjectsAsync(
-    ///     new HashSet&lt;SeedExhaustive.Types.Object.ObjectWithRequiredField&gt;()
-    ///     {
-    ///         new SeedExhaustive.Types.Object.ObjectWithRequiredField { String = "string" },
-    ///     }
+    ///     new HashSet&lt;ObjectWithRequiredField&gt;() { new ObjectWithRequiredField { String = "string" } }
     /// );
     /// </code></example>
-    public async Task<
-        HashSet<SeedExhaustive.Types.Object.ObjectWithRequiredField>
-    > GetAndReturnSetOfObjectsAsync(
-        HashSet<SeedExhaustive.Types.Object.ObjectWithRequiredField> request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+    public async Task<HashSet<ObjectWithRequiredField>> GetAndReturnSetOfObjectsAsync(
+        HashSet<ObjectWithRequiredField> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/container/set-of-objects",
                     Body = request,
                     Options = options,
@@ -210,22 +190,17 @@ public partial class ContainerClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<
-                    HashSet<SeedExhaustive.Types.Object.ObjectWithRequiredField>
-                >(responseBody)!;
+                return JsonUtils.Deserialize<HashSet<ObjectWithRequiredField>>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -240,16 +215,16 @@ public partial class ContainerClient
     /// </code></example>
     public async Task<Dictionary<string, string>> GetAndReturnMapPrimToPrimAsync(
         Dictionary<string, string> request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/container/map-prim-to-prim",
                     Body = request,
                     Options = options,
@@ -262,22 +237,17 @@ public partial class ContainerClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<Dictionary<string, string>>(
-                    responseBody
-                )!;
+                return JsonUtils.Deserialize<Dictionary<string, string>>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -287,29 +257,29 @@ public partial class ContainerClient
 
     /// <example><code>
     /// await client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
-    ///     new Dictionary&lt;string, SeedExhaustive.Types.Object.ObjectWithRequiredField&gt;()
+    ///     new Dictionary&lt;string, ObjectWithRequiredField&gt;()
     ///     {
     ///         {
     ///             "string",
-    ///             new SeedExhaustive.Types.Object.ObjectWithRequiredField { String = "string" }
+    ///             new ObjectWithRequiredField { String = "string" }
     ///         },
     ///     }
     /// );
     /// </code></example>
     public async Task<
-        Dictionary<string, SeedExhaustive.Types.Object.ObjectWithRequiredField>
+        Dictionary<string, ObjectWithRequiredField>
     > GetAndReturnMapOfPrimToObjectAsync(
-        Dictionary<string, SeedExhaustive.Types.Object.ObjectWithRequiredField> request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+        Dictionary<string, ObjectWithRequiredField> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/container/map-prim-to-object",
                     Body = request,
                     Options = options,
@@ -322,22 +292,19 @@ public partial class ContainerClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<
-                    Dictionary<string, SeedExhaustive.Types.Object.ObjectWithRequiredField>
-                >(responseBody)!;
+                return JsonUtils.Deserialize<Dictionary<string, ObjectWithRequiredField>>(
+                    responseBody
+                )!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -347,21 +314,21 @@ public partial class ContainerClient
 
     /// <example><code>
     /// await client.Endpoints.Container.GetAndReturnOptionalAsync(
-    ///     new SeedExhaustive.Types.Object.ObjectWithRequiredField { String = "string" }
+    ///     new ObjectWithRequiredField { String = "string" }
     /// );
     /// </code></example>
-    public async Task<SeedExhaustive.Types.Object.ObjectWithRequiredField?> GetAndReturnOptionalAsync(
-        SeedExhaustive.Types.Object.ObjectWithRequiredField? request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+    public async Task<ObjectWithRequiredField?> GetAndReturnOptionalAsync(
+        ObjectWithRequiredField? request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/container/opt-objects",
                     Body = request,
                     Options = options,
@@ -374,22 +341,17 @@ public partial class ContainerClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithRequiredField?>(
-                    responseBody
-                )!;
+                return JsonUtils.Deserialize<ObjectWithRequiredField?>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody

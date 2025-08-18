@@ -7,15 +7,15 @@ namespace Usage;
 public class Example41
 {
     public async global::System.Threading.Tasks.Task Do() {
-        var client = new SeedExhaustive.SeedExhaustiveClient(
+        var client = new SeedExhaustiveClient(
             token: "<token>",
-            clientOptions: new SeedExhaustive.ClientOptions{
+            clientOptions: new ClientOptions{
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Endpoints.Primitive.GetAndReturnDatetimeAsync(
-            DateTime.Parse("2024-01-15T09:30:00Z", null, System.Globalization.DateTimeStyles.AdjustToUniversal)
+            DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal)
         );
     }
 

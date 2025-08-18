@@ -5,13 +5,12 @@ namespace SeedExhaustive.Types.Object;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-[System.Serializable]
-public class NestedObjectWithOptionalFieldError(
-    SeedExhaustive.Types.Object.NestedObjectWithOptionalField body
-) : SeedExhaustive.SeedExhaustiveApiException("NestedObjectWithOptionalFieldError", 400, body)
+[Serializable]
+public class NestedObjectWithOptionalFieldError(NestedObjectWithOptionalField body)
+    : SeedExhaustiveApiException("NestedObjectWithOptionalFieldError", 400, body)
 {
     /// <summary>
     /// The body of the response that triggered the exception.
     /// </summary>
-    public new SeedExhaustive.Types.Object.NestedObjectWithOptionalField Body => body;
+    public new NestedObjectWithOptionalField Body => body;
 }

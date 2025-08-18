@@ -6,38 +6,31 @@ using WireMock.Settings;
 
 namespace SeedExhaustive.Test.Unit.MockServer;
 
-[NUnit.Framework.SetUpFixture]
+[SetUpFixture]
 public class BaseMockServerTest
 {
-    protected static WireMock.Server.WireMockServer Server { get; set; } = null!;
+    protected static WireMockServer Server { get; set; } = null!;
 
-    protected static SeedExhaustive.SeedExhaustiveClient Client { get; set; } = null!;
+    protected static SeedExhaustiveClient Client { get; set; } = null!;
 
-    protected static SeedExhaustive.RequestOptions RequestOptions { get; set; } = new();
+    protected static RequestOptions RequestOptions { get; set; } = new();
 
-    [NUnit.Framework.OneTimeSetUp]
+    [OneTimeSetUp]
     public void GlobalSetup()
     {
         // Start the WireMock server
         Server = WireMockServer.Start(
-            new WireMock.Settings.WireMockServerSettings
-            {
-                Logger = new WireMock.Logging.WireMockConsoleLogger(),
-            }
+            new WireMockServerSettings { Logger = new WireMockConsoleLogger() }
         );
 
         // Initialize the Client
-        Client = new SeedExhaustive.SeedExhaustiveClient(
+        Client = new SeedExhaustiveClient(
             "TOKEN",
-            clientOptions: new SeedExhaustive.ClientOptions
-            {
-                BaseUrl = Server.Urls[0],
-                MaxRetries = 0,
-            }
+            clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
     }
 
-    [NUnit.Framework.OneTimeTearDown]
+    [OneTimeTearDown]
     public void GlobalTeardown()
     {
         Server.Stop();

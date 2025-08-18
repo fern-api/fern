@@ -8,9 +8,9 @@ namespace SeedExhaustive.Endpoints.Primitive;
 
 public partial class PrimitiveClient
 {
-    private SeedExhaustive.Core.RawClient _client;
+    private RawClient _client;
 
-    internal PrimitiveClient(SeedExhaustive.Core.RawClient client)
+    internal PrimitiveClient(RawClient client)
     {
         _client = client;
     }
@@ -20,16 +20,16 @@ public partial class PrimitiveClient
     /// </code></example>
     public async Task<string> GetAndReturnStringAsync(
         string request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/primitive/string",
                     Body = request,
                     Options = options,
@@ -42,20 +42,17 @@ public partial class PrimitiveClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<string>(responseBody)!;
+                return JsonUtils.Deserialize<string>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -68,16 +65,16 @@ public partial class PrimitiveClient
     /// </code></example>
     public async Task<int> GetAndReturnIntAsync(
         int request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/primitive/integer",
                     Body = request,
                     Options = options,
@@ -90,20 +87,17 @@ public partial class PrimitiveClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<int>(responseBody)!;
+                return JsonUtils.Deserialize<int>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -116,16 +110,16 @@ public partial class PrimitiveClient
     /// </code></example>
     public async Task<long> GetAndReturnLongAsync(
         long request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/primitive/long",
                     Body = request,
                     Options = options,
@@ -138,20 +132,17 @@ public partial class PrimitiveClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<long>(responseBody)!;
+                return JsonUtils.Deserialize<long>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -164,16 +155,16 @@ public partial class PrimitiveClient
     /// </code></example>
     public async Task<double> GetAndReturnDoubleAsync(
         double request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/primitive/double",
                     Body = request,
                     Options = options,
@@ -186,20 +177,17 @@ public partial class PrimitiveClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<double>(responseBody)!;
+                return JsonUtils.Deserialize<double>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -212,16 +200,16 @@ public partial class PrimitiveClient
     /// </code></example>
     public async Task<bool> GetAndReturnBoolAsync(
         bool request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/primitive/boolean",
                     Body = request,
                     Options = options,
@@ -234,20 +222,17 @@ public partial class PrimitiveClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<bool>(responseBody)!;
+                return JsonUtils.Deserialize<bool>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -262,16 +247,16 @@ public partial class PrimitiveClient
     /// </code></example>
     public async Task<DateTime> GetAndReturnDatetimeAsync(
         DateTime request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/primitive/datetime",
                     Body = request,
                     Options = options,
@@ -284,20 +269,17 @@ public partial class PrimitiveClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<DateTime>(responseBody)!;
+                return JsonUtils.Deserialize<DateTime>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -310,16 +292,16 @@ public partial class PrimitiveClient
     /// </code></example>
     public async Task<DateOnly> GetAndReturnDateAsync(
         DateOnly request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/primitive/date",
                     Body = request,
                     Options = options,
@@ -332,20 +314,17 @@ public partial class PrimitiveClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<DateOnly>(responseBody)!;
+                return JsonUtils.Deserialize<DateOnly>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -358,16 +337,16 @@ public partial class PrimitiveClient
     /// </code></example>
     public async Task<string> GetAndReturnUuidAsync(
         string request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/primitive/uuid",
                     Body = request,
                     Options = options,
@@ -380,20 +359,17 @@ public partial class PrimitiveClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<string>(responseBody)!;
+                return JsonUtils.Deserialize<string>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -406,16 +382,16 @@ public partial class PrimitiveClient
     /// </code></example>
     public async Task<string> GetAndReturnBase64Async(
         string request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/primitive/base64",
                     Body = request,
                     Options = options,
@@ -428,20 +404,17 @@ public partial class PrimitiveClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<string>(responseBody)!;
+                return JsonUtils.Deserialize<string>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody

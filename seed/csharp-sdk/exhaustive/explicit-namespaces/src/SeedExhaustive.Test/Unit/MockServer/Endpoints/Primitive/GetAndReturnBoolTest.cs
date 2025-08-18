@@ -5,10 +5,10 @@ using SeedExhaustive.Test.Unit.MockServer;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Primitive;
 
-[NUnit.Framework.TestFixture]
-public class GetAndReturnBoolTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
+[TestFixture]
+public class GetAndReturnBoolTest : BaseMockServerTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
@@ -35,9 +35,6 @@ public class GetAndReturnBoolTest : SeedExhaustive.Test.Unit.MockServer.BaseMock
             );
 
         var response = await Client.Endpoints.Primitive.GetAndReturnBoolAsync(true);
-        Assert.That(
-            response,
-            Is.EqualTo(SeedExhaustive.Core.JsonUtils.Deserialize<bool>(mockResponse))
-        );
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
     }
 }

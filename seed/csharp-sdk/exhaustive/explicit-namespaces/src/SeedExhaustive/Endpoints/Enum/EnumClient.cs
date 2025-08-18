@@ -9,28 +9,28 @@ namespace SeedExhaustive.Endpoints.Enum;
 
 public partial class EnumClient
 {
-    private SeedExhaustive.Core.RawClient _client;
+    private RawClient _client;
 
-    internal EnumClient(SeedExhaustive.Core.RawClient client)
+    internal EnumClient(RawClient client)
     {
         _client = client;
     }
 
     /// <example><code>
-    /// await client.Endpoints.Enum.GetAndReturnEnumAsync(SeedExhaustive.Types.Enum.WeatherReport.Sunny);
+    /// await client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny);
     /// </code></example>
-    public async Task<SeedExhaustive.Types.Enum.WeatherReport> GetAndReturnEnumAsync(
-        SeedExhaustive.Types.Enum.WeatherReport request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+    public async Task<WeatherReport> GetAndReturnEnumAsync(
+        WeatherReport request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/enum",
                     Body = request,
                     Options = options,
@@ -43,22 +43,17 @@ public partial class EnumClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Enum.WeatherReport>(
-                    responseBody
-                )!;
+                return JsonUtils.Deserialize<WeatherReport>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody

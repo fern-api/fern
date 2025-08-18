@@ -6,10 +6,10 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Test.Unit.MockServer.NoReqBody;
 
-[NUnit.Framework.TestFixture]
-public class GetWithNoRequestBodyTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
+[TestFixture]
+public class GetWithNoRequestBodyTest : BaseMockServerTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
@@ -49,12 +49,7 @@ public class GetWithNoRequestBodyTest : SeedExhaustive.Test.Unit.MockServer.Base
         var response = await Client.NoReqBody.GetWithNoRequestBodyAsync();
         Assert.That(
             response,
-            Is.EqualTo(
-                    SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithOptionalField>(
-                        mockResponse
-                    )
-                )
-                .UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
         );
     }
 }

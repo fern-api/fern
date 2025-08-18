@@ -3,15 +3,15 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints.Params;
 
-[System.Serializable]
+[Serializable]
 public record GetWithPathAndQuery
 {
-    [System.Text.Json.Serialization.JsonIgnore]
+    [JsonIgnore]
     public required string Query { get; set; }
 
     /// <inheritdoc />
     public override string ToString()
     {
-        return SeedExhaustive.Core.JsonUtils.Serialize(this);
+        return JsonUtils.Serialize(this);
     }
 }

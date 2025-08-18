@@ -7,15 +7,15 @@ namespace Usage;
 public class Example9
 {
     public async global::System.Threading.Tasks.Task Do() {
-        var client = new SeedExhaustive.SeedExhaustiveClient(
+        var client = new SeedExhaustiveClient(
             token: "<token>",
-            clientOptions: new SeedExhaustive.ClientOptions{
+            clientOptions: new ClientOptions{
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Endpoints.Enum.GetAndReturnEnumAsync(
-            SeedExhaustive.Types.Enum.WeatherReport.Sunny
+            WeatherReport.Sunny
         );
     }
 

@@ -9,9 +9,9 @@ namespace SeedExhaustive.NoReqBody;
 
 public partial class NoReqBodyClient
 {
-    private SeedExhaustive.Core.RawClient _client;
+    private RawClient _client;
 
-    internal NoReqBodyClient(SeedExhaustive.Core.RawClient client)
+    internal NoReqBodyClient(RawClient client)
     {
         _client = client;
     }
@@ -19,17 +19,17 @@ public partial class NoReqBodyClient
     /// <example><code>
     /// await client.NoReqBody.GetWithNoRequestBodyAsync();
     /// </code></example>
-    public async Task<SeedExhaustive.Types.Object.ObjectWithOptionalField> GetWithNoRequestBodyAsync(
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+    public async Task<ObjectWithOptionalField> GetWithNoRequestBodyAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Get,
+                    Method = HttpMethod.Get,
                     Path = "/no-req-body",
                     Options = options,
                 },
@@ -41,22 +41,17 @@ public partial class NoReqBodyClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithOptionalField>(
-                    responseBody
-                )!;
+                return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -68,16 +63,16 @@ public partial class NoReqBodyClient
     /// await client.NoReqBody.PostWithNoRequestBodyAsync();
     /// </code></example>
     public async Task<string> PostWithNoRequestBodyAsync(
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/no-req-body",
                     Options = options,
                 },
@@ -89,20 +84,17 @@ public partial class NoReqBodyClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<string>(responseBody)!;
+                return JsonUtils.Deserialize<string>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody

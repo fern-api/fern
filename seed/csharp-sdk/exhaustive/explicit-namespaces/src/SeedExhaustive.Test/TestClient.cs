@@ -2,5 +2,5 @@ using NUnit.Framework;
 
 namespace SeedExhaustive.Test;
 
-[NUnit.Framework.TestFixture]
+[TestFixture]
 public class TestClient;

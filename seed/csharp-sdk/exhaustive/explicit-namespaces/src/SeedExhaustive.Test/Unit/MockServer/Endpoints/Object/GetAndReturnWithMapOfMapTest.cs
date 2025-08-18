@@ -6,10 +6,10 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Object;
 
-[NUnit.Framework.TestFixture]
-public class GetAndReturnWithMapOfMapTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
+[TestFixture]
+public class GetAndReturnWithMapOfMapTest : BaseMockServerTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
@@ -48,7 +48,7 @@ public class GetAndReturnWithMapOfMapTest : SeedExhaustive.Test.Unit.MockServer.
             );
 
         var response = await Client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(
-            new SeedExhaustive.Types.Object.ObjectWithMapOfMap
+            new ObjectWithMapOfMap
             {
                 Map = new Dictionary<string, Dictionary<string, string>>()
                 {
@@ -61,12 +61,7 @@ public class GetAndReturnWithMapOfMapTest : SeedExhaustive.Test.Unit.MockServer.
         );
         Assert.That(
             response,
-            Is.EqualTo(
-                    SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithMapOfMap>(
-                        mockResponse
-                    )
-                )
-                .UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<ObjectWithMapOfMap>(mockResponse)).UsingDefaults()
         );
     }
 }

@@ -5,11 +5,10 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.ContentType;
 
-[NUnit.Framework.TestFixture]
-public class PostJsonPatchContentWithCharsetTypeTest
-    : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
+[TestFixture]
+public class PostJsonPatchContentWithCharsetTypeTest : BaseMockServerTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void MockServerTest()
     {
         const string requestJson = """
@@ -50,7 +49,7 @@ public class PostJsonPatchContentWithCharsetTypeTest
 
         Assert.DoesNotThrowAsync(async () =>
             await Client.Endpoints.ContentType.PostJsonPatchContentWithCharsetTypeAsync(
-                new SeedExhaustive.Types.Object.ObjectWithOptionalField
+                new ObjectWithOptionalField
                 {
                     String = "string",
                     Integer = 1,
@@ -60,7 +59,7 @@ public class PostJsonPatchContentWithCharsetTypeTest
                     Datetime = DateTime.Parse(
                         "2024-01-15T09:30:00.000Z",
                         null,
-                        System.Globalization.DateTimeStyles.AdjustToUniversal
+                        DateTimeStyles.AdjustToUniversal
                     ),
                     Date = new DateOnly(2023, 1, 15),
                     Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",

@@ -7,10 +7,10 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.HttpMethods;
 
-[NUnit.Framework.TestFixture]
-public class TestPatchTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
+[TestFixture]
+public class TestPatchTest : BaseMockServerTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
@@ -80,7 +80,7 @@ public class TestPatchTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerT
 
         var response = await Client.Endpoints.HttpMethods.TestPatchAsync(
             "id",
-            new SeedExhaustive.Types.Object.ObjectWithOptionalField
+            new ObjectWithOptionalField
             {
                 String = "string",
                 Integer = 1,
@@ -90,7 +90,7 @@ public class TestPatchTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerT
                 Datetime = DateTime.Parse(
                     "2024-01-15T09:30:00.000Z",
                     null,
-                    System.Globalization.DateTimeStyles.AdjustToUniversal
+                    DateTimeStyles.AdjustToUniversal
                 ),
                 Date = new DateOnly(2023, 1, 15),
                 Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -103,12 +103,7 @@ public class TestPatchTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerT
         );
         Assert.That(
             response,
-            Is.EqualTo(
-                    SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithOptionalField>(
-                        mockResponse
-                    )
-                )
-                .UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
         );
     }
 }

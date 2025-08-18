@@ -8,10 +8,8 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Types.Union;
 
-[System.Text.Json.Serialization.JsonConverter(
-    typeof(SeedExhaustive.Types.Union.Animal.JsonConverter)
-)]
-[System.Serializable]
+[JsonConverter(typeof(Animal.JsonConverter))]
+[Serializable]
 public record Animal
 {
     internal Animal(string type, object? value)
@@ -21,18 +19,18 @@ public record Animal
     }
 
     /// <summary>
-    /// Create an instance of Animal with <see cref="SeedExhaustive.Types.Union.Animal.Dog"/>.
+    /// Create an instance of Animal with <see cref="Animal.Dog"/>.
     /// </summary>
-    public Animal(SeedExhaustive.Types.Union.Animal.Dog value)
+    public Animal(Animal.Dog value)
     {
         Animal_ = "dog";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of Animal with <see cref="SeedExhaustive.Types.Union.Animal.Cat"/>.
+    /// Create an instance of Animal with <see cref="Animal.Cat"/>.
     /// </summary>
-    public Animal(SeedExhaustive.Types.Union.Animal.Cat value)
+    public Animal(Animal.Cat value)
     {
         Animal_ = "cat";
         Value = value.Value;
@@ -41,7 +39,7 @@ public record Animal
     /// <summary>
     /// Discriminant value
     /// </summary>
-    [System.Text.Json.Serialization.JsonPropertyName("animal")]
+    [JsonPropertyName("animal")]
     public string Animal_ { get; internal set; }
 
     /// <summary>
@@ -66,7 +64,7 @@ public record Animal
     public SeedExhaustive.Types.Union.Dog AsDog() =>
         IsDog
             ? (SeedExhaustive.Types.Union.Dog)Value!
-            : throw new Exception("SeedExhaustive.Types.Union.Animal.Animal_ is not 'dog'");
+            : throw new Exception("Animal.Animal_ is not 'dog'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedExhaustive.Types.Union.Cat"/> if <see cref="Animal_"/> is 'cat', otherwise throws an exception.
@@ -75,7 +73,7 @@ public record Animal
     public SeedExhaustive.Types.Union.Cat AsCat() =>
         IsCat
             ? (SeedExhaustive.Types.Union.Cat)Value!
-            : throw new Exception("SeedExhaustive.Types.Union.Animal.Animal_ is not 'cat'");
+            : throw new Exception("Animal.Animal_ is not 'cat'");
 
     public T Match<T>(
         Func<SeedExhaustive.Types.Union.Dog, T> onDog,
@@ -139,27 +137,22 @@ public record Animal
         return false;
     }
 
-    public override string ToString() => SeedExhaustive.Core.JsonUtils.Serialize(this);
+    public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator SeedExhaustive.Types.Union.Animal(
-        SeedExhaustive.Types.Union.Animal.Dog value
-    ) => new(value);
+    public static implicit operator Animal(Animal.Dog value) => new(value);
 
-    public static implicit operator SeedExhaustive.Types.Union.Animal(
-        SeedExhaustive.Types.Union.Animal.Cat value
-    ) => new(value);
+    public static implicit operator Animal(Animal.Cat value) => new(value);
 
-    [System.Serializable]
-    internal sealed class JsonConverter
-        : System.Text.Json.Serialization.JsonConverter<SeedExhaustive.Types.Union.Animal>
+    [Serializable]
+    internal sealed class JsonConverter : JsonConverter<Animal>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
-            typeof(SeedExhaustive.Types.Union.Animal).IsAssignableFrom(typeToConvert);
+            typeof(Animal).IsAssignableFrom(typeToConvert);
 
-        public override SeedExhaustive.Types.Union.Animal Read(
-            ref System.Text.Json.Utf8JsonReader reader,
+        public override Animal Read(
+            ref Utf8JsonReader reader,
             global::System.Type typeToConvert,
-            System.Text.Json.JsonSerializerOptions options
+            JsonSerializerOptions options
         )
         {
             var json = JsonElement.ParseValue(ref reader);
@@ -195,22 +188,22 @@ public record Animal
                     ),
                 _ => json.Deserialize<object?>(options),
             };
-            return new SeedExhaustive.Types.Union.Animal(discriminator, value);
+            return new Animal(discriminator, value);
         }
 
         public override void Write(
-            System.Text.Json.Utf8JsonWriter writer,
-            SeedExhaustive.Types.Union.Animal value,
-            System.Text.Json.JsonSerializerOptions options
+            Utf8JsonWriter writer,
+            Animal value,
+            JsonSerializerOptions options
         )
         {
-            System.Text.Json.Nodes.JsonNode json =
+            JsonNode json =
                 value.Animal_ switch
                 {
                     "dog" => JsonSerializer.SerializeToNode(value.Value, options),
                     "cat" => JsonSerializer.SerializeToNode(value.Value, options),
                     _ => JsonSerializer.SerializeToNode(value.Value, options),
-                } ?? new System.Text.Json.Nodes.JsonObject();
+                } ?? new JsonObject();
             json["animal"] = value.Animal_;
             json.WriteTo(writer, options);
         }
@@ -219,7 +212,7 @@ public record Animal
     /// <summary>
     /// Discriminated union type for dog
     /// </summary>
-    [System.Serializable]
+    [Serializable]
     public struct Dog
     {
         public Dog(SeedExhaustive.Types.Union.Dog value)
@@ -231,15 +224,13 @@ public record Animal
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator SeedExhaustive.Types.Union.Animal.Dog(
-            SeedExhaustive.Types.Union.Dog value
-        ) => new(value);
+        public static implicit operator Dog(SeedExhaustive.Types.Union.Dog value) => new(value);
     }
 
     /// <summary>
     /// Discriminated union type for cat
     /// </summary>
-    [System.Serializable]
+    [Serializable]
     public struct Cat
     {
         public Cat(SeedExhaustive.Types.Union.Cat value)
@@ -251,8 +242,6 @@ public record Animal
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator SeedExhaustive.Types.Union.Animal.Cat(
-            SeedExhaustive.Types.Union.Cat value
-        ) => new(value);
+        public static implicit operator Cat(SeedExhaustive.Types.Union.Cat value) => new(value);
     }
 }

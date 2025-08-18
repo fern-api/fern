@@ -7,15 +7,15 @@ namespace Usage;
 public class Example18
 {
     public async global::System.Threading.Tasks.Task Do() {
-        var client = new SeedExhaustive.SeedExhaustiveClient(
+        var client = new SeedExhaustiveClient(
             token: "<token>",
-            clientOptions: new SeedExhaustive.ClientOptions{
+            clientOptions: new ClientOptions{
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(
-            new SeedExhaustive.Types.Object.ObjectWithMapOfMap{
+            new ObjectWithMapOfMap{
                 Map = new Dictionary<string, Dictionary<string, string>>(){
                     ["map"] = new Dictionary<string, string>(){
                         ["map"] = "map",

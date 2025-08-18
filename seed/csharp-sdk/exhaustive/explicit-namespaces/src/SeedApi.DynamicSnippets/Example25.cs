@@ -7,15 +7,15 @@ namespace Usage;
 public class Example25
 {
     public async global::System.Threading.Tasks.Task Do() {
-        var client = new SeedExhaustive.SeedExhaustiveClient(
+        var client = new SeedExhaustiveClient(
             token: "<token>",
-            clientOptions: new SeedExhaustive.ClientOptions{
+            clientOptions: new ClientOptions{
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(
-            new SeedExhaustive.Types.Object.ObjectWithOptionalField{
+            new ObjectWithOptionalField{
                 String = "large-positive",
                 Integer = 1000000000000,
                 Long = 1000000000000l,

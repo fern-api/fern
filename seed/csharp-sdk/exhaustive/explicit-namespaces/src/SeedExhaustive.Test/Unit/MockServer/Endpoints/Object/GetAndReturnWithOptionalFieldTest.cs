@@ -7,11 +7,10 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Object;
 
-[NUnit.Framework.TestFixture]
-public class GetAndReturnWithOptionalFieldTest
-    : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
+[TestFixture]
+public class GetAndReturnWithOptionalFieldTest : BaseMockServerTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public async global::System.Threading.Tasks.Task MockServerTest_1()
     {
         const string requestJson = """
@@ -80,7 +79,7 @@ public class GetAndReturnWithOptionalFieldTest
             );
 
         var response = await Client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
-            new SeedExhaustive.Types.Object.ObjectWithOptionalField
+            new ObjectWithOptionalField
             {
                 String = "string",
                 Integer = 1,
@@ -90,7 +89,7 @@ public class GetAndReturnWithOptionalFieldTest
                 Datetime = DateTime.Parse(
                     "2024-01-15T09:30:00.000Z",
                     null,
-                    System.Globalization.DateTimeStyles.AdjustToUniversal
+                    DateTimeStyles.AdjustToUniversal
                 ),
                 Date = new DateOnly(2023, 1, 15),
                 Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -103,16 +102,11 @@ public class GetAndReturnWithOptionalFieldTest
         );
         Assert.That(
             response,
-            Is.EqualTo(
-                    SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithOptionalField>(
-                        mockResponse
-                    )
-                )
-                .UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
         );
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public async global::System.Threading.Tasks.Task MockServerTest_2()
     {
         const string requestJson = """
@@ -151,7 +145,7 @@ public class GetAndReturnWithOptionalFieldTest
             );
 
         var response = await Client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
-            new SeedExhaustive.Types.Object.ObjectWithOptionalField
+            new ObjectWithOptionalField
             {
                 String = "test",
                 Integer = 21991583578,
@@ -162,12 +156,7 @@ public class GetAndReturnWithOptionalFieldTest
         );
         Assert.That(
             response,
-            Is.EqualTo(
-                    SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithOptionalField>(
-                        mockResponse
-                    )
-                )
-                .UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
         );
     }
 }

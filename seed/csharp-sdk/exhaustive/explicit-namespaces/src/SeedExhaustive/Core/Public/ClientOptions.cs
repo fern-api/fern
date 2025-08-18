@@ -4,13 +4,13 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive;
 
-[System.Serializable]
+[Serializable]
 public partial class ClientOptions
 {
     /// <summary>
     /// The http headers sent with the request.
     /// </summary>
-    internal SeedExhaustive.Core.Headers Headers { get; init; } = new();
+    internal Headers Headers { get; init; } = new();
 
     /// <summary>
     /// The Base URL for the API.
@@ -26,7 +26,7 @@ public partial class ClientOptions
     /// <summary>
     /// The http client used to make requests.
     /// </summary>
-    public System.Net.Http.HttpClient HttpClient { get;
+    public HttpClient HttpClient { get;
 #if NET5_0_OR_GREATER
         init;
 #else
@@ -38,10 +38,7 @@ public partial class ClientOptions
     /// Additional headers to be sent with HTTP requests.
     /// Headers with matching keys will be overwritten by headers set on the request.
     /// </summary>
-    public System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<
-        string,
-        string?
-    >> AdditionalHeaders { get;
+    public IEnumerable<KeyValuePair<string, string?>> AdditionalHeaders { get;
 #if NET5_0_OR_GREATER
         init;
 #else
@@ -63,7 +60,7 @@ public partial class ClientOptions
     /// <summary>
     /// The timeout for the request.
     /// </summary>
-    public System.TimeSpan Timeout { get;
+    public TimeSpan Timeout { get;
 #if NET5_0_OR_GREATER
         init;
 #else
@@ -74,7 +71,7 @@ public partial class ClientOptions
     /// <summary>
     /// Clones this and returns a new instance
     /// </summary>
-    internal SeedExhaustive.ClientOptions Clone()
+    internal ClientOptions Clone()
     {
         return new ClientOptions
         {

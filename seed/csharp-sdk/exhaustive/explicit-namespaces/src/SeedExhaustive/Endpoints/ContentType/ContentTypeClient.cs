@@ -9,16 +9,16 @@ namespace SeedExhaustive.Endpoints.ContentType;
 
 public partial class ContentTypeClient
 {
-    private SeedExhaustive.Core.RawClient _client;
+    private RawClient _client;
 
-    internal ContentTypeClient(SeedExhaustive.Core.RawClient client)
+    internal ContentTypeClient(RawClient client)
     {
         _client = client;
     }
 
     /// <example><code>
     /// await client.Endpoints.ContentType.PostJsonPatchContentTypeAsync(
-    ///     new SeedExhaustive.Types.Object.ObjectWithOptionalField
+    ///     new ObjectWithOptionalField
     ///     {
     ///         String = "string",
     ///         Integer = 1,
@@ -37,17 +37,17 @@ public partial class ContentTypeClient
     /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task PostJsonPatchContentTypeAsync(
-        SeedExhaustive.Types.Object.ObjectWithOptionalField request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+        ObjectWithOptionalField request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/foo/bar",
                     Body = request,
                     ContentType = "application/json-patch+json",
@@ -62,7 +62,7 @@ public partial class ContentTypeClient
         }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -72,7 +72,7 @@ public partial class ContentTypeClient
 
     /// <example><code>
     /// await client.Endpoints.ContentType.PostJsonPatchContentWithCharsetTypeAsync(
-    ///     new SeedExhaustive.Types.Object.ObjectWithOptionalField
+    ///     new ObjectWithOptionalField
     ///     {
     ///         String = "string",
     ///         Integer = 1,
@@ -91,17 +91,17 @@ public partial class ContentTypeClient
     /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task PostJsonPatchContentWithCharsetTypeAsync(
-        SeedExhaustive.Types.Object.ObjectWithOptionalField request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+        ObjectWithOptionalField request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/foo/baz",
                     Body = request,
                     ContentType = "application/json-patch+json; charset=utf-8",
@@ -116,7 +116,7 @@ public partial class ContentTypeClient
         }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody

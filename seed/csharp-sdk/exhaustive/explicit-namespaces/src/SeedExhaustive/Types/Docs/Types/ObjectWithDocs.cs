@@ -5,11 +5,11 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Types.Docs;
 
-[System.Serializable]
-public record ObjectWithDocs : System.Text.Json.Serialization.IJsonOnDeserialized
+[Serializable]
+public record ObjectWithDocs : IJsonOnDeserialized
 {
-    [System.Text.Json.Serialization.JsonExtensionData]
-    private readonly IDictionary<string, System.Text.Json.JsonElement> _extensionData =
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
     /// <summary>
@@ -69,12 +69,11 @@ public record ObjectWithDocs : System.Text.Json.Serialization.IJsonOnDeserialize
     /// - *: Can interfere with comment blocks
     /// - &: HTML entities
     /// </summary>
-    [System.Text.Json.Serialization.JsonPropertyName("string")]
+    [JsonPropertyName("string")]
     public required string String { get; set; }
 
-    [System.Text.Json.Serialization.JsonIgnore]
-    public SeedExhaustive.ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } =
-        new();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
     void IJsonOnDeserialized.OnDeserialized() =>
         AdditionalProperties.CopyFromExtensionData(_extensionData);
@@ -82,6 +81,6 @@ public record ObjectWithDocs : System.Text.Json.Serialization.IJsonOnDeserialize
     /// <inheritdoc />
     public override string ToString()
     {
-        return SeedExhaustive.Core.JsonUtils.Serialize(this);
+        return JsonUtils.Serialize(this);
     }
 }

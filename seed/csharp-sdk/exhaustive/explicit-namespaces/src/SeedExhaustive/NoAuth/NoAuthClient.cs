@@ -9,9 +9,9 @@ namespace SeedExhaustive.NoAuth;
 
 public partial class NoAuthClient
 {
-    private SeedExhaustive.Core.RawClient _client;
+    private RawClient _client;
 
-    internal NoAuthClient(SeedExhaustive.Core.RawClient client)
+    internal NoAuthClient(RawClient client)
     {
         _client = client;
     }
@@ -24,16 +24,16 @@ public partial class NoAuthClient
     /// </code></example>
     public async Task<bool> PostWithNoAuthAsync(
         object request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/no-auth",
                     Body = request,
                     Options = options,
@@ -46,14 +46,11 @@ public partial class NoAuthClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<bool>(responseBody)!;
+                return JsonUtils.Deserialize<bool>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
@@ -64,18 +61,16 @@ public partial class NoAuthClient
                 switch (response.StatusCode)
                 {
                     case 400:
-                        throw new SeedExhaustive.GeneralErrors.BadRequestBody(
-                            SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.GeneralErrors.BadObjectRequestInfo>(
-                                responseBody
-                            )
+                        throw new BadRequestBody(
+                            JsonUtils.Deserialize<BadObjectRequestInfo>(responseBody)
                         );
                 }
             }
-            catch (System.Text.Json.JsonException)
+            catch (JsonException)
             {
                 // unable to map error response, throwing generic error
             }
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody

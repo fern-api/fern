@@ -9,34 +9,30 @@ namespace SeedExhaustive.Endpoints.Union;
 
 public partial class UnionClient
 {
-    private SeedExhaustive.Core.RawClient _client;
+    private RawClient _client;
 
-    internal UnionClient(SeedExhaustive.Core.RawClient client)
+    internal UnionClient(RawClient client)
     {
         _client = client;
     }
 
     /// <example><code>
     /// await client.Endpoints.Union.GetAndReturnUnionAsync(
-    ///     new SeedExhaustive.Types.Union.Animal(
-    ///         new SeedExhaustive.Types.Union.Animal.Dog(
-    ///             new SeedExhaustive.Types.Union.Dog { Name = "name", LikesToWoof = true }
-    ///         )
-    ///     )
+    ///     new Animal(new Animal.Dog(new Dog { Name = "name", LikesToWoof = true }))
     /// );
     /// </code></example>
-    public async Task<SeedExhaustive.Types.Union.Animal> GetAndReturnUnionAsync(
-        SeedExhaustive.Types.Union.Animal request,
-        SeedExhaustive.RequestOptions? options = null,
-        System.Threading.CancellationToken cancellationToken = default
+    public async Task<Animal> GetAndReturnUnionAsync(
+        Animal request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExhaustive.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = System.Net.Http.HttpMethod.Post,
+                    Method = HttpMethod.Post,
                     Path = "/union",
                     Body = request,
                     Options = options,
@@ -49,22 +45,17 @@ public partial class UnionClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Union.Animal>(
-                    responseBody
-                )!;
+                return JsonUtils.Deserialize<Animal>(responseBody)!;
             }
-            catch (System.Text.Json.JsonException e)
+            catch (JsonException e)
             {
-                throw new SeedExhaustive.SeedExhaustiveException(
-                    "Failed to deserialize response",
-                    e
-                );
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustive.SeedExhaustiveApiException(
+            throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody

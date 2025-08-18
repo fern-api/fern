@@ -8,11 +8,10 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Test.Unit.MockServer.InlinedRequests;
 
-[NUnit.Framework.TestFixture]
-public class PostWithObjectBodyandResponseTest
-    : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
+[TestFixture]
+public class PostWithObjectBodyandResponseTest : BaseMockServerTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
@@ -85,11 +84,11 @@ public class PostWithObjectBodyandResponseTest
             );
 
         var response = await Client.InlinedRequests.PostWithObjectBodyandResponseAsync(
-            new SeedExhaustive.InlinedRequests.PostWithObjectBody
+            new PostWithObjectBody
             {
                 String = "string",
                 Integer = 1,
-                NestedObject = new SeedExhaustive.Types.Object.ObjectWithOptionalField
+                NestedObject = new ObjectWithOptionalField
                 {
                     String = "string",
                     Integer = 1,
@@ -99,7 +98,7 @@ public class PostWithObjectBodyandResponseTest
                     Datetime = DateTime.Parse(
                         "2024-01-15T09:30:00.000Z",
                         null,
-                        System.Globalization.DateTimeStyles.AdjustToUniversal
+                        DateTimeStyles.AdjustToUniversal
                     ),
                     Date = new DateOnly(2023, 1, 15),
                     Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -113,12 +112,7 @@ public class PostWithObjectBodyandResponseTest
         );
         Assert.That(
             response,
-            Is.EqualTo(
-                    SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithOptionalField>(
-                        mockResponse
-                    )
-                )
-                .UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
         );
     }
 }

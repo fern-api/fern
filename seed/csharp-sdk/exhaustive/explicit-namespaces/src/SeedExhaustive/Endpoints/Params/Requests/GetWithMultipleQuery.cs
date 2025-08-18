@@ -3,18 +3,18 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints.Params;
 
-[System.Serializable]
+[Serializable]
 public record GetWithMultipleQuery
 {
-    [System.Text.Json.Serialization.JsonIgnore]
+    [JsonIgnore]
     public IEnumerable<string> Query { get; set; } = new List<string>();
 
-    [System.Text.Json.Serialization.JsonIgnore]
+    [JsonIgnore]
     public IEnumerable<int> Number { get; set; } = new List<int>();
 
     /// <inheritdoc />
     public override string ToString()
     {
-        return SeedExhaustive.Core.JsonUtils.Serialize(this);
+        return JsonUtils.Serialize(this);
     }
 }

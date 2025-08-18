@@ -7,11 +7,10 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Object;
 
-[NUnit.Framework.TestFixture]
-public class GetAndReturnNestedWithRequiredFieldTest
-    : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
+[TestFixture]
+public class GetAndReturnNestedWithRequiredFieldTest : BaseMockServerTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
@@ -87,10 +86,10 @@ public class GetAndReturnNestedWithRequiredFieldTest
 
         var response = await Client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsync(
             "string",
-            new SeedExhaustive.Types.Object.NestedObjectWithRequiredField
+            new NestedObjectWithRequiredField
             {
                 String = "string",
-                NestedObject = new SeedExhaustive.Types.Object.ObjectWithOptionalField
+                NestedObject = new ObjectWithOptionalField
                 {
                     String = "string",
                     Integer = 1,
@@ -100,7 +99,7 @@ public class GetAndReturnNestedWithRequiredFieldTest
                     Datetime = DateTime.Parse(
                         "2024-01-15T09:30:00.000Z",
                         null,
-                        System.Globalization.DateTimeStyles.AdjustToUniversal
+                        DateTimeStyles.AdjustToUniversal
                     ),
                     Date = new DateOnly(2023, 1, 15),
                     Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -114,11 +113,7 @@ public class GetAndReturnNestedWithRequiredFieldTest
         );
         Assert.That(
             response,
-            Is.EqualTo(
-                    SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.NestedObjectWithRequiredField>(
-                        mockResponse
-                    )
-                )
+            Is.EqualTo(JsonUtils.Deserialize<NestedObjectWithRequiredField>(mockResponse))
                 .UsingDefaults()
         );
     }

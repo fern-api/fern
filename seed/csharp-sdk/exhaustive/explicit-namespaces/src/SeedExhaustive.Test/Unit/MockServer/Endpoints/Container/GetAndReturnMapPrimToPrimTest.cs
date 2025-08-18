@@ -5,10 +5,10 @@ using SeedExhaustive.Test.Unit.MockServer;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Container;
 
-[NUnit.Framework.TestFixture]
-public class GetAndReturnMapPrimToPrimTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
+[TestFixture]
+public class GetAndReturnMapPrimToPrimTest : BaseMockServerTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
@@ -43,11 +43,7 @@ public class GetAndReturnMapPrimToPrimTest : SeedExhaustive.Test.Unit.MockServer
         );
         Assert.That(
             response,
-            Is.EqualTo(
-                    SeedExhaustive.Core.JsonUtils.Deserialize<Dictionary<string, string>>(
-                        mockResponse
-                    )
-                )
+            Is.EqualTo(JsonUtils.Deserialize<Dictionary<string, string>>(mockResponse))
                 .UsingDefaults()
         );
     }
