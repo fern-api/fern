@@ -46,11 +46,12 @@ func (g *Generator) Run() error {
 		generatorexec.LogLevelDebug,
 		"Running go-v2 SDK generator...",
 	)
-	fmt.Println("\n\n\n----------------- GO-V2 SDK OUTPUT -----------------")
 
 	stdout := bytes.NewBuffer(nil)
 	stderr := bytes.NewBuffer(nil)
 	cmd := exec.Command("node", "--enable-source-maps", v2BinPath, configFilepath)
+
+	// If logs are needed from the Go-V2 generator:
 	// cmd.Stdout = io.MultiWriter(stdout, os.Stdout)
 	// cmd.Stderr = io.MultiWriter(stderr, os.Stderr)
 	cmd.Stdout = stdout

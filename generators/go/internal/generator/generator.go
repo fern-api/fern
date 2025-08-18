@@ -138,22 +138,12 @@ func (g *Generator) Generate(mode Mode) ([]*File, error) {
         return files, nil
     }
 
- //    for i, file := range files {
-	// 	fmt.Printf("File %d, at %s\n", i, file.Path)
-	// }
-
 	// Somewhat hacky fix; prefix packagePath to all .go file paths after the fact
 	for i := range files {
 	    if strings.HasSuffix(files[i].Path, ".go") {
 	        files[i].Path = path.Join(g.config.PackagePath, files[i].Path)
 	    }
 	}
-
-	fmt.Println("\n\n\n----------------- GO-V1 SDK OUTPUT -----------------")
-
-	// for i, file := range files {
-	// 	fmt.Printf("File %d\nAt %s\n%s\n\n\n", i, file.Path, file.Content)
-	// }
 
 	return files, nil
 }
