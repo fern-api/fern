@@ -693,16 +693,14 @@ public record DebugVariableValue
                 "booleanValue" => json.GetProperty("value").Deserialize<bool>(options),
                 "doubleValue" => json.GetProperty("value").Deserialize<double>(options),
                 "stringValue" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 "charValue" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 "mapValue" => json.Deserialize<SeedTrace.DebugMapValue>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.DebugMapValue"),
                 "listValue" => json.GetProperty("value")
                     .Deserialize<IEnumerable<DebugVariableValue>>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize IEnumerable<DebugVariableValue>"
-                    ),
+                ?? throw new JsonException("Failed to deserialize IEnumerable<DebugVariableValue>"),
                 "binaryTreeNodeValue" => json.Deserialize<SeedTrace.BinaryTreeNodeAndTreeValue>(
                     options
                 )
