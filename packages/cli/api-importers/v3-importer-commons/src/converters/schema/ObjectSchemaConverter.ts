@@ -31,7 +31,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
     }
 
     public convert(): ObjectSchemaConverter.Output {
-        const hasAdditionalProperties =
+        let hasAdditionalProperties =
             typeof this.schema.additionalProperties === "boolean" && this.schema.additionalProperties;
 
         if (!this.schema.properties && !this.schema.allOf) {
@@ -98,6 +98,11 @@ export class ObjectSchemaConverter extends AbstractConverter<
                 }
             } else {
                 allOfSchema = allOfSchemaOrReference;
+            }
+
+            // Check for additionalProperties in this allOf schema
+            if (typeof allOfSchema.additionalProperties === "boolean" && allOfSchema.additionalProperties) {
+                hasAdditionalProperties = true;
             }
 
             const {
