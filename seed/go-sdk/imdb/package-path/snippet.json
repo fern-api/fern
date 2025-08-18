@@ -1,0 +1,26 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/movies/create-movie",
+                "method": "POST",
+                "identifier_override": "endpoint_imdb.createMovie"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tinhereplease \"github.com/imdb/fern/inhereplease\"\n\tinherepleaseclient \"github.com/imdb/fern/inhereplease/client\"\n\toption \"github.com/imdb/fern/inhereplease/option\"\n)\n\nclient := inherepleaseclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Imdb.CreateMovie(\n\tcontext.TODO(),\n\t\u0026inhereplease.CreateMovieRequest{\n\t\tTitle:  \"title\",\n\t\tRating: 1.1,\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/movies/{movieId}",
+                "method": "GET",
+                "identifier_override": "endpoint_imdb.getMovie"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tinherepleaseclient \"github.com/imdb/fern/inhereplease/client\"\n\toption \"github.com/imdb/fern/inhereplease/option\"\n)\n\nclient := inherepleaseclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Imdb.GetMovie(\n\tcontext.TODO(),\n\t\"movieId\",\n)\n"
+            }
+        }
+    ]
+}
