@@ -85,9 +85,6 @@ export class ObjectSchemaConverter extends AbstractConverter<
 
                 // Check for additionalProperties before this is passed by for not having req. properties
                 if (typeof allOfSchema.additionalProperties === "boolean" && allOfSchema.additionalProperties) {
-                    this.context.logger.debug?.(
-                        `[ObjectSchemaConverter] allOf[${index}] allows additionalProperties. Setting hasAdditionalProperties = true 1.`
-                    );
                     hasAdditionalProperties = true;
                 }
                 
