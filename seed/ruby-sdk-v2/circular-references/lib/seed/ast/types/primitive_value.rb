@@ -4,7 +4,7 @@ module Seed
   module Ast
     module Types
       module PrimitiveValue
-        extends Seed::Internal::Types::Enum
+        extend Seed::Internal::Types::Enum
         STRING = "STRING"
         NUMBER = "NUMBER"end
     end
