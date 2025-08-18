@@ -1,14 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 2.1.11
+- version: 2.1.12
   changelogEntry:
     - type: fix
       summary: |
-        Generate explicit types everywhere, and have `dotnet format` reduce
-        namespaces and namespace prefixes. 
+        Add support for configuration 'explicit-namespaces' to Generate explicit types 
+        everywhere. 
+        Add support for `experimental-dotnet-format` to have `dotnet format` reduce
+        namespaces and namespace prefixes. (this can take a large amount of memory)
         This creates code that is much cleaner, and can easily support
         multiple endpoints with identical names in the generated code without
         name or namespace collisions.
-  createdAt: '2025-08-12'
+  createdAt: '2025-08-18'
   irVersion: 58
 
 - version: 2.1.10
