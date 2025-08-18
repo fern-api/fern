@@ -70,7 +70,6 @@ export class ObjectSchemaConverter extends AbstractConverter<
             const breadcrumbs = [...this.breadcrumbs, "allOf", index.toString()];
             let allOfSchema: OpenAPIV3_1.SchemaObject;
             if (this.context.isReferenceObject(allOfSchemaOrReference)) {
-                // Tries to resolve reference
                 const maybeResolvedReference = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                     schemaOrReference: allOfSchemaOrReference,
                     breadcrumbs
@@ -105,7 +104,6 @@ export class ObjectSchemaConverter extends AbstractConverter<
                 allOfSchema = allOfSchemaOrReference;
             }
 
-            // Check for additionalProperties in this allOf schema
             if (typeof allOfSchema.additionalProperties === "boolean" && allOfSchema.additionalProperties) {
                 hasAdditionalProperties = true;
             }
