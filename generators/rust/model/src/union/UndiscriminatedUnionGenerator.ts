@@ -309,8 +309,10 @@ export class UndiscriminatedUnionGenerator {
 
     private canDeriveHashAndEq(): boolean {
         // Check if all variant types can support Hash and Eq derives
+        // Use shared stack for the entire union's variant analysis
+        const analysisStack = new Set<string>();
         return this.undiscriminatedUnionTypeDeclaration.members.every((member) => {
-            return typeSupportsHashAndEq(member.type, this.context);
+            return typeSupportsHashAndEq(member.type, this.context, analysisStack);
         });
     }
 }
