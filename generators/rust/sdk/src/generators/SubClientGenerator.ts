@@ -6,13 +6,13 @@ import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 import {
     ApiAuth,
     AuthScheme,
-    CursorPagination,
     HttpEndpoint,
     HttpService,
-    OffsetPagination,
     Pagination,
-    PrimitiveTypeV1,
+    CursorPagination,
+    OffsetPagination,
     ResponseProperty,
+    PrimitiveTypeV1,
     Subpackage,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
