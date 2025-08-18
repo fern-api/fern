@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module Seed
-  module Types
     module Object_
       module Types
         class ObjectWithMapOfMap < Internal::Types::Model

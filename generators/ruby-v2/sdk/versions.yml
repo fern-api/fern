@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc2
+  createdAt: '2025-08-13'
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Support for sending request bodies when the request is a reference to a type or a primitive.
+  irVersion: 58
+
 - version: 1.0.0-rc1
   createdAt: '2025-08-13'
   changelogEntry:

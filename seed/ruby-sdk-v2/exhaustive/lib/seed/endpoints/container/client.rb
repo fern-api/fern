@@ -15,6 +15,7 @@ module Seed
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
             path: "/container/list-of-primitives"
+            body: params[:request],
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -29,6 +30,7 @@ module Seed
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
             path: "/container/list-of-objects"
+            body: params[:request],
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -43,6 +45,7 @@ module Seed
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
             path: "/container/set-of-primitives"
+            body: params[:request],
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -57,6 +60,7 @@ module Seed
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
             path: "/container/set-of-objects"
+            body: params[:request],
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -71,6 +75,7 @@ module Seed
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
             path: "/container/map-prim-to-prim"
+            body: params[:request],
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -85,6 +90,7 @@ module Seed
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
             path: "/container/map-prim-to-object"
+            body: params[:request],
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -99,6 +105,7 @@ module Seed
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
             path: "/container/opt-objects"
+            body: params[:request],
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"

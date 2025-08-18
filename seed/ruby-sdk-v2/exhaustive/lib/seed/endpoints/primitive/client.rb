@@ -15,6 +15,7 @@ module Seed
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
             path: "/primitive/string"
+            body: params[:request],
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -29,6 +30,7 @@ module Seed
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
             path: "/primitive/integer"
+            body: params[:request],
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -43,6 +45,7 @@ module Seed
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
             path: "/primitive/long"
+            body: params[:request],
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -57,6 +60,7 @@ module Seed
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
             path: "/primitive/double"
+            body: params[:request],
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -71,6 +75,7 @@ module Seed
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
             path: "/primitive/boolean"
+            body: params[:request],
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -85,6 +90,7 @@ module Seed
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
             path: "/primitive/datetime"
+            body: params[:request],
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -99,6 +105,7 @@ module Seed
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
             path: "/primitive/date"
+            body: params[:request],
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -113,6 +120,7 @@ module Seed
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
             path: "/primitive/uuid"
+            body: params[:request],
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -127,6 +135,7 @@ module Seed
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
             path: "/primitive/base64"
+            body: params[:request],
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
