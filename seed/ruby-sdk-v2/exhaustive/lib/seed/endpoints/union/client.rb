@@ -15,6 +15,7 @@ module Seed
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
             path: "/union"
+            body: Seed::Types::Union::Types::Animal.new(params[:request]).to_h,
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"

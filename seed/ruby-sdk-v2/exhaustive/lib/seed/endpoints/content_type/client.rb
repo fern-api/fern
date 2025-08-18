@@ -15,6 +15,7 @@ module Seed
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
             path: "/foo/bar"
+            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params[:request]).to_h,
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -29,6 +30,7 @@ module Seed
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
             path: "/foo/baz"
+            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params[:request]).to_h,
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"

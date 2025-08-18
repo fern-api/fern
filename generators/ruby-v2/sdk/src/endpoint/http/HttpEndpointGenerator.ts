@@ -50,7 +50,8 @@ export class HttpEndpointGenerator {
             baseUrl: ruby.codeblock(""),
             pathParameterReferences,
             endpoint,
-            requestType: request?.getRequestType()
+            requestType: request?.getRequestType(),
+            bodyReference: request?.getRequestBodyCodeBlock()?.requestBodyReference
         });
 
         if (sendRequestCodeBlock != null) {

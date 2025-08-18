@@ -9,7 +9,7 @@ export declare namespace RawClient {
         /** the endpoint for the endpoint */
         endpoint: HttpEndpoint;
         /** reference to a variable that is the body */
-        bodyReference?: string;
+        bodyReference?: ruby.CodeBlock;
         /** the path parameter id to reference */
         pathParameterReferences?: Record<string, string>;
         /** the headers to pass to the endpoint */
