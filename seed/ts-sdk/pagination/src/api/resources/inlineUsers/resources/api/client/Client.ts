@@ -53,7 +53,7 @@ export class Api {
     public async listWithCursorPagination(
         request: SeedPagination.inlineUsers.ListUsersCursorPaginationRequest = {},
         requestOptions?: Api.RequestOptions,
-    ): Promise<core.Page<SeedPagination.inlineUsers.User>> {
+    ): Promise<core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Item>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.inlineUsers.ListUsersCursorPaginationRequest,

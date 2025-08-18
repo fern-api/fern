@@ -958,6 +958,60 @@
                                     }
                                 }
                             ],
+                            "propertyPathWithTypes": [
+                                {
+                                    "name": {
+                                        "originalName": "cursor",
+                                        "camelCase": {
+                                            "unsafeName": "cursor",
+                                            "safeName": "cursor"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "cursor",
+                                            "safeName": "cursor"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "CURSOR",
+                                            "safeName": "CURSOR"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Cursor",
+                                            "safeName": "Cursor"
+                                        }
+                                    },
+                                    "type": {
+                                        "_type": "named",
+                                        "name": {
+                                            "originalName": "UsernamePage",
+                                            "camelCase": {
+                                                "unsafeName": "usernamePage",
+                                                "safeName": "usernamePage"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "username_page",
+                                                "safeName": "username_page"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "USERNAME_PAGE",
+                                                "safeName": "USERNAME_PAGE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "UsernamePage",
+                                                "safeName": "UsernamePage"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [],
+                                            "packagePath": [],
+                                            "file": null
+                                        },
+                                        "displayName": null,
+                                        "typeId": "type_:UsernamePage",
+                                        "default": null,
+                                        "inline": null
+                                    }
+                                }
+                            ],
                             "property": {
                                 "name": {
                                     "name": {

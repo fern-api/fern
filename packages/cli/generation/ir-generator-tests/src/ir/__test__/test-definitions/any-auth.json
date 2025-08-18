@@ -346,6 +346,7 @@
                         "responseProperties": {
                             "accessToken": {
                                 "propertyPath": [],
+                                "propertyPathWithTypes": [],
                                 "property": {
                                     "name": {
                                         "name": {
@@ -391,6 +392,7 @@
                             },
                             "expiresIn": {
                                 "propertyPath": [],
+                                "propertyPathWithTypes": [],
                                 "property": {
                                     "name": {
                                         "name": {
