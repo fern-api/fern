@@ -4,7 +4,7 @@ module Seed
     module Params
       module Types
         class GetWithInlinePath < Internal::Types::Model
-          field :param, String, optional: false, nullable: false
+          field :param, -> { String }, optional: false, nullable: false
 
         end
       end
