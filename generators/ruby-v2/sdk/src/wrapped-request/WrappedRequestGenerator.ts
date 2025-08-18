@@ -94,7 +94,6 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
         });
 
         const statements = generateFields({
-            typeDeclaration: undefined as any,
             properties,
             context: this.context
         });
