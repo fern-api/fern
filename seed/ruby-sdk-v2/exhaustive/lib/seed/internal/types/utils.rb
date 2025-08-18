@@ -4,7 +4,7 @@ module Seed
   module Internal
     module Types
       # Utilities for dealing with and checking types
-      class Utils
+      module Utils
         # Wraps a type into a type function
         #
         # @param type [Proc, Object]

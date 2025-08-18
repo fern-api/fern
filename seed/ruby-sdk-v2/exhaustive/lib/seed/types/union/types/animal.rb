@@ -4,7 +4,8 @@ module Seed
   module Types
     module Union
       module Types
-        class Animal < Internal::Types::Union
+        class Animal
+          extend Seed::Internal::Types::Union
 
           discriminant :animal
 
