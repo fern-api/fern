@@ -240,7 +240,7 @@ dotnet_diagnostic.IDE0005.severity = error
             );
         }
 
-        // format the code cleanly
+        // format the code cleanly using csharpier
         await this.csharpier(absolutePathToSrcDirectory);
     }
 
