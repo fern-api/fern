@@ -194,7 +194,6 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         moduleDeclarations.push(new ModuleDeclaration({ name: "client", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "error", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "client_config", isPublic: true }));
-        moduleDeclarations.push(new ModuleDeclaration({ name: "pagination", isPublic: true }));
 
         // Add core module (always include file operations)
         moduleDeclarations.push(new ModuleDeclaration({ name: "core", isPublic: true }));
@@ -243,7 +242,6 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // Add re-exports
         useStatements.push(new UseStatement({ path: "client_config", items: ["*"], isPublic: true }));
-        useStatements.push(new UseStatement({ path: "pagination", items: ["*"], isPublic: true }));
 
         // Add core module re-exports (always include file operations)
         useStatements.push(new UseStatement({ path: "core", items: ["*"], isPublic: true }));

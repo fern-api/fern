@@ -53,7 +53,9 @@ function createAsIsFiles(): AsIsFileDefinitionsById {
             key === "ApiClientBuilder" ||
             key === "HttpClient" ||
             key === "RequestOptions" ||
-            key === "ClientError";
+            key === "ClientError" ||
+            key === "Pagination" ||
+            key === "BytesUtils";
 
         if (isProjectFile) {
             directory = RelativeFilePath.of("");
