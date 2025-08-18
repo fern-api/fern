@@ -2,7 +2,7 @@
 
 types:
   UserId: string
-  UserEmail: string  
+  UserEmail: string
   UserAge: integer
   UserTags: list<string>
   UserProfile:
@@ -10,4 +10,4 @@ types:
       user_id: UserId
       email: UserEmail
       age: optional<UserAge>
-      tags: UserTags 
+      tags: UserTags

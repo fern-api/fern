@@ -1,5 +1,6 @@
 using global::System.Threading.Tasks;
 using SeedExhaustive;
+using SeedExhaustive.Endpoints;
 
 namespace Usage;
 
@@ -13,8 +14,11 @@ public class Example33
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnBoolAsync(
-            true
+        await client.Endpoints.Params.GetWithPathAndQueryAsync(
+            "param",
+            new GetWithPathAndQuery{
+                Query = "query"
+            }
         );
     }
 

@@ -51,6 +51,10 @@ class AbstractEndpointsObjectService(AbstractFernService):
     def get_and_return_nested_with_required_field_as_list(self, *, body: typing.List[NestedObjectWithRequiredField], auth: ApiAuth) -> NestedObjectWithRequiredField:
         ...
     
+    @abc.abstractmethod
+    def test_integer_overflow_edge_cases(self, *, body: ObjectWithOptionalField, auth: ApiAuth) -> ObjectWithOptionalField:
+        ...
+    
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -64,6 +68,7 @@ class AbstractEndpointsObjectService(AbstractFernService):
         cls.__init_get_and_return_nested_with_optional_field(router=router)
         cls.__init_get_and_return_nested_with_required_field(router=router)
         cls.__init_get_and_return_nested_with_required_field_as_list(router=router)
+        cls.__init_test_integer_overflow_edge_cases(router=router)
     
     @classmethod
     def __init_get_and_return_with_optional_field(cls, router: fastapi.APIRouter) -> None:
@@ -293,4 +298,42 @@ class AbstractEndpointsObjectService(AbstractFernService):
             response_model=NestedObjectWithRequiredField,
             description=AbstractEndpointsObjectService.get_and_return_nested_with_required_field_as_list.__doc__,
             **get_route_args(cls.get_and_return_nested_with_required_field_as_list, default_tag="endpoints.object"),
+        )(wrapper)
+    
+    @classmethod
+    def __init_test_integer_overflow_edge_cases(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.test_integer_overflow_edge_cases)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "auth":
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.test_integer_overflow_edge_cases, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        
+        @functools.wraps(cls.test_integer_overflow_edge_cases)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ObjectWithOptionalField:
+            try:
+                return cls.test_integer_overflow_edge_cases(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'test_integer_overflow_edge_cases' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+        
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.test_integer_overflow_edge_cases.__globals__)
+        
+        router.post(
+            path="/object/test-integer-overflow-edge-cases",
+            response_model=ObjectWithOptionalField,
+            description=AbstractEndpointsObjectService.test_integer_overflow_edge_cases.__doc__,
+            **get_route_args(cls.test_integer_overflow_edge_cases, default_tag="endpoints.object"),
         )(wrapper)

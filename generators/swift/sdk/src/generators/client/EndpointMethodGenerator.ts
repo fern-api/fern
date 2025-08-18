@@ -155,7 +155,7 @@ export class EndpointMethodGenerator {
         }
         return endpoint.response.body._visit({
             json: (resp) => this.sdkGeneratorContext.getSwiftTypeForTypeReference(resp.responseBodyType),
-            fileDownload: () => swift.Type.jsonValue(), // TODO(kafkas): Handle file downloads
+            fileDownload: () => swift.Type.data(),
             text: () => swift.Type.jsonValue(), // TODO(kafkas): Handle text responses
             bytes: () => swift.Type.jsonValue(), // TODO(kafkas): Handle bytes responses
             streaming: () => swift.Type.jsonValue(), // TODO(kafkas): Handle streaming responses
@@ -178,6 +178,15 @@ export class EndpointMethodGenerator {
                 value: swift.Expression.rawStringValue(formatEndpointPathForSwift(endpoint))
             })
         ];
+
+        if (endpoint.requestBody?.type === "bytes") {
+            arguments_.push(
+                swift.functionArgument({
+                    label: "contentType",
+                    value: swift.Expression.enumCaseShorthand("applicationOctetStream")
+                })
+            );
+        }
 
         if (endpoint.headers.length > 0) {
             arguments_.push(
@@ -257,21 +266,12 @@ export class EndpointMethodGenerator {
         }
 
         if (endpoint.requestBody) {
-            if (endpoint.requestBody.type === "bytes") {
-                arguments_.push(
-                    swift.functionArgument({
-                        label: "fileData",
-                        value: swift.Expression.reference("request")
-                    })
-                );
-            } else {
-                arguments_.push(
-                    swift.functionArgument({
-                        label: "body",
-                        value: swift.Expression.reference("request")
-                    })
-                );
-            }
+            arguments_.push(
+                swift.functionArgument({
+                    label: "body",
+                    value: swift.Expression.reference("request")
+                })
+            );
         }
 
         arguments_.push(
@@ -303,7 +303,7 @@ export class EndpointMethodGenerator {
                             target: swift.Expression.reference(
                                 this.clientGeneratorContext.httpClient.property.unsafeName
                             ),
-                            methodName: this.getHttpClientMethodNameForEndpoint(endpoint),
+                            methodName: "performRequest",
                             arguments_,
                             multiline: true
                         })
@@ -330,12 +330,5 @@ export class EndpointMethodGenerator {
             default:
                 assertNever(method);
         }
-    }
-
-    private getHttpClientMethodNameForEndpoint(endpoint: HttpEndpoint): string {
-        if (endpoint.requestBody?.type === "bytes") {
-            return "performFileUpload";
-        }
-        return "performRequest";
     }
 }

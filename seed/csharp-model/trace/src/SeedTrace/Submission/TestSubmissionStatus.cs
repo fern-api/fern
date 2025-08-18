@@ -270,15 +270,15 @@ public record TestSubmissionStatus
             {
                 "stopped" => new { },
                 "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
+                ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
                 "running" => json.GetProperty("value")
                     .Deserialize<SeedTrace.RunningSubmissionState>(options)
-                    ?? throw new JsonException(
+                ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.RunningSubmissionState"
                     ),
                 "testCaseIdToState" => json.GetProperty("value")
                     .Deserialize<Dictionary<string, SubmissionStatusForTestCase>>(options)
-                    ?? throw new JsonException(
+                ?? throw new JsonException(
                         "Failed to deserialize Dictionary<string, SubmissionStatusForTestCase>"
                     ),
                 _ => json.Deserialize<object?>(options),

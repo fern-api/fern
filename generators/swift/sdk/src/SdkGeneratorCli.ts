@@ -5,13 +5,13 @@ import { AbstractSwiftGeneratorCli, SwiftFile } from "@fern-api/swift-base";
 import {
     AliasGenerator,
     DiscriminatedUnionGenerator,
+    LiteralEnumGenerator,
     ObjectGenerator,
     StringEnumGenerator,
     UndiscriminatedUnionGenerator
 } from "@fern-api/swift-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { camelCase } from "lodash-es";
 
 import {
     PackageSwiftGenerator,
@@ -54,7 +54,10 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
-        await this.writeForDownload(context);
+        await this.generate(context);
+        if (context.isSelfHosted()) {
+            await context.generatorAgent.pushToGitHub({ context });
+        }
     }
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
@@ -149,17 +152,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         // Swift does not support literal aliases, so we need to generate a custom type for them
                         const literalType = atd.aliasOf.container.literal;
                         if (literalType.type === "string") {
-                            const generator = new StringEnumGenerator({
+                            const generator = new LiteralEnumGenerator({
                                 name,
-                                source: {
-                                    type: "custom",
-                                    values: [
-                                        {
-                                            unsafeName: camelCase(literalType.string),
-                                            rawValue: literalType.string
-                                        }
-                                    ]
-                                },
+                                literalValue: literalType.string,
                                 docsContent: typeDeclaration.docs
                             });
                             const enum_ = generator.generate();

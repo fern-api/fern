@@ -1,5 +1,3 @@
-import { pascalCase } from "./pascal-case";
-
 export class LocalSymbolRegistry {
     private static readonly reservedSymbols = ["CodingKeys"];
 
@@ -24,18 +22,17 @@ export class LocalSymbolRegistry {
         return symbol;
     }
 
-    public registerStringLiteralSymbolIfNotExists(literalValue: string): string {
+    public registerStringLiteralSymbolIfNotExists(nameCandidatePascalCase: string, literalValue: string): string {
         let symbolName = this.stringLiteralEnumSymbols.get(literalValue);
         if (symbolName != null) {
             return symbolName;
         }
-        const literalValuePascalCase = pascalCase(literalValue);
         symbolName = this.getAvailableSymbolName([
-            literalValuePascalCase,
-            `${literalValuePascalCase}Literal`,
-            `${literalValuePascalCase}Enum`,
-            `${literalValuePascalCase}LiteralType`,
-            `${literalValuePascalCase}EnumType`
+            nameCandidatePascalCase,
+            `${nameCandidatePascalCase}Literal`,
+            `${nameCandidatePascalCase}Enum`,
+            `${nameCandidatePascalCase}LiteralType`,
+            `${nameCandidatePascalCase}EnumType`
         ]);
         this.stringLiteralEnumSymbols.set(literalValue, symbolName);
         this.symbolSet.add(symbolName);

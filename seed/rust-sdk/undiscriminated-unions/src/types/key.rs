@@ -1,12 +1,12 @@
 use crate::key_type::KeyType;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]
 pub enum Key {
         KeyType(KeyType),
 
-        Literal(String),
+        Literal1(String),
 }
 
 impl Key {
@@ -14,8 +14,8 @@ impl Key {
         matches!(self, Self::KeyType(_))
     }
 
-    pub fn is_literal(&self) -> bool {
-        matches!(self, Self::Literal(_))
+    pub fn is_literal1(&self) -> bool {
+        matches!(self, Self::Literal1(_))
     }
 
 
@@ -33,16 +33,16 @@ impl Key {
                 }
     }
 
-    pub fn as_literal(&self) -> Option<&String> {
+    pub fn as_literal1(&self) -> Option<&String> {
         match self {
-                    Self::Literal(value) => Some(value),
+                    Self::Literal1(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_literal(self) -> Option<String> {
+    pub fn into_literal1(self) -> Option<String> {
         match self {
-                    Self::Literal(value) => Some(value),
+                    Self::Literal1(value) => Some(value),
                     _ => None,
                 }
     }

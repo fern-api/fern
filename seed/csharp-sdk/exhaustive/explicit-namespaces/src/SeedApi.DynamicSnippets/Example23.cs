@@ -1,6 +1,6 @@
 using global::System.Threading.Tasks;
 using SeedExhaustive;
-using SeedExhaustive.Endpoints.Params;
+using SeedExhaustive.Types.Object;
 
 namespace Usage;
 
@@ -14,10 +14,13 @@ public class Example23
             }
         );
 
-        await client.Endpoints.Params.GetWithQueryAsync(
-            new GetWithQuery{
-                Query = "query",
-                Number = 1
+        await client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(
+            new ObjectWithOptionalField{
+                String = "just-over-boundary",
+                Integer = 2147483648,
+                Long = 2147483648l,
+                Double = 2,
+                Bool = false
             }
         );
     }

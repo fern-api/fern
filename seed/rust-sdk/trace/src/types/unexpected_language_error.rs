@@ -1,7 +1,7 @@
 use crate::language::Language;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct UnexpectedLanguageError {
     #[serde(rename = "expectedLanguage")]
     pub expected_language: Language,

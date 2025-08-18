@@ -18,6 +18,7 @@ package com.fern.java.spring.generators;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.ObjectProperty;
@@ -39,6 +40,7 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.lang.model.element.Modifier;
 
 /**
@@ -47,7 +49,7 @@ import javax.lang.model.element.Modifier;
  */
 public final class MergePatchObjectGenerator extends AbstractFileGenerator {
 
-    private static final ClassName OPTIONAL_NULLABLE = ClassName.get("core", "OptionalNullable");
+    private final ClassName optionalNullableClassName;
     private final ObjectTypeDeclaration objectTypeDeclaration;
 
     public MergePatchObjectGenerator(
@@ -56,6 +58,8 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
             AbstractGeneratorContext<?, ?> generatorContext) {
         super(className, generatorContext);
         this.objectTypeDeclaration = objectTypeDeclaration;
+        this.optionalNullableClassName =
+                generatorContext.getPoetClassNameFactory().getCoreClassName("OptionalNullable");
     }
 
     @Override
@@ -110,7 +114,8 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
 
         // For JSON Merge Patch, we need to handle:
         // 1. nullable<T> -> OptionalNullable<T> (can be absent, present, or null)
-        // 2. optional<nullable<T>> -> OptionalNullable<T> (can be absent, present, or null)
+        // 2. optional<nullable<T>> -> OptionalNullable<T> (can be absent, present, or
+        // null)
         // 3. optional<T> -> Optional<T> (can be absent or present, but not null)
         // 4. T -> T (required, must be present)
 
@@ -241,7 +246,7 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
         if (needsOptionalNullable) {
             // For nullable<T> or optional<nullable<T>>, use OptionalNullable wrapper
             TypeName innerType = extractFromNullable(valueType);
-            return ParameterizedTypeName.get(OPTIONAL_NULLABLE, innerType);
+            return ParameterizedTypeName.get(optionalNullableClassName, innerType);
         } else {
             // For optional<T> (not nullable) or required fields, use normal type mapping
             // The PoetTypeNameMapper will handle Optional<T> for optional fields
@@ -480,7 +485,9 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(String.class)
-                .addStatement("return $T.stringify(this)", ClassName.get("core", "ObjectMappers"))
+                .addStatement(
+                        "return $T.stringify(this)",
+                        generatorContext.getPoetClassNameFactory().getObjectMapperClassName())
                 .build();
     }
 
@@ -509,10 +516,14 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
             FieldSpec.Builder fieldBuilder =
                     FieldSpec.builder(fieldType, fieldName).addModifiers(Modifier.PRIVATE);
 
-            // Initialize OptionalNullable fields to absent
-            if (fieldType instanceof ParameterizedTypeName
-                    && ((ParameterizedTypeName) fieldType).rawType.equals(OPTIONAL_NULLABLE)) {
-                fieldBuilder.initializer("$T.absent()", OPTIONAL_NULLABLE);
+            // Initialize OptionalNullable and Optional fields
+            if (fieldType instanceof ParameterizedTypeName) {
+                ParameterizedTypeName paramType = (ParameterizedTypeName) fieldType;
+                if (paramType.rawType.equals(optionalNullableClassName)) {
+                    fieldBuilder.initializer("$T.absent()", optionalNullableClassName);
+                } else if (paramType.rawType.equals(ClassName.get(Optional.class))) {
+                    fieldBuilder.initializer("$T.empty()", Optional.class);
+                }
             }
 
             FieldSpec field = fieldBuilder.build();
@@ -545,19 +556,27 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .returns(ClassName.get(className.packageName(), className.simpleName(), "Builder"));
 
-        // For OptionalNullable fields, create a special setter
         if (fieldType instanceof ParameterizedTypeName
-                && ((ParameterizedTypeName) fieldType).rawType.equals(OPTIONAL_NULLABLE)) {
+                && ((ParameterizedTypeName) fieldType).rawType.equals(optionalNullableClassName)) {
             TypeName innerType = ((ParameterizedTypeName) fieldType).typeArguments.get(0);
 
-            // Add JsonSetter annotation to handle deserialization
             setter.addAnnotation(AnnotationSpec.builder(JsonSetter.class)
                     .addMember("value", "$S", property.getName().getWireValue())
                     .build());
 
-            // Accept the inner type and wrap in OptionalNullable
             setter.addParameter(innerType, "value");
-            setter.addStatement("this.$N = $T.ofNullable(value)", fieldName, OPTIONAL_NULLABLE);
+            setter.addStatement("this.$N = $T.ofNullable(value)", fieldName, optionalNullableClassName);
+        } else if (fieldType instanceof ParameterizedTypeName
+                && ((ParameterizedTypeName) fieldType).rawType.equals(ClassName.get(Optional.class))) {
+            TypeName innerType = ((ParameterizedTypeName) fieldType).typeArguments.get(0);
+
+            setter.addAnnotation(AnnotationSpec.builder(JsonSetter.class)
+                    .addMember("value", "$S", property.getName().getWireValue())
+                    .addMember("nulls", "$T.$L", Nulls.class, "SKIP")
+                    .build());
+
+            setter.addParameter(innerType, "value");
+            setter.addStatement("this.$N = $T.ofNullable(value)", fieldName, Optional.class);
         } else {
             setter.addParameter(fieldType, "value");
             setter.addStatement("this.$N = value", fieldName);

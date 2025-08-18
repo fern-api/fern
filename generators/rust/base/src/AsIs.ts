@@ -10,6 +10,7 @@ export const AsIsFileNames = {
     HttpClient: "http_client.rs",
     RequestOptions: "request_options.rs",
     ClientError: "client_error.rs",
+    Pagination: "pagination.rs",
     // Project-level configuration files
     CargoToml: "Cargo.toml",
     Gitignore: ".gitignore",

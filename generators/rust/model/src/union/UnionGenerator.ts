@@ -269,8 +269,14 @@ export class UnionGenerator {
         });
     }
 
-    private getVariantTypesUsedInUnion(): { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] {
-        const variantTypeNames: { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] = [];
+    private getVariantTypesUsedInUnion(): {
+        snakeCase: { unsafeName: string };
+        pascalCase: { unsafeName: string };
+    }[] {
+        const variantTypeNames: {
+            snakeCase: { unsafeName: string };
+            pascalCase: { unsafeName: string };
+        }[] = [];
         const visited = new Set<string>();
 
         this.unionTypeDeclaration.types.forEach((unionType) => {
@@ -285,8 +291,12 @@ export class UnionGenerator {
                         if (!visited.has(typeName)) {
                             visited.add(typeName);
                             variantTypeNames.push({
-                                snakeCase: { unsafeName: singleProperty.type.name.snakeCase.unsafeName },
-                                pascalCase: { unsafeName: singleProperty.type.name.pascalCase.unsafeName }
+                                snakeCase: {
+                                    unsafeName: singleProperty.type.name.snakeCase.unsafeName
+                                },
+                                pascalCase: {
+                                    unsafeName: singleProperty.type.name.pascalCase.unsafeName
+                                }
                             });
                         }
                     }
@@ -297,8 +307,12 @@ export class UnionGenerator {
                     if (!visited.has(typeName)) {
                         visited.add(typeName);
                         variantTypeNames.push({
-                            snakeCase: { unsafeName: declaredTypeName.name.snakeCase.unsafeName },
-                            pascalCase: { unsafeName: declaredTypeName.name.pascalCase.unsafeName }
+                            snakeCase: {
+                                unsafeName: declaredTypeName.name.snakeCase.unsafeName
+                            },
+                            pascalCase: {
+                                unsafeName: declaredTypeName.name.pascalCase.unsafeName
+                            }
                         });
                     }
                 },

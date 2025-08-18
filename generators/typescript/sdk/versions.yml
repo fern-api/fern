@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 2.8.2
+- version: 2.8.3
   changelogEntry:
     - summary: |
         Add a new flag to the SDK generator: `dangerouslyFlattenRequestParameters`.
@@ -7,6 +7,14 @@
         The flag is named `dangerouslyFlattenRequestParameters` because body and query
         parameters could have the same name, which may cause collisions and break the
         SDK if duplicate keys are present. Use this flag with caution.
+      type: feat
+  createdAt: '2025-08-18'
+  irVersion: 59
+
+- version: 2.8.2
+  changelogEntry:
+    - summary: |
+        Log warning when `noSerdeLayer` is `false` and `enableInlineTypes` is `true`.
       type: feat
   createdAt: '2025-08-15'
   irVersion: 59
@@ -16,7 +24,7 @@
     - summary: |
         Properly assert responses in wire tests when the `neverThrowErrors` flag is enabled.
       type: fix
-  createdAt: "2025-08-15"
+  createdAt: '2025-08-15'
   irVersion: 59
 
 - version: 2.8.0
@@ -35,49 +43,49 @@
         ```
         The default is `yarn`.
       type: feat
-  createdAt: "2025-08-13"
+  createdAt: '2025-08-13'
   irVersion: 59
 
 - version: 2.7.0
   changelogEntry:
     - summary: Implement inferred bearer authentication.
       type: feat
-  createdAt: "2025-08-12"
+  createdAt: '2025-08-12'
   irVersion: 59
 
 - version: 2.6.8
   changelogEntry:
     - summary: Export BinaryResponse using `export type { BinaryResponse } ...` syntax to fix an issue with the SWC compiler.
       type: fix
-  createdAt: "2025-08-06"
+  createdAt: '2025-08-06'
   irVersion: 58
 
 - version: 2.6.7
   changelogEntry:
     - summary: Improve logging inside of wire tests for when a JSON body fails to parse to JSON.
       type: feat
-  createdAt: "2025-08-01"
+  createdAt: '2025-08-01'
   irVersion: 58
 
 - version: 2.6.6
   changelogEntry:
     - summary: Requests and responses with no body should not be asserted as JSON in wire tests.
       type: fix
-  createdAt: "2025-08-04"
+  createdAt: '2025-08-04'
   irVersion: 58
 
 - version: 2.6.5
   changelogEntry:
     - summary: If an enum wire value is not found, use the first enum value as a fallback.
       type: fix
-  createdAt: "2025-08-01"
+  createdAt: '2025-08-01'
   irVersion: 58
 
 - version: 2.6.4
   changelogEntry:
     - summary: Fix inline types inside of multipart-form requests
       type: fix
-  createdAt: "2025-07-30"
+  createdAt: '2025-07-30'
   irVersion: 58
 
 - version: 2.6.3
@@ -85,7 +93,7 @@
     - summary: |
         Include root variables in code snippet generation for client instantiation.
       type: fix
-  createdAt: "2025-07-25"
+  createdAt: '2025-07-25'
   irVersion: 58
 
 - version: 2.6.2
@@ -93,7 +101,7 @@
     - summary: |
         Update form-data version to 4.0.4 to avoid vulnerability.
       type: chore
-  createdAt: "2025-07-24"
+  createdAt: '2025-07-24'
   irVersion: 58
 
 - version: 2.6.1
@@ -101,7 +109,7 @@
     - summary: |
         Add additional query string parameters section to the generated README.md file.
       type: chore
-  createdAt: "2025-07-23"
+  createdAt: '2025-07-23'
   irVersion: 58
 
 - version: 2.6.0
@@ -116,14 +124,14 @@
         });
         ```
       type: feat
-  createdAt: "2025-07-23"
+  createdAt: '2025-07-23'
   irVersion: 58
 
 - version: 2.5.1
   changelogEntry:
     - summary: Update README.md generation to be more accurate
       type: chore
-  createdAt: "2025-07-22"
+  createdAt: '2025-07-22'
   irVersion: 58
 
 - version: 2.5.0
@@ -165,28 +173,28 @@
         await client.upload(createReadStream("path/to/file"));
         ```
       type: feat
-  createdAt: "2025-07-17"
+  createdAt: '2025-07-17'
   irVersion: 58
 
 - version: 2.4.11
   changelogEntry:
     - summary: Bump the docker image for the generator to node:22.12-alpine3.20
       type: chore
-  createdAt: "2025-07-18"
+  createdAt: '2025-07-18'
   irVersion: 58
 
 - version: 2.4.10
   changelogEntry:
     - summary: Escape strings containing `*/` inside of JSDoc comments to avoid premature JSDoc block ending.
       type: fix
-  createdAt: "2025-07-15"
+  createdAt: '2025-07-15'
   irVersion: 58
 
 - version: 2.4.9
   changelogEntry:
     - summary: Preserve trailing slash of URL and path if present
       type: fix
-  createdAt: "2025-07-15"
+  createdAt: '2025-07-15'
   irVersion: 58
 
 - version: 2.4.8
@@ -194,7 +202,7 @@
     - summary: |
         Fix ts readme snippet where const was reassigned. Changed to let.
       type: fix
-  createdAt: "2025-07-10"
+  createdAt: '2025-07-10'
   irVersion: 58
 
 - version: 2.4.7
@@ -204,7 +212,7 @@
         This was previously fixed for `shouldBundle: true`, but not for `shouldBundle: false` (default).
         All dependencies should now come through.
       type: fix
-  createdAt: "2025-07-10"
+  createdAt: '2025-07-10'
   irVersion: 58
 
 - version: 2.4.6
@@ -218,7 +226,7 @@
     - summary: |
         Fix Jest configuration when a `packagePath` is specified in _generators.yml_ config.
       type: fix
-  createdAt: "2025-07-09"
+  createdAt: '2025-07-09'
   irVersion: 58
 
 - version: 2.4.5
@@ -226,7 +234,7 @@
     - summary: |
         Make sure `extraDependencies`, `extraPeerDependencies`, `extraPeerDependenciesMeta`, and `extraDevDependencies` are always merged into _package.json_.
       type: fix
-  createdAt: "2025-07-09"
+  createdAt: '2025-07-09'
   irVersion: 58
 
 - version: 2.4.4
@@ -234,7 +242,7 @@
     - summary: |
         Make the `BinaryResponse.bytes` function optional because some versions of runtimes do not support the function on fetch `Response`.
       type: fix
-  createdAt: "2025-07-09"
+  createdAt: '2025-07-09'
   irVersion: 58
 
 - version: 2.4.3
@@ -242,7 +250,7 @@
     - summary: |
         Fix an issue where a property set to `undefined` would not match with a property that is missing in the `withJson` MSW predicate.
       type: fix
-  createdAt: "2025-07-08"
+  createdAt: '2025-07-08'
   irVersion: 58
 
 - version: 2.4.2
@@ -251,7 +259,7 @@
         Fixes a compile issue when WebSocket connect methods require query parameters with special characters. 
         Fixes response deserialization in websockets to respect skipping validation.
       type: fix
-  createdAt: "2025-07-04"
+  createdAt: '2025-07-04'
   irVersion: 58
 
 - version: 2.4.1
@@ -260,21 +268,21 @@
         When serde layer is enabled, WebSocket channels now pass through unrecognized properties 
         instead of stripping them to preserve forwards compatibility.
       type: fix
-  createdAt: "2025-07-04"
+  createdAt: '2025-07-04'
   irVersion: 58
 
 - version: 2.4.0
   changelogEntry:
     - summary: Fixes bug with query parameter and path parameter serialization in URL for WebSocket channels.
       type: fix
-  createdAt: "2025-07-03"
+  createdAt: '2025-07-03'
   irVersion: 58
 
 - version: 2.3.3
   changelogEntry:
     - summary: Bump version to test Docker image rename to `fernapi/fern-typescript-sdk`
       type: internal
-  createdAt: "2025-07-03"
+  createdAt: '2025-07-03'
   irVersion: 58
 - version: 2.3.2
   changelogEntry:
@@ -285,7 +293,7 @@
 
         We're doing this because Jest has a bug where it doesn't properly load TypeScript modules even though the TypeScript and imports are valid.
       type: fix
-  createdAt: "2025-07-03"
+  createdAt: '2025-07-03'
   irVersion: 58
 - version: 2.3.1
   changelogEntry:
@@ -293,7 +301,7 @@
         Fixes an issue where OAuth clients would not compile when variables were configured
         in the SDK. Now, the oauth client is instantiated with any global path parameters or headers.
       type: fix
-  createdAt: "2025-07-03"
+  createdAt: '2025-07-03'
   irVersion: 58
 
 - version: 2.3.0
@@ -302,7 +310,7 @@
         Change the `outputSourceFiles` default from `false` to `true`.
         This will affect the output when you generate the SDK to the local file system.
       type: feat
-  createdAt: "2025-07-03"
+  createdAt: '2025-07-03'
   irVersion: 58
 - version: 2.2.1
   changelogEntry:
@@ -310,7 +318,7 @@
         Ensure _tests/wire_ is generated even when there are no wire tests generated.
         Otherwise, Jest throws an error because the wire test project `roots` doesn't exist.
       type: fix
-  createdAt: "2025-07-03"
+  createdAt: '2025-07-03'
   irVersion: 58
 - version: 2.2.0
   changelogEntry:
@@ -334,7 +342,7 @@
                       node: ">=16.0.0"
         ```
       type: feat
-  createdAt: "2025-07-03"
+  createdAt: '2025-07-03'
   irVersion: 58
 
 - version: 2.1.0
@@ -350,7 +358,7 @@
         You can now pass in paths and patterns as an argument to the above commands to filter down to specific tests.
         For example: `yarn test tests/unit/fetcher`
       type: feat
-  createdAt: "2025-07-02"
+  createdAt: '2025-07-02'
   irVersion: 58
 - version: 2.0.0
   changelogEntry:
@@ -371,7 +379,7 @@
         With these defaults, the generated SDKs will have _**ZERO**_ dependencies (excluding devDependencies and `ws` in case of WebSocket generation).
         As a result, the SDKs are smaller, faster, more secure, and easier to use.
       type: feat
-  createdAt: "2025-07-02"
+  createdAt: '2025-07-02'
   irVersion: 58
 
 - version: 1.10.6
@@ -379,7 +387,7 @@
     - summary: |
         Publish multi-platform builds of the TypeScript SDK docker container.
       type: fix
-  createdAt: "2025-07-02"
+  createdAt: '2025-07-02'
   irVersion: 58
 
 - version: 1.10.5
@@ -399,35 +407,35 @@
                   useDefaultRequestParameterValues: true
         ```
       type: feat
-  createdAt: "2025-06-30"
+  createdAt: '2025-06-30'
   irVersion: 58
 - version: 1.10.4
   changelogEntry:
     - summary: |
         Add `omitFernHeaders` configuration to omit Fern headers from the generated SDK.
       type: fix
-  createdAt: "2025-07-01"
+  createdAt: '2025-07-01'
   irVersion: 58
 - version: 1.10.3
   changelogEntry:
     - summary: |
         Remove `qs` dependency.
       type: fix
-  createdAt: "2025-07-01"
+  createdAt: '2025-07-01'
   irVersion: 58
 - version: 1.10.2
   changelogEntry:
     - summary: |
         Remove `js-base64` dependency in favor of using native implementations.
       type: fix
-  createdAt: "2025-07-01"
+  createdAt: '2025-07-01'
   irVersion: 58
 - version: 1.10.1
   changelogEntry:
     - summary: |
         Remove `url-join` dependency in favor of a handwritten `joinUrl` function.
       type: fix
-  createdAt: "2025-06-30"
+  createdAt: '2025-06-30'
   irVersion: 58
 - version: 1.10.0
   changelogEntry:
@@ -435,13 +443,13 @@
         Add `fetchSupport` configuration which lets you choose between `node-fetch` and `native`.
         The default is `node-fetch`. If you choose `native`, the `node-fetch` dependency will be removed.
       type: feat
-  createdAt: "2025-06-27"
+  createdAt: '2025-06-27'
   irVersion: 58
 - version: 1.9.1
   changelogEntry:
     - summary: Improve auto-pagination logic to consider empty strings in response as null cursors and stop paging.
       type: fix
-  createdAt: "2025-06-27"
+  createdAt: '2025-06-27'
   irVersion: 58
 - version: 1.9.0
   changelogEntry:
@@ -457,7 +465,7 @@
         * `ArrayBuffer`
         * `Uint8Array`
       type: feat
-  createdAt: "2025-06-22"
+  createdAt: '2025-06-22'
   irVersion: 58
 - version: 1.8.2
   changelogEntry:
@@ -465,13 +473,13 @@
         When a multipart form part is explicitly marked as JSON, serialize the data as JSON regardless of type. 
         This also means arrays, maps, etc. will not be split into multiple parts, but serialized to JSON as a single part.
       type: fix
-  createdAt: "2025-06-22"
+  createdAt: '2025-06-22'
   irVersion: 58
 - version: 1.8.1
   changelogEntry:
     - summary: Fix binary response README.md examples
       type: fix
-  createdAt: "2025-06-22"
+  createdAt: '2025-06-22'
   irVersion: 58
 - version: 1.8.0
   changelogEntry:
@@ -491,7 +499,7 @@
         ```
         The user can choose how to consume the binary data.
       type: feat
-  createdAt: "2025-06-19"
+  createdAt: '2025-06-19'
   irVersion: 58
 
 - version: 1.7.2
@@ -500,14 +508,14 @@
         Fix bug where duplicate file generation was silently allowed instead of failing. The `withSourceFile` method now properly 
         handles the `overwrite` option to prevent unintended file overwrites.
       type: fix
-  createdAt: "2025-06-19"
+  createdAt: '2025-06-19'
   irVersion: 58
 - version: 1.7.1
   changelogEntry:
     - summary: |
         __jest.config.mjs__ now only maps relative path modules that end on `.js` to their `.ts` equivalent.
       type: fix
-  createdAt: "2025-06-18"
+  createdAt: '2025-06-18'
   irVersion: 58
 - version: 1.7.0
   changelogEntry:
@@ -525,7 +533,7 @@
                   packagePath: src/package-path
         ```
       type: feat
-  createdAt: "2025-06-16"
+  createdAt: '2025-06-16'
   irVersion: 58
 - version: 1.6.0
   changelogEntry:
@@ -537,14 +545,14 @@
     - summary: |
         `tests/unit/zurg` are moved to `tests/unit/schemas` to match the name in `src/core/schemas` which is what the tests are verifying.
       type: internal
-  createdAt: "2025-06-13"
+  createdAt: '2025-06-13'
   irVersion: 58
 
 - version: 1.5.0
   changelogEntry:
     - summary: Add support for websocket connect methods with path parameters in the TypeScript generator
       type: feat
-  createdAt: "2025-06-11"
+  createdAt: '2025-06-11'
   irVersion: 58
 
 - version: 1.4.0
@@ -553,14 +561,14 @@
       type: feat
     - summary: Reduce duplicate code generation by passing headers from the root client down to the subpackage clients.
       type: internal
-  createdAt: "2025-06-05"
+  createdAt: '2025-06-05'
   irVersion: 58
 
 - version: 1.3.2
   changelogEntry:
     - summary: Fix dynamic imports in the built dist/esm code.
       type: fix
-  createdAt: "2025-06-05"
+  createdAt: '2025-06-05'
   irVersion: 58
 
 - version: 1.3.1
@@ -570,14 +578,14 @@
         When the HTTP request does not match any of the configured predicates, it would throw an error, including in the unrelated integration tests.
         In this version MSW is configured to bypass instead of throw an error when HTTP requests do not match the configured predicates.
       type: fix
-  createdAt: "2025-06-05"
+  createdAt: '2025-06-05'
   irVersion: 58
 
 - version: 1.3.0
   changelogEntry:
     - summary: Add support for generating the full project when using the filesystem output mode.
       type: feat
-  createdAt: "2025-06-04"
+  createdAt: '2025-06-04'
   irVersion: 58
 
 - version: 1.2.4
@@ -586,28 +594,28 @@
         Generate tests to verify the SDK sends and receives HTTP requests as expected.
         You can turn of these tests by setting `generateWireTests` to `false` in the `config` of your generator configuration.
       type: feat
-  createdAt: "2025-06-03"
+  createdAt: '2025-06-03'
   irVersion: 58
 
 - version: 1.1.1
   changelogEntry:
     - summary: Fix an issue where attempting to access a property with an invalid property name would lead to a broken output SDK.
       type: fix
-  createdAt: "2025-06-04"
+  createdAt: '2025-06-04'
   irVersion: 58
 
 - version: 1.1.0
   changelogEntry:
     - summary: Add support for HEAD HTTP method.
       type: feat
-  createdAt: "2025-06-03"
+  createdAt: '2025-06-03'
   irVersion: 58
 
 - version: 1.0.1
   changelogEntry:
     - summary: Fix property lookup in inherited schemas during snippet generation for object schemas.
       type: fix
-  createdAt: "2025-05-14"
+  createdAt: '2025-05-14'
   irVersion: 57
 
 - version: 1.0.0
@@ -632,42 +640,42 @@
         When generating properties for interfaces and classes, we only surround the property name with quotes if necessary.
         In some cases where the property name wasn't a valid identifier before, we now surround it with quotes too.
       type: fix
-  createdAt: "2025-05-14"
+  createdAt: '2025-05-14'
   irVersion: 57
 
 - version: 0.51.7
   changelogEntry:
     - summary: If an object extends an alias, the generator now visits the alias that is being extended (instead of throwing an error).
       type: fix
-  createdAt: "2025-05-14"
+  createdAt: '2025-05-14'
   irVersion: 57
 
 - version: 0.51.6
   changelogEntry:
     - summary: Add support for the custom introduction setting in the generated README.md.
       type: fix
-  createdAt: "2025-05-13"
+  createdAt: '2025-05-13'
   irVersion: 57
 
 - version: 0.51.5
   changelogEntry:
     - summary: Fixed an issue with ts-morph where creating an ifStatement with empty conditions array caused errors in multipart form data handling.
       type: fix
-  createdAt: "2025-05-03"
+  createdAt: '2025-05-03'
   irVersion: 57
 
 - version: 0.51.4
   changelogEntry:
     - summary: Fix issue where the _runtime.ts_ file was missing when other files were trying to import it.
       type: fix
-  createdAt: "2025-04-22"
+  createdAt: '2025-04-22'
   irVersion: 57
 
 - version: 0.51.3
   changelogEntry:
     - summary: Fix minor type issue for polyfilling Headers in Node 16 and below.
       type: fix
-  createdAt: "2025-04-21"
+  createdAt: '2025-04-21'
   irVersion: 57
 
 - version: 0.51.2
@@ -676,7 +684,7 @@
         When uploading files, extract the filename from the `path` property if present on the given object.
         This will extract the filename for `fs.createReadStream()` for example.
       type: fix
-  createdAt: "2025-04-21"
+  createdAt: '2025-04-21'
   irVersion: 57
 
 - version: 0.51.1
@@ -685,7 +693,7 @@
         Fallback to a custom `Headers` class implementation if the native `Headers` class is not available.
         Versions of Node 16 and below do not support the native `Headers` class, so this fallback is necessary to ensure compatibility.
       type: fix
-  createdAt: "2025-04-21"
+  createdAt: '2025-04-21'
   irVersion: 57
 
 - version: 0.51.0
@@ -705,7 +713,7 @@
         }
         ```
       type: feat
-  createdAt: "2025-04-14"
+  createdAt: '2025-04-14'
   irVersion: 57
 
 - version: 0.50.1
@@ -713,7 +721,7 @@
     - summary: |
         Add `"packageManager": "yarn@1.22.22"` to _package.json_.
       type: feat
-  createdAt: "2025-04-08"
+  createdAt: '2025-04-08'
   irVersion: 57
 
 - version: 0.50.0
@@ -735,7 +743,7 @@
         } = rawResponse;
         ```
       type: feat
-  createdAt: "2025-04-07"
+  createdAt: '2025-04-07'
   irVersion: 57
 
 - version: 0.49.7
@@ -743,49 +751,49 @@
     - summary: |
         Significantly improve performance of SDK generation when the `useLegacyExports` config is `false`. For a large spec like Square, the generation went from 10+ minutes to almost 1 minute.
       type: fix
-  createdAt: "2025-03-27"
+  createdAt: '2025-03-27'
   irVersion: 57
 
 - version: 0.49.6
   changelogEntry:
     - summary: Support arbitrary websocket headers during connect handshake.
       type: feat
-  createdAt: "2025-03-27"
+  createdAt: '2025-03-27'
   irVersion: 57
 
 - version: 0.49.5
   changelogEntry:
     - summary: Improvements to Websocket code generation quality.
       type: feat
-  createdAt: "2025-03-27"
+  createdAt: '2025-03-27'
   irVersion: 57
 
 - version: 0.49.4
   changelogEntry:
     - summary: Increase the timeout used in the generated `webpack.test.ts` file.
       type: fix
-  createdAt: "2025-03-19"
+  createdAt: '2025-03-19'
   irVersion: 57
 
 - version: 0.49.3
   changelogEntry:
     - summary: Increase the timeout used in the generated `webpack.test.ts` file.
       type: fix
-  createdAt: "2025-03-19"
+  createdAt: '2025-03-19'
   irVersion: 57
 
 - version: 0.49.2
   changelogEntry:
     - summary: Fix issue where IdempotentRequestOptions is not generated in the client namespace.
       type: fix
-  createdAt: "2025-03-18"
+  createdAt: '2025-03-18'
   irVersion: 57
 
 - version: 0.49.1
   changelogEntry:
     - summary: This PR includes several fixes to the generated `Socket.ts` file when websocket client code generation is enabled.
       type: fix
-  createdAt: "2025-03-10"
+  createdAt: '2025-03-10'
   irVersion: 57
 
 - version: 0.49.0
@@ -793,7 +801,7 @@
     - summary: |
         This PR enables the Typescript generator to produce Websocket SDK endpoints. This can be enabled by adding the option `shouldGenerateWebsocketClients: true` to the Typescript generator config.
       type: feat
-  createdAt: "2025-03-06"
+  createdAt: '2025-03-06'
   irVersion: 57
 
 - version: 0.48.7
@@ -801,49 +809,49 @@
     - summary: |
         Form data encoding now correctly handles array and object values by encoding each property value as a separate key-value pair, rather than trying to encode the entire object as a single value. This ensures proper handling of complex data structures in multipart form requests.
       type: fix
-  createdAt: "2025-01-28"
+  createdAt: '2025-01-28'
   irVersion: 55
 
 - version: 0.48.6
   changelogEntry:
     - summary: Support form-encoded form data parameters by using `qs` to properly encode array and object values with the `repeat` array format.
       type: fix
-  createdAt: "2025-01-28"
+  createdAt: '2025-01-28'
   irVersion: 55
 
 - version: 0.48.5
   changelogEntry:
     - summary: Don't double wrap a blob if a user uploads a blob to a multi-part form. Otherwise file's content-type is lost in Deno.
       type: fix
-  createdAt: "2025-01-28"
+  createdAt: '2025-01-28'
   irVersion: 55
 
 - version: 0.48.4
   changelogEntry:
     - summary: When custom config `useBigInt` is `true`, generate examples and snippets with `BigInt("123")`.
       type: fix
-  createdAt: "2025-01-21"
+  createdAt: '2025-01-21'
   irVersion: 55
 
 - version: 0.48.3
   changelogEntry:
     - summary: The SDK now supports reading the basic auth username and password values from environment variables.
       type: fix
-  createdAt: "2025-01-16"
+  createdAt: '2025-01-16'
   irVersion: 55
 
 - version: 0.48.2
   changelogEntry:
     - summary: This updates the retrier logic to stop retrying on HTTP conflict (409). This was an oversight that we've meant to remove for a while (similar to other Fern SDKs).
       type: fix
-  createdAt: "2025-01-16"
+  createdAt: '2025-01-16'
   irVersion: 55
 
 - version: 0.48.1
   changelogEntry:
     - summary: Record types with `null` values are now correctly serialized.
       type: fix
-  createdAt: "2025-01-16"
+  createdAt: '2025-01-16'
   irVersion: 55
 
 - version: 0.48.0
@@ -896,7 +904,7 @@
         }
         ```
       type: feat
-  createdAt: "2025-01-16"
+  createdAt: '2025-01-16'
   irVersion: 55
 
 - version: 0.47.1
@@ -912,7 +920,7 @@
         }
         ```
       type: fix
-  createdAt: "2025-01-15"
+  createdAt: '2025-01-15'
   irVersion: 55
 
 - version: 0.47.0
@@ -925,7 +933,7 @@
         await client.users.update({ username: "john.doe", metadata: null });
         ```
       type: feat
-  createdAt: "2025-01-14"
+  createdAt: '2025-01-14'
   irVersion: 55
 
 - version: 0.46.11
@@ -968,42 +976,42 @@
         }
         ```
       type: fix
-  createdAt: "2025-01-14"
+  createdAt: '2025-01-14'
   irVersion: 53
 
 - version: 0.46.10
   changelogEntry:
     - summary: Use serialization layer to convert types to JSON strings when enabled.
       type: fix
-  createdAt: "2025-01-14"
+  createdAt: '2025-01-14'
   irVersion: 53
 
 - version: 0.46.9
   changelogEntry:
     - summary: Expose `baseUrl` as a default Client constructor option and construct URL correctly.
       type: fix
-  createdAt: "2025-01-13"
+  createdAt: '2025-01-13'
   irVersion: 53
 
 - version: 0.46.8
   changelogEntry:
     - summary: Generate the `version.ts` file correctly
       type: fix
-  createdAt: "2025-01-13"
+  createdAt: '2025-01-13'
   irVersion: 53
 
 - version: 0.46.7
   changelogEntry:
     - summary: Simplify runtime detection to reduce the chance of using an unsupported API like `process.` Detect Edge Runtime by Vercel.
       type: fix
-  createdAt: "2025-01-09"
+  createdAt: '2025-01-09'
   irVersion: 53
 
 - version: 0.46.6
   changelogEntry:
     - summary: Update `@types/node` to `18+`, required for the generated `Node18UniversalStreamWrapper` test.
       type: fix
-  createdAt: "2025-01-09"
+  createdAt: '2025-01-09'
   irVersion: 53
 
 - version: 0.46.5
@@ -1012,21 +1020,21 @@
       type: fix
     - summary: Only map .js modules in Jest, not .json files.
       type: fix
-  createdAt: "2025-01-09"
+  createdAt: '2025-01-09'
   irVersion: 53
 
 - version: 0.46.4
   changelogEntry:
     - summary: Fix packageJson custom configuration & package.json types field.
       type: fix
-  createdAt: "2025-01-09"
+  createdAt: '2025-01-09'
   irVersion: 53
 
 - version: 0.46.3
   changelogEntry:
     - summary: Revert to using legacy exports by default.
       type: fix
-  createdAt: "2025-01-09"
+  createdAt: '2025-01-09'
   irVersion: 53
 
 - version: 0.46.2
@@ -1035,14 +1043,14 @@
       type: fix
     - summary: Make sure Jest loads Jest configuration regardless of package.json type.
       type: fix
-  createdAt: "2025-01-09"
+  createdAt: '2025-01-09'
   irVersion: 53
 
 - version: 0.46.1
   changelogEntry:
     - summary: ESModule output is fixed to be compatible with Node.js ESM loading.
       type: fix
-  createdAt: "2025-01-08"
+  createdAt: '2025-01-08'
   irVersion: 53
 
 - version: 0.46.0
@@ -1063,14 +1071,14 @@
     - summary: |
         `package.json` itself is exported in `package.json` to allow consumers to easily read metadata about the package they are consuming.
       type: feat
-  createdAt: "2025-01-06"
+  createdAt: '2025-01-06'
   irVersion: 53
 
 - version: 0.45.2
   changelogEntry:
     - summary: TS generated snippets now respect proper parameter casing when noSerdeLayer is enabled.
       type: fix
-  createdAt: "2024-12-31"
+  createdAt: '2024-12-31'
   irVersion: 53
 
 - version: 0.45.1
@@ -1080,49 +1088,49 @@
 
         For the `enableInlineTypes` feature, some namespaces were no longer declared (ambient), and types and interfaces inside the namespace would no longer be automatically exported without the `export` keyword. This fix exports everything that's inside these namespaces and also declared namespaces for good measure (in case they are not declared in the future).
       type: fix
-  createdAt: "2024-12-27"
+  createdAt: '2024-12-27'
   irVersion: 53
 
 - version: 0.45.0
   changelogEntry:
     - summary: Update dependencies of the generated TS SDK and Express generator. TypeScript has been updated to 5.7.2 which is a major version upgrade from 4.6.4.
       type: feat
-  createdAt: "2024-12-26"
+  createdAt: '2024-12-26'
   irVersion: 53
 
 - version: 0.44.5
   changelogEntry:
     - summary: Fix a bug where we attempt to parse an empty terminator when receiving streaming JSON responses.
       type: fix
-  createdAt: "2024-12-23"
+  createdAt: '2024-12-23'
   irVersion: 53
 
 - version: 0.44.4
   changelogEntry:
     - summary: Use specified defaults for pagination offset parameters during SDK generation.
       type: feat
-  createdAt: "2024-12-20"
+  createdAt: '2024-12-20'
   irVersion: 53
 
 - version: 0.44.3
   changelogEntry:
     - summary: Fix a bug where client would send request wrapper instead of the body of the request wrapper, when the request has inline path parameters and a body property.
       type: fix
-  createdAt: "2024-12-18"
+  createdAt: '2024-12-18'
   irVersion: 53
 
 - version: 0.44.2
   changelogEntry:
     - summary: Inline path parameters will use their original name when `retainOriginalName` or `noSerdeLayer` is enabled.
       type: fix
-  createdAt: "2024-12-17"
+  createdAt: '2024-12-17'
   irVersion: 53
 
 - version: 0.44.1
   changelogEntry:
     - summary: When there is an environment variable set, you do not need to pass in any parameters to the client constructor.
       type: fix
-  createdAt: "2024-12-16"
+  createdAt: '2024-12-16'
   irVersion: 53
 
 - version: 0.44.0
@@ -1144,14 +1152,14 @@
         await service.getFoo({ pathParamName: "pathParamValue", id: "SOME_ID" });
         ```
       type: feat
-  createdAt: "2024-12-13"
+  createdAt: '2024-12-13'
   irVersion: 53
 
 - version: 0.43.1
   changelogEntry:
     - summary: When `noSerdeLayer` is enabled, streaming endpoints were failing to compile because they assumed that the serialization layer existed. This is now fixed.
       type: fix
-  createdAt: "2024-12-11"
+  createdAt: '2024-12-11'
   irVersion: 53
 
 - version: 0.43.0
@@ -1213,7 +1221,7 @@
         const bar: MyRootType.Foo.Bar = {};
         ```
       type: feat
-  createdAt: "2024-12-11"
+  createdAt: '2024-12-11'
   irVersion: 53
 
 - version: 0.42.7
@@ -1229,35 +1237,35 @@
         }
         ```
       type: feat
-  createdAt: "2024-12-03"
+  createdAt: '2024-12-03'
   irVersion: 53
 
 - version: 0.42.6
   changelogEntry:
     - summary: Remove the generated `APIPromise` since it is not compatible on certain node versions.
       type: fix
-  createdAt: "2024-11-23"
+  createdAt: '2024-11-23'
   irVersion: 53
 
 - version: 0.42.5
   changelogEntry:
     - summary: Remove extraneous import in pagination snippets.
       type: fix
-  createdAt: "2024-11-23"
+  createdAt: '2024-11-23'
   irVersion: 53
 
 - version: 0.42.4
   changelogEntry:
     - summary: Improve `GeneratedTimeoutSdkError` error to include endpoint name in message.
       type: fix
-  createdAt: "2024-11-21"
+  createdAt: '2024-11-21'
   irVersion: 53
 
 - version: 0.42.3
   changelogEntry:
     - summary: Fixed issue with snippets used for pagination endpoints.
       type: fix
-  createdAt: "2024-11-22"
+  createdAt: '2024-11-22'
   irVersion: 53
 
 - version: 0.42.2
@@ -1280,7 +1288,7 @@
         }
         ```
       type: feat
-  createdAt: "2024-11-21"
+  createdAt: '2024-11-21'
   irVersion: 53
 
 - version: 0.42.1
@@ -1296,7 +1304,7 @@
         });
         ```
       type: feat
-  createdAt: "2024-11-20"
+  createdAt: '2024-11-20'
   irVersion: 53
 
 - version: 0.42.0
@@ -1310,56 +1318,56 @@
         console.log(response.body);
         ```
       type: feat
-  createdAt: "2024-11-15"
+  createdAt: '2024-11-15'
   irVersion: 53
 
 - version: 0.41.2
   changelogEntry:
     - summary: Actually remove `jest-fetch-mock` from package.json.
       type: fix
-  createdAt: "2024-11-18"
+  createdAt: '2024-11-18'
   irVersion: 53
 
 - version: 0.41.1
   changelogEntry:
     - summary: Remove dev dependency on `jest-fetch-mock`.
       type: fix
-  createdAt: "2024-11-02"
+  createdAt: '2024-11-02'
   irVersion: 53
 
 - version: 0.41.0
   changelogEntry:
     - summary: Add a variable jitter to the exponential backoff and retry.
       type: feat
-  createdAt: "2024-10-08"
+  createdAt: '2024-10-08'
   irVersion: 53
 
 - version: 0.41.0-rc2
   changelogEntry:
     - summary: Generated READMEs now include improved usage snippets for pagination and streaming endpoints.
       type: feat
-  createdAt: "2024-10-08"
+  createdAt: '2024-10-08'
   irVersion: 53
 
 - version: 0.41.0-rc1
   changelogEntry:
     - summary: Fixes a broken unit test introduced in 0.41.0-rc0.
       type: fix
-  createdAt: "2024-10-08"
+  createdAt: '2024-10-08'
   irVersion: 53
 
 - version: 0.41.0-rc0
   changelogEntry:
     - summary: The generated SDK now supports bytes (`application/octet-stream`) requests.
       type: feat
-  createdAt: "2024-10-08"
+  createdAt: '2024-10-08'
   irVersion: 53
 
 - version: 0.40.8
   changelogEntry:
     - summary: File array uploads now call `request.appendFile` instead of `request.append` which was causing form data to be in a corrupted state.
       type: fix
-  createdAt: "2024-09-28"
+  createdAt: '2024-09-28'
   irVersion: 53
 
 - version: 0.40.7
@@ -1373,28 +1381,28 @@
         A full reference for this library can be found [here](./reference.md).
         ```
       type: fix
-  createdAt: "2024-09-28"
+  createdAt: '2024-09-28'
   irVersion: 53
 
 - version: 0.40.6
   changelogEntry:
     - summary: The TypeScript SDK now supports specifying a custom contentType if one is specified.
       type: fix
-  createdAt: "2024-09-18"
+  createdAt: '2024-09-18'
   irVersion: 53
 
 - version: 0.40.5
   changelogEntry:
     - summary: The snippet templates for file upload are now accurate and also respect the feature flag `inlineFileProperties`.
       type: fix
-  createdAt: "2024-09-18"
+  createdAt: '2024-09-18'
   irVersion: 53
 
 - version: 0.40.4
   changelogEntry:
     - summary: Upgrades dependency `stream-json` which improves the performance when reading large API specs. This version will improve your `fern generate` performance.
       type: fix
-  createdAt: "2024-09-12"
+  createdAt: '2024-09-12'
   irVersion: 53
 
 - version: 0.40.3
@@ -1416,21 +1424,21 @@
         }
         ```
       type: fix
-  createdAt: "2024-09-12"
+  createdAt: '2024-09-12'
   irVersion: 53
 
 - version: 0.40.2
   changelogEntry:
     - summary: The generated SDK now handles reading IR JSONs that are larger than 500MB. In order to to this, the function `streamObjectFromFile` is used instead of `JSON.parse`.
       type: fix
-  createdAt: "2024-09-12"
+  createdAt: '2024-09-12'
   irVersion: 53
 
 - version: 0.40.1
   changelogEntry:
     - summary: The generated snippets now inline referenced request objects given they are not named, they need to be inlined.
       type: fix
-  createdAt: "2024-09-12"
+  createdAt: '2024-09-12'
   irVersion: 53
 
 - version: 0.40.0
@@ -1448,7 +1456,7 @@
               useBigInt: true
         ```
       type: feat
-  createdAt: "2024-09-12"
+  createdAt: '2024-09-12'
   irVersion: 53
 
 - version: 0.39.8
@@ -1473,7 +1481,7 @@
         }
         ```
       type: fix
-  createdAt: "2024-09-11"
+  createdAt: '2024-09-11'
   irVersion: 53
 
 - version: 0.39.7
@@ -1482,7 +1490,7 @@
         The SDK now produces a `version.ts` file where we export a constant called `SDK_VERSION`.
         This constant can be used by different utilities to dynamically import in the version (for example, if someone wants to customize the user agent).
       type: chore
-  createdAt: "2024-08-27"
+  createdAt: '2024-08-27'
   irVersion: 53
 
 - version: 0.39.6
@@ -1491,7 +1499,7 @@
         Browser clients can now import streams, via `readable-streams` polyfill. Additionally adds a
         webpack unit test to verify that the core utilities can be compiled.
       type: fix
-  createdAt: "2024-08-27"
+  createdAt: '2024-08-27'
   irVersion: 53
 
 - version: 0.39.5
@@ -1501,21 +1509,21 @@
         will not use `Date` objects but instead use strings. Without this fix, the generated
         wire tests would result in failures.
       type: fix
-  createdAt: "2024-08-20"
+  createdAt: '2024-08-20'
   irVersion: 53
 
 - version: 0.39.4
   changelogEntry:
     - summary: Ensure that environment files don't generate, unless there is a valid environment available.
       type: fix
-  createdAt: "2024-08-20"
+  createdAt: '2024-08-20'
   irVersion: 53
 
 - version: 0.39.3
   changelogEntry:
     - summary: Multipart form data unit tests only get generated if the SDK has multipart form uploads.
       type: fix
-  createdAt: "2024-08-16"
+  createdAt: '2024-08-16'
   irVersion: 53
 
 - version: 0.39.2
@@ -1528,7 +1536,7 @@
         ```
         `filename.ext` will be encoded into the upload.
       type: fix
-  createdAt: "2024-08-16"
+  createdAt: '2024-08-16'
   irVersion: 53
 
 - version: 0.39.1
@@ -1537,7 +1545,7 @@
         The SDK now supports looking directly at a `hasNextPage` property for offset pagination if configured.
         Previously the SDK would look if the number of items were empty, but this failed in certain edge cases.
       type: feat
-  createdAt: "2024-08-07"
+  createdAt: '2024-08-07'
   irVersion: 53
 
 - version: 0.38.6
@@ -1547,14 +1555,14 @@
         `<package>/<version>`. For example if your package is called `imdb` and is versioned `0.1.0`, then
         the user agent header will be `imdb/0.1.0`.
       type: feat
-  createdAt: "2024-08-07"
+  createdAt: '2024-08-07'
   irVersion: 53
 
 - version: 0.38.5
   changelogEntry:
     - summary: Addressed fetcher unit test flakiness by using a mock fetcher
       type: fix
-  createdAt: "2024-08-07"
+  createdAt: '2024-08-07'
   irVersion: 53
 
 - version: 0.38.4
@@ -1563,21 +1571,21 @@
       type: fix
     - summary: Snippet templates no longer try to inline objects within containers
       type: fix
-  createdAt: "2024-08-04"
+  createdAt: '2024-08-04'
   irVersion: 53
 
 - version: 0.38.3
   changelogEntry:
     - summary: Adds async iterable to StreamWrapper implementation for easier use with downstream dependencies.
       type: fix
-  createdAt: "2024-08-02"
+  createdAt: '2024-08-02'
   irVersion: 53
 
 - version: 0.38.2
   changelogEntry:
     - summary: Refactors the `noScripts` feature flag to make sure that no `yarn install` commands can be accidentally triggered.
       type: fix
-  createdAt: "2024-08-01"
+  createdAt: '2024-08-01'
   irVersion: 53
 
 - version: 0.38.1
@@ -1593,7 +1601,7 @@
             noScripts: true
         ```
       type: feat
-  createdAt: "2024-08-01"
+  createdAt: '2024-08-01'
   irVersion: 53
 
 - version: 0.38.0-rc0
@@ -1602,7 +1610,7 @@
       type: internal
     - summary: The generator now creates snippet templates for undiscriminated unions.
       type: chore
-  createdAt: "2024-07-31"
+  createdAt: '2024-07-31'
   irVersion: 53
 
 - version: 0.37.0-rc0
@@ -1617,35 +1625,35 @@
             generateWireTests: true
         ```
       type: feat
-  createdAt: "2024-07-29"
+  createdAt: '2024-07-29'
   irVersion: 50
 
 - version: 0.36.6
   changelogEntry:
     - summary: Now import paths are correctly added to getResponseBody tests. CI checks also added.
       type: fix
-  createdAt: "2024-07-29"
+  createdAt: '2024-07-29'
   irVersion: 50
 
 - version: 0.36.5
   changelogEntry:
     - summary: Now, server sent events are treated differently as streaming responses, to ensure the correct wrapping happens.
       type: fix
-  createdAt: "2024-07-29"
+  createdAt: '2024-07-29'
   irVersion: 50
 
 - version: 0.36.4
   changelogEntry:
     - summary: Now, import paths are correctly added to stream wrapper tests.
       type: fix
-  createdAt: "2024-07-26"
+  createdAt: '2024-07-26'
   irVersion: 50
 
 - version: 0.36.3
   changelogEntry:
     - summary: Support starting the stream on `StreamWrapper.pipe(...)` for shorter syntax when dealing with `node:stream` primitives.
       type: fix
-  createdAt: "2024-07-26"
+  createdAt: '2024-07-26'
   irVersion: 50
 
 - version: 0.36.2
@@ -1661,28 +1669,28 @@
       type: fix
     - summary: Now, there are generated unit tests for the `fetcher/stream-wrappers` core directory which makes sure that Fern's stream wrapping from responses work as expected!
       type: fix
-  createdAt: "2024-07-26"
+  createdAt: '2024-07-26'
   irVersion: 50
 
 - version: 0.36.1
   changelogEntry:
     - summary: Now, there are generated unit tests for the `auth` and `fetcher` core directory which makes sure that Fern's fetcher and authorization helpers work as expected!
       type: fix
-  createdAt: "2024-07-16"
+  createdAt: '2024-07-16'
   irVersion: 50
 
 - version: 0.36.0
   changelogEntry:
     - summary: Now, there are generated unit tests for the `schemas` core directory which makes sure that Fern's request + response validation will work as expected!
       type: fix
-  createdAt: "2024-07-16"
+  createdAt: '2024-07-16'
   irVersion: 50
 
 - version: 0.35.0
   changelogEntry:
     - summary: Support Multipart Form uploads where `fs.createReadStream` is passed. This requires coercing the stream into a `File`.
       type: fix
-  createdAt: "2024-07-16"
+  createdAt: '2024-07-16'
   irVersion: 50
 
 - version: 0.34.0
@@ -1730,7 +1738,7 @@
         });
         ```
       type: feat
-  createdAt: "2024-07-16"
+  createdAt: '2024-07-16'
   irVersion: 50
 
 - version: 0.33.0
@@ -1746,7 +1754,7 @@
         3. By accepting a `Blob` as a file parameter, the SDK now supports sending the
           filename when making a request.
       type: fix
-  createdAt: "2024-07-16"
+  createdAt: '2024-07-16'
   irVersion: 48
 
 - version: 0.32.0
@@ -1757,7 +1765,7 @@
       type: feat
     - summary: The `reference.md` includes a single section for the _first_ example specified on the endpoint. Previously, a separate section was included for _every_ example.
       type: fix
-  createdAt: "2024-07-15"
+  createdAt: '2024-07-15'
   irVersion: 48
 
 - version: 0.31.0
@@ -1805,21 +1813,21 @@
         }
         ```
       type: feat
-  createdAt: "2024-07-12"
+  createdAt: '2024-07-12'
   irVersion: 48
 
 - version: 0.30.0
   changelogEntry:
     - summary: Client-level `Options` now supports overriding global headers like version.
       type: feat
-  createdAt: "2024-07-11"
+  createdAt: '2024-07-11'
   irVersion: 48
 
 - version: 0.29.2
   changelogEntry:
     - summary: Fix serialization of types with circular references
       type: fix
-  createdAt: "2024-07-10"
+  createdAt: '2024-07-10'
   irVersion: 48
 
 - version: 0.29.1
@@ -1844,7 +1852,7 @@
         });
         ```
       type: fix
-  createdAt: "2024-07-10"
+  createdAt: '2024-07-10'
   irVersion: 48
 
 - version: 0.29.0
@@ -1858,28 +1866,28 @@
 
         This feature shares the same UX as both the `offset` and `cursor` pagination variants.
       type: feat
-  createdAt: "2024-07-09"
+  createdAt: '2024-07-09'
   irVersion: 48
 
 - version: 0.29.0-rc0
   changelogEntry:
     - summary: All serializers in the generated SDK are now synchronous. This makes the serializers easier to use and improves the performance as well.
       type: fix
-  createdAt: "2024-07-09"
+  createdAt: '2024-07-09'
   irVersion: 46
 
 - version: 0.28.0-rc0
   changelogEntry:
     - summary: Add support for offset pagination, which uses the same pagination API introduced in `0.26.0-rc0`.
       type: feat
-  createdAt: "2024-07-09"
+  createdAt: '2024-07-09'
   irVersion: 46
 
 - version: 0.27.2
   changelogEntry:
     - summary: The generated readme now moves the sections for `AbortController`, `Runtime Compatibility` and `Custom Fetcher` under the Advanced section in the generated README.
       type: fix
-  createdAt: "2024-07-08"
+  createdAt: '2024-07-08'
   irVersion: 46
 
 - version: 0.27.1
@@ -1895,7 +1903,7 @@
             publishToJsr: true
         ```
       type: feat
-  createdAt: "2024-07-08"
+  createdAt: '2024-07-08'
   irVersion: 46
 
 - version: 0.27.0
@@ -1913,7 +1921,7 @@
 
         For more on NPM dist tags, see https://docs.npmjs.com/adding-dist-tags-to-packages
       type: feat
-  createdAt: "2024-07-08"
+  createdAt: '2024-07-08'
   irVersion: 46
 
 - version: 0.26.0-rc3
@@ -1921,7 +1929,7 @@
     - summary: |
         The typescript generator now returns all `FormData` headers and Fetcher no longer stringifies stream.Readable type.
       type: fix
-  createdAt: "2024-06-30"
+  createdAt: '2024-06-30'
   irVersion: 46
 
 - version: 0.26.0-rc2
@@ -1929,14 +1937,14 @@
     - summary: |
         `RequestOptions` now supports overriding global headers like authentication and version.
       type: feat
-  createdAt: "2024-06-27"
+  createdAt: '2024-06-27'
   irVersion: 46
 
 - version: 0.26.0-rc1
   changelogEntry:
     - summary: The generator was skipping auto pagination for item arrays that were optional. Now, those are safely handled as well.
       type: fix
-  createdAt: "2024-06-27"
+  createdAt: '2024-06-27'
   irVersion: 46
 
 - version: 0.26.0-rc0
@@ -1965,63 +1973,63 @@
         }
         ```
       type: feat
-  createdAt: "2024-06-27"
+  createdAt: '2024-06-27'
   irVersion: 46
 
 - version: 0.25.3
   changelogEntry:
     - summary: The generator is now upgraded to `v46.2.0` of the IR.
       type: internal
-  createdAt: "2024-06-26"
+  createdAt: '2024-06-26'
   irVersion: 46
 
 - version: 0.25.3
   changelogEntry:
     - summary: The generator is now upgraded to `v46.2.0` of the IR.
       type: internal
-  createdAt: "2024-06-26"
+  createdAt: '2024-06-26'
   irVersion: 46
 
 - version: 0.25.2
   changelogEntry:
     - summary: The generator now removes `fs`, `path`, and `os` dependencies from the browser runtime.
       type: fix
-  createdAt: "2024-06-20"
+  createdAt: '2024-06-20'
   irVersion: 46
 
 - version: 0.25.1
   changelogEntry:
     - summary: The generator now removes `fs`, `path`, and `os` dependencies from the browser runtime.
       type: fix
-  createdAt: "2024-06-20"
+  createdAt: '2024-06-20'
   irVersion: 46
 
 - version: 0.25.0
   changelogEntry:
     - summary: The generator now generates snippets for streaming endpoints. There is also a fix where literals are excluded from inlined requests.
       type: fix
-  createdAt: "2024-06-19"
+  createdAt: '2024-06-19'
   irVersion: 46
 
 - version: 0.25.0-rc0
   changelogEntry:
     - summary: The generator now merges the user's original `README.md` file (if any).
       type: feat
-  createdAt: "2024-06-19"
+  createdAt: '2024-06-19'
   irVersion: 46
 
 - version: 0.24.4
   changelogEntry:
     - summary: APIs that specify a default environment no longer include an unused environment import in their generated snippets.
       type: fix
-  createdAt: "2024-06-19"
+  createdAt: '2024-06-19'
   irVersion: 46
 
 - version: 0.24.3
   changelogEntry:
     - summary: The generator only adds a publish step in github actions if credentials are specified.
       type: fix
-  createdAt: "2024-06-18"
+  createdAt: '2024-06-18'
   irVersion: 46
 
 - version: 0.24.2
@@ -2042,7 +2050,7 @@
         });
         ```
       type: fix
-  createdAt: "2024-06-19"
+  createdAt: '2024-06-19'
   irVersion: 46
 
 - version: 0.24.1
@@ -2056,21 +2064,21 @@
         const client = new MyClient({ ... });
         ```
       type: fix
-  createdAt: "2024-06-19"
+  createdAt: '2024-06-19'
   irVersion: 46
 
 - version: 0.24.0
   changelogEntry:
     - summary: Add dynamic client instantiation snippets
       type: feat
-  createdAt: "2024-06-18"
+  createdAt: '2024-06-18'
   irVersion: 46
 
 - version: 0.24.0-rc0
   changelogEntry:
     - summary: Dynamic client instantiation snippets are now generated. Note this only affects enterprise users that are using Fern's Snippets API.
       type: feat
-  createdAt: "2024-06-18"
+  createdAt: '2024-06-18'
   irVersion: 46
 
 - version: 0.23.3
@@ -2090,7 +2098,7 @@
         });
         ```
       type: feat
-  createdAt: "2024-06-17"
+  createdAt: '2024-06-17'
   irVersion: 46
 
 - version: 0.23.2
@@ -2101,21 +2109,21 @@
       type: fix
     - summary: When an NPM package name is not specified, the generated `README.md` will default to using the namespace export.
       type: fix
-  createdAt: "2024-06-14"
+  createdAt: '2024-06-14'
   irVersion: 46
 
 - version: 0.23.1
   changelogEntry:
     - summary: Undiscriminated unions used as map keys examples no longer return an error.
       type: fix
-  createdAt: "2024-06-13"
+  createdAt: '2024-06-13'
   irVersion: 46
 
 - version: 0.23.0
   changelogEntry:
     - summary: The latest version of the `generator-cli` (used to generate `README.md` files) is always installed.
       type: fix
-  createdAt: "2024-06-12"
+  createdAt: '2024-06-12'
   irVersion: 46
 
 - version: 0.23.0-rc1
@@ -2132,7 +2140,7 @@
             bin: "./index.js"
         ```
       type: fix
-  createdAt: "2024-06-11"
+  createdAt: '2024-06-11'
   irVersion: 46
 
 - version: 0.23.0-rc0
@@ -2142,21 +2150,21 @@
         1. The templates do not have a leading single quote (a typo from before)
         2. The templates now inline union properties (in certain cases)
       type: fix
-  createdAt: "2024-06-07"
+  createdAt: '2024-06-07'
   irVersion: 46
 
 - version: 0.22.0
   changelogEntry:
     - summary: Add support for higher quality `README.md` generation.
       type: feat
-  createdAt: "2024-06-07"
+  createdAt: '2024-06-07'
   irVersion: 46
 
 - version: 0.21.1
   changelogEntry:
     - summary: Detect `workerd` (Cloudflare) environments in `Runtime.ts`. The `Stream` class which is used for Server-Sent Events now prefers `TextDecoder` if it is present in the environment, to work in Cloudflare environments.
       type: feat
-  createdAt: "2024-06-05"
+  createdAt: '2024-06-05'
   irVersion: 46
 
 - version: 0.21.0
@@ -2165,28 +2173,28 @@
       type: feat
     - summary: Bump to IRv46.
       type: internal
-  createdAt: "2024-06-05"
+  createdAt: '2024-06-05'
   irVersion: 46
 
 - version: 0.20.9
   changelogEntry:
     - summary: TypeScript generator outputs code snippets that have `example-identifier` embedded.
       type: fix
-  createdAt: "2024-06-02"
+  createdAt: '2024-06-02'
   irVersion: 43
 
 - version: 0.20.8
   changelogEntry:
     - summary: TypeScript projects were skipping added peer dependencies in certain cases, now those are fixed.
       type: feat
-  createdAt: "2024-06-02"
+  createdAt: '2024-06-02'
   irVersion: 43
 
 - version: 0.20.7
   changelogEntry:
     - summary: Simplify the error handling introduced in `0.20.6` so that it more easily handles endpoints that include structured errors.
       type: fix
-  createdAt: "2024-05-31"
+  createdAt: '2024-05-31'
   irVersion: 43
 
 - version: 0.20.6
@@ -2196,7 +2204,7 @@
         now throws an error whenever we fail to refresh an access token even if `neverThrowErrors`
         is set. We treat this failure as a systematic exception, so it's OK to throw in this case.
       type: fix
-  createdAt: "2024-05-31"
+  createdAt: '2024-05-31'
   irVersion: 43
 
 - version: 0.20.5
@@ -2213,14 +2221,14 @@
             optional: true
         ```
       type: feat
-  createdAt: "2024-05-30"
+  createdAt: '2024-05-30'
   irVersion: 43
 
 - version: 0.20.4
   changelogEntry:
     - summary: Functionality to generate integration tests against a mock server has been disabled.
       type: fix
-  createdAt: "2024-05-29"
+  createdAt: '2024-05-29'
   irVersion: 43
 
 - version: 0.20.2
@@ -2238,21 +2246,21 @@
         }
         ```
       type: fix
-  createdAt: "2024-05-29"
+  createdAt: '2024-05-29'
   irVersion: 43
 
 - version: 0.20.1
   changelogEntry:
     - summary: Remove instances of `node:stream` so that the generated SDK is Webpack + Next.js compatible.
       type: fix
-  createdAt: "2024-05-29"
+  createdAt: '2024-05-29'
   irVersion: 43
 
 - version: 0.20.1-rc0
   changelogEntry:
     - summary: URL encoded bodies are now appropriately encoded within the fetcher.
       type: fix
-  createdAt: "2024-05-29"
+  createdAt: '2024-05-29'
   irVersion: 43
 
 - version: 0.20.1
@@ -2261,7 +2269,7 @@
       type: fix
     - summary: Fix URL encoded body encoding in fetcher
       type: fix
-  createdAt: "2024-05-29"
+  createdAt: '2024-05-29'
   irVersion: 43
 
 - version: 0.20.0-rc1
@@ -2269,7 +2277,7 @@
     - summary: |
         Pass `abortSignal` to `Stream` for server-sent-events and JSON streams so that the user can opt out and break from a stream.
       type: fix
-  createdAt: "2024-05-24"
+  createdAt: '2024-05-24'
   irVersion: 43
 
 - version: 0.20.0-rc1
@@ -2277,7 +2285,7 @@
     - summary: |
         Pass `abortSignal` to `Stream` for server-sent-events and JSON streams so that the user can opt out and break from a stream.
       type: fix
-  createdAt: "2024-05-24"
+  createdAt: '2024-05-24'
   irVersion: 43
 
 - version: 0.20.0-rc0
@@ -2293,7 +2301,7 @@
         })
         ```
       type: feat
-  createdAt: "2024-05-24"
+  createdAt: '2024-05-24'
   irVersion: 43
 
 - version: 0.19.0
@@ -2357,14 +2365,14 @@
         }
         ```
       type: feat
-  createdAt: "2024-05-20"
+  createdAt: '2024-05-20'
   irVersion: 43
 
 - version: 0.18.3
   changelogEntry:
     - summary: The generator now uses the latest FDR SDK.
       type: internal
-  createdAt: "2024-05-17"
+  createdAt: '2024-05-17'
   irVersion: 43
 
 - version: 0.18.2
@@ -2374,7 +2382,7 @@
         bearer token as optional. This prevents us from sending the `Authorization` header
         when retrieving the access token.
       type: fix
-  createdAt: "2024-05-15"
+  createdAt: '2024-05-15'
   irVersion: 43
 
 - version: 0.18.1
@@ -2394,7 +2402,7 @@
         }
         ```
       type: fix
-  createdAt: "2024-05-14"
+  createdAt: '2024-05-14'
   irVersion: 43
 
 - version: 0.18.0
@@ -2404,21 +2412,21 @@
         resolves the access token and refreshes it as needed. The resolved access token is then used as the
         bearer token in all client requests.
       type: feat
-  createdAt: "2024-05-13"
+  createdAt: '2024-05-13'
   irVersion: 43
 
 - version: 0.17.1
   changelogEntry:
     - summary: Multipart form data requests are now compatible across browser and Node.js runtimes.
       type: fix
-  createdAt: "2024-05-06"
+  createdAt: '2024-05-06'
   irVersion: 43
 
 - version: 0.17.0
   changelogEntry:
     - summary: Bump to v43 of IR which means that you will need `0.26.1` of the Fern CLI version. To bump your CLI version, please run `fern upgrade`.
       type: internal
-  createdAt: "2024-05-06"
+  createdAt: '2024-05-06'
   irVersion: 43
 
 - version: 0.16.0-rc8
@@ -2445,7 +2453,7 @@
         }
         ```
       type: feat
-  createdAt: "2024-05-06"
+  createdAt: '2024-05-06'
   irVersion: 38
 
 - version: 0.16.0-rc7
@@ -2504,35 +2512,35 @@
         });
         ```
       type: fix
-  createdAt: "2024-04-30"
+  createdAt: '2024-04-30'
   irVersion: 38
 
 - version: 0.16.0-rc6
   changelogEntry:
     - summary: snippet templates now move file upload parameters to unnamed args
       type: fix
-  createdAt: "2024-04-30"
+  createdAt: '2024-04-30'
   irVersion: 38
 
 - version: 0.16.0-rc5
   changelogEntry:
     - summary: remove duplicate quotation marks in snippet templates
       type: fix
-  createdAt: "2024-04-30"
+  createdAt: '2024-04-30'
   irVersion: 38
 
 - version: 0.16.0-rc4
   changelogEntry:
     - summary: fixes to styling of the SDK code snippet templates.
       type: fix
-  createdAt: "2024-04-25"
+  createdAt: '2024-04-25'
   irVersion: 38
 
 - version: 0.16.0-rc0
   changelogEntry:
     - summary: The generator now registers snippet templates which can be used for dynamic SDK code snippet generation.
       type: feat
-  createdAt: "2024-04-24"
+  createdAt: '2024-04-24'
   irVersion: 38
 
 - version: 0.15.1-rc1
@@ -2551,14 +2559,14 @@
         export { type MyRequest } from "./MyRequest";
         ```
       type: feat
-  createdAt: "2024-04-24"
+  createdAt: '2024-04-24'
   irVersion: 38
 
 - version: 0.15.1-rc0
   changelogEntry:
     - summary: plain text responses are now supported in the TypeScript generator.
       type: feat
-  createdAt: "2024-04-22"
+  createdAt: '2024-04-22'
   irVersion: 38
 
 - version: 0.15.0-rc1
@@ -2567,7 +2575,7 @@
         Minor fixes to SSE processing. In particular, stream terminal characters are now
         respected like `[DONE]` and JSON parsed data is sent to the deserialize function.
       type: fix
-  createdAt: "2024-04-22"
+  createdAt: '2024-04-22'
   irVersion: 38
 
 - version: 0.15.0-rc0
@@ -2576,7 +2584,7 @@
         Bump to v38 of IR and support server-sent events where the events are sent
         with a `data: ` prefix and terminated with a new line.
       type: feat
-  createdAt: "2024-04-19"
+  createdAt: '2024-04-19'
   irVersion: 38
 
 - version: 0.14.1-rc5
@@ -2618,14 +2626,14 @@
             allowExtraFields: true
         ```
       type: feat
-  createdAt: "2024-04-17"
+  createdAt: '2024-04-17'
   irVersion: 37
 
 - version: 0.13.0
   changelogEntry:
     - summary: Support V37 of the IR.
       type: internal
-  createdAt: "2024-04-09"
+  createdAt: '2024-04-09'
   irVersion: 37
 
 - version: 0.13.0-rc0
@@ -2677,14 +2685,14 @@
         }
         ```
       type: feat
-  createdAt: "2024-04-02"
+  createdAt: '2024-04-02'
   irVersion: 33
 
 - version: 0.12.9
   changelogEntry:
     - summary: The generator stopped working for remote code generation starting in `0.12.7`. This is now fixed.
       type: fix
-  createdAt: "2024-03-22"
+  createdAt: '2024-03-22'
   irVersion: 33
 
 - version: 0.12.8
@@ -2693,14 +2701,14 @@
       type: feat
     - summary: Shared generator notification and config parsing logic.
       type: internal
-  createdAt: "2024-03-22"
+  createdAt: '2024-03-22'
   irVersion: 33
 
 - version: 0.12.8-rc0
   changelogEntry:
     - summary: Enhance serde performance by reducing reliance on async behavior and lazy async dynamic imports.
       type: feat
-  createdAt: "2024-03-18"
+  createdAt: '2024-03-18'
   irVersion: 33
 
 - version: 0.12.7
@@ -2710,7 +2718,7 @@
 
         Previously, the SDK would only leverage these defaults for bearer token auth IF auth was mandatory throughout the SDK.
       type: feat
-  createdAt: "2024-03-14"
+  createdAt: '2024-03-14'
   irVersion: 33
 
 - version: 0.12.6
@@ -2723,7 +2731,7 @@
         `require("node-fetch").default` based on
         https://github.com/node-fetch/node-fetch/issues/450#issuecomment-387045223.
       type: fix
-  createdAt: "2024-02-27"
+  createdAt: '2024-02-27'
   irVersion: 33
 
 - version: 0.12.5
@@ -2745,7 +2753,7 @@
                 tolerateRepublish: true
         ```
       type: feat
-  createdAt: "2024-02-27"
+  createdAt: '2024-02-27'
   irVersion: 33
 
 - version: 0.12.4
@@ -2763,7 +2771,7 @@
       type: fix
     - summary: Previously SDK code snippets would not support generation with undiscriminated unions. Now, it does.
       type: fix
-  createdAt: "2024-02-27"
+  createdAt: '2024-02-27'
   irVersion: 33
 
 - version: 0.12.2
@@ -2782,7 +2790,7 @@
         client.users.list();
         ```
       type: fix
-  createdAt: "2024-02-27"
+  createdAt: '2024-02-27'
   irVersion: 33
 
 - version: 0.12.1
@@ -2812,7 +2820,7 @@
         }
         ```
       type: fix
-  createdAt: "2024-02-27"
+  createdAt: '2024-02-27'
   irVersion: 33
 
 - version: 0.12.0
@@ -2840,7 +2848,7 @@
         });
         ```
       type: feat
-  createdAt: "2024-02-26"
+  createdAt: '2024-02-26'
   irVersion: 33
 
 - version: 0.11.5
@@ -2860,7 +2868,7 @@
           includeApiReference: true
         ```
       type: feat
-  createdAt: "2024-02-15"
+  createdAt: '2024-02-15'
   irVersion: 31
 
 - version: 0.11.4
@@ -2870,7 +2878,7 @@
         for APIs that intake `application/octet-stream` content types or for folks that have
         .fernignored their and added custom utilities that leverage the fetcher.
       type: fix
-  createdAt: "2024-02-15"
+  createdAt: '2024-02-15'
   irVersion: 31
 
 - version: 0.11.3
@@ -2880,7 +2888,7 @@
         fetch packaged with newer versions of Node.js, however it causes unexpected behavior with
         file uploads.
       type: fix
-  createdAt: "2024-02-13"
+  createdAt: '2024-02-13'
   irVersion: 31
 
 - version: 0.11.2
@@ -2888,14 +2896,14 @@
     - summary: |
         ensure SDK generator does not drop additional parameters from requests that perform file upload. Previously, if an endpoint had `file` inputs without additional `body` parameters, query parameters were erroneously ignored.
       type: fix
-  createdAt: "2024-02-13"
+  createdAt: '2024-02-13'
   irVersion: 31
 
 - version: 0.11.1
   changelogEntry:
     - summary: The SDK generator no longer generates a `tsconfig.json` with `noUnusedParameters` enabled. This check was too strict.
       type: fix
-  createdAt: "2024-02-13"
+  createdAt: '2024-02-13'
   irVersion: 31
 
 - version: 0.11.0
@@ -2905,7 +2913,7 @@
         used in. The header `X-Fern-Runtime` will report the runtime (e.g. `browser`, `node`, `deno`)
         and the header `X-Fern-Runtime-Version` will report the version.
       type: feat
-  createdAt: "2024-02-13"
+  createdAt: '2024-02-13'
   irVersion: 31
 
 - version: 0.10.0
@@ -2916,12 +2924,12 @@
 
         **Note**: You must be on the enterprise tier to enable this mode.
       type: feat
-  createdAt: "2024-02-11"
+  createdAt: '2024-02-11'
   irVersion: 31
 
 - version: 0.9.7
   changelogEntry:
     - summary: Initialize this changelog
       type: chore
-  createdAt: "2024-02-11"
+  createdAt: '2024-02-11'
   irVersion: 31

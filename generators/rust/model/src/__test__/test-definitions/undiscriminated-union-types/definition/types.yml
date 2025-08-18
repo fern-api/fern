@@ -58,4 +58,4 @@ types:
     properties:
       error: string
       code: integer
-      details: optional<list<string>> 
+      details: optional<list<string>>

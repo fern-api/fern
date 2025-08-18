@@ -140,6 +140,117 @@ class RawServiceClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def named_patch_with_mixed(
+        self,
+        id: str,
+        *,
+        app_id: typing.Optional[str] = OMIT,
+        instructions: typing.Optional[str] = OMIT,
+        active: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
+        """
+        Named request with mixed optional/nullable fields and merge-patch content type.
+        This should trigger the NPE issue when optional fields aren't initialized.
+
+        Parameters
+        ----------
+        id : str
+
+        app_id : typing.Optional[str]
+
+        instructions : typing.Optional[str]
+
+        active : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"named-mixed/{jsonable_encoder(id)}",
+            method="PATCH",
+            json={
+                "appId": app_id,
+                "instructions": instructions,
+                "active": active,
+            },
+            headers={
+                "content-type": "application/merge-patch+json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def optional_merge_patch_test(
+        self,
+        *,
+        required_field: str,
+        optional_string: typing.Optional[str] = OMIT,
+        optional_integer: typing.Optional[int] = OMIT,
+        optional_boolean: typing.Optional[bool] = OMIT,
+        nullable_string: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
+        """
+        Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+        This endpoint should:
+        1. Not NPE when fields are not provided (tests initialization)
+        2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
+
+        Parameters
+        ----------
+        required_field : str
+
+        optional_string : typing.Optional[str]
+
+        optional_integer : typing.Optional[int]
+
+        optional_boolean : typing.Optional[bool]
+
+        nullable_string : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "optional-merge-patch-test",
+            method="PATCH",
+            json={
+                "requiredField": required_field,
+                "optionalString": optional_string,
+                "optionalInteger": optional_integer,
+                "optionalBoolean": optional_boolean,
+                "nullableString": nullable_string,
+            },
+            headers={
+                "content-type": "application/merge-patch+json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def regular_patch(
         self,
         id: str,
@@ -297,6 +408,117 @@ class AsyncRawServiceClient:
                 "bio": bio,
                 "profileImageUrl": profile_image_url,
                 "settings": settings,
+            },
+            headers={
+                "content-type": "application/merge-patch+json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def named_patch_with_mixed(
+        self,
+        id: str,
+        *,
+        app_id: typing.Optional[str] = OMIT,
+        instructions: typing.Optional[str] = OMIT,
+        active: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
+        """
+        Named request with mixed optional/nullable fields and merge-patch content type.
+        This should trigger the NPE issue when optional fields aren't initialized.
+
+        Parameters
+        ----------
+        id : str
+
+        app_id : typing.Optional[str]
+
+        instructions : typing.Optional[str]
+
+        active : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"named-mixed/{jsonable_encoder(id)}",
+            method="PATCH",
+            json={
+                "appId": app_id,
+                "instructions": instructions,
+                "active": active,
+            },
+            headers={
+                "content-type": "application/merge-patch+json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def optional_merge_patch_test(
+        self,
+        *,
+        required_field: str,
+        optional_string: typing.Optional[str] = OMIT,
+        optional_integer: typing.Optional[int] = OMIT,
+        optional_boolean: typing.Optional[bool] = OMIT,
+        nullable_string: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
+        """
+        Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+        This endpoint should:
+        1. Not NPE when fields are not provided (tests initialization)
+        2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
+
+        Parameters
+        ----------
+        required_field : str
+
+        optional_string : typing.Optional[str]
+
+        optional_integer : typing.Optional[int]
+
+        optional_boolean : typing.Optional[bool]
+
+        nullable_string : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "optional-merge-patch-test",
+            method="PATCH",
+            json={
+                "requiredField": required_field,
+                "optionalString": optional_string,
+                "optionalInteger": optional_integer,
+                "optionalBoolean": optional_boolean,
+                "nullableString": nullable_string,
             },
             headers={
                 "content-type": "application/merge-patch+json",

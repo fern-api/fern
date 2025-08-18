@@ -27,7 +27,7 @@ export class EnumGenerator extends FileGenerator<RubyFile, ModelCustomConfigSche
         const enumModule = ruby.module({
             name: this.typeDeclaration.name.name.pascalCase.safeName
         });
-        enumModule.addStatement(ruby.codeblock(`extends ${this.context.getRootModule().name}::Internal::Types::Enum`));
+        enumModule.addStatement(ruby.codeblock(`extend ${this.context.getRootModule().name}::Internal::Types::Enum`));
 
         for (const enumValue of this.enumDeclaration.values) {
             enumModule.addStatement(
@@ -35,20 +35,17 @@ export class EnumGenerator extends FileGenerator<RubyFile, ModelCustomConfigSche
             );
         }
 
-        const typesModule = this.context.getTypesModule();
-        typesModule.addStatement(enumModule);
-
-        const rootModule = this.context.getRootModule();
-        rootModule.addStatement(typesModule);
-
         return new RubyFile({
             node: ruby.codeblock((writer) => {
-                ruby.comment({ docs: "frozen_string_literal: true" });
+                ruby.comment({ docs: "frozen_string_literal: true" }).write(writer);
                 writer.newLine();
-                rootModule.write(writer);
+                ruby.wrapInModules(
+                    enumModule,
+                    this.context.getModulesForTypeId(this.typeDeclaration.name.typeId)
+                ).write(writer);
             }),
             directory: this.getFilepath(),
-            filename: `${this.typeDeclaration.name.name.snakeCase.safeName}.rb`,
+            filename: this.context.getFileNameForTypeId(this.typeDeclaration.name.typeId),
             customConfig: this.context.customConfig
         });
     }

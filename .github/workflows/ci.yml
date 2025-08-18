@@ -27,7 +27,7 @@ jobs:
 
       - name: Check dependencies
         run: pnpm depcheck
-  
+
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -60,8 +60,8 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: lint:biome
-        run: pnpm lint:biome
+      - name: check:biome
+        run: pnpm check:biome
 
   test:
     if: github.repository == 'fern-api/fern'

@@ -13,6 +13,7 @@ export { Method } from "./Method";
 export { Module } from "./Module";
 export { ModuleDeclaration } from "./ModuleDeclaration";
 export { NewtypeStruct } from "./NewtypeStruct";
+export { PaginatedMethod } from "./PaginatedMethod";
 export { Pattern } from "./Pattern";
 export { Reference } from "./Reference";
 export { StandaloneFunction } from "./StandaloneFunction";

@@ -12,11 +12,12 @@ public class Example2
             }
         );
 
-        await client.Service.RegularPatchAsync(
+        await client.Service.NamedPatchWithMixedAsync(
             "id",
-            new RegularPatchRequest{
-                Field1 = "field1",
-                Field2 = 1
+            new NamedMixedPatchRequest{
+                AppId = "appId",
+                Instructions = "instructions",
+                Active = true
             }
         );
     }

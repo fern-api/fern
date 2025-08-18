@@ -4,6 +4,7 @@ use serde::de::DeserializeOwned;
 use crate::{ClientConfig, RequestOptions, ClientError};
 
 /// Internal HTTP client that handles requests with authentication and retries
+#[derive(Clone)]
 pub struct HttpClient {
     client: Client,
     config: ClientConfig,
