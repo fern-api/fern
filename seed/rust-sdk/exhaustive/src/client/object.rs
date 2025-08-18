@@ -72,5 +72,15 @@ impl ObjectClient {
         ).await
     }
 
+    pub async fn test_integer_overflow_edge_cases(&self, request: &ObjectWithOptionalField, options: Option<RequestOptions>) -> Result<ObjectWithOptionalField, ClientError> {
+        self.http_client.execute_request(
+            Method::POST,
+            "/object/test-integer-overflow-edge-cases",
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
+    }
+
 }
 

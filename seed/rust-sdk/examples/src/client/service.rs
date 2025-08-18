@@ -40,10 +40,10 @@ impl ServiceClient {
             {
             let mut query_params = Vec::new();
             if let Some(Some(value)) = shallow {
-                query_params.push(("shallow".to_string(), value.to_string()));
+                query_params.push(("shallow".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(Some(value)) = tag {
-                query_params.push(("tag".to_string(), value.to_string()));
+                query_params.push(("tag".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             Some(query_params)
         },
