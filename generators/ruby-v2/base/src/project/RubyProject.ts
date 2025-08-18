@@ -244,6 +244,7 @@ class ModuleFile {
         contents += `# API Types\n`;
         const typeDeclarations = this.context.getAllTypeDeclarations();
         const sortedTypeDeclarations = topologicalSort(typeDeclarations, compareTypeDeclarations);
+        const rubyFilePaths = this.project.getRawAbsoluteFilePaths();
         sortedTypeDeclarations.forEach((typeDeclaration) => {
             const typeFilePath = join(
                 this.project.absolutePathToOutputDirectory,
@@ -252,13 +253,14 @@ class ModuleFile {
                     this.context.getFileNameForTypeId(typeDeclaration.name.typeId).replaceAll(".rb", "")
                 )
             );
-            contents += `require_relative '${relative(this.filePath, typeFilePath)}'\n`;
-            visitedPaths.add(typeFilePath);
+            if (rubyFilePaths.includes(typeFilePath)) {
+                contents += `require_relative '${relative(this.filePath, typeFilePath)}'\n`;
+                visitedPaths.add(typeFilePath);
+            }
         });
 
         contents += "\n";
         contents += `# Client Types\n`;
-        const rubyFilePaths = this.project.getRawAbsoluteFilePaths();
         rubyFilePaths.forEach((filePath) => {
             if (!visitedPaths.has(filePath.toString())) {
                 contents += `require_relative '${relative(this.filePath, filePath)}'\n`;
