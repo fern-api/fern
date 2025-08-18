@@ -1,5 +1,6 @@
 import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
+import { assertDefined } from "@fern-api/core-utils";
 import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import dedent from "dedent";
@@ -245,8 +246,8 @@ class ModuleFile {
         contents += "\n";
         contents += `# API Types\n`;
         const typeDeclarations = this.context.getAllTypeDeclarations();
-        typeDeclarations.sort(compareTypeDeclarations);
-        typeDeclarations.forEach((typeDeclaration) => {
+        const sortedTypeDeclarations = topologicalSort(typeDeclarations, compareTypeDeclarations);
+        sortedTypeDeclarations.forEach((typeDeclaration) => {
             const typeFilePath = join(
                 this.project.absolutePathToOutputDirectory,
                 this.context.getLocationForTypeId(typeDeclaration.name.typeId),
@@ -287,4 +288,75 @@ function compareTypeDeclarations(a: TypeDeclaration, b: TypeDeclaration): number
 
 function dependsOn(a: TypeDeclaration, b: TypeDeclaration): boolean {
     return a.referencedTypes.has(b.name.typeId);
+}
+
+/**
+ * Sorts an array using a comparator that only works for consecutive values.
+ *
+ * @param arr - The array to sort
+ * @param compareConsecutive - A comparator function that returns:
+ *   - negative number if a < b (when a and b are consecutive in sorted order)
+ *   - positive number if a > b (when a and b are consecutive in sorted order)
+ *   - 0 if a and b are not consecutive (cannot determine their relative order)
+ *
+ * The algorithm builds a sorted chain by finding consecutive relationships
+ * and linking them together. For example, with values [1,2,3]:
+ * - compare(1,2) returns -1 (1 comes before 2)
+ * - compare(2,3) returns -1 (2 comes before 3)
+ * - compare(1,3) returns 0 (1 and 3 are not consecutive)
+ *
+ * @returns A new sorted array
+ */
+function topologicalSort<T>(arr: T[], compareConsecutive: (a: T, b: T) => number): T[] {
+    if (arr.length === 0) return [];
+
+    const result: T[] = [];
+    const remaining = [...arr];
+
+    while (remaining.length > 0) {
+        // Start a new chain with any remaining element
+        const sorted: T[] = [];
+        let current = remaining.pop()!;
+        sorted.push(current);
+
+        let foundInThisPass = true;
+        while (foundInThisPass && remaining.length > 0) {
+            foundInThisPass = false;
+
+            // Try to find what comes before current chain start
+            for (let i = 0; i < remaining.length; i++) {
+                if (compareConsecutive(defined(remaining[i]), defined(sorted[0])) < 0) {
+                    sorted.unshift(remaining.splice(i, 1)[0]!);
+                    foundInThisPass = true;
+                    break;
+                }
+            }
+
+            // Try to find what comes after current chain end
+            if (!foundInThisPass) {
+                for (let i = 0; i < remaining.length; i++) {
+                    if (compareConsecutive(defined(sorted[sorted.length - 1]), defined(remaining[i])) < 0) {
+                        sorted.push(remaining.splice(i, 1)[0]!);
+                        foundInThisPass = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Add this chain to results
+        result.push(...sorted);
+    }
+
+    return result;
+}
+
+function defined<T>(t: T | undefined | null): T {
+    if (t === undefined) {
+        throw new Error("Expected value to be defined but got undefined.");
+    }
+    if (t === null) {
+        throw new Error("Expected value to be defined but got null.");
+    }
+    return t;
 }
