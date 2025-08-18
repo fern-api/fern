@@ -7,6 +7,7 @@ import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
 import { join as pathJoin } from "path";
 import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
+import { topologicalCompareAsIsFiles } from "../AsIs";
 
 const GEMFILE_FILENAME = "Gemfile";
 const RAKEFILE_FILENAME = "Rakefile";
@@ -79,8 +80,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
     }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
-            filename.replace(".Template", ""),
-            RelativeFilePath.of(`lib/${this.context.getRootFolderName()}/internal`),
+            this.getAsIsOutputFilename(filename),
+            this.getAsIsOutputDirectory(),
             replaceTemplate({
                 contents,
                 variables: getTemplateVariables({
@@ -88,6 +89,14 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 })
             })
         );
+    }
+
+    public getAsIsOutputDirectory(): RelativeFilePath {
+        return RelativeFilePath.of(`lib/${this.context.getRootFolderName()}/internal`);
+    }
+
+    public getAsIsOutputFilename(templateFileName: string): string {
+        return templateFileName.replace(".Template", "");
     }
 
     private async writeAsIsFiles(): Promise<void> {
@@ -194,6 +203,12 @@ class ModuleFile {
     private project: RubyProject;
     public readonly filePath: AbsoluteFilePath;
     public readonly fileName: string;
+    private readonly baseContents: string = dedent`
+        # frozen_string_literal: true
+
+        require "json"
+        require "net/http"
+        require "securerandom"\n\n`;
 
     public constructor({ context, project }: ModuleFile.Args) {
         this.context = context;
@@ -203,14 +218,32 @@ class ModuleFile {
     }
 
     public toString(): string {
-        let contents = "";
+        let contents = this.baseContents;
+        const visitedPaths = new Set<string>();
+
+        contents += `# Internal Types\n`;
+        const coreFiles = this.context.getCoreAsIsFiles();
+        coreFiles.sort((a, b) => topologicalCompareAsIsFiles(a, b));
+        coreFiles.forEach((filename) => {
+            const absoluteFilePath = join(
+                this.project.absolutePathToOutputDirectory,
+                this.project.getAsIsOutputDirectory(),
+                RelativeFilePath.of(this.project.getAsIsOutputFilename(filename).replaceAll(".rb", ""))
+            );
+            contents += `require_relative '${relative(this.filePath, absoluteFilePath)}'\n`;
+            visitedPaths.add(absoluteFilePath.toString());
+        });
 
         const coreFilePaths = this.project.getCoreAbsoluteFilePaths();
         coreFilePaths.forEach((filePath) => {
-            contents += `require_relative '${relative(this.filePath, filePath)}'\n`;
+            if (!visitedPaths.has(filePath.toString())) {
+                contents += `require_relative '${relative(this.filePath, filePath)}'\n`;
+                visitedPaths.add(filePath.toString());
+            }
         });
 
-        const visitedPaths = new Set<string>();
+        contents += "\n";
+        contents += `# API Types\n`;
         const typeDeclarations = this.context.getAllTypeDeclarations();
         typeDeclarations.sort(compareTypeDeclarations);
         typeDeclarations.forEach((typeDeclaration) => {
@@ -225,10 +258,13 @@ class ModuleFile {
             visitedPaths.add(typeFilePath);
         });
 
+        contents += "\n";
+        contents += `# Client Types\n`;
         const rubyFilePaths = this.project.getRawAbsoluteFilePaths();
         rubyFilePaths.forEach((filePath) => {
             if (!visitedPaths.has(filePath.toString())) {
                 contents += `require_relative '${relative(this.filePath, filePath)}'\n`;
+                visitedPaths.add(filePath.toString());
             }
         });
         return dedent`${contents}`;
