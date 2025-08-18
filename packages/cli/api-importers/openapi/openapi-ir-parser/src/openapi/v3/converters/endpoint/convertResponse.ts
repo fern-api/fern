@@ -257,7 +257,8 @@ function convertResolvedResponse({
             mimeType.isPDF() ||
             mimeType.isAudio() ||
             mimeType.isImage() ||
-            mimeType.isVideo()
+            mimeType.isVideo() ||
+            mimeType.isMultiPartMixed()
         ) {
             return ResponseWithExample.file({ description: resolvedResponse.description, source, statusCode });
         }
