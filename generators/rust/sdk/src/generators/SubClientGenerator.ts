@@ -117,6 +117,20 @@ export class SubClientGenerator {
             );
         }
 
+        // Add bytes-specific imports if any endpoints use bytes
+        if (this.hasBytesEndpoints()) {
+            imports.push(
+                new UseStatement({
+                    path: "std::io",
+                    items: ["Read"]
+                }),
+                new UseStatement({
+                    path: "std::fs",
+                    items: ["File"]
+                })
+            );
+        }
+
         return imports;
     }
 
@@ -178,26 +192,66 @@ export class SubClientGenerator {
         const httpMethod = this.getHttpMethod(endpoint);
         const pathExpression = this.getPathExpression(endpoint);
         const requestBody = this.getRequestBody(endpoint, params);
-        // Remove this line as we're now handling query params separately
 
         const returnType = rust.Type.result(
             this.getReturnType(endpoint),
             rust.Type.reference(rust.reference({ name: "ClientError" }))
         );
 
+        // Generate different method bodies for bytes vs regular requests
+        const methodBody = this.generateMethodBody(endpoint, params, httpMethod, pathExpression, requestBody);
+
         return {
             name: endpoint.name.snakeCase.safeName,
             parameters,
             returnType: returnType.toString(),
             isAsync: true,
-            body: `self.http_client.execute_request(
+            body: methodBody
+        };
+    }
+
+    private generateMethodBody(
+        endpoint: HttpEndpoint,
+        params: EndpointParameter[],
+        httpMethod: string,
+        pathExpression: string,
+        requestBody: string
+    ): string {
+        if (endpoint.requestBody?.type === "bytes") {
+            return this.generateBytesRequestMethodBody(httpMethod, pathExpression, requestBody, endpoint);
+        } else {
+            return this.generateRegularRequestMethodBody(httpMethod, pathExpression, requestBody, endpoint);
+        }
+    }
+
+    private generateBytesRequestMethodBody(
+        httpMethod: string,
+        pathExpression: string,
+        requestBody: string,
+        endpoint: HttpEndpoint
+    ): string {
+        return `self.http_client.execute_bytes_request(
             Method::${httpMethod},
             ${pathExpression},
             ${requestBody},
             ${this.buildQueryParameters(endpoint)},
             options,
-        ).await`
-        };
+        ).await`;
+    }
+
+    private generateRegularRequestMethodBody(
+        httpMethod: string,
+        pathExpression: string,
+        requestBody: string,
+        endpoint: HttpEndpoint
+    ): string {
+        return `self.http_client.execute_request(
+            Method::${httpMethod},
+            ${pathExpression},
+            ${requestBody},
+            ${this.buildQueryParameters(endpoint)},
+            options,
+        ).await`;
     }
 
     private buildMethodParameters(params: EndpointParameter[]): string[] {
@@ -270,17 +324,22 @@ export class SubClientGenerator {
                 fileUpload: () => {
                     return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
                 },
-                bytes: () => rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8)),
+                bytes: (bytesRequest) => {
+                    // Support multiple input types for file uploads
+                    return rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8));
+                },
                 _other: () => {
                     return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
                 }
             });
 
+            // Use different parameter name and handling for bytes requests
+            const isBytes = endpoint.requestBody.type === "bytes";
             params.push({
-                name: "request",
+                name: isBytes ? "file_data" : "request",
                 type: requestBodyType,
-                isRef: true,
-                optional: false
+                isRef: !isBytes, // Don't pass bytes by reference
+                optional: isBytes ? (endpoint.requestBody as any).isOptional || false : false
             });
         }
     }
@@ -401,9 +460,38 @@ export class SubClientGenerator {
     }
 
     private getRequestBody(endpoint: HttpEndpoint, params: EndpointParameter[]): string {
-        const requestBodyParam = params.find((param) => param.name === "request");
-        if (requestBodyParam && endpoint.requestBody) {
-            return "Some(serde_json::to_value(request).unwrap_or_default())";
+        if (endpoint.requestBody) {
+            return endpoint.requestBody._visit({
+                inlinedRequestBody: () => {
+                    const requestBodyParam = params.find((param) => param.name === "request");
+                    if (requestBodyParam) {
+                        return "Some(serde_json::to_value(request).unwrap_or_default())";
+                    }
+                    return "None";
+                },
+                reference: () => {
+                    const requestBodyParam = params.find((param) => param.name === "request");
+                    if (requestBodyParam) {
+                        return "Some(serde_json::to_value(request).unwrap_or_default())";
+                    }
+                    return "None";
+                },
+                fileUpload: () => {
+                    const requestBodyParam = params.find((param) => param.name === "request");
+                    if (requestBodyParam) {
+                        return "Some(serde_json::to_value(request).unwrap_or_default())";
+                    }
+                    return "None";
+                },
+                bytes: (bytesRequest) => {
+                    const dataParam = params.find((param) => param.name === "file_data");
+                    if (dataParam) {
+                        return bytesRequest.isOptional ? "file_data.unwrap_or_default()" : "file_data";
+                    }
+                    return "Vec::new()";
+                },
+                _other: () => "None"
+            });
         }
         return "None";
     }
@@ -583,6 +671,11 @@ export class SubClientGenerator {
     private hasPaginatedEndpoints(): boolean {
         const endpoints = this.service?.endpoints || [];
         return endpoints.some((endpoint) => endpoint.pagination != null);
+    }
+
+    private hasBytesEndpoints(): boolean {
+        const endpoints = this.service?.endpoints || [];
+        return endpoints.some((endpoint) => endpoint.requestBody?.type === "bytes");
     }
 
     private hasHashMapInQueryParams(): boolean {

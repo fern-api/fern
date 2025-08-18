@@ -11,6 +11,7 @@ export const AsIsFileNames = {
     RequestOptions: "request_options.rs",
     ClientError: "client_error.rs",
     Pagination: "pagination.rs",
+    BytesUtils: "bytes_utils.rs",
     // Project-level configuration files
     CargoToml: "Cargo.toml",
     Gitignore: ".gitignore",
