@@ -3,8 +3,8 @@
   changelogEntry:
     - type: fix
       summary: |
-        Add support for configuration 'explicit-namespaces' to Generate explicit types 
-        everywhere. 
+        Add support for configuration 'experimental-fully-qualified-namespaces' to 
+        generate explicit types everywhere. 
         Add support for `experimental-dotnet-format` to have `dotnet format` reduce
         namespaces and namespace prefixes. (this can take a large amount of memory)
         This creates code that is much cleaner, and can easily support

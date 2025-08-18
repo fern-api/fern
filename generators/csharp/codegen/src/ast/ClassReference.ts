@@ -1,4 +1,3 @@
-import { isContext } from "vm";
 import { csharp } from "..";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -53,7 +52,15 @@ export class ClassReference extends AstNode {
             const alias = writer.addNamespaceAlias(this.namespaceAlias, this.namespace);
             writer.write(`${alias}.${this.name}`);
         } else {
-            if (writer.getCustomConfig()["explicit-namespaces"] !== true) {
+            if (writer.shouldUseFullyQualifiedNamespaces()) {
+                // explicitly express namespaces
+                writer.addReference(this);
+                if (this.enclosingType != null) {
+                    writer.write(`${this.enclosingType.namespace}.${this.enclosingType.name}.${this.name}`);
+                } else {
+                    writer.write(`${this.namespace}.${this.name}`);
+                }
+            } else {
                 // use the original logic, relying on explictly declaring namespaces 'fully-qualified'
                 if (this.fullyQualified) {
                     writer.addReference(this);
@@ -75,14 +82,6 @@ export class ClassReference extends AstNode {
                 } else {
                     writer.addReference(this);
                     writer.write(`${this.name}`);
-                }
-            } else {
-                // explicitly express namespaces
-                writer.addReference(this);
-                if (this.enclosingType != null) {
-                    writer.write(`${this.enclosingType.namespace}.${this.enclosingType.name}.${this.name}`);
-                } else {
-                    writer.write(`${this.namespace}.${this.name}`);
                 }
             }
         }

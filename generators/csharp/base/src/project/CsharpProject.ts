@@ -32,7 +32,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
     private publicCoreTestFiles: File[] = [];
     private testUtilFiles: File[] = [];
     private sourceFetcher: SourceFetcher;
-    private useDotnetFormat: boolean;
+
     public readonly filepaths: CsharpProjectFilepaths;
 
     public constructor({
@@ -49,7 +49,6 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             context: this.context,
             sourceConfig: this.context.ir.sourceConfig
         });
-        this.useDotnetFormat = this.context.customConfig["experimental-dotnet-format"] ?? false;
     }
 
     public getProjectDirectory(): RelativeFilePath {
@@ -217,7 +216,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         await this.createCoreTestDirectory({ absolutePathToTestProjectDirectory });
         await this.createPublicCoreDirectory({ absolutePathToProjectDirectory });
 
-        if (this.useDotnetFormat) {
+        if (this.context.shouldUseDotnetFormat()) {
             // apply dotnet analyzer and formatter pass 1
             await this.dotnetFormat(
                 absolutePathToSrcDirectory,

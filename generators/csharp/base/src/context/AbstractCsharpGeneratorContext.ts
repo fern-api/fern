@@ -189,6 +189,14 @@ export abstract class AbstractCsharpGeneratorContext<
         );
     }
 
+    public shouldUseFullyQualifiedNamespaces(): boolean {
+        return this.customConfig["experimental-fully-qualified-namespaces"] ?? false;
+    }
+
+    public shouldUseDotnetFormat(): boolean {
+        return this.customConfig["experimental-dotnet-format"] ?? false;
+    }
+
     public generateNewAdditionalProperties(): boolean {
         return (
             this.customConfig["additional-properties"] ??
