@@ -1,7 +1,6 @@
 use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
 use reqwest::{Method};
-use std::io::{Read};
-use std::fs::{File};
+use crate::core::{File, FormDataBuilder};
 
 pub struct ServiceClient {
     pub http_client: HttpClient,

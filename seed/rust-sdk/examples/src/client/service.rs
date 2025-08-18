@@ -1,6 +1,7 @@
 use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
+use crate::core::{File, FormDataBuilder};
 
 pub struct ServiceClient {
     pub http_client: HttpClient,
@@ -12,29 +13,21 @@ impl ServiceClient {
         Ok(Self { http_client })
     }
 
-    pub async fn check(&self, id: &String, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn get_movie(&self, movie_id: &MovieId, options: Option<RequestOptions>) -> Result<Movie, ClientError> {
         self.http_client.execute_request(
             Method::GET,
-            &format!("/check/{}", id),
+            &format!("/movie/{}", movie_id.0),
             None,
             None,
             options,
         ).await
     }
 
-    pub async fn ping(&self, options: Option<RequestOptions>) -> Result<bool, ClientError> {
+    pub async fn create_movie(&self, request: &Movie, options: Option<RequestOptions>) -> Result<MovieId, ClientError> {
         self.http_client.execute_request(
-            Method::GET,
-            "/ping",
-            None,
-            None,
-            options,
-        ).await
-    }
-
-}
-
-_value(request).unwrap_or_default()),
+            Method::POST,
+            "/movie",
+            Some(serde_json::to_value(request).unwrap_or_default()),
             None,
             options,
         ).await

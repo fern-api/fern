@@ -1,5 +1,6 @@
 use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
 use reqwest::{Method};
+use crate::core::{File, FormDataBuilder};
 
 pub struct Ec2Client {
     pub http_client: HttpClient,

@@ -1,6 +1,7 @@
 use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
+use crate::core::{File, FormDataBuilder};
 
 pub struct ApiClient {
     pub http_client: HttpClient,
@@ -15,16 +16,12 @@ impl ApiClient {
     pub async fn get_something(&self, options: Option<RequestOptions>) -> Result<(), ClientError> {
         self.http_client.execute_request(
             Method::GET,
-            "/nested/get-something",
+            "/nested-no-auth/get-something",
             None,
             None,
             options,
         ).await
     }
-
-}
-
-  }
 
 }
 

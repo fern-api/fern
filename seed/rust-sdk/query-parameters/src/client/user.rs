@@ -2,6 +2,7 @@ use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use std::collections::{HashMap};
 use crate::{types::*};
+use crate::core::{File, FormDataBuilder};
 
 pub struct UserClient {
     pub http_client: HttpClient,

@@ -1,6 +1,7 @@
 use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
+use crate::core::{File, FormDataBuilder};
 
 pub struct ContentTypeClient {
     pub http_client: HttpClient,

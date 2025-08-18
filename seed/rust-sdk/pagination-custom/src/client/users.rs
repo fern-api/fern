@@ -2,6 +2,7 @@ use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 use crate::{AsyncPaginator, PaginationResult};
+use crate::core::{File, FormDataBuilder};
 
 pub struct UsersClient {
     pub http_client: HttpClient,
