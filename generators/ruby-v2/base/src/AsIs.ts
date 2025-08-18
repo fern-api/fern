@@ -35,3 +35,37 @@ export const AsIsFiles = {
     TypesUnknown: "types/unknown.Template.rb",
     TypesUtils: "types/utils.Template.rb"
 } as const;
+
+export function topologicalCompareAsIsFiles(fileA: string, fileB: string): number {
+    const validFiles = Object.values(AsIsFiles);
+    if (
+        validFiles.includes(fileA as (typeof validFiles)[number]) &&
+        validFiles.includes(fileB as (typeof validFiles)[number])
+    ) {
+        return asIsTopoValue[fileA as keyof typeof asIsTopoValue] - asIsTopoValue[fileB as keyof typeof asIsTopoValue];
+    }
+    throw new Error(`Invalid file: ${fileA} or ${fileB}`);
+}
+
+const asIsTopoValue = {
+    [AsIsFiles.JsonSerializable]: 0,
+    [AsIsFiles.TypesType]: 1,
+    [AsIsFiles.TypesUtils]: 2,
+    [AsIsFiles.TypesUnion]: 3,
+    [AsIsFiles.ErrorsConstraint]: 4,
+    [AsIsFiles.ErrorsType]: 5,
+    [AsIsFiles.HttpBaseRequest]: 6,
+    [AsIsFiles.JsonRequest]: 7,
+    [AsIsFiles.HttpRawClient]: 8,
+    [AsIsFiles.MultipartEncoder]: 9,
+    [AsIsFiles.MultipartFormDataPart]: 10,
+    [AsIsFiles.MultipartFormData]: 11,
+    [AsIsFiles.MultipartRequest]: 12,
+    [AsIsFiles.ModelField]: 13,
+    [AsIsFiles.Model]: 14,
+    [AsIsFiles.Array]: 15,
+    [AsIsFiles.TypesBoolean]: 16,
+    [AsIsFiles.TypesEnum]: 17,
+    [AsIsFiles.TypesHash]: 18,
+    [AsIsFiles.TypesUnknown]: 19
+};
