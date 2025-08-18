@@ -1,4 +1,10 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: Updated allOf scheme parsing to grab additionalProperties flag
+      type: chore
+  irVersion: 59
+  createdAt: "2025-08-18"
+  version: 0.66.18
 
 - changelogEntry:
     - summary: Support IR v59 in the Swift SDK generator.
