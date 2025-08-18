@@ -1,6 +1,6 @@
 import { AbstractProject, File } from "@fern-api/base-generator";
-import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { assertDefined } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import dedent from "dedent";
@@ -308,7 +308,9 @@ function dependsOn(a: TypeDeclaration, b: TypeDeclaration): boolean {
  * @returns A new sorted array
  */
 function topologicalSort<T>(arr: T[], compareConsecutive: (a: T, b: T) => number): T[] {
-    if (arr.length === 0) return [];
+    if (arr.length === 0) {
+        return [];
+    }
 
     const result: T[] = [];
     const remaining = [...arr];
@@ -316,7 +318,7 @@ function topologicalSort<T>(arr: T[], compareConsecutive: (a: T, b: T) => number
     while (remaining.length > 0) {
         // Start a new chain with any remaining element
         const sorted: T[] = [];
-        let current = remaining.pop()!;
+        let current = defined(remaining.pop());
         sorted.push(current);
 
         let foundInThisPass = true;
@@ -326,7 +328,7 @@ function topologicalSort<T>(arr: T[], compareConsecutive: (a: T, b: T) => number
             // Try to find what comes before current chain start
             for (let i = 0; i < remaining.length; i++) {
                 if (compareConsecutive(defined(remaining[i]), defined(sorted[0])) < 0) {
-                    sorted.unshift(remaining.splice(i, 1)[0]!);
+                    sorted.unshift(defined(remaining.splice(i, 1)[0]));
                     foundInThisPass = true;
                     break;
                 }
@@ -336,7 +338,7 @@ function topologicalSort<T>(arr: T[], compareConsecutive: (a: T, b: T) => number
             if (!foundInThisPass) {
                 for (let i = 0; i < remaining.length; i++) {
                     if (compareConsecutive(defined(sorted[sorted.length - 1]), defined(remaining[i])) < 0) {
-                        sorted.push(remaining.splice(i, 1)[0]!);
+                        sorted.push(defined(remaining.splice(i, 1)[0]));
                         foundInThisPass = true;
                         break;
                     }
