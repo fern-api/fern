@@ -118,19 +118,13 @@ export class SubClientGenerator {
             );
         }
 
-        // Add bytes-specific imports if any endpoints use bytes
-        if (this.hasBytesEndpoints()) {
-            imports.push(
-                new UseStatement({
-                    path: "std::io",
-                    items: ["Read"]
-                }),
-                new UseStatement({
-                    path: "std::fs",
-                    items: ["File"]
-                })
-            );
-        }
+        // Always include file operation imports since they're now available in every SDK
+        imports.push(
+            new UseStatement({
+                path: "crate::core",
+                items: ["File", "FormDataBuilder"]
+            })
+        );
 
         return imports;
     }
@@ -220,6 +214,10 @@ export class SubClientGenerator {
     ): string {
         if (endpoint.requestBody?.type === "bytes") {
             return this.generateBytesRequestMethodBody(httpMethod, pathExpression, requestBody, endpoint);
+        } else if (endpoint.requestBody?.type === "fileUpload") {
+            return this.generateFileUploadRequestMethodBody(httpMethod, pathExpression, requestBody, endpoint);
+        } else if (endpoint.response?.body?.type === "fileDownload") {
+            return this.generateStreamingRequestMethodBody(httpMethod, pathExpression, requestBody, endpoint);
         } else {
             return this.generateRegularRequestMethodBody(httpMethod, pathExpression, requestBody, endpoint);
         }
@@ -247,6 +245,36 @@ export class SubClientGenerator {
         endpoint: HttpEndpoint
     ): string {
         return `self.http_client.execute_request(
+            Method::${httpMethod},
+            ${pathExpression},
+            ${requestBody},
+            ${this.buildQueryParameters(endpoint)},
+            options,
+        ).await`;
+    }
+
+    private generateStreamingRequestMethodBody(
+        httpMethod: string,
+        pathExpression: string,
+        requestBody: string,
+        endpoint: HttpEndpoint
+    ): string {
+        return `self.http_client.execute_streaming_request(
+            Method::${httpMethod},
+            ${pathExpression},
+            ${requestBody},
+            ${this.buildQueryParameters(endpoint)},
+            options,
+        ).await.map(|response| crate::core::FileStream::new(response))`;
+    }
+
+    private generateFileUploadRequestMethodBody(
+        httpMethod: string,
+        pathExpression: string,
+        requestBody: string,
+        endpoint: HttpEndpoint
+    ): string {
+        return `self.http_client.execute_multipart_request(
             Method::${httpMethod},
             ${pathExpression},
             ${requestBody},
@@ -323,7 +351,7 @@ export class SubClientGenerator {
                 },
                 reference: (reference) => generateRustTypeForTypeReference(reference.requestBodyType),
                 fileUpload: () => {
-                    return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
+                    return rust.Type.reference(rust.reference({ name: "File", module: "crate::core" }));
                 },
                 bytes: (bytesRequest) => {
                     // Support multiple input types for file uploads
@@ -334,12 +362,25 @@ export class SubClientGenerator {
                 }
             });
 
-            // Use different parameter name and handling for bytes requests
+            // Use different parameter name and handling for different request types
             const isBytes = endpoint.requestBody.type === "bytes";
+            const isFileUpload = endpoint.requestBody.type === "fileUpload";
+
+            let paramName = "request";
+            let isRef = true;
+
+            if (isBytes) {
+                paramName = "file_data";
+                isRef = false; // Don't pass bytes by reference
+            } else if (isFileUpload) {
+                paramName = "file";
+                isRef = false; // Don't pass File by reference
+            }
+
             params.push({
-                name: isBytes ? "file_data" : "request",
+                name: paramName,
                 type: requestBodyType,
-                isRef: !isBytes, // Don't pass bytes by reference
+                isRef,
                 optional: isBytes ? (endpoint.requestBody as HttpRequestBody.Bytes).isOptional || false : false
             });
         }
@@ -385,7 +426,7 @@ export class SubClientGenerator {
                     }
                     return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
                 },
-                fileDownload: () => rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8)),
+                fileDownload: () => rust.Type.reference(rust.reference({ name: "FileStream", module: "crate::core" })),
                 text: () => rust.Type.primitive(rust.PrimitiveType.String),
                 bytes: () => rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8)),
                 streaming: () => {
@@ -478,9 +519,9 @@ export class SubClientGenerator {
                     return "None";
                 },
                 fileUpload: () => {
-                    const requestBodyParam = params.find((param) => param.name === "request");
-                    if (requestBodyParam) {
-                        return "Some(serde_json::to_value(request).unwrap_or_default())";
+                    const fileParam = params.find((param) => param.name === "file");
+                    if (fileParam) {
+                        return this.generateFileUploadFormData(endpoint, params);
                     }
                     return "None";
                 },
@@ -672,11 +713,6 @@ export class SubClientGenerator {
     private hasPaginatedEndpoints(): boolean {
         const endpoints = this.service?.endpoints || [];
         return endpoints.some((endpoint) => endpoint.pagination != null);
-    }
-
-    private hasBytesEndpoints(): boolean {
-        const endpoints = this.service?.endpoints || [];
-        return endpoints.some((endpoint) => endpoint.requestBody?.type === "bytes");
     }
 
     private hasHashMapInQueryParams(): boolean {
@@ -1141,5 +1177,72 @@ export class SubClientGenerator {
             });
         }
         return "per_page"; // Default fallback
+    }
+
+    // =============================================================================
+    // FILE UPLOAD FORM DATA GENERATION
+    // =============================================================================
+
+    private generateFileUploadFormData(endpoint: HttpEndpoint, params: EndpointParameter[]): string {
+        // For simple file upload, just return the file directly
+        // For more complex form data, we'll need to build it with FormDataBuilder
+        const fileParam = params.find((param) => param.name === "file");
+        if (!fileParam) {
+            return "None";
+        }
+
+        // Check if this is a simple file upload or complex form with additional fields
+        const hasOtherParams = params.some((param) => param.name !== "file" && param.name !== "options");
+
+        // For file uploads, we need to use multipart forms
+        // Always use FormDataBuilder for consistency
+        return this.generateFormDataUpload(endpoint, params);
+    }
+
+    private generateFormDataUpload(endpoint: HttpEndpoint, params: EndpointParameter[]): string {
+        // Build method call chain using AST expressions
+        const methodCallArgs: Array<{ method: string; args: rust.Expression[] }> = [];
+
+        // Add the file
+        const fileParam = params.find((param) => param.name === "file");
+        if (fileParam) {
+            methodCallArgs.push({
+                method: "add_file",
+                args: [rust.Expression.stringLiteral("file"), rust.Expression.reference("file")]
+            });
+        }
+
+        // Add other parameters as text fields
+        for (const param of params) {
+            if (param.name === "file" || param.name === "options") {
+                continue;
+            }
+
+            if (param.optional) {
+                methodCallArgs.push({
+                    method: "add_optional_text",
+                    args: [rust.Expression.stringLiteral(param.name), rust.Expression.reference(`&${param.name}`)]
+                });
+            } else {
+                methodCallArgs.push({
+                    method: "add_text",
+                    args: [rust.Expression.stringLiteral(param.name), rust.Expression.reference(param.name)]
+                });
+            }
+        }
+
+        // Create the initial FormDataBuilder::new() static method call
+        let builderExpression = rust.Expression.reference("crate::core::FormDataBuilder::new()");
+
+        // Chain all method calls
+        if (methodCallArgs.length > 0) {
+            builderExpression = rust.Expression.methodChain(builderExpression, methodCallArgs);
+        }
+
+        // Add the final .build() call
+        const finalExpression = rust.Expression.methodChain(builderExpression, [{ method: "build", args: [] }]);
+
+        // Return the complete method chain expression
+        return finalExpression.toString();
     }
 }
