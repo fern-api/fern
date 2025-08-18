@@ -15,7 +15,7 @@ impl ApiClient {
     pub async fn get_something(&self, options: Option<RequestOptions>) -> Result<(), ClientError> {
         self.http_client.execute_request(
             Method::GET,
-            "/nested/get-something",
+            "/nested-no-auth/get-something",
             None,
             None,
             options,

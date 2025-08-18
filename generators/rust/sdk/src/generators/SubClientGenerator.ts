@@ -7,6 +7,7 @@ import {
     ApiAuth,
     AuthScheme,
     HttpEndpoint,
+    HttpRequestBody,
     HttpService,
     Pagination,
     CursorPagination,
@@ -339,7 +340,7 @@ export class SubClientGenerator {
                 name: isBytes ? "file_data" : "request",
                 type: requestBodyType,
                 isRef: !isBytes, // Don't pass bytes by reference
-                optional: isBytes ? (endpoint.requestBody as any).isOptional || false : false
+                optional: isBytes ? (endpoint.requestBody as HttpRequestBody.Bytes).isOptional || false : false
             });
         }
     }

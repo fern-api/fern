@@ -12,21 +12,29 @@ impl ServiceClient {
         Ok(Self { http_client })
     }
 
-    pub async fn get_movie(&self, movie_id: &MovieId, options: Option<RequestOptions>) -> Result<Movie, ClientError> {
+    pub async fn check(&self, id: &String, options: Option<RequestOptions>) -> Result<(), ClientError> {
         self.http_client.execute_request(
             Method::GET,
-            &format!("/movie/{}", movie_id.0),
+            &format!("/check/{}", id),
             None,
             None,
             options,
         ).await
     }
 
-    pub async fn create_movie(&self, request: &Movie, options: Option<RequestOptions>) -> Result<MovieId, ClientError> {
+    pub async fn ping(&self, options: Option<RequestOptions>) -> Result<bool, ClientError> {
         self.http_client.execute_request(
-            Method::POST,
-            "/movie",
-            Some(serde_json::to_value(request).unwrap_or_default()),
+            Method::GET,
+            "/ping",
+            None,
+            None,
+            options,
+        ).await
+    }
+
+}
+
+_value(request).unwrap_or_default()),
             None,
             options,
         ).await
