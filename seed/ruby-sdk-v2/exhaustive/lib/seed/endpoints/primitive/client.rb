@@ -14,7 +14,7 @@ module Seed
         def get_and_return_string(request_options: {}, **params)
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
-            path: "/primitive/string"
+            path: "/primitive/string",
             body: params[:request],
           )
           _response = @client.send(_request)
@@ -29,7 +29,7 @@ module Seed
         def get_and_return_int(request_options: {}, **params)
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
-            path: "/primitive/integer"
+            path: "/primitive/integer",
             body: params[:request],
           )
           _response = @client.send(_request)
@@ -44,7 +44,7 @@ module Seed
         def get_and_return_long(request_options: {}, **params)
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
-            path: "/primitive/long"
+            path: "/primitive/long",
             body: params[:request],
           )
           _response = @client.send(_request)
@@ -59,7 +59,7 @@ module Seed
         def get_and_return_double(request_options: {}, **params)
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
-            path: "/primitive/double"
+            path: "/primitive/double",
             body: params[:request],
           )
           _response = @client.send(_request)
@@ -74,7 +74,7 @@ module Seed
         def get_and_return_bool(request_options: {}, **params)
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
-            path: "/primitive/boolean"
+            path: "/primitive/boolean",
             body: params[:request],
           )
           _response = @client.send(_request)
@@ -89,7 +89,7 @@ module Seed
         def get_and_return_datetime(request_options: {}, **params)
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
-            path: "/primitive/datetime"
+            path: "/primitive/datetime",
             body: params[:request],
           )
           _response = @client.send(_request)
@@ -104,7 +104,7 @@ module Seed
         def get_and_return_date(request_options: {}, **params)
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
-            path: "/primitive/date"
+            path: "/primitive/date",
             body: params[:request],
           )
           _response = @client.send(_request)
@@ -119,7 +119,7 @@ module Seed
         def get_and_return_uuid(request_options: {}, **params)
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
-            path: "/primitive/uuid"
+            path: "/primitive/uuid",
             body: params[:request],
           )
           _response = @client.send(_request)
@@ -134,7 +134,7 @@ module Seed
         def get_and_return_base_64(request_options: {}, **params)
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
-            path: "/primitive/base64"
+            path: "/primitive/base64",
             body: params[:request],
           )
           _response = @client.send(_request)

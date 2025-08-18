@@ -14,7 +14,7 @@ module Seed
         def get_and_return_list_of_primitives(request_options: {}, **params)
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
-            path: "/container/list-of-primitives"
+            path: "/container/list-of-primitives",
             body: params[:request],
           )
           _response = @client.send(_request)
@@ -29,7 +29,7 @@ module Seed
         def get_and_return_list_of_objects(request_options: {}, **params)
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
-            path: "/container/list-of-objects"
+            path: "/container/list-of-objects",
             body: params[:request],
           )
           _response = @client.send(_request)
@@ -44,7 +44,7 @@ module Seed
         def get_and_return_set_of_primitives(request_options: {}, **params)
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
-            path: "/container/set-of-primitives"
+            path: "/container/set-of-primitives",
             body: params[:request],
           )
           _response = @client.send(_request)
@@ -59,7 +59,7 @@ module Seed
         def get_and_return_set_of_objects(request_options: {}, **params)
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
-            path: "/container/set-of-objects"
+            path: "/container/set-of-objects",
             body: params[:request],
           )
           _response = @client.send(_request)
@@ -74,7 +74,7 @@ module Seed
         def get_and_return_map_prim_to_prim(request_options: {}, **params)
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
-            path: "/container/map-prim-to-prim"
+            path: "/container/map-prim-to-prim",
             body: params[:request],
           )
           _response = @client.send(_request)
@@ -89,7 +89,7 @@ module Seed
         def get_and_return_map_of_prim_to_object(request_options: {}, **params)
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
-            path: "/container/map-prim-to-object"
+            path: "/container/map-prim-to-object",
             body: params[:request],
           )
           _response = @client.send(_request)
@@ -104,7 +104,7 @@ module Seed
         def get_and_return_optional(request_options: {}, **params)
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
-            path: "/container/opt-objects"
+            path: "/container/opt-objects",
             body: params[:request],
           )
           _response = @client.send(_request)
