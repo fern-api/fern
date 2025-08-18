@@ -32,6 +32,7 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
         const properties = this.objectDeclaration.properties || [];
 
         const statements = generateFields({
+            typeDeclaration: this.typeDeclaration,
             properties,
             context: this.context
         });
