@@ -70,24 +70,32 @@ export class ObjectSchemaConverter extends AbstractConverter<
             const breadcrumbs = [...this.breadcrumbs, "allOf", index.toString()];
             let allOfSchema: OpenAPIV3_1.SchemaObject;
             if (this.context.isReferenceObject(allOfSchemaOrReference)) {
-                if (!objectHasRequiredProperties) {
-                    this.addTypeReferenceToExtends({
-                        reference: allOfSchemaOrReference,
-                        breadcrumbs,
-                        extends_,
-                        referencedTypes
-                    });
-                    continue;
-                }
+                // Tries to resolve reference
                 const maybeResolvedReference = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                     schemaOrReference: allOfSchemaOrReference,
                     breadcrumbs
                 });
                 if (maybeResolvedReference == null) {
+                    this.context.logger.debug?.(
+                        `[ObjectSchemaConverter] allOf[${index}] reference could not be resolved. Skipping: ${JSON.stringify(allOfSchemaOrReference)}`
+                    );
                     continue;
                 }
                 allOfSchema = maybeResolvedReference;
-                if (Object.keys(allOfSchema.properties ?? {}).every((key) => !this.schema.required?.includes(key))) {
+
+                // Check for additionalProperties before this is passed by for not having req. properties
+                if (typeof allOfSchema.additionalProperties === "boolean" && allOfSchema.additionalProperties) {
+                    this.context.logger.debug?.(
+                        `[ObjectSchemaConverter] allOf[${index}] allows additionalProperties. Setting hasAdditionalProperties = true 1.`
+                    );
+                    hasAdditionalProperties = true;
+                }
+                
+                // if the allOf schema has no properties that are required in the base schema, add the reference to the extends_
+                if (
+                    (!objectHasRequiredProperties) || 
+                    (Object.keys(allOfSchema.properties ?? {}).every((key) => !this.schema.required?.includes(key)))
+                ) {
                     this.addTypeReferenceToExtends({
                         reference: allOfSchemaOrReference,
                         breadcrumbs,
