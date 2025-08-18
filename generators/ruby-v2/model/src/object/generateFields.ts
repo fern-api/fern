@@ -26,13 +26,9 @@ export function generateFields({
 
         return ruby.codeblock((writer) => {
             writer.write(`field :${fieldName}, `);
-            if (isCircular) {
-                writer.write("-> { ");
-                rubyType.write(writer);
-                writer.write(" }");
-            } else {
-                rubyType.write(writer);
-            }
+            writer.write("-> { ");
+            rubyType.write(writer);
+            writer.write(" }");
             writer.write(`, optional: ${isOptional}, nullable: ${isNullable}`);
             // Only add newline for the last statement to ensure 'end' appears on its own line
             if (index === properties.length - 1) {

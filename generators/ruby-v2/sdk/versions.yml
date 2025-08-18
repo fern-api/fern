@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc3
+  createdAt: '2025-08-13'
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Always lazy load type references to handle circular dependencies and import order.
+  irVersion: 58
+
 - version: 1.0.0-rc2
   createdAt: '2025-08-13'
   changelogEntry:
