@@ -14,7 +14,7 @@ module Seed
         def get_and_return_union(request_options: {}, **params)
           _request = Seed::Internal::Http::JSONRequest.new(
             method: POST,
-            path: "/union"
+            path: "/union",
             body: Seed::Types::Union::Types::Animal.new(params[:request]).to_h,
           )
           _response = @client.send(_request)

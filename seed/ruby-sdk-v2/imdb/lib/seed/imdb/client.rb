@@ -15,7 +15,8 @@ module Seed
       def create_movie(request_options: {}, **params)
         _request = Seed::Internal::Http::JSONRequest.new(
           method: POST,
-          path: "/movies/create-movie"
+          path: "/movies/create-movie",
+          body: Seed::Imdb::Types::CreateMovieRequest.new(params[:request]).to_h,
         )
         _response = @client.send(_request)
         if _response.code >= "200" && _response.code < "300"

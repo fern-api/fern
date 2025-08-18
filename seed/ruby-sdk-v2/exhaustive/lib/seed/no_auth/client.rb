@@ -15,7 +15,7 @@ module Seed
       def post_with_no_auth(request_options: {}, **params)
         _request = Seed::Internal::Http::JSONRequest.new(
           method: POST,
-          path: "/no-auth"
+          path: "/no-auth",
           body: params[:request],
         )
         _response = @client.send(_request)
