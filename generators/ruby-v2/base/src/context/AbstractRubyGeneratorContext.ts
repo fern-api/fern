@@ -68,9 +68,13 @@ export abstract class AbstractRubyGeneratorContext<
         return typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName);
     }
 
+    public abstract getAllTypeDeclarations(): TypeDeclaration[];
+
     public abstract getCoreAsIsFiles(): string[];
 
     public abstract getLocationForTypeId(typeId: TypeId): RelativeFilePath;
+
+    public abstract getFileNameForTypeId(typeId: TypeId): string;
 
     public abstract getModuleNamesForTypeId(typeId: TypeId): string[];
 

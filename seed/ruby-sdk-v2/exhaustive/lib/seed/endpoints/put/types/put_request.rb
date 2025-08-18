@@ -4,7 +4,7 @@ module Seed
     module Put
       module Types
         class PutRequest < Internal::Types::Model
-          field :id, String, optional: false, nullable: false
+          field :id, -> { String }, optional: false, nullable: false
 
         end
       end

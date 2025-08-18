@@ -9,7 +9,7 @@ export declare namespace RawClient {
         /** the endpoint for the endpoint */
         endpoint: HttpEndpoint;
         /** reference to a variable that is the body */
-        bodyReference?: string;
+        bodyReference?: ruby.CodeBlock;
         /** the path parameter id to reference */
         pathParameterReferences?: Record<string, string>;
         /** the headers to pass to the endpoint */
@@ -49,7 +49,7 @@ export class RawClient {
                     writer.writeLine(`method: ${endpoint.method.toUpperCase()},`);
                     writer.write(`path: `);
                     this.writePathString({ writer, endpoint, pathParameterReferences: pathParameterReferences ?? {} });
-                    writer.writeLine();
+                    writer.writeLine(",");
                     if (headerBagReference != null) {
                         writer.writeLine(`headers: ${headerBagReference},`);
                     }

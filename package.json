@@ -30,6 +30,7 @@
     "format:fix": "biome format --fix",
     "format:check": "biome format",
     "format:package-json": "sort-package-json \"generators/**/package.json\" \"packages/**/package.json\" --ignore \"**/dist\" --ignore \"**lib\" --ignore \"**/node_modules\"",
+    "check:biome": "biome check",
     "check": "biome check",
     "check:fix": "biome check --fix",
     "depcheck": "turbo depcheck",

@@ -37,12 +37,9 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
     public doGenerate(): RubyFile {
         const classNode = ruby.class_({
             ...this.classReference,
-            superclass: ruby.classReference({
-                name: "Union",
-                modules: ["Internal", "Types"]
-            }),
             docstring: this.typeDeclaration.docs ?? undefined
         });
+        classNode.addStatement(ruby.codeblock(`extend ${this.context.getRootModule().name}::Internal::Types::Union`));
 
         classNode.addStatement(
             ruby.codeblock((writer) => {
@@ -70,7 +67,7 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
                 );
             }),
             directory: this.getFilepath(),
-            filename: this.getFilename(),
+            filename: this.context.getFileNameForTypeId(this.typeDeclaration.name.typeId),
             customConfig: this.context.customConfig
         });
     }
@@ -97,9 +94,5 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
 
     protected getFilepath(): RelativeFilePath {
         return this.context.getLocationForTypeId(this.typeDeclaration.name.typeId);
-    }
-
-    private getFilename(): string {
-        return `${this.typeDeclaration.name.name.snakeCase.safeName}.rb`;
     }
 }

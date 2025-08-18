@@ -5,7 +5,7 @@ module Seed
     module Docs
       module Types
         class ObjectWithDocs < Internal::Types::Model
-          field :string, String, optional: false, nullable: false
+          field :string, -> { String }, optional: false, nullable: false
 
         end
       end

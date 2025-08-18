@@ -4,7 +4,7 @@ module Seed
   module GeneralErrors
     module Types
       class BadObjectRequestInfo < Internal::Types::Model
-        field :message, String, optional: false, nullable: false
+        field :message, -> { String }, optional: false, nullable: false
 
       end
     end
