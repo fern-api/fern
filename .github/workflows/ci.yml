@@ -60,8 +60,8 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: check:biome
-        run: pnpm check:biome
+      - name: Biome Check
+        run: pnpm check
 
   test:
     if: github.repository == 'fern-api/fern'
