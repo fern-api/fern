@@ -38,7 +38,10 @@ export const AsIsFiles = {
 
 export function topologicalCompareAsIsFiles(fileA: string, fileB: string): number {
     const validFiles = Object.values(AsIsFiles);
-    if (validFiles.includes(fileA as any) && validFiles.includes(fileB as any)) {
+    if (
+        validFiles.includes(fileA as (typeof validFiles)[number]) &&
+        validFiles.includes(fileB as (typeof validFiles)[number])
+    ) {
         return asIsTopoValue[fileA as keyof typeof asIsTopoValue] - asIsTopoValue[fileB as keyof typeof asIsTopoValue];
     }
     throw new Error(`Invalid file: ${fileA} or ${fileB}`);
@@ -64,5 +67,5 @@ const asIsTopoValue = {
     [AsIsFiles.TypesBoolean]: 16,
     [AsIsFiles.TypesEnum]: 17,
     [AsIsFiles.TypesHash]: 18,
-    [AsIsFiles.TypesUnknown]: 19,
-}
+    [AsIsFiles.TypesUnknown]: 19
+};

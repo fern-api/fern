@@ -6,8 +6,8 @@ import dedent from "dedent";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
 import { join as pathJoin } from "path";
-import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
 import { topologicalCompareAsIsFiles } from "../AsIs";
+import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
 
 const GEMFILE_FILENAME = "Gemfile";
 const RAKEFILE_FILENAME = "Rakefile";
