@@ -9,6 +9,7 @@ import { convertGeneratorWorkspaceToFernWorkspace } from "../../utils/convertSee
 import { DockerScriptRunner, LocalScriptRunner, ScriptRunner } from "../test";
 import { TaskContextFactory } from "../test/TaskContextFactory";
 import { DockerTestRunner, LocalTestRunner, TestRunner } from "../test/test-runner";
+import { FixtureConfigurations } from "../../config/api";
 
 export async function runWithCustomFixture({
     pathToFixture,
@@ -104,11 +105,17 @@ export async function runWithCustomFixture({
             return;
         }
 
+        const runFixtureConfig: FixtureConfigurations = {
+            customConfig: generatorGroup.config,
+            outputFolder: "",
+            ...customFixtureConfig
+        };
+
         await testRunner.build();
 
         await testRunner.run({
             fixture: "custom",
-            configuration: customFixtureConfig,
+            configuration: runFixtureConfig,
             inspect,
             absolutePathToApiDefinition: pathToFixture,
             outputDir: absolutePathToOutput
@@ -140,7 +147,7 @@ function getGeneratorGroup({
     image: string;
     imageAliases?: string[];
     absolutePathToOutput: AbsoluteFilePath;
-}): { group: GeneratorGroup; invocation: GeneratorInvocation } | undefined {
+}): { group: GeneratorGroup; invocation: GeneratorInvocation; config: object } | undefined {
     const groups = apiWorkspace.generatorsConfiguration?.groups;
     for (const group of groups ?? []) {
         for (const generator of group.generators) {
@@ -155,7 +162,8 @@ function getGeneratorGroup({
                         ...group,
                         generators: [invocation]
                     },
-                    invocation
+                    invocation,
+                    config: generator.config as object
                 };
             }
         }
