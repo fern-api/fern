@@ -14,9 +14,7 @@ public class Example2
             }
         );
 
-        await client.Service.PostAsync(
-            "endpointParam"
-        );
+        await client.NestedNoAuth.Api.GetSomethingAsync();
     }
 
 }

@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Endpoints\Params\Requests\GetWithQuery;
+use Seed\Types\Object\Types\ObjectWithOptionalField;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,9 +11,12 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->params->getWithQuery(
-    new GetWithQuery([
-        'query' => 'query',
-        'number' => 1,
+$client->endpoints->object->testIntegerOverflowEdgeCases(
+    new ObjectWithOptionalField([
+        'string' => 'just-under-boundary',
+        'integer' => -2147483649,
+        'long' => -2147483649,
+        'double' => -2,
+        'bool' => true,
     ]),
 );

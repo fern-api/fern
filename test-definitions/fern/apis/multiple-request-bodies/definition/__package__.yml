@@ -1,0 +1,70 @@
+types:
+  DocumentMetadata:
+    properties:
+      author: optional<string>
+      id: optional<integer>
+      tags: optional<list<unknown>>
+      title: optional<string>
+    source:
+      openapi: openapi.yml
+  DocumentUploadResult:
+    properties:
+      fileId: optional<string>
+      status: optional<string>
+    source:
+      openapi: openapi.yml
+  UploadDocumentResponse:
+    discriminated: false
+    source:
+      openapi: openapi.yml
+    union:
+      - DocumentMetadata
+      - DocumentUploadResult
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    uploadJsonDocument:
+      auth: true
+      display-name: Upload document metadata (JSON) or document file
+      examples:
+        - request: {}
+          response:
+            body:
+              author: author
+              id: 1
+              tags:
+                - key: value
+              title: title
+      method: POST
+      path: /documents/upload
+      request:
+        body:
+          properties:
+            author: optional<string>
+            tags: optional<list<string>>
+            title: optional<string>
+        content-type: application/json
+        name: UploadDocumentRequest
+      response:
+        docs: Successful response
+        status-code: 200
+        type: UploadDocumentResponse
+      source:
+        openapi: openapi.yml
+    uploadPdfDocument:
+      auth: true
+      display-name: Upload document metadata (JSON) or document file
+      method: POST
+      path: /documents/upload
+      request:
+        body: bytes
+        content-type: application/pdf
+      response:
+        docs: Successful response
+        status-code: 200
+        type: UploadDocumentResponse
+      source:
+        openapi: openapi.yml
+  source:
+    openapi: openapi.yml

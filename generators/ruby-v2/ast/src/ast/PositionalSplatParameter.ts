@@ -1,5 +1,5 @@
-import { Parameter } from "./Parameter";
 import { Writer } from "./core/Writer";
+import { Parameter } from "./Parameter";
 
 // TODO: Does this need to be narrowed to collection types only?
 export declare namespace PositionalSplatParameter {

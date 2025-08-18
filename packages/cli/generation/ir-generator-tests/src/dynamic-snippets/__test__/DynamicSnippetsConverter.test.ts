@@ -1,7 +1,6 @@
-import path from "path";
-
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
+import path from "path";
 
 import { loadApisOrThrow } from "../../loadApisOrThrow";
 import { generateAndSnapshotDynamicIR } from "./generateAndSnapshotDynamicIR";

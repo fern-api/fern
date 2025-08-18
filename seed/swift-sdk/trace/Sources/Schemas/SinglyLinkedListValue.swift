@@ -1,6 +1,9 @@
+import Foundation
+
 public struct SinglyLinkedListValue: Codable, Hashable, Sendable {
     public let head: NodeId?
     public let nodes: [NodeId: SinglyLinkedListNodeValue]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +30,7 @@ public struct SinglyLinkedListValue: Codable, Hashable, Sendable {
         try container.encode(self.nodes, forKey: .nodes)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case head
         case nodes

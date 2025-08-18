@@ -1,26 +1,27 @@
 import {
-    Type,
-    Reference,
-    Writer,
     AstNode,
-    PrimitiveType,
     Attribute,
-    Field,
-    Struct,
+    Client,
+    CodeBlock,
     Enum,
     EnumVariant,
-    NewtypeStruct,
-    Method,
-    ImplBlock,
-    Module,
-    Client,
-    Visibility,
-    PUBLIC,
     Expression,
-    Statement,
-    CodeBlock,
+    Field,
+    ImplBlock,
+    MatchArm,
+    Method,
+    Module,
+    NewtypeStruct,
     Pattern,
-    MatchArm
+    PrimitiveType,
+    PUBLIC,
+    Reference,
+    StandaloneFunction,
+    Statement,
+    Struct,
+    Type,
+    Visibility,
+    Writer
 } from "./ast";
 
 // Factory functions for Type creation
@@ -82,6 +83,10 @@ export function method(args: Method.Args): Method {
     return new Method(args);
 }
 
+export function standaloneFunction(args: StandaloneFunction.Args): StandaloneFunction {
+    return new StandaloneFunction(args);
+}
+
 export function implBlock(args: ImplBlock.Args): ImplBlock {
     return new ImplBlock(args);
 }
@@ -110,6 +115,7 @@ export const rust = {
     EnumVariant,
     NewtypeStruct,
     Method,
+    StandaloneFunction,
     ImplBlock,
     Module,
     Client,
@@ -125,6 +131,7 @@ export const rust = {
     enumVariant,
     newtypeStruct,
     method,
+    standaloneFunction,
     implBlock,
     module,
     client,

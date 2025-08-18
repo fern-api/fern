@@ -1,3 +1,5 @@
+import Foundation
+
 public enum UnionWithTime: Codable, Hashable, Sendable {
     case value(Value)
     case date(Date)
@@ -37,6 +39,7 @@ public enum UnionWithTime: Codable, Hashable, Sendable {
     public struct Value: Codable, Hashable, Sendable {
         public let type: String = "value"
         public let value: Int
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -60,6 +63,7 @@ public enum UnionWithTime: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -69,6 +73,7 @@ public enum UnionWithTime: Codable, Hashable, Sendable {
     public struct Date: Codable, Hashable, Sendable {
         public let type: String = "date"
         public let value: Date
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -92,6 +97,7 @@ public enum UnionWithTime: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -101,6 +107,7 @@ public enum UnionWithTime: Codable, Hashable, Sendable {
     public struct Datetime: Codable, Hashable, Sendable {
         public let type: String = "datetime"
         public let value: Date
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -124,6 +131,7 @@ public enum UnionWithTime: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value

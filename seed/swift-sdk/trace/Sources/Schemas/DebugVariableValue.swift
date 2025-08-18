@@ -1,3 +1,5 @@
+import Foundation
+
 public enum DebugVariableValue: Codable, Hashable, Sendable {
     case integerValue(IntegerValue)
     case booleanValue(BooleanValue)
@@ -87,6 +89,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
     public struct IntegerValue: Codable, Hashable, Sendable {
         public let type: String = "integerValue"
         public let value: Int
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -110,6 +113,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -119,6 +123,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
     public struct BooleanValue: Codable, Hashable, Sendable {
         public let type: String = "booleanValue"
         public let value: Bool
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -142,6 +147,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -151,6 +157,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
     public struct DoubleValue: Codable, Hashable, Sendable {
         public let type: String = "doubleValue"
         public let value: Double
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -174,6 +181,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -183,6 +191,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
     public struct StringValue: Codable, Hashable, Sendable {
         public let type: String = "stringValue"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -206,6 +215,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -215,6 +225,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
     public struct CharValue: Codable, Hashable, Sendable {
         public let type: String = "charValue"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -238,6 +249,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -247,6 +259,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
     public struct MapValue: Codable, Hashable, Sendable {
         public let type: String = "mapValue"
         public let keyValuePairs: [DebugKeyValuePairs]
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -270,6 +283,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
             try container.encode(self.keyValuePairs, forKey: .keyValuePairs)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case keyValuePairs
@@ -279,6 +293,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
     public struct ListValue: Codable, Hashable, Sendable {
         public let type: String = "listValue"
         public let value: [DebugVariableValue]
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -302,6 +317,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -312,6 +328,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
         public let type: String = "binaryTreeNodeValue"
         public let nodeId: NodeId
         public let fullTree: BinaryTreeValue
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -339,6 +356,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
             try container.encode(self.fullTree, forKey: .fullTree)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case nodeId
@@ -350,6 +368,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
         public let type: String = "singlyLinkedListNodeValue"
         public let nodeId: NodeId
         public let fullList: SinglyLinkedListValue
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -377,6 +396,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
             try container.encode(self.fullList, forKey: .fullList)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case nodeId
@@ -388,6 +408,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
         public let type: String = "doublyLinkedListNodeValue"
         public let nodeId: NodeId
         public let fullList: DoublyLinkedListValue
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -415,6 +436,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
             try container.encode(self.fullList, forKey: .fullList)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case nodeId
@@ -423,6 +445,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
     }
 
     public struct UndefinedValue: Codable, Hashable, Sendable {
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -441,6 +464,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
     }
 
     public struct NullValue: Codable, Hashable, Sendable {
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -462,6 +486,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
         public let type: String = "genericValue"
         public let stringifiedType: String?
         public let stringifiedValue: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -489,6 +514,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
             try container.encode(self.stringifiedValue, forKey: .stringifiedValue)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case stringifiedType

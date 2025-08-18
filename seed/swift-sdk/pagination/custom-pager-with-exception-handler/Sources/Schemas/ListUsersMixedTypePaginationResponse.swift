@@ -1,6 +1,9 @@
+import Foundation
+
 public struct ListUsersMixedTypePaginationResponse: Codable, Hashable, Sendable {
     public let next: String
     public let data: [User]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +30,7 @@ public struct ListUsersMixedTypePaginationResponse: Codable, Hashable, Sendable 
         try container.encode(self.data, forKey: .data)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case next
         case data

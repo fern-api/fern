@@ -1,5 +1,10 @@
+import Foundation
+
 public struct ListUsersBodyOffsetPaginationRequest: Codable, Hashable, Sendable {
+    /// The object that contains the offset used for pagination
+    /// in order to fetch the next page of results.
     public let pagination: WithPage?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +27,7 @@ public struct ListUsersBodyOffsetPaginationRequest: Codable, Hashable, Sendable 
         try container.encodeIfPresent(self.pagination, forKey: .pagination)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case pagination
     }

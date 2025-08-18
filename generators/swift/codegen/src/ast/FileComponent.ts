@@ -13,4 +13,5 @@ export type FileComponent =
     | EnumWithRawValues
     | LineBreak
     | Statement
-    | Struct;
+    | Struct
+    | string;

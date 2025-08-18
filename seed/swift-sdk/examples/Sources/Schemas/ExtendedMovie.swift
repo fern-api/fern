@@ -1,15 +1,19 @@
+import Foundation
+
 public struct ExtendedMovie: Codable, Hashable, Sendable {
     public let id: MovieId
     public let prequel: MovieId?
     public let title: String
     public let from: String
+    /// The rating scale is one to five stars
     public let rating: Double
-    public let type: JSONValue
+    public let type: Movie
     public let tag: Tag
     public let book: String?
     public let metadata: [String: JSONValue]
     public let revenue: Int64
     public let cast: [String]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -18,7 +22,7 @@ public struct ExtendedMovie: Codable, Hashable, Sendable {
         title: String,
         from: String,
         rating: Double,
-        type: JSONValue,
+        type: Movie,
         tag: Tag,
         book: String? = nil,
         metadata: [String: JSONValue],
@@ -47,7 +51,7 @@ public struct ExtendedMovie: Codable, Hashable, Sendable {
         self.title = try container.decode(String.self, forKey: .title)
         self.from = try container.decode(String.self, forKey: .from)
         self.rating = try container.decode(Double.self, forKey: .rating)
-        self.type = try container.decode(JSONValue.self, forKey: .type)
+        self.type = try container.decode(Movie.self, forKey: .type)
         self.tag = try container.decode(Tag.self, forKey: .tag)
         self.book = try container.decodeIfPresent(String.self, forKey: .book)
         self.metadata = try container.decode([String: JSONValue].self, forKey: .metadata)
@@ -72,6 +76,11 @@ public struct ExtendedMovie: Codable, Hashable, Sendable {
         try container.encode(self.cast, forKey: .cast)
     }
 
+    public enum Movie: String, Codable, Hashable, CaseIterable, Sendable {
+        case movie
+    }
+
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case prequel

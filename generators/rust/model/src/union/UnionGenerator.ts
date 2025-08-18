@@ -3,6 +3,7 @@ import { RustFile } from "@fern-api/rust-base";
 import { Attribute, rust } from "@fern-api/rust-codegen";
 import { SingleUnionType, TypeDeclaration, TypeReference, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
+import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import {
     isCollectionType,
     isDateTimeType,
@@ -10,7 +11,6 @@ import {
     isUnknownType,
     isUuidType
 } from "../utils/primitiveTypeUtils";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class UnionGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -269,8 +269,14 @@ export class UnionGenerator {
         });
     }
 
-    private getVariantTypesUsedInUnion(): { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] {
-        const variantTypeNames: { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] = [];
+    private getVariantTypesUsedInUnion(): {
+        snakeCase: { unsafeName: string };
+        pascalCase: { unsafeName: string };
+    }[] {
+        const variantTypeNames: {
+            snakeCase: { unsafeName: string };
+            pascalCase: { unsafeName: string };
+        }[] = [];
         const visited = new Set<string>();
 
         this.unionTypeDeclaration.types.forEach((unionType) => {
@@ -285,8 +291,12 @@ export class UnionGenerator {
                         if (!visited.has(typeName)) {
                             visited.add(typeName);
                             variantTypeNames.push({
-                                snakeCase: { unsafeName: singleProperty.type.name.snakeCase.unsafeName },
-                                pascalCase: { unsafeName: singleProperty.type.name.pascalCase.unsafeName }
+                                snakeCase: {
+                                    unsafeName: singleProperty.type.name.snakeCase.unsafeName
+                                },
+                                pascalCase: {
+                                    unsafeName: singleProperty.type.name.pascalCase.unsafeName
+                                }
                             });
                         }
                     }
@@ -297,8 +307,12 @@ export class UnionGenerator {
                     if (!visited.has(typeName)) {
                         visited.add(typeName);
                         variantTypeNames.push({
-                            snakeCase: { unsafeName: declaredTypeName.name.snakeCase.unsafeName },
-                            pascalCase: { unsafeName: declaredTypeName.name.pascalCase.unsafeName }
+                            snakeCase: {
+                                unsafeName: declaredTypeName.name.snakeCase.unsafeName
+                            },
+                            pascalCase: {
+                                unsafeName: declaredTypeName.name.pascalCase.unsafeName
+                            }
                         });
                     }
                 },

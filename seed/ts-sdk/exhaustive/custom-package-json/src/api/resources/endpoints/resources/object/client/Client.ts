@@ -43,21 +43,11 @@ export class Object_ {
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithOptionalField({
-     *         string: "string",
-     *         integer: 1,
-     *         long: 1000000,
-     *         double: 1.1,
-     *         bool: true,
-     *         datetime: "2024-01-15T09:30:00Z",
-     *         date: "2023-01-15",
-     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *         base64: "SGVsbG8gd29ybGQh",
-     *         list: ["list", "list"],
-     *         set: ["set"],
-     *         map: {
-     *             1: "map"
-     *         },
-     *         bigint: "1000000"
+     *         string: "test",
+     *         integer: 21991583578,
+     *         long: 9223372036854776000,
+     *         double: 3.14,
+     *         bool: true
      *     })
      */
     public getAndReturnWithOptionalField(
@@ -83,6 +73,11 @@ export class Object_ {
             >
         >
     > {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -90,11 +85,7 @@ export class Object_ {
                 "/object/get-and-return-with-optional-field",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -157,6 +148,11 @@ export class Object_ {
             >
         >
     > {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -164,11 +160,7 @@ export class Object_ {
                 "/object/get-and-return-with-required-field",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -229,6 +221,11 @@ export class Object_ {
             core.APIResponse<Fiddle.types.ObjectWithMapOfMap, Fiddle.endpoints.object.getAndReturnWithMapOfMap.Error>
         >
     > {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -236,11 +233,7 @@ export class Object_ {
                 "/object/get-and-return-with-map-of-map",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -322,6 +315,11 @@ export class Object_ {
             >
         >
     > {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -329,11 +327,7 @@ export class Object_ {
                 "/object/get-and-return-nested-with-optional-field",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -418,6 +412,11 @@ export class Object_ {
             >
         >
     > {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -425,11 +424,7 @@ export class Object_ {
                 `/object/get-and-return-nested-with-required-field/${encodeURIComponent(string_)}`,
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -530,6 +525,11 @@ export class Object_ {
             >
         >
     > {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -537,11 +537,7 @@ export class Object_ {
                 "/object/get-and-return-nested-with-required-field-list",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -568,6 +564,121 @@ export class Object_ {
                 error: Fiddle.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error._unknown(
                     _response.error,
                 ),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
+        };
+    }
+
+    /**
+     * @param {Fiddle.types.ObjectWithOptionalField} request
+     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.testIntegerOverflowEdgeCases({
+     *         string: "boundary-test",
+     *         integer: 2147483647,
+     *         long: 9223372036854776000,
+     *         double: 1.7976931348623157e+308,
+     *         bool: true
+     *     })
+     *
+     * @example
+     *     await client.endpoints.object.testIntegerOverflowEdgeCases({
+     *         string: "just-over-boundary",
+     *         integer: 2147483648,
+     *         long: 2147483648,
+     *         double: 2,
+     *         bool: false
+     *     })
+     *
+     * @example
+     *     await client.endpoints.object.testIntegerOverflowEdgeCases({
+     *         string: "just-under-boundary",
+     *         integer: -2147483649,
+     *         long: -2147483649,
+     *         double: -2,
+     *         bool: true
+     *     })
+     *
+     * @example
+     *     await client.endpoints.object.testIntegerOverflowEdgeCases({
+     *         string: "large-positive",
+     *         integer: 1000000000000,
+     *         long: 1000000000000,
+     *         double: 1000000000000,
+     *         bool: false
+     *     })
+     *
+     * @example
+     *     await client.endpoints.object.testIntegerOverflowEdgeCases({
+     *         string: "large-negative",
+     *         integer: -1000000000000,
+     *         long: -1000000000000,
+     *         double: -1000000000000,
+     *         bool: true
+     *     })
+     */
+    public testIntegerOverflowEdgeCases(
+        request: Fiddle.types.ObjectWithOptionalField,
+        requestOptions?: Object_.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<
+            Fiddle.types.ObjectWithOptionalField,
+            Fiddle.endpoints.object.testIntegerOverflowEdgeCases.Error
+        >
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__testIntegerOverflowEdgeCases(request, requestOptions));
+    }
+
+    private async __testIntegerOverflowEdgeCases(
+        request: Fiddle.types.ObjectWithOptionalField,
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                Fiddle.types.ObjectWithOptionalField,
+                Fiddle.endpoints.object.testIntegerOverflowEdgeCases.Error
+            >
+        >
+    > {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/test-integer-overflow-edge-cases",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: {
+                    ok: true,
+                    body: _response.body as Fiddle.types.ObjectWithOptionalField,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        return {
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.object.testIntegerOverflowEdgeCases.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,

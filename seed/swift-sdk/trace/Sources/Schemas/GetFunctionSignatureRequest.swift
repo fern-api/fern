@@ -1,5 +1,8 @@
+import Foundation
+
 public struct GetFunctionSignatureRequest: Codable, Hashable, Sendable {
     public let functionSignature: FunctionSignature
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +25,7 @@ public struct GetFunctionSignatureRequest: Codable, Hashable, Sendable {
         try container.encode(self.functionSignature, forKey: .functionSignature)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case functionSignature
     }

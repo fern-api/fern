@@ -41,6 +41,37 @@ paths:
                 - client_secret
                 - audience
                 - grant_type
+  /nested-no-auth/get-something:
+    get:
+      operationId: nestedNoAuth_api_getSomething
+      tags:
+        - NestedNoAuthApi
+      parameters: []
+      responses:
+        '204':
+          description: ''
+  /nested/get-something:
+    get:
+      operationId: nested_api_getSomething
+      tags:
+        - NestedApi
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      security:
+        - BearerAuth: []
+  /get-something:
+    get:
+      operationId: simple_getSomething
+      tags:
+        - Simple
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      security:
+        - BearerAuth: []
 components:
   schemas:
     authTokenResponse:

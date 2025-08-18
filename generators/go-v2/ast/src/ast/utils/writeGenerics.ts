@@ -1,5 +1,5 @@
-import { Type } from "../Type";
 import { Writer } from "../core/Writer";
+import { Type } from "../Type";
 
 export function writeGenerics({ writer, generics }: { writer: Writer; generics: Type[] }): void {
     if (generics.length === 0) {

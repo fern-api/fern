@@ -1,6 +1,9 @@
+import Foundation
+
 public struct CreateMovieRequest: Codable, Hashable, Sendable {
     public let title: String
     public let rating: Double
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +30,7 @@ public struct CreateMovieRequest: Codable, Hashable, Sendable {
         try container.encode(self.rating, forKey: .rating)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case title
         case rating

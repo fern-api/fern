@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
-import { rust, Attribute, PUBLIC } from "@fern-api/rust-codegen";
+import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 export class EnumGenerator {
@@ -39,12 +39,17 @@ export class EnumGenerator {
 
         // Write the enum
         rustEnum.write(writer);
+        writer.newLine();
+
+        // Write Display implementation
+        this.writeDisplayImplementation(writer);
 
         return writer.toString();
     }
 
     private writeUseStatements(writer: rust.Writer): void {
         writer.writeLine("use serde::{Deserialize, Serialize};");
+        writer.writeLine("use std::fmt;");
     }
 
     private generateEnumForTypeDeclaration(): rust.Enum {
@@ -59,8 +64,9 @@ export class EnumGenerator {
     private generateEnumAttributes(): rust.Attribute[] {
         const attributes: rust.Attribute[] = [];
 
-        // Always add basic derives
-        const derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
+        // Always add basic derives including Hash and Eq for maximum compatibility
+        // Hash and Eq are needed when enums are used as HashMap keys
+        const derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq", "Eq", "Hash"];
         attributes.push(Attribute.derive(derives));
 
         return attributes;
@@ -78,5 +84,31 @@ export class EnumGenerator {
             name: enumValue.name.name.pascalCase.unsafeName,
             attributes: variantAttributes.length > 0 ? variantAttributes : undefined
         });
+    }
+
+    private writeDisplayImplementation(writer: rust.Writer): void {
+        const enumName = this.typeDeclaration.name.name.pascalCase.unsafeName;
+
+        writer.writeLine(`impl fmt::Display for ${enumName} {`);
+        writer.indent();
+        writer.writeLine("fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {");
+        writer.indent();
+        writer.writeLine("let s = match self {");
+        writer.indent();
+
+        // Generate match arms for each enum variant
+        this.enumTypeDeclaration.values.forEach((enumValue) => {
+            const variantName = enumValue.name.name.pascalCase.unsafeName;
+            const wireValue = enumValue.name.wireValue;
+            writer.writeLine(`Self::${variantName} => "${wireValue}",`);
+        });
+
+        writer.dedent();
+        writer.writeLine("};");
+        writer.writeLine('write!(f, "{}", s)');
+        writer.dedent();
+        writer.writeLine("}");
+        writer.dedent();
+        writer.writeLine("}");
     }
 }

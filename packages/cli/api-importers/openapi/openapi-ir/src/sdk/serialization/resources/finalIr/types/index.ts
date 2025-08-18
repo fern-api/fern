@@ -42,6 +42,7 @@ export * from "./QueryParameter";
 export * from "./Header";
 export * from "./Request";
 export * from "./OctetStreamRequest";
+export * from "./FormUrlEncodedRequest";
 export * from "./JsonRequest";
 export * from "./MultipartRequest";
 export * from "./MultipartRequestProperty";

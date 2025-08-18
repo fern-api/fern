@@ -1,6 +1,9 @@
+import Foundation
+
 public struct FunctionImplementation: Codable, Hashable, Sendable {
     public let impl: String
     public let imports: String?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +30,7 @@ public struct FunctionImplementation: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.imports, forKey: .imports)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case impl
         case imports

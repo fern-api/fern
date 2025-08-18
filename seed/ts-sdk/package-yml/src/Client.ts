@@ -78,6 +78,7 @@ export class SeedPackageYmlClient {
         request: SeedPackageYml.EchoRequest,
         requestOptions?: SeedPackageYmlClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -85,7 +86,7 @@ export class SeedPackageYmlClient {
                 `/${encodeURIComponent(this._options.id)}/`,
             ),
             method: "POST",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",

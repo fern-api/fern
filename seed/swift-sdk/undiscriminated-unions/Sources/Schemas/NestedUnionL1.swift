@@ -1,3 +1,6 @@
+import Foundation
+
+/// Nested layer 1.
 public enum NestedUnionL1: Codable, Hashable, Sendable {
     case int(Int)
     case json(JSONValue)

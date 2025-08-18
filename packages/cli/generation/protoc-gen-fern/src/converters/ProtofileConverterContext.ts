@@ -1,8 +1,7 @@
 import { CodeGeneratorRequest, DescriptorProto, FileDescriptorProto } from "@bufbuild/protobuf/wkt";
-import { OpenAPIV3_1 } from "openapi-types";
-
 import { TypeReference } from "@fern-api/ir-sdk";
 import { AbstractConverterContext, Spec } from "@fern-api/v3-importer-commons";
+import { OpenAPIV3_1 } from "openapi-types";
 
 import { EnumOrMessageConverter } from "./message/EnumOrMessageConverter";
 import { CommentNode, PathStarterValues } from "./utils/CreateGlobalCommentsStore";

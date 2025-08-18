@@ -1,0 +1,13 @@
+// service_service
+"/api/resources"
+"/api/resources/\(resourceID)"
+"/api/resources/search"
+"/api/users"
+"/api/users/\(userID)"
+"/api/users"
+"/api/users/\(userID)"
+"/api/users/\(userID)"
+"/api/connections"
+"/api/connections/\(connectionID)"
+"/api/clients"
+"/api/clients/\(clientID)"

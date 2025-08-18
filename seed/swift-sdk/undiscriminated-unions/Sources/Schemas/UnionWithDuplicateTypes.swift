@@ -1,3 +1,6 @@
+import Foundation
+
+/// Duplicate types.
 public enum UnionWithDuplicateTypes: Codable, Hashable, Sendable {
     case string(String)
     case stringArray([String])

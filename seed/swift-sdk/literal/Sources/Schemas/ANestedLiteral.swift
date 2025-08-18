@@ -1,9 +1,12 @@
+import Foundation
+
 public struct ANestedLiteral: Codable, Hashable, Sendable {
-    public let myLiteral: JSONValue
+    public let myLiteral: HowSuperCool
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        myLiteral: JSONValue,
+        myLiteral: HowSuperCool,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.myLiteral = myLiteral
@@ -12,7 +15,7 @@ public struct ANestedLiteral: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.myLiteral = try container.decode(JSONValue.self, forKey: .myLiteral)
+        self.myLiteral = try container.decode(HowSuperCool.self, forKey: .myLiteral)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -22,6 +25,11 @@ public struct ANestedLiteral: Codable, Hashable, Sendable {
         try container.encode(self.myLiteral, forKey: .myLiteral)
     }
 
+    public enum HowSuperCool: String, Codable, Hashable, CaseIterable, Sendable {
+        case howSuperCool = "How super cool"
+    }
+
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case myLiteral
     }

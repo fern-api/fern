@@ -2,18 +2,20 @@ import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractRustGeneratorCli, RustFile } from "@fern-api/rust-base";
 import { Module, ModuleDeclaration, UseStatement } from "@fern-api/rust-codegen";
+import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
 import { generateModels } from "@fern-api/rust-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { ErrorGenerator } from "./error/ErrorGenerator";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
+import { ErrorGenerator } from "./error/ErrorGenerator";
 import { ClientConfigGenerator } from "./generators/ClientConfigGenerator";
 import { RootClientGenerator } from "./generators/RootClientGenerator";
 import { SubClientGenerator } from "./generators/SubClientGenerator";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { convertDynamicEndpointSnippetRequest, convertIr } from "./utils";
 
 export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     // ===========================
@@ -55,9 +57,18 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     // ===========================
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        context.logger.info("=== GENERATE METHOD CALLED ===");
+
         const projectFiles = await this.generateProjectFiles(context);
         context.project.addSourceFiles(...projectFiles);
+
+        context.logger.info("=== CALLING generateReadme ===");
+        // Generate README if configured
+        await this.generateReadme(context);
+
+        context.logger.info("=== CALLING persist ===");
         await context.project.persist();
+        context.logger.info("=== PERSIST COMPLETE ===");
     }
 
     private async generateProjectFiles(context: SdkGeneratorContext): Promise<RustFile[]> {
@@ -187,6 +198,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         moduleDeclarations.push(new ModuleDeclaration({ name: "http_client", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "request_options", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "client_error", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "pagination", isPublic: true }));
 
         if (this.hasEnvironments(context)) {
             moduleDeclarations.push(new ModuleDeclaration({ name: "environment", isPublic: true }));
@@ -248,6 +260,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             })
         );
         useStatements.push(new UseStatement({ path: "client_error", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "pagination", items: ["*"], isPublic: true }));
 
         return new Module({
             moduleDeclarations,
@@ -279,6 +292,91 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             useStatements,
             rawDeclarations
         });
+    }
+
+    // ===========================
+    // README GENERATION
+    // ===========================
+
+    private async generateReadme(context: SdkGeneratorContext): Promise<void> {
+        try {
+            context.logger.info("Starting README generation...");
+
+            // Generate endpoint snippets using dynamic snippets
+            const endpointSnippets = this.generateDynamicSnippets(context);
+
+            context.logger.debug(`Generated ${endpointSnippets.length} endpoint snippets`);
+
+            // Generate README content using the agent
+            const readmeContent = await context.generatorAgent.generateReadme({
+                context,
+                endpointSnippets
+            });
+
+            context.logger.debug(`Generated README content length: ${readmeContent.length}`);
+
+            // Add README to the project
+            const readmeFile = new RustFile({
+                filename: "README.md",
+                directory: RelativeFilePath.of(""),
+                fileContents: readmeContent
+            });
+
+            context.project.addSourceFiles(readmeFile);
+            context.logger.info("Successfully added README.md to project");
+        } catch (error) {
+            context.logger.error("Failed to generate README.md");
+            if (error instanceof Error) {
+                context.logger.error("Error details:", error.message);
+                if (error.stack) {
+                    context.logger.debug("Stack trace:", error.stack);
+                }
+            }
+        }
+    }
+
+    private generateDynamicSnippets(context: SdkGeneratorContext): Endpoint[] {
+        const endpointSnippets: Endpoint[] = [];
+
+        const dynamicIr = context.ir.dynamic;
+        if (dynamicIr == null) {
+            context.logger.warn("Cannot generate README without dynamic IR");
+            return endpointSnippets;
+        }
+
+        try {
+            context.logger.info("Using DynamicSnippetsGenerator for Rust snippet generation");
+
+            const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
+                ir: convertIr(dynamicIr),
+                config: context.config
+            });
+
+            for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
+                const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
+                for (const endpointExample of endpoint.examples ?? []) {
+                    endpointSnippets.push({
+                        exampleIdentifier: endpointExample.id,
+                        id: {
+                            method: endpoint.location.method,
+                            path,
+                            identifierOverride: endpointId
+                        },
+                        snippet: FernGeneratorExec.EndpointSnippet.go({
+                            client: dynamicSnippetsGenerator.generateSync(
+                                convertDynamicEndpointSnippetRequest(endpointExample)
+                            ).snippet
+                        })
+                    });
+                }
+            }
+
+            context.logger.info(`Generated ${endpointSnippets.length} dynamic snippets`);
+            return endpointSnippets;
+        } catch (error) {
+            context.logger.error(`Failed to generate dynamic snippets: ${error}`);
+            return endpointSnippets;
+        }
     }
 
     // ===========================

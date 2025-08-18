@@ -1,4 +1,7 @@
+import Foundation
+
 public enum UnionWithDiscriminant: Codable, Hashable, Sendable {
+    /// This is a Foo field.
     case foo(Foo)
     case bar(Bar)
 
@@ -29,9 +32,11 @@ public enum UnionWithDiscriminant: Codable, Hashable, Sendable {
         }
     }
 
+    /// This is a Foo field.
     public struct Foo: Codable, Hashable, Sendable {
         public let type: String = "foo"
         public let foo: Foo
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -55,6 +60,7 @@ public enum UnionWithDiscriminant: Codable, Hashable, Sendable {
             try container.encode(self.foo, forKey: .foo)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type = "_type"
             case foo
@@ -64,6 +70,7 @@ public enum UnionWithDiscriminant: Codable, Hashable, Sendable {
     public struct Bar: Codable, Hashable, Sendable {
         public let type: String = "bar"
         public let bar: Bar
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -87,6 +94,7 @@ public enum UnionWithDiscriminant: Codable, Hashable, Sendable {
             try container.encode(self.bar, forKey: .bar)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type = "_type"
             case bar

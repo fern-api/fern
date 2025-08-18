@@ -1,10 +1,8 @@
-import { Reference, getTextOfTsNode } from "@fern-typescript/commons";
+import { SetRequired } from "@fern-api/core-utils";
+import { Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
+import { getTextOfTsNode, Reference } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ClassDeclarationStructure, Scope, ts } from "ts-morph";
-
-import { SetRequired } from "@fern-api/core-utils";
-
-import { Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
 
 import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
@@ -116,6 +114,9 @@ export class GeneratedWrappedService {
             });
             return;
         }
+
+        let authProviderReference: ts.Expression | undefined;
+
         class_.getAccessors.push({
             name: this.getGetterName(),
             returnType: getTextOfTsNode(referenceToWrapped.getTypeNode()),
@@ -132,7 +133,8 @@ export class GeneratedWrappedService {
                                 ts.SyntaxKind.QuestionQuestionEqualsToken,
                                 generatedWrappedService.instantiate({
                                     referenceToClient: referenceToWrapped.getExpression(),
-                                    referenceToOptions: this.wrapperService.getReferenceToOptions()
+                                    referenceToOptions: this.wrapperService.getReferenceToOptions(),
+                                    referenceToAuthProvider: this.wrapperService.getReferenceToAuthProvider()
                                 })
                             )
                         )

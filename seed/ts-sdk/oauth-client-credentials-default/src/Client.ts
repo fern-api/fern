@@ -5,6 +5,9 @@
 import * as core from "./core/index.js";
 import { Auth } from "./api/resources/auth/client/Client.js";
 import { mergeHeaders } from "./core/headers.js";
+import { NestedNoAuth } from "./api/resources/nestedNoAuth/client/Client.js";
+import { Nested } from "./api/resources/nested/client/Client.js";
+import { Simple } from "./api/resources/simple/client/Client.js";
 
 export declare namespace SeedOauthClientCredentialsDefaultClient {
     export interface Options {
@@ -35,6 +38,9 @@ export class SeedOauthClientCredentialsDefaultClient {
     protected readonly _options: SeedOauthClientCredentialsDefaultClient.Options;
     private readonly _oauthTokenProvider: core.OAuthTokenProvider;
     protected _auth: Auth | undefined;
+    protected _nestedNoAuth: NestedNoAuth | undefined;
+    protected _nested: Nested | undefined;
+    protected _simple: Simple | undefined;
 
     constructor(_options: SeedOauthClientCredentialsDefaultClient.Options) {
         this._options = {
@@ -64,6 +70,27 @@ export class SeedOauthClientCredentialsDefaultClient {
 
     public get auth(): Auth {
         return (this._auth ??= new Auth({
+            ...this._options,
+            token: async () => await this._oauthTokenProvider.getToken(),
+        }));
+    }
+
+    public get nestedNoAuth(): NestedNoAuth {
+        return (this._nestedNoAuth ??= new NestedNoAuth({
+            ...this._options,
+            token: async () => await this._oauthTokenProvider.getToken(),
+        }));
+    }
+
+    public get nested(): Nested {
+        return (this._nested ??= new Nested({
+            ...this._options,
+            token: async () => await this._oauthTokenProvider.getToken(),
+        }));
+    }
+
+    public get simple(): Simple {
+        return (this._simple ??= new Simple({
             ...this._options,
             token: async () => await this._oauthTokenProvider.getToken(),
         }));

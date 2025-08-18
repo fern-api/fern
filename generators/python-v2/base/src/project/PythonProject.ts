@@ -1,9 +1,8 @@
+import { AbstractProject, File } from "@fern-api/base-generator";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { loggingExeca } from "@fern-api/logging-execa";
 import { readFile } from "fs/promises";
 import path from "path";
-
-import { AbstractProject, File } from "@fern-api/base-generator";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { loggingExeca } from "@fern-api/logging-execa";
 
 import { AbstractPythonGeneratorContext } from "../cli";
 import { BasePythonCustomConfigSchema } from "../custom-config";

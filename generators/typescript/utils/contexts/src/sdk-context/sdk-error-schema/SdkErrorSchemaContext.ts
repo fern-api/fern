@@ -1,6 +1,5 @@
-import { Reference, Zurg } from "@fern-typescript/commons";
-
 import { DeclaredErrorName } from "@fern-fern/ir-sdk/api";
+import { Reference, Zurg } from "@fern-typescript/commons";
 
 import { GeneratedSdkErrorSchema } from "./GeneratedSdkErrorSchema";
 

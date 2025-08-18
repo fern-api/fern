@@ -1,6 +1,9 @@
+import Foundation
+
 public struct ProblemFiles: Codable, Hashable, Sendable {
     public let solutionFile: FileInfo
     public let readOnlyFiles: [FileInfo]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +30,7 @@ public struct ProblemFiles: Codable, Hashable, Sendable {
         try container.encode(self.readOnlyFiles, forKey: .readOnlyFiles)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case solutionFile
         case readOnlyFiles

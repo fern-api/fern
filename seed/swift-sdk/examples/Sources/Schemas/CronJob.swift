@@ -1,5 +1,8 @@
+import Foundation
+
 public struct CronJob: Codable, Hashable, Sendable {
     public let expression: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +25,7 @@ public struct CronJob: Codable, Hashable, Sendable {
         try container.encode(self.expression, forKey: .expression)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case expression
     }

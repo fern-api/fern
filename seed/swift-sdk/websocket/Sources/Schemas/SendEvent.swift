@@ -1,6 +1,9 @@
+import Foundation
+
 public struct SendEvent: Codable, Hashable, Sendable {
     public let sendText: String
     public let sendParam: Int
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +30,7 @@ public struct SendEvent: Codable, Hashable, Sendable {
         try container.encode(self.sendParam, forKey: .sendParam)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case sendText
         case sendParam

@@ -1,3 +1,5 @@
+import Foundation
+
 public final class ServiceClient: Sendable {
     private let httpClient: HTTPClient
 
@@ -13,12 +15,12 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func downloadFile(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func downloadFile(requestOptions: RequestOptions? = nil) async throws -> Data {
         return try await httpClient.performRequest(
             method: .post,
             path: "/",
             requestOptions: requestOptions,
-            responseType: Any.self
+            responseType: Data.self
         )
     }
 }

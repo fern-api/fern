@@ -1,3 +1,5 @@
+import Foundation
+
 public enum DataType: Codable, Hashable, Sendable {
     case string(String)
     case base64(Base64)
@@ -32,6 +34,7 @@ public enum DataType: Codable, Hashable, Sendable {
     public struct String: Codable, Hashable, Sendable {
         public let type: String = "string"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -55,6 +58,7 @@ public enum DataType: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -64,6 +68,7 @@ public enum DataType: Codable, Hashable, Sendable {
     public struct Base64: Codable, Hashable, Sendable {
         public let type: String = "base64"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -87,6 +92,7 @@ public enum DataType: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value

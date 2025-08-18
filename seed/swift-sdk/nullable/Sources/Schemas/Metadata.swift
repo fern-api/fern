@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Metadata: Codable, Hashable, Sendable {
     public let createdAt: Date
     public let updatedAt: Date
@@ -5,6 +7,7 @@ public struct Metadata: Codable, Hashable, Sendable {
     public let activated: JSONValue?
     public let status: Status
     public let values: [String: JSONValue?]?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -47,6 +50,7 @@ public struct Metadata: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.values, forKey: .values)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case createdAt
         case updatedAt

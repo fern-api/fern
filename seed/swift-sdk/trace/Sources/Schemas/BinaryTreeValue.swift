@@ -1,6 +1,9 @@
+import Foundation
+
 public struct BinaryTreeValue: Codable, Hashable, Sendable {
     public let root: NodeId?
     public let nodes: [NodeId: BinaryTreeNodeValue]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +30,7 @@ public struct BinaryTreeValue: Codable, Hashable, Sendable {
         try container.encode(self.nodes, forKey: .nodes)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case root
         case nodes

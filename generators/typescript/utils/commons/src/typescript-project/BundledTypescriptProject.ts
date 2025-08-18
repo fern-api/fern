@@ -1,14 +1,13 @@
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { produce } from "immer";
 import yaml from "js-yaml";
 import { IPackageJson } from "package-json-type";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
 
-import { RelativeFilePath } from "@fern-api/fs-utils";
-
 import { DependencyType } from "../dependency-manager/DependencyManager";
 import { JSR } from "./JSR";
-import { TypescriptProject } from "./TypescriptProject";
 import { mergeExtraConfigs } from "./mergeExtraConfigs";
+import { TypescriptProject } from "./TypescriptProject";
 
 export declare namespace BundledTypescriptProject {
     export interface Init extends TypescriptProject.Init {}
@@ -28,13 +27,16 @@ export class BundledTypescriptProject extends TypescriptProject {
         if (this.outputJsr) {
             await this.generateJsrJson();
         }
+        if (this.packageManager === "pnpm") {
+            await this.generatePnpmWorkspace();
+        }
     }
 
-    protected getYarnFormatCommand(): string[] {
+    protected getFormatCommand(): string[] {
         return [BundledTypescriptProject.FORMAT_SCRIPT_NAME];
     }
 
-    protected getYarnBuildCommand(): string[] {
+    protected getBuildCommand(): string[] {
         return [BundledTypescriptProject.BUILD_SCRIPT_NAME];
     }
 
@@ -118,9 +120,16 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
                 "!.yarn/plugins",
                 "!.yarn/releases",
                 "!.yarn/sdks",
-                "!.yarn/versions"
+                "!.yarn/versions",
+                "# pnpm",
+                ".pnpm-store/",
+                ".pnpm-debug.log"
             ].join("\n")
         );
+    }
+
+    private async generatePnpmWorkspace(): Promise<void> {
+        await this.writeFileToVolume(RelativeFilePath.of(TypescriptProject.PNPM_WORKSPACE_FILENAME), "packages: ['.']");
     }
 
     private async generatePrettierRc(): Promise<void> {
@@ -244,8 +253,8 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                 [BundledTypescriptProject.COMPILE_SCRIPT_NAME]: "tsc",
                 [BundledTypescriptProject.BUNDLE_SCRIPT_NAME]: `node ${BundledTypescriptProject.BUILD_SCRIPT_FILENAME}`,
                 [BundledTypescriptProject.BUILD_SCRIPT_NAME]: [
-                    `yarn ${BundledTypescriptProject.COMPILE_SCRIPT_NAME}`,
-                    `yarn ${BundledTypescriptProject.BUNDLE_SCRIPT_NAME}`
+                    `${this.packageManager} ${BundledTypescriptProject.COMPILE_SCRIPT_NAME}`,
+                    `${this.packageManager} ${BundledTypescriptProject.BUNDLE_SCRIPT_NAME}`
                 ].join(" && ")
             }
         };

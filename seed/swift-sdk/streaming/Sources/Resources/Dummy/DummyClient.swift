@@ -1,3 +1,5 @@
+import Foundation
+
 public final class DummyClient: Sendable {
     private let httpClient: HTTPClient
 
@@ -5,13 +7,13 @@ public final class DummyClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func generateStream(request: GenerateStreamRequest, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func generateStream(request: GenerateStreamRequest, requestOptions: RequestOptions? = nil) async throws -> JSONValue {
         return try await httpClient.performRequest(
             method: .post,
             path: "/generate-stream",
             body: request,
             requestOptions: requestOptions,
-            responseType: Any.self
+            responseType: JSONValue.self
         )
     }
 

@@ -1,15 +1,13 @@
-import { Reference, TypeReferenceNode } from "@fern-typescript/commons";
-import { ts } from "ts-morph";
-
 import {
     DeclaredTypeName,
     ExampleTypeReference,
-    ObjectProperty,
     ResolvedTypeReference,
     TypeDeclaration,
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+import { Reference, TypeReferenceNode } from "@fern-typescript/commons";
+import { ts } from "ts-morph";
 
 import { GeneratedType } from "./GeneratedType";
 import { GeneratedTypeReferenceExample } from "./GeneratedTypeReferenceExample";
@@ -37,5 +35,6 @@ export interface TypeContext {
     getGeneratedExample: (example: ExampleTypeReference) => GeneratedTypeReferenceExample;
     isNullable: (typeReference: TypeReference) => boolean;
     isOptional: (typeReference: TypeReference) => boolean;
+    isLiteral: (typeReference: TypeReference) => boolean;
     hasDefaultValue: (typeReference: TypeReference) => boolean;
 }

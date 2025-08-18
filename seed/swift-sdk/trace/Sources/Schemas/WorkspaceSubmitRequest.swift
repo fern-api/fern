@@ -1,8 +1,11 @@
+import Foundation
+
 public struct WorkspaceSubmitRequest: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let language: Language
     public let submissionFiles: [SubmissionFileInfo]
     public let userId: String?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -37,6 +40,7 @@ public struct WorkspaceSubmitRequest: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.userId, forKey: .userId)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case submissionId
         case language

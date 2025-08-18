@@ -1,3 +1,5 @@
+import Foundation
+
 public enum ClientError: Error {
     // Network & Client Errors
     case invalidURL

@@ -1,12 +1,5 @@
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import { readFile, stat } from "fs/promises";
-import matter from "gray-matter";
-import { kebabCase } from "lodash-es";
-import urlJoin from "url-join";
-
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { WithoutQuestionMarks, docsYml, parseDocsConfiguration } from "@fern-api/configuration-loader";
+import { docsYml, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
     parseImagePaths,
@@ -17,10 +10,10 @@ import {
 import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import {
     AbsoluteFilePath,
-    RelativeFilePath,
     doesPathExist,
     join,
     listFiles,
+    RelativeFilePath,
     relative,
     resolve
 } from "@fern-api/fs-utils";
@@ -29,6 +22,12 @@ import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import { readFile, stat } from "fs/promises";
+import matter from "gray-matter";
+import { kebabCase } from "lodash-es";
+import urlJoin from "url-join";
 
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ApiReferenceNodeConverterLatest } from "./ApiReferenceNodeConverterLatest";
@@ -64,6 +63,7 @@ type RegisterApiFn = (opts: {
     snippetsConfig: APIV1Write.SnippetsConfig;
     playgroundConfig?: PlaygroundConfig;
     apiName?: string;
+    workspace?: FernWorkspace;
 }) => AsyncOrSync<string>;
 
 type RegisterApiV2Fn = (opts: {
@@ -847,7 +847,15 @@ export class DocsDefinitionResolver {
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
 
         let ir: IntermediateRepresentation | undefined = undefined;
-        let workspace: FernWorkspace | undefined = undefined;
+        const workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
+            { context: this.taskContext },
+            {
+                enableUniqueErrorsPerEndpoint: true,
+                detectGlobalHeaders: false,
+                objectQueryParameters: true,
+                preserveSchemaIds: true
+            }
+        );
         const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
         const useV3Parser = openapiParserV3 == null || openapiParserV3;
         // The v3 parser is enabled on default. We attempt to load the OpenAPI workspace and generate an IR directly.
@@ -866,15 +874,6 @@ export class DocsDefinitionResolver {
         }
         // This case runs if either the V3 parser is not enabled, or if we failed to load the OpenAPI workspace
         if (ir == null) {
-            workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
-                { context: this.taskContext },
-                {
-                    enableUniqueErrorsPerEndpoint: true,
-                    detectGlobalHeaders: false,
-                    objectQueryParameters: true,
-                    preserveSchemaIds: true
-                }
-            );
             ir = generateIntermediateRepresentation({
                 workspace,
                 audiences: item.audiences,
@@ -894,9 +893,15 @@ export class DocsDefinitionResolver {
             ir,
             snippetsConfig,
             playgroundConfig: { oauth: item.playground?.oauth },
-            apiName: item.apiName
+            apiName: item.apiName,
+            workspace
         });
-        const api = convertIrToApiDefinition(ir, apiDefinitionId, { oauth: item.playground?.oauth });
+        const api = convertIrToApiDefinition({
+            ir,
+            apiDefinitionId,
+            playgroundConfig: { oauth: item.playground?.oauth },
+            context: this.taskContext
+        });
 
         const node = new ApiReferenceNodeConverter(
             item,

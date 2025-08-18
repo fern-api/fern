@@ -1,8 +1,11 @@
+import Foundation
+
 public struct BasicTestCaseTemplate: Codable, Hashable, Sendable {
     public let templateId: TestCaseTemplateId
     public let name: String
     public let description: TestCaseImplementationDescription
     public let expectedValueParameterId: ParameterId
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -37,6 +40,7 @@ public struct BasicTestCaseTemplate: Codable, Hashable, Sendable {
         try container.encode(self.expectedValueParameterId, forKey: .expectedValueParameterId)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case templateId
         case name

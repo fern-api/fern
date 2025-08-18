@@ -1,7 +1,6 @@
 using global::System.Threading.Tasks;
 using SeedExhaustive;
 using SeedExhaustive.Core;
-using SeedExhaustive.Endpoints;
 
 namespace Usage;
 
@@ -15,10 +14,8 @@ public class Example38
             }
         );
 
-        await client.Endpoints.Put.AddAsync(
-            new PutRequest{
-                Id = "id"
-            }
+        await client.Endpoints.Primitive.GetAndReturnLongAsync(
+            1000000l
         );
     }
 

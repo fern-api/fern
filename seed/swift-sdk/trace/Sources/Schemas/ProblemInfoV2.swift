@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ProblemInfoV2: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let problemDescription: ProblemDescription
@@ -9,6 +11,7 @@ public struct ProblemInfoV2: Codable, Hashable, Sendable {
     public let customTestCaseTemplates: [TestCaseTemplate]
     public let testcases: [TestCaseV2]
     public let isPublic: Bool
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -67,6 +70,7 @@ public struct ProblemInfoV2: Codable, Hashable, Sendable {
         try container.encode(self.isPublic, forKey: .isPublic)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case problemId
         case problemDescription

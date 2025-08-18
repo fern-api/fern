@@ -1,8 +1,11 @@
+import Foundation
+
 public struct SendEnumInlinedRequest: Codable, Hashable, Sendable {
     public let operand: Operand
     public let maybeOperand: Operand?
     public let operandOrColor: ColorOrOperand
     public let maybeOperandOrColor: ColorOrOperand?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -37,6 +40,7 @@ public struct SendEnumInlinedRequest: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.maybeOperandOrColor, forKey: .maybeOperandOrColor)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case operand
         case maybeOperand

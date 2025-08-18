@@ -1,9 +1,8 @@
-import { writeFile } from "fs/promises";
-import tmp from "tmp-promise";
-
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
+import { writeFile } from "fs/promises";
+import tmp from "tmp-promise";
 
 import { DockerScriptConfig } from "../../../config/api";
 import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces";
@@ -46,7 +45,9 @@ export class DockerScriptRunner extends ScriptRunner {
 
     public async stop(): Promise<void> {
         for (const script of this.scripts) {
-            await loggingExeca(undefined, "docker", ["kill", script.containerId]);
+            await loggingExeca(this.context.logger, "docker", ["kill", script.containerId], {
+                doNotPipeOutput: false
+            });
         }
     }
 
@@ -79,7 +80,7 @@ export class DockerScriptRunner extends ScriptRunner {
             "docker",
             ["exec", containerId, "mkdir", `/${workDir}`],
             {
-                doNotPipeOutput: true,
+                doNotPipeOutput: false,
                 reject: false
             }
         );
@@ -94,7 +95,7 @@ export class DockerScriptRunner extends ScriptRunner {
             "docker",
             ["cp", scriptFile.path, `${containerId}:/${workDir}/test.sh`],
             {
-                doNotPipeOutput: true,
+                doNotPipeOutput: false,
                 reject: false
             }
         );
@@ -109,7 +110,7 @@ export class DockerScriptRunner extends ScriptRunner {
             "docker",
             ["cp", `${outputDir}/.`, `${containerId}:/${workDir}/generated/`],
             {
-                doNotPipeOutput: true,
+                doNotPipeOutput: false,
                 reject: false
             }
         );
@@ -126,7 +127,7 @@ export class DockerScriptRunner extends ScriptRunner {
             "docker",
             ["exec", containerId, "/bin/sh", "-c", `chmod +x /${workDir}/test.sh && /${workDir}/test.sh`],
             {
-                doNotPipeOutput: true,
+                doNotPipeOutput: false,
                 reject: false
             }
         );
@@ -151,14 +152,14 @@ export class DockerScriptRunner extends ScriptRunner {
         const cliVolumeBind = `${absoluteFilePathToFernCli}:/fern`;
         // Start running a docker container for each script instance
         for (const script of this.workspace.workspaceConfig.scripts ?? []) {
-            const startSeedCommand = await loggingExeca(undefined, "docker", [
-                "run",
-                "-dit",
-                "-v",
-                cliVolumeBind,
-                script.docker,
-                "/bin/sh"
-            ]);
+            const startSeedCommand = await loggingExeca(
+                context.logger,
+                "docker",
+                ["run", "-dit", "-v", cliVolumeBind, script.docker, "/bin/sh"],
+                {
+                    doNotPipeOutput: false
+                }
+            );
             const containerId = startSeedCommand.stdout;
             this.scripts.push({ ...script, containerId });
         }

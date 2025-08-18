@@ -1,9 +1,9 @@
 import { AstNode } from "./AstNode";
-import { Writer } from "./Writer";
-import { Field } from "./Field";
 import { Attribute } from "./Attribute";
+import { Field } from "./Field";
 import { Visibility } from "./types";
 import { writeVisibility } from "./utils/writeVisibility";
+import { Writer } from "./Writer";
 
 export declare namespace Struct {
     interface Args {

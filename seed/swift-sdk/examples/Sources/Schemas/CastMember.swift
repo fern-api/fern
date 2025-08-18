@@ -1,3 +1,5 @@
+import Foundation
+
 public enum CastMember: Codable, Hashable, Sendable {
     case actor(Actor)
     case actress(Actress)

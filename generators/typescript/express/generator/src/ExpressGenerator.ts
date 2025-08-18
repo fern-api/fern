@@ -1,3 +1,6 @@
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
+import { HttpService, IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
 import {
     CoreUtilitiesManager,
     DependencyManager,
@@ -24,11 +27,6 @@ import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { Directory, Project, SourceFile } from "ts-morph";
-
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { Logger } from "@fern-api/logger";
-
-import { HttpService, IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
 
 import { ExpressContextImpl } from "./contexts/ExpressContextImpl";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
@@ -71,6 +69,7 @@ export declare namespace ExpressGenerator {
         useBigInt: boolean;
         noOptionalProperties: boolean;
         packagePath: string | undefined;
+        packageManager: "pnpm" | "yarn";
     }
 }
 
@@ -290,7 +289,8 @@ export class ExpressGenerator {
             extraConfigs: undefined,
             outputJsr: false,
             exportSerde: false,
-            useLegacyExports: true
+            useLegacyExports: true,
+            packageManager: this.config.packageManager
         });
     }
 

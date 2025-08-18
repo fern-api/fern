@@ -1,5 +1,8 @@
+import Foundation
+
 public struct ObjectWithMapOfMap: Codable, Hashable, Sendable {
     public let map: [String: [String: String]]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +25,7 @@ public struct ObjectWithMapOfMap: Codable, Hashable, Sendable {
         try container.encode(self.map, forKey: .map)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case map
     }

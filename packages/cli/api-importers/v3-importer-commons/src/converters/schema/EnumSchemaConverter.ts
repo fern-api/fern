@@ -1,6 +1,5 @@
-import { OpenAPIV3_1 } from "openapi-types";
-
 import { Type } from "@fern-api/ir-sdk";
+import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext, FernEnumConfig } from "../..";
 

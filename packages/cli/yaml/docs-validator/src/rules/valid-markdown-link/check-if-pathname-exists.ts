@@ -1,5 +1,5 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
-import { AbsoluteFilePath, RelativeFilePath, dirname, doesPathExist, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { getRedirectForPath } from "./redirect-for-path";
 import { addLeadingSlash, removeLeadingSlash, removeTrailingSlash } from "./url-utils";

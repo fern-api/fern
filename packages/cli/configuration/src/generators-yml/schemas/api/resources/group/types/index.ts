@@ -19,3 +19,4 @@ export * from "./PostmanOutputLocationSchema";
 export * from "./LocalFileSystemOutputLocationSchema";
 export * from "./NugetOutputLocationSchema";
 export * from "./RubyGemsOutputLocationSchema";
+export * from "./CratesOutputLocationSchema";

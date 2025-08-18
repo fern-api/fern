@@ -1,7 +1,7 @@
 import { Access } from "./Access";
-import { Method } from "./Method";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { Method } from "./Method";
 
 export declare namespace Class {
     interface Args {

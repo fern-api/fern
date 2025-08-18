@@ -1,18 +1,21 @@
+import Foundation
+
 public struct RefreshTokenRequest: Codable, Hashable, Sendable {
     public let clientId: String
     public let clientSecret: String
     public let refreshToken: String
-    public let audience: JSONValue
-    public let grantType: JSONValue
+    public let audience: HttpsApiExampleCom
+    public let grantType: RefreshToken
     public let scope: String?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         clientId: String,
         clientSecret: String,
         refreshToken: String,
-        audience: JSONValue,
-        grantType: JSONValue,
+        audience: HttpsApiExampleCom,
+        grantType: RefreshToken,
         scope: String? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -30,8 +33,8 @@ public struct RefreshTokenRequest: Codable, Hashable, Sendable {
         self.clientId = try container.decode(String.self, forKey: .clientId)
         self.clientSecret = try container.decode(String.self, forKey: .clientSecret)
         self.refreshToken = try container.decode(String.self, forKey: .refreshToken)
-        self.audience = try container.decode(JSONValue.self, forKey: .audience)
-        self.grantType = try container.decode(JSONValue.self, forKey: .grantType)
+        self.audience = try container.decode(HttpsApiExampleCom.self, forKey: .audience)
+        self.grantType = try container.decode(RefreshToken.self, forKey: .grantType)
         self.scope = try container.decodeIfPresent(String.self, forKey: .scope)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
@@ -47,6 +50,15 @@ public struct RefreshTokenRequest: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.scope, forKey: .scope)
     }
 
+    public enum HttpsApiExampleCom: String, Codable, Hashable, CaseIterable, Sendable {
+        case httpsApiExampleCom = "https://api.example.com"
+    }
+
+    public enum RefreshToken: String, Codable, Hashable, CaseIterable, Sendable {
+        case refreshToken = "refresh_token"
+    }
+
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case clientId = "client_id"
         case clientSecret = "client_secret"

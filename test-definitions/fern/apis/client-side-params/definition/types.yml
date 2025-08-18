@@ -1,0 +1,228 @@
+types:
+  Resource:
+    properties:
+      id: string
+      name: string
+      description: optional<string>
+      created_at: datetime
+      updated_at: datetime
+      metadata: optional<map<string, unknown>>
+
+  SearchResponse:
+    properties:
+      results: list<Resource>
+      total: optional<integer>
+      next_offset: optional<integer>
+
+  User:
+    docs: User object similar to Auth0 users
+    properties:
+      user_id: string
+      email: string
+      email_verified: boolean
+      username: optional<string>
+      phone_number: optional<string>
+      phone_verified: optional<boolean>
+      created_at: datetime
+      updated_at: datetime
+      identities: optional<list<Identity>>
+      app_metadata: optional<map<string, unknown>>
+      user_metadata: optional<map<string, unknown>>
+      picture: optional<string>
+      name: optional<string>
+      nickname: optional<string>
+      multifactor: optional<list<string>>
+      last_ip: optional<string>
+      last_login: optional<datetime>
+      logins_count: optional<integer>
+      blocked: optional<boolean>
+      given_name: optional<string>
+      family_name: optional<string>
+
+  Identity:
+    properties:
+      connection: string
+      user_id: string
+      provider: string
+      is_social: boolean
+      access_token: optional<string>
+      expires_in: optional<integer>
+
+  PaginatedUserResponse:
+    docs: Response with pagination info like Auth0
+    properties:
+      users: list<User>
+      start: integer
+      limit: integer
+      length: integer
+      total: optional<integer>
+
+  CreateUserRequest:
+    properties:
+      email: string
+      email_verified: optional<boolean>
+      username: optional<string>
+      password: optional<string>
+      phone_number: optional<string>
+      phone_verified: optional<boolean>
+      user_metadata: optional<map<string, unknown>>
+      app_metadata: optional<map<string, unknown>>
+      connection: string
+      
+  UpdateUserRequest:
+    properties:
+      email: optional<string>
+      email_verified: optional<boolean>
+      username: optional<string>
+      phone_number: optional<string>
+      phone_verified: optional<boolean>
+      user_metadata: optional<map<string, unknown>>
+      app_metadata: optional<map<string, unknown>>
+      password: optional<string>
+      blocked: optional<boolean>
+
+  # Connection types
+  Connection:
+    docs: Represents an identity provider connection
+    properties:
+      id:
+        type: string
+        docs: Connection identifier
+      name:
+        type: string
+        docs: Connection name
+      display_name:
+        type: optional<string>
+        docs: Display name for the connection
+      strategy:
+        type: string
+        docs: The identity provider identifier (auth0, google-oauth2, facebook, etc.)
+      options:
+        type: optional<map<string, unknown>>
+        docs: Connection-specific configuration options
+      enabled_clients:
+        type: optional<list<string>>
+        docs: List of client IDs that can use this connection
+      realms:
+        type: optional<list<string>>
+        docs: Applicable realms for enterprise connections
+      is_domain_connection:
+        type: optional<boolean>
+        docs: Whether this is a domain connection
+      metadata:
+        type: optional<map<string, unknown>>
+        docs: Additional metadata
+
+  # Client/Application types
+  Client:
+    docs: Represents a client application
+    properties:
+      client_id:
+        type: string
+        docs: The unique client identifier
+      tenant:
+        type: optional<string>
+        docs: The tenant name
+      name:
+        type: string
+        docs: Name of the client
+      description:
+        type: optional<string>
+        docs: Free text description of the client
+      global:
+        type: optional<boolean>
+        docs: Whether this is a global client
+      client_secret:
+        type: optional<string>
+        docs: The client secret (only for non-public clients)
+      app_type:
+        type: optional<string>
+        docs: The type of application (spa, native, regular_web, non_interactive)
+      logo_uri:
+        type: optional<string>
+        docs: URL of the client logo
+      is_first_party:
+        type: optional<boolean>
+        docs: Whether this client is a first party client
+      oidc_conformant:
+        type: optional<boolean>
+        docs: Whether this client conforms to OIDC specifications
+      callbacks:
+        type: optional<list<string>>
+        docs: Allowed callback URLs
+      allowed_origins:
+        type: optional<list<string>>
+        docs: Allowed origins for CORS
+      web_origins:
+        type: optional<list<string>>
+        docs: Allowed web origins for CORS
+      grant_types:
+        type: optional<list<string>>
+        docs: Allowed grant types
+      jwt_configuration:
+        type: optional<map<string, unknown>>
+        docs: JWT configuration for the client
+      signing_keys:
+        type: optional<list<map<string, unknown>>>
+        docs: Client signing keys
+      encryption_key:
+        type: optional<map<string, unknown>>
+        docs: Encryption key
+      sso:
+        type: optional<boolean>
+        docs: Whether SSO is enabled
+      sso_disabled:
+        type: optional<boolean>
+        docs: Whether SSO is disabled
+      cross_origin_auth:
+        type: optional<boolean>
+        docs: Whether to use cross-origin authentication
+      cross_origin_loc:
+        type: optional<string>
+        docs: URL for cross-origin authentication
+      custom_login_page_on:
+        type: optional<boolean>
+        docs: Whether a custom login page is enabled
+      custom_login_page:
+        type: optional<string>
+        docs: Custom login page URL
+      custom_login_page_preview:
+        type: optional<string>
+        docs: Custom login page preview URL
+      form_template:
+        type: optional<string>
+        docs: Form template for WS-Federation
+      is_heroku_app:
+        type: optional<boolean>
+        docs: Whether this is a Heroku application
+      addons:
+        type: optional<map<string, unknown>>
+        docs: Addons enabled for this client
+      token_endpoint_auth_method:
+        type: optional<string>
+        docs: Requested authentication method for the token endpoint
+      client_metadata:
+        type: optional<map<string, unknown>>
+        docs: Metadata associated with the client
+      mobile:
+        type: optional<map<string, unknown>>
+        docs: Mobile app settings
+
+  PaginatedClientResponse:
+    docs: Paginated response for clients listing
+    properties:
+      start:
+        type: integer
+        docs: Starting index (zero-based)
+      limit:
+        type: integer
+        docs: Number of items requested
+      length:
+        type: integer
+        docs: Number of items returned
+      total:
+        type: optional<integer>
+        docs: Total number of items (when include_totals=true)
+      clients:
+        type: list<Client>
+        docs: List of clients

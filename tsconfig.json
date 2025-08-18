@@ -446,6 +446,9 @@
       "path": "./generators/rust/sdk"
     },
     {
+      "path": "./generators/rust/dynamic-snippets"
+    },
+    {
       "path": "./packages/cli/login"
     },
     {

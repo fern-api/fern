@@ -1,6 +1,6 @@
 service:
   auth: false
-  base-path: ''
+  base-path: ""
   endpoints:
     patch:
       method: PATCH
@@ -14,3 +14,84 @@ service:
         name: PatchProxyRequest
       source:
         openapi: ../specs/vault/swagger.json
+
+    # Test with more complex types - properly distinguishing optional vs optional<nullable>
+    patchComplex:
+      docs: |
+        Update with JSON merge patch - complex types.
+        This endpoint demonstrates the distinction between:
+        - optional<T> fields (can be present or absent, but not null)
+        - optional<nullable<T>> fields (can be present, absent, or null)
+      method: PATCH
+      path: /complex/{id}
+      path-parameters:
+        id: string
+      request:
+        body:
+          properties:
+            # These fields can be present or absent, but NOT null
+            name: optional<string>
+            age: optional<integer>
+            active: optional<boolean>
+            metadata: optional<map<string, unknown>>
+            tags: optional<list<string>>
+
+            # These fields can be present, absent, OR null (true tri-state)
+            email: optional<nullable<string>>
+            nickname: optional<nullable<string>>
+            bio: optional<nullable<string>>
+            profileImageUrl: optional<nullable<string>>
+            settings: optional<nullable<map<string, unknown>>>
+        content-type: application/merge-patch+json
+        name: PatchComplexRequest
+
+    namedPatchWithMixed:
+      docs: |
+        Named request with mixed optional/nullable fields and merge-patch content type.
+        This should trigger the NPE issue when optional fields aren't initialized.
+      method: PATCH
+      path: /named-mixed/{id}
+      path-parameters:
+        id: string
+      request:
+        name: NamedMixedPatchRequest
+        body:
+          properties:
+            appId: optional<string> # Changed to optional
+            instructions: nullable<string> # Kept as nullable
+            active: nullable<boolean> # Kept as nullable
+        content-type: application/merge-patch+json
+
+    # Test case to verify both NPE issues are fixed
+    optionalMergePatchTest:
+      docs: |
+        Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+        This endpoint should:
+        1. Not NPE when fields are not provided (tests initialization)
+        2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
+      method: PATCH
+      path: /optional-merge-patch-test
+      request:
+        name: OptionalMergePatchRequest
+        body:
+          properties:
+            requiredField: string                    # Required field
+            optionalString: optional<string>         # Should be Optional<String> with initialization
+            optionalInteger: optional<integer>       # Should be Optional<Integer> with initialization
+            optionalBoolean: optional<boolean>       # Should be Optional<Boolean> with initialization
+            nullableString: nullable<string>         # Should be OptionalNullable<String> (for comparison)
+        content-type: application/merge-patch+json
+    
+    # Regular PATCH without merge-patch content type (should use Optional)
+    regularPatch:
+      docs: Regular PATCH endpoint without merge-patch semantics
+      method: PATCH
+      path: /regular/{id}
+      path-parameters:
+        id: string
+      request:
+        body:
+          properties:
+            field1: optional<string>
+            field2: optional<integer>
+        name: RegularPatchRequest

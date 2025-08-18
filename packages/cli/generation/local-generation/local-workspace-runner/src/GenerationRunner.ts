@@ -1,26 +1,24 @@
-import chalk from "chalk";
-import { readFile, writeFile } from "fs/promises";
-import * as prettier from "prettier2";
-
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import {
+    generatorsYml,
     RESOLVED_SNIPPET_TEMPLATES_MD,
     SNIPPET_JSON_FILENAME,
-    SNIPPET_TEMPLATES_JSON_FILENAME,
-    generatorsYml
+    SNIPPET_TEMPLATES_JSON_FILENAME
 } from "@fern-api/configuration";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { HttpEndpoint, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { Fern, Template } from "@fern-api/sdk";
 import { TaskContext } from "@fern-api/task-context";
-
-import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import chalk from "chalk";
+import { readFile, writeFile } from "fs/promises";
+import * as prettier from "prettier2";
+import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests";
 import { ExecutionEnvironment } from "./ExecutionEnvironment";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace";
-import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 export declare namespace GenerationRunner {
     interface RunArgs {
@@ -220,7 +218,8 @@ export class GenerationRunner {
             includeOptionalRequestPropertyExamples: true,
             inspect,
             executionEnvironment: this.executionEnvironment,
-            ir: rawIr
+            ir: rawIr,
+            runner: undefined
         });
 
         return { ir, generatorConfig };

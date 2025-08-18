@@ -1,6 +1,9 @@
+import Foundation
+
 public struct Metadata: Codable, Hashable, Sendable {
     public let id: Id
     public let value: JSONValue
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +30,7 @@ public struct Metadata: Codable, Hashable, Sendable {
         try container.encode(self.value, forKey: .value)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case value

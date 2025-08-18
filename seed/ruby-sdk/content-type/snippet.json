@@ -13,12 +13,56 @@
         },
         {
             "id": {
+                "path": "/complex/{id}",
+                "method": "PATCH",
+                "identifierOverride": "endpoint_service.patchComplex"
+            },
+            "snippet": {
+                "client": "require \"fern_content_type\"\n\ncontent_types = SeedContentTypesClient::Client.new(base_url: \"https://api.example.com\")\ncontent_types.service.patch_complex(\n  id: \"id\",\n  name: \"name\",\n  age: 1,\n  active: true,\n  metadata: { \"metadata\": {\"key\":\"value\"} },\n  tags: [\"tags\", \"tags\"],\n  email: \"email\",\n  nickname: \"nickname\",\n  bio: \"bio\",\n  profile_image_url: \"profileImageUrl\",\n  settings: { \"settings\": {\"key\":\"value\"} }\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/regular/{id}",
+                "method": "PATCH",
+                "identifierOverride": "endpoint_service.regularPatch"
+            },
+            "snippet": {
+                "client": "require \"fern_content_type\"\n\ncontent_types = SeedContentTypesClient::Client.new(base_url: \"https://api.example.com\")\ncontent_types.service.regular_patch(\n  id: \"id\",\n  field_1: \"field1\",\n  field_2: 1\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
                 "path": "/",
                 "method": "PATCH",
                 "identifierOverride": "endpoint_service.patch"
             },
             "snippet": {
                 "client": "require \"fern_content_type\"\n\ncontent_types = SeedContentTypesClient::Client.new(base_url: \"https://api.example.com\")\ncontent_types.service.patch(application: \"application\", require_auth: true)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/complex/{id}",
+                "method": "PATCH",
+                "identifierOverride": "endpoint_service.patchComplex"
+            },
+            "snippet": {
+                "client": "require \"fern_content_type\"\n\ncontent_types = SeedContentTypesClient::Client.new(base_url: \"https://api.example.com\")\ncontent_types.service.patch_complex(\n  id: \"id\",\n  name: \"name\",\n  age: 1,\n  active: true,\n  metadata: { \"metadata\": {\"key\":\"value\"} },\n  tags: [\"tags\", \"tags\"],\n  email: \"email\",\n  nickname: \"nickname\",\n  bio: \"bio\",\n  profile_image_url: \"profileImageUrl\",\n  settings: { \"settings\": {\"key\":\"value\"} }\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/regular/{id}",
+                "method": "PATCH",
+                "identifierOverride": "endpoint_service.regularPatch"
+            },
+            "snippet": {
+                "client": "require \"fern_content_type\"\n\ncontent_types = SeedContentTypesClient::Client.new(base_url: \"https://api.example.com\")\ncontent_types.service.regular_patch(\n  id: \"id\",\n  field_1: \"field1\",\n  field_2: 1\n)",
                 "type": "ruby"
             }
         }

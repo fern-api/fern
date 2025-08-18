@@ -4,29 +4,68 @@ use crate::{types::*};
 
 pub struct ServiceClient {
     pub http_client: HttpClient,
-    pub api_key: Option<String>,
-    pub bearer_token: Option<String>,
-    pub username: Option<String>,
-    pub password: Option<String>,
 }
 
 impl ServiceClient {
-    pub fn new(config: ClientConfig, api_key: Option<String>, bearer_token: Option<String>, username: Option<String>, password: Option<String>) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
         let http_client = HttpClient::new(config)?;
-        Ok(Self { 
-            http_client, 
-            api_key, 
-            bearer_token, 
-            username, 
-            password 
-        })
+        Ok(Self { http_client })
     }
 
-    pub async fn get_exception(&self, notification_id: &String, options: Option<RequestOptions>) -> Result<Exception, ClientError> {
+    pub async fn get_movie(&self, movie_id: &MovieId, options: Option<RequestOptions>) -> Result<Movie, ClientError> {
         self.http_client.execute_request(
             Method::GET,
-            &format!("/file/notification/{}", notification_id),
+            &format!("/movie/{}", movie_id.0),
             None,
+            None,
+            options,
+        ).await
+    }
+
+    pub async fn create_movie(&self, request: &Movie, options: Option<RequestOptions>) -> Result<MovieId, ClientError> {
+        self.http_client.execute_request(
+            Method::POST,
+            "/movie",
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
+    }
+
+    pub async fn get_metadata(&self, shallow: Option<Option<bool>>, tag: Option<Option<String>>, options: Option<RequestOptions>) -> Result<Metadata, ClientError> {
+        self.http_client.execute_request(
+            Method::GET,
+            "/metadata",
+            None,
+            {
+            let mut query_params = Vec::new();
+            if let Some(Some(value)) = shallow {
+                query_params.push(("shallow".to_string(), value.to_string()));
+            }
+            if let Some(Some(value)) = tag {
+                query_params.push(("tag".to_string(), value.to_string()));
+            }
+            Some(query_params)
+        },
+            options,
+        ).await
+    }
+
+    pub async fn create_big_entity(&self, request: &BigEntity, options: Option<RequestOptions>) -> Result<Response, ClientError> {
+        self.http_client.execute_request(
+            Method::POST,
+            "/big-entity",
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
+    }
+
+    pub async fn refresh_token(&self, request: &Option<RefreshTokenRequest>, options: Option<RequestOptions>) -> Result<(), ClientError> {
+        self.http_client.execute_request(
+            Method::POST,
+            "/refresh-token",
+            Some(serde_json::to_value(request).unwrap_or_default()),
             None,
             options,
         ).await

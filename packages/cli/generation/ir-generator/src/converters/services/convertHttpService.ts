@@ -1,8 +1,6 @@
-import urlJoin from "url-join";
-
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { assertNever } from "@fern-api/core-utils";
-import { RawSchemas, isVariablePathParameter } from "@fern-api/fern-definition-schema";
+import { isVariablePathParameter, RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     Encoding,
     HttpEndpoint,
@@ -15,8 +13,9 @@ import {
     Transport,
     TypeReference
 } from "@fern-api/ir-sdk";
-import { IdGenerator, constructHttpPath } from "@fern-api/ir-utils";
+import { constructHttpPath, IdGenerator } from "@fern-api/ir-utils";
 import { SourceResolver } from "@fern-api/source-resolver";
+import urlJoin from "url-join";
 
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";

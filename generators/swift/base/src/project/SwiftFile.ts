@@ -6,19 +6,30 @@ export declare namespace SwiftFile {
     interface Args {
         filename: string;
         directory: RelativeFilePath;
-        fileContents: string | swift.FileComponent[];
+        contents: swift.FileComponent[];
     }
 }
 
 export class SwiftFile extends File {
-    private static getFileContents(fileContents: string | swift.FileComponent[]) {
-        if (typeof fileContents === "string") {
-            return fileContents;
-        }
-        return fileContents.map((component) => component.toString()).join("");
+    public static create(args: SwiftFile.Args) {
+        return new SwiftFile(args);
     }
 
-    constructor(args: SwiftFile.Args) {
-        super(args.filename, args.directory, SwiftFile.getFileContents(args.fileContents));
+    /**
+     * Creates a new Swift file with the Foundation framework imported.
+     */
+    public static createWithFoundation(args: SwiftFile.Args) {
+        return new SwiftFile({
+            ...args,
+            contents: [swift.Statement.import("Foundation"), swift.LineBreak.single(), ...args.contents]
+        });
+    }
+
+    public static getRawContents(components: swift.FileComponent[]) {
+        return components.map((component) => component.toString()).join("");
+    }
+
+    private constructor(args: SwiftFile.Args) {
+        super(args.filename, args.directory, SwiftFile.getRawContents(args.contents));
     }
 }

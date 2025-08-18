@@ -1,5 +1,8 @@
+import Foundation
+
 public struct BranchNode: Codable, Hashable, Sendable {
     public let children: [Node]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +25,7 @@ public struct BranchNode: Codable, Hashable, Sendable {
         try container.encode(self.children, forKey: .children)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case children
     }

@@ -1,8 +1,11 @@
+import Foundation
+
 public struct CreateUserRequest: Codable, Hashable, Sendable {
     public let username: String
     public let tags: [String]?
     public let metadata: Metadata?
     public let avatar: JSONValue?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -37,6 +40,7 @@ public struct CreateUserRequest: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.avatar, forKey: .avatar)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case username
         case tags

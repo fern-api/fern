@@ -1,11 +1,10 @@
-import decompress from "decompress";
-import { cp, readFile, readdir, rm, rmdir } from "fs/promises";
-import tmp from "tmp-promise";
-
 import { FERNIGNORE_FILENAME } from "@fern-api/configuration";
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
+import decompress from "decompress";
+import { cp, readdir, readFile, rm, rmdir } from "fs/promises";
+import tmp from "tmp-promise";
 
 export declare namespace LocalTaskHandler {
     export interface Init {
@@ -192,6 +191,14 @@ async function getFernIgnorePaths({
         ...fernIgnoreFileContents
             .trim()
             .split(NEW_LINE_REGEX)
-            .filter((line) => !line.startsWith("#") && line.length > 0)
+            .map((line) => {
+                // Remove comments at the end of the line
+                const commentIndex = line.indexOf("#");
+                if (commentIndex !== -1) {
+                    return line.slice(0, commentIndex).trim();
+                }
+                return line.trim();
+            })
+            .filter((line) => line.length > 0)
     ];
 }

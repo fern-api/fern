@@ -97,7 +97,9 @@ service:
       request:
         name: ListResourcesRequest
         query-parameters:
-          page_limit: integer
+          page_limit: 
+            type: integer
+            default: 25
           beforeDate: date
       response: list<Resource>
       examples:

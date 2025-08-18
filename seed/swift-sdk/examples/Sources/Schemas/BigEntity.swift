@@ -1,3 +1,5 @@
+import Foundation
+
 public struct BigEntity: Codable, Hashable, Sendable {
     public let castMember: CastMember?
     public let extendedMovie: ExtendedMovie?
@@ -12,6 +14,7 @@ public struct BigEntity: Codable, Hashable, Sendable {
     public let node: Node?
     public let directory: Directory?
     public let moment: Moment?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -82,6 +85,7 @@ public struct BigEntity: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.moment, forKey: .moment)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case castMember
         case extendedMovie

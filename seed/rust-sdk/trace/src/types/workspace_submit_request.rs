@@ -3,7 +3,7 @@ use crate::language::Language;
 use crate::submission_file_info::SubmissionFileInfo;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct WorkspaceSubmitRequest {
     #[serde(rename = "submissionId")]
     pub submission_id: SubmissionId,

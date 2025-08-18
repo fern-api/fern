@@ -1,8 +1,7 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { findUp } from "find-up";
-import { readFile, readdir } from "fs/promises";
+import { readdir, readFile } from "fs/promises";
 import yaml from "js-yaml";
-
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { FernSeedConfig } from "./config";
 

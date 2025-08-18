@@ -1,0 +1,73 @@
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.7.0
+  createdAt: "2025-08-16"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Added sanitization for literal enum values to generate valid and readable names.
+  irVersion: 59
+
+- version: 0.6.0
+  createdAt: "2025-08-16"
+  changelogEntry:
+    - type: chore
+      summary: Upgraded to IR v59.
+  irVersion: 59
+
+- version: 0.5.0
+  createdAt: "2025-08-15"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Added 'fileDownload' response support.
+  irVersion: 58
+
+- version: 0.4.1
+  createdAt: "2025-08-14"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed an infinite recursion bug in Swift SDKs where convenience initializers without auth schemes could ambiguously call the designated initializer. The generator now always passes arguments explicitly to avoid ambiguity.
+  irVersion: 58
+
+- version: 0.4.0
+  createdAt: "2025-08-13"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Added support for string literal types.
+  irVersion: 58
+
+- version: 0.3.0
+  createdAt: "2025-08-11"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Removed implicit Foundation import by deleting Prelude.swift and adding explicit imports to all source files.
+  irVersion: 58
+
+- version: 0.2.0
+  createdAt: "2025-08-10"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Root client can now use an async token provider for bearer authentication.
+  irVersion: 58
+
+- version: 0.1.0
+  createdAt: "2025-08-08"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Implements support for header, bearer and basic authentication schemes in the Swift SDK.
+    - type: fix
+      summary: |
+        The root client initializer is now generated based on the auth schemes defined in the API, replacing the previous static signature.
+  irVersion: 58
+
+- version: 0.0.0
+  createdAt: "2025-08-06"
+  changelogEntry:
+    - type: feat
+      summary: Initial beta release.
+  irVersion: 58

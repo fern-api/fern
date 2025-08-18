@@ -1,9 +1,8 @@
+import { generatorsYml, loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
+import { assertNever, Values } from "@fern-api/core-utils";
+import { Project } from "@fern-api/project-loader";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
-
-import { generatorsYml, loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
-import { Values, assertNever } from "@fern-api/core-utils";
-import { Project } from "@fern-api/project-loader";
 
 import { CliContext } from "../../cli-context/CliContext";
 

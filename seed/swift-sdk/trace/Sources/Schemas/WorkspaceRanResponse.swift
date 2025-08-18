@@ -1,6 +1,9 @@
+import Foundation
+
 public struct WorkspaceRanResponse: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let runDetails: WorkspaceRunDetails
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +30,7 @@ public struct WorkspaceRanResponse: Codable, Hashable, Sendable {
         try container.encode(self.runDetails, forKey: .runDetails)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case submissionId
         case runDetails

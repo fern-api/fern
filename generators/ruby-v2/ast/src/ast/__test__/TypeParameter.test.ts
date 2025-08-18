@@ -1,8 +1,8 @@
 import { ruby } from "../..";
 import { BaseRubyCustomConfigSchema } from "../../custom-config/BaseRubyCustomConfigSchema";
+import { Writer } from "../core/Writer";
 import { Type } from "../Type";
 import { Variance } from "../TypeParameter";
-import { Writer } from "../core/Writer";
 
 describe("TypeParameter", () => {
     let writerConfig: Writer.Args;

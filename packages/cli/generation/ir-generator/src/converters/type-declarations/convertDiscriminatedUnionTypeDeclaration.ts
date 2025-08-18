@@ -1,4 +1,4 @@
-import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema";
+import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { SingleUnionType, SingleUnionTypeProperties, Type, TypeReference } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../../FernFileContext";

@@ -1,10 +1,10 @@
 import {
-    ClassReference,
     Class_,
+    ClassReference,
     ConditionalStatement,
     Expression,
-    FunctionInvocation,
     Function_,
+    FunctionInvocation,
     GenericClassReference,
     HashReference,
     LongClassReference,

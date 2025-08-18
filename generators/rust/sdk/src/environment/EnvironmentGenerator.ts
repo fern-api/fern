@@ -1,31 +1,31 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import {
-    SingleBaseUrlEnvironments,
-    MultipleBaseUrlsEnvironments,
-    SingleBaseUrlEnvironment,
-    MultipleBaseUrlsEnvironment,
-    EnvironmentBaseUrlWithId
-} from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import {
-    rust,
+    Attribute,
+    CodeBlock,
     Enum,
     EnumVariant,
-    Attribute,
+    Expression,
     ImplBlock,
+    MatchArm,
     Method,
-    UseStatement,
-    Type,
-    CodeBlock,
+    Pattern,
     PUBLIC,
     Reference,
-    Expression,
+    rust,
+    Statement,
     Struct,
-    Pattern,
-    MatchArm,
-    Statement
+    Type,
+    UseStatement
 } from "@fern-api/rust-codegen";
+import {
+    EnvironmentBaseUrlWithId,
+    MultipleBaseUrlsEnvironment,
+    MultipleBaseUrlsEnvironments,
+    SingleBaseUrlEnvironment,
+    SingleBaseUrlEnvironments
+} from "@fern-fern/ir-sdk/api";
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export declare namespace EnvironmentGenerator {
     interface Args {

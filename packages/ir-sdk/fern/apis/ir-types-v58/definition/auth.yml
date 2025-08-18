@@ -1,0 +1,100 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  http: http.yml
+  types: types.yml
+  commons: commons.yml
+types:
+  EnvironmentVariable: string
+  ApiAuth:
+    extends: commons.WithDocs
+    properties:
+      requirement: AuthSchemesRequirement
+      schemes: list<AuthScheme>
+  AuthSchemesRequirement:
+    enum:
+      - ALL
+      - ANY
+  AuthScheme:
+    discriminant:
+      value: _type
+      name: type
+    union:
+      bearer: BearerAuthScheme
+      basic: BasicAuthScheme
+      header: HeaderAuthScheme
+      oauth: OAuthScheme
+  BearerAuthScheme:
+    extends: commons.WithDocs
+    properties:
+      token: commons.Name
+      tokenEnvVar:
+        type: optional<EnvironmentVariable>
+        docs: The environment variable the SDK should use to read the token.
+  
+  OAuthScheme:
+    extends: commons.WithDocs
+    docs: |
+      We currently assume the resultant token is leveraged as a bearer token, e.g. "Authorization Bearer"
+    properties:
+      configuration: OAuthConfiguration
+  OAuthConfiguration:
+    union:
+      clientCredentials: OAuthClientCredentials
+  OAuthClientCredentials:
+    properties:
+      clientIdEnvVar: optional<EnvironmentVariable>
+      clientSecretEnvVar: optional<EnvironmentVariable>
+      tokenPrefix: optional<string>
+      tokenHeader: optional<string>
+      scopes: optional<list<string>>
+      tokenEndpoint: OAuthTokenEndpoint
+      refreshEndpoint: optional<OAuthRefreshEndpoint>
+  OAuthTokenEndpoint:
+    properties:
+      endpointReference: commons.EndpointReference
+      requestProperties: OAuthAccessTokenRequestProperties
+      responseProperties: OAuthAccessTokenResponseProperties
+  OAuthRefreshEndpoint:
+    properties:
+      endpointReference: commons.EndpointReference
+      requestProperties: OAuthRefreshTokenRequestProperties
+      responseProperties: OAuthAccessTokenResponseProperties
+  OAuthAccessTokenRequestProperties:
+    docs: The properties required to retrieve an OAuth token.
+    properties:
+      clientId: http.RequestProperty
+      clientSecret: http.RequestProperty
+      scopes: optional<http.RequestProperty>
+      customProperties: optional<list<http.RequestProperty>>
+  OAuthAccessTokenResponseProperties:
+    docs: The properties to map to the corresponding OAuth token primitive.
+    properties:
+      accessToken: http.ResponseProperty
+      expiresIn: optional<http.ResponseProperty>
+      refreshToken: optional<http.ResponseProperty>
+  OAuthRefreshTokenRequestProperties:
+    docs: The properties required to retrieve an OAuth refresh token.
+    properties:
+      refreshToken: http.RequestProperty
+
+  BasicAuthScheme:
+    extends: commons.WithDocs
+    properties:
+      username: commons.Name
+      usernameEnvVar:
+        type: optional<EnvironmentVariable>
+        docs: The environment variable the SDK should use to read the username.
+      password: commons.Name
+      passwordEnvVar:
+        type: optional<EnvironmentVariable>
+        docs: The environment variable the SDK should use to read the password.
+  HeaderAuthScheme:
+    extends: commons.WithDocs
+    properties:
+      name: commons.NameAndWireValue
+      valueType: types.TypeReference
+      prefix: optional<string>
+      headerEnvVar:
+        type: optional<EnvironmentVariable>
+        docs: The environment variable the SDK should use to read the header.

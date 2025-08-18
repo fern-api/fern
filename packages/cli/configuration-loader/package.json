@@ -39,7 +39,7 @@
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.139.5-0b0fae69f",
+    "@fern-fern/fdr-cjs-sdk": "0.139.9-492ec7b92",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@fern-fern/generators-sdk": "0.114.0-5745f9e74",
     "find-up": "^6.3.0",

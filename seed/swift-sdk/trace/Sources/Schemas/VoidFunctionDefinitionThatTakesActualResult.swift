@@ -1,6 +1,10 @@
+import Foundation
+
+/// The generated signature will include an additional param, actualResult
 public struct VoidFunctionDefinitionThatTakesActualResult: Codable, Hashable, Sendable {
     public let additionalParameters: [Parameter]
     public let code: FunctionImplementationForMultipleLanguages
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +31,7 @@ public struct VoidFunctionDefinitionThatTakesActualResult: Codable, Hashable, Se
         try container.encode(self.code, forKey: .code)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case additionalParameters
         case code

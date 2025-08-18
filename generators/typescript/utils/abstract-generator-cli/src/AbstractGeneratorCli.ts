@@ -1,6 +1,3 @@
-import { NpmPackage, PersistedTypescriptProject, constructNpmPackage } from "@fern-typescript/commons";
-import { GeneratorContext } from "@fern-typescript/contexts";
-
 import {
     FernGeneratorExec,
     GeneratorNotificationService,
@@ -9,11 +6,12 @@ import {
     parseIR
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { CONSOLE_LOGGER, LogLevel, Logger, createLogger } from "@fern-api/logger";
-
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import * as serializers from "@fern-fern/ir-sdk/serialization";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
+import { FernIr, serialization } from "@fern-fern/ir-sdk";
+import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { constructNpmPackage, NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
+import { GeneratorContext } from "@fern-typescript/contexts";
 
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
@@ -57,8 +55,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             : new GeneratorNotificationService(config.environment);
 
         try {
-            const customConfig = this.parseCustomConfig(config.customConfig);
-
             const logger = createLogger((level, ...message) => {
                 CONSOLE_LOGGER.log(level, ...message);
 
@@ -70,6 +66,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     })
                 );
             });
+            const customConfig = this.parseCustomConfig(config.customConfig, logger);
 
             const npmPackage = constructNpmPackage({
                 generatorConfig: config,
@@ -92,7 +89,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
 
             const ir = await parseIR({
                 absolutePathToIR: AbsoluteFilePath.of(config.irFilepath),
-                parse: serializers.IntermediateRepresentation.parse
+                parse: serialization.IntermediateRepresentation.parse
             });
 
             const generatorContext = new GeneratorContextImpl(logger, version);
@@ -137,7 +134,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             isPackagePrivate: npmPackage != null && npmPackage.private,
                             pathToProject,
                             config,
-                            publishToJsr: this.publishToJsr(customConfig)
+                            publishToJsr: this.publishToJsr(customConfig),
+                            packageManager: this.getPackageManager(customConfig)
                         });
                     });
                     await typescriptProject.copyProjectTo({
@@ -205,7 +203,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         }
     }
 
-    protected abstract parseCustomConfig(customConfig: unknown): CustomConfig;
+    protected abstract parseCustomConfig(customConfig: unknown, logger: Logger): CustomConfig;
     protected abstract generateTypescriptProject(args: {
         config: FernGeneratorExec.GeneratorConfig;
         customConfig: CustomConfig;
@@ -215,6 +213,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     }): Promise<PersistedTypescriptProject>;
     protected abstract isPackagePrivate(customConfig: CustomConfig): boolean;
     protected abstract publishToJsr(customConfig: CustomConfig): boolean;
+    protected abstract getPackageManager(customConfig: CustomConfig): "pnpm" | "yarn";
     protected abstract outputSourceFiles(customConfig: CustomConfig): boolean;
     protected abstract shouldTolerateRepublish(customConfig: CustomConfig): boolean;
 

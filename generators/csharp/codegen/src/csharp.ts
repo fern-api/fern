@@ -135,30 +135,30 @@ export function string_(args: String_.Args): String_ {
 }
 
 export {
-    Annotation,
     Access,
+    Annotation,
+    AnonymousFunction,
     Class,
     ClassInstantiation,
     ClassReference,
     CodeBlock,
+    convertReadOnlyPrimitiveTypes,
     Dictionary,
     Enum,
     Field,
     InstantiatedPrimitive,
     Interface,
     Method,
-    AnonymousFunction,
     MethodInvocation,
     MethodType,
     Parameter,
-    TypeParameter,
+    String_,
     Type,
     Type as Types,
     TypeLiteral,
-    Writer,
+    TypeParameter,
     VALID_READ_ONLY_MEMORY_TYPES,
-    convertReadOnlyPrimitiveTypes,
-    String_
+    Writer
 } from "./ast";
-export { type ConstructorField } from "./ast/TypeLiteral";
 export { AstNode } from "./ast/core/AstNode";
+export { type ConstructorField } from "./ast/TypeLiteral";

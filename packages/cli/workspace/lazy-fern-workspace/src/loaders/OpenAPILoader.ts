@@ -1,10 +1,9 @@
-import { readFile } from "fs/promises";
-
-import { OpenAPISpec, isOpenAPIV2, isOpenAPIV3 } from "@fern-api/api-workspace-commons";
+import { isOpenAPIV2, isOpenAPIV3, OpenAPISpec } from "@fern-api/api-workspace-commons";
 import { AbsoluteFilePath, join, relative } from "@fern-api/fs-utils";
 import { Source as OpenApiIrSource } from "@fern-api/openapi-ir";
 import { Document, getParseOptions } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
+import { readFile } from "fs/promises";
 
 import { convertOpenAPIV2ToV3 } from "../utils/convertOpenAPIV2ToV3";
 import { loadAsyncAPI } from "../utils/loadAsyncAPI";

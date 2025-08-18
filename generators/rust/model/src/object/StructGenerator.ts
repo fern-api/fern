@@ -1,19 +1,22 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
-import { rust, Attribute, PUBLIC } from "@fern-api/rust-codegen";
+import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 
-import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
-import {
-    isDateTimeType,
-    isUuidType,
-    isCollectionType,
-    isUnknownType,
-    isOptionalType,
-    getInnerTypeFromOptional
-} from "../utils/primitiveTypeUtils";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import {
+    extractNamedTypesFromTypeReference,
+    getInnerTypeFromOptional,
+    isCollectionType,
+    isDateTimeOnlyType,
+    isDateTimeType,
+    isOptionalType,
+    isUnknownType,
+    isUuidType,
+    typeSupportsHashAndEq
+} from "../utils/primitiveTypeUtils";
 
 export class StructGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -80,7 +83,7 @@ export class StructGenerator {
 
         // Add chrono if we have datetime fields
         if (this.hasDateTimeFields()) {
-            writer.writeLine("use chrono::{DateTime, Utc};");
+            writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
         }
 
         // Add std::collections if we have maps or sets
@@ -124,8 +127,14 @@ export class StructGenerator {
     private generateStructAttributes(): rust.Attribute[] {
         const attributes: rust.Attribute[] = [];
 
-        // Always add basic derives
-        const derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
+        // Basic derives - start with essential ones
+        let derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
+
+        // Only add Hash and Eq if all field types support them
+        if (this.canDeriveHashAndEq()) {
+            derives.push("Eq", "Hash");
+        }
+
         attributes.push(Attribute.derive(derives));
 
         return attributes;
@@ -183,12 +192,23 @@ export class StructGenerator {
         }
 
         // Add special serde handling for datetime fields
-        if (this.isDateTimeProperty(property)) {
-            attributes.push(Attribute.serde.with("chrono::serde::ts_seconds"));
+        const isOptional = isOptionalType(property.valueType);
+        const innerType = isOptional ? getInnerTypeFromOptional(property.valueType) : property.valueType;
+
+        if (isDateTimeOnlyType(innerType)) {
+            // DateTime<Utc> fields need chrono serializers
+            if (isOptional) {
+                // Optional DateTime<Utc> needs ts_seconds_option
+                attributes.push(Attribute.serde.with("chrono::serde::ts_seconds_option"));
+            } else {
+                // Non-optional DateTime<Utc> needs ts_seconds
+                attributes.push(Attribute.serde.with("chrono::serde::ts_seconds"));
+            }
         }
+        // Note: NaiveDate (date type) fields don't need any special serializer
 
         // Add skip_serializing_if for optional fields to omit null values
-        if (isOptionalType(property.valueType)) {
+        if (isOptional) {
             attributes.push(Attribute.serde.skipSerializingIf('"Option::is_none"'));
         }
 
@@ -231,44 +251,27 @@ export class StructGenerator {
         });
     }
 
-    private getCustomTypesUsedInFields(): { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] {
-        const customTypeNames: { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] = [];
+    private getCustomTypesUsedInFields(): {
+        snakeCase: { unsafeName: string };
+        pascalCase: { unsafeName: string };
+    }[] {
+        const customTypeNames: {
+            snakeCase: { unsafeName: string };
+            pascalCase: { unsafeName: string };
+        }[] = [];
         const visited = new Set<string>();
 
-        const extractNamedTypesRecursively = (typeRef: TypeReference) => {
-            if (typeRef.type === "named") {
-                const typeName = typeRef.name.originalName;
-                if (!visited.has(typeName)) {
-                    visited.add(typeName);
-                    customTypeNames.push({
-                        snakeCase: { unsafeName: typeRef.name.snakeCase.unsafeName },
-                        pascalCase: { unsafeName: typeRef.name.pascalCase.unsafeName }
-                    });
-                }
-            } else if (typeRef.type === "container") {
-                typeRef.container._visit({
-                    list: (listType) => extractNamedTypesRecursively(listType),
-                    set: (setType) => extractNamedTypesRecursively(setType),
-                    optional: (optionalType) => extractNamedTypesRecursively(optionalType),
-                    nullable: (nullableType) => extractNamedTypesRecursively(nullableType),
-                    map: (mapType) => {
-                        extractNamedTypesRecursively(mapType.keyType);
-                        extractNamedTypesRecursively(mapType.valueType);
-                    },
-                    literal: () => {
-                        // No named types in literals
-                    },
-                    _other: () => {
-                        // Unknown container type
-                    }
-                });
-            }
-        };
-
         this.objectTypeDeclaration.properties.forEach((property) => {
-            extractNamedTypesRecursively(property.valueType);
+            extractNamedTypesFromTypeReference(property.valueType, customTypeNames, visited);
         });
 
         return customTypeNames;
+    }
+
+    private canDeriveHashAndEq(): boolean {
+        // Check if all field types can support Hash and Eq derives
+        return this.objectTypeDeclaration.properties.every((property) => {
+            return typeSupportsHashAndEq(property.valueType, this.context);
+        });
     }
 }

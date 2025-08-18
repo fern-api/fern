@@ -58,12 +58,13 @@ export class Service {
         request: SeedContentTypes.PatchProxyRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)),
             method: "PATCH",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             contentType: "application/merge-patch+json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -93,6 +94,320 @@ export class Service {
                 });
             case "timeout":
                 throw new errors.SeedContentTypesTimeoutError("Timeout exceeded when calling PATCH /.");
+            case "unknown":
+                throw new errors.SeedContentTypesError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Update with JSON merge patch - complex types.
+     * This endpoint demonstrates the distinction between:
+     * - optional<T> fields (can be present or absent, but not null)
+     * - optional<nullable<T>> fields (can be present, absent, or null)
+     *
+     * @param {string} id
+     * @param {SeedContentTypes.PatchComplexRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.patchComplex("id", {
+     *         name: "name",
+     *         age: 1,
+     *         active: true,
+     *         metadata: {
+     *             "metadata": {
+     *                 "key": "value"
+     *             }
+     *         },
+     *         tags: ["tags", "tags"],
+     *         email: "email",
+     *         nickname: "nickname",
+     *         bio: "bio",
+     *         profileImageUrl: "profileImageUrl",
+     *         settings: {
+     *             "settings": {
+     *                 "key": "value"
+     *             }
+     *         }
+     *     })
+     */
+    public patchComplex(
+        id: string,
+        request: SeedContentTypes.PatchComplexRequest = {},
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__patchComplex(id, request, requestOptions));
+    }
+
+    private async __patchComplex(
+        id: string,
+        request: SeedContentTypes.PatchComplexRequest = {},
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `complex/${encodeURIComponent(id)}`,
+            ),
+            method: "PATCH",
+            headers: _headers,
+            contentType: "application/merge-patch+json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedContentTypesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedContentTypesError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedContentTypesTimeoutError("Timeout exceeded when calling PATCH /complex/{id}.");
+            case "unknown":
+                throw new errors.SeedContentTypesError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Named request with mixed optional/nullable fields and merge-patch content type.
+     * This should trigger the NPE issue when optional fields aren't initialized.
+     *
+     * @param {string} id
+     * @param {SeedContentTypes.NamedMixedPatchRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.namedPatchWithMixed("id", {
+     *         appId: "appId",
+     *         instructions: "instructions",
+     *         active: true
+     *     })
+     */
+    public namedPatchWithMixed(
+        id: string,
+        request: SeedContentTypes.NamedMixedPatchRequest,
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__namedPatchWithMixed(id, request, requestOptions));
+    }
+
+    private async __namedPatchWithMixed(
+        id: string,
+        request: SeedContentTypes.NamedMixedPatchRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `named-mixed/${encodeURIComponent(id)}`,
+            ),
+            method: "PATCH",
+            headers: _headers,
+            contentType: "application/merge-patch+json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedContentTypesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedContentTypesError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedContentTypesTimeoutError("Timeout exceeded when calling PATCH /named-mixed/{id}.");
+            case "unknown":
+                throw new errors.SeedContentTypesError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+     * This endpoint should:
+     * 1. Not NPE when fields are not provided (tests initialization)
+     * 2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
+     *
+     * @param {SeedContentTypes.OptionalMergePatchRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.optionalMergePatchTest({
+     *         requiredField: "requiredField",
+     *         optionalString: "optionalString",
+     *         optionalInteger: 1,
+     *         optionalBoolean: true,
+     *         nullableString: "nullableString"
+     *     })
+     */
+    public optionalMergePatchTest(
+        request: SeedContentTypes.OptionalMergePatchRequest,
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__optionalMergePatchTest(request, requestOptions));
+    }
+
+    private async __optionalMergePatchTest(
+        request: SeedContentTypes.OptionalMergePatchRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "optional-merge-patch-test",
+            ),
+            method: "PATCH",
+            headers: _headers,
+            contentType: "application/merge-patch+json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedContentTypesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedContentTypesError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedContentTypesTimeoutError(
+                    "Timeout exceeded when calling PATCH /optional-merge-patch-test.",
+                );
+            case "unknown":
+                throw new errors.SeedContentTypesError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Regular PATCH endpoint without merge-patch semantics
+     *
+     * @param {string} id
+     * @param {SeedContentTypes.RegularPatchRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.regularPatch("id", {
+     *         field1: "field1",
+     *         field2: 1
+     *     })
+     */
+    public regularPatch(
+        id: string,
+        request: SeedContentTypes.RegularPatchRequest = {},
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__regularPatch(id, request, requestOptions));
+    }
+
+    private async __regularPatch(
+        id: string,
+        request: SeedContentTypes.RegularPatchRequest = {},
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `regular/${encodeURIComponent(id)}`,
+            ),
+            method: "PATCH",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedContentTypesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedContentTypesError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedContentTypesTimeoutError("Timeout exceeded when calling PATCH /regular/{id}.");
             case "unknown":
                 throw new errors.SeedContentTypesError({
                     message: _response.error.errorMessage,

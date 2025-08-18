@@ -1,8 +1,9 @@
 import { ruby } from "../..";
 import { BaseRubyCustomConfigSchema } from "../../custom-config/BaseRubyCustomConfigSchema";
+import { ClassReference } from "../ClassReference";
+import { Writer } from "../core/Writer";
 import { MethodKind } from "../Method";
 import { Type } from "../Type";
-import { Writer } from "../core/Writer";
 
 describe("Class", () => {
     let writerConfig: Writer.Args;
@@ -18,7 +19,7 @@ describe("Class", () => {
     });
 
     test("writes class with superclass", () => {
-        const superclass = ruby.class_({ name: "Parent" });
+        const superclass = ruby.classReference({ name: "Parent" });
         const class_ = ruby.class_({ name: "Child", superclass });
 
         expect(class_.toString(writerConfig)).toMatchSnapshot();

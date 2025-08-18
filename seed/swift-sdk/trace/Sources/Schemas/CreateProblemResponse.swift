@@ -1,3 +1,5 @@
+import Foundation
+
 public enum CreateProblemResponse: Codable, Hashable, Sendable {
     case success(Success)
     case error(Error)
@@ -32,6 +34,7 @@ public enum CreateProblemResponse: Codable, Hashable, Sendable {
     public struct Success: Codable, Hashable, Sendable {
         public let type: String = "success"
         public let value: ProblemId
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -55,6 +58,7 @@ public enum CreateProblemResponse: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -64,6 +68,7 @@ public enum CreateProblemResponse: Codable, Hashable, Sendable {
     public struct Error: Codable, Hashable, Sendable {
         public let type: String = "error"
         public let value: CreateProblemError
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -87,6 +92,7 @@ public enum CreateProblemResponse: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value

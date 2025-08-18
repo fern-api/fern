@@ -8,7 +8,7 @@ exports[`Type > boolish 1`] = `"boolish"`;
 
 exports[`Type > bot 1`] = `"bot"`;
 
-exports[`Type > class 1`] = `"class"`;
+exports[`Type > class 1`] = `"MyApi::V1::Client"`;
 
 exports[`Type > generics 1`] = `"Foo[String, Integer]"`;
 

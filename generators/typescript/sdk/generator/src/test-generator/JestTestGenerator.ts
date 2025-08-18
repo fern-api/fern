@@ -1,30 +1,37 @@
+import { assertNever } from "@fern-api/core-utils";
+import {
+    AuthScheme,
+    ExampleEndpointCall,
+    ExampleRequestBody,
+    ExampleResponse,
+    ExampleTypeReference,
+    HttpEndpoint,
+    HttpMethod,
+    HttpService,
+    IntermediateRepresentation
+} from "@fern-fern/ir-sdk/api";
 import {
     DependencyManager,
     DependencyType,
     ExportedFilePath,
-    PackageId,
-    Reference,
     getExampleEndpointCalls,
     getParameterNameForRootExamplePathParameter,
     getParameterNameForRootPathParameter,
-    getTextOfTsNode
+    getTextOfTsNode,
+    PackageId,
+    Reference
 } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
 import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator";
 import path from "path";
 import { Directory, ts } from "ts-morph";
-import { Code, arrayOf, code, literalOf } from "ts-poet";
-
-import { assertNever } from "@fern-api/core-utils";
-
-import * as IR from "@fern-fern/ir-sdk/api";
-import { ExampleRequestBody } from "@fern-fern/ir-sdk/api";
+import { arrayOf, Code, code, literalOf } from "ts-poet";
 
 const DEFAULT_PACKAGE_PATH = "src";
 
 export declare namespace JestTestGenerator {
     interface Args {
-        ir: IR.IntermediateRepresentation;
+        ir: IntermediateRepresentation;
         dependencyManager: DependencyManager;
         rootDirectory: Directory;
         includeSerdeLayer: boolean;
@@ -34,11 +41,12 @@ export declare namespace JestTestGenerator {
         retainOriginalCasing: boolean;
         relativePackagePath: string;
         relativeTestPath: string;
+        neverThrowErrors: boolean;
     }
 }
 
 export class JestTestGenerator {
-    private readonly ir: IR.IntermediateRepresentation;
+    private readonly ir: IntermediateRepresentation;
     private readonly dependencyManager: DependencyManager;
     private readonly rootDirectory: Directory;
     private readonly writeUnitTests: boolean;
@@ -48,6 +56,7 @@ export class JestTestGenerator {
     private readonly retainOriginalCasing: boolean;
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
+    private readonly neverThrowErrors: boolean;
 
     constructor({
         ir,
@@ -59,7 +68,8 @@ export class JestTestGenerator {
         useBigInt,
         retainOriginalCasing,
         relativePackagePath,
-        relativeTestPath
+        relativeTestPath,
+        neverThrowErrors
     }: JestTestGenerator.Args) {
         this.ir = ir;
         this.dependencyManager = dependencyManager;
@@ -71,6 +81,7 @@ export class JestTestGenerator {
         this.retainOriginalCasing = retainOriginalCasing;
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
+        this.neverThrowErrors = neverThrowErrors;
     }
 
     private async addJestConfigs(): Promise<void> {
@@ -157,7 +168,7 @@ export class JestTestGenerator {
         }
     }
 
-    public getTestFile(service: IR.HttpService): ExportedFilePath {
+    public getTestFile(service: HttpService): ExportedFilePath {
         const folders = service.name.fernFilepath.packagePath.map((folder) => folder.originalName);
         const filename = `${service.name.fernFilepath.file?.camelCase.unsafeName ?? "main"}.test.ts`;
 
@@ -246,9 +257,272 @@ describe("test", () => {
         this.rootDirectory.createSourceFile(`${wireTestPath}/.gitkeep`, "", { overwrite: true });
     }
 
+    public getMockAuthFilepath(): ExportedFilePath {
+        return {
+            directories: [
+                {
+                    nameOnDisk: "wire"
+                }
+            ],
+            file: {
+                nameOnDisk: "mockAuth.ts"
+            },
+            rootDir: this.relativeTestPath
+        };
+    }
+
+    public shouldBuildMockAuthFile({ context }: { context: SdkContext }): boolean {
+        if (!this.generateWireTests) {
+            return false;
+        }
+
+        if (!this.ir.auth.schemes.find((s) => s.type === "inferred")) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public buildMockAuthFile({ context }: { context: SdkContext }): Code | undefined {
+        context.importsManager.addImportFromRoot(
+            "mock-server/MockServer",
+            {
+                namedImports: ["MockServer"]
+            },
+            this.relativeTestPath
+        );
+        const authScheme = this.ir.auth.schemes.find((s) => s.type === "inferred");
+        if (!authScheme) {
+            return undefined;
+        }
+        const endpointId = authScheme.tokenEndpoint.endpoint.endpointId;
+        const serviceId = authScheme.tokenEndpoint.endpoint.serviceId;
+
+        const service = this.ir.services[serviceId];
+        if (!service) {
+            throw new Error("Service not found");
+        }
+
+        const endpoint = service.endpoints.find((e) => e.id === endpointId);
+        if (!endpoint) {
+            throw new Error("Endpoint not found");
+        }
+
+        const successfulExamples = getExampleEndpointCalls(endpoint).filter(
+            (example) => example.response.type === "ok"
+        );
+        const example = successfulExamples[0];
+        if (!example) {
+            return;
+        }
+
+        if (example.response.type !== "ok") {
+            context.logger.warn("No successful response found to mock auth in wire tests.");
+            return;
+        }
+
+        const rawRequestBody = this.getRequestExample(example.request);
+        const rawResponseBody = this.getResponseExample(example.response);
+        const responseStatusCode = getExampleResponseStatusCode(example.response);
+
+        return code`
+export function mockAuth(server: MockServer) {
+    ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
+    ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
+    server
+        .mockEndpoint()
+        .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
+            return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+                `;
+        })}${example.endpointHeaders.map((h) => {
+            return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+                `;
+        })}${
+            rawRequestBody
+                ? code`.jsonBody(rawRequestBody)
+            `
+                : ""
+        }.respondWith()
+        .statusCode(${responseStatusCode})${
+            rawResponseBody
+                ? code`.jsonBody(rawResponseBody)
+            `
+                : ""
+        }.build();
+}
+`;
+    }
+
+    private getAuthClientOptions(context: SdkContext): Record<string, Code> {
+        const authOptions: Record<string, Code> = {};
+        this.ir.auth.schemes.forEach((schema) => {
+            schema._visit({
+                bearer: (schema) => {
+                    authOptions[schema.token.camelCase.unsafeName] = code`"test"`;
+                },
+                header: (schema) => {
+                    authOptions[schema.name.name.camelCase.unsafeName] = code`"test"`;
+                },
+                basic: (schema) => {
+                    authOptions[schema.username.camelCase.unsafeName] = code`"test"`;
+                    authOptions[schema.password.camelCase.unsafeName] = code`"test"`;
+                },
+                oauth: () => {
+                    // noop
+                    authOptions[OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME] = code`"test"`;
+                    authOptions[OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME] = code`"test"`;
+                },
+                inferred: (auth) => {
+                    const service = this.ir.services[auth.tokenEndpoint.endpoint.serviceId];
+                    if (!service) {
+                        throw new Error("Service not found");
+                    }
+                    const endpoint = service.endpoints.find((e) => e.id === auth.tokenEndpoint.endpoint.endpointId);
+                    if (!endpoint) {
+                        throw new Error("Endpoint not found");
+                    }
+
+                    const successfulExamples = getExampleEndpointCalls(endpoint).filter(
+                        (example) => example.response.type === "ok"
+                    );
+                    const example = successfulExamples[0];
+                    if (!example) {
+                        return;
+                    }
+
+                    if (example.response.type !== "ok") {
+                        context.logger.warn("No successful response found to mock auth in wire tests.");
+                        return;
+                    }
+
+                    const authRequestParameters = this.getAuthRequestExampleOptions({
+                        request: example,
+                        auth: AuthScheme.inferred(auth),
+                        context
+                    });
+                    Object.assign(authOptions, authRequestParameters);
+                },
+                _other: () => {
+                    // noop
+                }
+            });
+        });
+        return authOptions;
+    }
+
+    private getAuthRequestExampleOptions({
+        request,
+        auth,
+        context
+    }: {
+        request: ExampleEndpointCall;
+        auth: AuthScheme;
+        context: SdkContext;
+    }): Record<string, Code> {
+        const result: Record<string, Code> = {};
+
+        request.endpointHeaders.forEach((h) => {
+            result[h.name.name.camelCase.safeName] = code`${literalOf(h.value.jsonExample)}`;
+        });
+
+        request.serviceHeaders.forEach((header) => {
+            result[header.name.name.camelCase.safeName] = code`${literalOf(header.value.jsonExample)}`;
+        });
+
+        request.queryParameters.forEach((queryParameter) => {
+            result[queryParameter.name.name.camelCase.safeName] = code`${literalOf(queryParameter.value.jsonExample)}`;
+        });
+
+        request.rootPathParameters.forEach((rootPathParameter) => {
+            result[rootPathParameter.name.camelCase.safeName] = code`${literalOf(rootPathParameter.value.jsonExample)}`;
+        });
+
+        request.servicePathParameters.forEach((pathParameter) => {
+            result[pathParameter.name.camelCase.safeName] = code`${literalOf(pathParameter.value.jsonExample)}`;
+        });
+
+        request.endpointPathParameters.forEach((pathParameter) => {
+            result[pathParameter.name.camelCase.safeName] = code`${literalOf(pathParameter.value.jsonExample)}`;
+        });
+
+        request.request?._visit({
+            inlinedRequestBody: (value) => {
+                value.properties.forEach((p) => {
+                    return (result[p.name.name.camelCase.safeName] = this.createRawJsonExample(p.value));
+                });
+            },
+            reference: (value) => {
+                Object.entries(this.getAuthRequestParameters(value)).forEach(([key, val]) => {
+                    result[key] = val;
+                });
+            },
+            _other: () => {
+                // noop
+            }
+        });
+
+        const authProviderParams = new Set<string>(
+            context.authProvider.getPropertiesForAuthTokenParams(auth).map((p) => p.name)
+        );
+        return Object.fromEntries(Object.entries(result).filter(([key]) => authProviderParams.has(key)));
+    }
+
+    private getAuthRequestParameters({ shape }: ExampleTypeReference): Record<string, Code> {
+        const getAuthRequestParameters = this.getAuthRequestParameters.bind(this);
+        const createRawJsonExample = this.createRawJsonExample.bind(this);
+        return shape._visit<Record<string, Code>>({
+            primitive: () => {
+                return {};
+            },
+            container: (value) => {
+                return value._visit({
+                    list: () => ({}),
+                    map: () => ({}),
+                    nullable: (value) => {
+                        if (!value.nullable) {
+                            return {};
+                        }
+                        return getAuthRequestParameters(value.nullable);
+                    },
+                    optional: (value) => {
+                        if (!value.optional) {
+                            return {};
+                        }
+                        return getAuthRequestParameters(value.optional);
+                    },
+                    set: () => ({}),
+                    literal: () => ({}),
+                    _other: () => ({})
+                });
+            },
+            named: (value) => {
+                return value.shape._visit<Record<string, Code>>({
+                    alias: (value) => {
+                        return getAuthRequestParameters(value.value);
+                    },
+                    enum: () => ({}),
+                    object: (value) => {
+                        return Object.fromEntries(
+                            value.properties.map((property) => {
+                                return [property.name.name.camelCase.safeName, createRawJsonExample(property.value)];
+                            })
+                        );
+                    },
+                    union: () => ({}),
+                    undiscriminatedUnion: (value) => {
+                        return getAuthRequestParameters(value.singleUnionType);
+                    },
+                    _other: () => ({})
+                });
+            },
+            unknown: () => ({}),
+            _other: () => ({})
+        });
+    }
+
     public buildFile(
         serviceName: string,
-        service: IR.HttpService,
+        service: HttpService,
         packageId: PackageId,
         serviceGenerator: GeneratedSdkClientClass,
         context: SdkContext
@@ -260,7 +534,7 @@ describe("test", () => {
             },
             this.relativeTestPath
         );
-        const importStatement = context.sdkClientClass.getReferenceToClientClass({ isRoot: true });
+        const refToClientType = context.sdkClientClass.getReferenceToClientClass({ isRoot: true });
 
         const baseOptions: Record<string, Code> = {};
         if (this.ir.variables.length > 0) {
@@ -275,29 +549,7 @@ describe("test", () => {
                 })
             ] = code`${literalOf(pathParameter.variable ?? pathParameter.name.camelCase.unsafeName)}`;
         });
-        this.ir.auth.schemes.forEach((schema) => {
-            schema._visit({
-                bearer: (schema) => {
-                    baseOptions[schema.token.camelCase.unsafeName] = code`"test"`;
-                },
-                header: (schema) => {
-                    baseOptions[schema.name.name.camelCase.unsafeName] = code`"test"`;
-                },
-                basic: (schema) => {
-                    baseOptions[schema.username.camelCase.unsafeName] = code`"test"`;
-                    baseOptions[schema.password.camelCase.unsafeName] = code`"test"`;
-                },
-                oauth: () => {
-                    // noop
-                    baseOptions[OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME] = code`"test"`;
-                    baseOptions[OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME] = code`"test"`;
-                },
-                _other: () => {
-                    // noop
-                    return;
-                }
-            });
-        });
+        Object.assign(baseOptions, this.getAuthClientOptions(context));
         this.ir.headers.forEach((header) => {
             // We don't need to include literal types because they will automatically be included
             if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
@@ -332,7 +584,7 @@ describe("test", () => {
 
         const tests = service.endpoints
             .filter((e) => this.shouldBuildTest(e))
-            .map((endpoint) => this.buildTest(endpoint, serviceGenerator, context, importStatement, baseOptions))
+            .map((endpoint) => this.buildTest(endpoint, serviceGenerator, context, refToClientType, baseOptions))
             .filter((test) => test != null);
 
         if (tests.length === 0) {
@@ -347,7 +599,7 @@ describe("${serviceName}", () => {
     }
 
     private buildTest(
-        endpoint: IR.HttpEndpoint,
+        endpoint: HttpEndpoint,
         serviceGenerator: GeneratedSdkClientClass,
         context: SdkContext,
         importStatement: Reference,
@@ -390,7 +642,11 @@ describe("${serviceName}", () => {
         const rawRequestBody = this.getRequestExample(example.request);
         const rawResponseBody = this.getResponseExample(example.response);
         const responseStatusCode = getExampleResponseStatusCode(example.response);
-        const expected = getExpectedResponseBody(example.response, context);
+        const expected = getExpectedResponseBody({
+            response: example.response,
+            context,
+            neverThrowErrors: this.neverThrowErrors
+        });
 
         const generateEnvironment = () => {
             if (!this.ir.environments) {
@@ -413,6 +669,7 @@ describe("${serviceName}", () => {
             });
         };
         options["environment"] = generateEnvironment();
+
         example.rootPathParameters.forEach((pathParameter) => {
             options[
                 getParameterNameForRootExamplePathParameter({
@@ -422,11 +679,23 @@ describe("${serviceName}", () => {
             ] = code`${literalOf(pathParameter.value.jsonExample)}`;
         });
 
-        const isHeadersResponse = endpoint.response?.body === undefined && endpoint.method === IR.HttpMethod.Head;
+        const isHeadersResponse = endpoint.response?.body === undefined && endpoint.method === HttpMethod.Head;
+
+        let mockAuthSnippet: Code | undefined;
+        if (this.shouldBuildMockAuthFile({ context }) && endpoint.auth) {
+            mockAuthSnippet = code`mockAuth(server);\n`;
+            context.importsManager.addImportFromRoot(
+                "wire/mockAuth",
+                {
+                    namedImports: ["mockAuth"]
+                },
+                this.relativeTestPath
+            );
+        }
 
         return code`
     test("${endpoint.name.originalName}", async () => {
-        const server = mockServerPool.createServer();
+        const server = mockServerPool.createServer();${mockAuthSnippet ? mockAuthSnippet : ""}
         const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${literalOf(options)});
         ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
         ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
@@ -462,7 +731,7 @@ describe("${serviceName}", () => {
           `;
     }
 
-    private shouldBuildTest(endpoint: IR.HttpEndpoint): boolean {
+    private shouldBuildTest(endpoint: HttpEndpoint): boolean {
         if (
             this.ir.auth.schemes.some((scheme) => {
                 switch (scheme.type) {
@@ -470,6 +739,8 @@ describe("${serviceName}", () => {
                     case "bearer":
                     case "header":
                         return false; // supported
+                    case "inferred":
+                        return false; // TODO: handle inferred auth scheme
                     case "oauth":
                         return true; // not supported
                     default:
@@ -540,7 +811,7 @@ describe("${serviceName}", () => {
         return requestExample;
     }
 
-    getResponseExample(response: IR.ExampleResponse | undefined): Code | undefined {
+    getResponseExample(response: ExampleResponse | undefined): Code | undefined {
         if (!response) {
             return undefined;
         }
@@ -585,7 +856,7 @@ describe("${serviceName}", () => {
         return responseExample;
     }
 
-    createRawJsonExample({ shape, jsonExample }: IR.ExampleTypeReference): Code {
+    createRawJsonExample({ shape, jsonExample }: ExampleTypeReference): Code {
         const createRawJsonExample = this.createRawJsonExample.bind(this);
         return shape._visit<Code>({
             primitive: (value) => {
@@ -714,7 +985,7 @@ describe("${serviceName}", () => {
     }
 }
 
-function getExampleResponseStatusCode(response: IR.ExampleResponse): number {
+function getExampleResponseStatusCode(response: ExampleResponse): number {
     return response._visit({
         ok: () => 200,
         error: () => 500,
@@ -724,8 +995,16 @@ function getExampleResponseStatusCode(response: IR.ExampleResponse): number {
     });
 }
 
-function getExpectedResponseBody(response: IR.ExampleResponse, context: SdkContext): Code {
-    return response._visit({
+function getExpectedResponseBody({
+    response,
+    context,
+    neverThrowErrors
+}: {
+    response: ExampleResponse;
+    context: SdkContext;
+    neverThrowErrors: boolean;
+}): Code {
+    const result = response._visit({
         ok: (response) => {
             return response._visit({
                 body: (value) => {
@@ -755,4 +1034,13 @@ function getExpectedResponseBody(response: IR.ExampleResponse, context: SdkConte
             throw new Error("Unsupported response type");
         }
     });
+    if (neverThrowErrors) {
+        return code`{
+            body: ${result},
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        }`;
+    }
+    return result;
 }

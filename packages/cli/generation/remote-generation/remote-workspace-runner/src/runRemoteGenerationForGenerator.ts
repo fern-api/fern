@@ -12,12 +12,11 @@ import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 
 import { FernRegistry as FdrAPI, FernRegistryClient as FdrClient } from "@fern-fern/fdr-cjs-sdk";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-
-import { RemoteTaskHandler } from "./RemoteTaskHandler";
-import { SourceUploader } from "./SourceUploader";
 import { createAndStartJob } from "./createAndStartJob";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
+import { RemoteTaskHandler } from "./RemoteTaskHandler";
+import { SourceUploader } from "./SourceUploader";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -98,7 +97,8 @@ export async function runRemoteGenerationForGenerator({
             rubySdk: undefined,
             goSdk: undefined,
             csharpSdk: undefined
-        }
+        },
+        context: interactiveTaskContext
     });
     const response = await fdr.api.v1.register.registerApiDefinition({
         orgId: FdrAPI.OrgId(organization),

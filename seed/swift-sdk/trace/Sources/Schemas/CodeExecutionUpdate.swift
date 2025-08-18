@@ -1,14 +1,27 @@
+import Foundation
+
 public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
+    /// Statuses if an executor for the session isn't ready (Before RunningResponse).
     case buildingExecutor(BuildingExecutor)
+    /// Sent once a test submission is executing.
     case running(Running)
+    /// Sent if a submission cannot be run (i.e. Compile Error).
     case errored(Errored)
+    /// Sent if a submission is stopped.
     case stopped(Stopped)
+    /// Graded testcases without trace information.
     case graded(Graded)
+    /// Graded submission for v2 problems.
     case gradedV2(GradedV2)
+    /// Workspace run without trace information.
     case workspaceRan(WorkspaceRan)
+    /// Gives progress about what is being recorded.
     case recording(Recording)
+    /// Graded testcases with trace information.
     case recorded(Recorded)
+    /// Sent if an invalid request is sent for a submission.
     case invalidRequest(InvalidRequest)
+    /// Sent once a submission is graded and fully recorded.
     case finished(Finished)
 
     public init(from decoder: Decoder) throws {
@@ -74,10 +87,12 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Statuses if an executor for the session isn't ready (Before RunningResponse).
     public struct BuildingExecutor: Codable, Hashable, Sendable {
         public let type: String = "buildingExecutor"
         public let submissionId: SubmissionId
         public let status: ExecutionSessionStatus
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -105,6 +120,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encode(self.status, forKey: .status)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -112,10 +128,12 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Sent once a test submission is executing.
     public struct Running: Codable, Hashable, Sendable {
         public let type: String = "running"
         public let submissionId: SubmissionId
         public let state: RunningSubmissionState
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -143,6 +161,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encode(self.state, forKey: .state)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -150,10 +169,12 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Sent if a submission cannot be run (i.e. Compile Error).
     public struct Errored: Codable, Hashable, Sendable {
         public let type: String = "errored"
         public let submissionId: SubmissionId
         public let errorInfo: ErrorInfo
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -181,6 +202,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encode(self.errorInfo, forKey: .errorInfo)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -188,9 +210,11 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Sent if a submission is stopped.
     public struct Stopped: Codable, Hashable, Sendable {
         public let type: String = "stopped"
         public let submissionId: SubmissionId
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -214,16 +238,19 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encode(self.submissionId, forKey: .submissionId)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
         }
     }
 
+    /// Graded testcases without trace information.
     public struct Graded: Codable, Hashable, Sendable {
         public let type: String = "graded"
         public let submissionId: SubmissionId
         public let testCases: [String: TestCaseResultWithStdout]
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -251,6 +278,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encode(self.testCases, forKey: .testCases)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -258,10 +286,12 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Graded submission for v2 problems.
     public struct GradedV2: Codable, Hashable, Sendable {
         public let type: String = "gradedV2"
         public let submissionId: SubmissionId
         public let testCases: [TestCaseId: TestCaseGrade]
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -289,6 +319,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encode(self.testCases, forKey: .testCases)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -296,10 +327,12 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Workspace run without trace information.
     public struct WorkspaceRan: Codable, Hashable, Sendable {
         public let type: String = "workspaceRan"
         public let submissionId: SubmissionId
         public let runDetails: WorkspaceRunDetails
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -327,6 +360,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encode(self.runDetails, forKey: .runDetails)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -334,6 +368,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Gives progress about what is being recorded.
     public struct Recording: Codable, Hashable, Sendable {
         public let type: String = "recording"
         public let submissionId: SubmissionId
@@ -341,6 +376,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         public let lineNumber: Int
         public let lightweightStackInfo: LightweightStackframeInformation
         public let tracedFile: TracedFile?
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -380,6 +416,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encodeIfPresent(self.tracedFile, forKey: .tracedFile)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -390,11 +427,13 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Graded testcases with trace information.
     public struct Recorded: Codable, Hashable, Sendable {
         public let type: String = "recorded"
         public let submissionId: SubmissionId
         public let traceResponsesSize: Int
         public let testCaseId: String?
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -426,6 +465,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encodeIfPresent(self.testCaseId, forKey: .testCaseId)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -434,10 +474,12 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Sent if an invalid request is sent for a submission.
     public struct InvalidRequest: Codable, Hashable, Sendable {
         public let type: String = "invalidRequest"
         public let request: SubmissionRequest
         public let cause: InvalidRequestCause
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -465,6 +507,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encode(self.cause, forKey: .cause)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case request
@@ -472,9 +515,11 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Sent once a submission is graded and fully recorded.
     public struct Finished: Codable, Hashable, Sendable {
         public let type: String = "finished"
         public let submissionId: SubmissionId
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -498,6 +543,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encode(self.submissionId, forKey: .submissionId)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId

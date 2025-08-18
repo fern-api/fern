@@ -7,6 +7,7 @@ export declare namespace AliasGenerator {
     interface Args {
         name: string;
         typeDeclaration: AliasTypeDeclaration;
+        docsContent?: string;
         context: ModelGeneratorContext;
     }
 }
@@ -14,11 +15,13 @@ export declare namespace AliasGenerator {
 export class AliasGenerator {
     private readonly name: string;
     private readonly typeDeclaration: AliasTypeDeclaration;
+    private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
 
-    public constructor({ name, typeDeclaration, context }: AliasGenerator.Args) {
+    public constructor({ name, typeDeclaration, docsContent, context }: AliasGenerator.Args) {
         this.name = name;
         this.typeDeclaration = typeDeclaration;
+        this.docsContent = docsContent;
         this.context = context;
     }
 
@@ -30,7 +33,8 @@ export class AliasGenerator {
         return swift.Statement.typealiasDeclaration({
             unsafeName: this.name,
             accessLevel: swift.AccessLevel.Public,
-            aliasedType: this.context.getSwiftTypeForTypeReference(this.typeDeclaration.aliasOf)
+            aliasedType: this.context.getSwiftTypeForTypeReference(this.typeDeclaration.aliasOf),
+            docs: this.docsContent ? swift.docComment({ summary: this.docsContent }) : undefined
         });
     }
 }

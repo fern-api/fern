@@ -1,4 +1,4 @@
-import { FernToken, FernUserToken, createOrganizationIfDoesNotExist } from "@fern-api/auth";
+import { createOrganizationIfDoesNotExist, FernToken, FernUserToken } from "@fern-api/auth";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
@@ -15,7 +15,8 @@ export async function generateDocsWorkspace({
     preview,
     brokenLinks,
     strictBrokenLinks,
-    disableTemplates
+    disableTemplates,
+    dynamicSnippets
 }: {
     project: Project;
     cliContext: CliContext;
@@ -24,6 +25,7 @@ export async function generateDocsWorkspace({
     brokenLinks: boolean;
     strictBrokenLinks: boolean;
     disableTemplates: boolean | undefined;
+    dynamicSnippets: boolean | undefined;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -88,7 +90,8 @@ export async function generateDocsWorkspace({
             token,
             instanceUrl: instance,
             preview,
-            disableTemplates
+            disableTemplates,
+            dynamicSnippets
         });
     });
 }

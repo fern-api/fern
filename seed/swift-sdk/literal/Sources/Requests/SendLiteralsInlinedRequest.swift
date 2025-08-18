@@ -1,17 +1,20 @@
+import Foundation
+
 public struct SendLiteralsInlinedRequest: Codable, Hashable, Sendable {
-    public let prompt: JSONValue
-    public let context: JSONValue?
+    public let prompt: YouAreAHelpfulAssistant
+    public let context: YoureSuperWise?
     public let query: String
     public let temperature: Double?
     public let stream: JSONValue
     public let aliasedContext: SomeAliasedLiteral
     public let maybeContext: SomeAliasedLiteral?
     public let objectWithLiteral: ATopLevelLiteral
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        prompt: JSONValue,
-        context: JSONValue? = nil,
+        prompt: YouAreAHelpfulAssistant,
+        context: YoureSuperWise? = nil,
         query: String,
         temperature: Double? = nil,
         stream: JSONValue,
@@ -33,8 +36,8 @@ public struct SendLiteralsInlinedRequest: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.prompt = try container.decode(JSONValue.self, forKey: .prompt)
-        self.context = try container.decodeIfPresent(JSONValue.self, forKey: .context)
+        self.prompt = try container.decode(YouAreAHelpfulAssistant.self, forKey: .prompt)
+        self.context = try container.decodeIfPresent(YoureSuperWise.self, forKey: .context)
         self.query = try container.decode(String.self, forKey: .query)
         self.temperature = try container.decodeIfPresent(Double.self, forKey: .temperature)
         self.stream = try container.decode(JSONValue.self, forKey: .stream)
@@ -57,6 +60,15 @@ public struct SendLiteralsInlinedRequest: Codable, Hashable, Sendable {
         try container.encode(self.objectWithLiteral, forKey: .objectWithLiteral)
     }
 
+    public enum YouAreAHelpfulAssistant: String, Codable, Hashable, CaseIterable, Sendable {
+        case youAreAHelpfulAssistant = "You are a helpful assistant"
+    }
+
+    public enum YoureSuperWise: String, Codable, Hashable, CaseIterable, Sendable {
+        case youreSuperWise = "You're super wise"
+    }
+
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case prompt
         case context

@@ -1,8 +1,12 @@
+import Foundation
+
 public struct Page: Codable, Hashable, Sendable {
+    /// The current page
     public let page: Int
     public let next: NextPage?
     public let perPage: Int
     public let totalPage: Int
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -37,6 +41,7 @@ public struct Page: Codable, Hashable, Sendable {
         try container.encode(self.totalPage, forKey: .totalPage)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case page
         case next

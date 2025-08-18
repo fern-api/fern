@@ -1,3 +1,5 @@
+import Foundation
+
 public enum UnionWithBaseProperties: Codable, Hashable, Sendable {
     case integer(Integer)
     case string(String)
@@ -37,6 +39,7 @@ public enum UnionWithBaseProperties: Codable, Hashable, Sendable {
     public struct Integer: Codable, Hashable, Sendable {
         public let type: String = "integer"
         public let value: Int
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -60,6 +63,7 @@ public enum UnionWithBaseProperties: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -69,6 +73,7 @@ public enum UnionWithBaseProperties: Codable, Hashable, Sendable {
     public struct String: Codable, Hashable, Sendable {
         public let type: String = "string"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -92,6 +97,7 @@ public enum UnionWithBaseProperties: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -101,6 +107,7 @@ public enum UnionWithBaseProperties: Codable, Hashable, Sendable {
     public struct Foo: Codable, Hashable, Sendable {
         public let type: String = "foo"
         public let name: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -124,6 +131,7 @@ public enum UnionWithBaseProperties: Codable, Hashable, Sendable {
             try container.encode(self.name, forKey: .name)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case name

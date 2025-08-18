@@ -1,5 +1,8 @@
+import Foundation
+
 public struct SearchResponse: Codable, Hashable, Sendable {
     public let results: [String]?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +25,7 @@ public struct SearchResponse: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.results, forKey: .results)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case results
     }

@@ -1,18 +1,21 @@
+import Foundation
+
 public struct Account: Codable, Hashable, Sendable {
     public let id: String
     public let relatedResources: [ResourceList]
     public let memo: Memo
-    public let resourceType: JSONValue
+    public let resourceType: Account
     public let name: String
     public let patient: Patient?
     public let practitioner: Practitioner?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         id: String,
         relatedResources: [ResourceList],
         memo: Memo,
-        resourceType: JSONValue,
+        resourceType: Account,
         name: String,
         patient: Patient? = nil,
         practitioner: Practitioner? = nil,
@@ -33,7 +36,7 @@ public struct Account: Codable, Hashable, Sendable {
         self.id = try container.decode(String.self, forKey: .id)
         self.relatedResources = try container.decode([ResourceList].self, forKey: .relatedResources)
         self.memo = try container.decode(Memo.self, forKey: .memo)
-        self.resourceType = try container.decode(JSONValue.self, forKey: .resourceType)
+        self.resourceType = try container.decode(Account.self, forKey: .resourceType)
         self.name = try container.decode(String.self, forKey: .name)
         self.patient = try container.decodeIfPresent(Patient.self, forKey: .patient)
         self.practitioner = try container.decodeIfPresent(Practitioner.self, forKey: .practitioner)
@@ -52,6 +55,11 @@ public struct Account: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.practitioner, forKey: .practitioner)
     }
 
+    public enum Account: String, Codable, Hashable, CaseIterable, Sendable {
+        case account = "Account"
+    }
+
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case relatedResources = "related_resources"

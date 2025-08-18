@@ -1,5 +1,8 @@
+import Foundation
+
 public struct WorkspaceTracedUpdate: Codable, Hashable, Sendable {
     public let traceResponsesSize: Int
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +25,7 @@ public struct WorkspaceTracedUpdate: Codable, Hashable, Sendable {
         try container.encode(self.traceResponsesSize, forKey: .traceResponsesSize)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case traceResponsesSize
     }

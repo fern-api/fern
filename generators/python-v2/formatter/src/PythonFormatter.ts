@@ -1,6 +1,5 @@
-import init, { Config, format } from "@wasm-fmt/ruff_fmt";
-
 import { AbstractFormatter } from "@fern-api/base-generator";
+import init, { Config, format } from "@wasm-fmt/ruff_fmt";
 
 export class PythonFormatter extends AbstractFormatter {
     private config: Config | undefined;

@@ -1,0 +1,137 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/api/resources",
+                "method": "GET",
+                "identifier_override": "endpoint_service.listResources"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.listResources({\n    page: 1,\n    per_page: 1,\n    sort: \"created_at\",\n    order: \"desc\",\n    include_totals: true,\n    fields: \"fields\",\n    search: \"search\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/resources/{resourceId}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getResource"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.getResource(\"resourceId\", {\n    include_metadata: true,\n    format: \"json\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/resources/search",
+                "method": "POST",
+                "identifier_override": "endpoint_service.searchResources"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.searchResources({\n    limit: 1,\n    offset: 1,\n    query: \"query\",\n    filters: {\n        \"filters\": {\n            \"key\": \"value\"\n        }\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users",
+                "method": "GET",
+                "identifier_override": "endpoint_service.listUsers"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.listUsers({\n    page: 1,\n    per_page: 1,\n    include_totals: true,\n    sort: \"sort\",\n    connection: \"connection\",\n    q: \"q\",\n    search_engine: \"search_engine\",\n    fields: \"fields\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getUserById"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.getUserById(\"userId\", {\n    fields: \"fields\",\n    include_fields: true\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users",
+                "method": "POST",
+                "identifier_override": "endpoint_service.createUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.createUser({\n    email: \"email\",\n    email_verified: true,\n    username: \"username\",\n    password: \"password\",\n    phone_number: \"phone_number\",\n    phone_verified: true,\n    user_metadata: {\n        \"user_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    app_metadata: {\n        \"app_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    connection: \"connection\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_service.updateUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.updateUser(\"userId\", {\n    email: \"email\",\n    email_verified: true,\n    username: \"username\",\n    phone_number: \"phone_number\",\n    phone_verified: true,\n    user_metadata: {\n        \"user_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    app_metadata: {\n        \"app_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    password: \"password\",\n    blocked: true\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_service.deleteUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.deleteUser(\"userId\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/connections",
+                "method": "GET",
+                "identifier_override": "endpoint_service.listConnections"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.listConnections({\n    strategy: \"strategy\",\n    name: \"name\",\n    fields: \"fields\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/connections/{connectionId}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getConnection"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.getConnection(\"connectionId\", {\n    fields: \"fields\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/clients",
+                "method": "GET",
+                "identifier_override": "endpoint_service.listClients"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.listClients({\n    fields: \"fields\",\n    include_fields: true,\n    page: 1,\n    per_page: 1,\n    include_totals: true,\n    is_global: true,\n    is_first_party: true,\n    app_type: [\"app_type\", \"app_type\"]\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/clients/{clientId}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getClient"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.getClient(\"clientId\", {\n    fields: \"fields\",\n    include_fields: true\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

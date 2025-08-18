@@ -1,7 +1,7 @@
-irVersion: v39
+irVersion: v58
 displayName: Ruby SDK
 image: fernapi/fern-ruby-sdk
-changelogLocation: ../../generators/ruby/sdk/versions.yml
+changelogLocation: ../../generators/ruby-v2/sdk/versions.yml
 
 buildScripts:
   installScript:
@@ -13,10 +13,9 @@ buildScripts:
 
 publish:
   preBuildCommands:
-    - ./.github/actions/install
-    - pnpm --filter @fern-api/fern-ruby-sdk dist:cli
+    - pnpm --filter @fern-api/ruby-sdk dist:cli
   docker:
-    file: ./generators/ruby/sdk/Dockerfile
+    file: ./generators/ruby-v2/sdk/Dockerfile
     image: fernapi/fern-ruby-sdk
     context: .
 test:

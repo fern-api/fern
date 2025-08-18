@@ -56,6 +56,11 @@ export class Service {
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            _binaryUploadRequest.headers,
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -63,7 +68,7 @@ export class Service {
                 "upload-content",
             ),
             method: "POST",
-            headers: mergeHeaders(this._options?.headers, _binaryUploadRequest.headers, requestOptions?.headers),
+            headers: _headers,
             contentType: "application/octet-stream",
             queryParameters: requestOptions?.queryParams,
             requestType: "bytes",

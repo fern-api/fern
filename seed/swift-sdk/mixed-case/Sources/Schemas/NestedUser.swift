@@ -1,6 +1,9 @@
+import Foundation
+
 public struct NestedUser: Codable, Hashable, Sendable {
     public let name: String
     public let nestedUser: User
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +30,7 @@ public struct NestedUser: Codable, Hashable, Sendable {
         try container.encode(self.nestedUser, forKey: .nestedUser)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case name = "Name"
         case nestedUser = "NestedUser"

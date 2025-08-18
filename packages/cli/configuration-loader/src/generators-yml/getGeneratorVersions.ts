@@ -1,8 +1,6 @@
-import semver from "semver";
-
 import { TaskContext } from "@fern-api/task-context";
-
 import { FernRegistry, FernRegistryClient as GeneratorsClient } from "@fern-fern/generators-sdk";
+import semver from "semver";
 
 export async function getLatestGeneratorVersion({
     generatorName,
@@ -113,6 +111,12 @@ function getGeneratorMetadataFromName(generatorName: string, context?: TaskConte
             return "rust-sdk";
         case "fern-rust-model":
             return "rust-model";
+
+        // Swift
+        case "fern-swift-sdk":
+            return "swift-sdk";
+        case "fern-swift-model":
+            return "swift-model";
 
         default: {
             context?.logger.warn(`Unrecognized generator name found, attempting to parse manually: ${generatorName}`);

@@ -1,9 +1,11 @@
+import { AbstractProject, File } from "@fern-api/base-generator";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 import dedent from "dedent";
-import { mkdir, writeFile } from "fs/promises";
-
-import { AbstractProject } from "@fern-api/base-generator";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { AbstractRubyGeneratorContext, BaseRubyCustomConfigSchema, RubyFile } from "@fern-api/ruby-ast";
+import { mkdir, readFile, writeFile } from "fs/promises";
+import { template } from "lodash-es";
+import { join as pathJoin } from "path";
+import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
 
 const GEMFILE_FILENAME = "Gemfile";
 const RAKEFILE_FILENAME = "Rakefile";
@@ -12,14 +14,20 @@ const RAKEFILE_FILENAME = "Rakefile";
  * In memory representation of a Ruby project.
  */
 export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>> {
+    private coreFiles: File[] = [];
+    private rubyContext: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+
     public constructor({ context }: { context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema> }) {
         super(context);
+        this.rubyContext = context;
     }
 
     public async persist(): Promise<void> {
         await this.createGemfile();
         await this.createRakefile();
         await this.writeRawFiles();
+        await this.createAsIsFiles();
+        await this.writeAsIsFiles();
     }
 
     private async createGemfile(): Promise<void> {
@@ -38,10 +46,69 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         );
     }
 
+    private async createAsIsFiles(): Promise<void> {
+        const asIsFiles = this.rubyContext.getCoreAsIsFiles();
+        this.context.logger.debug(`Found ${asIsFiles.length} as-is files to copy: ${asIsFiles.join(", ")}`);
+
+        for (const filename of asIsFiles) {
+            this.coreFiles.push(
+                await this.createAsIsFile({
+                    filename,
+                    gemNamespace: firstCharUpperCase(this.context.config.organization || "fern")
+                })
+            );
+        }
+    }
+
+    private async createAsIsFile({
+        filename,
+        gemNamespace
+    }: {
+        filename: string;
+        gemNamespace: string;
+    }): Promise<File> {
+        const contents = (await readFile(getAsIsFilepath(filename))).toString();
+        return new File(
+            filename.replace(".Template", ""),
+            RelativeFilePath.of(`lib/${this.context.getRootFolderName()}/internal`),
+            replaceTemplate({
+                contents,
+                variables: getTemplateVariables({
+                    gemNamespace
+                })
+            })
+        );
+    }
+
+    private async writeAsIsFiles(): Promise<void> {
+        for (const file of this.coreFiles) {
+            await file.write(this.absolutePathToOutputDirectory);
+        }
+    }
+
     private async mkdir(absolutePathToDirectory: AbsoluteFilePath): Promise<void> {
         this.context.logger.debug(`mkdir ${absolutePathToDirectory}`);
         await mkdir(absolutePathToDirectory, { recursive: true });
     }
+}
+
+function firstCharUpperCase(st: string): string {
+    return st.length < 1 ? st : st.charAt(0).toUpperCase() + st.substring(1);
+}
+
+function replaceTemplate({ contents, variables }: { contents: string; variables: Record<string, unknown> }): string {
+    return template(contents)(variables);
+}
+
+function getTemplateVariables({ gemNamespace }: { gemNamespace: string }): Record<string, unknown> {
+    return {
+        gem_namespace: gemNamespace,
+        sdkName: gemNamespace.toLowerCase()
+    };
+}
+
+function getAsIsFilepath(filename: string): AbsoluteFilePath {
+    return AbsoluteFilePath.of(pathJoin(__dirname, "asIs", filename));
 }
 
 declare namespace Gemfile {

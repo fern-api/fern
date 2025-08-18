@@ -1,5 +1,9 @@
+import Foundation
+
 public struct DeleteUserRequest: Codable, Hashable, Sendable {
+    /// The user to delete.
     public let username: JSONValue?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +26,7 @@ public struct DeleteUserRequest: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.username, forKey: .username)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case username
     }

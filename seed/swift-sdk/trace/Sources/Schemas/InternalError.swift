@@ -1,5 +1,8 @@
+import Foundation
+
 public struct InternalError: Codable, Hashable, Sendable {
     public let exceptionInfo: ExceptionInfo
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +25,7 @@ public struct InternalError: Codable, Hashable, Sendable {
         try container.encode(self.exceptionInfo, forKey: .exceptionInfo)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case exceptionInfo
     }

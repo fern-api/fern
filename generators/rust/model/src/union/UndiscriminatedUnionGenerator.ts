@@ -10,8 +10,15 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
-import { isCollectionType, isDateTimeType, isUnknownType, isUuidType } from "../utils/primitiveTypeUtils";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import {
+    extractNamedTypesFromTypeReference,
+    isCollectionType,
+    isDateTimeType,
+    isUnknownType,
+    isUuidType,
+    typeSupportsHashAndEq
+} from "../utils/primitiveTypeUtils";
 
 export class UndiscriminatedUnionGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -107,8 +114,14 @@ export class UndiscriminatedUnionGenerator {
     private generateUnionAttributes(): rust.Attribute[] {
         const attributes: rust.Attribute[] = [];
 
-        // Basic derives
-        const derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
+        // Basic derives - start with essential ones
+        let derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
+
+        // Only add Hash and Eq if all variant types support them
+        if (this.canDeriveHashAndEq()) {
+            derives.push("Eq", "Hash");
+        }
+
         attributes.push(Attribute.derive(derives));
 
         // Serde untagged attribute for undiscriminated union
@@ -159,21 +172,27 @@ export class UndiscriminatedUnionGenerator {
                     return `Variant${index}`;
             }
         } else if (memberType.type === "container") {
-            // Handle container types
+            // Handle container types - include inner type information to avoid conflicts
             const containerType = memberType.container.type;
             switch (containerType) {
-                case "list":
-                    return "List";
+                case "list": {
+                    // Try to get the inner type name to make it unique
+                    const listInnerType = memberType.container.list;
+                    if (listInnerType.type === "named") {
+                        return `${listInnerType.name.pascalCase.unsafeName}List`;
+                    }
+                    return `List${index}`;
+                }
                 case "map":
-                    return "Map";
+                    return `Map${index}`;
                 case "set":
-                    return "Set";
+                    return `Set${index}`;
                 case "optional":
-                    return "Optional";
+                    return `Optional${index}`;
                 case "nullable":
-                    return "Nullable";
+                    return `Nullable${index}`;
                 case "literal":
-                    return "Literal";
+                    return `Literal${index}`;
                 default:
                     return `Container${index}`;
             }
@@ -198,40 +217,55 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private generateVariantCheckers(writer: rust.Writer): void {
+        const generatedMethods = new Set<string>();
+
         this.undiscriminatedUnionTypeDeclaration.members.forEach((member, index) => {
             const variantName = this.getVariantNameForMember(member, index);
             const methodName = `is_${variantName.toLowerCase()}`;
 
-            writer.writeBlock(`pub fn ${methodName}(&self) -> bool`, () => {
-                writer.writeLine(`matches!(self, Self::${variantName}(_))`);
-            });
-            writer.newLine();
+            // Only generate if we haven't already generated this method name
+            if (!generatedMethods.has(methodName)) {
+                generatedMethods.add(methodName);
+
+                writer.writeBlock(`pub fn ${methodName}(&self) -> bool`, () => {
+                    writer.writeLine(`matches!(self, Self::${variantName}(_))`);
+                });
+                writer.newLine();
+            }
         });
     }
 
     private generateConversionMethods(writer: rust.Writer): void {
+        const generatedMethods = new Set<string>();
+
         this.undiscriminatedUnionTypeDeclaration.members.forEach((member, index) => {
             const variantName = this.getVariantNameForMember(member, index);
             const memberType = generateRustTypeForTypeReference(member.type);
             const methodName = `as_${variantName.toLowerCase()}`;
-
-            writer.writeBlock(`pub fn ${methodName}(&self) -> Option<&${memberType.toString()}>`, () => {
-                writer.writeLine("match self {");
-                writer.writeLine(`            Self::${variantName}(value) => Some(value),`);
-                writer.writeLine("            _ => None,");
-                writer.writeLine("        }");
-            });
-            writer.newLine();
-
-            // Also generate owned conversion
             const ownedMethodName = `into_${variantName.toLowerCase()}`;
-            writer.writeBlock(`pub fn ${ownedMethodName}(self) -> Option<${memberType.toString()}>`, () => {
-                writer.writeLine("match self {");
-                writer.writeLine(`            Self::${variantName}(value) => Some(value),`);
-                writer.writeLine("            _ => None,");
-                writer.writeLine("        }");
-            });
-            writer.newLine();
+
+            // Only generate if we haven't already generated these method names
+            if (!generatedMethods.has(methodName)) {
+                generatedMethods.add(methodName);
+                generatedMethods.add(ownedMethodName);
+
+                writer.writeBlock(`pub fn ${methodName}(&self) -> Option<&${memberType.toString()}>`, () => {
+                    writer.writeLine("match self {");
+                    writer.writeLine(`            Self::${variantName}(value) => Some(value),`);
+                    writer.writeLine("            _ => None,");
+                    writer.writeLine("        }");
+                });
+                writer.newLine();
+
+                // Also generate owned conversion
+                writer.writeBlock(`pub fn ${ownedMethodName}(self) -> Option<${memberType.toString()}>`, () => {
+                    writer.writeLine("match self {");
+                    writer.writeLine(`            Self::${variantName}(value) => Some(value),`);
+                    writer.writeLine("            _ => None,");
+                    writer.writeLine("        }");
+                });
+                writer.newLine();
+            }
         });
     }
 
@@ -256,23 +290,27 @@ export class UndiscriminatedUnionGenerator {
         return this.undiscriminatedUnionTypeDeclaration.members.some((member) => predicate(member.type));
     }
 
-    private getVariantTypesUsedInUnion(): { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] {
-        const variantTypeNames: { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] = [];
+    private getVariantTypesUsedInUnion(): {
+        snakeCase: { unsafeName: string };
+        pascalCase: { unsafeName: string };
+    }[] {
+        const variantTypeNames: {
+            snakeCase: { unsafeName: string };
+            pascalCase: { unsafeName: string };
+        }[] = [];
         const visited = new Set<string>();
 
         this.undiscriminatedUnionTypeDeclaration.members.forEach((member) => {
-            if (member.type.type === "named") {
-                const typeName = member.type.name.originalName;
-                if (!visited.has(typeName)) {
-                    visited.add(typeName);
-                    variantTypeNames.push({
-                        snakeCase: { unsafeName: member.type.name.snakeCase.unsafeName },
-                        pascalCase: { unsafeName: member.type.name.pascalCase.unsafeName }
-                    });
-                }
-            }
+            extractNamedTypesFromTypeReference(member.type, variantTypeNames, visited);
         });
 
         return variantTypeNames;
+    }
+
+    private canDeriveHashAndEq(): boolean {
+        // Check if all variant types can support Hash and Eq derives
+        return this.undiscriminatedUnionTypeDeclaration.members.every((member) => {
+            return typeSupportsHashAndEq(member.type, this.context);
+        });
     }
 }

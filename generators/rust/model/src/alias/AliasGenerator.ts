@@ -1,10 +1,10 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
-import { rust, Attribute, PUBLIC } from "@fern-api/rust-codegen";
+import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { AliasTypeDeclaration, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import { generateRustTypeForTypeReference } from "../converters";
-import { isChronoType, isUuidType, isCollectionType, isUnknownType, isDateTimeType } from "../utils/primitiveTypeUtils";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { isChronoType, isCollectionType, isDateTimeType, isUnknownType, isUuidType } from "../utils/primitiveTypeUtils";
 
 export class AliasGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -117,8 +117,14 @@ export class AliasGenerator {
         return attributes;
     }
 
-    private getCustomTypesUsedInAlias(): { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] {
-        const customTypeNames: { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] = [];
+    private getCustomTypesUsedInAlias(): {
+        snakeCase: { unsafeName: string };
+        pascalCase: { unsafeName: string };
+    }[] {
+        const customTypeNames: {
+            snakeCase: { unsafeName: string };
+            pascalCase: { unsafeName: string };
+        }[] = [];
         const visited = new Set<string>();
 
         const extractNamedTypesRecursively = (typeRef: TypeReference) => {

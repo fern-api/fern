@@ -1,16 +1,19 @@
+import Foundation
+
 public struct Script: Codable, Hashable, Sendable {
     public let id: String
     public let relatedResources: [ResourceList]
     public let memo: Memo
-    public let resourceType: JSONValue
+    public let resourceType: Script
     public let name: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         id: String,
         relatedResources: [ResourceList],
         memo: Memo,
-        resourceType: JSONValue,
+        resourceType: Script,
         name: String,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -27,7 +30,7 @@ public struct Script: Codable, Hashable, Sendable {
         self.id = try container.decode(String.self, forKey: .id)
         self.relatedResources = try container.decode([ResourceList].self, forKey: .relatedResources)
         self.memo = try container.decode(Memo.self, forKey: .memo)
-        self.resourceType = try container.decode(JSONValue.self, forKey: .resourceType)
+        self.resourceType = try container.decode(Script.self, forKey: .resourceType)
         self.name = try container.decode(String.self, forKey: .name)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
@@ -42,6 +45,11 @@ public struct Script: Codable, Hashable, Sendable {
         try container.encode(self.name, forKey: .name)
     }
 
+    public enum Script: String, Codable, Hashable, CaseIterable, Sendable {
+        case script = "Script"
+    }
+
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case relatedResources = "related_resources"

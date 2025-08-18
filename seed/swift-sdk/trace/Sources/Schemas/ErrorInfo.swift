@@ -1,6 +1,10 @@
+import Foundation
+
 public enum ErrorInfo: Codable, Hashable, Sendable {
     case compileError(CompileError)
+    /// If the submission cannot be executed and throws a runtime error before getting to any of the testcases.
     case runtimeError(RuntimeError)
+    /// If the trace backend encounters an unexpected error.
     case internalError(InternalError)
 
     public init(from decoder: Decoder) throws {
@@ -37,6 +41,7 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
     public struct CompileError: Codable, Hashable, Sendable {
         public let type: String = "compileError"
         public let message: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -60,15 +65,18 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
             try container.encode(self.message, forKey: .message)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case message
         }
     }
 
+    /// If the submission cannot be executed and throws a runtime error before getting to any of the testcases.
     public struct RuntimeError: Codable, Hashable, Sendable {
         public let type: String = "runtimeError"
         public let message: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -92,15 +100,18 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
             try container.encode(self.message, forKey: .message)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case message
         }
     }
 
+    /// If the trace backend encounters an unexpected error.
     public struct InternalError: Codable, Hashable, Sendable {
         public let type: String = "internalError"
         public let exceptionInfo: ExceptionInfo
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -124,6 +135,7 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
             try container.encode(self.exceptionInfo, forKey: .exceptionInfo)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case exceptionInfo

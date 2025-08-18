@@ -1,3 +1,57 @@
+- version: 2.41.1
+  changelogEntry:
+    - summary: |
+        Fix integer overflow when processing OpenAPI specs with large integer values in examples. Values exceeding Java's Integer range are automatically converted to long type to prevent generation failures.
+      type: fix
+  createdAt: '2025-08-15'
+  irVersion: 58
+
+- version: 2.41.0
+  changelogEntry:
+    - summary: |
+        Add support for generating wire tests via `enable-wire-tests` flag. Wire tests verify HTTP protocol communication
+        using MockWebServer and are generated for all endpoints in a service.
+        
+        ```yaml
+        customConfig:
+          enable-wire-tests: true
+        ```
+        
+        Generated tests include:
+        - Working 404/500 error tests that compile immediately
+        - Success test templates with TODO comments for customization
+        - Proper handling of staged vs regular builders
+        - Constants for all magic strings for better maintainability
+        
+        Note: Complex request bodies and response validation require manual customization.
+      type: feat
+  createdAt: '2025-08-14'
+  irVersion: 58
+
+- version: 2.40.0
+  changelogEntry:
+    - summary: |
+        Add support for client-side default parameter values via `use-default-request-parameter-values` flag. 
+        When enabled, query and header parameters with defaults become Optional types and defaults are automatically 
+        applied when not provided. Example:
+
+        ```yaml
+        customConfig:
+          use-default-request-parameter-values: true
+        ```
+
+        Generated code:
+        ```java
+        // Parameters with defaults become Optional
+        private final Optional<Integer> perPage;  // Has default: 50
+
+        // Defaults are applied automatically
+        QueryStringMapper.addQueryParameter(httpUrl, "per_page", request.getPerPage().orElse(50), false);
+        ```
+      type: feat
+  createdAt: '2025-08-13'
+  irVersion: 58
+
 - version: 2.39.6
   changelogEntry:
     - summary: |

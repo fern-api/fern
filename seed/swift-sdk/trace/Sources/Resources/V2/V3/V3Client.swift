@@ -1,3 +1,5 @@
+import Foundation
+
 public final class V3Client: Sendable {
     public let problem: V3ProblemClient
     private let httpClient: HTTPClient

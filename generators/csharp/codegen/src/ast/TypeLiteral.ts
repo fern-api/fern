@@ -3,8 +3,8 @@ import { assertNever } from "@fern-api/core-utils";
 import { csharp } from "..";
 import { ClassInstantiation } from "./ClassInstantiation";
 import { ClassReference } from "./ClassReference";
-import { Type } from "./Type";
 import { AstNode, Writer } from "./core";
+import { Type } from "./Type";
 
 type InternalTypeLiteral =
     | Boolean_

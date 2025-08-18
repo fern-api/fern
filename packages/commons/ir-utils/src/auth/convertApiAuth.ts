@@ -87,13 +87,23 @@ function convertSchemeReference({
                     docs,
                     rawScheme
                 }),
-            bearer: (rawScheme) =>
+            tokenBearer: (rawScheme) =>
                 generateBearerAuth({
                     casingsGenerator,
                     docs,
                     rawScheme
                 }),
-            oauth: (rawScheme) =>
+            inferredBearer(authScheme) {
+                // TODO: implement
+                return generateBearerAuth({
+                    casingsGenerator,
+                    docs,
+                    rawScheme: undefined
+                });
+            },
+            oauth: (
+                rawScheme // TODO: implement
+            ) =>
                 generateBearerAuth({
                     casingsGenerator,
                     docs,
@@ -130,7 +140,7 @@ function generateBearerAuth({
 }: {
     casingsGenerator: CasingsGenerator;
     docs: string | undefined;
-    rawScheme: RawSchemas.BearerAuthSchemeSchema | undefined;
+    rawScheme: RawSchemas.TokenBearerAuthSchema | undefined;
 }): AuthScheme.Bearer {
     return AuthScheme.bearer({
         docs,

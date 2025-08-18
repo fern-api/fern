@@ -1,3 +1,5 @@
+import Foundation
+
 public final class DClient: Sendable {
     public let types: TypesClient
     private let httpClient: HTTPClient

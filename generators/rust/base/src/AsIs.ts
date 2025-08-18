@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import { entries } from "@fern-api/core-utils";
-import { RelativeFilePath, getFilename } from "@fern-api/fs-utils";
+import { getFilename, RelativeFilePath } from "@fern-api/fs-utils";
 
 export const AsIsFileNames = {
     // Core infrastructure templates
@@ -10,6 +10,7 @@ export const AsIsFileNames = {
     HttpClient: "http_client.rs",
     RequestOptions: "request_options.rs",
     ClientError: "client_error.rs",
+    Pagination: "pagination.rs",
     // Project-level configuration files
     CargoToml: "Cargo.toml",
     Gitignore: ".gitignore",

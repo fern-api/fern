@@ -1,9 +1,17 @@
+import { MediaType } from "@fern-api/core-utils";
+
+import {
+    EndpointSdkName,
+    EndpointWithExample,
+    PrimitiveSchemaValueWithExample,
+    RequestWithExample,
+    SchemaWithExample,
+    Source
+} from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
-
-import { EndpointWithExample, PrimitiveSchemaValueWithExample, SchemaWithExample, Source } from "@fern-api/openapi-ir";
-
 import { getExtension } from "../../../../getExtension";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { DummyOpenAPIV3ParserContext } from "../../DummyOpenAPIV3ParserContext";
 import { OpenAPIExtension } from "../../extensions/extensions";
@@ -13,8 +21,9 @@ import { getFernAvailability } from "../../extensions/getFernAvailability";
 import { OperationContext } from "../contexts";
 import { convertServer } from "../convertServer";
 import { ConvertedParameters, convertParameters } from "../endpoint/convertParameters";
-import { convertRequest } from "../endpoint/convertRequest";
+import { convertRequest, convertToSingleRequest } from "../endpoint/convertRequest";
 import { convertResponse } from "../endpoint/convertResponse";
+import { isApplicationJsonMediaType } from "../endpoint/getApplicationJsonSchema";
 
 export function convertHttpOperation({
     operationContext,
@@ -30,8 +39,8 @@ export function convertHttpOperation({
     suffix?: string;
     streamFormat: "sse" | "json" | undefined;
     source: Source;
-}): EndpointWithExample {
-    const { document, operation, path, method, baseBreadcrumbs, sdkMethodName } = operationContext;
+}): EndpointWithExample[] {
+    const { document, operation, path, method, baseBreadcrumbs } = operationContext;
 
     const idempotent = getExtension<boolean>(operation, FernOpenAPIExtension.IDEMPOTENT);
     const requestNameOverride = getExtension<string>(operation, [
@@ -88,50 +97,132 @@ export function convertHttpOperation({
         }
     }
 
-    let convertedRequest =
-        operation.requestBody != null
-            ? convertRequest({
-                  requestBody: operation.requestBody,
-                  document,
-                  context: new DummyOpenAPIV3ParserContext({
-                      document: context.document,
-                      taskContext: context.taskContext,
-                      options: context.options,
-                      source: context.source,
-                      namespace: context.namespace
-                  }),
-                  requestBreadcrumbs,
-                  source,
-                  namespace: context.namespace
-              })
-            : undefined;
+    let convertedRequests = (() => {
+        if (operationContext.method === "GET") {
+            // If the method is GET, the request should be explicitly undefined
+            return [undefined];
+        }
+        if (!operation.requestBody) {
+            return [undefined];
+        }
+        const resolvedRequestBody = isReferenceObject(operation.requestBody)
+            ? context.resolveRequestBodyReference(operation.requestBody)
+            : operation.requestBody;
 
-    // if request has query params or headers and body is not an object, then use `Body`
-    if (
-        endpointHasNonRequestBodyParameters({ context, convertedParameters }) &&
-        convertedRequest != null &&
-        convertedRequest.type === "json" &&
-        convertedRequest.schema.type !== "object" &&
-        operation.requestBody != null
-    ) {
-        convertedRequest = convertRequest({
-            requestBody: operation.requestBody,
-            document,
-            context,
-            requestBreadcrumbs: [...requestBreadcrumbs, "Body"],
-            source,
-            namespace: context.namespace
-        });
-    } else if (operation.requestBody != null) {
-        convertedRequest = convertRequest({
-            requestBody: operation.requestBody,
-            document,
-            context,
-            requestBreadcrumbs: [...requestBreadcrumbs],
-            source,
-            namespace: context.namespace
-        });
-    }
+        const allRequestsHaveSdkMethodNames = Object.values(resolvedRequestBody.content).every(
+            (mediaTypeObject) => getRequestSdkMethodName({ mediaTypeObject }) != null
+        );
+
+        const requests: (RequestWithExample | undefined)[] = [];
+        if (allRequestsHaveSdkMethodNames) {
+            requests.push(
+                ...Object.entries(resolvedRequestBody.content)
+                    .map(([mediaType, mediaTypeObject]) => {
+                        let convertedRequest = convertRequest({
+                            mediaType,
+                            mediaTypeObject,
+                            description: resolvedRequestBody.description,
+                            document,
+                            context: new DummyOpenAPIV3ParserContext({
+                                document: context.document,
+                                taskContext: context.taskContext,
+                                options: context.options,
+                                source: context.source,
+                                namespace: context.namespace
+                            }),
+                            requestBreadcrumbs,
+                            source,
+                            namespace: context.namespace
+                        });
+
+                        // if request has query params or headers and body is not an object, then use `Body`
+                        if (
+                            endpointHasNonRequestBodyParameters({ context, convertedParameters }) &&
+                            convertedRequest != null &&
+                            (convertedRequest.type === "json" || convertedRequest.type === "formUrlEncoded") &&
+                            convertedRequest.schema.type !== "object" &&
+                            operation.requestBody != null
+                        ) {
+                            convertedRequest = convertRequest({
+                                mediaType,
+                                mediaTypeObject,
+                                description: resolvedRequestBody.description,
+                                document,
+                                context,
+                                requestBreadcrumbs: [...requestBreadcrumbs, "Body"],
+                                source,
+                                namespace: context.namespace
+                            });
+                        } else if (operation.requestBody != null) {
+                            convertedRequest = convertRequest({
+                                mediaType,
+                                mediaTypeObject,
+                                description: resolvedRequestBody.description,
+                                document,
+                                context,
+                                requestBreadcrumbs: [...requestBreadcrumbs],
+                                source,
+                                namespace: context.namespace
+                            });
+                        }
+
+                        return convertedRequest;
+                    })
+                    .filter((request) => request != null)
+            );
+            if (requests.length === 0) {
+                return [undefined];
+            }
+            return requests;
+        } else {
+            let convertedRequest = convertToSingleRequest({
+                content: resolvedRequestBody.content,
+                description: resolvedRequestBody.description,
+                document,
+                context: new DummyOpenAPIV3ParserContext({
+                    document: context.document,
+                    taskContext: context.taskContext,
+                    options: context.options,
+                    source: context.source,
+                    namespace: context.namespace
+                }),
+                requestBreadcrumbs,
+                source,
+                namespace: context.namespace
+            });
+
+            // if request has query params or headers and body is not an object, then use `Body`
+            if (
+                endpointHasNonRequestBodyParameters({ context, convertedParameters }) &&
+                convertedRequest != null &&
+                (convertedRequest.type === "json" || convertedRequest.type === "formUrlEncoded") &&
+                convertedRequest.schema.type !== "object" &&
+                operation.requestBody != null
+            ) {
+                convertedRequest = convertToSingleRequest({
+                    content: resolvedRequestBody.content,
+                    description: resolvedRequestBody.description,
+                    document,
+                    context,
+                    requestBreadcrumbs: [...requestBreadcrumbs, "Body"],
+                    source,
+                    namespace: context.namespace
+                });
+            } else if (operation.requestBody != null) {
+                convertedRequest = convertToSingleRequest({
+                    content: resolvedRequestBody.content,
+                    description: resolvedRequestBody.description,
+                    document,
+                    context,
+                    requestBreadcrumbs: [...requestBreadcrumbs],
+                    source,
+                    namespace: context.namespace
+                });
+            }
+
+            return [convertedRequest];
+        }
+    })();
 
     const responseBreadcrumbs = [...baseBreadcrumbs, "Response"];
 
@@ -145,15 +236,10 @@ export function convertHttpOperation({
         source
     });
 
-    // Fern doesn't support GET requests with bodies
-    if (operationContext.method === "GET") {
-        convertedRequest = undefined;
-    }
-
     const availability = getFernAvailability(operation);
     const examples = getExamplesFromExtension(operationContext, operation, context);
     const serverName = getExtension<string>(operation, FernOpenAPIExtension.SERVER_NAME_V2);
-    return {
+    return convertedRequests.map((request) => ({
         summary: operation.summary,
         internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),
         idempotent,
@@ -164,13 +250,13 @@ export function convertHttpOperation({
                 : operation.operationId,
         tags: context.resolveTagsToTagIds(operation.tags),
         namespace: context.namespace,
-        sdkName: sdkMethodName,
+        sdkName: createOperationSdkMethodName({ operationContext, request }),
         pathParameters: convertedParameters.pathParameters,
         queryParameters: convertedParameters.queryParameters,
         headers: convertedParameters.headers,
         requestNameOverride: requestNameOverride ?? undefined,
         generatedRequestName: getGeneratedTypeName(requestBreadcrumbs, context.options.preserveSchemaIds),
-        request: convertedRequest,
+        request,
         response: convertedResponse.value,
         errors: convertedResponse.errors,
         servers:
@@ -185,6 +271,38 @@ export function convertHttpOperation({
         examples,
         pagination: operationContext.pagination,
         source
+    }));
+}
+
+function getRequestSdkMethodName({
+    mediaTypeObject
+}: {
+    mediaTypeObject: OpenAPIV3.MediaTypeObject;
+}): string | undefined {
+    return getExtension<string>(mediaTypeObject, FernOpenAPIExtension.SDK_METHOD_NAME);
+}
+function createOperationSdkMethodName({
+    operationContext,
+    request
+}: {
+    operationContext: OperationContext;
+    request: RequestWithExample | undefined;
+}): EndpointSdkName | undefined {
+    if (!request) {
+        return operationContext.sdkMethodName;
+    }
+    if (!request.sdkMethodName) {
+        return operationContext.sdkMethodName;
+    }
+    if (operationContext.sdkMethodName) {
+        return {
+            groupName: [...operationContext.sdkMethodName.groupName],
+            methodName: request.sdkMethodName ?? operationContext.sdkMethodName.methodName
+        };
+    }
+    return {
+        groupName: [],
+        methodName: request.sdkMethodName
     };
 }
 

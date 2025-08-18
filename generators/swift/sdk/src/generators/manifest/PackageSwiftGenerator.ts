@@ -18,10 +18,10 @@ export class PackageSwiftGenerator {
     }
 
     public generate(): SwiftFile {
-        return new SwiftFile({
+        return SwiftFile.create({
             filename: "Package.swift",
             directory: RelativeFilePath.of(""),
-            fileContents: [
+            contents: [
                 swift.comment({ content: "swift-tools-version: 5.7" }),
                 swift.LineBreak.single(),
                 swift.Statement.import("PackageDescription"),

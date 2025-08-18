@@ -1,5 +1,8 @@
+import Foundation
+
 public struct SubmissionIdNotFound: Codable, Hashable, Sendable {
     public let missingSubmissionId: SubmissionId
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +25,7 @@ public struct SubmissionIdNotFound: Codable, Hashable, Sendable {
         try container.encode(self.missingSubmissionId, forKey: .missingSubmissionId)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case missingSubmissionId
     }

@@ -1,7 +1,7 @@
 use crate::next_page::NextPage;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct Page {
     pub page: i32,
     #[serde(skip_serializing_if = "Option::is_none")]

@@ -1,7 +1,7 @@
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { AliasGenerator } from "./alias/AliasGenerator";
 import { EnumGenerator } from "./enum/EnumGenerator";
 import { IndexGenerator } from "./index/IndexGenerator";
+import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { ObjectGenerator } from "./object/ObjectGenerator";
 import { UnionGenerator } from "./union/UnionGenerator";
 

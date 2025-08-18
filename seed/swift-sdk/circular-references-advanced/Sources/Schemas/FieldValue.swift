@@ -1,3 +1,5 @@
+import Foundation
+
 public enum FieldValue: Codable, Hashable, Sendable {
     case primitiveValue(PrimitiveValue)
     case objectValue(ObjectValue)
@@ -37,6 +39,7 @@ public enum FieldValue: Codable, Hashable, Sendable {
     public struct PrimitiveValue: Codable, Hashable, Sendable {
         public let type: String = "primitive_value"
         public let value: PrimitiveValue
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -60,6 +63,7 @@ public enum FieldValue: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -68,6 +72,7 @@ public enum FieldValue: Codable, Hashable, Sendable {
 
     public struct ObjectValue: Codable, Hashable, Sendable {
         public let type: String = "object_value"
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -89,6 +94,7 @@ public enum FieldValue: Codable, Hashable, Sendable {
     public struct ContainerValue: Codable, Hashable, Sendable {
         public let type: String = "container_value"
         public let value: ContainerValue
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -112,6 +118,7 @@ public enum FieldValue: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value

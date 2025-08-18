@@ -3,6 +3,7 @@ export { Class } from "./Class";
 export { CodeBlock } from "./CodeBlock";
 export { Comment } from "./Comment";
 export { DeclarationType } from "./DeclarationType";
+export { DocComment } from "./DocComment";
 export { EnumWithAssociatedValues } from "./EnumWithAssociatedValues";
 export { EnumWithRawValues } from "./EnumWithRawValues";
 export { Expression } from "./Expression";

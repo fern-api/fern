@@ -1,7 +1,10 @@
+import Foundation
+
 public struct GeneratedFilesType: Codable, Hashable, Sendable {
     public let generatedTestCaseFiles: [Language: FilesType]
     public let generatedTemplateFiles: [Language: FilesType]
     public let other: [Language: FilesType]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -32,6 +35,7 @@ public struct GeneratedFilesType: Codable, Hashable, Sendable {
         try container.encode(self.other, forKey: .other)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case generatedTestCaseFiles
         case generatedTemplateFiles

@@ -1,3 +1,5 @@
+import Foundation
+
 public enum SubmissionRequest: Codable, Hashable, Sendable {
     case initializeProblemRequest(InitializeProblemRequest)
     case initializeWorkspaceRequest(InitializeWorkspaceRequest)
@@ -48,6 +50,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
         public let type: String = "initializeProblemRequest"
         public let problemId: ProblemId
         public let problemVersion: Int?
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -75,6 +78,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
             try container.encodeIfPresent(self.problemVersion, forKey: .problemVersion)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case problemId
@@ -83,6 +87,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
     }
 
     public struct InitializeWorkspaceRequest: Codable, Hashable, Sendable {
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -108,6 +113,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
         public let problemId: ProblemId
         public let problemVersion: Int?
         public let userId: String?
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -151,6 +157,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
             try container.encodeIfPresent(self.userId, forKey: .userId)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -168,6 +175,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
         public let language: Language
         public let submissionFiles: [SubmissionFileInfo]
         public let userId: String?
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -203,6 +211,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
             try container.encodeIfPresent(self.userId, forKey: .userId)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -215,6 +224,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
     public struct Stop: Codable, Hashable, Sendable {
         public let type: String = "stop"
         public let submissionId: SubmissionId
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -238,6 +248,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
             try container.encode(self.submissionId, forKey: .submissionId)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId

@@ -1,8 +1,7 @@
-import { mkdir } from "fs/promises";
-
 import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { BaseJavaCustomConfigSchema } from "@fern-api/java-ast";
+import { mkdir } from "fs/promises";
 
 import { AbstractJavaGeneratorContext } from "../context/AbstractJavaGeneratorContext";
 

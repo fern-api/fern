@@ -1,25 +1,26 @@
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-
+import { TaskContext } from "@fern-api/task-context";
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
-
-import { PlaygroundConfig, convertAuth } from "./convertAuth";
+import { convertAuth, PlaygroundConfig } from "./convertAuth";
 import { convertIrAvailability, convertPackage } from "./convertPackage";
 import { convertTypeReference, convertTypeShape } from "./convertTypeShape";
 
 export function convertIrToFdrApi({
     ir,
     snippetsConfig,
-    playgroundConfig
+    playgroundConfig,
+    context
 }: {
     ir: IntermediateRepresentation;
     snippetsConfig: FdrCjsSdk.api.v1.register.SnippetsConfig;
     playgroundConfig?: PlaygroundConfig;
+    context: TaskContext;
 }): FdrCjsSdk.api.v1.register.ApiDefinition {
     const fdrApi: FdrCjsSdk.api.v1.register.ApiDefinition = {
         types: {},
         subpackages: {},
         rootPackage: convertPackage(ir.rootPackage, ir),
-        auth: convertAuth(ir.auth, ir, playgroundConfig),
+        auth: convertAuth({ auth: ir.auth, ir, playgroundConfig, context }),
         snippetsConfiguration: snippetsConfig,
         globalHeaders: ir.headers.map(
             (header): FdrCjsSdk.api.v1.register.Header => ({

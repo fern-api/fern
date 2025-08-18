@@ -1,8 +1,11 @@
+import Foundation
+
 public struct LightweightProblemInfoV2Type: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let problemName: String
     public let problemVersion: Int
     public let variableTypes: JSONValue
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -37,6 +40,7 @@ public struct LightweightProblemInfoV2Type: Codable, Hashable, Sendable {
         try container.encode(self.variableTypes, forKey: .variableTypes)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case problemId
         case problemName

@@ -1,3 +1,5 @@
+import Foundation
+
 public enum RunningSubmissionState: String, Codable, Hashable, CaseIterable, Sendable {
     case queueingSubmission = "QUEUEING_SUBMISSION"
     case killingHistoricalSubmissions = "KILLING_HISTORICAL_SUBMISSIONS"

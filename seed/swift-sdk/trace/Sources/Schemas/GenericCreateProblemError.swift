@@ -1,7 +1,10 @@
+import Foundation
+
 public struct GenericCreateProblemError: Codable, Hashable, Sendable {
     public let message: String
     public let type: String
     public let stacktrace: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -32,6 +35,7 @@ public struct GenericCreateProblemError: Codable, Hashable, Sendable {
         try container.encode(self.stacktrace, forKey: .stacktrace)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case message
         case type

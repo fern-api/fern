@@ -1,6 +1,9 @@
+import Foundation
+
 public struct GetGeneratedTestCaseFileRequest: Codable, Hashable, Sendable {
     public let template: TestCaseTemplate?
     public let testCase: TestCaseV2
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +30,7 @@ public struct GetGeneratedTestCaseFileRequest: Codable, Hashable, Sendable {
         try container.encode(self.testCase, forKey: .testCase)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case template
         case testCase

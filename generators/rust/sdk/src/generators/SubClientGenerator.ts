@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
-import { UseStatement, rust } from "@fern-api/rust-codegen";
+import { rust, UseStatement } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 
 import {
@@ -8,8 +8,11 @@ import {
     AuthScheme,
     HttpEndpoint,
     HttpService,
+    Pagination,
+    CursorPagination,
+    OffsetPagination,
+    ResponseProperty,
     PrimitiveTypeV1,
-    QueryParameter,
     Subpackage,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
@@ -73,7 +76,9 @@ export class SubClientGenerator {
 
     private generateImports(): UseStatement[] {
         const hasTypes = this.hasTypes(this.context);
-        const typesItems = [
+        const hasHashMapInQueryParams = this.hasHashMapInQueryParams();
+
+        const imports = [
             new UseStatement({
                 path: "crate",
                 items: ["ClientConfig", "ClientError", "HttpClient", "RequestOptions"]
@@ -83,15 +88,36 @@ export class SubClientGenerator {
                 items: ["Method"]
             })
         ];
+
+        if (hasHashMapInQueryParams) {
+            imports.push(
+                new UseStatement({
+                    path: "std::collections",
+                    items: ["HashMap"]
+                })
+            );
+        }
+
         if (hasTypes) {
-            typesItems.push(
+            imports.push(
                 new UseStatement({
                     path: "crate",
                     items: ["types::*"]
                 })
             );
         }
-        return typesItems;
+
+        // Add pagination imports if there are paginated endpoints
+        if (this.hasPaginatedEndpoints()) {
+            imports.push(
+                new UseStatement({
+                    path: "crate",
+                    items: ["AsyncPaginator", "PaginationResult"]
+                })
+            );
+        }
+
+        return imports;
     }
 
     private generateFields(): rust.Client.Field[] {
@@ -103,30 +129,6 @@ export class SubClientGenerator {
             }
         ];
 
-        // Always add standard auth fields for consistent API
-        fields.push(
-            {
-                name: "api_key",
-                type: "Option<String>",
-                visibility: "pub"
-            },
-            {
-                name: "bearer_token",
-                type: "Option<String>",
-                visibility: "pub"
-            },
-            {
-                name: "username",
-                type: "Option<String>",
-                visibility: "pub"
-            },
-            {
-                name: "password",
-                type: "Option<String>",
-                visibility: "pub"
-            }
-        );
-
         return fields;
     }
 
@@ -135,23 +137,11 @@ export class SubClientGenerator {
         const errorType = rust.Type.reference(rust.reference({ name: "ClientError" }));
         const returnType = rust.Type.result(selfType, errorType);
 
-        // Use consistent parameter signature for all auth types
-        const parameters = [
-            "config: ClientConfig",
-            "api_key: Option<String>",
-            "bearer_token: Option<String>",
-            "username: Option<String>",
-            "password: Option<String>"
-        ];
+        // Use simple parameter signature with just config
+        const parameters = ["config: ClientConfig"];
 
         const constructorBody = `let http_client = HttpClient::new(config)?;
-        Ok(Self { 
-            http_client, 
-            api_key, 
-            bearer_token, 
-            username, 
-            password 
-        })`;
+        Ok(Self { http_client })`;
 
         return {
             name: "new",
@@ -167,7 +157,19 @@ export class SubClientGenerator {
     // =============================================================================
 
     private convertEndpointsToHttpMethods(endpoints: HttpEndpoint[]): rust.Client.SimpleMethod[] {
-        return endpoints.map((endpoint) => this.generateHttpMethod(endpoint));
+        const methods: rust.Client.SimpleMethod[] = [];
+
+        for (const endpoint of endpoints) {
+            if (endpoint.pagination) {
+                // For paginated endpoints, only generate the paginated version
+                methods.push(...this.generatePaginatedMethods(endpoint));
+            } else {
+                // For non-paginated endpoints, generate the regular method
+                methods.push(this.generateHttpMethod(endpoint));
+            }
+        }
+
+        return methods;
     }
 
     private generateHttpMethod(endpoint: HttpEndpoint): rust.Client.SimpleMethod {
@@ -253,7 +255,7 @@ export class SubClientGenerator {
                 name: queryParam.name.name.snakeCase.safeName,
                 type: generateRustTypeForTypeReference(queryParam.valueType),
                 optional: true,
-                isRef: this.shouldPassByReference(queryParam.valueType)
+                isRef: false
             });
         });
     }
@@ -416,8 +418,14 @@ export class SubClientGenerator {
         const queryParamStatements = queryParams.map((queryParam) => {
             const paramName = queryParam.name.name.snakeCase.safeName;
             const wireValue = queryParam.name.wireValue;
-            return `if let Some(value) = ${paramName} {
-                query_params.push(("${wireValue}".to_string(), ${this.getQueryParameterConversion(queryParam, paramName)}));
+            const isOptionalType = this.isOptionalContainerType(queryParam.valueType);
+            const pattern = isOptionalType ? `Some(Some(value))` : `Some(value)`;
+            const valueExpression = this.isComplexType(queryParam.valueType)
+                ? "serde_json::to_string(&value).unwrap_or_default()"
+                : "value.to_string()";
+
+            return `if let ${pattern} = ${paramName} {
+                query_params.push(("${wireValue}".to_string(), ${valueExpression}));
             }`;
         });
 
@@ -428,25 +436,616 @@ export class SubClientGenerator {
         }`;
     }
 
-    private hasQueryParameters(endpoint: HttpEndpoint): boolean {
-        return endpoint.queryParameters.length > 0;
-    }
+    private buildQueryParametersWithoutPagination(endpoint: HttpEndpoint, paginationConfig: Pagination): string {
+        const queryParams = endpoint.queryParameters;
+        if (queryParams.length === 0) {
+            return "None";
+        }
 
-    private getQueryParameterConversion(queryParam: QueryParameter, paramName: string): string {
-        // Handle different types of query parameters
-        return "value.to_string()";
-    }
+        // Get pagination param names to exclude
+        const paginationParamNames = new Set<string>();
+        if (paginationConfig) {
+            paginationConfig._visit({
+                cursor: (cursor) => {
+                    cursor.page.property._visit({
+                        query: (query) => {
+                            paginationParamNames.add(query.name.wireValue);
+                        },
+                        body: (body) => {
+                            paginationParamNames.add(body.name.wireValue);
+                        },
+                        _other: () => {
+                            /* no-op */
+                        }
+                    });
+                },
+                offset: (offset) => {
+                    offset.page.property._visit({
+                        query: (query) => {
+                            paginationParamNames.add(query.name.wireValue);
+                        },
+                        body: (body) => {
+                            paginationParamNames.add(body.name.wireValue);
+                        },
+                        _other: () => {
+                            /* no-op */
+                        }
+                    });
+                    if (offset.step) {
+                        offset.step.property._visit({
+                            query: (query) => {
+                                paginationParamNames.add(query.name.wireValue);
+                            },
+                            body: (body) => {
+                                paginationParamNames.add(body.name.wireValue);
+                            },
+                            _other: () => {
+                                /* no-op */
+                            }
+                        });
+                    }
+                },
+                custom: () => {
+                    /* no-op */
+                },
+                _other: () => {
+                    /* no-op */
+                }
+            });
+        }
 
-    private getQueryParameterValue(queryParam: QueryParameter, paramName: string): string {
-        // For now, assume all query parameters are optional strings or can be converted to strings
-        return paramName;
+        // Filter out pagination parameters
+        const filteredParams = queryParams.filter((param) => !paginationParamNames.has(param.name.wireValue));
+
+        if (filteredParams.length === 0) {
+            return "None";
+        }
+
+        // Generate code to build Vec<(String, String)> with non-pagination query parameters
+        const queryParamStatements = filteredParams.map((queryParam) => {
+            const paramName = queryParam.name.name.snakeCase.safeName;
+            const wireValue = queryParam.name.wireValue;
+            const isOptionalType = this.isOptionalContainerType(queryParam.valueType);
+            const pattern = isOptionalType ? `Some(Some(value))` : `Some(value)`;
+            const valueExpression = this.isComplexType(queryParam.valueType)
+                ? "serde_json::to_string(&value).unwrap_or_default()"
+                : "value.to_string()";
+
+            return `if let ${pattern} = ${paramName} {
+                query_params.push(("${wireValue}".to_string(), ${valueExpression}));
+            }`;
+        });
+
+        return `{
+            let mut query_params = Vec::new();
+            ${queryParamStatements.join("\n            ")}
+            Some(query_params)
+        }`;
     }
 
     // =============================================================================
-    // UTILITY METHODS
+    // PAGINATION METHODS
     // =============================================================================
+
+    private generatePaginatedMethods(endpoint: HttpEndpoint): rust.Client.SimpleMethod[] {
+        const methods: rust.Client.SimpleMethod[] = [];
+
+        if (endpoint.pagination) {
+            // Generate simple paginated method that follows the same pattern as regular methods
+            methods.push(this.generatePaginatedMethod(endpoint));
+        }
+
+        return methods;
+    }
+
+    private generatePaginatedMethod(endpoint: HttpEndpoint): rust.Client.SimpleMethod {
+        if (!endpoint.pagination) {
+            throw new Error("Cannot generate paginated method for endpoint without pagination");
+        }
+
+        const params = this.extractParametersFromEndpoint(endpoint);
+        const parameters = this.buildMethodParameters(params);
+        const baseName = endpoint.name.snakeCase.safeName;
+        const httpMethod = this.getHttpMethod(endpoint);
+        const pathExpression = this.getPathExpression(endpoint);
+        const requestBody = this.getRequestBody(endpoint, params);
+
+        // Always use generic serde_json::Value for maximum compatibility
+        const itemType = rust.Type.reference(rust.reference({ name: "serde_json::Value" }));
+
+        // Return AsyncPaginator<ItemType> with proper typing
+        const returnType = rust.Type.result(
+            rust.Type.reference(
+                rust.reference({
+                    name: "AsyncPaginator",
+                    genericArgs: [itemType]
+                })
+            ),
+            rust.Type.reference(rust.reference({ name: "ClientError" }))
+        );
+
+        // Generate pagination logic based on pagination type
+        const paginationLogic = this.generatePaginationLogic(endpoint, httpMethod, pathExpression, requestBody);
+
+        return {
+            name: baseName,
+            parameters,
+            returnType: returnType.toString(),
+            isAsync: true,
+            body: paginationLogic
+        };
+    }
 
     private hasTypes(context: SdkGeneratorContext): boolean {
         return Object.keys(context.ir.types).length > 0;
+    }
+
+    private hasPaginatedEndpoints(): boolean {
+        const endpoints = this.service?.endpoints || [];
+        return endpoints.some((endpoint) => endpoint.pagination != null);
+    }
+
+    private hasHashMapInQueryParams(): boolean {
+        const endpoints = this.service?.endpoints || [];
+        return endpoints.some((endpoint) =>
+            endpoint.queryParameters.some((queryParam) => this.isCollectionType(queryParam.valueType))
+        );
+    }
+
+    private isCollectionType(typeRef: TypeReference): boolean {
+        return TypeReference._visit(typeRef, {
+            primitive: () => false,
+            named: () => false,
+            container: (container) => {
+                return container._visit({
+                    map: () => true,
+                    set: () => true,
+                    list: () => false,
+                    optional: (innerType) => this.isCollectionType(innerType),
+                    nullable: (innerType) => this.isCollectionType(innerType),
+                    literal: () => false,
+                    _other: () => false
+                });
+            },
+            unknown: () => false,
+            _other: () => false
+        });
+    }
+
+    private isComplexType(typeRef: TypeReference): boolean {
+        return TypeReference._visit(typeRef, {
+            primitive: () => false,
+            named: () => true,
+            container: () => true,
+            unknown: () => true,
+            _other: () => true
+        });
+    }
+
+    private isOptionalContainerType(typeRef: TypeReference): boolean {
+        return TypeReference._visit(typeRef, {
+            primitive: () => false,
+            named: () => false,
+            container: (container) => {
+                return container._visit({
+                    optional: () => true,
+                    nullable: () => true,
+                    list: () => false,
+                    set: () => false,
+                    map: () => false,
+                    literal: () => false,
+                    _other: () => false
+                });
+            },
+            unknown: () => false,
+            _other: () => false
+        });
+    }
+
+    // =============================================================================
+    // PAGINATION HELPER METHODS
+    // =============================================================================
+
+    private generatePaginationLogic(
+        endpoint: HttpEndpoint,
+        httpMethod: string,
+        pathExpression: string,
+        requestBody: string
+    ): string {
+        if (!endpoint.pagination) {
+            throw new Error("Cannot generate pagination logic without pagination configuration");
+        }
+
+        return Pagination._visit(endpoint.pagination, {
+            cursor: (cursor) =>
+                this.generateCursorPaginationLogic(endpoint, httpMethod, pathExpression, requestBody, cursor),
+            offset: (offset) =>
+                this.generateOffsetPaginationLogic(endpoint, httpMethod, pathExpression, requestBody, offset),
+            custom: (_custom) => this.generateCustomPaginationLogic(endpoint, httpMethod, pathExpression, requestBody),
+            _other: () => {
+                throw new Error("Unknown pagination type");
+            }
+        });
+    }
+
+    private generateCursorPaginationLogic(
+        endpoint: HttpEndpoint,
+        httpMethod: string,
+        pathExpression: string,
+        requestBody: string,
+        cursor: CursorPagination
+    ): string {
+        const queryParams = this.buildQueryParametersWithoutPagination(endpoint, Pagination.cursor(cursor));
+        const params = this.extractParametersFromEndpoint(endpoint);
+
+        // Generate cloning statements for reference parameters to avoid lifetime issues
+        const cloningStatements = params
+            .filter((param) => param.isRef)
+            .map((param) => `let ${param.name}_clone = ${param.name}.clone();`)
+            .join("\n            ");
+
+        // Extract the cursor parameter name from the pagination configuration
+        const cursorParamName = this.getCursorParamName(cursor);
+
+        return `let http_client = std::sync::Arc::new(self.http_client.clone());
+            let base_query_params = ${queryParams};
+            let options_clone = options.clone();
+            ${cloningStatements}
+            
+            AsyncPaginator::new(
+                http_client,
+                move |client, cursor_value| {
+                    let mut query_params: Vec<(String, String)> = base_query_params.clone().unwrap_or_default();
+                    if let Some(cursor) = cursor_value {
+                        // Add cursor parameter based on pagination configuration
+                        query_params.push(("${cursorParamName}".to_string(), cursor));
+                    }
+                    let options_for_request = options_clone.clone();
+                    
+                    // Clone captured variables to move into the async block
+                    ${this.generateCapturedVariableCloningForAsyncMove(params)}
+                    
+                    Box::pin(async move {
+                        let response: serde_json::Value = client.execute_request(
+                            Method::${httpMethod},
+                            ${this.buildPathExpressionForAsyncMove(pathExpression, params)},
+                            ${this.buildRequestBodyForAsyncMove(requestBody, params)},
+                            Some(query_params),
+                            options_for_request,
+                        ).await?;
+                        
+                        // Extract pagination info from response
+                        ${this.generatePaginationExtraction(endpoint, false)}
+                        
+                        Ok(PaginationResult {
+                            items,
+                            next_cursor,
+                            has_next_page,
+                        })
+                    })
+                },
+                None, // Start with no cursor
+            )`;
+    }
+
+    private generateOffsetPaginationLogic(
+        endpoint: HttpEndpoint,
+        httpMethod: string,
+        pathExpression: string,
+        requestBody: string,
+        offset: OffsetPagination
+    ): string {
+        const queryParams = this.buildQueryParametersWithoutPagination(endpoint, Pagination.offset(offset));
+        const params = this.extractParametersFromEndpoint(endpoint);
+
+        // Generate cloning statements for reference parameters to avoid lifetime issues
+        const cloningStatements = params
+            .filter((param) => param.isRef)
+            .map((param) => `let ${param.name}_clone = ${param.name}.clone();`)
+            .join("\n            ");
+
+        const pageParamName = offset.page?.property?.name?.wireValue || "page";
+
+        return `let http_client = std::sync::Arc::new(self.http_client.clone());
+            let base_query_params = ${queryParams};
+            let options_clone = options.clone();
+            ${cloningStatements}
+            
+            AsyncPaginator::new(
+                http_client,
+                move |client, page_token| {
+                    let mut query_params: Vec<(String, String)> = base_query_params.clone().unwrap_or_default();
+                    
+                    // Use page_token as offset/page number (start from 0 if None)
+                    let current_page = page_token.unwrap_or_else(|| "0".to_string());
+                    query_params.push(("${pageParamName}".to_string(), current_page.clone()));
+                    
+                    let options_for_request = options_clone.clone();
+                    
+                    // Clone captured variables to move into the async block
+                    ${this.generateCapturedVariableCloningForAsyncMove(params)}
+                    
+                    Box::pin(async move {
+                        let response: serde_json::Value = client.execute_request(
+                            Method::${httpMethod},
+                            ${this.buildPathExpressionForAsyncMove(pathExpression, params)},
+                            ${this.buildRequestBodyForAsyncMove(requestBody, params)},
+                            Some(query_params),
+                            options_for_request,
+                        ).await?;
+                        
+                        // Extract pagination info from response
+                        ${this.generatePaginationExtraction(endpoint, true)}
+                        
+                        Ok(PaginationResult {
+                            items,
+                            next_cursor,
+                            has_next_page,
+                        })
+                    })
+                },
+                None, // Start with page 0
+            )`;
+    }
+
+    private generateCustomPaginationLogic(
+        endpoint: HttpEndpoint,
+        httpMethod: string,
+        pathExpression: string,
+        requestBody: string
+    ): string {
+        // For custom pagination, generate a basic implementation that can be customized
+        const queryParams = this.buildQueryParameters(endpoint);
+        const params = this.extractParametersFromEndpoint(endpoint);
+
+        // Generate cloning statements for reference parameters to avoid lifetime issues
+        const cloningStatements = params
+            .filter((param) => param.isRef)
+            .map((param) => `let ${param.name}_clone = ${param.name}.clone();`)
+            .join("\n            ");
+
+        return `let http_client = std::sync::Arc::new(self.http_client.clone());
+            let base_query_params = ${queryParams};
+            let options_clone = options.clone();
+            ${cloningStatements}
+            
+            AsyncPaginator::new(
+                http_client,
+                move |client, cursor_value| {
+                    let query_params = base_query_params.clone();
+                    let options_for_request = options_clone.clone();
+                    // Custom pagination logic would go here
+                    
+                    // Clone captured variables to move into the async block
+                    ${this.generateCapturedVariableCloningForAsyncMove(params)}
+                    
+                    Box::pin(async move {
+                        let response: serde_json::Value = client.execute_request(
+                            Method::${httpMethod},
+                            ${this.buildPathExpressionForAsyncMove(pathExpression, params)},
+                            ${this.buildRequestBodyForAsyncMove(requestBody, params)},
+                            query_params,
+                            options_for_request,
+                        ).await?;
+                        
+                        // Custom extraction logic would go here
+                        ${this.generatePaginationExtraction(endpoint)}
+                        
+                        Ok(PaginationResult {
+                            items,
+                            next_cursor,
+                            has_next_page,
+                        })
+                    })
+                },
+                None,
+            )`;
+    }
+
+    // =============================================================================
+    // CLOSURE HELPER METHODS
+    // =============================================================================
+
+    private generateCapturedVariableCloningForAsyncMove(params: EndpointParameter[]): string {
+        // Generate cloning statements for each captured variable inside the closure
+        const cloningStatements = params
+            .filter((param) => param.isRef)
+            .map((param) => `let ${param.name}_for_async = ${param.name}_clone.clone();`)
+            .join("\n                    ");
+
+        return cloningStatements;
+    }
+
+    private buildPathExpressionForAsyncMove(pathExpression: string, params: EndpointParameter[]): string {
+        // Replace references with async-move versions
+        let result = pathExpression;
+
+        params
+            .filter((param) => param.isRef)
+            .forEach((param) => {
+                const originalRef = param.name;
+                const asyncRef = `${param.name}_for_async`;
+                result = result.replace(new RegExp(`\\b${originalRef}\\b`, "g"), asyncRef);
+            });
+
+        return result;
+    }
+
+    private buildRequestBodyForAsyncMove(requestBody: string, params: EndpointParameter[]): string {
+        // Replace references with async-move versions
+        let result = requestBody;
+
+        params
+            .filter((param) => param.isRef)
+            .forEach((param) => {
+                const originalRef = param.name;
+                const asyncRef = `${param.name}_for_async`;
+                result = result.replace(new RegExp(`\\b${originalRef}\\b`, "g"), asyncRef);
+            });
+
+        return result;
+    }
+
+    private generatePaginationExtraction(endpoint: HttpEndpoint, isOffsetPagination: boolean = false): string {
+        if (!endpoint.pagination) {
+            return `let items = vec![];
+                        let next_cursor: Option<String> = None;
+                        let has_next_page = false;`;
+        }
+
+        return Pagination._visit(endpoint.pagination, {
+            cursor: (cursor) => this.generateGenericCursorExtraction(cursor),
+            offset: (offset) => this.generateGenericOffsetExtraction(offset, isOffsetPagination),
+            custom: () => this.generateGenericCustomExtraction(),
+            _other: () => this.generateGenericCustomExtraction()
+        });
+    }
+
+    private generateGenericCursorExtraction(cursor: CursorPagination): string {
+        // Build field paths from the pagination configuration
+        const resultsPath = this.buildResponseFieldPath(cursor.results);
+        const cursorPath = cursor.next ? this.buildResponseFieldPath(cursor.next) : null;
+
+        // For cursor path, it's already properly formatted with and_then chains
+        const cursorExtraction = cursorPath
+            ? `response${cursorPath}.and_then(|v| v.as_str().map(|s| s.to_string()))`
+            : "None";
+
+        return `// Generic field extraction using pagination configuration
+                        let items: Vec<serde_json::Value> = response
+                            ${resultsPath}
+                            .and_then(|v| v.as_array())
+                            .map(|arr| arr.clone())
+                            .unwrap_or_default();
+                        
+                        let next_cursor: Option<String> = ${cursorExtraction};
+                        let has_next_page = next_cursor.is_some();`;
+    }
+
+    private generateGenericOffsetExtraction(offset: OffsetPagination, isInPaginationLoop: boolean = false): string {
+        const resultsPath = this.buildResponseFieldPath(offset.results);
+        const hasNextPath = offset.hasNextPage ? this.buildResponseFieldPath(offset.hasNextPage) : null;
+        const stepParamName = this.getStepParamName(offset);
+
+        // For hasNextPage path, it's already properly formatted with and_then chains
+        const hasNextPageCheck = hasNextPath
+            ? `response${hasNextPath}.and_then(|v| v.as_bool()).unwrap_or(!items.is_empty())`
+            : "!items.is_empty()";
+
+        if (isInPaginationLoop) {
+            return `// Generic field extraction for offset pagination
+                        let items: Vec<serde_json::Value> = response
+                            ${resultsPath}
+                            .and_then(|v| v.as_array())
+                            .map(|arr| arr.clone())
+                            .unwrap_or_default();
+                        
+                        let has_next_page = ${hasNextPageCheck};
+                        // Calculate next page number for offset pagination
+                        let next_cursor: Option<String> = if has_next_page {
+                            let current_page_num: u64 = current_page.parse().unwrap_or(0);
+                            let step_size = if let Some(step) = response.get("${stepParamName}") {
+                                step.as_u64().unwrap_or(1)
+                            } else {
+                                1 // Default step size
+                            };
+                            Some((current_page_num + step_size).to_string())
+                        } else {
+                            None
+                        };`;
+        } else {
+            return `// Generic field extraction for offset pagination
+                        let items: Vec<serde_json::Value> = response
+                            ${resultsPath}
+                            .and_then(|v| v.as_array())
+                            .map(|arr| arr.clone())
+                            .unwrap_or_default();
+                        
+                        // Offset pagination tracking handled by paginator
+                        let next_cursor: Option<String> = None;
+                        let has_next_page = ${hasNextPageCheck};`;
+        }
+    }
+
+    private generateGenericCustomExtraction(): string {
+        return `// Generic extraction for custom pagination - tries common field names
+                        let items: Vec<serde_json::Value> = response
+                            .get("data")
+                            .or_else(|| response.get("results"))
+                            .or_else(|| response.get("items"))
+                            .and_then(|v| v.as_array())
+                            .map(|arr| arr.clone())
+                            .unwrap_or_default();
+                        
+                        let next_cursor: Option<String> = None;
+                        let has_next_page = false; // Custom pagination requires manual implementation`;
+    }
+
+    private buildResponseFieldPath(property: ResponseProperty): string {
+        if (!property) {
+            return '.get("data")'; // Default fallback
+        }
+
+        // Extract the complete property path from the ResponseProperty structure
+        const fieldPath = this.extractResponseFieldPath(property);
+
+        // For nested paths, we need to chain .and_then() calls properly
+        if (fieldPath.length === 1) {
+            return `.get("${fieldPath[0]}")`;
+        } else if (fieldPath.length > 1) {
+            // Build a chain of .and_then() for nested paths
+            let result = "";
+            for (let i = 0; i < fieldPath.length; i++) {
+                if (i === 0) {
+                    result = `.get("${fieldPath[i]}")`;
+                } else {
+                    result += `.and_then(|v| v.get("${fieldPath[i]}"))`;
+                }
+            }
+            return result;
+        }
+        return '.get("data")';
+    }
+
+    private extractResponseFieldPath(property: ResponseProperty): string[] {
+        if (!property) {
+            return ["data"];
+        }
+
+        const path: string[] = [];
+
+        // If there's a propertyPath (nested properties), add them first
+        if (property.propertyPath && Array.isArray(property.propertyPath)) {
+            property.propertyPath.forEach((pathItem) => {
+                path.push(pathItem.originalName);
+            });
+        }
+
+        // Finally, add the property name itself
+        path.push(property.property.name.wireValue);
+
+        // If path is still empty, use default
+        return path.length > 0 ? path : ["data"];
+    }
+
+    private getCursorParamName(cursor: CursorPagination): string {
+        // Extract cursor parameter name from pagination configuration
+        return cursor.page.property._visit({
+            query: (query) => query.name.wireValue,
+            body: (body) => body.name.wireValue,
+            _other: () => "cursor"
+        });
+    }
+
+    private getStepParamName(offset: OffsetPagination): string {
+        // Extract step parameter name from pagination configuration
+        if (offset.step) {
+            return offset.step.property._visit({
+                query: (query) => query.name.wireValue,
+                body: (body) => body.name.wireValue,
+                _other: () => "step"
+            });
+        }
+        return "per_page"; // Default fallback
     }
 }

@@ -1,8 +1,11 @@
+import Foundation
+
 public struct GetSubmissionStateResponse: Codable, Hashable, Sendable {
     public let timeSubmitted: Date?
     public let submission: String
     public let language: Language
     public let submissionTypeState: SubmissionTypeState
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -37,6 +40,7 @@ public struct GetSubmissionStateResponse: Codable, Hashable, Sendable {
         try container.encode(self.submissionTypeState, forKey: .submissionTypeState)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case timeSubmitted
         case submission

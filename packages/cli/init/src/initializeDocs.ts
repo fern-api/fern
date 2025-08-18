@@ -1,12 +1,10 @@
-import chalk from "chalk";
-import fs from "fs-extra";
-import { writeFile } from "fs/promises";
-import yaml from "js-yaml";
-
-import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
-import { docsYml } from "@fern-api/configuration-loader";
-import { RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { DOCS_CONFIGURATION_FILENAME, docsYml } from "@fern-api/configuration-loader";
+import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import chalk from "chalk";
+import { writeFile } from "fs/promises";
+import fs from "fs-extra";
+import yaml from "js-yaml";
 
 import { titleCase } from "../../../commons/core-utils/src";
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization";

@@ -1,8 +1,11 @@
+import Foundation
+
 public struct FileInfoV2: Codable, Hashable, Sendable {
     public let filename: String
     public let directory: String
     public let contents: String
     public let editable: Bool
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -37,6 +40,7 @@ public struct FileInfoV2: Codable, Hashable, Sendable {
         try container.encode(self.editable, forKey: .editable)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case filename
         case directory

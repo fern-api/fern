@@ -1,3 +1,5 @@
+import Foundation
+
 public enum Resource: Codable, Hashable, Sendable {
     case user(User)
     case organization(Organization)
@@ -34,6 +36,7 @@ public enum Resource: Codable, Hashable, Sendable {
         public let userName: String
         public let metadataTags: [String]
         public let extraProperties: [String: String]
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -65,6 +68,7 @@ public enum Resource: Codable, Hashable, Sendable {
             try container.encode(self.extraProperties, forKey: .extraProperties)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case resourceType = "resource_type"
             case userName
@@ -76,6 +80,7 @@ public enum Resource: Codable, Hashable, Sendable {
     public struct Organization: Codable, Hashable, Sendable {
         public let resourceType: String = "Organization"
         public let name: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -99,6 +104,7 @@ public enum Resource: Codable, Hashable, Sendable {
             try container.encode(self.name, forKey: .name)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case resourceType = "resource_type"
             case name

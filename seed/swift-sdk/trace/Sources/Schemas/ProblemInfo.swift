@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ProblemInfo: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let problemDescription: ProblemDescription
@@ -9,6 +11,7 @@ public struct ProblemInfo: Codable, Hashable, Sendable {
     public let testcases: [TestCaseWithExpectedResult]
     public let methodName: String
     public let supportsCustomTestCases: Bool
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -67,6 +70,7 @@ public struct ProblemInfo: Codable, Hashable, Sendable {
         try container.encode(self.supportsCustomTestCases, forKey: .supportsCustomTestCases)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case problemId
         case problemDescription

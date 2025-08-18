@@ -17,6 +17,18 @@ public interface IDownloadFilesCustomConfig {
         return false;
     }
 
+    @Value.Default
+    @JsonProperty("use-default-request-parameter-values")
+    default Boolean useDefaultRequestParameterValues() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("enable-wire-tests")
+    default Boolean enableWireTests() {
+        return false;
+    }
+
     @JsonProperty("package-prefix")
     Optional<String> packagePrefix();
 

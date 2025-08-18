@@ -1,0 +1,8 @@
+
+module Seed
+    class Environment
+        PRODUCTION = "https://production.com/api"
+        STAGING = "https://staging.com/api"
+
+
+end

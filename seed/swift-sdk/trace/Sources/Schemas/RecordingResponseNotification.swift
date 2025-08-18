@@ -1,9 +1,12 @@
+import Foundation
+
 public struct RecordingResponseNotification: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let testCaseId: String?
     public let lineNumber: Int
     public let lightweightStackInfo: LightweightStackframeInformation
     public let tracedFile: TracedFile?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -42,6 +45,7 @@ public struct RecordingResponseNotification: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.tracedFile, forKey: .tracedFile)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case submissionId
         case testCaseId

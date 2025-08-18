@@ -51,12 +51,13 @@ export class Unknown {
     }
 
     private async __post(request?: any, requestOptions?: Unknown.RequestOptions): Promise<core.WithRawResponse<any[]>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)),
             method: "POST",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -116,6 +117,7 @@ export class Unknown {
         request: SeedUnknownAsAny.MyObject,
         requestOptions?: Unknown.RequestOptions,
     ): Promise<core.WithRawResponse<any[]>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -123,7 +125,7 @@ export class Unknown {
                 "/with-object",
             ),
             method: "POST",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",

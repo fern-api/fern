@@ -1,5 +1,8 @@
+import Foundation
+
 public struct GetTraceResponsesPageRequest: Codable, Hashable, Sendable {
     public let offset: Int?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +25,7 @@ public struct GetTraceResponsesPageRequest: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.offset, forKey: .offset)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case offset
     }

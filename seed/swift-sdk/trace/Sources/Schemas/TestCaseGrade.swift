@@ -1,3 +1,5 @@
+import Foundation
+
 public enum TestCaseGrade: Codable, Hashable, Sendable {
     case hidden(Hidden)
     case nonHidden(NonHidden)
@@ -32,6 +34,7 @@ public enum TestCaseGrade: Codable, Hashable, Sendable {
     public struct Hidden: Codable, Hashable, Sendable {
         public let type: String = "hidden"
         public let passed: Bool
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -55,6 +58,7 @@ public enum TestCaseGrade: Codable, Hashable, Sendable {
             try container.encode(self.passed, forKey: .passed)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case passed
@@ -67,6 +71,7 @@ public enum TestCaseGrade: Codable, Hashable, Sendable {
         public let actualResult: VariableValue?
         public let exception: ExceptionV2?
         public let stdout: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -102,6 +107,7 @@ public enum TestCaseGrade: Codable, Hashable, Sendable {
             try container.encode(self.stdout, forKey: .stdout)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case passed

@@ -158,8 +158,13 @@ describe("Problem", () => {
             methodName: "methodName",
         });
         expect(response).toEqual({
-            type: "success",
-            value: SeedTrace.ProblemId("string"),
+            body: {
+                type: "success",
+                value: SeedTrace.ProblemId("string"),
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 
@@ -314,7 +319,12 @@ describe("Problem", () => {
             methodName: "methodName",
         });
         expect(response).toEqual({
-            problemVersion: 1,
+            body: {
+                problemVersion: 1,
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 
@@ -325,7 +335,12 @@ describe("Problem", () => {
         server.mockEndpoint().delete("/problem-crud/delete/problemId").respondWith().statusCode(200).build();
 
         const response = await client.problem.deleteProblem(SeedTrace.ProblemId("problemId"));
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
 
     test("getDefaultStarterFiles", async () => {
@@ -380,24 +395,29 @@ describe("Problem", () => {
             methodName: "methodName",
         });
         expect(response).toEqual({
-            files: {
-                ["JAVA"]: {
-                    solutionFile: {
-                        filename: "filename",
-                        contents: "contents",
+            body: {
+                files: {
+                    ["JAVA"]: {
+                        solutionFile: {
+                            filename: "filename",
+                            contents: "contents",
+                        },
+                        readOnlyFiles: [
+                            {
+                                filename: "filename",
+                                contents: "contents",
+                            },
+                            {
+                                filename: "filename",
+                                contents: "contents",
+                            },
+                        ],
                     },
-                    readOnlyFiles: [
-                        {
-                            filename: "filename",
-                            contents: "contents",
-                        },
-                        {
-                            filename: "filename",
-                            contents: "contents",
-                        },
-                    ],
                 },
             },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
         });
     });
 });

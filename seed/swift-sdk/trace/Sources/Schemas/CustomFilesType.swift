@@ -1,3 +1,5 @@
+import Foundation
+
 public enum CustomFilesType: Codable, Hashable, Sendable {
     case basic(Basic)
     case custom(Custom)
@@ -35,6 +37,7 @@ public enum CustomFilesType: Codable, Hashable, Sendable {
         public let signature: NonVoidFunctionSignatureType
         public let additionalFiles: [Language: FilesType]
         public let basicTestCaseTemplate: BasicTestCaseTemplateType
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -70,6 +73,7 @@ public enum CustomFilesType: Codable, Hashable, Sendable {
             try container.encode(self.basicTestCaseTemplate, forKey: .basicTestCaseTemplate)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case methodName
@@ -82,6 +86,7 @@ public enum CustomFilesType: Codable, Hashable, Sendable {
     public struct Custom: Codable, Hashable, Sendable {
         public let type: String = "custom"
         public let value: [Language: FilesType]
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -105,6 +110,7 @@ public enum CustomFilesType: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value

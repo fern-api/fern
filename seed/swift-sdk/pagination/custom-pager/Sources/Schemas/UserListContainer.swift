@@ -1,5 +1,8 @@
+import Foundation
+
 public struct UserListContainer: Codable, Hashable, Sendable {
     public let users: [User]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +25,7 @@ public struct UserListContainer: Codable, Hashable, Sendable {
         try container.encode(self.users, forKey: .users)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case users
     }

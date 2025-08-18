@@ -1,6 +1,5 @@
-import { z } from "zod";
-
 import { BaseGeneratorConfigSchema } from "@fern-api/ruby-codegen";
+import { z } from "zod";
 
 export type RubyModelCustomConfig = z.infer<typeof RubyModelCustomConfigSchema>;
 export const RubyModelCustomConfigSchema = BaseGeneratorConfigSchema.extend({});

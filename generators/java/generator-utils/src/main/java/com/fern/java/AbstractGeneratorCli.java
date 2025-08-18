@@ -1,5 +1,10 @@
 package com.fern.java;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
@@ -72,10 +77,149 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
     private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
         try {
-            return ObjectMappers.JSON_MAPPER.readValue(
-                    new File(generatorConfig.getIrFilepath()), IntermediateRepresentation.class);
+            File irFile = new File(generatorConfig.getIrFilepath());
+
+            String irJson = java.nio.file.Files.readString(irFile.toPath());
+
+            String processedJson = preprocessIntegerOverflow(irJson);
+
+            return ObjectMappers.JSON_MAPPER.readValue(processedJson, IntermediateRepresentation.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read ir", e);
+        }
+    }
+
+    /**
+     * Preprocesses the IR JSON to handle integer overflow in example values.
+     *
+     * <p>OpenAPI specifications may contain example values that exceed Java's Integer limits (e.g., from systems using
+     * 64-bit integers). This method finds such values in fields explicitly typed as "integer" and converts them to
+     * "long" type to preserve the original value while preventing Jackson deserialization failures.
+     *
+     * <p>Note: This only processes integer fields in the IR's example values to avoid modifying actual schema
+     * definitions.
+     */
+    private static String preprocessIntegerOverflow(String json) {
+        if (json == null || json.trim().isEmpty()) {
+            return json;
+        }
+
+        try {
+            return processJsonForIntegerOverflow(json);
+        } catch (Exception e) {
+            log.warn("Failed to preprocess integer overflow, using original JSON", e);
+            return json;
+        }
+    }
+
+    private static String processJsonForIntegerOverflow(String json) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode rootNode = mapper.readTree(json);
+
+        IntegerOverflowProcessor processor = new IntegerOverflowProcessor();
+        JsonNode processedNode = processor.processNode(rootNode);
+
+        if (processor.getConversions() > 0) {
+            log.info("Converted {} integer overflow value(s) to long type in IR", processor.getConversions());
+        }
+
+        return mapper.writeValueAsString(processedNode);
+    }
+
+    private static class IntegerOverflowProcessor {
+        private int conversions = 0;
+
+        public int getConversions() {
+            return conversions;
+        }
+
+        public JsonNode processNode(JsonNode node) {
+            if (node == null) {
+                return node;
+            }
+
+            if (node.isObject()) {
+                return processObjectNode((ObjectNode) node);
+            } else if (node.isArray()) {
+                return processArrayNode((ArrayNode) node);
+            } else if (node.isNumber()) {
+                return processNumberNode(node);
+            } else {
+                return node;
+            }
+        }
+
+        private JsonNode processObjectNode(ObjectNode objectNode) {
+            ObjectNode result = objectNode.deepCopy();
+
+            if (result.has("integer")) {
+                JsonNode integerNode = result.get("integer");
+                if (integerNode.isNumber() && isIntegerOverflow(integerNode)) {
+                    long value = integerNode.asLong();
+                    log.debug("Integer overflow detected in IR example value: {}. Converting to long type.", value);
+                    result.remove("integer");
+                    result.put("long", value);
+                    conversions++;
+                }
+            }
+
+            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> fields = result.fields();
+            while (fields.hasNext()) {
+                java.util.Map.Entry<String, JsonNode> field = fields.next();
+                String fieldName = field.getKey();
+                JsonNode fieldValue = field.getValue();
+
+                if ("integer".equals(fieldName) || "long".equals(fieldName)) {
+                    continue;
+                }
+
+                JsonNode processedValue = processNode(fieldValue);
+                if (processedValue != fieldValue) {
+                    result.set(fieldName, processedValue);
+                }
+            }
+
+            return result;
+        }
+
+        private JsonNode processArrayNode(ArrayNode arrayNode) {
+            ArrayNode result = arrayNode.deepCopy();
+
+            for (int i = 0; i < result.size(); i++) {
+                JsonNode element = result.get(i);
+                JsonNode processedElement = processNode(element);
+                if (processedElement != element) {
+                    result.set(i, processedElement);
+                }
+            }
+
+            return result;
+        }
+
+        private JsonNode processNumberNode(JsonNode numberNode) {
+            if (isIntegerOverflow(numberNode)) {
+                log.debug("Converting overflow integer {} to long", numberNode.asLong());
+                conversions++;
+                return JsonNodeFactory.instance.numberNode(numberNode.asLong());
+            }
+            return numberNode;
+        }
+
+        private boolean isIntegerOverflow(JsonNode numberNode) {
+            if (!numberNode.isNumber()) {
+                return false;
+            }
+
+            try {
+                if (numberNode.isIntegralNumber()) {
+                    long value = numberNode.asLong();
+                    return value > Integer.MAX_VALUE || value < Integer.MIN_VALUE;
+                }
+            } catch (Exception e) {
+                log.debug("Failed to check integer overflow for value: {}", numberNode);
+            }
+
+            return false;
         }
     }
 

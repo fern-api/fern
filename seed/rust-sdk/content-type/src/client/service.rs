@@ -3,28 +3,38 @@ use reqwest::{Method};
 
 pub struct ServiceClient {
     pub http_client: HttpClient,
-    pub api_key: Option<String>,
-    pub bearer_token: Option<String>,
-    pub username: Option<String>,
-    pub password: Option<String>,
 }
 
 impl ServiceClient {
-    pub fn new(config: ClientConfig, api_key: Option<String>, bearer_token: Option<String>, username: Option<String>, password: Option<String>) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
         let http_client = HttpClient::new(config)?;
-        Ok(Self { 
-            http_client, 
-            api_key, 
-            bearer_token, 
-            username, 
-            password 
-        })
+        Ok(Self { http_client })
     }
 
     pub async fn patch(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ClientError> {
         self.http_client.execute_request(
             Method::PATCH,
             "",
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
+    }
+
+    pub async fn patch_complex(&self, id: &String, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ClientError> {
+        self.http_client.execute_request(
+            Method::PATCH,
+            &format!("complex/{}", id),
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
+    }
+
+    pub async fn regular_patch(&self, id: &String, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ClientError> {
+        self.http_client.execute_request(
+            Method::PATCH,
+            &format!("regular/{}", id),
             Some(serde_json::to_value(request).unwrap_or_default()),
             None,
             options,

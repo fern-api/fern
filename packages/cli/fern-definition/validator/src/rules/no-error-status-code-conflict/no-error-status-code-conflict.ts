@@ -1,10 +1,8 @@
-import { noop } from "lodash-es";
-
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-
-import { Rule, RuleViolation } from "../../Rule";
+import { noop } from "lodash-es";
 import { visitDefinitionFileYamlAst } from "../../ast";
+import { Rule, RuleViolation } from "../../Rule";
 
 export const NoErrorStatusCodeConflictRule: Rule = {
     name: "no-error-status-code-conflict",

@@ -12,6 +12,45 @@
                 "sync_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsDefault.SeedOauthClientCredentialsDefaultClient;\nimport com.seed.oauthClientCredentialsDefault.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .grantType(\"client_credentials\")\n                .build()\n        );\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsDefault.SeedOauthClientCredentialsDefaultClient;\nimport com.seed.oauthClientCredentialsDefault.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .grantType(\"client_credentials\")\n                .build()\n        );\n    }\n}\n"
             }
+        },
+        {
+            "example_identifier": "82444d62",
+            "id": {
+                "method": "GET",
+                "path": "/nested-no-auth/get-something",
+                "identifier_override": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsDefault.SeedOauthClientCredentialsDefaultClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.nestedNoAuth().api().getSomething();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsDefault.SeedOauthClientCredentialsDefaultClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.nestedNoAuth().api().getSomething();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "82444d62",
+            "id": {
+                "method": "GET",
+                "path": "/nested/get-something",
+                "identifier_override": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsDefault.SeedOauthClientCredentialsDefaultClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.nested().api().getSomething();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsDefault.SeedOauthClientCredentialsDefaultClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.nested().api().getSomething();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "82444d62",
+            "id": {
+                "method": "GET",
+                "path": "/get-something",
+                "identifier_override": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsDefault.SeedOauthClientCredentialsDefaultClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.simple().getSomething();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsDefault.SeedOauthClientCredentialsDefaultClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.simple().getSomething();\n    }\n}\n"
+            }
         }
     ],
     "types": {}

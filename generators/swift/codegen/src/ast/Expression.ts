@@ -73,6 +73,7 @@ type MethodCallWithTrailingClosure = {
     target: Expression;
     methodName: string;
     closureBody: Expression;
+    multiline?: true;
 };
 
 type ContextualMethodCall = {
@@ -198,9 +199,21 @@ export class Expression extends AstNode {
                 this.internalExpression.target.write(writer);
                 writer.write(".");
                 writer.write(this.internalExpression.methodName);
-                writer.write(" { ");
+                writer.write(" {");
+                if (this.internalExpression.multiline) {
+                    writer.newLine();
+                    writer.indent();
+                } else {
+                    writer.write(" ");
+                }
                 this.internalExpression.closureBody.write(writer);
-                writer.write(" }");
+                if (this.internalExpression.multiline) {
+                    writer.newLine();
+                    writer.dedent();
+                } else {
+                    writer.write(" ");
+                }
+                writer.write("}");
                 break;
             case "contextual-method-call":
                 writer.write(".");
@@ -378,11 +391,21 @@ export class Expression extends AstNode {
         return new this({ type: "await", expression });
     }
 
+    public static rawValue(value: string): Expression {
+        return new this({ type: "raw-value", value });
+    }
+
+    // Helpers
+
     public static rawStringValue(value: string): Expression {
         return new this({ type: "raw-value", value: `"${value}"` });
     }
 
-    public static rawValue(value: string): Expression {
-        return new this({ type: "raw-value", value });
+    public static nil(): Expression {
+        return new this({ type: "raw-value", value: "nil" });
+    }
+
+    public static self(): Expression {
+        return new this({ type: "raw-value", value: "self" });
     }
 }

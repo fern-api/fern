@@ -1,3 +1,5 @@
+import Foundation
+
 public enum Shape: Codable, Hashable, Sendable {
     case circle(Circle)
     case square(Square)
@@ -32,6 +34,7 @@ public enum Shape: Codable, Hashable, Sendable {
     public struct Circle: Codable, Hashable, Sendable {
         public let type: String = "circle"
         public let radius: Double
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -55,6 +58,7 @@ public enum Shape: Codable, Hashable, Sendable {
             try container.encode(self.radius, forKey: .radius)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case radius
@@ -64,6 +68,7 @@ public enum Shape: Codable, Hashable, Sendable {
     public struct Square: Codable, Hashable, Sendable {
         public let type: String = "square"
         public let length: Double
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -87,6 +92,7 @@ public enum Shape: Codable, Hashable, Sendable {
             try container.encode(self.length, forKey: .length)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case length

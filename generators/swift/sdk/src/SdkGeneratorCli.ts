@@ -1,16 +1,18 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { noop } from "@fern-api/core-utils";
+import { assertNever, noop } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, SwiftFile } from "@fern-api/swift-base";
 import {
     AliasGenerator,
     DiscriminatedUnionGenerator,
+    LiteralEnumGenerator,
     ObjectGenerator,
     StringEnumGenerator,
     UndiscriminatedUnionGenerator
 } from "@fern-api/swift-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { camelCase } from "lodash-es";
 
 import {
     PackageSwiftGenerator,
@@ -88,10 +90,10 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     private async generateSourceAsIsFiles(context: SdkGeneratorContext): Promise<void> {
         await Promise.all(
             context.getSourceAsIsFiles().map(async (def) => {
-                context.project.addSourceFile({
-                    nameCandidateWithoutExtension: def.filenameWithoutExtension,
+                context.project.addSourceAsIsFile({
+                    filenameWithoutExt: def.filenameWithoutExtension,
                     directory: def.directory,
-                    fileContents: await def.loadContents()
+                    contents: await def.loadContents()
                 });
             })
         );
@@ -109,7 +111,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             context.project.addSourceFile({
                 nameCandidateWithoutExtension: class_.name,
                 directory: RelativeFilePath.of(`Resources/${fernFilepathDir}`),
-                fileContents: [class_]
+                contents: [class_]
             });
         });
     }
@@ -125,13 +127,14 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         ),
                         properties: endpoint.requestBody.properties,
                         extendedProperties: endpoint.requestBody.extendedProperties,
+                        docsContent: endpoint.requestBody.docs,
                         context
                     });
                     const struct = generator.generate();
                     context.project.addSourceFile({
                         nameCandidateWithoutExtension: struct.name,
                         directory: context.requestsDirectory,
-                        fileContents: [struct]
+                        contents: [struct]
                     });
                 }
             });
@@ -143,28 +146,64 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             typeDeclaration.shape._visit({
                 alias: (atd) => {
                     const name = context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId);
-                    const generator = new AliasGenerator({
-                        name: name,
-                        typeDeclaration: atd,
-                        context
-                    });
-                    const declaration = generator.generate();
-                    context.project.addSourceFile({
-                        nameCandidateWithoutExtension: name,
-                        directory: context.schemasDirectory,
-                        fileContents: [declaration]
-                    });
+                    if (atd.aliasOf.type === "container" && atd.aliasOf.container.type === "literal") {
+                        // Swift does not support literal aliases, so we need to generate a custom type for them
+                        const literalType = atd.aliasOf.container.literal;
+                        if (literalType.type === "string") {
+                            const generator = new LiteralEnumGenerator({
+                                name,
+                                literalValue: literalType.string,
+                                docsContent: typeDeclaration.docs
+                            });
+                            const enum_ = generator.generate();
+                            context.project.addSourceFile({
+                                nameCandidateWithoutExtension: enum_.name,
+                                directory: context.schemasDirectory,
+                                contents: [enum_]
+                            });
+                        } else if (literalType.type === "boolean") {
+                            // TODO(kafkas): Implement boolean literals
+                            const generator = new AliasGenerator({
+                                name,
+                                typeDeclaration: atd,
+                                docsContent: typeDeclaration.docs,
+                                context
+                            });
+                            const declaration = generator.generate();
+                            context.project.addSourceFile({
+                                nameCandidateWithoutExtension: name,
+                                directory: context.schemasDirectory,
+                                contents: [declaration]
+                            });
+                        } else {
+                            assertNever(literalType);
+                        }
+                    } else {
+                        const generator = new AliasGenerator({
+                            name,
+                            typeDeclaration: atd,
+                            docsContent: typeDeclaration.docs,
+                            context
+                        });
+                        const declaration = generator.generate();
+                        context.project.addSourceFile({
+                            nameCandidateWithoutExtension: name,
+                            directory: context.schemasDirectory,
+                            contents: [declaration]
+                        });
+                    }
                 },
                 enum: (etd) => {
                     const generator = new StringEnumGenerator({
                         name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
-                        enumTypeDeclaration: etd
+                        source: { type: "ir", enumTypeDeclaration: etd },
+                        docsContent: typeDeclaration.docs
                     });
                     const enum_ = generator.generate();
                     context.project.addSourceFile({
                         nameCandidateWithoutExtension: enum_.name,
                         directory: context.schemasDirectory,
-                        fileContents: [enum_]
+                        contents: [enum_]
                     });
                 },
                 object: (otd) => {
@@ -172,39 +211,42 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
                         properties: otd.properties,
                         extendedProperties: otd.extendedProperties,
+                        docsContent: typeDeclaration.docs,
                         context
                     });
                     const struct = generator.generate();
                     context.project.addSourceFile({
                         nameCandidateWithoutExtension: struct.name,
                         directory: context.schemasDirectory,
-                        fileContents: [struct]
+                        contents: [struct]
                     });
                 },
                 undiscriminatedUnion: (uutd) => {
                     const generator = new UndiscriminatedUnionGenerator({
                         name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
                         typeDeclaration: uutd,
+                        docsContent: typeDeclaration.docs,
                         context
                     });
                     const enum_ = generator.generate();
                     context.project.addSourceFile({
                         nameCandidateWithoutExtension: enum_.name,
                         directory: context.schemasDirectory,
-                        fileContents: [enum_]
+                        contents: [enum_]
                     });
                 },
                 union: (utd) => {
                     const generator = new DiscriminatedUnionGenerator({
                         name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
                         unionTypeDeclaration: utd,
+                        docsContent: typeDeclaration.docs,
                         context
                     });
                     const enum_ = generator.generate();
                     context.project.addSourceFile({
                         nameCandidateWithoutExtension: enum_.name,
                         directory: context.schemasDirectory,
-                        fileContents: [enum_]
+                        contents: [enum_]
                     });
                 },
                 _other: noop
@@ -222,7 +264,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         context.project.addSourceFile({
             nameCandidateWithoutExtension: rootClientClass.name,
             directory: RelativeFilePath.of(""),
-            fileContents: [rootClientClass]
+            contents: [rootClientClass]
         });
     }
 
@@ -237,7 +279,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             context.project.addSourceFile({
                 nameCandidateWithoutExtension: environmentEnum.name,
                 directory: RelativeFilePath.of(""),
-                fileContents: [environmentEnum]
+                contents: [environmentEnum]
             });
         } else {
             // TODO(kafkas): Handle multiple environments

@@ -1,13 +1,12 @@
-import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
-import { NpmPackage, PersistedTypescriptProject, fixImportsForEsm, writeTemplateFiles } from "@fern-typescript/commons";
-import { GeneratorContext } from "@fern-typescript/contexts";
-import { SdkGenerator } from "@fern-typescript/sdk-generator";
-
 import { FernGeneratorExec } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
 import { getNamespaceExport } from "@fern-api/typescript-base";
-
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
+import { fixImportsForEsm, NpmPackage, PersistedTypescriptProject, writeTemplateFiles } from "@fern-typescript/commons";
+import { GeneratorContext } from "@fern-typescript/contexts";
+import { SdkGenerator } from "@fern-typescript/sdk-generator";
 
 import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
 import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
@@ -26,10 +25,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         this.configOverrides = configOverrides ?? {};
     }
 
-    protected parseCustomConfig(customConfig: unknown): SdkCustomConfig {
+    protected parseCustomConfig(customConfig: unknown, logger: Logger): SdkCustomConfig {
         const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
         const noSerdeLayer = parsed?.noSerdeLayer ?? true;
-        return {
+        const config = {
             useBrandedStringAliases: parsed?.useBrandedStringAliases ?? false,
             outputSourceFiles: parsed?.outputSourceFiles ?? true,
             isPackagePrivate: parsed?.private ?? false,
@@ -73,8 +72,20 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             fetchSupport: parsed?.fetchSupport ?? "native",
             packagePath: parsed?.packagePath,
             omitFernHeaders: parsed?.omitFernHeaders ?? false,
-            useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false
+            useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false,
+            packageManager: parsed?.packageManager ?? "yarn"
         };
+
+        if (parsed?.noSerdeLayer === false && typeof parsed?.enableInlineTypes === "undefined") {
+            logger.info(
+                "noSerdeLayer is explicitly false while enableInlineTypes is implicitly true. Changing enableInlineTypes to false."
+            );
+            config.enableInlineTypes = false;
+        }
+        if (parsed?.noSerdeLayer === false && parsed?.enableInlineTypes === true) {
+            logger.error("Incompatible configuration: noSerdeLayer cannot be false while enableInlineTypes is true.");
+        }
+        return config;
     }
 
     protected async generateTypescriptProject({
@@ -163,7 +174,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 fetchSupport: customConfig.fetchSupport ?? "native",
                 packagePath: customConfig.packagePath,
                 omitFernHeaders: customConfig.omitFernHeaders ?? false,
-                useDefaultRequestParameterValues: customConfig.useDefaultRequestParameterValues ?? false
+                useDefaultRequestParameterValues: customConfig.useDefaultRequestParameterValues ?? false,
+                packageManager: customConfig.packageManager
             }
         });
         const typescriptProject = await sdkGenerator.generate();
@@ -250,5 +262,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             default:
                 return hasGitHubOutputMode;
         }
+    }
+
+    protected getPackageManager(customConfig: SdkCustomConfig): "pnpm" | "yarn" {
+        return customConfig.packageManager;
     }
 }

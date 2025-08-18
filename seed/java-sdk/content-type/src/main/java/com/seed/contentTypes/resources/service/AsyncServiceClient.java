@@ -5,7 +5,11 @@ package com.seed.contentTypes.resources.service;
 
 import com.seed.contentTypes.core.ClientOptions;
 import com.seed.contentTypes.core.RequestOptions;
+import com.seed.contentTypes.resources.service.requests.NamedMixedPatchRequest;
+import com.seed.contentTypes.resources.service.requests.OptionalMergePatchRequest;
+import com.seed.contentTypes.resources.service.requests.PatchComplexRequest;
 import com.seed.contentTypes.resources.service.requests.PatchProxyRequest;
+import com.seed.contentTypes.resources.service.requests.RegularPatchRequest;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncServiceClient {
@@ -31,5 +35,104 @@ public class AsyncServiceClient {
 
     public CompletableFuture<Void> patch(PatchProxyRequest request, RequestOptions requestOptions) {
         return this.rawClient.patch(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update with JSON merge patch - complex types.
+     * This endpoint demonstrates the distinction between:
+     * <ul>
+     * <li>optional&lt;T&gt; fields (can be present or absent, but not null)</li>
+     * <li>optional&lt;nullable&lt;T&gt;&gt; fields (can be present, absent, or null)</li>
+     * </ul>
+     */
+    public CompletableFuture<Void> patchComplex(String id) {
+        return this.rawClient.patchComplex(id).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update with JSON merge patch - complex types.
+     * This endpoint demonstrates the distinction between:
+     * <ul>
+     * <li>optional&lt;T&gt; fields (can be present or absent, but not null)</li>
+     * <li>optional&lt;nullable&lt;T&gt;&gt; fields (can be present, absent, or null)</li>
+     * </ul>
+     */
+    public CompletableFuture<Void> patchComplex(String id, PatchComplexRequest request) {
+        return this.rawClient.patchComplex(id, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update with JSON merge patch - complex types.
+     * This endpoint demonstrates the distinction between:
+     * <ul>
+     * <li>optional&lt;T&gt; fields (can be present or absent, but not null)</li>
+     * <li>optional&lt;nullable&lt;T&gt;&gt; fields (can be present, absent, or null)</li>
+     * </ul>
+     */
+    public CompletableFuture<Void> patchComplex(String id, PatchComplexRequest request, RequestOptions requestOptions) {
+        return this.rawClient.patchComplex(id, request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Named request with mixed optional/nullable fields and merge-patch content type.
+     * This should trigger the NPE issue when optional fields aren't initialized.
+     */
+    public CompletableFuture<Void> namedPatchWithMixed(String id, NamedMixedPatchRequest request) {
+        return this.rawClient.namedPatchWithMixed(id, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Named request with mixed optional/nullable fields and merge-patch content type.
+     * This should trigger the NPE issue when optional fields aren't initialized.
+     */
+    public CompletableFuture<Void> namedPatchWithMixed(
+            String id, NamedMixedPatchRequest request, RequestOptions requestOptions) {
+        return this.rawClient.namedPatchWithMixed(id, request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+     * This endpoint should:
+     * <ol>
+     * <li>Not NPE when fields are not provided (tests initialization)</li>
+     * <li>Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)</li>
+     * </ol>
+     */
+    public CompletableFuture<Void> optionalMergePatchTest(OptionalMergePatchRequest request) {
+        return this.rawClient.optionalMergePatchTest(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+     * This endpoint should:
+     * <ol>
+     * <li>Not NPE when fields are not provided (tests initialization)</li>
+     * <li>Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)</li>
+     * </ol>
+     */
+    public CompletableFuture<Void> optionalMergePatchTest(
+            OptionalMergePatchRequest request, RequestOptions requestOptions) {
+        return this.rawClient.optionalMergePatchTest(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Regular PATCH endpoint without merge-patch semantics
+     */
+    public CompletableFuture<Void> regularPatch(String id) {
+        return this.rawClient.regularPatch(id).thenApply(response -> response.body());
+    }
+
+    /**
+     * Regular PATCH endpoint without merge-patch semantics
+     */
+    public CompletableFuture<Void> regularPatch(String id, RegularPatchRequest request) {
+        return this.rawClient.regularPatch(id, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Regular PATCH endpoint without merge-patch semantics
+     */
+    public CompletableFuture<Void> regularPatch(String id, RegularPatchRequest request, RequestOptions requestOptions) {
+        return this.rawClient.regularPatch(id, request, requestOptions).thenApply(response -> response.body());
     }
 }

@@ -1,13 +1,12 @@
+import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { Logger } from "@fern-api/logger";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ExportsManager, ImportsManager, NpmPackage } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
-import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { Logger } from "@fern-api/logger";
-
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-
 import { BaseContext } from "../base-context";
+import { AuthProviderContext } from "./auth-provider";
 import { EndpointErrorUnionContext } from "./endpoint-error-union";
 import { EnvironmentsContext } from "./environments";
 import { GenericAPISdkErrorContext } from "./generic-api-sdk-error";
@@ -52,4 +51,5 @@ export interface SdkContext extends BaseContext {
     neverThrowErrors: boolean;
     importsManager: ImportsManager;
     exportsManager: ExportsManager;
+    authProvider: AuthProviderContext;
 }

@@ -1,0 +1,3 @@
+rootProject.name = 'client-side-params'
+
+include 'sample-app'

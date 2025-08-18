@@ -12,15 +12,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetcher = void 0;
 exports.fetcherImpl = fetcherImpl;
 const json_js_1 = require("../json.js");
-const RawResponse_js_1 = require("./RawResponse.js");
-const Supplier_js_1 = require("./Supplier.js");
 const createRequestUrl_js_1 = require("./createRequestUrl.js");
 const getErrorResponseBody_js_1 = require("./getErrorResponseBody.js");
 const getFetchFn_js_1 = require("./getFetchFn.js");
 const getRequestBody_js_1 = require("./getRequestBody.js");
 const getResponseBody_js_1 = require("./getResponseBody.js");
 const makeRequest_js_1 = require("./makeRequest.js");
+const RawResponse_js_1 = require("./RawResponse.js");
 const requestWithRetries_js_1 = require("./requestWithRetries.js");
+const Supplier_js_1 = require("./Supplier.js");
 function getHeaders(args) {
     return __awaiter(this, void 0, void 0, function* () {
         const newHeaders = {};

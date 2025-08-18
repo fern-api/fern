@@ -1,8 +1,11 @@
+import Foundation
+
 public struct TestCaseNonHiddenGrade: Codable, Hashable, Sendable {
     public let passed: Bool
     public let actualResult: VariableValue?
     public let exception: ExceptionV2?
     public let stdout: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -37,6 +40,7 @@ public struct TestCaseNonHiddenGrade: Codable, Hashable, Sendable {
         try container.encode(self.stdout, forKey: .stdout)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case passed
         case actualResult

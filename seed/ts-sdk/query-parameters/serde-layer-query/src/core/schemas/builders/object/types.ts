@@ -1,4 +1,4 @@
-import { BaseSchema, Schema, inferParsed, inferRaw } from "../../Schema.js";
+import { BaseSchema, inferParsed, inferRaw, Schema } from "../../Schema.js";
 import { addQuestionMarksToNullableProperties } from "../../utils/addQuestionMarksToNullableProperties.js";
 import { ObjectLikeUtils } from "../object-like/index.js";
 import { SchemaUtils } from "../schema-utils/index.js";

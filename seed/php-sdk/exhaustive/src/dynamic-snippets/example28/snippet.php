@@ -10,7 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->params->modifyWithPath(
+$client->endpoints->params->getWithPath(
     'param',
-    'string',
 );

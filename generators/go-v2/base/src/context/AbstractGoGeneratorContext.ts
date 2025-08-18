@@ -5,7 +5,7 @@ import {
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-
+import { BaseGoCustomConfigSchema, go, resolveRootImportPath } from "@fern-api/go-ast";
 import {
     EnumTypeDeclaration,
     ErrorDeclaration,
@@ -23,13 +23,11 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-
-import { BaseGoCustomConfigSchema, go, resolveRootImportPath } from "@fern-api/go-ast";
 import { GoProject } from "../project/GoProject";
+import { GoFieldMapper } from "./GoFieldMapper";
 import { GoTypeMapper } from "./GoTypeMapper";
 import { GoValueFormatter } from "./GoValueFormatter";
 import { GoZeroValueMapper } from "./GoZeroValueMapper";
-import { GoFieldMapper } from "./GoFieldMapper";
 
 export interface FileLocation {
     importPath: string;
@@ -273,7 +271,6 @@ export abstract class AbstractGoGeneratorContext<
 
     public maybeUnwrapIterable(typeReference: TypeReference): TypeReference | undefined {
         switch (typeReference.type) {
-            // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow fall through
             case "container": {
                 const container = typeReference.container;
                 switch (container.type) {
@@ -293,7 +290,6 @@ export abstract class AbstractGoGeneratorContext<
                 }
                 break;
             }
-            // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow fall through
             case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId).shape;
                 switch (typeDeclaration.type) {
@@ -319,7 +315,6 @@ export abstract class AbstractGoGeneratorContext<
 
     public maybeUnwrapOptionalOrNullable(typeReference: TypeReference): TypeReference | undefined {
         switch (typeReference.type) {
-            // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow fall through
             case "container": {
                 const container = typeReference.container;
                 switch (container.type) {
@@ -355,7 +350,6 @@ export abstract class AbstractGoGeneratorContext<
      */
     public needsOptionalDereference(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
-            // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow fall through
             case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId).shape;
                 switch (typeDeclaration.type) {
@@ -372,7 +366,6 @@ export abstract class AbstractGoGeneratorContext<
                 }
                 break;
             }
-            // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow fall through
             case "container": {
                 const containerType = typeReference.container;
                 switch (containerType.type) {
@@ -549,7 +542,6 @@ export abstract class AbstractGoGeneratorContext<
 
     public maybeEnum(typeReference: TypeReference): EnumTypeDeclaration | undefined {
         switch (typeReference.type) {
-            // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow fall through
             case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 switch (declaration.shape.type) {
@@ -566,7 +558,6 @@ export abstract class AbstractGoGeneratorContext<
                 }
                 break;
             }
-            // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow fall through
             case "container": {
                 const container = typeReference.container;
                 switch (container.type) {
@@ -594,7 +585,6 @@ export abstract class AbstractGoGeneratorContext<
 
     public maybePrimitive(typeReference: TypeReference): PrimitiveTypeV1 | undefined {
         switch (typeReference.type) {
-            // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow fall through
             case "container": {
                 const container = typeReference.container;
                 switch (container.type) {

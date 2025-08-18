@@ -1,11 +1,11 @@
 /* eslint-disable jest/expect-expect */
 /* eslint-disable jest/valid-describe-callback */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { readdir } from "fs/promises";
-import path from "path";
 
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { IntermediateRepresentationChangeDetector } from "@fern-api/ir-utils";
+import { readdir } from "fs/promises";
+import path from "path";
 
 import { generateIRFromPath } from "./generateAndSnapshotIR";
 

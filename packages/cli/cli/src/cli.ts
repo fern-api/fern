@@ -1,18 +1,13 @@
 #!/usr/bin/env node
+import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
-import getPort from "get-port";
-import type { ReadStream, WriteStream } from "node:tty";
-import { Argv } from "yargs";
-import { hideBin } from "yargs/helpers";
-import yargs from "yargs/yargs";
-
 import {
     GENERATORS_CONFIGURATION_FILENAME,
-    PROJECT_CONFIG_FILENAME,
     generatorsYml,
     getFernDirectory,
-    loadProjectConfig
+    loadProjectConfig,
+    PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
@@ -21,6 +16,10 @@ import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
+import getPort from "get-port";
+import { Argv } from "yargs";
+import { hideBin } from "yargs/helpers";
+import yargs from "yargs/yargs";
 
 import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "../../init/src/utils/loadOpenApiFromUrl";
 import { CliContext } from "./cli-context/CliContext";
@@ -32,14 +31,14 @@ import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
+import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
+import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
 import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces";
 import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/generate-openapi-fdr/generateOpenApiToFdrApiDefinitionForWorkspaces";
 import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces";
-import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
-import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
 import { mockServer } from "./commands/mock/mockServer";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
@@ -525,6 +524,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     type: "string",
                     hidden: true,
                     description: "Override output mode to local-file-system with the specified path"
+                })
+                .option("dynamic-snippets", {
+                    boolean: true,
+                    description: "Use dynamic SDK snippets in docs generation",
+                    default: false
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -574,7 +578,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     preview: argv.preview,
                     brokenLinks: argv.brokenLinks,
                     strictBrokenLinks: argv.strictBrokenLinks,
-                    disableTemplates: argv.disableSnippets
+                    disableTemplates: argv.disableSnippets,
+                    dynamicSnippets: argv.dynamicSnippets
                 });
             }
             // default to loading api workspace to preserve legacy behavior

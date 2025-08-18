@@ -1,3 +1,5 @@
+import Foundation
+
 public final class ServiceClient_: Sendable {
     private let httpClient: HTTPClient
 
@@ -47,6 +49,15 @@ public final class ServiceClient_: Sendable {
             body: request,
             requestOptions: requestOptions,
             responseType: Response.self
+        )
+    }
+
+    public func refreshToken(request: RefreshTokenRequest?, requestOptions: RequestOptions? = nil) async throws -> Void {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/refresh-token",
+            body: request,
+            requestOptions: requestOptions
         )
     }
 }

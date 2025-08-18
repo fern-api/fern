@@ -1,7 +1,10 @@
+import Foundation
+
 public struct NestedType: Codable, Hashable, Sendable {
     public let raw: String
     public let docs: String
     public let name: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -32,6 +35,7 @@ public struct NestedType: Codable, Hashable, Sendable {
         try container.encode(self.name, forKey: .name)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case raw
         case docs

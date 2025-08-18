@@ -1,7 +1,7 @@
 import { ClassReference } from "./ClassReference";
-import { KeywordArgument } from "./KeywordArgument";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { KeywordArgument } from "./KeywordArgument";
 
 export declare namespace ClassInstantiation {
     interface Args {

@@ -1,10 +1,9 @@
+import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-sdk/api";
 import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons";
 import { GeneratedSdkError, SdkErrorContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { SourceFile } from "ts-morph";
-
-import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { SdkErrorDeclarationReferencer } from "../../declaration-referencers/SdkErrorDeclarationReferencer";
 

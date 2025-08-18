@@ -1,10 +1,10 @@
 /* eslint-disable jest/expect-expect */
 /* eslint-disable jest/valid-describe-callback */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import path from "path";
 
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
+import path from "path";
 
 import { loadApisOrThrow } from "../../loadApisOrThrow";
 import { generateAndSnapshotIR, generateAndSnapshotIRFromPath } from "./generateAndSnapshotIR";
@@ -72,21 +72,19 @@ describe("test definitions", async () => {
         defaultToAllApiWorkspaces: true
     });
 
-    await Promise.all(
-        apiWorkspaces.map(async (workspace) => {
-            it(`${workspace.workspaceName}`, async () => {
-                await generateAndSnapshotIR({
-                    absolutePathToIr: AbsoluteFilePath.of(path.join(__dirname, "test-definitions")),
-                    workspace,
-                    audiences: { type: "all" },
-                    workspaceName: workspace.workspaceName ?? ""
-                });
+    apiWorkspaces.forEach((workspace) => {
+        it(`${workspace.workspaceName}`, async () => {
+            await generateAndSnapshotIR({
+                absolutePathToIr: AbsoluteFilePath.of(path.join(__dirname, "test-definitions")),
+                workspace,
+                audiences: { type: "all" },
+                workspaceName: workspace.workspaceName ?? ""
             });
-        })
-    );
+        });
+    });
 });
 
-it("test definitions openapi", async () => {
+describe("test definitions openapi", async () => {
     const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../../test-definitions-openapi");
     const apiWorkspaces = await loadApisOrThrow({
         fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of("fern")),
@@ -97,8 +95,8 @@ it("test definitions openapi", async () => {
         defaultToAllApiWorkspaces: true
     });
 
-    await Promise.all(
-        apiWorkspaces.map(async (workspace) => {
+    apiWorkspaces.forEach((workspace) => {
+        it(`${workspace.workspaceName}`, async () => {
             await generateAndSnapshotIR({
                 absolutePathToIr: AbsoluteFilePath.of(path.join(__dirname, "test-definitions-openapi")),
                 workspace,
@@ -108,8 +106,8 @@ it("test definitions openapi", async () => {
                         : { type: "all" },
                 workspaceName: workspace.workspaceName ?? ""
             });
-        })
-    );
+        });
+    });
 }, 200_000);
 
 it("generics", async () => {

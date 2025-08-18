@@ -1,7 +1,11 @@
+import Foundation
+
 public struct ListUsersExtendedOptionalListResponse: Codable, Hashable, Sendable {
     public let data: UserOptionalListContainer
     public let next: UUID?
+    /// The totall number of /users
     public let totalCount: Int
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -32,6 +36,7 @@ public struct ListUsersExtendedOptionalListResponse: Codable, Hashable, Sendable
         try container.encode(self.totalCount, forKey: .totalCount)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case data
         case next

@@ -1,3 +1,5 @@
+import Foundation
+
 public enum ProblemDescriptionBoard: Codable, Hashable, Sendable {
     case html(Html)
     case variable(Variable)
@@ -37,6 +39,7 @@ public enum ProblemDescriptionBoard: Codable, Hashable, Sendable {
     public struct Html: Codable, Hashable, Sendable {
         public let type: String = "html"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -60,6 +63,7 @@ public enum ProblemDescriptionBoard: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -69,6 +73,7 @@ public enum ProblemDescriptionBoard: Codable, Hashable, Sendable {
     public struct Variable: Codable, Hashable, Sendable {
         public let type: String = "variable"
         public let value: VariableValue
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -92,6 +97,7 @@ public enum ProblemDescriptionBoard: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -101,6 +107,7 @@ public enum ProblemDescriptionBoard: Codable, Hashable, Sendable {
     public struct TestCaseId: Codable, Hashable, Sendable {
         public let type: String = "testCaseId"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -124,6 +131,7 @@ public enum ProblemDescriptionBoard: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value

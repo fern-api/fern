@@ -1,6 +1,9 @@
+import Foundation
+
 public struct StoreTracedTestCaseRequest: Codable, Hashable, Sendable {
     public let result: TestCaseResultWithStdout
     public let traceResponses: [TraceResponse]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +30,7 @@ public struct StoreTracedTestCaseRequest: Codable, Hashable, Sendable {
         try container.encode(self.traceResponses, forKey: .traceResponses)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case result
         case traceResponses

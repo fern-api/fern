@@ -1,13 +1,12 @@
-import { isEqual, uniqWith } from "lodash-es";
-
 import { assertNever } from "@fern-api/core-utils";
+import { isEqual, uniqWith } from "lodash-es";
 
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { ClassReference } from "./ClassReference";
-import { TypeLiteral } from "./TypeLiteral";
 import { AstNode } from "./core/AstNode";
 import { GLOBAL_NAMESPACE } from "./core/Constant";
 import { Writer } from "./core/Writer";
+import { TypeLiteral } from "./TypeLiteral";
 
 type InternalType =
     | Array_

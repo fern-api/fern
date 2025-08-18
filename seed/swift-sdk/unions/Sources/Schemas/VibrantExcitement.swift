@@ -1,5 +1,8 @@
+import Foundation
+
 public struct VibrantExcitement: Codable, Hashable, Sendable {
     public let value: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +25,7 @@ public struct VibrantExcitement: Codable, Hashable, Sendable {
         try container.encode(self.value, forKey: .value)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case value
     }

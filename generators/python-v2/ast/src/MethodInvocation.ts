@@ -1,7 +1,7 @@
-import { MethodArgument } from "./MethodArgument";
-import { Reference } from "./Reference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { MethodArgument } from "./MethodArgument";
+import { Reference } from "./Reference";
 
 export declare namespace MethodInvocation {
     interface Args {

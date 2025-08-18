@@ -1,3 +1,5 @@
+import Foundation
+
 final class HTTPClient: Sendable {
     private let clientConfig: ClientConfig
     private let jsonEncoder = Serde.jsonEncoder
@@ -7,90 +9,74 @@ final class HTTPClient: Sendable {
         self.clientConfig = config
     }
 
-    func performRequest<T: Decodable>(
-        method: HTTP.Method,
-        path: String,
-        headers requestHeaders: [String: String] = [:],
-        queryParams requestQueryParams: [String: QueryParameter?] = [:],
-        body requestBody: (any Encodable)? = nil,
-        requestOptions: RequestOptions? = nil,
-        responseType: T.Type
-    ) async throws -> T {
-        let requestBody: HTTP.RequestBody? = requestBody.map { .jsonEncodable($0) }
-
-        let request = buildRequest(
-            method: method,
-            path: path,
-            requestContentType: .applicationJson,
-            requestHeaders: requestHeaders,
-            requestQueryParams: requestQueryParams,
-            requestBody: requestBody,
-            requestOptions: requestOptions
-        )
-
-        let (data, contentType) = try await executeRequestWithURLSession(request)
-
-        if T.self == String.self {
-            do {
-                return try jsonDecoder.decode(responseType, from: data)
-            } catch {
-                if contentType?.lowercased().contains("text") == true,
-                    let string = String(data: data, encoding: .utf8) as? T
-                {
-                    return string
-                }
-                throw ClientError.decodingError(error)
-            }
-        }
-
-        do {
-            return try jsonDecoder.decode(responseType, from: data)
-        } catch {
-            throw ClientError.decodingError(error)
-        }
-    }
-
+    /// Performs a request with no response.
     func performRequest(
         method: HTTP.Method,
         path: String,
+        contentType requestContentType: HTTP.ContentType = .applicationJson,
         headers requestHeaders: [String: String] = [:],
         queryParams requestQueryParams: [String: QueryParameter?] = [:],
         body requestBody: (any Encodable)? = nil,
         requestOptions: RequestOptions? = nil
     ) async throws {
-        let requestBody: HTTP.RequestBody? = requestBody.map { .jsonEncodable($0) }
-
-        let request = buildRequest(
+        _ = try await performRequest(
             method: method,
             path: path,
-            requestContentType: .applicationJson,
+            contentType: requestContentType,
+            headers: requestHeaders,
+            queryParams: requestQueryParams,
+            body: requestBody,
+            requestOptions: requestOptions,
+            responseType: Data.self
+        )
+    }
+
+    /// Performs a request with the specified response type.
+    func performRequest<T: Decodable>(
+        method: HTTP.Method,
+        path: String,
+        contentType requestContentType: HTTP.ContentType = .applicationJson,
+        headers requestHeaders: [String: String] = [:],
+        queryParams requestQueryParams: [String: QueryParameter?] = [:],
+        body requestBody: (any Encodable)? = nil,
+        requestOptions: RequestOptions? = nil,
+        responseType: T.Type
+    ) async throws -> T {
+        let requestBody: HTTP.RequestBody? = requestBody.map { body in
+            if let data = body as? Data {
+                return .data(data)
+            } else {
+                return .jsonEncodable(body)
+            }
+        }
+
+        let request = try await buildRequest(
+            method: method,
+            path: path,
+            requestContentType: requestContentType,
             requestHeaders: requestHeaders,
             requestQueryParams: requestQueryParams,
             requestBody: requestBody,
             requestOptions: requestOptions
         )
-        _ = try await executeRequestWithURLSession(request)
-    }
 
-    func performFileUpload<T: Decodable>(
-        method: HTTP.Method,
-        path: String,
-        headers requestHeaders: [String: String] = [:],
-        queryParams requestQueryParams: [String: QueryParameter?] = [:],
-        fileData: Data,
-        requestOptions: RequestOptions? = nil,
-        responseType: T.Type
-    ) async throws -> T {
-        let request = buildRequest(
-            method: method,
-            path: path,
-            requestContentType: .applicationOctetStream,
-            requestHeaders: requestHeaders,
-            requestQueryParams: requestQueryParams,
-            requestBody: .data(fileData),
-            requestOptions: requestOptions
-        )
         let (data, _) = try await executeRequestWithURLSession(request)
+
+        if responseType == Data.self {
+            if let data = data as? T {
+                return data
+            } else {
+                throw ClientError.invalidResponse
+            }
+        }
+        
+        if responseType == String.self {
+            if let string = String(data: data, encoding: .utf8) as? T {
+                return string
+            } else {
+                throw ClientError.invalidResponse
+            }
+        }
 
         do {
             return try jsonDecoder.decode(responseType, from: data)
@@ -107,7 +93,7 @@ final class HTTPClient: Sendable {
         requestQueryParams: [String: QueryParameter?],
         requestBody: HTTP.RequestBody? = nil,
         requestOptions: RequestOptions? = nil
-    ) -> URLRequest {
+    ) async throws -> URLRequest {
         // Init with URL
         let url = buildRequestURL(
             path: path, requestQueryParams: requestQueryParams, requestOptions: requestOptions
@@ -124,7 +110,7 @@ final class HTTPClient: Sendable {
         request.httpMethod = method.rawValue
 
         // Set headers
-        let headers = buildRequestHeaders(
+        let headers = try await buildRequestHeaders(
             requestContentType: requestContentType,
             requestHeaders: requestHeaders,
             requestOptions: requestOptions
@@ -180,14 +166,17 @@ final class HTTPClient: Sendable {
         requestContentType: HTTP.ContentType,
         requestHeaders: [String: String],
         requestOptions: RequestOptions? = nil
-    ) -> [String: String] {
+    ) async throws -> [String: String] {
         var headers = clientConfig.headers ?? [:]
         headers["Content-Type"] = requestContentType.rawValue
-        if let apiKey = requestOptions?.apiKey ?? clientConfig.apiKey {
-            headers["api_key"] = apiKey
+        if let headerAuth = clientConfig.headerAuth {
+            headers[headerAuth.header] = requestOptions?.apiKey ?? headerAuth.key
         }
-        if let token = requestOptions?.token ?? clientConfig.token {
-            headers["Authorization"] = "Bearer \(token)"
+        if let basicAuthToken = clientConfig.basicAuth?.token {
+            headers["Authorization"] = "Basic \(basicAuthToken)"
+        }
+        if let bearerAuthToken = try await getBearerAuthToken(requestOptions) {
+            headers["Authorization"] = "Bearer \(bearerAuthToken)"
         }
         for (key, value) in requestHeaders {
             headers[key] = value
@@ -196,6 +185,16 @@ final class HTTPClient: Sendable {
             headers[key] = value
         }
         return headers
+    }
+
+    private func getBearerAuthToken(_ requestOptions: RequestOptions?) async throws -> String? {
+        if let tokenString = requestOptions?.token {
+            return tokenString
+        }
+        if let bearerAuth = clientConfig.bearerAuth {
+            return try await bearerAuth.token.retrieve()
+        }
+        return nil
     }
 
     private func buildRequestBody(

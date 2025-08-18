@@ -1,5 +1,3 @@
-import { OpenAPIV3_1 } from "openapi-types";
-
 import { MediaType } from "@fern-api/core-utils";
 import {
     FileProperty,
@@ -10,6 +8,7 @@ import {
     TypeReference
 } from "@fern-api/ir-sdk";
 import { Converters } from "@fern-api/v3-importer-commons";
+import { OpenAPIV3_1 } from "openapi-types";
 
 import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
 

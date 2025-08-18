@@ -1,7 +1,8 @@
 import {
+    AstNode,
+    Class_,
     ClassInstantiation,
     ClassReference,
-    Class_,
     CodeBlock,
     Comment,
     KeywordArgument,
@@ -9,26 +10,38 @@ import {
     KeywordSplatParameter,
     Method,
     MethodInvocation,
-    Module,
+    MethodKind,
+    Module_,
     PositionalArgument,
     PositionalParameter,
     PositionalSplatParameter,
     TypeParameter,
+    Writer,
     YieldParameter
 } from "./ast";
+import { IfElse } from "./ast/IfElse";
+
+import * as TypeLiteral from "./ast/TypeLiteral";
 
 export {
+    Class_,
     ClassInstantiation,
     ClassReference,
     CodeBlock,
     KeywordArgument,
+    KeywordParameter,
     Method,
     MethodInvocation,
+    MethodKind,
+    Module_,
     Parameter,
+    Type,
     TypeLiteral,
-    TypeParameter
+    TypeParameter,
+    Writer
 } from "./ast";
 export { AstNode } from "./ast/core/AstNode";
+export type { HashEntry } from "./ast/TypeLiteral";
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg);
@@ -60,8 +73,8 @@ export function class_(args: Class_.Args): Class_ {
     return new Class_(args);
 }
 
-export function module(args: Module.Args): Module {
-    return new Module(args);
+export function module(args: Module_.Args): Module_ {
+    return new Module_(args);
 }
 
 export function method(args: Method.Args): Method {
@@ -94,4 +107,17 @@ export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
 
 export function positionalArgument(args: PositionalArgument.Args): PositionalArgument {
     return new PositionalArgument(args);
+}
+
+export function ifElse(args: IfElse.Args): IfElse {
+    return new IfElse(args);
+}
+
+export function wrapInModules(node: AstNode, modules: Module_[]): AstNode {
+    let topLevelNode: AstNode = node;
+    for (const module of modules.toReversed()) {
+        module.addStatement(topLevelNode);
+        topLevelNode = module;
+    }
+    return topLevelNode;
 }

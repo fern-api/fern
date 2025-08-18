@@ -1,0 +1,3 @@
+rootProject.name = 'inferred-auth-implicit-no-expiry'
+
+include 'sample-app'

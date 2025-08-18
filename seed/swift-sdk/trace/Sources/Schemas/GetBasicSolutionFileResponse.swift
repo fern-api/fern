@@ -1,5 +1,8 @@
+import Foundation
+
 public struct GetBasicSolutionFileResponse: Codable, Hashable, Sendable {
     public let solutionFileByLanguage: [Language: FileInfoV2]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +25,7 @@ public struct GetBasicSolutionFileResponse: Codable, Hashable, Sendable {
         try container.encode(self.solutionFileByLanguage, forKey: .solutionFileByLanguage)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case solutionFileByLanguage
     }

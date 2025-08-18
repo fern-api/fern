@@ -1,6 +1,3 @@
-import isEqual from "lodash-es/isEqual";
-import { OpenAPIV3 } from "openapi-types";
-
 import {
     AliasTypeDeclaration,
     ContainerType,
@@ -21,6 +18,8 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-api/ir-sdk";
+import isEqual from "lodash-es/isEqual";
+import { OpenAPIV3 } from "openapi-types";
 
 import { convertObject } from "./convertObject";
 

@@ -1,8 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
-
-import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { Type } from "./Type";
 
 export interface NamedValue {
     name: string;
@@ -115,7 +114,7 @@ export class TypeLiteral extends AstNode {
         switch (this.internalType.type) {
             case "str": {
                 // For now, just write the string as a Ruby string literal
-                if (this.internalType.value.includes("'")) {
+                if (this.internalType.value.includes("'") || this.internalType.value.includes("#")) {
                     writer.write(`"${this.internalType.value.replaceAll('"', '\\"')}"`);
                 } else {
                     writer.write(`'${this.internalType.value}'`);

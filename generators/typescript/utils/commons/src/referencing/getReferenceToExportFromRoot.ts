@@ -2,12 +2,12 @@ import { SourceFile, ts } from "ts-morph";
 
 import { ExportedDirectory, ExportedFilePath, ExportsManager } from "../exports-manager";
 import { ImportsManager } from "../imports-manager/ImportsManager";
-import { ModuleSpecifier } from "./ModuleSpecifier";
-import { GetReferenceOpts, Reference } from "./Reference";
 import { getDirectReferenceToExport } from "./getDirectReferenceToExport";
 import { getEntityNameOfDirectory } from "./getEntityNameOfDirectory";
 import { getExpressionToDirectory } from "./getExpressionToDirectory";
 import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
+import { ModuleSpecifier } from "./ModuleSpecifier";
+import { GetReferenceOpts, Reference } from "./Reference";
 
 const DEFAULT_SRC_DIRECTORY = "src";
 

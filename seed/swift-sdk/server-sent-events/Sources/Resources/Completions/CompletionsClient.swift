@@ -1,3 +1,5 @@
+import Foundation
+
 public final class CompletionsClient: Sendable {
     private let httpClient: HTTPClient
 
@@ -5,13 +7,13 @@ public final class CompletionsClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func stream(request: StreamCompletionRequest, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func stream(request: StreamCompletionRequest, requestOptions: RequestOptions? = nil) async throws -> JSONValue {
         return try await httpClient.performRequest(
             method: .post,
             path: "/stream",
             body: request,
             requestOptions: requestOptions,
-            responseType: Any.self
+            responseType: JSONValue.self
         )
     }
 }

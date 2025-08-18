@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.16.7
+  changelogEntry:
+    - summary: |
+        Support for apiVersion header. Default accept header to */*.
+      type: fix
+  createdAt: '2025-08-08'
+  irVersion: 58
 - version: 1.16.5
   changelogEntry:
     - summary: |

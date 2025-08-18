@@ -1,12 +1,11 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
+import { createLoggingExecutable } from "@fern-api/logging-execa";
+import { PublishInfo } from "@fern-api/typescript-base";
 import decompress from "decompress";
 import { cp, readdir, rm } from "fs/promises";
 import tmp from "tmp-promise";
 import urlJoin from "url-join";
-
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { Logger } from "@fern-api/logger";
-import { createLoggingExecutable } from "@fern-api/logging-execa";
-import { PublishInfo } from "@fern-api/typescript-base";
 
 export declare namespace PersistedTypescriptProject {
     export interface Init {
@@ -14,9 +13,10 @@ export declare namespace PersistedTypescriptProject {
         srcDirectory: RelativeFilePath;
         distDirectory: RelativeFilePath;
         testDirectory: RelativeFilePath;
-        yarnBuildCommand: string[];
-        yarnFormatCommand: string[];
+        buildCommand: string[];
+        formatCommand: string[];
         runScripts: boolean;
+        packageManager: "pnpm" | "yarn";
     }
 }
 
@@ -24,9 +24,10 @@ export class PersistedTypescriptProject {
     private directory: AbsoluteFilePath;
     private srcDirectory: RelativeFilePath;
     private distDirectory: RelativeFilePath;
+    private packageManager: "pnpm" | "yarn";
     private testDirectory: RelativeFilePath;
-    private yarnBuildCommand: string[];
-    private yarnFormatCommand: string[];
+    private buildCommand: string[];
+    private formatCommand: string[];
 
     private hasInstalled = false;
     private hasFormatted = false;
@@ -39,17 +40,19 @@ export class PersistedTypescriptProject {
         srcDirectory,
         distDirectory,
         testDirectory,
-        yarnBuildCommand,
-        yarnFormatCommand,
-        runScripts
+        buildCommand,
+        formatCommand,
+        runScripts,
+        packageManager
     }: PersistedTypescriptProject.Init) {
         this.directory = directory;
         this.srcDirectory = srcDirectory;
         this.distDirectory = distDirectory;
         this.testDirectory = testDirectory;
-        this.yarnBuildCommand = yarnBuildCommand;
-        this.yarnFormatCommand = yarnFormatCommand;
+        this.buildCommand = buildCommand;
+        this.formatCommand = formatCommand;
         this.runScripts = runScripts;
+        this.packageManager = packageManager;
     }
 
     public getSrcDirectory(): AbsoluteFilePath {
@@ -69,16 +72,24 @@ export class PersistedTypescriptProject {
             return;
         }
 
-        const yarn = createLoggingExecutable("yarn", {
+        const pm = createLoggingExecutable(this.packageManager, {
             cwd: this.directory,
             logger
         });
 
-        await yarn(["install"], {
-            env: {
-                // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
-                YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
-            }
+        await pm(["install"], {
+            env:
+                this.packageManager === "yarn"
+                    ? {
+                          // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
+                          YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+                      }
+                    : this.packageManager === "pnpm"
+                      ? {
+                            // allow modifying pnpm-lock.yaml, even when in CI
+                            PNPM_FROZEN_LOCKFILE: "false"
+                        }
+                      : undefined
         });
 
         this.hasInstalled = true;
@@ -95,11 +106,11 @@ export class PersistedTypescriptProject {
 
         await this.installDependencies(logger);
 
-        const yarn = createLoggingExecutable("yarn", {
+        const pm = createLoggingExecutable(this.packageManager, {
             cwd: this.directory,
             logger
         });
-        await yarn(this.yarnFormatCommand);
+        await pm(this.formatCommand);
 
         this.hasFormatted = true;
     }
@@ -115,11 +126,11 @@ export class PersistedTypescriptProject {
 
         await this.format(logger);
 
-        const yarn = createLoggingExecutable("yarn", {
+        const pm = createLoggingExecutable(this.packageManager, {
             cwd: this.directory,
             logger
         });
-        await yarn(this.yarnBuildCommand);
+        await pm(this.buildCommand);
 
         this.hasBuilt = true;
     }

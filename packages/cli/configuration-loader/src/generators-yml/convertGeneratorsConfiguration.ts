@@ -1,14 +1,12 @@
-import { readFile } from "fs/promises";
-import path from "path";
-
 import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { visitRawApiAuth } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath, RelativeFilePath, dirname, join, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
+import { readFile } from "fs/promises";
+import path from "path";
 
 const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     shouldUseTitleAsName: undefined,
@@ -740,6 +738,18 @@ async function convertOutputMode({
                     downloadSnippets
                 })
             );
+        case "crates":
+            // Workaround: Use npm override as a temporary solution for crates
+            // Both are package registries with similar authentication patterns
+            // This allows crates configuration to pass validation and be processed
+            return FernFiddle.OutputMode.publishV2(
+                FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
+                    registryUrl: generator.output.url ?? "https://crates.io/api/v1/crates",
+                    packageName: generator.output["package-name"],
+                    token: generator.output.token ?? "",
+                    downloadSnippets
+                })
+            );
         default:
             assertNever(generator.output);
     }
@@ -847,6 +857,15 @@ function getGithubPublishInfo(
                 registryUrl: output.url ?? "https://rubygems.org/",
                 packageName: output["package-name"],
                 apiKey: output["api-key"]
+            });
+        case "crates":
+            // TODO: Add native crates support to FernFiddle SDK
+            // Workaround: Use npm configuration as a temporary solution for crates
+            // Both are package registries with similar structure
+            return FernFiddle.GithubPublishInfo.npm({
+                registryUrl: output.url ?? "https://crates.io",
+                packageName: output["package-name"],
+                token: output.token
             });
         default:
             assertNever(output);

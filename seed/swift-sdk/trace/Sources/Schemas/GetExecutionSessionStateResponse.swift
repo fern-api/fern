@@ -1,7 +1,10 @@
+import Foundation
+
 public struct GetExecutionSessionStateResponse: Codable, Hashable, Sendable {
     public let states: [String: ExecutionSessionState]
     public let numWarmingInstances: Int?
     public let warmingSessionIds: [String]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -32,6 +35,7 @@ public struct GetExecutionSessionStateResponse: Codable, Hashable, Sendable {
         try container.encode(self.warmingSessionIds, forKey: .warmingSessionIds)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case states
         case numWarmingInstances

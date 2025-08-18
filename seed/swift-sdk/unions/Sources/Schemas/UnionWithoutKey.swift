@@ -1,5 +1,8 @@
+import Foundation
+
 public enum UnionWithoutKey: Codable, Hashable, Sendable {
     case foo(Foo)
+    /// This is a bar field.
     case bar(Bar)
 
     public init(from decoder: Decoder) throws {
@@ -32,6 +35,7 @@ public enum UnionWithoutKey: Codable, Hashable, Sendable {
     public struct Foo: Codable, Hashable, Sendable {
         public let type: String = "foo"
         public let name: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -55,15 +59,18 @@ public enum UnionWithoutKey: Codable, Hashable, Sendable {
             try container.encode(self.name, forKey: .name)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case name
         }
     }
 
+    /// This is a bar field.
     public struct Bar: Codable, Hashable, Sendable {
         public let type: String = "bar"
         public let name: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -87,6 +94,7 @@ public enum UnionWithoutKey: Codable, Hashable, Sendable {
             try container.encode(self.name, forKey: .name)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case name

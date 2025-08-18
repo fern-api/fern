@@ -1,8 +1,8 @@
 import {
-    RawSchemas,
     isGeneric,
     isRawObjectDefinition,
     parseGeneric,
+    RawSchemas,
     recursivelyVisitRawTypeReference,
     visitRawTypeDeclaration
 } from "@fern-api/fern-definition-schema";

@@ -1,7 +1,6 @@
+import { assertNever } from "@fern-api/core-utils";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-
-import { assertNever } from "@fern-api/core-utils";
 
 export function getReadableTypeNode({
     typeArgument,

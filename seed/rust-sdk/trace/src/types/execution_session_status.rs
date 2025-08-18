@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
+use std::fmt;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub enum ExecutionSessionStatus {
     #[serde(rename = "CREATING_CONTAINER")]
     CreatingContainer,
@@ -14,4 +15,17 @@ pub enum ExecutionSessionStatus {
     LiveContainer,
     #[serde(rename = "FAILED_TO_LAUNCH")]
     FailedToLaunch,
+}
+impl fmt::Display for ExecutionSessionStatus {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let s = match self {
+            Self::CreatingContainer => "CREATING_CONTAINER",
+            Self::ProvisioningContainer => "PROVISIONING_CONTAINER",
+            Self::PendingContainer => "PENDING_CONTAINER",
+            Self::RunningContainer => "RUNNING_CONTAINER",
+            Self::LiveContainer => "LIVE_CONTAINER",
+            Self::FailedToLaunch => "FAILED_TO_LAUNCH",
+        };
+        write!(f, "{}", s)
+    }
 }

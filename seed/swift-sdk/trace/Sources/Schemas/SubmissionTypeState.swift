@@ -1,3 +1,5 @@
+import Foundation
+
 public enum SubmissionTypeState: Codable, Hashable, Sendable {
     case test(Test)
     case workspace(Workspace)
@@ -35,6 +37,7 @@ public enum SubmissionTypeState: Codable, Hashable, Sendable {
         public let defaultTestCases: [TestCase]
         public let customTestCases: [TestCase]
         public let status: TestSubmissionStatus
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -70,6 +73,7 @@ public enum SubmissionTypeState: Codable, Hashable, Sendable {
             try container.encode(self.status, forKey: .status)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case problemId
@@ -82,6 +86,7 @@ public enum SubmissionTypeState: Codable, Hashable, Sendable {
     public struct Workspace: Codable, Hashable, Sendable {
         public let type: String = "workspace"
         public let status: WorkspaceSubmissionStatus
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -105,6 +110,7 @@ public enum SubmissionTypeState: Codable, Hashable, Sendable {
             try container.encode(self.status, forKey: .status)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case status

@@ -1,12 +1,11 @@
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { NpmPackage } from "@fern-api/typescript-base";
 import { mkdir, writeFile } from "fs/promises";
 import Dirent from "memfs/lib/Dirent";
 import { Volume } from "memfs/lib/volume";
 import path from "path";
 import tmp from "tmp-promise";
 import { Project } from "ts-morph";
-
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { NpmPackage } from "@fern-api/typescript-base";
 
 import { PackageDependencies } from "../dependency-manager/DependencyManager";
 import { PersistedTypescriptProject } from "./PersistedTypescriptProject";
@@ -27,6 +26,7 @@ export declare namespace TypescriptProject {
         outputJsr: boolean;
         exportSerde: boolean;
         packagePath?: string;
+        packageManager: "yarn" | "pnpm";
     }
 }
 
@@ -62,6 +62,7 @@ export abstract class TypescriptProject {
     protected static readonly REFERENCE_FILENAME = "reference.md";
     protected static readonly README_FILENAME = "README.md";
     protected static readonly LICENSE_FILENAME = "LICENSE";
+    protected static readonly PNPM_WORKSPACE_FILENAME = "pnpm-workspace.yaml";
 
     protected static readonly FORMAT_SCRIPT_NAME = "format";
     protected static readonly COMPILE_SCRIPT_NAME = "compile";
@@ -84,6 +85,7 @@ export abstract class TypescriptProject {
     protected readonly extraPeerDependencies: Record<string, string>;
     protected readonly extraScripts: Record<string, string>;
     protected readonly packagePath: string;
+    protected readonly packageManager: "yarn" | "pnpm";
 
     private readonly runScripts: boolean;
 
@@ -101,7 +103,8 @@ export abstract class TypescriptProject {
         outputJsr,
         exportSerde,
         extraConfigs,
-        packagePath
+        packagePath,
+        packageManager
     }: TypescriptProject.Init) {
         this.npmPackage = npmPackage;
         this.runScripts = runScripts;
@@ -117,6 +120,7 @@ export abstract class TypescriptProject {
         this.exportSerde = exportSerde;
         this.extraConfigs = extraConfigs;
         this.packagePath = packagePath ?? TypescriptProject.DEFAULT_SRC_DIRECTORY;
+        this.packageManager = packageManager;
     }
 
     public getFoldersForExports(): string[] {
@@ -148,8 +152,9 @@ export abstract class TypescriptProject {
             srcDirectory: RelativeFilePath.of(this.packagePath),
             testDirectory: RelativeFilePath.of(TypescriptProject.TEST_DIRECTORY),
             distDirectory: RelativeFilePath.of(TypescriptProject.DIST_DIRECTORY),
-            yarnBuildCommand: this.getYarnBuildCommand(),
-            yarnFormatCommand: this.getYarnFormatCommand()
+            buildCommand: this.getBuildCommand(),
+            formatCommand: this.getFormatCommand(),
+            packageManager: this.packageManager
         });
     }
 
@@ -198,6 +203,6 @@ export abstract class TypescriptProject {
     }
 
     protected abstract addFilesToVolume(): void | Promise<void>;
-    protected abstract getYarnFormatCommand(): string[];
-    protected abstract getYarnBuildCommand(): string[];
+    protected abstract getFormatCommand(): string[];
+    protected abstract getBuildCommand(): string[];
 }

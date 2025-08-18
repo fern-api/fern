@@ -1,6 +1,9 @@
+import Foundation
+
 public struct VoidFunctionSignatureThatTakesActualResult: Codable, Hashable, Sendable {
     public let parameters: [Parameter]
     public let actualResultType: VariableType
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +30,7 @@ public struct VoidFunctionSignatureThatTakesActualResult: Codable, Hashable, Sen
         try container.encode(self.actualResultType, forKey: .actualResultType)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case parameters
         case actualResultType

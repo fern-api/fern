@@ -70,7 +70,7 @@
         },
         "fullExamples": [],
         "additionalProperties": false,
-        "type": "json"
+        "type": "formUrlEncoded"
       },
       "response": {
         "description": "Successful operation",

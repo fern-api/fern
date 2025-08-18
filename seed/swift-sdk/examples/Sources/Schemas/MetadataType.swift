@@ -1,3 +1,5 @@
+import Foundation
+
 public enum MetadataType: Codable, Hashable, Sendable {
     case html(Html)
     case markdown(Markdown)
@@ -32,6 +34,7 @@ public enum MetadataType: Codable, Hashable, Sendable {
     public struct Html: Codable, Hashable, Sendable {
         public let type: String = "html"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -55,6 +58,7 @@ public enum MetadataType: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -64,6 +68,7 @@ public enum MetadataType: Codable, Hashable, Sendable {
     public struct Markdown: Codable, Hashable, Sendable {
         public let type: String = "markdown"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -87,6 +92,7 @@ public enum MetadataType: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value

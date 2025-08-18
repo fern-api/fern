@@ -1,3 +1,5 @@
+import Foundation
+
 public final class ProblemClient: Sendable {
     private let httpClient: HTTPClient
 
@@ -5,6 +7,9 @@ public final class ProblemClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// Creates a problem
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func createProblem(request: CreateProblemRequest, requestOptions: RequestOptions? = nil) async throws -> CreateProblemResponse {
         return try await httpClient.performRequest(
             method: .post,
@@ -15,6 +20,9 @@ public final class ProblemClient: Sendable {
         )
     }
 
+    /// Updates a problem
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func updateProblem(problemId: String, request: CreateProblemRequest, requestOptions: RequestOptions? = nil) async throws -> UpdateProblemResponse {
         return try await httpClient.performRequest(
             method: .post,
@@ -25,6 +33,9 @@ public final class ProblemClient: Sendable {
         )
     }
 
+    /// Soft deletes a problem
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func deleteProblem(problemId: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .delete,
@@ -33,6 +44,9 @@ public final class ProblemClient: Sendable {
         )
     }
 
+    /// Returns default starter files for problem
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getDefaultStarterFiles(request: GetDefaultStarterFilesRequest, requestOptions: RequestOptions? = nil) async throws -> GetDefaultStarterFilesResponse {
         return try await httpClient.performRequest(
             method: .post,

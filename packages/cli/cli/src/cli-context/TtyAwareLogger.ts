@@ -1,10 +1,9 @@
+import { addPrefixToString, assertNever, noop } from "@fern-api/core-utils";
+import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import ansiEscapes from "ansi-escapes";
 import chalk from "chalk";
 import IS_CI from "is-ci";
 import ora, { Ora } from "ora";
-
-import { addPrefixToString, assertNever, noop } from "@fern-api/core-utils";
-import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 
 import { Log } from "./Log";
 import { TaskContextImpl } from "./TaskContextImpl";

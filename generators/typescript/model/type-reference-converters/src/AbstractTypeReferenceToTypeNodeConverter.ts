@@ -1,10 +1,7 @@
-import { TypeReferenceNode } from "@fern-typescript/commons";
-import { InlineConsts } from "@fern-typescript/commons";
-import { ts } from "ts-morph";
-
 import { assertNever } from "@fern-api/core-utils";
-
 import { DeclaredTypeName, Literal, MapType, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-sdk/api";
+import { InlineConsts, TypeReferenceNode } from "@fern-typescript/commons";
+import { ts } from "ts-morph";
 
 import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
 

@@ -1,7 +1,11 @@
+import Foundation
+
+/// An OAuth token response.
 public struct TokenResponse: Codable, Hashable, Sendable {
     public let accessToken: String
     public let expiresIn: Int
     public let refreshToken: String?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -32,6 +36,7 @@ public struct TokenResponse: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.refreshToken, forKey: .refreshToken)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case accessToken = "access_token"
         case expiresIn = "expires_in"

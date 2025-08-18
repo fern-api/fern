@@ -1,10 +1,9 @@
+import { SubpackageId, WebSocketChannel, WebSocketChannelId } from "@fern-fern/ir-sdk/api";
 import { ExportsManager, ImportsManager, NpmPackage, PackageId, Reference } from "@fern-typescript/commons";
 import { GeneratedWebsocketSocketClass, WebsocketClassContext } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { WebsocketClassGenerator } from "@fern-typescript/sdk-client-class-generator";
 import { SourceFile } from "ts-morph";
-
-import { SubpackageId, WebSocketChannel, WebSocketChannelId } from "@fern-fern/ir-sdk/api";
 
 import { WebsocketSocketDeclarationReferencer } from "../../declaration-referencers/WebsocketSocketDeclarationReferencer";
 

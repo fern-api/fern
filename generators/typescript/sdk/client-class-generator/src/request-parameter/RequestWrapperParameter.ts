@@ -1,17 +1,18 @@
-import { GetReferenceOpts } from "@fern-typescript/commons";
-import { GeneratedRequestWrapper, RequestWrapperNonBodyProperty, SdkContext } from "@fern-typescript/contexts";
-import { ts } from "ts-morph";
-
-import { ExampleEndpointCall, HttpHeader, QueryParameter } from "@fern-fern/ir-sdk/api";
 import {
     BigIntegerType,
     BooleanType,
     DoubleType,
+    ExampleEndpointCall,
+    HttpHeader,
     IntegerType,
     LongType,
+    QueryParameter,
     StringType,
     TypeReference
-} from "@fern-fern/ir-sdk/api/resources/types/types";
+} from "@fern-fern/ir-sdk/api";
+import { GetReferenceOpts } from "@fern-typescript/commons";
+import { GeneratedRequestWrapper, RequestWrapperNonBodyProperty, SdkContext } from "@fern-typescript/contexts";
+import { ts } from "ts-morph";
 
 import { AbstractRequestParameter } from "./AbstractRequestParameter";
 

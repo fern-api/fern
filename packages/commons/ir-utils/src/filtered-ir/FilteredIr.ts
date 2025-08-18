@@ -3,9 +3,9 @@ import {
     HttpEndpoint,
     HttpService,
     TypeDeclaration,
+    Webhook,
     WebSocketChannel,
-    WebSocketChannelId,
-    Webhook
+    WebSocketChannelId
 } from "@fern-api/ir-sdk";
 
 import { IdGenerator } from "../utils/IdGenerator";

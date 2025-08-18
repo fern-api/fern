@@ -1,11 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
 import {
-    RawSchemas,
     isGeneric,
     isRawDiscriminatedUnionDefinition,
     isRawEnumDefinition,
     isRawObjectDefinition,
-    isRawUndiscriminatedUnionDefinition
+    isRawUndiscriminatedUnionDefinition,
+    RawSchemas
 } from "@fern-api/fern-definition-schema";
 import { ResolvedTypeReference, ShapeType, Type } from "@fern-api/ir-sdk";
 

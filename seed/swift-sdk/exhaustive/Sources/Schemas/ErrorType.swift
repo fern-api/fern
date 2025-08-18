@@ -1,8 +1,11 @@
+import Foundation
+
 public struct ErrorType: Codable, Hashable, Sendable {
     public let category: ErrorCategory
     public let code: ErrorCode
     public let detail: String?
     public let field: String?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -37,6 +40,7 @@ public struct ErrorType: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.field, forKey: .field)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case category
         case code

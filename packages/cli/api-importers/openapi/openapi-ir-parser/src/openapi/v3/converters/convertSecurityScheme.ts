@@ -1,6 +1,5 @@
-import { OpenAPIV3 } from "openapi-types";
-
 import { EnumSchema, SecurityScheme, Source } from "@fern-api/openapi-ir";
+import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../../../getExtension";
 import { convertEnum } from "../../../schema/convertEnum";
@@ -10,9 +9,9 @@ import { OpenAPIExtension } from "../extensions/extensions";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 import { getBasicSecuritySchemeNames } from "../extensions/getBasicSecuritySchemeNames";
 import {
+    getBasicSecuritySchemeNameAndEnvvar,
     HeaderSecuritySchemeNames,
-    SecuritySchemeNames,
-    getBasicSecuritySchemeNameAndEnvvar
+    SecuritySchemeNames
 } from "../extensions/getSecuritySchemeNameAndEnvvars";
 
 export function convertSecurityScheme(
@@ -42,7 +41,8 @@ function convertSecuritySchemeHelper(
                 headerNames?.name ?? getExtension<string>(securityScheme, FernOpenAPIExtension.HEADER_VARIABLE_NAME),
             headerEnvVar: headerNames?.env
         });
-    } else if (securityScheme.type === "http" && securityScheme.scheme === "bearer") {
+    } else if (securityScheme.type === "http" && securityScheme.scheme?.toLowerCase() === "bearer") {
+        // ^ case insensitivity for securityScheme.scheme required in OAS
         const bearerNames = getExtension<SecuritySchemeNames>(securityScheme, FernOpenAPIExtension.FERN_BEARER_TOKEN);
         return SecurityScheme.bearer({
             tokenVariableName:
@@ -50,7 +50,8 @@ function convertSecuritySchemeHelper(
                 getExtension<string>(securityScheme, FernOpenAPIExtension.BEARER_TOKEN_VARIABLE_NAME),
             tokenEnvVar: bearerNames?.env
         });
-    } else if (securityScheme.type === "http" && securityScheme.scheme === "basic") {
+    } else if (securityScheme.type === "http" && securityScheme.scheme?.toLowerCase() === "basic") {
+        // ^ case insensitivity for securityScheme.scheme required in OAS
         const basicSecuritySchemeNamingAndEnvvar = getBasicSecuritySchemeNameAndEnvvar(securityScheme);
         const basicSecuritySchemeNaming = getBasicSecuritySchemeNames(securityScheme);
         return SecurityScheme.basic({
