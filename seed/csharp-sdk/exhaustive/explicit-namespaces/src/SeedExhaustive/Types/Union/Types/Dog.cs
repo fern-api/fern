@@ -5,21 +5,22 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Types.Union;
 
-[Serializable]
-public record Dog : IJsonOnDeserialized
+[System.Serializable]
+public record Dog : System.Text.Json.Serialization.IJsonOnDeserialized
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
+    [System.Text.Json.Serialization.JsonExtensionData]
+    private readonly IDictionary<string, System.Text.Json.JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [JsonPropertyName("name")]
+    [System.Text.Json.Serialization.JsonPropertyName("name")]
     public required string Name { get; set; }
 
-    [JsonPropertyName("likesToWoof")]
+    [System.Text.Json.Serialization.JsonPropertyName("likesToWoof")]
     public required bool LikesToWoof { get; set; }
 
-    [JsonIgnore]
-    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+    [System.Text.Json.Serialization.JsonIgnore]
+    public SeedExhaustive.ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } =
+        new();
 
     void IJsonOnDeserialized.OnDeserialized() =>
         AdditionalProperties.CopyFromExtensionData(_extensionData);
@@ -27,6 +28,6 @@ public record Dog : IJsonOnDeserialized
     /// <inheritdoc />
     public override string ToString()
     {
-        return JsonUtils.Serialize(this);
+        return SeedExhaustive.Core.JsonUtils.Serialize(this);
     }
 }

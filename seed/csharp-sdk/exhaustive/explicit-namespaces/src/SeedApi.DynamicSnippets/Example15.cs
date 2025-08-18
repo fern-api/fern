@@ -7,15 +7,15 @@ namespace Usage;
 public class Example15
 {
     public async global::System.Threading.Tasks.Task Do() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedExhaustive.SeedExhaustiveClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new SeedExhaustive.ClientOptions{
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
-            new ObjectWithOptionalField{
+            new SeedExhaustive.Types.Object.ObjectWithOptionalField{
                 String = "test",
                 Integer = 21991583578,
                 Long = 9223372036854776000l,

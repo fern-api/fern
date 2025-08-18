@@ -3,15 +3,23 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints.Put;
 
-[JsonConverter(typeof(StringEnumSerializer<ErrorCategory>))]
-[Serializable]
-public readonly record struct ErrorCategory : IStringEnum
+[System.Text.Json.Serialization.JsonConverter(
+    typeof(SeedExhaustive.Core.StringEnumSerializer<SeedExhaustive.Endpoints.Put.ErrorCategory>)
+)]
+[System.Serializable]
+public readonly record struct ErrorCategory : SeedExhaustive.Core.IStringEnum
 {
-    public static readonly ErrorCategory ApiError = new(Values.ApiError);
+    public static readonly SeedExhaustive.Endpoints.Put.ErrorCategory ApiError = new(
+        Values.ApiError
+    );
 
-    public static readonly ErrorCategory AuthenticationError = new(Values.AuthenticationError);
+    public static readonly SeedExhaustive.Endpoints.Put.ErrorCategory AuthenticationError = new(
+        Values.AuthenticationError
+    );
 
-    public static readonly ErrorCategory InvalidRequestError = new(Values.InvalidRequestError);
+    public static readonly SeedExhaustive.Endpoints.Put.ErrorCategory InvalidRequestError = new(
+        Values.InvalidRequestError
+    );
 
     public ErrorCategory(string value)
     {
@@ -26,9 +34,9 @@ public readonly record struct ErrorCategory : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static ErrorCategory FromCustom(string value)
+    public static SeedExhaustive.Endpoints.Put.ErrorCategory FromCustom(string value)
     {
-        return new ErrorCategory(value);
+        return new SeedExhaustive.Endpoints.Put.ErrorCategory(value);
     }
 
     public bool Equals(string? other)
@@ -44,20 +52,26 @@ public readonly record struct ErrorCategory : IStringEnum
         return Value;
     }
 
-    public static bool operator ==(ErrorCategory value1, string value2) =>
-        value1.Value.Equals(value2);
+    public static bool operator ==(
+        SeedExhaustive.Endpoints.Put.ErrorCategory value1,
+        string value2
+    ) => value1.Value.Equals(value2);
 
-    public static bool operator !=(ErrorCategory value1, string value2) =>
-        !value1.Value.Equals(value2);
+    public static bool operator !=(
+        SeedExhaustive.Endpoints.Put.ErrorCategory value1,
+        string value2
+    ) => !value1.Value.Equals(value2);
 
-    public static explicit operator string(ErrorCategory value) => value.Value;
+    public static explicit operator string(SeedExhaustive.Endpoints.Put.ErrorCategory value) =>
+        value.Value;
 
-    public static explicit operator ErrorCategory(string value) => new(value);
+    public static explicit operator SeedExhaustive.Endpoints.Put.ErrorCategory(string value) =>
+        new(value);
 
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
-    [Serializable]
+    [System.Serializable]
     public static class Values
     {
         public const string ApiError = "API_ERROR";

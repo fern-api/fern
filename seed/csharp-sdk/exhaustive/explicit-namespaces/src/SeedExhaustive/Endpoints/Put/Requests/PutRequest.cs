@@ -3,15 +3,15 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints.Put;
 
-[Serializable]
+[System.Serializable]
 public record PutRequest
 {
-    [JsonIgnore]
+    [System.Text.Json.Serialization.JsonIgnore]
     public required string Id { get; set; }
 
     /// <inheritdoc />
     public override string ToString()
     {
-        return JsonUtils.Serialize(this);
+        return SeedExhaustive.Core.JsonUtils.Serialize(this);
     }
 }

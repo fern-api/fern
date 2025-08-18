@@ -9,9 +9,9 @@ namespace SeedExhaustive.Endpoints.Params;
 
 public partial class ParamsClient
 {
-    private RawClient _client;
+    private SeedExhaustive.Core.RawClient _client;
 
-    internal ParamsClient(RawClient client)
+    internal ParamsClient(SeedExhaustive.Core.RawClient client)
     {
         _client = client;
     }
@@ -24,19 +24,19 @@ public partial class ParamsClient
     /// </code></example>
     public async Task<string> GetWithPathAsync(
         string param,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
+        SeedExhaustive.RequestOptions? options = null,
+        System.Threading.CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExhaustive.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
+                    Method = System.Net.Http.HttpMethod.Get,
                     Path = string.Format(
                         "/params/path/{0}",
-                        ValueConvert.ToPathParameterString(param)
+                        SeedExhaustive.Core.ValueConvert.ToPathParameterString(param)
                     ),
                     Options = options,
                 },
@@ -48,17 +48,20 @@ public partial class ParamsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                return SeedExhaustive.Core.JsonUtils.Deserialize<string>(responseBody)!;
             }
-            catch (JsonException e)
+            catch (System.Text.Json.JsonException e)
             {
-                throw new SeedExhaustiveException("Failed to deserialize response", e);
+                throw new SeedExhaustive.SeedExhaustiveException(
+                    "Failed to deserialize response",
+                    e
+                );
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException(
+            throw new SeedExhaustive.SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -70,23 +73,25 @@ public partial class ParamsClient
     /// GET with path param
     /// </summary>
     /// <example><code>
-    /// await client.Endpoints.Params.GetWithInlinePathAsync(new GetWithInlinePath { Param = "param" });
+    /// await client.Endpoints.Params.GetWithInlinePathAsync(
+    ///     new SeedExhaustive.Endpoints.Params.GetWithInlinePath { Param = "param" }
+    /// );
     /// </code></example>
     public async Task<string> GetWithInlinePathAsync(
-        GetWithInlinePath request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
+        SeedExhaustive.Endpoints.Params.GetWithInlinePath request,
+        SeedExhaustive.RequestOptions? options = null,
+        System.Threading.CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExhaustive.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
+                    Method = System.Net.Http.HttpMethod.Get,
                     Path = string.Format(
                         "/params/path/{0}",
-                        ValueConvert.ToPathParameterString(request.Param)
+                        SeedExhaustive.Core.ValueConvert.ToPathParameterString(request.Param)
                     ),
                     Options = options,
                 },
@@ -98,17 +103,20 @@ public partial class ParamsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                return SeedExhaustive.Core.JsonUtils.Deserialize<string>(responseBody)!;
             }
-            catch (JsonException e)
+            catch (System.Text.Json.JsonException e)
             {
-                throw new SeedExhaustiveException("Failed to deserialize response", e);
+                throw new SeedExhaustive.SeedExhaustiveException(
+                    "Failed to deserialize response",
+                    e
+                );
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException(
+            throw new SeedExhaustive.SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -120,12 +128,14 @@ public partial class ParamsClient
     /// GET with query param
     /// </summary>
     /// <example><code>
-    /// await client.Endpoints.Params.GetWithQueryAsync(new GetWithQuery { Query = "query", Number = 1 });
+    /// await client.Endpoints.Params.GetWithQueryAsync(
+    ///     new SeedExhaustive.Endpoints.Params.GetWithQuery { Query = "query", Number = 1 }
+    /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task GetWithQueryAsync(
-        GetWithQuery request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
+        SeedExhaustive.Endpoints.Params.GetWithQuery request,
+        SeedExhaustive.RequestOptions? options = null,
+        System.Threading.CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
@@ -133,10 +143,10 @@ public partial class ParamsClient
         _query["number"] = request.Number.ToString();
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExhaustive.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
+                    Method = System.Net.Http.HttpMethod.Get,
                     Path = "/params",
                     Query = _query,
                     Options = options,
@@ -150,7 +160,7 @@ public partial class ParamsClient
         }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException(
+            throw new SeedExhaustive.SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -163,13 +173,13 @@ public partial class ParamsClient
     /// </summary>
     /// <example><code>
     /// await client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
-    ///     new GetWithMultipleQuery { Query = ["query"], Number = [1] }
+    ///     new SeedExhaustive.Endpoints.Params.GetWithMultipleQuery { Query = ["query"], Number = [1] }
     /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task GetWithAllowMultipleQueryAsync(
-        GetWithMultipleQuery request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
+        SeedExhaustive.Endpoints.Params.GetWithMultipleQuery request,
+        SeedExhaustive.RequestOptions? options = null,
+        System.Threading.CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
@@ -177,10 +187,10 @@ public partial class ParamsClient
         _query["number"] = request.Number.Select(_value => _value.ToString()).ToList();
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExhaustive.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
+                    Method = System.Net.Http.HttpMethod.Get,
                     Path = "/params",
                     Query = _query,
                     Options = options,
@@ -194,7 +204,7 @@ public partial class ParamsClient
         }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException(
+            throw new SeedExhaustive.SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -208,27 +218,27 @@ public partial class ParamsClient
     /// <example><code>
     /// await client.Endpoints.Params.GetWithPathAndQueryAsync(
     ///     "param",
-    ///     new GetWithPathAndQuery { Query = "query" }
+    ///     new SeedExhaustive.Endpoints.Params.GetWithPathAndQuery { Query = "query" }
     /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task GetWithPathAndQueryAsync(
         string param,
-        GetWithPathAndQuery request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
+        SeedExhaustive.Endpoints.Params.GetWithPathAndQuery request,
+        SeedExhaustive.RequestOptions? options = null,
+        System.Threading.CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
         _query["query"] = request.Query;
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExhaustive.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
+                    Method = System.Net.Http.HttpMethod.Get,
                     Path = string.Format(
                         "/params/path-query/{0}",
-                        ValueConvert.ToPathParameterString(param)
+                        SeedExhaustive.Core.ValueConvert.ToPathParameterString(param)
                     ),
                     Query = _query,
                     Options = options,
@@ -242,7 +252,7 @@ public partial class ParamsClient
         }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException(
+            throw new SeedExhaustive.SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -255,26 +265,30 @@ public partial class ParamsClient
     /// </summary>
     /// <example><code>
     /// await client.Endpoints.Params.GetWithInlinePathAndQueryAsync(
-    ///     new GetWithInlinePathAndQuery { Param = "param", Query = "query" }
+    ///     new SeedExhaustive.Endpoints.Params.GetWithInlinePathAndQuery
+    ///     {
+    ///         Param = "param",
+    ///         Query = "query",
+    ///     }
     /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task GetWithInlinePathAndQueryAsync(
-        GetWithInlinePathAndQuery request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
+        SeedExhaustive.Endpoints.Params.GetWithInlinePathAndQuery request,
+        SeedExhaustive.RequestOptions? options = null,
+        System.Threading.CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
         _query["query"] = request.Query;
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExhaustive.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
+                    Method = System.Net.Http.HttpMethod.Get,
                     Path = string.Format(
                         "/params/path-query/{0}",
-                        ValueConvert.ToPathParameterString(request.Param)
+                        SeedExhaustive.Core.ValueConvert.ToPathParameterString(request.Param)
                     ),
                     Query = _query,
                     Options = options,
@@ -288,7 +302,7 @@ public partial class ParamsClient
         }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException(
+            throw new SeedExhaustive.SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -305,19 +319,19 @@ public partial class ParamsClient
     public async Task<string> ModifyWithPathAsync(
         string param,
         string request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
+        SeedExhaustive.RequestOptions? options = null,
+        System.Threading.CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExhaustive.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Put,
+                    Method = System.Net.Http.HttpMethod.Put,
                     Path = string.Format(
                         "/params/path/{0}",
-                        ValueConvert.ToPathParameterString(param)
+                        SeedExhaustive.Core.ValueConvert.ToPathParameterString(param)
                     ),
                     Body = request,
                     Options = options,
@@ -330,17 +344,20 @@ public partial class ParamsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                return SeedExhaustive.Core.JsonUtils.Deserialize<string>(responseBody)!;
             }
-            catch (JsonException e)
+            catch (System.Text.Json.JsonException e)
             {
-                throw new SeedExhaustiveException("Failed to deserialize response", e);
+                throw new SeedExhaustive.SeedExhaustiveException(
+                    "Failed to deserialize response",
+                    e
+                );
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException(
+            throw new SeedExhaustive.SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -353,24 +370,28 @@ public partial class ParamsClient
     /// </summary>
     /// <example><code>
     /// await client.Endpoints.Params.ModifyWithInlinePathAsync(
-    ///     new ModifyResourceAtInlinedPath { Param = "param", Body = "string" }
+    ///     new SeedExhaustive.Endpoints.Params.ModifyResourceAtInlinedPath
+    ///     {
+    ///         Param = "param",
+    ///         Body = "string",
+    ///     }
     /// );
     /// </code></example>
     public async Task<string> ModifyWithInlinePathAsync(
-        ModifyResourceAtInlinedPath request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
+        SeedExhaustive.Endpoints.Params.ModifyResourceAtInlinedPath request,
+        SeedExhaustive.RequestOptions? options = null,
+        System.Threading.CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExhaustive.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Put,
+                    Method = System.Net.Http.HttpMethod.Put,
                     Path = string.Format(
                         "/params/path/{0}",
-                        ValueConvert.ToPathParameterString(request.Param)
+                        SeedExhaustive.Core.ValueConvert.ToPathParameterString(request.Param)
                     ),
                     Body = request.Body,
                     Options = options,
@@ -383,17 +404,20 @@ public partial class ParamsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                return SeedExhaustive.Core.JsonUtils.Deserialize<string>(responseBody)!;
             }
-            catch (JsonException e)
+            catch (System.Text.Json.JsonException e)
             {
-                throw new SeedExhaustiveException("Failed to deserialize response", e);
+                throw new SeedExhaustive.SeedExhaustiveException(
+                    "Failed to deserialize response",
+                    e
+                );
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException(
+            throw new SeedExhaustive.SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody

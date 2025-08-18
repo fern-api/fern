@@ -5,10 +5,10 @@ using SeedExhaustive.Test.Unit.MockServer;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Urls;
 
-[TestFixture]
-public class WithMixedCaseTest : BaseMockServerTest
+[NUnit.Framework.TestFixture]
+public class WithMixedCaseTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
@@ -25,6 +25,9 @@ public class WithMixedCaseTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Urls.WithMixedCaseAsync();
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
+        Assert.That(
+            response,
+            Is.EqualTo(SeedExhaustive.Core.JsonUtils.Deserialize<string>(mockResponse))
+        );
     }
 }

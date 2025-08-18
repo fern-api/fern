@@ -13,6 +13,7 @@ export const BaseCsharpCustomConfigSchema = z.object({
     "read-only-memory-types": z.optional(z.array(z.string())),
     "root-namespace-for-core-classes": z.boolean().optional(),
     "use-discriminated-unions": z.boolean().optional(),
+    "experimental-dotnet-format": z.boolean().optional(),
 
     // General options.
     "root-client-class-access": z.enum(["public", "internal"]).optional(),

@@ -7,15 +7,15 @@ namespace Usage;
 public class Example55
 {
     public async global::System.Threading.Tasks.Task Do() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedExhaustive.SeedExhaustiveClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new SeedExhaustive.ClientOptions{
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.ReqWithHeaders.GetWithCustomHeaderAsync(
-            new ReqWithHeaders{
+            new SeedExhaustive.ReqWithHeaders.ReqWithHeaders{
                 XTestServiceHeader = "X-TEST-SERVICE-HEADER",
                 XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
                 Body = "string"

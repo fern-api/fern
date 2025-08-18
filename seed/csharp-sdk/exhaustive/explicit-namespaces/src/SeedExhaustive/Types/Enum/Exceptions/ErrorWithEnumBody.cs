@@ -5,12 +5,12 @@ namespace SeedExhaustive.Types.Enum;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-[Serializable]
-public class ErrorWithEnumBody(WeatherReport body)
-    : SeedExhaustiveApiException("ErrorWithEnumBody", 400, body)
+[System.Serializable]
+public class ErrorWithEnumBody(SeedExhaustive.Types.Enum.WeatherReport body)
+    : SeedExhaustive.SeedExhaustiveApiException("ErrorWithEnumBody", 400, body)
 {
     /// <summary>
     /// The body of the response that triggered the exception.
     /// </summary>
-    public new WeatherReport Body => body;
+    public new SeedExhaustive.Types.Enum.WeatherReport Body => body;
 }

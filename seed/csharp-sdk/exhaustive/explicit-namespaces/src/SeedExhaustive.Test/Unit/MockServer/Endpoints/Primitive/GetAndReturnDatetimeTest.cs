@@ -6,10 +6,10 @@ using SeedExhaustive.Test.Unit.MockServer;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Primitive;
 
-[TestFixture]
-public class GetAndReturnDatetimeTest : BaseMockServerTest
+[NUnit.Framework.TestFixture]
+public class GetAndReturnDatetimeTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
@@ -36,8 +36,15 @@ public class GetAndReturnDatetimeTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Primitive.GetAndReturnDatetimeAsync(
-            DateTime.Parse("2024-01-15T09:30:00.000Z", null, DateTimeStyles.AdjustToUniversal)
+            DateTime.Parse(
+                "2024-01-15T09:30:00.000Z",
+                null,
+                System.Globalization.DateTimeStyles.AdjustToUniversal
+            )
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<DateTime>(mockResponse)));
+        Assert.That(
+            response,
+            Is.EqualTo(SeedExhaustive.Core.JsonUtils.Deserialize<DateTime>(mockResponse))
+        );
     }
 }

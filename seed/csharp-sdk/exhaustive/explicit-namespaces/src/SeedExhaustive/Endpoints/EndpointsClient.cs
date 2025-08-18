@@ -14,40 +14,40 @@ namespace SeedExhaustive.Endpoints;
 
 public partial class EndpointsClient
 {
-    private RawClient _client;
+    private SeedExhaustive.Core.RawClient _client;
 
-    internal EndpointsClient(RawClient client)
+    internal EndpointsClient(SeedExhaustive.Core.RawClient client)
     {
         _client = client;
-        Container = new ContainerClient(_client);
-        ContentType = new ContentTypeClient(_client);
-        Enum = new EnumClient(_client);
-        HttpMethods = new HttpMethodsClient(_client);
-        Object = new ObjectClient(_client);
-        Params = new ParamsClient(_client);
-        Primitive = new PrimitiveClient(_client);
-        Put = new PutClient(_client);
-        Union = new UnionClient(_client);
-        Urls = new UrlsClient(_client);
+        Container = new SeedExhaustive.Endpoints.Container.ContainerClient(_client);
+        ContentType = new SeedExhaustive.Endpoints.ContentType.ContentTypeClient(_client);
+        Enum = new SeedExhaustive.Endpoints.Enum.EnumClient(_client);
+        HttpMethods = new SeedExhaustive.Endpoints.HttpMethods.HttpMethodsClient(_client);
+        Object = new SeedExhaustive.Endpoints.Object.ObjectClient(_client);
+        Params = new SeedExhaustive.Endpoints.Params.ParamsClient(_client);
+        Primitive = new SeedExhaustive.Endpoints.Primitive.PrimitiveClient(_client);
+        Put = new SeedExhaustive.Endpoints.Put.PutClient(_client);
+        Union = new SeedExhaustive.Endpoints.Union.UnionClient(_client);
+        Urls = new SeedExhaustive.Endpoints.Urls.UrlsClient(_client);
     }
 
-    public ContainerClient Container { get; }
+    public SeedExhaustive.Endpoints.Container.ContainerClient Container { get; }
 
-    public ContentTypeClient ContentType { get; }
+    public SeedExhaustive.Endpoints.ContentType.ContentTypeClient ContentType { get; }
 
-    public EnumClient Enum { get; }
+    public SeedExhaustive.Endpoints.Enum.EnumClient Enum { get; }
 
-    public HttpMethodsClient HttpMethods { get; }
+    public SeedExhaustive.Endpoints.HttpMethods.HttpMethodsClient HttpMethods { get; }
 
-    public ObjectClient Object { get; }
+    public SeedExhaustive.Endpoints.Object.ObjectClient Object { get; }
 
-    public ParamsClient Params { get; }
+    public SeedExhaustive.Endpoints.Params.ParamsClient Params { get; }
 
-    public PrimitiveClient Primitive { get; }
+    public SeedExhaustive.Endpoints.Primitive.PrimitiveClient Primitive { get; }
 
-    public PutClient Put { get; }
+    public SeedExhaustive.Endpoints.Put.PutClient Put { get; }
 
-    public UnionClient Union { get; }
+    public SeedExhaustive.Endpoints.Union.UnionClient Union { get; }
 
-    public UrlsClient Urls { get; }
+    public SeedExhaustive.Endpoints.Urls.UrlsClient Urls { get; }
 }

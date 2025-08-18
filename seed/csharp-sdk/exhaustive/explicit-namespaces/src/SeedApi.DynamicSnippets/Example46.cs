@@ -7,16 +7,16 @@ namespace Usage;
 public class Example46
 {
     public async global::System.Threading.Tasks.Task Do() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedExhaustive.SeedExhaustiveClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new SeedExhaustive.ClientOptions{
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Endpoints.Union.GetAndReturnUnionAsync(
-            new Animal(
-                new Dog{
+            new SeedExhaustive.Types.Union.Animal(
+                new SeedExhaustive.Types.Union.Dog{
                     Name = "name",
                     LikesToWoof = true
                 }

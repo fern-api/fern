@@ -5,18 +5,19 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.GeneralErrors;
 
-[Serializable]
-public record BadObjectRequestInfo : IJsonOnDeserialized
+[System.Serializable]
+public record BadObjectRequestInfo : System.Text.Json.Serialization.IJsonOnDeserialized
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
+    [System.Text.Json.Serialization.JsonExtensionData]
+    private readonly IDictionary<string, System.Text.Json.JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [JsonPropertyName("message")]
+    [System.Text.Json.Serialization.JsonPropertyName("message")]
     public required string Message { get; set; }
 
-    [JsonIgnore]
-    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+    [System.Text.Json.Serialization.JsonIgnore]
+    public SeedExhaustive.ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } =
+        new();
 
     void IJsonOnDeserialized.OnDeserialized() =>
         AdditionalProperties.CopyFromExtensionData(_extensionData);
@@ -24,6 +25,6 @@ public record BadObjectRequestInfo : IJsonOnDeserialized
     /// <inheritdoc />
     public override string ToString()
     {
-        return JsonUtils.Serialize(this);
+        return SeedExhaustive.Core.JsonUtils.Serialize(this);
     }
 }

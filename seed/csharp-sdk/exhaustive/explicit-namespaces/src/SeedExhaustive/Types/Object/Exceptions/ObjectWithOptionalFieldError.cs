@@ -5,12 +5,12 @@ namespace SeedExhaustive.Types.Object;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-[Serializable]
-public class ObjectWithOptionalFieldError(ObjectWithOptionalField body)
-    : SeedExhaustiveApiException("ObjectWithOptionalFieldError", 400, body)
+[System.Serializable]
+public class ObjectWithOptionalFieldError(SeedExhaustive.Types.Object.ObjectWithOptionalField body)
+    : SeedExhaustive.SeedExhaustiveApiException("ObjectWithOptionalFieldError", 400, body)
 {
     /// <summary>
     /// The body of the response that triggered the exception.
     /// </summary>
-    public new ObjectWithOptionalField Body => body;
+    public new SeedExhaustive.Types.Object.ObjectWithOptionalField Body => body;
 }

@@ -7,10 +7,11 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Object;
 
-[TestFixture]
-public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
+[NUnit.Framework.TestFixture]
+public class TestIntegerOverflowEdgeCasesTest
+    : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest_1()
     {
         const string requestJson = """
@@ -79,7 +80,7 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(
-            new ObjectWithOptionalField
+            new SeedExhaustive.Types.Object.ObjectWithOptionalField
             {
                 String = "string",
                 Integer = 1,
@@ -89,7 +90,7 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
                 Datetime = DateTime.Parse(
                     "2024-01-15T09:30:00.000Z",
                     null,
-                    DateTimeStyles.AdjustToUniversal
+                    System.Globalization.DateTimeStyles.AdjustToUniversal
                 ),
                 Date = new DateOnly(2023, 1, 15),
                 Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -102,11 +103,16 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
+            Is.EqualTo(
+                    SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithOptionalField>(
+                        mockResponse
+                    )
+                )
+                .UsingDefaults()
         );
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest_2()
     {
         const string requestJson = """
@@ -145,7 +151,7 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(
-            new ObjectWithOptionalField
+            new SeedExhaustive.Types.Object.ObjectWithOptionalField
             {
                 String = "boundary-test",
                 Integer = 2147483647,
@@ -156,11 +162,16 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
+            Is.EqualTo(
+                    SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithOptionalField>(
+                        mockResponse
+                    )
+                )
+                .UsingDefaults()
         );
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest_3()
     {
         const string requestJson = """
@@ -199,7 +210,7 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(
-            new ObjectWithOptionalField
+            new SeedExhaustive.Types.Object.ObjectWithOptionalField
             {
                 String = "just-over-boundary",
                 Integer = 2147483648,
@@ -210,11 +221,16 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
+            Is.EqualTo(
+                    SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithOptionalField>(
+                        mockResponse
+                    )
+                )
+                .UsingDefaults()
         );
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest_4()
     {
         const string requestJson = """
@@ -253,7 +269,7 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(
-            new ObjectWithOptionalField
+            new SeedExhaustive.Types.Object.ObjectWithOptionalField
             {
                 String = "just-under-boundary",
                 Integer = -2147483649,
@@ -264,11 +280,16 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
+            Is.EqualTo(
+                    SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithOptionalField>(
+                        mockResponse
+                    )
+                )
+                .UsingDefaults()
         );
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest_5()
     {
         const string requestJson = """
@@ -307,7 +328,7 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(
-            new ObjectWithOptionalField
+            new SeedExhaustive.Types.Object.ObjectWithOptionalField
             {
                 String = "large-positive",
                 Integer = 1000000000000,
@@ -318,11 +339,16 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
+            Is.EqualTo(
+                    SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithOptionalField>(
+                        mockResponse
+                    )
+                )
+                .UsingDefaults()
         );
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest_6()
     {
         const string requestJson = """
@@ -361,7 +387,7 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(
-            new ObjectWithOptionalField
+            new SeedExhaustive.Types.Object.ObjectWithOptionalField
             {
                 String = "large-negative",
                 Integer = -1000000000000,
@@ -372,7 +398,12 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
+            Is.EqualTo(
+                    SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithOptionalField>(
+                        mockResponse
+                    )
+                )
+                .UsingDefaults()
         );
     }
 }

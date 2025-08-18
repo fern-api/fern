@@ -8,16 +8,16 @@ namespace SeedExhaustive.ReqWithHeaders;
 
 public partial class ReqWithHeadersClient
 {
-    private RawClient _client;
+    private SeedExhaustive.Core.RawClient _client;
 
-    internal ReqWithHeadersClient(RawClient client)
+    internal ReqWithHeadersClient(SeedExhaustive.Core.RawClient client)
     {
         _client = client;
     }
 
     /// <example><code>
     /// await client.ReqWithHeaders.GetWithCustomHeaderAsync(
-    ///     new ReqWithHeaders
+    ///     new SeedExhaustive.ReqWithHeaders.ReqWithHeaders
     ///     {
     ///         XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
     ///         XTestServiceHeader = "X-TEST-SERVICE-HEADER",
@@ -26,12 +26,12 @@ public partial class ReqWithHeadersClient
     /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task GetWithCustomHeaderAsync(
-        ReqWithHeaders request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
+        SeedExhaustive.ReqWithHeaders.ReqWithHeaders request,
+        SeedExhaustive.RequestOptions? options = null,
+        System.Threading.CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Headers(
+        var _headers = new SeedExhaustive.Core.Headers(
             new Dictionary<string, string>()
             {
                 { "X-TEST-SERVICE-HEADER", request.XTestServiceHeader },
@@ -40,10 +40,10 @@ public partial class ReqWithHeadersClient
         );
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExhaustive.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
+                    Method = System.Net.Http.HttpMethod.Post,
                     Path = "/test-headers/custom-header",
                     Body = request.Body,
                     Headers = _headers,
@@ -58,7 +58,7 @@ public partial class ReqWithHeadersClient
         }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException(
+            throw new SeedExhaustive.SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody

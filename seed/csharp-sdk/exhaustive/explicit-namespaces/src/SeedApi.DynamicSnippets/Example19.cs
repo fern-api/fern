@@ -8,23 +8,23 @@ namespace Usage;
 public class Example19
 {
     public async global::System.Threading.Tasks.Task Do() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedExhaustive.SeedExhaustiveClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new SeedExhaustive.ClientOptions{
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Endpoints.Object.GetAndReturnNestedWithOptionalFieldAsync(
-            new NestedObjectWithOptionalField{
+            new SeedExhaustive.Types.Object.NestedObjectWithOptionalField{
                 String = "string",
-                NestedObject = new ObjectWithOptionalField{
+                NestedObject = new SeedExhaustive.Types.Object.ObjectWithOptionalField{
                     String = "string",
                     Integer = 1,
                     Long = 1000000l,
                     Double = 1.1,
                     Bool = true,
-                    Datetime = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
+                    Datetime = DateTime.Parse("2024-01-15T09:30:00Z", null, System.Globalization.DateTimeStyles.AdjustToUniversal),
                     Date = DateOnly.Parse("2023-01-15"),
                     Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     Base64 = "SGVsbG8gd29ybGQh",

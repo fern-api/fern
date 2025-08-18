@@ -6,10 +6,10 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Container;
 
-[TestFixture]
-public class GetAndReturnOptionalTest : BaseMockServerTest
+[NUnit.Framework.TestFixture]
+public class GetAndReturnOptionalTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
@@ -40,11 +40,15 @@ public class GetAndReturnOptionalTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Container.GetAndReturnOptionalAsync(
-            new ObjectWithRequiredField { String = "string" }
+            new SeedExhaustive.Types.Object.ObjectWithRequiredField { String = "string" }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<ObjectWithRequiredField?>(mockResponse))
+            Is.EqualTo(
+                    SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithRequiredField?>(
+                        mockResponse
+                    )
+                )
                 .UsingDefaults()
         );
     }

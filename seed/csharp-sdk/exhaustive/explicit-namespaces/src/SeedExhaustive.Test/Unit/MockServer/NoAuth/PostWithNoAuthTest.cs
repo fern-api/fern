@@ -5,10 +5,10 @@ using SeedExhaustive.Test.Unit.MockServer;
 
 namespace SeedExhaustive.Test.Unit.MockServer.NoAuth;
 
-[TestFixture]
-public class PostWithNoAuthTest : BaseMockServerTest
+[NUnit.Framework.TestFixture]
+public class PostWithNoAuthTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
@@ -39,6 +39,9 @@ public class PostWithNoAuthTest : BaseMockServerTest
         var response = await Client.NoAuth.PostWithNoAuthAsync(
             new Dictionary<object, object?>() { { "key", "value" } }
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
+        Assert.That(
+            response,
+            Is.EqualTo(SeedExhaustive.Core.JsonUtils.Deserialize<bool>(mockResponse))
+        );
     }
 }

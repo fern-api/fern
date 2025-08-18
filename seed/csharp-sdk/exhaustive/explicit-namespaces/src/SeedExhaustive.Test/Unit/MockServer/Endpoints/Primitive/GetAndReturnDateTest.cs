@@ -5,10 +5,10 @@ using SeedExhaustive.Test.Unit.MockServer;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Primitive;
 
-[TestFixture]
-public class GetAndReturnDateTest : BaseMockServerTest
+[NUnit.Framework.TestFixture]
+public class GetAndReturnDateTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
@@ -37,6 +37,9 @@ public class GetAndReturnDateTest : BaseMockServerTest
         var response = await Client.Endpoints.Primitive.GetAndReturnDateAsync(
             new DateOnly(2023, 1, 15)
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<DateOnly>(mockResponse)));
+        Assert.That(
+            response,
+            Is.EqualTo(SeedExhaustive.Core.JsonUtils.Deserialize<DateOnly>(mockResponse))
+        );
     }
 }

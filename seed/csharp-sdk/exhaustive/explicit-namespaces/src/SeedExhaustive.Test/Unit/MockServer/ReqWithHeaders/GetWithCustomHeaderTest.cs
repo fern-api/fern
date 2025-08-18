@@ -1,12 +1,13 @@
 using NUnit.Framework;
+using SeedExhaustive.ReqWithHeaders;
 using SeedExhaustive.Test.Unit.MockServer;
 
 namespace SeedExhaustive.Test.Unit.MockServer.ReqWithHeaders;
 
-[TestFixture]
-public class GetWithCustomHeaderTest : BaseMockServerTest
+[NUnit.Framework.TestFixture]
+public class GetWithCustomHeaderTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         const string requestJson = """

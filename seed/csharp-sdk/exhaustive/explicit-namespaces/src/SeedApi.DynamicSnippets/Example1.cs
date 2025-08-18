@@ -7,19 +7,19 @@ namespace Usage;
 public class Example1
 {
     public async global::System.Threading.Tasks.Task Do() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedExhaustive.SeedExhaustiveClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new SeedExhaustive.ClientOptions{
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
-            new List<ObjectWithRequiredField>(){
-                new ObjectWithRequiredField{
+            new List<SeedExhaustive.Types.Object.ObjectWithRequiredField>(){
+                new SeedExhaustive.Types.Object.ObjectWithRequiredField{
                     String = "string"
                 },
-                new ObjectWithRequiredField{
+                new SeedExhaustive.Types.Object.ObjectWithRequiredField{
                     String = "string"
                 },
             }

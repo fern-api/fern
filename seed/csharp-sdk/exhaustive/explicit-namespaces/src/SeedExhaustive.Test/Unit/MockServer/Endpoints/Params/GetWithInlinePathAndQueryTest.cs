@@ -4,10 +4,10 @@ using SeedExhaustive.Test.Unit.MockServer;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Params;
 
-[TestFixture]
-public class GetWithInlinePathAndQueryTest : BaseMockServerTest
+[NUnit.Framework.TestFixture]
+public class GetWithInlinePathAndQueryTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         Server
@@ -22,7 +22,11 @@ public class GetWithInlinePathAndQueryTest : BaseMockServerTest
 
         Assert.DoesNotThrowAsync(async () =>
             await Client.Endpoints.Params.GetWithInlinePathAndQueryAsync(
-                new GetWithInlinePathAndQuery { Param = "param", Query = "query" }
+                new SeedExhaustive.Endpoints.Params.GetWithInlinePathAndQuery
+                {
+                    Param = "param",
+                    Query = "query",
+                }
             )
         );
     }

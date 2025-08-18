@@ -7,10 +7,11 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Object;
 
-[TestFixture]
-public class GetAndReturnNestedWithRequiredFieldAsListTest : BaseMockServerTest
+[NUnit.Framework.TestFixture]
+public class GetAndReturnNestedWithRequiredFieldAsListTest
+    : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
@@ -112,12 +113,12 @@ public class GetAndReturnNestedWithRequiredFieldAsListTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(
-            new List<NestedObjectWithRequiredField>()
+            new List<SeedExhaustive.Types.Object.NestedObjectWithRequiredField>()
             {
-                new NestedObjectWithRequiredField
+                new SeedExhaustive.Types.Object.NestedObjectWithRequiredField
                 {
                     String = "string",
-                    NestedObject = new ObjectWithOptionalField
+                    NestedObject = new SeedExhaustive.Types.Object.ObjectWithOptionalField
                     {
                         String = "string",
                         Integer = 1,
@@ -127,7 +128,7 @@ public class GetAndReturnNestedWithRequiredFieldAsListTest : BaseMockServerTest
                         Datetime = DateTime.Parse(
                             "2024-01-15T09:30:00.000Z",
                             null,
-                            DateTimeStyles.AdjustToUniversal
+                            System.Globalization.DateTimeStyles.AdjustToUniversal
                         ),
                         Date = new DateOnly(2023, 1, 15),
                         Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -138,10 +139,10 @@ public class GetAndReturnNestedWithRequiredFieldAsListTest : BaseMockServerTest
                         Bigint = "1000000",
                     },
                 },
-                new NestedObjectWithRequiredField
+                new SeedExhaustive.Types.Object.NestedObjectWithRequiredField
                 {
                     String = "string",
-                    NestedObject = new ObjectWithOptionalField
+                    NestedObject = new SeedExhaustive.Types.Object.ObjectWithOptionalField
                     {
                         String = "string",
                         Integer = 1,
@@ -151,7 +152,7 @@ public class GetAndReturnNestedWithRequiredFieldAsListTest : BaseMockServerTest
                         Datetime = DateTime.Parse(
                             "2024-01-15T09:30:00.000Z",
                             null,
-                            DateTimeStyles.AdjustToUniversal
+                            System.Globalization.DateTimeStyles.AdjustToUniversal
                         ),
                         Date = new DateOnly(2023, 1, 15),
                         Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -166,7 +167,11 @@ public class GetAndReturnNestedWithRequiredFieldAsListTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<NestedObjectWithRequiredField>(mockResponse))
+            Is.EqualTo(
+                    SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.NestedObjectWithRequiredField>(
+                        mockResponse
+                    )
+                )
                 .UsingDefaults()
         );
     }

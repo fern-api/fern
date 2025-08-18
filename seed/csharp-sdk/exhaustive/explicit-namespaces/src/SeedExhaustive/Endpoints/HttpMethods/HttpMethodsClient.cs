@@ -9,9 +9,9 @@ namespace SeedExhaustive.Endpoints.HttpMethods;
 
 public partial class HttpMethodsClient
 {
-    private RawClient _client;
+    private SeedExhaustive.Core.RawClient _client;
 
-    internal HttpMethodsClient(RawClient client)
+    internal HttpMethodsClient(SeedExhaustive.Core.RawClient client)
     {
         _client = client;
     }
@@ -21,19 +21,19 @@ public partial class HttpMethodsClient
     /// </code></example>
     public async Task<string> TestGetAsync(
         string id,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
+        SeedExhaustive.RequestOptions? options = null,
+        System.Threading.CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExhaustive.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
+                    Method = System.Net.Http.HttpMethod.Get,
                     Path = string.Format(
                         "/http-methods/{0}",
-                        ValueConvert.ToPathParameterString(id)
+                        SeedExhaustive.Core.ValueConvert.ToPathParameterString(id)
                     ),
                     Options = options,
                 },
@@ -45,17 +45,20 @@ public partial class HttpMethodsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                return SeedExhaustive.Core.JsonUtils.Deserialize<string>(responseBody)!;
             }
-            catch (JsonException e)
+            catch (System.Text.Json.JsonException e)
             {
-                throw new SeedExhaustiveException("Failed to deserialize response", e);
+                throw new SeedExhaustive.SeedExhaustiveException(
+                    "Failed to deserialize response",
+                    e
+                );
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException(
+            throw new SeedExhaustive.SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -64,20 +67,22 @@ public partial class HttpMethodsClient
     }
 
     /// <example><code>
-    /// await client.Endpoints.HttpMethods.TestPostAsync(new ObjectWithRequiredField { String = "string" });
+    /// await client.Endpoints.HttpMethods.TestPostAsync(
+    ///     new SeedExhaustive.Types.Object.ObjectWithRequiredField { String = "string" }
+    /// );
     /// </code></example>
-    public async Task<ObjectWithOptionalField> TestPostAsync(
-        ObjectWithRequiredField request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
+    public async Task<SeedExhaustive.Types.Object.ObjectWithOptionalField> TestPostAsync(
+        SeedExhaustive.Types.Object.ObjectWithRequiredField request,
+        SeedExhaustive.RequestOptions? options = null,
+        System.Threading.CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExhaustive.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
+                    Method = System.Net.Http.HttpMethod.Post,
                     Path = "/http-methods",
                     Body = request,
                     Options = options,
@@ -90,17 +95,22 @@ public partial class HttpMethodsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+                return SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithOptionalField>(
+                    responseBody
+                )!;
             }
-            catch (JsonException e)
+            catch (System.Text.Json.JsonException e)
             {
-                throw new SeedExhaustiveException("Failed to deserialize response", e);
+                throw new SeedExhaustive.SeedExhaustiveException(
+                    "Failed to deserialize response",
+                    e
+                );
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException(
+            throw new SeedExhaustive.SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -111,25 +121,25 @@ public partial class HttpMethodsClient
     /// <example><code>
     /// await client.Endpoints.HttpMethods.TestPutAsync(
     ///     "id",
-    ///     new ObjectWithRequiredField { String = "string" }
+    ///     new SeedExhaustive.Types.Object.ObjectWithRequiredField { String = "string" }
     /// );
     /// </code></example>
-    public async Task<ObjectWithOptionalField> TestPutAsync(
+    public async Task<SeedExhaustive.Types.Object.ObjectWithOptionalField> TestPutAsync(
         string id,
-        ObjectWithRequiredField request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
+        SeedExhaustive.Types.Object.ObjectWithRequiredField request,
+        SeedExhaustive.RequestOptions? options = null,
+        System.Threading.CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExhaustive.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Put,
+                    Method = System.Net.Http.HttpMethod.Put,
                     Path = string.Format(
                         "/http-methods/{0}",
-                        ValueConvert.ToPathParameterString(id)
+                        SeedExhaustive.Core.ValueConvert.ToPathParameterString(id)
                     ),
                     Body = request,
                     Options = options,
@@ -142,17 +152,22 @@ public partial class HttpMethodsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+                return SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithOptionalField>(
+                    responseBody
+                )!;
             }
-            catch (JsonException e)
+            catch (System.Text.Json.JsonException e)
             {
-                throw new SeedExhaustiveException("Failed to deserialize response", e);
+                throw new SeedExhaustive.SeedExhaustiveException(
+                    "Failed to deserialize response",
+                    e
+                );
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException(
+            throw new SeedExhaustive.SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -163,7 +178,7 @@ public partial class HttpMethodsClient
     /// <example><code>
     /// await client.Endpoints.HttpMethods.TestPatchAsync(
     ///     "id",
-    ///     new ObjectWithOptionalField
+    ///     new SeedExhaustive.Types.Object.ObjectWithOptionalField
     ///     {
     ///         String = "string",
     ///         Integer = 1,
@@ -181,22 +196,22 @@ public partial class HttpMethodsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<ObjectWithOptionalField> TestPatchAsync(
+    public async Task<SeedExhaustive.Types.Object.ObjectWithOptionalField> TestPatchAsync(
         string id,
-        ObjectWithOptionalField request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
+        SeedExhaustive.Types.Object.ObjectWithOptionalField request,
+        SeedExhaustive.RequestOptions? options = null,
+        System.Threading.CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExhaustive.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
                     Path = string.Format(
                         "/http-methods/{0}",
-                        ValueConvert.ToPathParameterString(id)
+                        SeedExhaustive.Core.ValueConvert.ToPathParameterString(id)
                     ),
                     Body = request,
                     Options = options,
@@ -209,17 +224,22 @@ public partial class HttpMethodsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+                return SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithOptionalField>(
+                    responseBody
+                )!;
             }
-            catch (JsonException e)
+            catch (System.Text.Json.JsonException e)
             {
-                throw new SeedExhaustiveException("Failed to deserialize response", e);
+                throw new SeedExhaustive.SeedExhaustiveException(
+                    "Failed to deserialize response",
+                    e
+                );
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException(
+            throw new SeedExhaustive.SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -232,19 +252,19 @@ public partial class HttpMethodsClient
     /// </code></example>
     public async Task<bool> TestDeleteAsync(
         string id,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
+        SeedExhaustive.RequestOptions? options = null,
+        System.Threading.CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExhaustive.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Delete,
+                    Method = System.Net.Http.HttpMethod.Delete,
                     Path = string.Format(
                         "/http-methods/{0}",
-                        ValueConvert.ToPathParameterString(id)
+                        SeedExhaustive.Core.ValueConvert.ToPathParameterString(id)
                     ),
                     Options = options,
                 },
@@ -256,17 +276,20 @@ public partial class HttpMethodsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<bool>(responseBody)!;
+                return SeedExhaustive.Core.JsonUtils.Deserialize<bool>(responseBody)!;
             }
-            catch (JsonException e)
+            catch (System.Text.Json.JsonException e)
             {
-                throw new SeedExhaustiveException("Failed to deserialize response", e);
+                throw new SeedExhaustive.SeedExhaustiveException(
+                    "Failed to deserialize response",
+                    e
+                );
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException(
+            throw new SeedExhaustive.SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody

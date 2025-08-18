@@ -5,21 +5,22 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Types.Object;
 
-[Serializable]
-public record NestedObjectWithOptionalField : IJsonOnDeserialized
+[System.Serializable]
+public record NestedObjectWithOptionalField : System.Text.Json.Serialization.IJsonOnDeserialized
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
+    [System.Text.Json.Serialization.JsonExtensionData]
+    private readonly IDictionary<string, System.Text.Json.JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [JsonPropertyName("string")]
+    [System.Text.Json.Serialization.JsonPropertyName("string")]
     public string? String { get; set; }
 
-    [JsonPropertyName("NestedObject")]
-    public ObjectWithOptionalField? NestedObject { get; set; }
+    [System.Text.Json.Serialization.JsonPropertyName("NestedObject")]
+    public SeedExhaustive.Types.Object.ObjectWithOptionalField? NestedObject { get; set; }
 
-    [JsonIgnore]
-    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+    [System.Text.Json.Serialization.JsonIgnore]
+    public SeedExhaustive.ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } =
+        new();
 
     void IJsonOnDeserialized.OnDeserialized() =>
         AdditionalProperties.CopyFromExtensionData(_extensionData);
@@ -27,6 +28,6 @@ public record NestedObjectWithOptionalField : IJsonOnDeserialized
     /// <inheritdoc />
     public override string ToString()
     {
-        return JsonUtils.Serialize(this);
+        return SeedExhaustive.Core.JsonUtils.Serialize(this);
     }
 }

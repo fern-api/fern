@@ -8,10 +8,11 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Test.Unit.MockServer.InlinedRequests;
 
-[TestFixture]
-public class PostWithObjectBodyandResponseTest : BaseMockServerTest
+[NUnit.Framework.TestFixture]
+public class PostWithObjectBodyandResponseTest
+    : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
@@ -84,11 +85,11 @@ public class PostWithObjectBodyandResponseTest : BaseMockServerTest
             );
 
         var response = await Client.InlinedRequests.PostWithObjectBodyandResponseAsync(
-            new PostWithObjectBody
+            new SeedExhaustive.InlinedRequests.PostWithObjectBody
             {
                 String = "string",
                 Integer = 1,
-                NestedObject = new ObjectWithOptionalField
+                NestedObject = new SeedExhaustive.Types.Object.ObjectWithOptionalField
                 {
                     String = "string",
                     Integer = 1,
@@ -98,7 +99,7 @@ public class PostWithObjectBodyandResponseTest : BaseMockServerTest
                     Datetime = DateTime.Parse(
                         "2024-01-15T09:30:00.000Z",
                         null,
-                        DateTimeStyles.AdjustToUniversal
+                        System.Globalization.DateTimeStyles.AdjustToUniversal
                     ),
                     Date = new DateOnly(2023, 1, 15),
                     Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -112,7 +113,12 @@ public class PostWithObjectBodyandResponseTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
+            Is.EqualTo(
+                    SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithOptionalField>(
+                        mockResponse
+                    )
+                )
+                .UsingDefaults()
         );
     }
 }

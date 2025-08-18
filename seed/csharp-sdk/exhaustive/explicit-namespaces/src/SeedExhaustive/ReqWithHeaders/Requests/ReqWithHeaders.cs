@@ -3,21 +3,21 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.ReqWithHeaders;
 
-[Serializable]
+[System.Serializable]
 public record ReqWithHeaders
 {
-    [JsonIgnore]
+    [System.Text.Json.Serialization.JsonIgnore]
     public required string XTestServiceHeader { get; set; }
 
-    [JsonIgnore]
+    [System.Text.Json.Serialization.JsonIgnore]
     public required string XTestEndpointHeader { get; set; }
 
-    [JsonIgnore]
+    [System.Text.Json.Serialization.JsonIgnore]
     public required string Body { get; set; }
 
     /// <inheritdoc />
     public override string ToString()
     {
-        return JsonUtils.Serialize(this);
+        return SeedExhaustive.Core.JsonUtils.Serialize(this);
     }
 }

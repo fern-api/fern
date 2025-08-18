@@ -5,10 +5,10 @@ using SeedExhaustive.Test.Unit.MockServer;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Primitive;
 
-[TestFixture]
-public class GetAndReturnUuidTest : BaseMockServerTest
+[NUnit.Framework.TestFixture]
+public class GetAndReturnUuidTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
@@ -37,6 +37,9 @@ public class GetAndReturnUuidTest : BaseMockServerTest
         var response = await Client.Endpoints.Primitive.GetAndReturnUuidAsync(
             "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
+        Assert.That(
+            response,
+            Is.EqualTo(SeedExhaustive.Core.JsonUtils.Deserialize<string>(mockResponse))
+        );
     }
 }

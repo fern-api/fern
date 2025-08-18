@@ -8,9 +8,9 @@ namespace SeedExhaustive.Endpoints.Urls;
 
 public partial class UrlsClient
 {
-    private RawClient _client;
+    private SeedExhaustive.Core.RawClient _client;
 
-    internal UrlsClient(RawClient client)
+    internal UrlsClient(SeedExhaustive.Core.RawClient client)
     {
         _client = client;
     }
@@ -19,16 +19,16 @@ public partial class UrlsClient
     /// await client.Endpoints.Urls.WithMixedCaseAsync();
     /// </code></example>
     public async Task<string> WithMixedCaseAsync(
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
+        SeedExhaustive.RequestOptions? options = null,
+        System.Threading.CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExhaustive.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
+                    Method = System.Net.Http.HttpMethod.Get,
                     Path = "/urls/MixedCase",
                     Options = options,
                 },
@@ -40,17 +40,20 @@ public partial class UrlsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                return SeedExhaustive.Core.JsonUtils.Deserialize<string>(responseBody)!;
             }
-            catch (JsonException e)
+            catch (System.Text.Json.JsonException e)
             {
-                throw new SeedExhaustiveException("Failed to deserialize response", e);
+                throw new SeedExhaustive.SeedExhaustiveException(
+                    "Failed to deserialize response",
+                    e
+                );
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException(
+            throw new SeedExhaustive.SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -62,16 +65,16 @@ public partial class UrlsClient
     /// await client.Endpoints.Urls.NoEndingSlashAsync();
     /// </code></example>
     public async Task<string> NoEndingSlashAsync(
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
+        SeedExhaustive.RequestOptions? options = null,
+        System.Threading.CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExhaustive.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
+                    Method = System.Net.Http.HttpMethod.Get,
                     Path = "/urls/no-ending-slash",
                     Options = options,
                 },
@@ -83,17 +86,20 @@ public partial class UrlsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                return SeedExhaustive.Core.JsonUtils.Deserialize<string>(responseBody)!;
             }
-            catch (JsonException e)
+            catch (System.Text.Json.JsonException e)
             {
-                throw new SeedExhaustiveException("Failed to deserialize response", e);
+                throw new SeedExhaustive.SeedExhaustiveException(
+                    "Failed to deserialize response",
+                    e
+                );
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException(
+            throw new SeedExhaustive.SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -105,16 +111,16 @@ public partial class UrlsClient
     /// await client.Endpoints.Urls.WithEndingSlashAsync();
     /// </code></example>
     public async Task<string> WithEndingSlashAsync(
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
+        SeedExhaustive.RequestOptions? options = null,
+        System.Threading.CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExhaustive.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
+                    Method = System.Net.Http.HttpMethod.Get,
                     Path = "/urls/with-ending-slash/",
                     Options = options,
                 },
@@ -126,17 +132,20 @@ public partial class UrlsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                return SeedExhaustive.Core.JsonUtils.Deserialize<string>(responseBody)!;
             }
-            catch (JsonException e)
+            catch (System.Text.Json.JsonException e)
             {
-                throw new SeedExhaustiveException("Failed to deserialize response", e);
+                throw new SeedExhaustive.SeedExhaustiveException(
+                    "Failed to deserialize response",
+                    e
+                );
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException(
+            throw new SeedExhaustive.SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -148,16 +157,16 @@ public partial class UrlsClient
     /// await client.Endpoints.Urls.WithUnderscoresAsync();
     /// </code></example>
     public async Task<string> WithUnderscoresAsync(
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
+        SeedExhaustive.RequestOptions? options = null,
+        System.Threading.CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExhaustive.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
+                    Method = System.Net.Http.HttpMethod.Get,
                     Path = "/urls/with_underscores",
                     Options = options,
                 },
@@ -169,17 +178,20 @@ public partial class UrlsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                return SeedExhaustive.Core.JsonUtils.Deserialize<string>(responseBody)!;
             }
-            catch (JsonException e)
+            catch (System.Text.Json.JsonException e)
             {
-                throw new SeedExhaustiveException("Failed to deserialize response", e);
+                throw new SeedExhaustive.SeedExhaustiveException(
+                    "Failed to deserialize response",
+                    e
+                );
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException(
+            throw new SeedExhaustive.SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody

@@ -10,9 +10,9 @@ namespace SeedExhaustive.InlinedRequests;
 
 public partial class InlinedRequestsClient
 {
-    private RawClient _client;
+    private SeedExhaustive.Core.RawClient _client;
 
-    internal InlinedRequestsClient(RawClient client)
+    internal InlinedRequestsClient(SeedExhaustive.Core.RawClient client)
     {
         _client = client;
     }
@@ -22,11 +22,11 @@ public partial class InlinedRequestsClient
     /// </summary>
     /// <example><code>
     /// await client.InlinedRequests.PostWithObjectBodyandResponseAsync(
-    ///     new PostWithObjectBody
+    ///     new SeedExhaustive.InlinedRequests.PostWithObjectBody
     ///     {
     ///         String = "string",
     ///         Integer = 1,
-    ///         NestedObject = new ObjectWithOptionalField
+    ///         NestedObject = new SeedExhaustive.Types.Object.ObjectWithOptionalField
     ///         {
     ///             String = "string",
     ///             Integer = 1,
@@ -45,18 +45,18 @@ public partial class InlinedRequestsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<ObjectWithOptionalField> PostWithObjectBodyandResponseAsync(
-        PostWithObjectBody request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
+    public async Task<SeedExhaustive.Types.Object.ObjectWithOptionalField> PostWithObjectBodyandResponseAsync(
+        SeedExhaustive.InlinedRequests.PostWithObjectBody request,
+        SeedExhaustive.RequestOptions? options = null,
+        System.Threading.CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExhaustive.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
+                    Method = System.Net.Http.HttpMethod.Post,
                     Path = "/req-bodies/object",
                     Body = request,
                     Options = options,
@@ -69,11 +69,16 @@ public partial class InlinedRequestsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+                return SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Object.ObjectWithOptionalField>(
+                    responseBody
+                )!;
             }
-            catch (JsonException e)
+            catch (System.Text.Json.JsonException e)
             {
-                throw new SeedExhaustiveException("Failed to deserialize response", e);
+                throw new SeedExhaustive.SeedExhaustiveException(
+                    "Failed to deserialize response",
+                    e
+                );
             }
         }
 
@@ -84,16 +89,18 @@ public partial class InlinedRequestsClient
                 switch (response.StatusCode)
                 {
                     case 400:
-                        throw new BadRequestBody(
-                            JsonUtils.Deserialize<BadObjectRequestInfo>(responseBody)
+                        throw new SeedExhaustive.GeneralErrors.BadRequestBody(
+                            SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.GeneralErrors.BadObjectRequestInfo>(
+                                responseBody
+                            )
                         );
                 }
             }
-            catch (JsonException)
+            catch (System.Text.Json.JsonException)
             {
                 // unable to map error response, throwing generic error
             }
-            throw new SeedExhaustiveApiException(
+            throw new SeedExhaustive.SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody

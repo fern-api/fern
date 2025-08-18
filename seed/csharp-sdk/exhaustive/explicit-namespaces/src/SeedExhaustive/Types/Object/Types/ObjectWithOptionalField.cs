@@ -5,57 +5,58 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Types.Object;
 
-[Serializable]
-public record ObjectWithOptionalField : IJsonOnDeserialized
+[System.Serializable]
+public record ObjectWithOptionalField : System.Text.Json.Serialization.IJsonOnDeserialized
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
+    [System.Text.Json.Serialization.JsonExtensionData]
+    private readonly IDictionary<string, System.Text.Json.JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
     /// <summary>
     /// This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
     /// </summary>
-    [JsonPropertyName("string")]
+    [System.Text.Json.Serialization.JsonPropertyName("string")]
     public string? String { get; set; }
 
-    [JsonPropertyName("integer")]
+    [System.Text.Json.Serialization.JsonPropertyName("integer")]
     public int? Integer { get; set; }
 
-    [JsonPropertyName("long")]
+    [System.Text.Json.Serialization.JsonPropertyName("long")]
     public long? Long { get; set; }
 
-    [JsonPropertyName("double")]
+    [System.Text.Json.Serialization.JsonPropertyName("double")]
     public double? Double { get; set; }
 
-    [JsonPropertyName("bool")]
+    [System.Text.Json.Serialization.JsonPropertyName("bool")]
     public bool? Bool { get; set; }
 
-    [JsonPropertyName("datetime")]
+    [System.Text.Json.Serialization.JsonPropertyName("datetime")]
     public DateTime? Datetime { get; set; }
 
-    [JsonPropertyName("date")]
+    [System.Text.Json.Serialization.JsonPropertyName("date")]
     public DateOnly? Date { get; set; }
 
-    [JsonPropertyName("uuid")]
+    [System.Text.Json.Serialization.JsonPropertyName("uuid")]
     public string? Uuid { get; set; }
 
-    [JsonPropertyName("base64")]
+    [System.Text.Json.Serialization.JsonPropertyName("base64")]
     public string? Base64 { get; set; }
 
-    [JsonPropertyName("list")]
+    [System.Text.Json.Serialization.JsonPropertyName("list")]
     public IEnumerable<string>? List { get; set; }
 
-    [JsonPropertyName("set")]
+    [System.Text.Json.Serialization.JsonPropertyName("set")]
     public HashSet<string>? Set { get; set; }
 
-    [JsonPropertyName("map")]
+    [System.Text.Json.Serialization.JsonPropertyName("map")]
     public Dictionary<int, string>? Map { get; set; }
 
-    [JsonPropertyName("bigint")]
+    [System.Text.Json.Serialization.JsonPropertyName("bigint")]
     public string? Bigint { get; set; }
 
-    [JsonIgnore]
-    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+    [System.Text.Json.Serialization.JsonIgnore]
+    public SeedExhaustive.ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } =
+        new();
 
     void IJsonOnDeserialized.OnDeserialized() =>
         AdditionalProperties.CopyFromExtensionData(_extensionData);
@@ -63,6 +64,6 @@ public record ObjectWithOptionalField : IJsonOnDeserialized
     /// <inheritdoc />
     public override string ToString()
     {
-        return JsonUtils.Serialize(this);
+        return SeedExhaustive.Core.JsonUtils.Serialize(this);
     }
 }

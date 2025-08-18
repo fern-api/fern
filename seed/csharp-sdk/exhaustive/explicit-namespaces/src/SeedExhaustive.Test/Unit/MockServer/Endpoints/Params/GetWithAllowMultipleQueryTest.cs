@@ -4,10 +4,10 @@ using SeedExhaustive.Test.Unit.MockServer;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Params;
 
-[TestFixture]
-public class GetWithAllowMultipleQueryTest : BaseMockServerTest
+[NUnit.Framework.TestFixture]
+public class GetWithAllowMultipleQueryTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         Server
@@ -23,7 +23,11 @@ public class GetWithAllowMultipleQueryTest : BaseMockServerTest
 
         Assert.DoesNotThrowAsync(async () =>
             await Client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
-                new GetWithMultipleQuery { Query = ["query"], Number = [1] }
+                new SeedExhaustive.Endpoints.Params.GetWithMultipleQuery
+                {
+                    Query = ["query"],
+                    Number = [1],
+                }
             )
         );
     }

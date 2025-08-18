@@ -5,18 +5,19 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Types.Object;
 
-[Serializable]
-public record DoubleOptional : IJsonOnDeserialized
+[System.Serializable]
+public record DoubleOptional : System.Text.Json.Serialization.IJsonOnDeserialized
 {
-    [JsonExtensionData]
-    private readonly IDictionary<string, JsonElement> _extensionData =
+    [System.Text.Json.Serialization.JsonExtensionData]
+    private readonly IDictionary<string, System.Text.Json.JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [JsonPropertyName("optionalAlias")]
+    [System.Text.Json.Serialization.JsonPropertyName("optionalAlias")]
     public string? OptionalAlias { get; set; }
 
-    [JsonIgnore]
-    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+    [System.Text.Json.Serialization.JsonIgnore]
+    public SeedExhaustive.ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } =
+        new();
 
     void IJsonOnDeserialized.OnDeserialized() =>
         AdditionalProperties.CopyFromExtensionData(_extensionData);
@@ -24,6 +25,6 @@ public record DoubleOptional : IJsonOnDeserialized
     /// <inheritdoc />
     public override string ToString()
     {
-        return JsonUtils.Serialize(this);
+        return SeedExhaustive.Core.JsonUtils.Serialize(this);
     }
 }

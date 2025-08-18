@@ -5,10 +5,10 @@ using SeedExhaustive.Test.Unit.MockServer;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Urls;
 
-[TestFixture]
-public class NoEndingSlashTest : BaseMockServerTest
+[NUnit.Framework.TestFixture]
+public class NoEndingSlashTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
@@ -30,6 +30,9 @@ public class NoEndingSlashTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Urls.NoEndingSlashAsync();
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
+        Assert.That(
+            response,
+            Is.EqualTo(SeedExhaustive.Core.JsonUtils.Deserialize<string>(mockResponse))
+        );
     }
 }

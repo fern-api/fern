@@ -19,7 +19,7 @@ internal interface IRequestOptions
     /// <summary>
     /// The http client used to make requests.
     /// </summary>
-    public HttpClient? HttpClient { get;
+    public System.Net.Http.HttpClient? HttpClient { get;
 #if NET5_0_OR_GREATER
         init;
 #else
@@ -30,13 +30,16 @@ internal interface IRequestOptions
     /// <summary>
     /// The http headers sent with the request.
     /// </summary>
-    internal Headers Headers { get; init; }
+    internal SeedExhaustive.Core.Headers Headers { get; init; }
 
     /// <summary>
     /// Additional headers to be sent with the request.
     /// Headers previously set with matching keys will be overwritten.
     /// </summary>
-    public IEnumerable<KeyValuePair<string, string?>> AdditionalHeaders { get;
+    public System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<
+        string,
+        string?
+    >> AdditionalHeaders { get;
 #if NET5_0_OR_GREATER
         init;
 #else
@@ -58,7 +61,7 @@ internal interface IRequestOptions
     /// <summary>
     /// The timeout for the request.
     /// </summary>
-    public TimeSpan? Timeout { get;
+    public System.TimeSpan? Timeout { get;
 #if NET5_0_OR_GREATER
         init;
 #else
@@ -69,7 +72,10 @@ internal interface IRequestOptions
     /// <summary>
     /// Additional query parameters sent with the request.
     /// </summary>
-    public IEnumerable<KeyValuePair<string, string>> AdditionalQueryParameters { get;
+    public IEnumerable<System.Collections.Generic.KeyValuePair<
+        string,
+        string
+    >> AdditionalQueryParameters { get;
 #if NET5_0_OR_GREATER
         init;
 #else

@@ -3,17 +3,19 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Types.Enum;
 
-[JsonConverter(typeof(StringEnumSerializer<WeatherReport>))]
-[Serializable]
-public readonly record struct WeatherReport : IStringEnum
+[System.Text.Json.Serialization.JsonConverter(
+    typeof(SeedExhaustive.Core.StringEnumSerializer<SeedExhaustive.Types.Enum.WeatherReport>)
+)]
+[System.Serializable]
+public readonly record struct WeatherReport : SeedExhaustive.Core.IStringEnum
 {
-    public static readonly WeatherReport Sunny = new(Values.Sunny);
+    public static readonly SeedExhaustive.Types.Enum.WeatherReport Sunny = new(Values.Sunny);
 
-    public static readonly WeatherReport Cloudy = new(Values.Cloudy);
+    public static readonly SeedExhaustive.Types.Enum.WeatherReport Cloudy = new(Values.Cloudy);
 
-    public static readonly WeatherReport Raining = new(Values.Raining);
+    public static readonly SeedExhaustive.Types.Enum.WeatherReport Raining = new(Values.Raining);
 
-    public static readonly WeatherReport Snowing = new(Values.Snowing);
+    public static readonly SeedExhaustive.Types.Enum.WeatherReport Snowing = new(Values.Snowing);
 
     public WeatherReport(string value)
     {
@@ -28,9 +30,9 @@ public readonly record struct WeatherReport : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static WeatherReport FromCustom(string value)
+    public static SeedExhaustive.Types.Enum.WeatherReport FromCustom(string value)
     {
-        return new WeatherReport(value);
+        return new SeedExhaustive.Types.Enum.WeatherReport(value);
     }
 
     public bool Equals(string? other)
@@ -46,20 +48,22 @@ public readonly record struct WeatherReport : IStringEnum
         return Value;
     }
 
-    public static bool operator ==(WeatherReport value1, string value2) =>
+    public static bool operator ==(SeedExhaustive.Types.Enum.WeatherReport value1, string value2) =>
         value1.Value.Equals(value2);
 
-    public static bool operator !=(WeatherReport value1, string value2) =>
+    public static bool operator !=(SeedExhaustive.Types.Enum.WeatherReport value1, string value2) =>
         !value1.Value.Equals(value2);
 
-    public static explicit operator string(WeatherReport value) => value.Value;
+    public static explicit operator string(SeedExhaustive.Types.Enum.WeatherReport value) =>
+        value.Value;
 
-    public static explicit operator WeatherReport(string value) => new(value);
+    public static explicit operator SeedExhaustive.Types.Enum.WeatherReport(string value) =>
+        new(value);
 
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
-    [Serializable]
+    [System.Serializable]
     public static class Values
     {
         public const string Sunny = "SUNNY";

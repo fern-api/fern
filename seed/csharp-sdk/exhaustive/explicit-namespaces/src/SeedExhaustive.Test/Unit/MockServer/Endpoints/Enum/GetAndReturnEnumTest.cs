@@ -6,10 +6,10 @@ using SeedExhaustive.Types.Enum;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Enum;
 
-[TestFixture]
-public class GetAndReturnEnumTest : BaseMockServerTest
+[NUnit.Framework.TestFixture]
+public class GetAndReturnEnumTest : SeedExhaustive.Test.Unit.MockServer.BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
@@ -35,10 +35,17 @@ public class GetAndReturnEnumTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny);
+        var response = await Client.Endpoints.Enum.GetAndReturnEnumAsync(
+            SeedExhaustive.Types.Enum.WeatherReport.Sunny
+        );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<WeatherReport>(mockResponse)).UsingDefaults()
+            Is.EqualTo(
+                    SeedExhaustive.Core.JsonUtils.Deserialize<SeedExhaustive.Types.Enum.WeatherReport>(
+                        mockResponse
+                    )
+                )
+                .UsingDefaults()
         );
     }
 }

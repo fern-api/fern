@@ -4,21 +4,21 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.InlinedRequests;
 
-[Serializable]
+[System.Serializable]
 public record PostWithObjectBody
 {
-    [JsonPropertyName("string")]
+    [System.Text.Json.Serialization.JsonPropertyName("string")]
     public required string String { get; set; }
 
-    [JsonPropertyName("integer")]
+    [System.Text.Json.Serialization.JsonPropertyName("integer")]
     public required int Integer { get; set; }
 
-    [JsonPropertyName("NestedObject")]
-    public required ObjectWithOptionalField NestedObject { get; set; }
+    [System.Text.Json.Serialization.JsonPropertyName("NestedObject")]
+    public required SeedExhaustive.Types.Object.ObjectWithOptionalField NestedObject { get; set; }
 
     /// <inheritdoc />
     public override string ToString()
     {
-        return JsonUtils.Serialize(this);
+        return SeedExhaustive.Core.JsonUtils.Serialize(this);
     }
 }
