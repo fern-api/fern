@@ -5,7 +5,7 @@ module Seed
     module Put
       module Types
         module ErrorCode
-          extends Seed::Internal::Types::Enum
+          extend Seed::Internal::Types::Enum
           INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR"
           UNAUTHORIZED = "UNAUTHORIZED"
           FORBIDDEN = "FORBIDDEN"

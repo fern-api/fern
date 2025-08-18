@@ -28,7 +28,6 @@ require_relative 'seed/internal/types/unknown'
 
 # API Types
 require_relative 'seed/imdb/types/movie'
-require_relative 'seed/imdb/types/movie_id'
 require_relative 'seed/imdb/types/create_movie_request'
 
 # Client Types
