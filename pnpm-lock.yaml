@@ -2204,6 +2204,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../../packages/cli/logger
       '@fern-api/swift-base':
         specifier: workspace:*
         version: link:../base
@@ -2216,24 +2219,21 @@ importers:
       '@fern-api/test-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/test-utils
+      '@fern-fern/generator-cli-sdk':
+        specifier: 0.0.33
+        version: 0.0.33
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: 59.0.0
         version: 59.0.0
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
       tsup:
         specifier: ^8.5.0
         version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
