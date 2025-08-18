@@ -32,6 +32,7 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
         const properties = this.objectDeclaration.properties || [];
 
         const statements = generateFields({
+            typeDeclaration: this.typeDeclaration,
             properties,
             context: this.context
         });
@@ -55,7 +56,7 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
                 );
             }),
             directory: this.getFilepath(),
-            filename: `${this.typeDeclaration.name.name.snakeCase.safeName}.rb`,
+            filename: this.context.getFileNameForTypeId(this.typeDeclaration.name.typeId),
             customConfig: this.context.customConfig
         });
     }

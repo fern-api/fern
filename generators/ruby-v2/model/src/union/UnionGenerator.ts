@@ -70,7 +70,7 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
                 );
             }),
             directory: this.getFilepath(),
-            filename: this.getFilename(),
+            filename: this.context.getFileNameForTypeId(this.typeDeclaration.name.typeId),
             customConfig: this.context.customConfig
         });
     }
@@ -97,9 +97,5 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
 
     protected getFilepath(): RelativeFilePath {
         return this.context.getLocationForTypeId(this.typeDeclaration.name.typeId);
-    }
-
-    private getFilename(): string {
-        return `${this.typeDeclaration.name.name.snakeCase.safeName}.rb`;
     }
 }
