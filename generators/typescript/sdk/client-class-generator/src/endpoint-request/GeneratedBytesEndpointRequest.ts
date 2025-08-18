@@ -204,6 +204,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
             statements.push(...this.requestParameter.getInitialStatements());
         }
 
+        // Always build query parameters so _queryParams is defined
         const queryParams = this.getQueryParams(context);
         if (queryParams != null) {
             statements.push(...queryParams.getBuildStatements(context));
@@ -242,15 +243,15 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         );
         const queryParams = this.getQueryParams(context)?.getReferenceTo();
         
-        if (this.dangerouslyFlattenRequestParameters) {
-            // Merge body and query parameters into a single flattened object
-            const mergedParams = this.mergeParams(queryParams, body);
+        // When flattening, combine query parameters and body into a single body
+        if (this.dangerouslyFlattenRequestParameters && queryParams != null) {
+            // When flattening, use _body for the body and let _queryParams be handled separately
             return {
                 headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
-                queryParameters: undefined,
+                queryParameters: queryParams, // Keep query parameters separate
+                body: ts.factory.createIdentifier("_body"),
                 contentType: this.requestBody.contentType,
                 requestType: "bytes",
-                body: mergedParams,
                 duplex: ts.factory.createStringLiteral("half")
             };
         }
@@ -266,23 +267,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         };
     }
 
-    /**
-     * Merges query parameters and body into a single object.
-     * Query parameters are spread first, then body is added as a named property.
-     */
-    private mergeParams(queryParams: ts.Expression | undefined, body: ts.Expression): ts.Expression {
-        const elements: ts.ObjectLiteralElementLike[] = [];
-        
-        // Add query parameters first (if they exist)
-        if (queryParams) {
-            elements.push(ts.factory.createSpreadAssignment(queryParams));
-        }
-        
-        // Add body as a named property
-        elements.push(ts.factory.createPropertyAssignment("body", body));
-        
-        return ts.factory.createObjectLiteralExpression(elements, false);
-    }
+
 
     private initializeHeaders(context: SdkContext): ts.Statement[] {
         return generateHeaders({

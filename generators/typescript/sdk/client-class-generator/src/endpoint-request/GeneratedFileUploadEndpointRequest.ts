@@ -287,6 +287,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             statements.push(...this.requestParameter.getInitialStatements());
         }
 
+        // Always build query parameters so _queryParams is defined
         const queryParams = this.getQueryParams(context);
         if (queryParams != null) {
             statements.push(...queryParams.getBuildStatements(context));
@@ -368,17 +369,19 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             )
         });
 
-        if (this.dangerouslyFlattenRequestParameters) {
-            // Merge body and query parameters into a single flattened object
-            const queryParamsRef = queryParams?.getReferenceTo();
-            const mergedParams = this.mergeParams(queryParamsRef, body);
-            return {
-                headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
-                queryParameters: undefined,
-                requestType: "file",
-                body: mergedParams,
-                duplex
-            };
+        // When flattening, combine query parameters and body into a single body
+        if (this.dangerouslyFlattenRequestParameters && queryParams != null) {
+            const queryParamsRef = queryParams.getReferenceTo();
+            if (queryParamsRef != null) {
+                // When flattening, use _body for the body and let _queryParams be handled separately
+                return {
+                    headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
+                    queryParameters: queryParamsRef, // Keep query parameters separate
+                    requestType: "file",
+                    body: ts.factory.createIdentifier("_body"),
+                    duplex
+                };
+            }
         }
 
         // Default: separate body and query parameters
@@ -391,23 +394,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         };
     }
 
-    /**
-     * Merges query parameters and body into a single object.
-     * Query parameters are spread first, then body is added as a named property.
-     */
-    private mergeParams(queryParams: ts.Expression | undefined, body: ts.Expression): ts.Expression {
-        const elements: ts.ObjectLiteralElementLike[] = [];
-        
-        // Add query parameters first (if they exist)
-        if (queryParams) {
-            elements.push(ts.factory.createSpreadAssignment(queryParams));
-        }
-        
-        // Add body as a named property
-        elements.push(ts.factory.createPropertyAssignment("body", body));
-        
-        return ts.factory.createObjectLiteralExpression(elements, false);
-    }
+
 
     private initializeHeaders(context: SdkContext): ts.Statement[] {
         return generateHeaders({

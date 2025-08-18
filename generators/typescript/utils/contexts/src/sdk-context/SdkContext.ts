@@ -49,6 +49,7 @@ export interface SdkContext extends BaseContext {
     inlineFileProperties: boolean;
     omitUndefined: boolean;
     neverThrowErrors: boolean;
+    dangerouslyFlattenRequestParameters: boolean;
     importsManager: ImportsManager;
     exportsManager: ExportsManager;
     authProvider: AuthProviderContext;

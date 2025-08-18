@@ -376,7 +376,8 @@ export class SdkContextImpl implements SdkContext {
             inlineFileProperties,
             inlinePathParameters,
             enableInlineTypes,
-            formDataSupport
+            formDataSupport,
+            dangerouslyFlattenRequestParameters: this.dangerouslyFlattenRequestParameters
         });
         this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextImpl({
             importsManager,

@@ -49,24 +49,23 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         this.nonBodyKeyAliases = {};
 
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
+        
+        // Always extract query parameters and body for destructuring
         const nonBodyKeys = generatedRequestWrapper.getNonBodyKeysWithData(context);
-
-        if (nonBodyKeys.length === 0) {
+        
+        if (nonBodyKeys.length === 0 && this.endpoint.requestBody == null) {
             return [];
         }
 
-        const usedNames = new Set(variablesInScope);
-        const getNonConflictingName = (name: string) => {
-            while (usedNames.has(name)) {
-                name = `${name}_`;
-            }
-            usedNames.add(name);
-            return name;
-        };
-
-        const bindingElements: ts.BindingElement[] = nonBodyKeys.map((nonBodyKey) => {
+        const statements: ts.Statement[] = [];
+        
+        // Extract query parameters and body
+        const bindingElements: ts.BindingElement[] = [];
+        
+        // Add query parameters
+        for (const nonBodyKey of nonBodyKeys) {
             const defaultName = this.getDefaultVariableNameForNonBodyProperty(nonBodyKey);
-            const nonConflictingName = getNonConflictingName(defaultName);
+            const nonConflictingName = this.getNonConflictingName(defaultName, variablesInScope);
             this.nonBodyKeyAliases[defaultName] = nonConflictingName;
 
             const useDefaultValues = (context.config.customConfig as { useDefaultRequestParameterValues?: boolean })
@@ -84,16 +83,19 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                 }
             }
 
-            return ts.factory.createBindingElement(
-                undefined,
-                nonConflictingName !== nonBodyKey.propertyName
-                    ? ts.factory.createStringLiteral(nonBodyKey.propertyName)
-                    : undefined,
-                nonConflictingName,
-                defaultValue
+            bindingElements.push(
+                ts.factory.createBindingElement(
+                    undefined,
+                    nonConflictingName !== nonBodyKey.propertyName
+                        ? ts.factory.createStringLiteral(nonBodyKey.propertyName)
+                        : undefined,
+                    nonConflictingName,
+                    defaultValue
+                )
             );
-        });
-
+        }
+        
+        // Add body properties
         if (this.endpoint.requestBody != null) {
             bindingElements.push(
                 generatedRequestWrapper.areBodyPropertiesInlined()
@@ -109,29 +111,40 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                       )
             );
         }
-
-        return [
-            ts.factory.createVariableStatement(
-                undefined,
-                ts.factory.createVariableDeclarationList(
-                    [
-                        ts.factory.createVariableDeclaration(
-                            ts.factory.createObjectBindingPattern(bindingElements),
-                            undefined,
-                            undefined,
-                            ts.factory.createIdentifier(this.getRequestParameterName())
-                        )
-                    ],
-                    ts.NodeFlags.Const
+        
+        // Create destructuring statement
+        if (bindingElements.length > 0) {
+            statements.push(
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                ts.factory.createObjectBindingPattern(bindingElements),
+                                undefined,
+                                undefined,
+                                ts.factory.createIdentifier(this.getRequestParameterName())
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    )
                 )
-            )
-        ];
+            );
+        }
+        
+        return statements;
     }
 
     public getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined {
         if (this.endpoint.requestBody == null) {
             return undefined;
         }
+        
+        // When flattening, return _body since we're extracting it during destructuring
+        if (this.dangerouslyFlattenRequestParameters) {
+            return ts.factory.createIdentifier(RequestWrapperParameter.BODY_VARIABLE_NAME);
+        }
+        
         if (this.getGeneratedRequestWrapper(context).getNonBodyKeys(context).length > 0) {
             return ts.factory.createIdentifier(RequestWrapperParameter.BODY_VARIABLE_NAME);
         } else {
@@ -198,6 +211,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         if (queryParameter == null) {
             throw new Error("Query parameter does not exist: " + queryParameterKey);
         }
+        
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
         return ts.factory.createIdentifier(
             this.getAliasForNonBodyProperty(generatedRequestWrapper.getPropertyNameOfQueryParameter(queryParameter))
@@ -299,5 +313,15 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             });
         }
         return undefined;
+    }
+
+    private getNonConflictingName(name: string, variablesInScope: string[]): string {
+        const usedNames = new Set(variablesInScope);
+        let nonConflictingName = name;
+        while (usedNames.has(nonConflictingName)) {
+            nonConflictingName = `${nonConflictingName}_`;
+        }
+        usedNames.add(nonConflictingName);
+        return nonConflictingName;
     }
 }

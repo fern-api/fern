@@ -116,6 +116,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         context: SdkContext
     ): OptionalKind<ParameterDeclarationStructure & { docs?: string }>[] {
         const parameters: OptionalKind<ParameterDeclarationStructure & { docs?: string }>[] = [];
+        
+        // Add path parameters
         for (const pathParameter of getPathParametersForEndpointSignature({
             service: this.service,
             endpoint: this.endpoint,
@@ -130,9 +132,12 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 docs: pathParameter.docs
             });
         }
+
+        // Always use the combined request parameter for method signature
         if (this.requestParameter != null) {
             parameters.push(this.requestParameter.getParameterDeclaration(context));
         }
+        
         return parameters;
     }
 
@@ -151,6 +156,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     }): ts.Expression[] | undefined {
         const exampleParameters = [...example.servicePathParameters, ...example.endpointPathParameters];
         const result: ts.Expression[] = [];
+        
+        // Add path parameter examples
         for (const pathParameter of getPathParametersForEndpointSignature({
             service: this.service,
             endpoint: this.endpoint,
@@ -166,6 +173,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 result.push(generatedExample.build(context, opts));
             }
         }
+        
+        // Always use the combined request parameter example
         if (this.requestParameter != null) {
             const requestParameterExample = this.requestParameter.generateExample({ context, example, opts });
             if (
@@ -180,6 +189,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 return undefined;
             }
         }
+        
         return result;
     }
 
@@ -194,6 +204,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             );
         }
 
+        // Always build query parameters so _queryParams is defined
         statements.push(...this.getQueryParams(context).getBuildStatements(context));
 
         statements.push(...this.initializeHeaders(context));
@@ -207,16 +218,18 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         const body = this.getSerializedRequestBodyWithNullCheck(context);
         const queryParams = this.getQueryParams(context).getReferenceTo();
         
+        // When flattening, combine query parameters and body into a single body
         if (this.dangerouslyFlattenRequestParameters) {
-            // Merge body and query parameters into a single flattened object
-            const mergedParams = this.mergeParams(queryParams, body);
-            return {
-                headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
-                queryParameters: undefined,
-                body: mergedParams,
-                contentType: this.requestBody?.contentType ?? this.getFallbackContentType(),
-                requestType: this.getRequestType()
-            };
+            if (queryParams != null) {
+                // When flattening, use _body for the body and let _queryParams be handled separately
+                return {
+                    headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
+                    queryParameters: queryParams, // Keep query parameters separate
+                    body: ts.factory.createIdentifier("_body"),
+                    contentType: this.requestBody?.contentType ?? this.getFallbackContentType(),
+                    requestType: this.getRequestType()
+                };
+            }
         }
         
         // Default: separate body and query parameters
@@ -229,25 +242,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         };
     }
 
-    /**
-     * Merges query parameters and body into a single object.
-     * Query parameters are spread first, then body properties are spread.
-     */
-    private mergeParams(queryParams: ts.Expression | undefined, body: ts.Expression | undefined): ts.Expression {
-        const elements: ts.ObjectLiteralElementLike[] = [];
-        
-        // Add query parameters first (if they exist)
-        if (queryParams) {
-            elements.push(ts.factory.createSpreadAssignment(queryParams));
-        }
-        
-        // Add body properties (if they exist)
-        if (body) {
-            elements.push(ts.factory.createSpreadAssignment(body));
-        }
-        
-        return ts.factory.createObjectLiteralExpression(elements, false);
-    }
+
 
     private getFallbackContentType(): string | undefined {
         const requestBodyType = this.requestBody?.type ?? "undefined";
