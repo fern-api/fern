@@ -40,7 +40,7 @@ export class RubyTypeMapper {
             case "primitive":
                 return this.convertPrimitive(reference);
             case "unknown":
-                return ruby.Type.hash(ruby.Type.string(), ruby.Type.untyped());
+                return ruby.Type.hash(ruby.Type.string(), ruby.Type.object("Object"));
             default:
                 assertNever(reference);
         }
