@@ -4391,9 +4391,6 @@ importers:
       '@fern-api/casings-generator':
         specifier: workspace:*
         version: link:../../../commons/casings-generator
-      '@fern-api/cli-logger':
-        specifier: workspace:*
-        version: link:../../cli-logger
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../configuration
@@ -6588,9 +6585,6 @@ importers:
 
   packages/cli/mock:
     dependencies:
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../commons/core-utils
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../ir-sdk

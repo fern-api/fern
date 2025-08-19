@@ -35,7 +35,6 @@
   "dependencies": {
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/casings-generator": "workspace:*",
-    "@fern-api/cli-logger": "workspace:*",
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
