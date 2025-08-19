@@ -184,7 +184,7 @@ allowedFailures:
   - pagination:custom-pager-with-exception-handler
 
   # these tests are generating code with numbers that overflow the size of members they are meant
-  # to fill. 
+  # to fill.
   - exhaustive:explicit-namespaces
   - exhaustive:no-root-namespace-for-core-classes
   - exhaustive:no-generate-error-types
@@ -197,7 +197,7 @@ allowedFailures:
   - objects-with-imports
   - mixed-file-directory
 
-  # deserialization/?? issues for public readonly record struct 
+  # deserialization/?? issues for public readonly record struct
   - circular-references
   - circular-references-advanced
 

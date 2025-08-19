@@ -27,3 +27,7 @@ service:
       path: ""
       request: Task
       response: Task
+    emptyResponse:
+      method: POST
+      path: "/empty"
+      request: Task
