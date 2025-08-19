@@ -104,8 +104,9 @@ export class Method extends AstNode {
                 writer.writeNode(
                     new ClassReference({
                         name: "Task",
-                        namespace: "global::System.Threading.Tasks",
-                        fullyQualified: true
+                        namespace: "System.Threading.Tasks",
+                        fullyQualified: true,
+                        global: true
                     })
                 );
                 writer.write(" ");
