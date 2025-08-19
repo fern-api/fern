@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc7
+  createdAt: "2025-08-18"
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Update the Union type to not remove the discriminant from the value.
+  irVersion: 58
+
 - version: 1.0.0-rc6
   createdAt: "2025-08-18"
   changelogEntry:
