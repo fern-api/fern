@@ -130,9 +130,12 @@ export class SymbolRegistry {
     }
 
     /**
-     * Registers a unique symbol name for the root client class depending on availability.
+     * Registers a unique symbol name for the root client class.
+     * Tries preferred name first, then falls back to standard candidates.
      *
-     * @returns The unique root client symbol name
+     * @param apiNamePascalCase The API name in PascalCase
+     * @param preferredName Preferred name for the symbol
+     * @returns The registered unique root client symbol name
      */
     public registerRootClientSymbol(apiNamePascalCase: string, preferredName: string | undefined): string {
         const candidates: [string, ...string[]] = [
