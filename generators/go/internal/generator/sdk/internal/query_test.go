@@ -237,3 +237,103 @@ func TestQueryValues(t *testing.T) {
 		assert.Equal(t, "metadata%5Binner%5D=one&metadata%5Binner%5D=two&metadata%5Binner%5D=three", values.Encode())
 	})
 }
+
+func TestQueryValuesWithDefaults(t *testing.T) {
+	t.Run("apply defaults to zero values", func(t *testing.T) {
+		type example struct {
+			Name    string `json:"name" url:"name"`
+			Age     int    `json:"age" url:"age"`
+			Enabled bool   `json:"enabled" url:"enabled"`
+		}
+
+		defaults := map[string]interface{}{
+			"Name":    "default-name",
+			"Age":     25,
+			"Enabled": true,
+		}
+
+		values, err := QueryValuesWithDefaults(&example{}, defaults)
+		require.NoError(t, err)
+		assert.Equal(t, "age=25&enabled=true&name=default-name", values.Encode())
+	})
+
+	t.Run("preserve non-zero values over defaults", func(t *testing.T) {
+		type example struct {
+			Name    string `json:"name" url:"name"`
+			Age     int    `json:"age" url:"age"`
+			Enabled bool   `json:"enabled" url:"enabled"`
+		}
+
+		defaults := map[string]interface{}{
+			"Name":    "default-name",
+			"Age":     25,
+			"Enabled": true,
+		}
+
+		values, err := QueryValuesWithDefaults(&example{
+			Name: "actual-name",
+			Age:  30,
+			// Enabled remains false (zero value), should get default
+		}, defaults)
+		require.NoError(t, err)
+		assert.Equal(t, "age=30&enabled=true&name=actual-name", values.Encode())
+	})
+
+	t.Run("ignore defaults for fields not in struct", func(t *testing.T) {
+		type example struct {
+			Name string `json:"name" url:"name"`
+			Age  int    `json:"age" url:"age"`
+		}
+
+		defaults := map[string]interface{}{
+			"Name":        "default-name",
+			"Age":         25,
+			"NonExistent": "should-be-ignored",
+		}
+
+		values, err := QueryValuesWithDefaults(&example{}, defaults)
+		require.NoError(t, err)
+		assert.Equal(t, "age=25&name=default-name", values.Encode())
+	})
+
+	t.Run("type conversion for compatible defaults", func(t *testing.T) {
+		type example struct {
+			Count   int64   `json:"count" url:"count"`
+			Rate    float64 `json:"rate" url:"rate"`
+			Message string  `json:"message" url:"message"`
+		}
+
+		defaults := map[string]interface{}{
+			"Count":   int(100),     // int -> int64 conversion
+			"Rate":    float32(2.5), // float32 -> float64 conversion
+			"Message": "hello",      // string -> string (no conversion needed)
+		}
+
+		values, err := QueryValuesWithDefaults(&example{}, defaults)
+		require.NoError(t, err)
+		assert.Equal(t, "count=100&message=hello&rate=2.5", values.Encode())
+	})
+
+	t.Run("mixed with pointer fields and omitempty", func(t *testing.T) {
+		type example struct {
+			Required string  `json:"required" url:"required"`
+			Optional *string `json:"optional,omitempty" url:"optional,omitempty"`
+			Count    int     `json:"count,omitempty" url:"count,omitempty"`
+		}
+
+		defaultOptional := "default-optional"
+		defaults := map[string]interface{}{
+			"Required": "default-required",
+			"Optional": &defaultOptional, // pointer type
+			"Count":    42,
+		}
+
+		values, err := QueryValuesWithDefaults(&example{
+			Required: "custom-required", // should override default
+			// Optional is nil, should get default
+			// Count is 0, should get default
+		}, defaults)
+		require.NoError(t, err)
+		assert.Equal(t, "count=42&optional=default-optional&required=custom-required", values.Encode())
+	})
+}
