@@ -1,7 +1,7 @@
 using global::System.Threading.Tasks;
 using SeedExhaustive;
 using SeedExhaustive.Core;
-using SeedExhaustive.Endpoints;
+using SeedExhaustive.Types;
 
 namespace Usage;
 
@@ -15,10 +15,13 @@ public class Example45
             }
         );
 
-        await client.Endpoints.Put.AddAsync(
-            new PutRequest{
-                Id = "id"
-            }
+        await client.Endpoints.Union.GetAndReturnUnionAsync(
+            new Animal(
+                new Dog{
+                    Name = "name",
+                    LikesToWoof = true
+                }
+            )
         );
     }
 
