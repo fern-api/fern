@@ -56,7 +56,10 @@ export abstract class AbstractSwiftGeneratorContext<
      * finally subclient symbols last since they're unlikely to be used directly by end users.
      */
     private registerSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
-        project.symbolRegistry.registerRootClientSymbol(ir.apiName.pascalCase.unsafeName);
+        project.symbolRegistry.registerRootClientSymbol(
+            ir.apiName.pascalCase.unsafeName,
+            this.customConfig.clientClassName
+        );
         project.symbolRegistry.registerEnvironmentSymbol(ir.apiName.pascalCase.unsafeName);
         Object.entries(ir.types).forEach(([typeId, typeDeclaration]) => {
             project.symbolRegistry.registerSchemaTypeSymbol(typeId, typeDeclaration.name.name.pascalCase.unsafeName);

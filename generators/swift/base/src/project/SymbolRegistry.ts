@@ -130,18 +130,20 @@ export class SymbolRegistry {
     }
 
     /**
-     * Registers and generates a unique symbol name for the root client class.
-     * Tries candidate names in order: {API}Client, {API}Api, {API}ApiClient, {API}HttpClient.
+     * Registers a unique symbol name for the root client class depending on availability.
      *
-     * @param apiNamePascalCase The API name in PascalCase
-     * @returns The generated unique root client symbol name
+     * @returns The unique root client symbol name
      */
-    public registerRootClientSymbol(apiNamePascalCase: string): string {
-        const symbolName = this.getAvailableSymbolName([
+    public registerRootClientSymbol(apiNamePascalCase: string, preferredName: string | undefined): string {
+        const candidates: [string, ...string[]] = [
             `${apiNamePascalCase}Client`,
             `${apiNamePascalCase}Api`,
             `${apiNamePascalCase}ApiClient`
-        ]);
+        ];
+        if (typeof preferredName === "string") {
+            candidates.unshift(preferredName);
+        }
+        const symbolName = this.getAvailableSymbolName(candidates);
         this.rootClientSymbol = symbolName;
         this.symbolSet.add(symbolName);
         return symbolName;
