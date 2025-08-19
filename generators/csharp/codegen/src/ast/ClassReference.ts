@@ -16,6 +16,8 @@ export declare namespace ClassReference {
         generics?: (csharp.Type | csharp.TypeParameter)[];
         /* Whether or not the class reference should be fully-qualified */
         fullyQualified?: boolean;
+        /* force global:: qualifier */
+        global?: boolean;
     }
 }
 
@@ -26,9 +28,10 @@ export class ClassReference extends AstNode {
     public readonly enclosingType: ClassReference | undefined;
     public readonly generics: (csharp.Type | csharp.TypeParameter)[];
     public readonly fullyQualified: boolean;
+    public readonly global: boolean;
     private readonly namespaceSegments: string[];
 
-    constructor({ name, namespace, namespaceAlias, enclosingType, generics, fullyQualified }: ClassReference.Args) {
+    constructor({ name, namespace, namespaceAlias, enclosingType, generics, fullyQualified, global }: ClassReference.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
@@ -36,6 +39,7 @@ export class ClassReference extends AstNode {
         this.enclosingType = enclosingType;
         this.generics = generics ?? [];
         this.fullyQualified = fullyQualified ?? false;
+        this.global = global ?? false;
         this.namespaceSegments = namespace.split(".");
     }
 
@@ -56,15 +60,19 @@ export class ClassReference extends AstNode {
                 // explicitly express namespaces
                 writer.addReference(this);
                 if (this.enclosingType != null) {
-                    writer.write(`${this.enclosingType.namespace}.${this.enclosingType.name}.${this.name}`);
+                    writer.write(`global::${this.enclosingType.namespace}.${this.enclosingType.name}.${this.name}`);
                 } else {
-                    writer.write(`${this.namespace}.${this.name}`);
+                    writer.write(`global::${this.namespace}.${this.name}`);
                 }
             } else {
                 // use the original logic, relying on explictly declaring namespaces 'fully-qualified'
                 if (this.fullyQualified) {
                     writer.addReference(this);
-                    writer.write(`${this.namespace}.${this.name}`);
+                    if (this.enclosingType != null) {
+                        writer.write(`${this.global ? "global::" : ""}${this.enclosingType.namespace}.${this.enclosingType.name}.${this.name}`);
+                    } else {
+                        writer.write(`${this.global ? "global::" : ""}${this.namespace}.${this.name}`);
+                    }
                 } else if (this.qualifiedTypeNameRequired(writer, isAttribute)) {
                     const typeQualification = this.getTypeQualification({
                         classReferenceNamespace: this.namespace,

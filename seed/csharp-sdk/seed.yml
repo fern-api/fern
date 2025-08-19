@@ -166,6 +166,13 @@ fixtures:
     - customConfig:
         additional-properties: false
       outputFolder: no-additional-properties
+  csharp-namespace-collision:
+    #- customConfig: null
+    #  outputFolder: no-custom-config
+    - customConfig:
+        experimental-fully-qualified-namespaces: true
+        experimental-dotnet-format: true
+      outputFolder: fully-qualified-namespaces
 allowedFailures:
   - imdb:exported-client-class-name
   - literal

@@ -3,8 +3,18 @@
   changelogEntry:
     - type: fix
       summary: |
+        Ensure `experimental-fully-qualified-namespaces` to have 
+        'global::' prefix.
+        Removed unnecessary forced 'global::' prefix from 
+        `System.Threading.Tasks` usage.
+  createdAt: '2025-08-18'
+  irVersion: 58
+- version: 2.1.12
+  changelogEntry:
+    - type: fix
+      summary: |
         Add support for configuration 'experimental-fully-qualified-namespaces' to 
-        generate explicit types everywhere. 
+        generate fully qualified typenames and namespaces. 
         Add support for `experimental-dotnet-format` to have `dotnet format` reduce
         namespaces and namespace prefixes. (this can take a large amount of memory)
         This creates code that is much cleaner, and can easily support
