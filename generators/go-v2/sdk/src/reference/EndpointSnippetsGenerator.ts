@@ -176,7 +176,7 @@ export class EndpointSnippetsGenerator {
     }
 
     private extractMethodCall(fullSnippet: string): string {
-        // Extract just the method call from the full Java snippet
+        // Extract just the method call from the full Golang snippet
         // Look for the pattern: client.service().method(...);
 
         const lines = fullSnippet.split("\n");
