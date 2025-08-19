@@ -1,7 +1,7 @@
 import { validateDocsWorkspace } from "@fern-api/docs-validator";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
-import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 
 import { logViolations } from "./logViolations";
 

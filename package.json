@@ -33,7 +33,7 @@
     "check:biome": "biome check",
     "check": "biome check",
     "check:fix": "biome check --fix",
-    "depcheck": "turbo depcheck",
+    "depcheck": "turbo depcheck --continue=always",
     "codegen:local": "pnpm fern:local generate",
     "fern": "FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps ./packages/cli/cli/dist/prod/cli.cjs",
     "fern:local": "FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps ./packages/cli/cli/dist/prod/cli.cjs",

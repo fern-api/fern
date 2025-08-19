@@ -8,7 +8,6 @@ import { Field } from "./Field";
 import { Method } from "./Method";
 import { Reference } from "./Reference";
 import { StarImport } from "./StarImport";
-import { Type } from "./Type";
 
 interface UniqueReferenceValue {
     modulePath: ModulePath;

@@ -1,6 +1,5 @@
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { validateDocsWorkspace } from "@fern-api/docs-validator";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 
 import { CliContext } from "../../cli-context/CliContext";

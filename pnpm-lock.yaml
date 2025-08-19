@@ -1229,9 +1229,6 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
-      '@fern-api/logging-execa':
-        specifier: workspace:*
-        version: link:../../../packages/commons/logging-execa
       '@fern-api/python-ast':
         specifier: workspace:*
         version: link:../ast
@@ -4391,9 +4388,6 @@ importers:
       '@fern-api/casings-generator':
         specifier: workspace:*
         version: link:../../../commons/casings-generator
-      '@fern-api/cli-logger':
-        specifier: workspace:*
-        version: link:../../cli-logger
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../configuration
@@ -4427,9 +4421,6 @@ importers:
       openapi-types:
         specifier: ^12.1.3
         version: 12.1.3
-      yaml:
-        specifier: 2.3.3
-        version: 2.3.3
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -5236,9 +5227,6 @@ importers:
       micromark-extension-math:
         specifier: ^3.1.0
         version: 3.1.0
-      micromark-extension-mdx:
-        specifier: ^2.1.0
-        version: 2.1.0
       micromark-extension-mdxjs:
         specifier: ^3.0.0
         version: 3.0.0
@@ -5708,9 +5696,6 @@ importers:
       strip-ansi:
         specifier: ^7.1.0
         version: 7.1.0
-      terminal-link:
-        specifier: ^3.0.0
-        version: 3.0.0
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
@@ -6588,9 +6573,6 @@ importers:
 
   packages/cli/mock:
     dependencies:
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../commons/core-utils
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../ir-sdk
@@ -7138,9 +7120,6 @@ importers:
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
         version: link:../lazy-fern-workspace
-      '@fern-api/logger':
-        specifier: workspace:*
-        version: link:../../logger
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
@@ -12833,9 +12812,6 @@ packages:
 
   micromark-extension-mdx-md@2.0.0:
     resolution: {integrity: sha512-EpAiszsB3blw4Rpba7xTOUptcFeBFi+6PY8VnJ2hhimH+vCQDirWgsMpz7w1XcZE7LVrSAUGb9VJpG9ghlYvYQ==}
-
-  micromark-extension-mdx@2.1.0:
-    resolution: {integrity: sha512-lxyf9u2Lh3DufwUEDa/DnqNoGz5d3l6RIll1XyHaARQpy5sULXB05Cqh5BqHlVOj49n3LyXOpKG/kSczdkuMwg==}
 
   micromark-extension-mdxjs-esm@3.0.0:
     resolution: {integrity: sha512-DJFl4ZqkErRpq/dAPyeWp15tGrcrrJho1hKK5uBS70BCtfrIFg81sqcTVu3Ta+KD1Tk5vAtBNElWxtAa+m8K9A==}
@@ -20661,14 +20637,6 @@ snapshots:
 
   micromark-extension-mdx-md@2.0.0:
     dependencies:
-      micromark-util-types: 2.0.2
-
-  micromark-extension-mdx@2.1.0:
-    dependencies:
-      micromark-extension-mdx-expression: 3.0.1
-      micromark-extension-mdx-jsx: 3.0.2
-      micromark-extension-mdx-md: 2.0.0
-      micromark-util-combine-extensions: 2.0.1
       micromark-util-types: 2.0.2
 
   micromark-extension-mdxjs-esm@3.0.0:

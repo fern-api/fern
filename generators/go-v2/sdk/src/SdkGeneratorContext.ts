@@ -2,7 +2,7 @@ import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
-import { AbstractGoGeneratorContext, AsIsFiles, FileLocation, ModuleConfig } from "@fern-api/go-base";
+import { AbstractGoGeneratorContext, FileLocation } from "@fern-api/go-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
