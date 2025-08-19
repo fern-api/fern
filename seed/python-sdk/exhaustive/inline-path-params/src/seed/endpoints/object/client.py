@@ -89,6 +89,9 @@ class ObjectClient:
 
         Examples
         --------
+        import datetime
+        import uuid
+
         from seed import SeedExhaustive
 
         client = SeedExhaustive(
@@ -96,11 +99,25 @@ class ObjectClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.object.get_and_return_with_optional_field(
-            string="test",
-            integer=21991583578,
-            long_=9223372036854776000,
-            double=3.14,
+            string="string",
+            integer=1,
+            long_=1000000,
+            double=1.1,
             bool_=True,
+            datetime=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            date=datetime.date.fromisoformat(
+                "2023-01-15",
+            ),
+            uuid_=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            base_64="SGVsbG8gd29ybGQh",
+            list_=["list", "list"],
+            set_={"set"},
+            map_={1: "map"},
+            bigint=1000000,
         )
         """
         _response = self._raw_client.get_and_return_with_optional_field(
@@ -468,7 +485,6 @@ class ObjectClient:
         client.endpoints.object.test_integer_overflow_edge_cases(
             string="boundary-test",
             integer=2147483647,
-            long_=9223372036854776000,
             double=1.7976931348623157e308,
             bool_=True,
         )
@@ -565,6 +581,8 @@ class AsyncObjectClient:
         Examples
         --------
         import asyncio
+        import datetime
+        import uuid
 
         from seed import AsyncSeedExhaustive
 
@@ -576,11 +594,25 @@ class AsyncObjectClient:
 
         async def main() -> None:
             await client.endpoints.object.get_and_return_with_optional_field(
-                string="test",
-                integer=21991583578,
-                long_=9223372036854776000,
-                double=3.14,
+                string="string",
+                integer=1,
+                long_=1000000,
+                double=1.1,
                 bool_=True,
+                datetime=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                date=datetime.date.fromisoformat(
+                    "2023-01-15",
+                ),
+                uuid_=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+                base_64="SGVsbG8gd29ybGQh",
+                list_=["list", "list"],
+                set_={"set"},
+                map_={1: "map"},
+                bigint=1000000,
             )
 
 
@@ -995,7 +1027,6 @@ class AsyncObjectClient:
             await client.endpoints.object.test_integer_overflow_edge_cases(
                 string="boundary-test",
                 integer=2147483647,
-                long_=9223372036854776000,
                 double=1.7976931348623157e308,
                 bool_=True,
             )
