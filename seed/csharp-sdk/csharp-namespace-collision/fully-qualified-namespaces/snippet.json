@@ -1,0 +1,53 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_.createUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedSystem;\n\nvar client = new global::SeedSystem.SeedSystemClient();\nawait client.CreateUserAsync(\n    new global::SeedSystem.User\n    {\n        Id = \"id\",\n        Name = \"name\",\n        Email = \"email\",\n        Password = \"password\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_.createTask"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedSystem;\n\nvar client = new global::SeedSystem.SeedSystemClient();\nawait client.CreateTaskAsync(\n    new global::SeedSystem.Task\n    {\n        Id = \"id\",\n        Name = \"name\",\n        Email = \"email\",\n        Password = \"password\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_System.createUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedSystem.System;\nusing SeedSystem;\n\nvar client = new global::SeedSystem.SeedSystemClient();\nawait client.System.CreateUserAsync(\n    new global::SeedSystem.System.User\n    {\n        Line1 = \"line1\",\n        Line2 = \"line2\",\n        City = \"city\",\n        State = \"state\",\n        Zip = \"zip\",\n        Country = \"USA\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_System.createTask"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedSystem.System;\nusing SeedSystem;\n\nvar client = new global::SeedSystem.SeedSystemClient();\nawait client.System.CreateTaskAsync(\n    new global::SeedSystem.System.Task\n    {\n        Name = \"name\",\n        User = new global::SeedSystem.System.User\n        {\n            Line1 = \"line1\",\n            Line2 = \"line2\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = \"USA\",\n        },\n    }\n);\n"
+            }
+        }
+    ]
+}
