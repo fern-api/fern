@@ -4,7 +4,6 @@ import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
     context "context"
-    fern "github.com/exhaustive/fern"
 )
 
 func do() {
@@ -16,12 +15,7 @@ func do() {
             "<token>",
         ),
     )
-    client.ReqWithHeaders.GetWithCustomHeader(
+    client.Endpoints.Urls.WithEndingSlash(
         context.TODO(),
-        &fern.ReqWithHeaders{
-            XTestServiceHeader: "X-TEST-SERVICE-HEADER",
-            XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
-            Body: "string",
-        },
     )
 }

@@ -266,6 +266,17 @@
         },
         {
             "id": {
+                "path": "/object/test-integer-overflow-edge-cases",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.testIntegerOverflowEdgeCases"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/exhaustive/fern\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Object.TestIntegerOverflowEdgeCases(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithOptionalField{\n\t\tString: fern.String(\n\t\t\t\"boundary-test\",\n\t\t),\n\t\tInteger: fern.Int(\n\t\t\t2147483647,\n\t\t),\n\t\tDouble: fern.Float64(\n\t\t\t179769313486231570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,\n\t\t),\n\t\tBool: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/params",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithAllowMultipleQuery"

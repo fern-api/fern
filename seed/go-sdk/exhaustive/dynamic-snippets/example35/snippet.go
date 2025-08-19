@@ -4,7 +4,6 @@ import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
     context "context"
-    fern "github.com/exhaustive/fern"
 )
 
 func do() {
@@ -16,10 +15,8 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Primitive.GetAndReturnDate(
+    client.Endpoints.Primitive.GetAndReturnString(
         context.TODO(),
-        fern.MustParseDateTime(
-            "2023-01-15",
-        ),
+        "string",
     )
 }

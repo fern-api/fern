@@ -16,10 +16,12 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Primitive.GetAndReturnDatetime(
+    client.ReqWithHeaders.GetWithCustomHeader(
         context.TODO(),
-        fern.MustParseDateTime(
-            "2024-01-15T09:30:00Z",
-        ),
+        &fern.ReqWithHeaders{
+            XTestServiceHeader: "X-TEST-SERVICE-HEADER",
+            XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+            Body: "string",
+        },
     )
 }
