@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc9
+  createdAt: "2025-08-18"
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Union types extend the Model class.
+  irVersion: 58
+
 - version: 1.0.0-rc8
   createdAt: "2025-08-18"
   changelogEntry:
