@@ -13,10 +13,9 @@ $client = new SeedClient(
 );
 $client->endpoints->object->testIntegerOverflowEdgeCases(
     new ObjectWithOptionalField([
-        'string' => 'large-positive',
-        'integer' => 1000000000000,
-        'long' => 1000000000000,
-        'double' => 1000000000000,
-        'bool' => false,
+        'string' => 'large-negative',
+        'integer' => -1000000000000,
+        'double' => -1000000000000,
+        'bool' => true,
     ]),
 );
