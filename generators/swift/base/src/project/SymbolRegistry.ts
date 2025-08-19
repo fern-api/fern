@@ -159,12 +159,16 @@ export class SymbolRegistry {
      * @param apiNamePascalCase The API name in PascalCase
      * @returns The generated unique environment symbol name
      */
-    public registerEnvironmentSymbol(apiNamePascalCase: string): string {
-        const symbolName = this.getAvailableSymbolName([
+    public registerEnvironmentSymbol(apiNamePascalCase: string, preferredName: string | undefined): string {
+        const candidates: [string, ...string[]] = [
             `${apiNamePascalCase}Environment`,
             `${apiNamePascalCase}Environ`,
             `${apiNamePascalCase}Env`
-        ]);
+        ];
+        if (typeof preferredName === "string") {
+            candidates.unshift(preferredName);
+        }
+        const symbolName = this.getAvailableSymbolName(candidates);
         this.environmentSymbol = symbolName;
         this.symbolSet.add(symbolName);
         return symbolName;
