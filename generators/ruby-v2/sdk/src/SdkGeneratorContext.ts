@@ -143,8 +143,8 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
 
     public getReferenceToInternalJSONRequest(): ruby.ClassReference {
         return ruby.classReference({
-            name: "JSONRequest",
-            modules: [this.getRootModule().name, "Internal", "Http"]
+            name: "Request",
+            modules: [this.getRootModule().name, "Internal", "JSON"]
         });
     }
 

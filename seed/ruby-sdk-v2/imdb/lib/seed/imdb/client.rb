@@ -13,7 +13,7 @@ module Seed
       #
       # @return [String]
       def create_movie(request_options: {}, **params)
-        _request = Seed::Internal::Http::JSONRequest.new(
+        _request = Seed::Internal::JSON::Request.new(
           method: POST,
           path: "/movies/create-movie",
           body: Seed::Imdb::Types::CreateMovieRequest.new(params[:request]).to_h,
