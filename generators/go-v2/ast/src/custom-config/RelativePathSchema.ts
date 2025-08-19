@@ -30,7 +30,7 @@ export const relativePathSchema = z
     .refine(
         (pathStr) => {
             // check for invalid chars
-            const invalidChars = ["<", ">", ":", "\"", "|", "?", "*"];
+            const invalidChars = ["<", ">", ":", '"', "|", "?", "*"];
             for (const char of invalidChars) {
                 if (pathStr.includes(char)) {
                     return false;
