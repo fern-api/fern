@@ -150,6 +150,32 @@ client.customAuth().postWithCustomAuth(
 );
 ```
 
+### Custom Headers
+
+The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
+
+```java
+import com.seed.customAuth.SeedCustomAuthClient;
+import com.seed.customAuth.core.RequestOptions;
+
+// Client level
+SeedCustomAuthClient client = SeedCustomAuthClient
+    .builder()
+    .addHeader("X-Custom-Header", "custom-value")
+    .addHeader("X-Request-Id", "abc-123")
+    .build();
+;
+
+// Request level
+client.customAuth().postWithCustomAuth(
+    ...,
+    RequestOptions
+        .builder()
+        .addHeader("X-Request-Header", "request-value")
+        .build()
+);
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.
