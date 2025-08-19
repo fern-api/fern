@@ -117,10 +117,43 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         );
     }
 
+    public isUsingKnownIdentifier(name: string): boolean {
+        return [
+            "System",
+            "Task",
+            "Tasks",
+            "Threading",
+            "Linq",
+            "Net",
+            "Http",
+            "IO",
+            "Text",
+            "Json",
+            "Xml",
+            "Security",
+            "Collections",
+            "Data",
+            "Diagnostics",
+            "Globalization",
+            "Linq",
+            "Math",
+            "Reflection",
+            "Runtime",
+            "Security",
+            "Serialization",
+            "Threading",
+            "Xml"
+        ].includes(name);
+    }
+
     public getRootClientClassReference(): csharp.ClassReference {
+        const fullyQualified =
+            this.isUsingKnownIdentifier(this.getRootClientClassName()) ||
+            this.isUsingKnownIdentifier(this.getRootNamespace());
         return csharp.classReference({
             name: this.getRootClientClassName(),
-            namespace: this.getRootNamespace()
+            namespace: this.getRootNamespace(),
+            fullyQualified
         });
     }
 

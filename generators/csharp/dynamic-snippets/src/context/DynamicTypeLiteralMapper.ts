@@ -346,10 +346,14 @@ export class DynamicTypeLiteralMapper {
             parameters: object_.properties,
             values: this.context.getRecord(value) ?? {}
         });
+        const fullyQualified =
+            this.context.isUsingKnownIdentifier(this.context.getClassName(object_.declaration.name)) ||
+            this.context.isUsingKnownIdentifier(this.context.getNamespace(object_.declaration.fernFilepath));
         return csharp.TypeLiteral.class_({
             reference: csharp.classReference({
                 name: this.context.getClassName(object_.declaration.name),
-                namespace: this.context.getNamespace(object_.declaration.fernFilepath)
+                namespace: this.context.getNamespace(object_.declaration.fernFilepath),
+                fullyQualified
             }),
             fields: properties.map((property) => {
                 this.context.errors.scope(property.name.wireValue);
