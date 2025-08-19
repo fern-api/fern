@@ -50,8 +50,8 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
             ruby.method({
                 name: "initialize",
                 parameters: {
-                    positional: [
-                        ruby.parameters.positional({
+                    keyword: [
+                        ruby.parameters.keyword({
                             name: "client",
                             type: ruby.Type.class_(this.context.getRawClientClassReference())
                         })

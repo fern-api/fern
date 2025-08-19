@@ -14,8 +14,8 @@ public class Example36
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnStringAsync(
-            "string"
+        await client.Endpoints.Primitive.GetAndReturnIntAsync(
+            1
         );
     }
 

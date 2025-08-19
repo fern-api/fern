@@ -179,7 +179,7 @@ public record ContainerValue
             var value = discriminator switch
             {
                 "list" => json.GetProperty("value").Deserialize<IEnumerable<FieldValue>>(options)
-                    ?? throw new JsonException("Failed to deserialize IEnumerable<FieldValue>"),
+                ?? throw new JsonException("Failed to deserialize IEnumerable<FieldValue>"),
                 "optional" => json.GetProperty("value").Deserialize<FieldValue?>(options),
                 _ => json.Deserialize<object?>(options),
             };

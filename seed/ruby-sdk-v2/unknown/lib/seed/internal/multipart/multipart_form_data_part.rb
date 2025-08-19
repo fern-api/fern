@@ -2,7 +2,7 @@
 
 require "securerandom"
 
-module seed
+module Seed
   module Internal
     module Multipart
       # @api private

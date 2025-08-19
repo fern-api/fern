@@ -1,6 +1,6 @@
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { docsYml } from "@fern-api/configuration";
+import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { MediaType } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
@@ -15,8 +15,6 @@ import {
     DynamicIrUpload,
     SnippetsConfig
 } from "@fern-fern/fdr-cjs-sdk/api/resources/api/resources/v1/resources/register";
-
-import { generatorsYml } from "@fern-api/configuration";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
@@ -24,8 +22,8 @@ import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
 import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
-import { measureImageSizes } from "./measureImageSizes";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
+import { measureImageSizes } from "./measureImageSizes";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;

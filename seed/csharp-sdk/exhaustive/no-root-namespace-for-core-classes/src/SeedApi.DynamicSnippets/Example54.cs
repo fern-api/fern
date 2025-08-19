@@ -14,7 +14,13 @@ public class Example54
             }
         );
 
-        await client.NoReqBody.PostWithNoRequestBodyAsync();
+        await client.ReqWithHeaders.GetWithCustomHeaderAsync(
+            new ReqWithHeaders{
+                XTestServiceHeader = "X-TEST-SERVICE-HEADER",
+                XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
+                Body = "string"
+            }
+        );
     }
 
 }
