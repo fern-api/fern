@@ -1,7 +1,8 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
-import java.util.HashMap;
+import com.fern.sdk.resources.types.union.types.Animal;
+import com.fern.sdk.resources.types.union.types.Dog;
 
 public class Example45 {
     public static void main(String[] args) {
@@ -11,8 +12,14 @@ public class Example45 {
             .url("https://api.fern.com")
             .build();
 
-        client.noAuth().postWithNoAuth(new 
-        HashMap<String, Object>() {{put("key", "value");
-        }});
+        client.endpoints().union().getAndReturnUnion(
+            Animal.dog(
+                Dog
+                    .builder()
+                    .name("name")
+                    .likesToWoof(true)
+                    .build()
+            )
+        );
     }
 }

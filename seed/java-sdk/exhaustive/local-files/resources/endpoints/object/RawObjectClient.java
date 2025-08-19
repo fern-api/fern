@@ -297,4 +297,50 @@ public class RawObjectClient {
       throw new SeedExhaustiveException("Network error executing HTTP request", e);
     }
   }
+
+  public SeedExhaustiveHttpResponse<ObjectWithOptionalField> testIntegerOverflowEdgeCases() {
+    return testIntegerOverflowEdgeCases(ObjectWithOptionalField.builder().build());
+  }
+
+  public SeedExhaustiveHttpResponse<ObjectWithOptionalField> testIntegerOverflowEdgeCases(
+      ObjectWithOptionalField request) {
+    return testIntegerOverflowEdgeCases(request,null);
+  }
+
+  public SeedExhaustiveHttpResponse<ObjectWithOptionalField> testIntegerOverflowEdgeCases(
+      ObjectWithOptionalField request, RequestOptions requestOptions) {
+    HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+      .addPathSegments("object")
+      .addPathSegments("test-integer-overflow-edge-cases")
+      .build();
+    RequestBody body;
+    try {
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+    }
+    catch(JsonProcessingException e) {
+      throw new SeedExhaustiveException("Failed to serialize request", e);
+    }
+    Request okhttpRequest = new Request.Builder()
+      .url(httpUrl)
+      .method("POST", body)
+      .headers(Headers.of(clientOptions.headers(requestOptions)))
+      .addHeader("Content-Type", "application/json")
+      .addHeader("Accept", "application/json")
+      .build();
+    OkHttpClient client = clientOptions.httpClient();
+    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+      client = clientOptions.httpClientWithTimeout(requestOptions);
+    }
+    try (Response response = client.newCall(okhttpRequest).execute()) {
+      ResponseBody responseBody = response.body();
+      if (response.isSuccessful()) {
+        return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class), response);
+      }
+      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response);
+    }
+    catch (IOException e) {
+      throw new SeedExhaustiveException("Network error executing HTTP request", e);
+    }
+  }
 }
