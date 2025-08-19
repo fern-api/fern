@@ -400,7 +400,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addStatement("setHttpClient(builder)")
                 .addStatement("setTimeouts(builder)")
                 .addStatement("setRetries(builder)")
-                .addComment("Apply user-added headers from addHeader() calls")
                 .beginControlFlow("for ($T.Entry<String, String> header : this.customHeaders.entrySet())", Map.class)
                 .addStatement("builder.addHeader(header.getKey(), header.getValue())")
                 .endControlFlow()

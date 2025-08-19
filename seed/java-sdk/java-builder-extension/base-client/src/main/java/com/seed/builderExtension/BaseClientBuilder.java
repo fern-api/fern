@@ -85,7 +85,6 @@ public class BaseClientBuilder {
         setHttpClient(builder);
         setTimeouts(builder);
         setRetries(builder);
-        // Apply user-added headers from addHeader() calls
         for (Map.Entry<String, String> header : this.customHeaders.entrySet()) {
             builder.addHeader(header.getKey(), header.getValue());
         }
