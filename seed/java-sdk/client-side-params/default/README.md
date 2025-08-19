@@ -163,6 +163,32 @@ client.service().searchResources(
 );
 ```
 
+### Custom Headers
+
+The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
+
+```java
+import com.seed.clientSideParams.SeedClientSideParamsClient;
+import com.seed.clientSideParams.core.RequestOptions;
+
+// Client level
+SeedClientSideParamsClient client = SeedClientSideParamsClient
+    .builder()
+    .addHeader("X-Custom-Header", "custom-value")
+    .addHeader("X-Request-Id", "abc-123")
+    .build();
+;
+
+// Request level
+client.service().searchResources(
+    ...,
+    RequestOptions
+        .builder()
+        .addHeader("X-Request-Header", "request-value")
+        .build()
+);
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

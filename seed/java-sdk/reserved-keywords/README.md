@@ -152,6 +152,32 @@ client.package_().test(
 );
 ```
 
+### Custom Headers
+
+The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
+
+```java
+import com.seed.nurseryApi.SeedNurseryApiClient;
+import com.seed.nurseryApi.core.RequestOptions;
+
+// Client level
+SeedNurseryApiClient client = SeedNurseryApiClient
+    .builder()
+    .addHeader("X-Custom-Header", "custom-value")
+    .addHeader("X-Request-Id", "abc-123")
+    .build();
+;
+
+// Request level
+client.package_().test(
+    ...,
+    RequestOptions
+        .builder()
+        .addHeader("X-Request-Header", "request-value")
+        .build()
+);
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

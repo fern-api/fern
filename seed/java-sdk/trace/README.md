@@ -166,6 +166,32 @@ client.admin().updateTestSubmissionStatus(
 );
 ```
 
+### Custom Headers
+
+The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
+
+```java
+import com.seed.trace.SeedTraceClient;
+import com.seed.trace.core.RequestOptions;
+
+// Client level
+SeedTraceClient client = SeedTraceClient
+    .builder()
+    .addHeader("X-Custom-Header", "custom-value")
+    .addHeader("X-Request-Id", "abc-123")
+    .build();
+;
+
+// Request level
+client.admin().updateTestSubmissionStatus(
+    ...,
+    RequestOptions
+        .builder()
+        .addHeader("X-Request-Header", "request-value")
+        .build()
+);
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.
