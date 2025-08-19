@@ -2,7 +2,6 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import decompress from "decompress";
-import fs from "fs";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
 import tmp from "tmp-promise";

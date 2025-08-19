@@ -1,4 +1,3 @@
-import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Method } from "./Method";

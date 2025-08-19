@@ -1,5 +1,4 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { assertNever } from "@fern-api/core-utils";
 import { AbstractPhpGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";

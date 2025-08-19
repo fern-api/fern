@@ -1,7 +1,6 @@
 import { ruby } from "../..";
 import { BaseRubyCustomConfigSchema } from "../../custom-config/BaseRubyCustomConfigSchema";
 import { Writer } from "../core/Writer";
-import { MethodKind } from "../Method";
 import { Type } from "../Type";
 
 describe("Module", () => {

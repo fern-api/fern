@@ -3,7 +3,7 @@ import { noop, visitObjectAsync } from "@fern-api/core-utils";
 import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 

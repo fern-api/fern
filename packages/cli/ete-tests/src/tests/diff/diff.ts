@@ -1,6 +1,5 @@
-import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { readFile, rm } from "fs/promises";
+import { rm } from "fs/promises";
 import { tmpName } from "tmp-promise";
 
 import { runFernCli } from "../../utils/runFernCli";
