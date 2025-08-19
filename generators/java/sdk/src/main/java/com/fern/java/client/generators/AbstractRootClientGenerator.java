@@ -50,6 +50,7 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import javax.lang.model.element.Modifier;
@@ -190,6 +191,13 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .initializer("$T.empty()", Optional.class)
                 .build());
 
+        clientBuilder.addField(FieldSpec.builder(
+                        ParameterizedTypeName.get(ClassName.get(Map.class), ClassName.get(String.class), ClassName.get(String.class)),
+                        "customHeaders")
+                .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                .initializer("new $T<>()", HashMap.class)
+                .build());
+
         FieldSpec.Builder environmentFieldBuilder = FieldSpec.builder(
                         generatedEnvironmentsClass.getClassName(), ENVIRONMENT_FIELD_NAME)
                 .addModifiers(Modifier.PRIVATE);
@@ -328,6 +336,22 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addStatement(isExtensible ? "return self()" : "return this")
                 .build());
 
+        clientBuilder.addMethod(MethodSpec.methodBuilder("addHeader")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Add a custom header to be sent with all requests.\n"
+                        + "For headers that need to be computed dynamically or conditionally, "
+                        + "use the setAdditional() method override instead.\n"
+                        + "\n"
+                        + "@param name The header name\n"
+                        + "@param value The header value\n"
+                        + "@return This builder for method chaining")
+                .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                .addParameter(String.class, "name")
+                .addParameter(String.class, "value")
+                .addStatement("this.customHeaders.put(name, value)")
+                .addStatement(isExtensible ? "return self()" : "return this")
+                .build());
+
         generatorContext.getIr().getVariables().stream()
                 .map(variableDeclaration -> {
                     String variableName =
@@ -376,6 +400,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addStatement("setHttpClient(builder)")
                 .addStatement("setTimeouts(builder)")
                 .addStatement("setRetries(builder)")
+                .addComment("Apply user-added headers from addHeader() calls")
+                .beginControlFlow("for ($T.Entry<String, String> header : this.customHeaders.entrySet())", Map.class)
+                .addStatement("builder.addHeader(header.getKey(), header.getValue())")
+                .endControlFlow()
                 .addStatement("setAdditional(builder)")
                 .addStatement("return builder.build()");
 
