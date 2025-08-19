@@ -724,7 +724,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         const responseBody = httpEndpoint.response?.body;
 
         if (responseBody == null) {
-            throw new Error("Must figure out how to interpret this case (if its even possible)"); // TODO
+            return go.Type.error(); // no explicit void in golang, just need to handle the error
         }
 
         switch (responseBody.type) {
