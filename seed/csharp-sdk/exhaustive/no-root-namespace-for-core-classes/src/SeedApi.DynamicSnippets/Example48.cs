@@ -14,7 +14,7 @@ public class Example48
             }
         );
 
-        await client.Endpoints.Urls.NoEndingSlashAsync();
+        await client.Endpoints.Urls.WithEndingSlashAsync();
     }
 
 }

@@ -1,6 +1,5 @@
 using global::System.Threading.Tasks;
 using SeedExhaustive;
-using SeedExhaustive.Types.Union;
 
 namespace Usage;
 
@@ -14,14 +13,7 @@ public class Example46
             }
         );
 
-        await client.Endpoints.Union.GetAndReturnUnionAsync(
-            new Animal(
-                new Dog{
-                    Name = "name",
-                    LikesToWoof = true
-                }
-            )
-        );
+        await client.Endpoints.Urls.WithMixedCaseAsync();
     }
 
 }
