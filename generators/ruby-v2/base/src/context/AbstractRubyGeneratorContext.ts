@@ -53,6 +53,13 @@ export abstract class AbstractRubyGeneratorContext<
         });
     }
 
+    public getModelClassReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: "Model",
+            modules: ["Internal", "Types"]
+        });
+    }
+
     public getTypesModule(): ruby.Module_ {
         return ruby.module({
             name: "Types",
