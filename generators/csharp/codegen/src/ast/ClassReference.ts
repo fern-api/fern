@@ -31,7 +31,15 @@ export class ClassReference extends AstNode {
     public readonly global: boolean;
     private readonly namespaceSegments: string[];
 
-    constructor({ name, namespace, namespaceAlias, enclosingType, generics, fullyQualified, global }: ClassReference.Args) {
+    constructor({
+        name,
+        namespace,
+        namespaceAlias,
+        enclosingType,
+        generics,
+        fullyQualified,
+        global
+    }: ClassReference.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
@@ -69,7 +77,9 @@ export class ClassReference extends AstNode {
                 if (this.fullyQualified) {
                     writer.addReference(this);
                     if (this.enclosingType != null) {
-                        writer.write(`${this.global ? "global::" : ""}${this.enclosingType.namespace}.${this.enclosingType.name}.${this.name}`);
+                        writer.write(
+                            `${this.global ? "global::" : ""}${this.enclosingType.namespace}.${this.enclosingType.name}.${this.name}`
+                        );
                     } else {
                         writer.write(`${this.global ? "global::" : ""}${this.namespace}.${this.name}`);
                     }
