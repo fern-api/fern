@@ -32,34 +32,28 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
         const properties = this.objectDeclaration.properties || [];
 
         const statements = generateFields({
+            typeDeclaration: this.typeDeclaration,
             properties,
             context: this.context
         });
 
         const classNode = ruby.class_({
             name: this.typeDeclaration.name.name.pascalCase.safeName,
-            superclass: ruby.classReference({
-                name: "Model",
-                modules: ["Internal", "Types"]
-            }),
+            superclass: this.context.getModelClassReference(),
             docstring: this.typeDeclaration.docs ?? undefined,
             statements: statements
         });
 
-        const classWithTypesModule = this.context.getTypesModule();
-        classWithTypesModule.addStatement(classNode);
-
-        const classWithRootModule = this.context.getRootModule();
-        classWithRootModule.addStatement(classWithTypesModule);
-
         return new RubyFile({
             node: ruby.codeblock((writer) => {
-                writer.writeNode(ruby.comment({ docs: "frozen_string_literal: true" }));
+                ruby.comment({ docs: "frozen_string_literal: true" }).write(writer);
                 writer.newLine();
-                classWithRootModule.write(writer);
+                ruby.wrapInModules(classNode, this.context.getModulesForTypeId(this.typeDeclaration.name.typeId)).write(
+                    writer
+                );
             }),
             directory: this.getFilepath(),
-            filename: `${this.typeDeclaration.name.name.snakeCase.safeName}.rb`,
+            filename: this.context.getFileNameForTypeId(this.typeDeclaration.name.typeId),
             customConfig: this.context.customConfig
         });
     }

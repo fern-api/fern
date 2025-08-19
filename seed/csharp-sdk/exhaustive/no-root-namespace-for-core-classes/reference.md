@@ -715,11 +715,19 @@ await client.Endpoints.HttpMethods.TestDeleteAsync("id");
 await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
     new ObjectWithOptionalField
     {
-        String = "test",
-        Integer = 21991583578,
-        Long = 9223372036854776000,
-        Double = 3.14,
+        String = "string",
+        Integer = 1,
+        Long = 1000000,
+        Double = 1.1,
         Bool = true,
+        Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+        Date = new DateOnly(2023, 1, 15),
+        Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        Base64 = "SGVsbG8gd29ybGQh",
+        List = new List<string>() { "list", "list" },
+        Set = new HashSet<string>() { "set" },
+        Map = new Dictionary<int, string>() { { 1, "map" } },
+        Bigint = "1000000",
     }
 );
 ```
@@ -1074,7 +1082,6 @@ await client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(
     {
         String = "boundary-test",
         Integer = 2147483647,
-        Long = 9223372036854776000,
         Double = 1.7976931348623157e+308,
         Bool = true,
     }

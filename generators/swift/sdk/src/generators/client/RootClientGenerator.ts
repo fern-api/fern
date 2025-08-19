@@ -525,6 +525,8 @@ export class RootClientGenerator {
                 };
             } else if (scheme.type === "oauth") {
                 // TODO(kafkas): Implement oauth auth scheme
+            } else if (scheme.type === "inferred") {
+                // TODO(kafkas): Implement inferred auth scheme
             } else {
                 assertNever(scheme);
             }

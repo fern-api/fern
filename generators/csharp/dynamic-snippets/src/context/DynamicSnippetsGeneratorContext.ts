@@ -34,7 +34,10 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         super({ ir, config, options });
         this.ir = ir;
         this.customConfig =
-            config.customConfig != null ? (config.customConfig as BaseCsharpCustomConfigSchema) : undefined;
+            config.customConfig != null
+                ? (config.customConfig as BaseCsharpCustomConfigSchema)
+                : ({} as BaseCsharpCustomConfigSchema);
+
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
         this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
         this.filePropertyMapper = new FilePropertyMapper({ context: this });

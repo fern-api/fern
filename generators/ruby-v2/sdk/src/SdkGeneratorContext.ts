@@ -1,5 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { RelativeFilePath } from "@fern-api/path-utils";
+import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { ClassReference } from "@fern-api/ruby-ast/src/ast/ClassReference";
 import { AbstractRubyGeneratorContext, AsIsFiles, RubyProject } from "@fern-api/ruby-base";
@@ -10,6 +10,7 @@ import {
     ServiceId,
     Subpackage,
     SubpackageId,
+    TypeDeclaration,
     TypeId
 } from "@fern-fern/ir-sdk/api";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
@@ -38,16 +39,31 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
 
     public getLocationForTypeId(typeId: TypeId): RelativeFilePath {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        if (typeDeclaration.name.fernFilepath.allParts.length === 0) {
-            return RelativeFilePath.of(["lib", this.getRootFolderName(), ROOT_TYPES_FOLDER].join("/"));
-        }
-        return RelativeFilePath.of(
-            [
-                "lib",
-                this.getRootFolderName(),
-                ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.snakeCase.safeName)
-            ].join("/")
+        return join(
+            RelativeFilePath.of("lib"),
+            RelativeFilePath.of(this.getRootFolderName()),
+            ...this.snakeNames(typeDeclaration).map(RelativeFilePath.of),
+            RelativeFilePath.of(this.typesDirName)
         );
+    }
+
+    public getFileNameForTypeId(typeId: TypeId): string {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return typeDeclaration.name.name.snakeCase.safeName + ".rb";
+    }
+
+    public getAllTypeDeclarations(): TypeDeclaration[] {
+        return Object.values(this.ir.types);
+    }
+
+    public getModuleNamesForTypeId(typeId: TypeId): string[] {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return [this.getRootModule().name, ...this.pascalNames(typeDeclaration), this.getTypesModule().name];
+    }
+
+    public getModulesForTypeId(typeId: TypeId): ruby.Module_[] {
+        const modules = this.getModuleNamesForTypeId(typeId);
+        return modules.map((name) => ruby.module({ name }));
     }
 
     public getLocationForSubpackageId(subpackageId: SubpackageId): RelativeFilePath {
@@ -127,8 +143,8 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
 
     public getReferenceToInternalJSONRequest(): ruby.ClassReference {
         return ruby.classReference({
-            name: "JSONRequest",
-            modules: [this.getRootModule().name, "Internal", "Http"]
+            name: "Request",
+            modules: [this.getRootModule().name, "Internal", "JSON"]
         });
     }
 

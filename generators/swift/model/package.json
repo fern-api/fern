@@ -38,7 +38,7 @@
   "dependencies": {
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/swift-base": "workspace:*",
-    "@fern-fern/ir-sdk": "^58.2.0",
+    "@fern-fern/ir-sdk": "59.0.0",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {

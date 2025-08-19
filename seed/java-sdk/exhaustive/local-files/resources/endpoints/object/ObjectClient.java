@@ -95,4 +95,17 @@ public class ObjectClient {
       List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnNestedWithRequiredFieldAsList(request, requestOptions).body();
   }
+
+  public ObjectWithOptionalField testIntegerOverflowEdgeCases() {
+    return this.rawClient.testIntegerOverflowEdgeCases().body();
+  }
+
+  public ObjectWithOptionalField testIntegerOverflowEdgeCases(ObjectWithOptionalField request) {
+    return this.rawClient.testIntegerOverflowEdgeCases(request).body();
+  }
+
+  public ObjectWithOptionalField testIntegerOverflowEdgeCases(ObjectWithOptionalField request,
+      RequestOptions requestOptions) {
+    return this.rawClient.testIntegerOverflowEdgeCases(request, requestOptions).body();
+  }
 }

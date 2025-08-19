@@ -37,12 +37,10 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
     public doGenerate(): RubyFile {
         const classNode = ruby.class_({
             ...this.classReference,
-            superclass: ruby.classReference({
-                name: "Union",
-                modules: ["Internal", "Types"]
-            }),
+            superclass: this.context.getModelClassReference(),
             docstring: this.typeDeclaration.docs ?? undefined
         });
+        classNode.addStatement(ruby.codeblock(`extend ${this.context.getRootModule().name}::Internal::Types::Union`));
 
         classNode.addStatement(
             ruby.codeblock((writer) => {
@@ -61,19 +59,16 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
             );
         }
 
-        const classWithTypesModule = this.context.getTypesModule();
-        classWithTypesModule.addStatement(classNode);
-
-        const classWithRootModule = this.context.getRootModule();
-        classWithRootModule.addStatement(classWithTypesModule);
         return new RubyFile({
             node: ruby.codeblock((writer) => {
-                writer.writeNode(ruby.comment({ docs: "frozen_string_literal: true" }));
+                ruby.comment({ docs: "frozen_string_literal: true" }).write(writer);
                 writer.newLine();
-                classWithRootModule.write(writer);
+                ruby.wrapInModules(classNode, this.context.getModulesForTypeId(this.typeDeclaration.name.typeId)).write(
+                    writer
+                );
             }),
             directory: this.getFilepath(),
-            filename: this.getFilename(),
+            filename: this.context.getFileNameForTypeId(this.typeDeclaration.name.typeId),
             customConfig: this.context.customConfig
         });
     }
@@ -100,9 +95,5 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
 
     protected getFilepath(): RelativeFilePath {
         return this.context.getLocationForTypeId(this.typeDeclaration.name.typeId);
-    }
-
-    private getFilename(): string {
-        return `${this.typeDeclaration.name.name.snakeCase.safeName}.rb`;
     }
 }

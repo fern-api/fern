@@ -1,4 +1,5 @@
 import {
+    AstNode,
     Class_,
     ClassInstantiation,
     ClassReference,
@@ -110,4 +111,13 @@ export function positionalArgument(args: PositionalArgument.Args): PositionalArg
 
 export function ifElse(args: IfElse.Args): IfElse {
     return new IfElse(args);
+}
+
+export function wrapInModules(node: AstNode, modules: Module_[]): AstNode {
+    let topLevelNode: AstNode = node;
+    for (const module of modules.toReversed()) {
+        module.addStatement(topLevelNode);
+        topLevelNode = module;
+    }
+    return topLevelNode;
 }
