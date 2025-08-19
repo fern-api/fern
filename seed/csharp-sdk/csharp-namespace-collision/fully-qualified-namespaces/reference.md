@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedSystem/SeedSystemClient.cs">CreateUserAsync</a>(global::SeedSystem.User { ... }) -> global::SeedSystem.User</code></summary>
+<details><summary><code>client.<a href="/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollisionClient.cs">CreateUserAsync</a>(global::SeedCsharpNamespaceCollision.User { ... }) -> global::SeedCsharpNamespaceCollision.User</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 
 ```csharp
 await client.CreateUserAsync(
-    new global::SeedSystem.User
+    new global::SeedCsharpNamespaceCollision.User
     {
         Id = "id",
         Name = "name",
@@ -35,7 +35,7 @@ await client.CreateUserAsync(
 <dl>
 <dd>
 
-**request:** `global::SeedSystem.User` 
+**request:** `global::SeedCsharpNamespaceCollision.User` 
     
 </dd>
 </dl>
@@ -47,7 +47,7 @@ await client.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedSystem/SeedSystemClient.cs">CreateTaskAsync</a>(global::SeedSystem.Task { ... }) -> global::SeedSystem.Task</code></summary>
+<details><summary><code>client.<a href="/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollisionClient.cs">CreateTaskAsync</a>(global::SeedCsharpNamespaceCollision.Task { ... }) -> global::SeedCsharpNamespaceCollision.Task</code></summary>
 <dl>
 <dd>
 
@@ -61,7 +61,7 @@ await client.CreateUserAsync(
 
 ```csharp
 await client.CreateTaskAsync(
-    new global::SeedSystem.Task
+    new global::SeedCsharpNamespaceCollision.Task
     {
         Id = "id",
         Name = "name",
@@ -83,7 +83,7 @@ await client.CreateTaskAsync(
 <dl>
 <dd>
 
-**request:** `global::SeedSystem.Task` 
+**request:** `global::SeedCsharpNamespaceCollision.Task` 
     
 </dd>
 </dl>
@@ -96,7 +96,7 @@ await client.CreateTaskAsync(
 </details>
 
 ## System
-<details><summary><code>client.System.<a href="/src/SeedSystem/System/SystemClient.cs">CreateUserAsync</a>(global::SeedSystem.System.User { ... }) -> global::SeedSystem.System.User</code></summary>
+<details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">CreateUserAsync</a>(global::SeedCsharpNamespaceCollision.System.User { ... }) -> global::SeedCsharpNamespaceCollision.System.User</code></summary>
 <dl>
 <dd>
 
@@ -110,7 +110,7 @@ await client.CreateTaskAsync(
 
 ```csharp
 await client.System.CreateUserAsync(
-    new global::SeedSystem.System.User
+    new global::SeedCsharpNamespaceCollision.System.User
     {
         Line1 = "line1",
         Line2 = "line2",
@@ -134,7 +134,7 @@ await client.System.CreateUserAsync(
 <dl>
 <dd>
 
-**request:** `global::SeedSystem.System.User` 
+**request:** `global::SeedCsharpNamespaceCollision.System.User` 
     
 </dd>
 </dl>
@@ -146,7 +146,7 @@ await client.System.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.System.<a href="/src/SeedSystem/System/SystemClient.cs">CreateTaskAsync</a>(global::SeedSystem.System.Task { ... }) -> global::SeedSystem.System.Task</code></summary>
+<details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">CreateTaskAsync</a>(global::SeedCsharpNamespaceCollision.System.Task { ... }) -> global::SeedCsharpNamespaceCollision.System.Task</code></summary>
 <dl>
 <dd>
 
@@ -160,10 +160,10 @@ await client.System.CreateUserAsync(
 
 ```csharp
 await client.System.CreateTaskAsync(
-    new global::SeedSystem.System.Task
+    new global::SeedCsharpNamespaceCollision.System.Task
     {
         Name = "name",
-        User = new global::SeedSystem.System.User
+        User = new global::SeedCsharpNamespaceCollision.System.User
         {
             Line1 = "line1",
             Line2 = "line2",
@@ -188,7 +188,7 @@ await client.System.CreateTaskAsync(
 <dl>
 <dd>
 
-**request:** `global::SeedSystem.System.Task` 
+**request:** `global::SeedCsharpNamespaceCollision.System.Task` 
     
 </dd>
 </dl>

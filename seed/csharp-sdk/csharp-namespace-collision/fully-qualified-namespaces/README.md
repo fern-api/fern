@@ -1,7 +1,7 @@
 # Seed C# Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/SeedSystem)](https://nuget.org/packages/SeedSystem)
+[![nuget shield](https://img.shields.io/nuget/v/SeedCsharpNamespaceCollision)](https://nuget.org/packages/SeedCsharpNamespaceCollision)
 
 The Seed C# library provides convenient access to the Seed API from C#.
 
@@ -12,7 +12,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package SeedSystem
+dotnet add package SeedCsharpNamespaceCollision
 ```
 
 ## Usage
@@ -20,11 +20,11 @@ dotnet add package SeedSystem
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedSystem;
+using SeedCsharpNamespaceCollision;
 
-var client = new global::SeedSystem.SeedSystemClient();
+var client = new global::SeedCsharpNamespaceCollision.SeedCsharpNamespaceCollisionClient();
 await client.CreateUserAsync(
-    new global::SeedSystem.User
+    new global::SeedCsharpNamespaceCollision.User
     {
         Id = "id",
         Name = "name",
@@ -40,11 +40,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedSystem;
+using SeedCsharpNamespaceCollision;
 
 try {
     var response = await client.CreateUserAsync(...);
-} catch (SeedSystemApiException e) {
+} catch (SeedCsharpNamespaceCollisionApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }

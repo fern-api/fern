@@ -1,19 +1,19 @@
 using global::System.Threading.Tasks;
-using SeedSystem;
+using SeedCsharpNamespaceCollision;
 
 namespace Usage;
 
 public class Example1
 {
     public async global::System.Threading.Tasks.Task Do() {
-        var client = new global::SeedSystem.SeedSystemClient(
-            clientOptions: new global::SeedSystem.ClientOptions{
+        var client = new global::SeedCsharpNamespaceCollision.SeedCsharpNamespaceCollisionClient(
+            clientOptions: new global::SeedCsharpNamespaceCollision.ClientOptions{
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.CreateUserAsync(
-            new global::SeedSystem.User{
+            new global::SeedCsharpNamespaceCollision.User{
                 Id = "id",
                 Name = "name",
                 Email = "email",
