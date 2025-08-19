@@ -17,6 +17,7 @@ import {
     NameAndWireValue,
     PathParameter,
     QueryParameter,
+    TypeDeclaration,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import {
@@ -57,10 +58,13 @@ export declare namespace GeneratedRequestWrapperImpl {
         enableInlineTypes: boolean;
         shouldInlinePathParameters: boolean;
         formDataSupport: "Node16" | "Node18";
+        dangerouslyFlattenRequestParameters: boolean;
     }
 }
 
 const EXAMPLE_PREFIX = "    ";
+const BODY_PROPERTY_NAME = "body";
+const BODY_PROPERTY_SAFE_NAME = "body";
 
 export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private service: HttpService;
@@ -73,6 +77,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private enableInlineTypes: boolean;
     private _shouldInlinePathParameters: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
+    private readonly dangerouslyFlattenRequestParameters: boolean;
 
     constructor({
         service,
@@ -84,7 +89,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         inlineFileProperties,
         enableInlineTypes,
         shouldInlinePathParameters,
-        formDataSupport
+        formDataSupport,
+        dangerouslyFlattenRequestParameters
     }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
@@ -96,6 +102,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         this.enableInlineTypes = enableInlineTypes;
         this._shouldInlinePathParameters = shouldInlinePathParameters;
         this.formDataSupport = formDataSupport;
+        this.dangerouslyFlattenRequestParameters = dangerouslyFlattenRequestParameters;
     }
 
     public shouldInlinePathParameters(): boolean {
@@ -182,10 +189,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         for (const pathParameter of this.getPathParamsForRequestWrapper()) {
             const type = context.type.getReferenceToType(pathParameter.valueType);
             const hasDefaultValue = this.hasDefaultValue(pathParameter.valueType, context);
-            const propertyName = this.getPropertyNameOfPathParameter(pathParameter);
             properties.push({
-                name: getPropertyKey(propertyName.propertyName),
-                safeName: getPropertyKey(propertyName.safeName),
+                name: getPropertyKey(pathParameter.name.originalName),
+                safeName: getPropertyKey(pathParameter.name.originalName),
                 type: type.typeNodeWithoutUndefined,
                 isOptional: type.isOptional || hasDefaultValue,
                 docs: pathParameter.docs != null ? [pathParameter.docs] : undefined
@@ -222,29 +228,23 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 docs: header.docs != null ? [header.docs] : undefined
             });
         }
+
         const requestBody = this.endpoint.requestBody;
         if (requestBody != null) {
             HttpRequestBody._visit(requestBody, {
                 inlinedRequestBody: (inlinedRequestBody) => {
-                    for (const property of this.getAllNonLiteralPropertiesFromInlinedRequest({
+                    this.addRequestBodyProperties({
+                        properties,
                         inlinedRequestBody,
                         context
-                    })) {
-                        const requestProperty = this.getInlineProperty(inlinedRequestBody, property, context);
-                        properties.push(requestProperty);
-                    }
+                    });
                 },
                 reference: (referenceToRequestBody) => {
-                    const type = context.type.getReferenceToType(referenceToRequestBody.requestBodyType);
-                    const name = this.getReferencedBodyPropertyName();
-                    const requestProperty: GeneratedRequestWrapper.Property = {
-                        name,
-                        safeName: name,
-                        type: type.typeNodeWithoutUndefined,
-                        isOptional: type.isOptional,
-                        docs: referenceToRequestBody.docs != null ? [referenceToRequestBody.docs] : undefined
-                    };
-                    properties.push(requestProperty);
+                    this.addRequestBodyProperties({
+                        properties,
+                        referenceToRequestBody,
+                        context
+                    });
                 },
                 fileUpload: (fileUploadRequest) => {
                     for (const property of fileUploadRequest.properties) {
@@ -765,5 +765,162 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             ?.useDefaultRequestParameterValues;
 
         return hasDefaultValue && Boolean(useDefaultValues);
+    }
+
+    private createBodyTypeFromInlinedProperties(
+        inlinedRequestBody: InlinedRequestBody,
+        context: SdkContext
+    ): ts.TypeNode {
+        const properties: ts.PropertySignature[] = [];
+        for (const property of this.getAllNonLiteralPropertiesFromInlinedRequest({
+            inlinedRequestBody,
+            context
+        })) {
+            const type = this.getTypeForBodyProperty(inlinedRequestBody, property, context);
+            const name = this.getInlinedRequestBodyPropertyKeyFromName(property.name);
+            properties.push(
+                ts.factory.createPropertySignature(
+                    undefined,
+                    getPropertyKey(name.propertyName),
+                    type.isOptional ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
+                    type.typeNodeWithoutUndefined
+                )
+            );
+        }
+        return ts.factory.createTypeLiteralNode(properties);
+    }
+
+    private addRequestBodyProperties({
+        properties,
+        context,
+        ...requestBody
+    }: {
+        properties: GeneratedRequestWrapper.Property[];
+        context: SdkContext;
+    } & (
+        | { inlinedRequestBody: InlinedRequestBody }
+        | { referenceToRequestBody: HttpRequestBodyReference }
+    )) {
+        if (this.dangerouslyFlattenRequestParameters) {
+            if ('inlinedRequestBody' in requestBody) {
+                this.addFlattenedInlinedRequestBodyProperties(properties, requestBody.inlinedRequestBody, context);
+            } else {
+                this.addFlattenedReferencedRequestBodyProperties(properties, requestBody.referenceToRequestBody, context);
+            }
+        } else {
+            if ('inlinedRequestBody' in requestBody) {
+                this.addUnflattenedInlinedRequestBodyProperties(properties, requestBody.inlinedRequestBody, context);
+            } else {
+                this.addUnflattenedReferencedRequestBodyProperties(properties, requestBody.referenceToRequestBody, context);
+            }
+        }
+    }
+
+    private addFlattenedInlinedRequestBodyProperties(
+        properties: GeneratedRequestWrapper.Property[],
+        inlinedRequestBody: InlinedRequestBody,
+        context: SdkContext
+    ) {
+        for (const property of this.getAllNonLiteralPropertiesFromInlinedRequest({
+            inlinedRequestBody,
+            context
+        })) {
+            const requestProperty = this.getInlineProperty(inlinedRequestBody, property, context);
+            properties.push(requestProperty);
+        }
+    }
+
+    private addFlattenedReferencedRequestBodyProperties(
+        properties: GeneratedRequestWrapper.Property[],
+        referenceToRequestBody: HttpRequestBodyReference,
+        context: SdkContext
+    ) {
+        if (referenceToRequestBody.requestBodyType.type !== "named") {
+            this.addUnflattenedReferencedRequestBodyProperties(properties, referenceToRequestBody, context);
+            return;
+        }
+
+        const typeDeclaration = this.getTypeDeclaration(referenceToRequestBody.requestBodyType, context);
+        
+        if (typeDeclaration?.shape.type !== "object") {
+            this.addUnflattenedReferencedRequestBodyProperties(properties, referenceToRequestBody, context);
+            return;
+        }
+
+        this.addPropertiesFromTypeDeclaration(properties, typeDeclaration, context);
+    }
+
+    private addUnflattenedInlinedRequestBodyProperties(
+        properties: GeneratedRequestWrapper.Property[],
+        inlinedRequestBody: InlinedRequestBody,
+        context: SdkContext
+    ) {
+        const bodyProperties = this.getAllNonLiteralPropertiesFromInlinedRequest({
+            inlinedRequestBody,
+            context
+        });
+
+        if (bodyProperties.length > 0) {
+            const bodyType = this.createBodyTypeFromInlinedProperties(inlinedRequestBody, context);
+            properties.push({
+                name: BODY_PROPERTY_NAME,
+                safeName: BODY_PROPERTY_SAFE_NAME,
+                type: bodyType,
+                isOptional: false,
+                docs: undefined
+            });
+        }
+    }
+
+    private addUnflattenedReferencedRequestBodyProperties(
+        properties: GeneratedRequestWrapper.Property[],
+        referenceToRequestBody: HttpRequestBodyReference,
+        context: SdkContext
+    ) {
+        const type = context.type.getReferenceToType(referenceToRequestBody.requestBodyType);
+        const name = this.getReferencedBodyPropertyName();
+        
+        properties.push({
+            name,
+            safeName: name,
+            type: type.typeNodeWithoutUndefined,
+            isOptional: type.isOptional,
+            docs: referenceToRequestBody.docs != null ? [referenceToRequestBody.docs] : undefined
+        });
+    }
+
+    private getTypeDeclaration(
+        requestBodyType: TypeReference.Named,
+        context: SdkContext
+    ) {
+        return context.type.getTypeDeclaration({
+            typeId: requestBodyType.typeId,
+            fernFilepath: requestBodyType.fernFilepath,
+            name: requestBodyType.name,
+            displayName: requestBodyType.displayName
+        });
+    }
+
+    private addPropertiesFromTypeDeclaration(
+        properties: GeneratedRequestWrapper.Property[],
+        typeDeclaration: TypeDeclaration,
+        context: SdkContext
+    ) {
+        if (typeDeclaration.shape.type !== "object") {
+            return;
+        }
+
+        for (const property of typeDeclaration.shape.properties) {
+            const propertyType = context.type.getReferenceToType(property.valueType);
+            const hasDefaultValue = this.hasDefaultValue(property.valueType, context);
+            
+            properties.push({
+                name: getPropertyKey(property.name.wireValue),
+                safeName: getPropertyKey(property.name.wireValue),
+                type: propertyType.typeNodeWithoutUndefined,
+                isOptional: propertyType.isOptional || hasDefaultValue,
+                docs: property.docs != null ? [property.docs] : undefined
+            });
+        }
     }
 }
