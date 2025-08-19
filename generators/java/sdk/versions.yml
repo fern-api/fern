@@ -1,3 +1,11 @@
+- version: 2.41.2
+  changelogEntry:
+    - summary: |
+        Link reference.md in the README.md.
+      type: feat
+  createdAt: '2025-08-19'
+  irVersion: 58
+
 - version: 2.41.1
   changelogEntry:
     - summary: |
