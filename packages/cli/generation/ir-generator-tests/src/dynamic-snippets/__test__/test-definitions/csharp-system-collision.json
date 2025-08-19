@@ -393,6 +393,54 @@
                 "type": "json"
             },
             "examples": null
+        },
+        "endpoint_.emptyResponse": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "emptyResponse",
+                    "camelCase": {
+                        "unsafeName": "emptyResponse",
+                        "safeName": "emptyResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "empty_response",
+                        "safeName": "empty_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EMPTY_RESPONSE",
+                        "safeName": "EMPTY_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "EmptyResponse",
+                        "safeName": "EmptyResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/users/empty"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:Task"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
         }
     },
     "pathParameters": [],

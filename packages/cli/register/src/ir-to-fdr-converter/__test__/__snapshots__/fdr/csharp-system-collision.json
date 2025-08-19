@@ -293,6 +293,77 @@
             "codeSamples": []
           }
         ]
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "id": "emptyResponse",
+        "originalEndpointId": "endpoint_.emptyResponse",
+        "name": "Empty Response",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": "/users"
+            },
+            {
+              "type": "literal",
+              "value": "/empty"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_:Task"
+              }
+            }
+          }
+        },
+        "requestsV2": {},
+        "responsesV2": {},
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/users/empty",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "name": "name",
+              "user": {
+                "line1": "line1",
+                "city": "city",
+                "state": "state",
+                "zip": "zip",
+                "country": "USA"
+              }
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "name": "name",
+                "user": {
+                  "line1": "line1",
+                  "city": "city",
+                  "state": "state",
+                  "zip": "zip",
+                  "country": "USA"
+                }
+              }
+            },
+            "responseStatusCode": 204,
+            "codeSamples": []
+          }
+        ]
       }
     ],
     "webhooks": [],

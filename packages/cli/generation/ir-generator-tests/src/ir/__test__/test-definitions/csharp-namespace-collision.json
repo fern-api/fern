@@ -3,22 +3,22 @@
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
-        "originalName": "System",
+        "originalName": "csharp-namespace-collision",
         "camelCase": {
-            "unsafeName": "system",
-            "safeName": "system"
+            "unsafeName": "csharpNamespaceCollision",
+            "safeName": "csharpNamespaceCollision"
         },
         "snakeCase": {
-            "unsafeName": "system",
-            "safeName": "system"
+            "unsafeName": "csharp_namespace_collision",
+            "safeName": "csharp_namespace_collision"
         },
         "screamingSnakeCase": {
-            "unsafeName": "SYSTEM",
-            "safeName": "SYSTEM"
+            "unsafeName": "CSHARP_NAMESPACE_COLLISION",
+            "safeName": "CSHARP_NAMESPACE_COLLISION"
         },
         "pascalCase": {
-            "unsafeName": "System",
-            "safeName": "System"
+            "unsafeName": "CsharpNamespaceCollision",
+            "safeName": "CsharpNamespaceCollision"
         }
     },
     "apiDisplayName": null,
