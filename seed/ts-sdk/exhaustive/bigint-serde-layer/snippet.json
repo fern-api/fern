@@ -173,9 +173,8 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnWithOptionalField({\n    string: \"test\",\n    integer: 21991583578,\n    long: BigInt(\"9223372036854776000\"),\n    double: 3.14,\n    bool: true\n});\n"
-            },
-            "example_identifier": "WithLargeInteger"
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnWithOptionalField({\n    string: \"string\",\n    integer: 1,\n    long: BigInt(\"1000000\"),\n    double: 1.1,\n    bool: true,\n    datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    date: \"2023-01-15\",\n    uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    base64: \"SGVsbG8gd29ybGQh\",\n    list: [\"list\", \"list\"],\n    set: new Set([\"set\"]),\n    map: {\n        1: \"map\"\n    },\n    bigint: BigInt(\"1000000\")\n});\n"
+            }
         },
         {
             "id": {
@@ -240,7 +239,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.testIntegerOverflowEdgeCases({\n    string: \"boundary-test\",\n    integer: 2147483647,\n    long: BigInt(\"9223372036854776000\"),\n    double: 1.7976931348623157e+308,\n    bool: true\n});\n"
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.testIntegerOverflowEdgeCases({\n    string: \"boundary-test\",\n    integer: 2147483647,\n    double: 1.7976931348623157e+308,\n    bool: true\n});\n"
             },
             "example_identifier": "BoundaryValues"
         },
@@ -252,7 +251,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.testIntegerOverflowEdgeCases({\n    string: \"just-over-boundary\",\n    integer: 2147483648,\n    long: BigInt(\"2147483648\"),\n    double: 2,\n    bool: false\n});\n"
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.testIntegerOverflowEdgeCases({\n    string: \"just-over-boundary\",\n    integer: 2147483648,\n    double: 2,\n    bool: false\n});\n"
             },
             "example_identifier": "JustOverBoundary"
         },
@@ -264,7 +263,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.testIntegerOverflowEdgeCases({\n    string: \"just-under-boundary\",\n    integer: -2147483649,\n    long: BigInt(\"-2147483649\"),\n    double: -2,\n    bool: true\n});\n"
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.testIntegerOverflowEdgeCases({\n    string: \"just-under-boundary\",\n    integer: -2147483649,\n    double: -2,\n    bool: true\n});\n"
             },
             "example_identifier": "JustUnderBoundary"
         },
@@ -276,7 +275,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.testIntegerOverflowEdgeCases({\n    string: \"large-positive\",\n    integer: 1000000000000,\n    long: BigInt(\"1000000000000\"),\n    double: 1000000000000,\n    bool: false\n});\n"
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.testIntegerOverflowEdgeCases({\n    string: \"large-positive\",\n    integer: 1000000000000,\n    double: 1000000000000,\n    bool: false\n});\n"
             },
             "example_identifier": "LargePositiveValue"
         },
@@ -288,7 +287,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.testIntegerOverflowEdgeCases({\n    string: \"large-negative\",\n    integer: -1000000000000,\n    long: BigInt(\"-1000000000000\"),\n    double: -1000000000000,\n    bool: true\n});\n"
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.testIntegerOverflowEdgeCases({\n    string: \"large-negative\",\n    integer: -1000000000000,\n    double: -1000000000000,\n    bool: true\n});\n"
             },
             "example_identifier": "LargeNegativeValue"
         },

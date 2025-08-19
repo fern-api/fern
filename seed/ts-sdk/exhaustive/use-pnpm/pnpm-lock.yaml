@@ -986,10 +986,10 @@ packages:
             }
         engines: { node: ">=8" }
 
-    browserslist@4.25.2:
+    browserslist@4.25.3:
         resolution:
             {
-                integrity: sha512-0si2SJK3ooGzIawRu61ZdPCO1IncZwS8IzuX73sPZsXW6EQ/w/DAfPyKI8l1ETTCr2MnvqWitmlCUxgdul45jA==,
+                integrity: sha512-cDGv1kkDI4/0e5yON9yM5G/0A5u8sf5TnmdX5C9qHzI9PPu++sQ9zjm1k9NiOrf3riY4OkK0zSGqfvJyJsgCBQ==,
             }
         engines: { node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7 }
         hasBin: true
@@ -1266,10 +1266,10 @@ packages:
             }
         engines: { node: ">= 0.4" }
 
-    electron-to-chromium@1.5.204:
+    electron-to-chromium@1.5.207:
         resolution:
             {
-                integrity: sha512-s9VbBXWxfDrl67PlO4avwh0/GU2vcwx8Fph3wlR8LJl7ySGYId59EFE17VWVcuC3sLWNPENm6Z/uGqKbkPCcXA==,
+                integrity: sha512-mryFrrL/GXDTmAtIVMVf+eIXM09BBPlO5IQ7lUyKmK8d+A4VpRGG+M3ofoVef6qyF8s60rJei8ymlJxjUA8Faw==,
             }
 
     emittery@0.13.1:
@@ -3091,7 +3091,7 @@ snapshots:
         dependencies:
             "@babel/compat-data": 7.28.0
             "@babel/helper-validator-option": 7.27.1
-            browserslist: 4.25.2
+            browserslist: 4.25.3
             lru-cache: 5.1.1
             semver: 6.3.1
 
@@ -3786,12 +3786,12 @@ snapshots:
         dependencies:
             fill-range: 7.1.1
 
-    browserslist@4.25.2:
+    browserslist@4.25.3:
         dependencies:
             caniuse-lite: 1.0.30001735
-            electron-to-chromium: 1.5.204
+            electron-to-chromium: 1.5.207
             node-releases: 2.0.19
-            update-browserslist-db: 1.1.3(browserslist@4.25.2)
+            update-browserslist-db: 1.1.3(browserslist@4.25.3)
 
     bs-logger@0.2.6:
         dependencies:
@@ -3920,7 +3920,7 @@ snapshots:
             es-errors: 1.3.0
             gopd: 1.2.0
 
-    electron-to-chromium@1.5.204: {}
+    electron-to-chromium@1.5.207: {}
 
     emittery@0.13.1: {}
 
@@ -4966,9 +4966,9 @@ snapshots:
 
     universalify@0.2.0: {}
 
-    update-browserslist-db@1.1.3(browserslist@4.25.2):
+    update-browserslist-db@1.1.3(browserslist@4.25.3):
         dependencies:
-            browserslist: 4.25.2
+            browserslist: 4.25.3
             escalade: 3.2.0
             picocolors: 1.1.1
 
@@ -5010,7 +5010,7 @@ snapshots:
             "@webassemblyjs/wasm-parser": 1.14.1
             acorn: 8.15.0
             acorn-import-phases: 1.0.4(acorn@8.15.0)
-            browserslist: 4.25.2
+            browserslist: 4.25.3
             chrome-trace-event: 1.0.4
             enhanced-resolve: 5.18.3
             es-module-lexer: 1.7.0
