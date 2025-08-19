@@ -3,10 +3,8 @@ module Seed
   module Endpoints
     module Params
       class Client
-        # @option client [Seed::Internal::Http::RawClient]
-        #
         # @return [Seed::Endpoints::Params::Client]
-        def initialize(client)
+        def initialize(client:)
           @client = client
         end
 
@@ -92,7 +90,7 @@ module Seed
         #
         # @return [String]
         def modify_with_path(request_options: {}, **params)
-          _request = Seed::Internal::Http::JSONRequest.new(
+          _request = Seed::Internal::JSON::Request.new(
             method: PUT,
             path: "/params/path/#{params[:param]}",
             body: params[:request],

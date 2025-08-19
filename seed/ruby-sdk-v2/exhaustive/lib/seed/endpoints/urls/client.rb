@@ -3,10 +3,8 @@ module Seed
   module Endpoints
     module Urls
       class Client
-        # @option client [Seed::Internal::Http::RawClient]
-        #
         # @return [Seed::Endpoints::Urls::Client]
-        def initialize(client)
+        def initialize(client:)
           @client = client
         end
 

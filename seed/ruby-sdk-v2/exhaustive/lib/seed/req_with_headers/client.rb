@@ -2,10 +2,8 @@
 module Seed
   module ReqWithHeaders
     class Client
-      # @option client [Seed::Internal::Http::RawClient]
-      #
       # @return [Seed::ReqWithHeaders::Client]
-      def initialize(client)
+      def initialize(client:)
         @client = client
       end
 
