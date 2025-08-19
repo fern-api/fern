@@ -192,7 +192,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .build());
 
         clientBuilder.addField(FieldSpec.builder(
-                        ParameterizedTypeName.get(ClassName.get(Map.class), ClassName.get(String.class), ClassName.get(String.class)),
+                        ParameterizedTypeName.get(
+                                ClassName.get(Map.class), ClassName.get(String.class), ClassName.get(String.class)),
                         "customHeaders")
                 .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
                 .initializer("new $T<>()", HashMap.class)
