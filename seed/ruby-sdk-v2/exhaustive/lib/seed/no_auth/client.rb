@@ -2,10 +2,8 @@
 module Seed
   module NoAuth
     class Client
-      # @option client [Seed::Internal::Http::RawClient]
-      #
       # @return [Seed::NoAuth::Client]
-      def initialize(client)
+      def initialize(client:)
         @client = client
       end
 
@@ -13,7 +11,7 @@ module Seed
       #
       # @return [bool]
       def post_with_no_auth(request_options: {}, **params)
-        _request = Seed::Internal::Http::JSONRequest.new(
+        _request = Seed::Internal::JSON::Request.new(
           method: POST,
           path: "/no-auth",
           body: params[:request],

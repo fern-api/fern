@@ -3,10 +3,8 @@ module Seed
   module Endpoints
     module HttpMethods
       class Client
-        # @option client [Seed::Internal::Http::RawClient]
-        #
         # @return [Seed::Endpoints::HttpMethods::Client]
-        def initialize(client)
+        def initialize(client:)
           @client = client
         end
 
@@ -23,7 +21,7 @@ module Seed
 
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def test_post(request_options: {}, **params)
-          _request = Seed::Internal::Http::JSONRequest.new(
+          _request = Seed::Internal::JSON::Request.new(
             method: POST,
             path: "/http-methods",
             body: Seed::Types::Object_::Types::ObjectWithRequiredField.new(params[:request]).to_h,
@@ -38,7 +36,7 @@ module Seed
 
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def test_put(request_options: {}, **params)
-          _request = Seed::Internal::Http::JSONRequest.new(
+          _request = Seed::Internal::JSON::Request.new(
             method: PUT,
             path: "/http-methods/#{params[:id]}",
             body: Seed::Types::Object_::Types::ObjectWithRequiredField.new(params[:request]).to_h,
@@ -53,7 +51,7 @@ module Seed
 
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def test_patch(request_options: {}, **params)
-          _request = Seed::Internal::Http::JSONRequest.new(
+          _request = Seed::Internal::JSON::Request.new(
             method: PATCH,
             path: "/http-methods/#{params[:id]}",
             body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params[:request]).to_h,

@@ -112,7 +112,7 @@ module Seed
             end
           end
 
-          def coerce(value, strict: (respond_to?(:strict?) ? strict? : false))
+          def coerce(value, strict: strict?)
             return value if value.is_a?(self)
 
             return value unless value.is_a?(::Hash)
@@ -169,12 +169,6 @@ module Seed
             value = @data[name]
 
             next if value.nil? && field.optional && !field.nullable
-
-            if value.is_a?(::Array)
-              value = value.map { |item| item.respond_to?(:to_h) ? item.to_h : item }
-            elsif value.respond_to?(:to_h)
-              value = value.to_h
-            end
 
             acc[field.api_name] = value
           end

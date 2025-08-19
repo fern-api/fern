@@ -2,7 +2,7 @@
 
 module Seed
   module Internal
-    module JSON
+    module Multipart
       # @api private
       class Request < Seed::Internal::Http::BaseRequest
         attr_reader :body
