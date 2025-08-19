@@ -131,3 +131,19 @@ func (c *Client) GetAndReturnNestedWithRequiredFieldAsList(
 	}
 	return response.Body, nil
 }
+
+func (c *Client) TestIntegerOverflowEdgeCases(
+	ctx context.Context,
+	request *types.ObjectWithOptionalField,
+	opts ...option.RequestOption,
+) (*types.ObjectWithOptionalField, error) {
+	response, err := c.WithRawResponse.TestIntegerOverflowEdgeCases(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}

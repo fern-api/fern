@@ -10,6 +10,6 @@ public class Example28 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().params().modifyWithPath("param", "string");
+        client.endpoints().params().getWithPath("param");
     }
 }

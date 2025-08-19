@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module seed
+module Seed
   module Internal
     module Types
       class Hash

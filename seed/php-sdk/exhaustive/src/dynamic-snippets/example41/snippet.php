@@ -11,6 +11,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->primitive->getAndReturnDatetime(
-    new DateTime('2024-01-15T09:30:00Z'),
+$client->endpoints->primitive->getAndReturnDate(
+    new DateTime('2023-01-15'),
 );

@@ -99,4 +99,18 @@ public class AsyncObjectClient {
       List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnNestedWithRequiredFieldAsList(request, requestOptions).thenApply(response -> response.body());
   }
+
+  public CompletableFuture<ObjectWithOptionalField> testIntegerOverflowEdgeCases() {
+    return this.rawClient.testIntegerOverflowEdgeCases().thenApply(response -> response.body());
+  }
+
+  public CompletableFuture<ObjectWithOptionalField> testIntegerOverflowEdgeCases(
+      ObjectWithOptionalField request) {
+    return this.rawClient.testIntegerOverflowEdgeCases(request).thenApply(response -> response.body());
+  }
+
+  public CompletableFuture<ObjectWithOptionalField> testIntegerOverflowEdgeCases(
+      ObjectWithOptionalField request, RequestOptions requestOptions) {
+    return this.rawClient.testIntegerOverflowEdgeCases(request, requestOptions).thenApply(response -> response.body());
+  }
 }

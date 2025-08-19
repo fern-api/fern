@@ -113,7 +113,6 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             {
               "string": "boundary-test",
               "integer": 2147483647,
-              "long": 9223372036854776000,
               "double": 1.7976931348623157e+308,
               "bool": true
             }
@@ -123,7 +122,6 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             {
               "string": "boundary-test",
               "integer": 2147483647,
-              "long": 9223372036854776000,
               "double": 1.7976931348623157e+308,
               "bool": true
             }
@@ -149,7 +147,6 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             {
                 String = "boundary-test",
                 Integer = 2147483647,
-                Long = 9223372036854776000,
                 Double = 1.7976931348623157e+308,
                 Bool = true,
             }
@@ -167,7 +164,6 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             {
               "string": "just-over-boundary",
               "integer": 2147483648,
-              "long": 2147483648,
               "double": 2,
               "bool": false
             }
@@ -177,7 +173,6 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             {
               "string": "just-over-boundary",
               "integer": 2147483648,
-              "long": 2147483648,
               "double": 2,
               "bool": false
             }
@@ -203,7 +198,6 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             {
                 String = "just-over-boundary",
                 Integer = 2147483648,
-                Long = 2147483648,
                 Double = 2,
                 Bool = false,
             }
@@ -221,7 +215,6 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             {
               "string": "just-under-boundary",
               "integer": -2147483649,
-              "long": -2147483649,
               "double": -2,
               "bool": true
             }
@@ -231,7 +224,6 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             {
               "string": "just-under-boundary",
               "integer": -2147483649,
-              "long": -2147483649,
               "double": -2,
               "bool": true
             }
@@ -257,7 +249,6 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             {
                 String = "just-under-boundary",
                 Integer = -2147483649,
-                Long = -2147483649,
                 Double = -2,
                 Bool = true,
             }
@@ -275,7 +266,6 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             {
               "string": "large-positive",
               "integer": 1000000000000,
-              "long": 1000000000000,
               "double": 1000000000000,
               "bool": false
             }
@@ -285,7 +275,6 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             {
               "string": "large-positive",
               "integer": 1000000000000,
-              "long": 1000000000000,
               "double": 1000000000000,
               "bool": false
             }
@@ -311,7 +300,6 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             {
                 String = "large-positive",
                 Integer = 1000000000000,
-                Long = 1000000000000,
                 Double = 1000000000000,
                 Bool = false,
             }
@@ -329,7 +317,6 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             {
               "string": "large-negative",
               "integer": -1000000000000,
-              "long": -1000000000000,
               "double": -1000000000000,
               "bool": true
             }
@@ -339,7 +326,6 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             {
               "string": "large-negative",
               "integer": -1000000000000,
-              "long": -1000000000000,
               "double": -1000000000000,
               "bool": true
             }
@@ -365,7 +351,6 @@ public class TestIntegerOverflowEdgeCasesTest : BaseMockServerTest
             {
                 String = "large-negative",
                 Integer = -1000000000000,
-                Long = -1000000000000,
                 Double = -1000000000000,
                 Bool = true,
             }

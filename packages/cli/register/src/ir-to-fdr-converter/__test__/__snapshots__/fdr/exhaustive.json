@@ -2031,46 +2031,64 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "WithLargeInteger",
               "path": "/object/get-and-return-with-optional-field",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": {
-                "string": "test",
-                "integer": 21991583578,
-                "long": 9223372036854776000,
-                "double": 3.14,
-                "bool": true
-              },
+              "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
-                "value": {
-                  "string": "test",
-                  "integer": 21991583578,
-                  "long": 9223372036854776000,
-                  "double": 3.14,
-                  "bool": true
-                }
+                "value": {}
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "string": "test",
-                "integer": 21991583578,
-                "long": 9223372036854776000,
-                "double": 3.14,
-                "bool": true
+                "string": "string",
+                "integer": 1,
+                "long": 1000000,
+                "double": 1.1,
+                "bool": true,
+                "datetime": "2024-01-15T09:30:00Z",
+                "date": "2023-01-15",
+                "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                "base64": "SGVsbG8gd29ybGQh",
+                "list": [
+                  "list",
+                  "list"
+                ],
+                "set": [
+                  "set"
+                ],
+                "map": {
+                  "1": "map"
+                },
+                "bigint": "1000000"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "string": "test",
-                  "integer": 21991583578,
-                  "long": 9223372036854776000,
-                  "double": 3.14,
-                  "bool": true
+                  "string": "string",
+                  "integer": 1,
+                  "long": 1000000,
+                  "double": 1.1,
+                  "bool": true,
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "date": "2023-01-15",
+                  "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                  "base64": "SGVsbG8gd29ybGQh",
+                  "list": [
+                    "list",
+                    "list"
+                  ],
+                  "set": [
+                    "set"
+                  ],
+                  "map": {
+                    "1": "map"
+                  },
+                  "bigint": "1000000"
                 }
-              }
+              },
+              "codeSamples": []
             }
           ]
         },
@@ -2688,7 +2706,6 @@
               "requestBody": {
                 "string": "boundary-test",
                 "integer": 2147483647,
-                "long": 9223372036854776000,
                 "double": 1.7976931348623157e+308,
                 "bool": true
               },
@@ -2697,7 +2714,6 @@
                 "value": {
                   "string": "boundary-test",
                   "integer": 2147483647,
-                  "long": 9223372036854776000,
                   "double": 1.7976931348623157e+308,
                   "bool": true
                 }
@@ -2706,7 +2722,6 @@
               "responseBody": {
                 "string": "boundary-test",
                 "integer": 2147483647,
-                "long": 9223372036854776000,
                 "double": 1.7976931348623157e+308,
                 "bool": true
               },
@@ -2715,7 +2730,6 @@
                 "value": {
                   "string": "boundary-test",
                   "integer": 2147483647,
-                  "long": 9223372036854776000,
                   "double": 1.7976931348623157e+308,
                   "bool": true
                 }
@@ -2730,7 +2744,6 @@
               "requestBody": {
                 "string": "just-over-boundary",
                 "integer": 2147483648,
-                "long": 2147483648,
                 "double": 2,
                 "bool": false
               },
@@ -2739,7 +2752,6 @@
                 "value": {
                   "string": "just-over-boundary",
                   "integer": 2147483648,
-                  "long": 2147483648,
                   "double": 2,
                   "bool": false
                 }
@@ -2748,7 +2760,6 @@
               "responseBody": {
                 "string": "just-over-boundary",
                 "integer": 2147483648,
-                "long": 2147483648,
                 "double": 2,
                 "bool": false
               },
@@ -2757,7 +2768,6 @@
                 "value": {
                   "string": "just-over-boundary",
                   "integer": 2147483648,
-                  "long": 2147483648,
                   "double": 2,
                   "bool": false
                 }
@@ -2772,7 +2782,6 @@
               "requestBody": {
                 "string": "just-under-boundary",
                 "integer": -2147483649,
-                "long": -2147483649,
                 "double": -2,
                 "bool": true
               },
@@ -2781,7 +2790,6 @@
                 "value": {
                   "string": "just-under-boundary",
                   "integer": -2147483649,
-                  "long": -2147483649,
                   "double": -2,
                   "bool": true
                 }
@@ -2790,7 +2798,6 @@
               "responseBody": {
                 "string": "just-under-boundary",
                 "integer": -2147483649,
-                "long": -2147483649,
                 "double": -2,
                 "bool": true
               },
@@ -2799,7 +2806,6 @@
                 "value": {
                   "string": "just-under-boundary",
                   "integer": -2147483649,
-                  "long": -2147483649,
                   "double": -2,
                   "bool": true
                 }
@@ -2814,7 +2820,6 @@
               "requestBody": {
                 "string": "large-positive",
                 "integer": 1000000000000,
-                "long": 1000000000000,
                 "double": 1000000000000,
                 "bool": false
               },
@@ -2823,7 +2828,6 @@
                 "value": {
                   "string": "large-positive",
                   "integer": 1000000000000,
-                  "long": 1000000000000,
                   "double": 1000000000000,
                   "bool": false
                 }
@@ -2832,7 +2836,6 @@
               "responseBody": {
                 "string": "large-positive",
                 "integer": 1000000000000,
-                "long": 1000000000000,
                 "double": 1000000000000,
                 "bool": false
               },
@@ -2841,7 +2844,6 @@
                 "value": {
                   "string": "large-positive",
                   "integer": 1000000000000,
-                  "long": 1000000000000,
                   "double": 1000000000000,
                   "bool": false
                 }
@@ -2856,7 +2858,6 @@
               "requestBody": {
                 "string": "large-negative",
                 "integer": -1000000000000,
-                "long": -1000000000000,
                 "double": -1000000000000,
                 "bool": true
               },
@@ -2865,7 +2866,6 @@
                 "value": {
                   "string": "large-negative",
                   "integer": -1000000000000,
-                  "long": -1000000000000,
                   "double": -1000000000000,
                   "bool": true
                 }
@@ -2874,7 +2874,6 @@
               "responseBody": {
                 "string": "large-negative",
                 "integer": -1000000000000,
-                "long": -1000000000000,
                 "double": -1000000000000,
                 "bool": true
               },
@@ -2883,7 +2882,6 @@
                 "value": {
                   "string": "large-negative",
                   "integer": -1000000000000,
-                  "long": -1000000000000,
                   "double": -1000000000000,
                   "bool": true
                 }

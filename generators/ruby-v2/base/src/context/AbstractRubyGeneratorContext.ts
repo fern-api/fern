@@ -53,6 +53,13 @@ export abstract class AbstractRubyGeneratorContext<
         });
     }
 
+    public getModelClassReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: "Model",
+            modules: ["Internal", "Types"]
+        });
+    }
+
     public getTypesModule(): ruby.Module_ {
         return ruby.module({
             name: "Types",
@@ -68,9 +75,13 @@ export abstract class AbstractRubyGeneratorContext<
         return typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName);
     }
 
+    public abstract getAllTypeDeclarations(): TypeDeclaration[];
+
     public abstract getCoreAsIsFiles(): string[];
 
     public abstract getLocationForTypeId(typeId: TypeId): RelativeFilePath;
+
+    public abstract getFileNameForTypeId(typeId: TypeId): string;
 
     public abstract getModuleNamesForTypeId(typeId: TypeId): string[];
 
