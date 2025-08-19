@@ -75,4 +75,13 @@ public interface ObjectService {
   NestedObjectWithRequiredField getAndReturnNestedWithRequiredFieldAsList(
       @RequestHeader("Authorization") BearerAuth auth, Principal principal,
       @RequestBody List<NestedObjectWithRequiredField> body);
+
+  @PostMapping(
+      value = "/test-integer-overflow-edge-cases",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  ObjectWithOptionalField testIntegerOverflowEdgeCases(
+      @RequestHeader("Authorization") BearerAuth auth, Principal principal,
+      @RequestBody ObjectWithOptionalField body);
 }
