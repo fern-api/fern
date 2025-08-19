@@ -199,6 +199,13 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     private async generateReference({ context }: { context: SdkGeneratorContext }): Promise<void> {
         const builder = buildReference({ context });
         const content = await context.generatorAgent.generateReference(builder);
+
+        // Temporary
+        context.project.addRawFiles(
+            new File("ir.json", RelativeFilePath.of("."), JSON.stringify(context.ir, null, 2))
+        )
+        // Temporary
+
         context.project.addRawFiles(
             new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)
         );

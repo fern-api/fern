@@ -35,17 +35,22 @@ function getEndpointReferencesForService({
 }): FernGeneratorCli.EndpointReference[] {
     return service.endpoints
         .map((endpoint) => {
-            // const singleEndpointSnippet = context.snippetGenerator.getSingleEndpointSnippet({
-            //     endpoint,
-            //     example: context.getExampleEndpointCallOrThrow(endpoint)
-            // });
-            // if (!singleEndpointSnippet) {
-            //     return undefined;
-            // }
-            const singleEndpointSnippet = {
-                exampleIdentifier: undefined,
-                endpointCall: "test"
-            };
+            // TEMPORARY WORKAROUND
+            let singleEndpointSnippet: SingleEndpointSnippet = {
+                exampleIdentifier: "a",
+                endpointCall: "example call"
+            }
+            // -------------
+            const exampleCall = context.maybeGetExampleEndpointCall(endpoint);
+            if (exampleCall) {
+                const maybeSingleEndpointSnippet = context.snippetGenerator.getSingleEndpointSnippet({
+                    endpoint,
+                    example: exampleCall
+                });
+                if (maybeSingleEndpointSnippet) {
+                    singleEndpointSnippet = maybeSingleEndpointSnippet;
+                }
+            }
             return getEndpointReference({
                 context,
                 serviceId,
@@ -94,12 +99,12 @@ function getEndpointReference({
 
 function getAccessFromRootClient({ context, service }: { context: SdkGeneratorContext; service: HttpService }): string {
     const clientVariableName = "client";
-    const servicePath = service.name.fernFilepath.allParts.map((part) => part.camelCase.safeName);
+    const servicePath = service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName); // TODO: these should be pascalecase since public golang methods
     return servicePath.length > 0 ? `${clientVariableName}.${servicePath.join(".")}` : clientVariableName;
 }
 
 function getEndpointMethodName({ endpoint }: { endpoint: HttpEndpoint }): string {
-    return endpoint.name.camelCase.safeName;
+    return endpoint.name.pascalCase.safeName; // TODO: these should be pascalecase since public golang methods
 }
 
 function getReferenceEndpointInvocationParameters({
@@ -112,7 +117,7 @@ function getReferenceEndpointInvocationParameters({
     const parameters: string[] = [];
 
     endpoint.allPathParameters.forEach((pathParam) => {
-        parameters.push(pathParam.name.camelCase.safeName);
+        parameters.push(pathParam.name.pascalCase.safeName); // TODO: these should be pascalecase since public golang params
     });
 
     if (endpoint.requestBody != null) {
@@ -142,13 +147,37 @@ function getReturnValue({
     context: SdkGeneratorContext;
     endpoint: HttpEndpoint;
 }): { text: string } | undefined {
-    // TODO: Implement this
-    return undefined;
+    const returnType = context.getReturnTypeForEndpoint(endpoint);
+    const returnTypeString = getSimpleTypeName(returnType, context);
+    return { text: returnTypeString };
 }
 
-function getSimpleTypeName(returnType: unknown, context: SdkGeneratorContext): string {
-    // TODO: Implement this
-    return "test";
+function getGoTypeString({
+    context,
+    typeReference
+}: {
+    context: SdkGeneratorContext;
+    typeReference: TypeReference;
+}): string {
+    const goType = context.goTypeMapper.convert({ reference: typeReference })
+    return getSimpleTypeName(goType, context);
+}
+
+function getSimpleTypeName(goType: go.Type, context: SdkGeneratorContext): string {
+    const simpleWriter = new go.Writer({
+        packageName: context.getRootPackageName(),
+        importPath: context.getInternalImportPath(),
+        rootImportPath: context.getRootImportPath(),
+        customConfig: context.customConfig
+    });
+
+    goType.write(simpleWriter);
+
+    const typeName = simpleWriter.buffer.trim();
+
+    // TODO: anything else??
+
+    return typeName;
 }
 
 function getEndpointParameters({
@@ -158,8 +187,54 @@ function getEndpointParameters({
     context: SdkGeneratorContext;
     endpoint: HttpEndpoint;
 }): FernGeneratorCli.ParameterReference[] {
-    // TODO: Implement this
-    return [];
+    const parameters: FernGeneratorCli.ParameterReference[] = [];
+
+    endpoint.allPathParameters.forEach((pathParam) => {
+        parameters.push({
+            name: pathParam.name.camelCase.safeName,
+            type: getGoTypeString({ context, typeReference: pathParam.valueType}),
+            description: pathParam.docs,
+            required: true
+        });
+    });
+
+    endpoint.queryParameters.forEach((queryParam) => {
+        parameters.push({
+            name: queryParam.name.name.camelCase.safeName,
+            type: getGoTypeString({ context, typeReference: queryParam.valueType}),
+            description: queryParam.docs,
+            required: !queryParam.allowMultiple
+        });
+    });
+
+    endpoint.headers.forEach((header) => {
+        parameters.push({
+            name: header.name.name.camelCase.safeName,
+            type: getGoTypeString({ context, typeReference: header.valueType}),
+            description: header.docs,
+            required: true
+        });
+    });
+
+    if (endpoint.requestBody != null && endpoint.requestBody.type === "inlinedRequestBody") {
+        endpoint.requestBody.properties.forEach((property) => {
+            parameters.push({
+                name: property.name.name.camelCase.safeName,
+                type: getGoTypeString({ context, typeReference: property.valueType}),
+                description: property.docs,
+                required: true
+            });
+        });
+    } else if (endpoint.requestBody != null && endpoint.requestBody.type === "reference") {
+        parameters.push({
+            name: "request",
+            type: getGoTypeString({ context, typeReference: endpoint.requestBody.requestBodyType}),
+            description: endpoint.requestBody.docs,
+            required: true
+        });
+    }
+
+    return parameters;
 }
 
 
