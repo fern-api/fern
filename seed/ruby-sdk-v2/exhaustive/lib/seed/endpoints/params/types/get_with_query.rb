@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
   module Endpoints
@@ -6,7 +7,6 @@ module Seed
         class GetWithQuery < Internal::Types::Model
           field :query, -> { String }, optional: false, nullable: false
           field :number, -> { Integer }, optional: false, nullable: false
-
         end
       end
     end

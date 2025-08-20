@@ -4,7 +4,7 @@ module Seed
   module Internal
     module Multipart
       # @api private
-      class Request Seed::Internal::Http::BaseRequest
+      class Request < Seed::Internal::Http::BaseRequest
         attr_reader :body
 
         # @param base_url [String] The base URL for the request
@@ -34,4 +34,4 @@ module Seed
       end
     end
   end
-end 
+end
