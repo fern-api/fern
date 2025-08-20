@@ -74,7 +74,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             omitFernHeaders: parsed?.omitFernHeaders ?? false,
             useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false,
             packageManager: parsed?.packageManager ?? "yarn",
-            flattenRequestParameters: parsed?.flattenRequestParameters ?? false,
+            flattenRequestParameters: parsed?.flattenRequestParameters ?? true,
             useLegacyFlatteningLogic: parsed?.useLegacyFlatteningLogic ?? true
         };
 

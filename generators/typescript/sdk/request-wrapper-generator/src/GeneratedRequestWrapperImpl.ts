@@ -250,7 +250,13 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                         if (this.flattenRequestParameters) {
                             this.addFlattenedInlinedRequestBodyProperties(properties, inlinedRequestBody, context);
                         } else {
-                            this.addUnflattenedInlinedRequestBodyProperties(properties, inlinedRequestBody, context);
+                            // When unflattening, if there are no query parameters, flatten body properties directly
+                            // instead of wrapping them in a body property
+                            if (this.getAllQueryParameters().length === 0) {
+                                this.addFlattenedInlinedRequestBodyProperties(properties, inlinedRequestBody, context);
+                            } else {
+                                this.addUnflattenedInlinedRequestBodyProperties(properties, inlinedRequestBody, context);
+                            }
                         }
                     }
                 },
@@ -270,7 +276,13 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                         if (this.flattenRequestParameters) {
                             this.addFlattenedReferencedRequestBodyProperties(properties, referenceToRequestBody, context);
                         } else {
-                            this.addUnflattenedReferencedRequestBodyProperties(properties, referenceToRequestBody, context);
+                            // When unflattening, if there are no query parameters, flatten body properties directly
+                            // instead of wrapping them in a body property
+                            if (this.getAllQueryParameters().length === 0) {
+                                this.addFlattenedReferencedRequestBodyProperties(properties, referenceToRequestBody, context);
+                            } else {
+                                this.addUnflattenedReferencedRequestBodyProperties(properties, referenceToRequestBody, context);
+                            }
                         }
                     }
                 },

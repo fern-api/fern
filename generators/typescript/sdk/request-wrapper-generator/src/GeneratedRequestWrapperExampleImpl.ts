@@ -155,12 +155,20 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                     if (this.flattenRequestParameters) {
                         return properties;
                     } else {
-                        return [
-                            ts.factory.createPropertyAssignment(
-                                getPropertyKey(this.bodyPropertyName),
-                                ts.factory.createObjectLiteralExpression(properties, true)
-                            )
-                        ];
+                        // When unflattening, if there are no query parameters, flatten body properties directly
+                        // instead of wrapping them in a body property
+                        const hasQueryParameters = this.example.queryParameters != null && 
+                            this.example.queryParameters.length > 0;
+                        if (!hasQueryParameters) {
+                            return properties;
+                        } else {
+                            return [
+                                ts.factory.createPropertyAssignment(
+                                    getPropertyKey(this.bodyPropertyName),
+                                    ts.factory.createObjectLiteralExpression(properties, true)
+                                )
+                            ];
+                        }
                     }
                 }
             },
@@ -180,12 +188,22 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                             ts.isPropertyAssignment(prop)
                         );
                     } else {
-                        return [
-                            ts.factory.createPropertyAssignment(
-                                getPropertyKey(this.bodyPropertyName),
-                                generatedExample
-                            )
-                        ];
+                        // When unflattening, if there are no query parameters, flatten body properties directly
+                        // instead of wrapping them in a body property
+                        const hasQueryParameters = this.example.queryParameters != null && 
+                            this.example.queryParameters.length > 0;
+                        if (!hasQueryParameters && ts.isObjectLiteralExpression(generatedExample)) {
+                            return generatedExample.properties.filter((prop): prop is ts.PropertyAssignment => 
+                                ts.isPropertyAssignment(prop)
+                            );
+                        } else {
+                            return [
+                                ts.factory.createPropertyAssignment(
+                                    getPropertyKey(this.bodyPropertyName),
+                                    generatedExample
+                                )
+                            ];
+                        }
                     }
                 }
             },
