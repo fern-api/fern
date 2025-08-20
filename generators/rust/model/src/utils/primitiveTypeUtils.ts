@@ -204,6 +204,28 @@ export function getInnerTypeFromOptional(typeReference: TypeReference): TypeRefe
 }
 
 /**
+ * Check if a primitive type supports Hash and Eq traits in Rust
+ */
+export function primitiveSupportsHashAndEq(primitive: PrimitiveTypeV1): boolean {
+    return PrimitiveTypeV1._visit(primitive, {
+        string: () => true,
+        boolean: () => true,
+        integer: () => true,
+        uint: () => true,
+        uint64: () => true,
+        long: () => true,
+        float: () => false, // f32 doesn't implement Hash or Eq
+        double: () => false, // f64 doesn't implement Hash or Eq
+        bigInteger: () => true,
+        date: () => true,
+        dateTime: () => true,
+        base64: () => true,
+        uuid: () => true,
+        _other: () => false
+    });
+}
+
+/**
  * Shared utility functions for type analysis across generators
  */
 
@@ -213,7 +235,7 @@ export function typeSupportsHashAndEq(
     analysisStack?: Set<string>
 ): boolean {
     return TypeReference._visit(typeRef, {
-        primitive: () => true, // All primitives support Hash and Eq
+        primitive: (primitive) => primitiveSupportsHashAndEq(primitive.v1), // Check each primitive individually
         named: (namedType) => {
             // Check if this named type is likely to support Hash and Eq
             return namedTypeSupportsHashAndEq(namedType, context, analysisStack);
