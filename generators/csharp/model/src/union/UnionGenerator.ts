@@ -115,7 +115,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                 name: basePropertiesClassName,
                 access: csharp.Access.Internal,
                 type: csharp.Class.ClassType.Record,
-                isNestedClass: true,
+                enclosingType: class_.reference,
                 namespace: this.classReference.namespace,
                 annotations: [this.context.getSerializableAttribute()]
             });
@@ -425,7 +425,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     name: this.getUnionTypeClassName(type),
                     namespace: this.classReference.namespace,
                     access: csharp.Access.Public,
-                    isNestedClass: true,
+                    enclosingType: this.classReference,
                     type: memberType.isReferenceType() ? csharp.Class.ClassType.Record : csharp.Class.ClassType.Struct,
                     annotations: [this.context.getSerializableAttribute()]
                 });
@@ -547,7 +547,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
             name: "JsonConverter",
             access: csharp.Access.Internal,
             namespace: this.classReference.namespace,
-            isNestedClass: true,
+            enclosingType: this.classReference,
             sealed: true,
             parentClassReference: this.context.getJsonConverterClassReference(unionReference),
             annotations: [this.context.getSerializableAttribute()]

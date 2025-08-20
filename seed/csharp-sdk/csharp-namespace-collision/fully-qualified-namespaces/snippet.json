@@ -1,0 +1,53 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_.createUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpNamespaceCollision;\n\nvar client = new global::SeedCsharpNamespaceCollision.SeedCsharpNamespaceCollisionClient();\nawait client.CreateUserAsync(\n    new global::SeedCsharpNamespaceCollision.User\n    {\n        Id = \"id\",\n        Name = \"name\",\n        Email = \"email\",\n        Password = \"password\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_.createTask"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpNamespaceCollision;\n\nvar client = new global::SeedCsharpNamespaceCollision.SeedCsharpNamespaceCollisionClient();\nawait client.CreateTaskAsync(\n    new global::SeedCsharpNamespaceCollision.Task\n    {\n        Id = \"id\",\n        Name = \"name\",\n        Email = \"email\",\n        Password = \"password\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_System.createUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpNamespaceCollision.System;\nusing SeedCsharpNamespaceCollision;\n\nvar client = new global::SeedCsharpNamespaceCollision.SeedCsharpNamespaceCollisionClient();\nawait client.System.CreateUserAsync(\n    new global::SeedCsharpNamespaceCollision.System.User\n    {\n        Line1 = \"line1\",\n        Line2 = \"line2\",\n        City = \"city\",\n        State = \"state\",\n        Zip = \"zip\",\n        Country = \"USA\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_System.createTask"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpNamespaceCollision.System;\nusing SeedCsharpNamespaceCollision;\n\nvar client = new global::SeedCsharpNamespaceCollision.SeedCsharpNamespaceCollisionClient();\nawait client.System.CreateTaskAsync(\n    new global::SeedCsharpNamespaceCollision.System.Task\n    {\n        Name = \"name\",\n        User = new global::SeedCsharpNamespaceCollision.System.User\n        {\n            Line1 = \"line1\",\n            Line2 = \"line2\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = \"USA\",\n        },\n    }\n);\n"
+            }
+        }
+    ]
+}

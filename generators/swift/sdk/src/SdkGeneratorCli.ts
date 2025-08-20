@@ -12,7 +12,6 @@ import {
 } from "@fern-api/swift-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { camelCase } from "lodash-es";
 
 import {
     PackageSwiftGenerator,
@@ -55,7 +54,10 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
-        await this.writeForDownload(context);
+        await this.generate(context);
+        if (context.isSelfHosted()) {
+            await context.generatorAgent.pushToGitHub({ context });
+        }
     }
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {

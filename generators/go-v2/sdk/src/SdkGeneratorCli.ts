@@ -1,7 +1,7 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { DefaultBaseGoCustomConfigSchema } from "@fern-api/go-ast";
-import { AbstractGoGeneratorCli, ModuleConfigWriter } from "@fern-api/go-base";
+import { AbstractGoGeneratorCli } from "@fern-api/go-base";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";

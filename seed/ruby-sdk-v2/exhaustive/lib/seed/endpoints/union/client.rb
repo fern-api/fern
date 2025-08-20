@@ -3,18 +3,17 @@ module Seed
   module Endpoints
     module Union
       class Client
-        # @option client [Seed::Internal::Http::RawClient]
-        #
         # @return [Seed::Endpoints::Union::Client]
-        def initialize(client)
+        def initialize(client:)
           @client = client
         end
 
         # @return [Seed::Types::Union::Types::Animal]
         def get_and_return_union(request_options: {}, **params)
-          _request = Seed::Internal::Http::JSONRequest.new(
+          _request = Seed::Internal::JSON::Request.new(
             method: POST,
-            path: "/union"
+            path: "/union",
+            body: Seed::Types::Union::Types::Animal.new(params[:request]).to_h,
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"

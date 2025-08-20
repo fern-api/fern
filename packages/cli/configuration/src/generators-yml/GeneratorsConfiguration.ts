@@ -11,7 +11,6 @@ import {
     GeneratorInvocationSchema,
     GeneratorsConfigurationSchema,
     OpenApiFilterSchema,
-    OpenRpcSpecSchema,
     ReadmeSchema
 } from "./schemas";
 

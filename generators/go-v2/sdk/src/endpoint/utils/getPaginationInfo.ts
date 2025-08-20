@@ -13,7 +13,6 @@ import {
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
 import { PaginationInfo } from "../PaginationInfo";
-import { EndpointRequest } from "../request/EndpointRequest";
 
 const PAGE_REQUEST_VARIABLE_NAME = "pageRequest";
 const PAGE_REQUEST_CURSOR_NAME = `${PAGE_REQUEST_VARIABLE_NAME}.Cursor`;

@@ -112,6 +112,14 @@ export class Writer extends AbstractWriter {
         return this.customConfig;
     }
 
+    public shouldUseFullyQualifiedNamespaces(): boolean {
+        return this.customConfig["experimental-fully-qualified-namespaces"] ?? false;
+    }
+
+    public shouldUseDotnetFormat(): boolean {
+        return this.customConfig["experimental-dotnet-format"] ?? false;
+    }
+
     public getSimplifyObjectDictionaries(): boolean {
         return this.customConfig["simplify-object-dictionaries"] ?? false;
     }
@@ -151,7 +159,7 @@ ${this.buffer}`;
             // Filter out the current namespace.
             .filter((ns) => !this.isCurrentNamespace(ns))
             .filter((ns) => !isNamespaceImplicit(ns)) // System is implicitly imported
-            .map((ref) => `using ${ref};`)
+            .map((ref) => `using ${this.references[ref]?.some((each) => each?.global) ? "global::" : ""}${ref};`)
             .join("\n");
 
         if (result.length > 0) {

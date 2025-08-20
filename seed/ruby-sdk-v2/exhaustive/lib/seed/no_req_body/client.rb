@@ -2,10 +2,8 @@
 module Seed
   module NoReqBody
     class Client
-      # @option client [Seed::Internal::Http::RawClient]
-      #
       # @return [Seed::NoReqBody::Client]
-      def initialize(client)
+      def initialize(client:)
         @client = client
       end
 

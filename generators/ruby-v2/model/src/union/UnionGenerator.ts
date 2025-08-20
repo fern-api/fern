@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -37,12 +37,10 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
     public doGenerate(): RubyFile {
         const classNode = ruby.class_({
             ...this.classReference,
-            superclass: ruby.classReference({
-                name: "Union",
-                modules: ["Internal", "Types"]
-            }),
+            superclass: this.context.getModelClassReference(),
             docstring: this.typeDeclaration.docs ?? undefined
         });
+        classNode.addStatement(ruby.codeblock(`extend ${this.context.getRootModule().name}::Internal::Types::Union`));
 
         classNode.addStatement(
             ruby.codeblock((writer) => {
@@ -70,7 +68,7 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
                 );
             }),
             directory: this.getFilepath(),
-            filename: this.getFilename(),
+            filename: this.context.getFileNameForTypeId(this.typeDeclaration.name.typeId),
             customConfig: this.context.customConfig
         });
     }
@@ -97,9 +95,5 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
 
     protected getFilepath(): RelativeFilePath {
         return this.context.getLocationForTypeId(this.typeDeclaration.name.typeId);
-    }
-
-    private getFilename(): string {
-        return `${this.typeDeclaration.name.name.snakeCase.safeName}.rb`;
     }
 }

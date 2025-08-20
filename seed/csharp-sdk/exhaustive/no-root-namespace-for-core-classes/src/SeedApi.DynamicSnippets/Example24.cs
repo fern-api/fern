@@ -17,11 +17,10 @@ public class Example24
 
         await client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(
             new ObjectWithOptionalField{
-                String = "just-under-boundary",
-                Integer = -2147483649,
-                Long = -2147483649l,
-                Double = -2,
-                Bool = true
+                String = "large-positive",
+                Integer = 1000000000000,
+                Double = 1000000000000,
+                Bool = false
             }
         );
     }

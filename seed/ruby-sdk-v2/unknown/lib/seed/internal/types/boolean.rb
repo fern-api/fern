@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module seed
+module Seed
   module Internal
     module Types
       module Boolean
-      extend seed::Internal::Types::Union
+      extend Seed::Internal::Types::Union
 
         member TrueClass
         member FalseClass

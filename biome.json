@@ -1,7 +1,14 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.1.1/schema.json",
-	"vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
-	"files": { "ignoreUnknown": false, "maxSize": 80000000 },
+	"vcs": {
+		"enabled": false,
+		"clientKind": "git",
+		"useIgnoreFile": false
+	},
+	"files": {
+		"ignoreUnknown": false,
+		"maxSize": 80000000
+	},
 	"formatter": {
 		"enabled": true,
 		"formatWithErrors": false,
@@ -49,6 +56,7 @@
 				"noUnreachableSuper": "error",
 				"noUnsafeFinally": "error",
 				"noUnsafeOptionalChaining": "error",
+				"noUnusedImports": "error",
 				"noUnusedLabels": "error",
 				"noUnusedVariables": "off",
 				"useExhaustiveDependencies": "warn",
@@ -157,7 +165,14 @@
 		]
 	},
 	"javascript": {
-		"globals": ["expect", "describe", "it", "beforeEach", "test", "beforeAll"],
+		"globals": [
+			"expect",
+			"describe",
+			"it",
+			"beforeEach",
+			"test",
+			"beforeAll"
+		],
 		"formatter": {
 			"jsxQuoteStyle": "double",
 			"quoteProperties": "asNeeded",
@@ -170,26 +185,53 @@
 			"bracketSpacing": true
 		}
 	},
-	"html": { "formatter": { "selfCloseVoidElements": "always" } },
+	"html": {
+		"formatter": {
+			"selfCloseVoidElements": "always"
+		}
+	},
 	"overrides": [
 		{
 			"includes": [
-				"**/*.test.ts", 
-				"**/*.spec.ts", 
+				"**/*.test.ts",
+				"**/*.spec.ts",
 				"**/example-code.js",
-				"generators/base/src/AbstractGeneratorCli.ts", 
+				"generators/base/src/AbstractGeneratorCli.ts",
 				"packages/cli/docs-resolver/src/__test__/fixtures/dry/fern/fibonacci.js",
 				"packages/cli/ete-tests/src/tests/generate/fixtures/docs/fern/js/custom.js"
 			],
-			"linter": { "rules": { "suspicious": { "noConsole": "off" } } }
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noConsole": "off"
+					}
+				}
+			}
 		},
 		{
-			"includes": ["packages/cli/init/src/__test__/initializeWithMintlify.test.ts"],
-			"linter": { "rules": { "suspicious": { "noExplicitAny": "off" } } }
+			"includes": [
+				"packages/cli/init/src/__test__/initializeWithMintlify.test.ts"
+			],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noExplicitAny": "off"
+					}
+				}
+			}
 		},
 		{
-			"includes": ["packages/cli/docs-markdown-utils/src/__test__/parseImagePaths.test.ts", "packages/cli/fern-definition/validator/src/rules/valid-oauth/__test__/valid-oauth.test.ts"],
-			"linter": { "rules": { "suspicious": { "noMisplacedAssertion": "off" } } }
+			"includes": [
+				"packages/cli/docs-markdown-utils/src/__test__/parseImagePaths.test.ts",
+				"packages/cli/fern-definition/validator/src/rules/valid-oauth/__test__/valid-oauth.test.ts"
+			],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noMisplacedAssertion": "off"
+					}
+				}
+			}
 		},
 		{
 			"includes": [
@@ -200,13 +242,26 @@
 				"packages/cli/generation/ir-generator-tests/src/ir/__test__/breakingChangeDetector.test.ts",
 				"packages/cli/generation/ir-generator-tests/src/ir/__test__/generateIntermediateRepresentation.test.ts"
 			],
-			"linter": { "rules": { "suspicious": { "noSkippedTests": "off" } } }
-		},
-		{
-			"includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
 			"linter": {
 				"rules": {
-					"complexity": { "noArguments": "error" },
+					"suspicious": {
+						"noSkippedTests": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": [
+				"*.ts",
+				"*.tsx",
+				"*.mts",
+				"*.cts"
+			],
+			"linter": {
+				"rules": {
+					"complexity": {
+						"noArguments": "error"
+					},
 					"correctness": {
 						"noConstAssign": "off",
 						"noGlobalObjectCalls": "off",
@@ -217,7 +272,9 @@
 						"noUnreachable": "off",
 						"noUnreachableSuper": "off"
 					},
-					"style": { "useConst": "error" },
+					"style": {
+						"useConst": "error"
+					},
 					"suspicious": {
 						"noDuplicateClassMembers": "off",
 						"noDuplicateObjectKeys": "off",
@@ -233,10 +290,17 @@
 			}
 		},
 		{
-			"includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
+			"includes": [
+				"*.ts",
+				"*.tsx",
+				"*.mts",
+				"*.cts"
+			],
 			"linter": {
 				"rules": {
-					"complexity": { "noArguments": "error" },
+					"complexity": {
+						"noArguments": "error"
+					},
 					"correctness": {
 						"noConstAssign": "off",
 						"noGlobalObjectCalls": "off",
@@ -247,7 +311,9 @@
 						"noUnreachable": "off",
 						"noUnreachableSuper": "off"
 					},
-					"style": { "useConst": "error" },
+					"style": {
+						"useConst": "error"
+					},
 					"suspicious": {
 						"noDuplicateClassMembers": "off",
 						"noDuplicateObjectKeys": "off",
@@ -263,10 +329,17 @@
 			}
 		},
 		{
-			"includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
+			"includes": [
+				"*.ts",
+				"*.tsx",
+				"*.mts",
+				"*.cts"
+			],
 			"linter": {
 				"rules": {
-					"complexity": { "noArguments": "error" },
+					"complexity": {
+						"noArguments": "error"
+					},
 					"correctness": {
 						"noConstAssign": "off",
 						"noGlobalObjectCalls": "off",
@@ -277,7 +350,9 @@
 						"noUnreachable": "off",
 						"noUnreachableSuper": "off"
 					},
-					"style": { "useConst": "error" },
+					"style": {
+						"useConst": "error"
+					},
 					"suspicious": {
 						"noDuplicateClassMembers": "off",
 						"noDuplicateObjectKeys": "off",
@@ -301,10 +376,12 @@
 				"**/*.css",
 				"**/*.mdx"
 			],
-			"formatter": { "indentWidth": 2 }
+			"formatter": {
+				"indentWidth": 2
+			}
 		},
 		{
-			"includes":[
+			"includes": [
 				"packages/cli/api-importers/conjure/conjure-sdk/**",
 				"packages/cli/api-importers/openapi/openapi-ir/**",
 				"packages/cli/fern-definition/schema/src/schemas/**",
@@ -344,13 +421,23 @@
 				"packages/**/lib/**",
 				"generators/**/lib/**"
 			],
-			"linter": { "enabled": false },
-			"assist": { "enabled": false },
-			"formatter": { "enabled": false }
+			"linter": {
+				"enabled": false
+			},
+			"assist": {
+				"enabled": false
+			},
+			"formatter": {
+				"enabled": false
+			}
 		}
 	],
 	"assist": {
 		"enabled": true,
-		"actions": { "source": { "organizeImports": "on" } }
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
 	}
 }

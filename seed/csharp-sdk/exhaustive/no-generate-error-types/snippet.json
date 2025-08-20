@@ -182,7 +182,7 @@
             }
         },
         {
-            "example_identifier": "WithLargeInteger",
+            "example_identifier": null,
             "id": {
                 "path": "/object/get-and-return-with-optional-field",
                 "method": "POST",
@@ -190,7 +190,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"test\",\n        Integer = 21991583578,\n        Long = 9223372036854776000,\n        Double = 3.14,\n        Bool = true,\n    }\n);\n"
+                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"string\",\n        Integer = 1,\n        Long = 1000000,\n        Double = 1.1,\n        Bool = true,\n        Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n        Date = new DateOnly(2023, 1, 15),\n        Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        Base64 = \"SGVsbG8gd29ybGQh\",\n        List = new List<string>() { \"list\", \"list\" },\n        Set = new HashSet<string>() { \"set\" },\n        Map = new Dictionary<int, string>() { { 1, \"map\" } },\n        Bigint = \"1000000\",\n    }\n);\n"
             }
         },
         {
@@ -262,7 +262,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"boundary-test\",\n        Integer = 2147483647,\n        Long = 9223372036854776000,\n        Double = 1.7976931348623157e+308,\n        Bool = true,\n    }\n);\n"
+                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"boundary-test\",\n        Integer = 2147483647,\n        Double = 1.7976931348623157e+308,\n        Bool = true,\n    }\n);\n"
             }
         },
         {
@@ -274,7 +274,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"just-over-boundary\",\n        Integer = 2147483648,\n        Long = 2147483648,\n        Double = 2,\n        Bool = false,\n    }\n);\n"
+                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"just-over-boundary\",\n        Integer = 2147483648,\n        Double = 2,\n        Bool = false,\n    }\n);\n"
             }
         },
         {
@@ -286,7 +286,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"just-under-boundary\",\n        Integer = -2147483649,\n        Long = -2147483649,\n        Double = -2,\n        Bool = true,\n    }\n);\n"
+                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"just-under-boundary\",\n        Integer = -2147483649,\n        Double = -2,\n        Bool = true,\n    }\n);\n"
             }
         },
         {
@@ -298,7 +298,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"large-positive\",\n        Integer = 1000000000000,\n        Long = 1000000000000,\n        Double = 1000000000000,\n        Bool = false,\n    }\n);\n"
+                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"large-positive\",\n        Integer = 1000000000000,\n        Double = 1000000000000,\n        Bool = false,\n    }\n);\n"
             }
         },
         {
@@ -310,7 +310,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"large-negative\",\n        Integer = -1000000000000,\n        Long = -1000000000000,\n        Double = -1000000000000,\n        Bool = true,\n    }\n);\n"
+                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"large-negative\",\n        Integer = -1000000000000,\n        Double = -1000000000000,\n        Bool = true,\n    }\n);\n"
             }
         },
         {

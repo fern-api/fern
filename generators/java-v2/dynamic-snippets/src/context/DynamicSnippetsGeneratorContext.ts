@@ -1,8 +1,7 @@
 import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec,
-    Options,
-    TypeInstance
+    Options
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";

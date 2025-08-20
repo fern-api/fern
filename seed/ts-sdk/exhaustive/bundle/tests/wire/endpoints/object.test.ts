@@ -10,18 +10,34 @@ describe("Object_", () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = {
-            string: "test",
-            integer: 21991583578,
-            long: 9223372036854776000,
-            double: 3.14,
+            string: "string",
+            integer: 1,
+            long: 1000000,
+            double: 1.1,
             bool: true,
+            datetime: "2024-01-15T09:30:00Z",
+            date: "2023-01-15",
+            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            base64: "SGVsbG8gd29ybGQh",
+            list: ["list", "list"],
+            set: ["set"],
+            map: { "1": "map" },
+            bigint: "1000000",
         };
         const rawResponseBody = {
-            string: "test",
-            integer: 21991583578,
-            long: 9223372036854776000,
-            double: 3.14,
+            string: "string",
+            integer: 1,
+            long: 1000000,
+            double: 1.1,
             bool: true,
+            datetime: "2024-01-15T09:30:00Z",
+            date: "2023-01-15",
+            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            base64: "SGVsbG8gd29ybGQh",
+            list: ["list", "list"],
+            set: ["set"],
+            map: { "1": "map" },
+            bigint: "1000000",
         };
         server
             .mockEndpoint()
@@ -33,19 +49,39 @@ describe("Object_", () => {
             .build();
 
         const response = await client.endpoints.object.getAndReturnWithOptionalField({
-            string: "test",
-            integer: 21991583578,
-            long: 9223372036854776000,
-            double: 3.14,
+            string: "string",
+            integer: 1,
+            long: 1000000,
+            double: 1.1,
             bool: true,
+            datetime: "2024-01-15T09:30:00Z",
+            date: "2023-01-15",
+            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            base64: "SGVsbG8gd29ybGQh",
+            list: ["list", "list"],
+            set: ["set"],
+            map: {
+                1: "map",
+            },
+            bigint: "1000000",
         });
         expect(response).toEqual({
             body: {
-                string: "test",
-                integer: 21991583578,
-                long: 9223372036854776000,
-                double: 3.14,
+                string: "string",
+                integer: 1,
+                long: 1000000,
+                double: 1.1,
                 bool: true,
+                datetime: "2024-01-15T09:30:00Z",
+                date: "2023-01-15",
+                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                base64: "SGVsbG8gd29ybGQh",
+                list: ["list", "list"],
+                set: ["set"],
+                map: {
+                    1: "map",
+                },
+                bigint: "1000000",
             },
             ok: true,
             headers: expect.any(Object),
@@ -448,14 +484,12 @@ describe("Object_", () => {
         const rawRequestBody = {
             string: "boundary-test",
             integer: 2147483647,
-            long: 9223372036854776000,
             double: 1.7976931348623157e308,
             bool: true,
         };
         const rawResponseBody = {
             string: "boundary-test",
             integer: 2147483647,
-            long: 9223372036854776000,
             double: 1.7976931348623157e308,
             bool: true,
         };
@@ -471,7 +505,6 @@ describe("Object_", () => {
         const response = await client.endpoints.object.testIntegerOverflowEdgeCases({
             string: "boundary-test",
             integer: 2147483647,
-            long: 9223372036854776000,
             double: 1.7976931348623157e308,
             bool: true,
         });
@@ -479,7 +512,6 @@ describe("Object_", () => {
             body: {
                 string: "boundary-test",
                 integer: 2147483647,
-                long: 9223372036854776000,
                 double: 1.7976931348623157e308,
                 bool: true,
             },

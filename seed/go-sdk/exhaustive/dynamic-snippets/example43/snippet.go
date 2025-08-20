@@ -15,7 +15,8 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Urls.WithUnderscores(
+    client.Endpoints.Primitive.GetAndReturnBase64(
         context.TODO(),
+        []byte("SGVsbG8gd29ybGQh"),
     )
 }

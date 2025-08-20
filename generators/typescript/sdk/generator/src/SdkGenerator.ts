@@ -1,5 +1,4 @@
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
-import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";

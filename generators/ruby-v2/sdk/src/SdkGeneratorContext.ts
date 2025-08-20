@@ -10,6 +10,7 @@ import {
     ServiceId,
     Subpackage,
     SubpackageId,
+    TypeDeclaration,
     TypeId
 } from "@fern-fern/ir-sdk/api";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
@@ -44,6 +45,15 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             ...this.snakeNames(typeDeclaration).map(RelativeFilePath.of),
             RelativeFilePath.of(this.typesDirName)
         );
+    }
+
+    public getFileNameForTypeId(typeId: TypeId): string {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return typeDeclaration.name.name.snakeCase.safeName + ".rb";
+    }
+
+    public getAllTypeDeclarations(): TypeDeclaration[] {
+        return Object.values(this.ir.types);
     }
 
     public getModuleNamesForTypeId(typeId: TypeId): string[] {
@@ -133,8 +143,8 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
 
     public getReferenceToInternalJSONRequest(): ruby.ClassReference {
         return ruby.classReference({
-            name: "JSONRequest",
-            modules: [this.getRootModule().name, "Internal", "Http"]
+            name: "Request",
+            modules: [this.getRootModule().name, "Internal", "JSON"]
         });
     }
 

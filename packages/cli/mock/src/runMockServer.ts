@@ -1,4 +1,3 @@
-import { isPlainObject } from "@fern-api/core-utils";
 import { HttpEndpoint, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import express, { Request, Response } from "express";

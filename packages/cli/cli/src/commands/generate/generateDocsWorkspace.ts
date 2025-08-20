@@ -3,7 +3,6 @@ import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
-import { FernWorkspace } from "@fern-api/workspace-loader";
 
 import { CliContext } from "../../cli-context/CliContext";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues";

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module seed
+module Seed
   module Internal
     module Types
       # An array of a specific type
       class Array
-        include seed::Internal::Types::Type
+        include Seed::Internal::Types::Type
 
         attr_reader :type
 
@@ -14,7 +14,7 @@ module seed
           #
           # @param type [Object] The member type of this array
           #
-          # @return [seed::Internal::Types::Array]
+          # @return [Seed::Internal::Types::Array]
           def [](type)
             new(type)
           end
