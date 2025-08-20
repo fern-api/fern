@@ -327,7 +327,7 @@ function validateIntegerWithRules({
         if ((rules.exclusiveMin && integer <= rules.min) || (!rules.exclusiveMin && integer < rules.min)) {
             return [
                 {
-                    message: `Expected integer to be greater than or equal to ${rules.min}. Example is ${JSON.stringify(example)}.`
+                    message: `Expected integer to be greater than or equal to ${rules.min}. Example is ${example}.`
                 }
             ];
         }
@@ -336,7 +336,7 @@ function validateIntegerWithRules({
         if ((rules.exclusiveMax && integer >= rules.max) || (!rules.exclusiveMax && integer > rules.max)) {
             return [
                 {
-                    message: `Expected integer to be less than or equal to ${rules.max}. Example is ${JSON.stringify(example)}.`
+                    message: `Expected integer to be less than or equal to ${rules.max}. Example is ${example}.`
                 }
             ];
         }
@@ -345,7 +345,7 @@ function validateIntegerWithRules({
         if (integer % rules.multipleOf !== 0) {
             return [
                 {
-                    message: `Expected integer to be a multiple of ${rules.multipleOf}. Example is ${JSON.stringify(example)}.`
+                    message: `Expected integer to be a multiple of ${rules.multipleOf}. Example is ${example}.`
                 }
             ];
         }
@@ -471,7 +471,7 @@ function createValidator(
         if (validate(example)) {
             return [];
         }
-        return getViolationsForMisshapenExample(JSON.stringify(example), expectedTypeIncludingArticle);
+        return getViolationsForMisshapenExample(example, expectedTypeIncludingArticle);
     };
 }
 
