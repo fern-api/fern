@@ -5,7 +5,7 @@ import {
 } from "@fern-api/browser-compatible-base-generator";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
-import { IntermediateRepresentation, TypeDeclaration, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
 import { capitalize, snakeCase } from "lodash-es";
 import { RubyTypeMapper } from "./RubyTypeMapper";
 
@@ -65,30 +65,6 @@ export abstract class AbstractRubyGeneratorContext<
             name: "Types",
             statements: []
         });
-    }
-
-    public isOptional(typeReference: TypeReference): boolean {
-        switch (typeReference.type) {
-            case "container":
-                if (typeReference.container.type === "optional") {
-                    return true;
-                }
-                if (typeReference.container.type === "nullable") {
-                    return this.isOptional(typeReference.container.nullable);
-                }
-                return false;
-            case "named": {
-                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
-                if (typeDeclaration.shape.type === "alias") {
-                    return this.isOptional(typeDeclaration.shape.aliasOf);
-                }
-                return false;
-            }
-            case "unknown":
-                return false;
-            case "primitive":
-                return false;
-        }
     }
 
     protected snakeNames(typeDeclaration: TypeDeclaration): string[] {
