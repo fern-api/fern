@@ -90,6 +90,13 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             }
         }
 
+        // Generate wire tests if enabled
+        if (context.customConfig["enable-wire-tests"]) {
+            const { WireTestGenerator } = await import("./wire-tests/WireTestGenerator");
+            const wireTestGenerator = new WireTestGenerator(context);
+            await wireTestGenerator.generate();
+        }
+
         await context.project.persist();
     }
 
