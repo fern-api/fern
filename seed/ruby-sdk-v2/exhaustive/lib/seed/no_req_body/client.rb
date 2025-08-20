@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
   module NoReqBody
@@ -13,22 +14,19 @@ module Seed
         _response = @client.send(_request)
         if _response.code >= "200" && _response.code < "300"
           return Seed::Types::Object_::Types::ObjectWithOptionalField.load(_response.body)
-        else
-          raise _response.body
         end
+
+        raise _response.body
       end
 
       # @return [String]
       def post_with_no_request_body(request_options: {}, **params)
         _request = params
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return 
-        else
-          raise _response.body
-        end
-      end
+        return if _response.code >= "200" && _response.code < "300"
 
+        raise _response.body
+      end
     end
   end
 end
