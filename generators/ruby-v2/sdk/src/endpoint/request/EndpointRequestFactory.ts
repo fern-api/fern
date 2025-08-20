@@ -26,7 +26,7 @@ export function createEndpointRequest({
             if (endpoint.requestBody?.type === "fileUpload") {
                 return new FileUploadEndpointRequest(context, sdkRequest, endpoint, endpoint.requestBody);
             }
-            return new WrappedEndpointRequest({context, sdkRequest, serviceId, wrapper, endpoint});
+            return new WrappedEndpointRequest({ context, sdkRequest, serviceId, wrapper, endpoint });
         },
         justRequestBody: (value) => {
             if (value.type === "bytes") {

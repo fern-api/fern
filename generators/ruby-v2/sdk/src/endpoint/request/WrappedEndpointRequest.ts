@@ -1,16 +1,6 @@
 import { ruby } from "@fern-api/ruby-ast";
 
-import {
-    HttpEndpoint,
-    HttpHeader,
-    Name,
-    PrimitiveTypeV1,
-    QueryParameter,
-    SdkRequest,
-    SdkRequestWrapper,
-    ServiceId,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, SdkRequest, SdkRequestWrapper, ServiceId } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { RawClient } from "../http/RawClient";
@@ -87,7 +77,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             requestBodyReference: ruby.codeblock((writer) => {
                 writer.write("params");
             })
-        }
+        };
     }
 
     public getRequestType(): RawClient.RequestBodyType | undefined {
