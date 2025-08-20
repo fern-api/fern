@@ -1,5 +1,5 @@
 import { AbstractProject, File } from "@fern-api/base-generator";
-import { AbsoluteFilePath, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import dedent from "dedent";

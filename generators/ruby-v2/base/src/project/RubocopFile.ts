@@ -53,6 +53,6 @@ Metrics/PerceivedComplexity:
 
 Style/Documentation:
   Enabled: false
-`
+`;
     }
 }

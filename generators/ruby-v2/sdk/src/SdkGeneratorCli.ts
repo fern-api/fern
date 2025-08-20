@@ -94,7 +94,9 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 cwd: context.project.absolutePathToOutputDirectory,
                 doNotPipeOutput: true
             });
-        } catch (_) {}
+        } catch (_) {
+            // It's okay if rubocop fails to run.
+        }
     }
 
     private generateRequests(context: SdkGeneratorContext, service: HttpService, serviceId: string) {
