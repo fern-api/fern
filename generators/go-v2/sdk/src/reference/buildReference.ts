@@ -154,7 +154,7 @@ function getGoTypeString({
     context: SdkGeneratorContext;
     typeReference: TypeReference;
 }): string {
-    const goType = context.goTypeMapper.convert({ reference: typeReference })
+    const goType = context.goTypeMapper.convert({ reference: typeReference });
     return getSimpleTypeName(goType, context);
 }
 
@@ -187,7 +187,7 @@ function getEndpointParameters({
     endpoint.allPathParameters.forEach((pathParam) => {
         parameters.push({
             name: pathParam.name.camelCase.safeName,
-            type: getGoTypeString({ context, typeReference: pathParam.valueType}),
+            type: getGoTypeString({ context, typeReference: pathParam.valueType }),
             description: pathParam.docs,
             required: true
         });
@@ -196,7 +196,7 @@ function getEndpointParameters({
     endpoint.queryParameters.forEach((queryParam) => {
         parameters.push({
             name: queryParam.name.name.camelCase.safeName,
-            type: getGoTypeString({ context, typeReference: queryParam.valueType}),
+            type: getGoTypeString({ context, typeReference: queryParam.valueType }),
             description: queryParam.docs,
             required: !queryParam.allowMultiple
         });
@@ -205,7 +205,7 @@ function getEndpointParameters({
     endpoint.headers.forEach((header) => {
         parameters.push({
             name: header.name.name.camelCase.safeName,
-            type: getGoTypeString({ context, typeReference: header.valueType}),
+            type: getGoTypeString({ context, typeReference: header.valueType }),
             description: header.docs,
             required: true
         });
@@ -215,7 +215,7 @@ function getEndpointParameters({
         endpoint.requestBody.properties.forEach((property) => {
             parameters.push({
                 name: property.name.name.camelCase.safeName,
-                type: getGoTypeString({ context, typeReference: property.valueType}),
+                type: getGoTypeString({ context, typeReference: property.valueType }),
                 description: property.docs,
                 required: true
             });
@@ -223,7 +223,7 @@ function getEndpointParameters({
     } else if (endpoint.requestBody != null && endpoint.requestBody.type === "reference") {
         parameters.push({
             name: "request",
-            type: getGoTypeString({ context, typeReference: endpoint.requestBody.requestBodyType}),
+            type: getGoTypeString({ context, typeReference: endpoint.requestBody.requestBodyType }),
             description: endpoint.requestBody.docs,
             required: true
         });
@@ -231,7 +231,6 @@ function getEndpointParameters({
 
     return parameters;
 }
-
 
 function isRootServiceId({ context, serviceId }: { context: SdkGeneratorContext; serviceId: ServiceId }): boolean {
     return context.ir.rootPackage.service === serviceId;

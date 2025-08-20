@@ -739,9 +739,11 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             case "streamParameter":
                 const streamingResponse = this.getStreamingResponse(httpEndpoint);
                 if (!streamingResponse) {
-                    throw new Error(`Unable to parse streaming response for endpoint ${httpEndpoint.name.camelCase.safeName}`)
+                    throw new Error(
+                        `Unable to parse streaming response for endpoint ${httpEndpoint.name.camelCase.safeName}`
+                    );
                 }
-                return this.getStreamPayload(streamingResponse)
+                return this.getStreamPayload(streamingResponse);
             default:
                 assertNever(responseBody);
         }
