@@ -6,6 +6,7 @@ module Seed
       # @api private
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       class Request
 =======
       class Request Seed::Internal::Http::BaseRequest
@@ -13,6 +14,9 @@ module Seed
 =======
       class Request < Seed::Internal::Http::BaseRequest
 >>>>>>> 77d7a57281 (Small updates to SDK)
+=======
+      class Request Seed::Internal::Http::BaseRequest
+>>>>>>> 2354087acd (fix)
         attr_reader :body
 
         # @param base_url [String] The base URL for the request

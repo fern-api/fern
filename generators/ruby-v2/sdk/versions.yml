@@ -4,6 +4,14 @@
   changelogEntry:
     - type: fix
       summary: >-
+        Support multipart form uploads.
+  irVersion: 58
+
+- version: 1.0.0-rc11
+  createdAt: "2025-08-20"
+  changelogEntry:
+    - type: fix
+      summary: >-
         Install dependencies after generating the SDK to produce a Gemfile.lock.
   irVersion: 58
 
@@ -13,7 +21,6 @@
     - type: fix
       summary: >-
         Generate a Rubocop file and autocorrect the generated code.
-  irVersion: 58
 
 - version: 1.0.0-rc9
   createdAt: "2025-08-18"
