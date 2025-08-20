@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { rust, UseStatement } from "@fern-api/rust-codegen";
-import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
+import { generateRustTypeForTypeReference, isDateTimeType } from "@fern-api/rust-model";
 
 import {
     CursorPagination,
@@ -349,10 +349,12 @@ export class SubClientGenerator {
             const wireValue = queryParam.name.wireValue;
             const pattern = `Some(value)`;
 
-            // Handle string types properly - no JSON serialization
+            // Handle different types properly for query parameters
             let valueExpression: string;
             if (this.isStringType(queryParam.valueType)) {
                 valueExpression = "value.clone()";
+            } else if (this.isDateTimeTypeRecursive(queryParam.valueType)) {
+                valueExpression = "value.to_rfc3339()";
             } else if (this.isComplexType(queryParam.valueType)) {
                 valueExpression = "serde_json::to_string(&value).unwrap_or_default()";
             } else {
@@ -465,6 +467,8 @@ export class SubClientGenerator {
                 let valueExpression: string;
                 if (this.isStringType(param.valueType)) {
                     valueExpression = "&value";
+                } else if (this.isDateTimeTypeRecursive(param.valueType)) {
+                    valueExpression = "&value.to_rfc3339()";
                 } else if (this.isComplexType(param.valueType)) {
                     valueExpression = "&serde_json::to_string(&value).unwrap_or_default()";
                 } else {
@@ -644,7 +648,41 @@ export class SubClientGenerator {
                 return primitive.v1 === PrimitiveTypeV1.String;
             },
             named: () => false,
-            container: () => false,
+            container: (container) => {
+                // Check if it's an optional string
+                return container._visit({
+                    optional: (innerType) => this.isStringType(innerType),
+                    nullable: (innerType) => this.isStringType(innerType),
+                    list: () => false,
+                    set: () => false,
+                    map: () => false,
+                    literal: () => false,
+                    _other: () => false
+                });
+            },
+            unknown: () => false,
+            _other: () => false
+        });
+    }
+
+    private isDateTimeTypeRecursive(typeRef: TypeReference): boolean {
+        return TypeReference._visit(typeRef, {
+            primitive: (primitive) => {
+                return isDateTimeType(typeRef);
+            },
+            named: () => false,
+            container: (container) => {
+                // Check if it's an optional DateTime
+                return container._visit({
+                    optional: (innerType) => this.isDateTimeTypeRecursive(innerType),
+                    nullable: (innerType) => this.isDateTimeTypeRecursive(innerType),
+                    list: () => false,
+                    set: () => false,
+                    map: () => false,
+                    literal: () => false,
+                    _other: () => false
+                });
+            },
             unknown: () => false,
             _other: () => false
         });
