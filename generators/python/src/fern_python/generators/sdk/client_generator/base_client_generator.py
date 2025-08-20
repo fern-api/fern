@@ -2,16 +2,15 @@ import typing
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List, Optional
-from typing_extensions import Unpack
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .constants import DEFAULT_BODY_PARAMETER_VALUE
 from .endpoint_metadata_collector import EndpointMetadataCollector
 from .endpoint_response_code_writer import EndpointResponseCodeWriter
-from .generated_root_client import GeneratedRootClient
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.snippet import SnippetRegistry, SnippetWriter
+from typing_extensions import Unpack
 
 import fern.ir.resources as ir_types
 
@@ -22,6 +21,7 @@ class ConstructorParameter:
     type_hint: AST.TypeHint
     private_member_name: typing.Optional[str] = None
     initializer: Optional[AST.Expression] = None
+
 
 ConstructorParameterT = typing.TypeVar("ConstructorParameterT", bound=ConstructorParameter)
 
@@ -46,6 +46,7 @@ class BaseClientGeneratorKwargs(typing.TypedDict):
     endpoint_metadata_collector: EndpointMetadataCollector
     websocket: Optional[ir_types.WebSocketChannel]
 
+
 class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
     """Base class for client generators with common functionality."""
 
@@ -54,14 +55,14 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
     TOKEN_MEMBER_NAME = "_token"
 
     def __init__(self, **kwargs: Unpack[BaseClientGeneratorKwargs]):
-        self._context = kwargs['context']
-        self._package = kwargs['package']
-        self._class_name = kwargs['class_name']
-        self._async_class_name = kwargs['async_class_name']
-        self._snippet_registry = kwargs['snippet_registry']
-        self._snippet_writer = kwargs['snippet_writer']
-        self._endpoint_metadata_collector = kwargs['endpoint_metadata_collector']
-        self._websocket = kwargs['websocket']
+        self._context = kwargs["context"]
+        self._package = kwargs["package"]
+        self._class_name = kwargs["class_name"]
+        self._async_class_name = kwargs["async_class_name"]
+        self._snippet_registry = kwargs["snippet_registry"]
+        self._snippet_writer = kwargs["snippet_writer"]
+        self._endpoint_metadata_collector = kwargs["endpoint_metadata_collector"]
+        self._websocket = kwargs["websocket"]
         self._is_default_body_parameter_used = False
 
     def generate(self, source_file: SourceFile) -> None:

@@ -1,15 +1,15 @@
 from typing import List
 
-from fern_python.generators.sdk.client_generator.generated_root_client import GeneratedRootClient
-from typing_extensions import Unpack
-
-
 from .base_client_generator import BaseClientGeneratorKwargs, ConstructorParameter
 from .base_wrapped_client_generator import BaseWrappedClientGenerator
 from .websocket_connect_method_generator import WebsocketConnectMethodGenerator
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
+from fern_python.generators.sdk.client_generator.generated_root_client import GeneratedRootClient
+from typing_extensions import Unpack
+
 import fern.ir.resources as ir_types
+
 
 class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
     def __init__(
@@ -23,7 +23,6 @@ class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
         )
         self._subpackage_id = subpackage_id
         self._generated_root_client = generated_root_client
-
 
     def generate(self, source_file: SourceFile) -> None:
         class_declaration = self._create_class_declaration(is_async=False)

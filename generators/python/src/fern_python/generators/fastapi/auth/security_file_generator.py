@@ -1,3 +1,5 @@
+from typing import NoReturn
+
 from ..context import FastApiGeneratorContext
 from .basic_auth_generator import BasicAuthGenerator
 from .bearer_auth_generator import BearerAuthGenerator
@@ -5,12 +7,11 @@ from .header_auth_generator import HeaderAuthGenerator
 from fern_python.codegen import AST, Filepath, Project
 from fern_python.external_dependencies import FastAPI
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-from typing import NoReturn
-
 
 
 def raise_on_inferred_auth() -> NoReturn:
     raise ValueError("Inferred auth is not supported yet")
+
 
 class SecurityFileGenerator:
     _API_AUTH_TYPE = "ApiAuth"

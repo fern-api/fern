@@ -2,7 +2,6 @@ import typing
 from dataclasses import dataclass
 from typing import List, Optional
 
-
 from ..context.sdk_generator_context import SdkGeneratorContext
 from ..environment_generators import (
     GeneratedEnvironment,
@@ -20,7 +19,7 @@ from fern_python.generators.sdk.client_generator.endpoint_metadata_collector imp
 )
 from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
-    ConstructorParameter
+    ConstructorParameter,
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 
@@ -94,7 +93,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         exclude_auth = self._oauth_scheme is not None
 
         self._constructor_info = client_wrapper_generator._get_constructor_info(exclude_auth=exclude_auth)
-        self._root_client_constructor_params = self._constructor_info.constructor_parameters 
+        self._root_client_constructor_params = self._constructor_info.constructor_parameters
         if self._context.ir.environments is not None and self._context.ir.environments.default_environment is None:
             environment_constructor_parameter = client_wrapper_generator._get_environment_constructor_parameter()
             self._root_client_constructor_params.append(environment_constructor_parameter)
@@ -219,7 +218,9 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
         snippet = self._context.source_file_factory.create_snippet()
         snippet.add_expression(
-            self._generated_root_client.async_instantiation if is_async else self._generated_root_client.sync_instantiation
+            self._generated_root_client.async_instantiation
+            if is_async
+            else self._generated_root_client.sync_instantiation
         )
         class_declaration = AST.ClassDeclaration(
             name=self._async_class_name if is_async else self._class_name,
@@ -228,9 +229,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     named_parameters=named_parameters,
                 ),
                 body=AST.CodeWriter(
-                    self._get_write_constructor_body(
-                        is_async=is_async
-                    ),
+                    self._get_write_constructor_body(is_async=is_async),
                 ),
             ),
             docstring=AST.Docstring(self._write_root_class_docstring),
@@ -296,7 +295,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
                         type_hint=(
                             AST.TypeHint(self._context.get_reference_to_environments_class())
-                            if self._environments_config is not None and self._environments_config.default_environment is not None
+                            if self._environments_config is not None
+                            and self._environments_config.default_environment is not None
                             else AST.TypeHint.optional(
                                 AST.TypeHint(self._context.get_reference_to_environments_class())
                             )
@@ -635,9 +635,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
         return parameters
 
-    def _get_write_constructor_body(
-        self, *, is_async: bool
-    ) -> CodeWriterFunction:
+    def _get_write_constructor_body(self, *, is_async: bool) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
             timeout_local_variable = "_defaulted_timeout"
             writer.write(f"{timeout_local_variable} = ")
@@ -983,9 +981,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     client_instantiation = AST.ClassInstantiation(
                         class_=client_class_reference,
                         args=[
-                            param.initializer
-                            for param in self._constructor_parameters
-                            if param.initializer is not None
+                            param.initializer for param in self._constructor_parameters if param.initializer is not None
                         ],
                     )
 

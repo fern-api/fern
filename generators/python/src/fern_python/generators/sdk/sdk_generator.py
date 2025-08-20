@@ -292,8 +292,7 @@ class SdkGenerator(AbstractGenerator):
 
         snippets = snippet_registry.snippets()
         if snippets is not None and (
-            generator_config.output.mode.get_as_union().type != "downloadFiles" or
-            ir.self_hosted
+            generator_config.output.mode.get_as_union().type != "downloadFiles" or ir.self_hosted
         ):
             self._maybe_write_snippets(
                 context=context,
@@ -341,7 +340,6 @@ class SdkGenerator(AbstractGenerator):
 
         if not (generator_config.output.mode.get_as_union().type == "downloadFiles"):
             as_is_copier.copy_to_project(project=project)
-
 
         test_fac = SnippetTestFactory(
             project=project,

@@ -3,17 +3,19 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import List, Optional
 
+import fern_python.generators.sdk.names as names
 from ..context.sdk_generator_context import SdkGeneratorContext
 from ..environment_generators import GeneratedEnvironment
 from fdr import PayloadInput, Template, TemplateInput
 from fern_python.codegen import AST, Project, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import httpx
+from fern_python.generators.sdk.client_generator.base_client_generator import (
+    ConstructorParameter as BaseClientGeneratorConstructorParameter,
+)
 from fern_python.generators.sdk.core_utilities.core_utilities import CoreUtilities
 from fern_python.snippet.template_utils import TemplateGenerator
-import fern_python.generators.sdk.names as names
 
-from fern_python.generators.sdk.client_generator.base_client_generator import ConstructorParameter as BaseClientGeneratorConstructorParameter
 import fern.ir.resources as ir_types
 
 
@@ -69,7 +71,7 @@ class ClientWrapperGenerator:
     STRING_OR_SUPPLIER_TYPE_HINT = AST.TypeHint.union(
         AST.TypeHint.str_(), AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_())
     )
-    
+
     HEADERS_CONSTRUCTOR_PARAMETER_NAME = "headers"
     HEADERS_CONSTRUCTOR_PARAMETER_DOCS = "Additional headers to send with every request."
     HEADERS_MEMBER_NAME = "_headers"
@@ -472,7 +474,9 @@ class ClientWrapperGenerator:
                     writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
                     params_empty = False
             for literal_header in literal_headers:
-                writer.write_line(f"self.{literal_header.private_member_name} = {literal_header.constructor_parameter_name}")
+                writer.write_line(
+                    f"self.{literal_header.private_member_name} = {literal_header.constructor_parameter_name}"
+                )
                 params_empty = False
             if params_empty:
                 writer.write_line("pass")
@@ -715,7 +719,7 @@ class ClientWrapperGenerator:
                     password_constructor_parameter,
                 ]
             )
-        
+
         # Add generic headers parameter
         headers_constructor_parameter = ConstructorParameter(
             constructor_parameter_name=ClientWrapperGenerator.HEADERS_CONSTRUCTOR_PARAMETER_NAME,
@@ -728,7 +732,7 @@ class ClientWrapperGenerator:
                 ),
                 body=AST.CodeWriter(f"return self.{ClientWrapperGenerator.HEADERS_MEMBER_NAME}"),
             ),
-            docs=ClientWrapperGenerator.HEADERS_CONSTRUCTOR_PARAMETER_DOCS
+            docs=ClientWrapperGenerator.HEADERS_CONSTRUCTOR_PARAMETER_DOCS,
         )
         parameters.append(headers_constructor_parameter)
 
