@@ -36,9 +36,11 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
 
         const modules = [
             this.context.getRootModule(),
-            ...this.subpackage.fernFilepath.allParts.map((path) => ruby.module({
-                name: path.pascalCase.safeName
-            }))
+            ...this.subpackage.fernFilepath.allParts.map((path) =>
+                ruby.module({
+                    name: path.pascalCase.safeName
+                })
+            )
         ];
 
         clientClass.addStatement(

@@ -47,24 +47,18 @@ export class HttpEndpointGenerator {
 
         const statements: ruby.AstNode[] = [];
 
-        if (endpoint.allPathParameters.length > 0) {
-            const pathParameterNames = endpoint.allPathParameters.map((pathParameter) =>
-                this.getPathParameterName({ pathParameter })
-            );
-            statements.push(ruby.codeblock((writer) => {
-                writer.writeLine(`_path_param_names = ["${pathParameterNames.join(`", "`)}"]`);
-                writer.writeLine(`${PATH_PARAMS_VN} = ${PARAMS_VN}.extract!(*_path_param_names)`);
-            }));
+        const queryParameterCodeBlock = request?.getQueryParameterCodeBlock();
+        if (queryParameterCodeBlock != null) {
+            statements.push(queryParameterCodeBlock.code);
+        }
+        const headerParameterCodeBlock = request?.getHeaderParameterCodeBlock();
+        if (headerParameterCodeBlock != null) {
+            statements.push(headerParameterCodeBlock.code);
         }
 
-        if (endpoint.queryParameters.length > 0) {
-            const queryParameterNames = endpoint.queryParameters.map((queryParameter) =>
-                this.getQueryParameterName({ queryParameter })
-            );
-            statements.push(ruby.codeblock((writer) => {
-                writer.writeLine(`_query_param_names = ["${queryParameterNames.join(`", "`)}"]`);
-                writer.writeLine(`${QUERY_PARAMS_VN} = ${PARAMS_VN}.extract!(*_query_param_names)`);
-            }));
+        const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
+        if (requestBodyCodeBlock?.code != null) {
+            statements.push(requestBodyCodeBlock.code);
         }
 
         const pathParameterReferences = this.getPathParameterReferences({ endpoint });
@@ -73,8 +67,8 @@ export class HttpEndpointGenerator {
             pathParameterReferences,
             endpoint,
             requestType: request?.getRequestType(),
-            queryBagReference: endpoint.queryParameters.length > 0 ? QUERY_PARAMS_VN : undefined,
-            bodyReference: request?.getRequestBodyCodeBlock()?.requestBodyReference
+            queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+            bodyReference: requestBodyCodeBlock?.requestBodyReference
         });
 
         if (sendRequestCodeBlock != null) {
@@ -91,9 +85,7 @@ export class HttpEndpointGenerator {
             ruby.codeblock(`${HTTP_RESPONSE_VN} = @client.send(${RAW_CLIENT_REQUEST_VARIABLE_NAME})`),
             ruby.ifElse({
                 if: {
-                    condition: ruby.codeblock(
-                        `${HTTP_RESPONSE_VN}.code >= "200" && ${HTTP_RESPONSE_VN}.code < "300"`
-                    ),
+                    condition: ruby.codeblock(`${HTTP_RESPONSE_VN}.code >= "200" && ${HTTP_RESPONSE_VN}.code < "300"`),
                     thenBody: [
                         ruby.codeblock((writer) => {
                             if (endpoint.response?.body == null) {
@@ -137,19 +129,6 @@ export class HttpEndpointGenerator {
             },
             statements
         });
-    }
-
-    private getQueryParameterReferences({ endpoint }: { endpoint: HttpEndpoint }): Record<string, string> {
-        const queryParameterReferences: Record<string, string> = {};
-        for (const queryParam of endpoint.queryParameters) {
-            const parameterName = queryParam.name.name.originalName;
-            queryParameterReferences[queryParam.name.name.originalName] = `params[:${parameterName}]`;
-        }
-        return queryParameterReferences;
-    }
-
-    private getQueryParameterName({ queryParameter }: { queryParameter: QueryParameter }): string {
-        return queryParameter.name.name.originalName;
     }
 
     private getPathParameterReferences({ endpoint }: { endpoint: HttpEndpoint }): Record<string, string> {

@@ -7,6 +7,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     HttpService,
     IntermediateRepresentation,
+    Name,
     ServiceId,
     Subpackage,
     SubpackageId,
@@ -157,6 +158,25 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
                 ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName),
                 "Types"
             ]
+        });
+    }
+
+    public getModuleNamesForServiceId(serviceId: ServiceId): string[] {
+        return [
+            this.getRootModule().name,
+            ...this.getSubpackageForServiceId(serviceId).fernFilepath.allParts.map((part) => part.pascalCase.safeName),
+            this.getTypesModule().name
+        ];
+    }
+
+    public getModulesForServiceId(serviceId: ServiceId): ruby.Module_[] {
+        return this.getModuleNamesForServiceId(serviceId).map((part) => ruby.module({ name: part }));
+    }
+
+    public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): ruby.ClassReference {
+        return ruby.classReference({
+            name: requestName.pascalCase.safeName,
+            modules: this.getModuleNamesForServiceId(serviceId)
         });
     }
 
