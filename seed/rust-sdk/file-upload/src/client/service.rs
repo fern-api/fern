@@ -32,26 +32,26 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn just_file_with_query_params(&self, maybe_string: Option<Option<String>>, integer: Option<i32>, maybe_integer: Option<Option<i32>>, list_of_strings: Option<String>, optional_list_of_strings: Option<Option<String>>, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn just_file_with_query_params(&self, maybe_string: Option<String>, integer: Option<i32>, maybe_integer: Option<i32>, list_of_strings: Option<String>, optional_list_of_strings: Option<String>, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ClientError> {
         self.http_client.execute_request(
             Method::POST,
             "/just-file-with-query-params",
             Some(serde_json::to_value(request).unwrap_or_default()),
             {
             let mut query_params = Vec::new();
-            if let Some(Some(value)) = maybe_string {
+            if let Some(value) = maybe_string {
                 query_params.push(("maybeString".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(value) = integer {
                 query_params.push(("integer".to_string(), value.to_string()));
             }
-            if let Some(Some(value)) = maybe_integer {
+            if let Some(value) = maybe_integer {
                 query_params.push(("maybeInteger".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(value) = list_of_strings {
-                query_params.push(("listOfStrings".to_string(), value.to_string()));
+                query_params.push(("listOfStrings".to_string(), value.clone()));
             }
-            if let Some(Some(value)) = optional_list_of_strings {
+            if let Some(value) = optional_list_of_strings {
                 query_params.push(("optionalListOfStrings".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             Some(query_params)

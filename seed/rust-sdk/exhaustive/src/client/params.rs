@@ -38,14 +38,18 @@ impl ParamsClient {
             "/params",
             None,
             {
-            let mut query_params = Vec::new();
+            let mut query_builder = crate::QueryParameterBuilder::new();
             if let Some(value) = query {
-                query_params.push(("query".to_string(), value.to_string()));
+                // Try to parse as structured query, fall back to simple if it fails
+                if let Err(_) = query_builder.add_structured_query(&value) {
+                    query_builder.add_simple("query", &value);
+                }
             }
             if let Some(value) = number {
-                query_params.push(("number".to_string(), value.to_string()));
+                query_builder.add_simple("number", &value.to_string());
             }
-            Some(query_params)
+            let params = query_builder.build();
+            if params.is_empty() { None } else { Some(params) }
         },
             options,
         ).await
@@ -57,14 +61,18 @@ impl ParamsClient {
             "/params",
             None,
             {
-            let mut query_params = Vec::new();
+            let mut query_builder = crate::QueryParameterBuilder::new();
             if let Some(value) = query {
-                query_params.push(("query".to_string(), value.to_string()));
+                // Try to parse as structured query, fall back to simple if it fails
+                if let Err(_) = query_builder.add_structured_query(&value) {
+                    query_builder.add_simple("query", &value);
+                }
             }
             if let Some(value) = number {
-                query_params.push(("number".to_string(), value.to_string()));
+                query_builder.add_simple("number", &value.to_string());
             }
-            Some(query_params)
+            let params = query_builder.build();
+            if params.is_empty() { None } else { Some(params) }
         },
             options,
         ).await
@@ -76,11 +84,15 @@ impl ParamsClient {
             &format!("/params/path-query/{}", param),
             None,
             {
-            let mut query_params = Vec::new();
+            let mut query_builder = crate::QueryParameterBuilder::new();
             if let Some(value) = query {
-                query_params.push(("query".to_string(), value.to_string()));
+                // Try to parse as structured query, fall back to simple if it fails
+                if let Err(_) = query_builder.add_structured_query(&value) {
+                    query_builder.add_simple("query", &value);
+                }
             }
-            Some(query_params)
+            let params = query_builder.build();
+            if params.is_empty() { None } else { Some(params) }
         },
             options,
         ).await
@@ -92,11 +104,15 @@ impl ParamsClient {
             &format!("/params/path-query/{}", param),
             None,
             {
-            let mut query_params = Vec::new();
+            let mut query_builder = crate::QueryParameterBuilder::new();
             if let Some(value) = query {
-                query_params.push(("query".to_string(), value.to_string()));
+                // Try to parse as structured query, fall back to simple if it fails
+                if let Err(_) = query_builder.add_structured_query(&value) {
+                    query_builder.add_simple("query", &value);
+                }
             }
-            Some(query_params)
+            let params = query_builder.build();
+            if params.is_empty() { None } else { Some(params) }
         },
             options,
         ).await

@@ -13,17 +13,17 @@ impl UsersClient {
         Ok(Self { http_client })
     }
 
-    pub async fn list_with_cursor_pagination(&self, page: Option<Option<i32>>, per_page: Option<Option<i32>>, order: Option<Option<Order>>, starting_after: Option<Option<String>>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
+    pub async fn list_with_cursor_pagination(&self, page: Option<i32>, per_page: Option<i32>, order: Option<Order>, starting_after: Option<String>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = {
             let mut query_params = Vec::new();
-            if let Some(Some(value)) = page {
+            if let Some(value) = page {
                 query_params.push(("page".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
-            if let Some(Some(value)) = per_page {
+            if let Some(value) = per_page {
                 query_params.push(("per_page".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
-            if let Some(Some(value)) = order {
+            if let Some(value) = order {
                 query_params.push(("order".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             Some(query_params)
@@ -75,7 +75,7 @@ impl UsersClient {
             )
     }
 
-    pub async fn list_with_mixed_type_cursor_pagination(&self, cursor: Option<Option<String>>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
+    pub async fn list_with_mixed_type_cursor_pagination(&self, cursor: Option<String>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = None;
             let options_clone = options.clone();
@@ -148,7 +148,7 @@ impl UsersClient {
                         let response: serde_json::Value = client.execute_request(
                             Method::POST,
                             "/users",
-                            Some(serde_json::to_value(request_for_async).unwrap_or_default()),
+                            Some(serde_json::to_value(request).unwrap_or_default()),
                             Some(query_params),
                             options_for_request,
                         ).await?;
@@ -175,17 +175,17 @@ impl UsersClient {
             )
     }
 
-    pub async fn list_with_offset_pagination(&self, page: Option<Option<i32>>, per_page: Option<Option<i32>>, order: Option<Option<Order>>, starting_after: Option<Option<String>>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
+    pub async fn list_with_offset_pagination(&self, page: Option<i32>, per_page: Option<i32>, order: Option<Order>, starting_after: Option<String>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = {
             let mut query_params = Vec::new();
-            if let Some(Some(value)) = per_page {
+            if let Some(value) = per_page {
                 query_params.push(("per_page".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
-            if let Some(Some(value)) = order {
+            if let Some(value) = order {
                 query_params.push(("order".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
-            if let Some(Some(value)) = starting_after {
+            if let Some(value) = starting_after {
                 query_params.push(("starting_after".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             Some(query_params)
@@ -249,17 +249,17 @@ impl UsersClient {
             )
     }
 
-    pub async fn list_with_double_offset_pagination(&self, page: Option<Option<f64>>, per_page: Option<Option<f64>>, order: Option<Option<Order>>, starting_after: Option<Option<String>>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
+    pub async fn list_with_double_offset_pagination(&self, page: Option<f64>, per_page: Option<f64>, order: Option<Order>, starting_after: Option<String>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = {
             let mut query_params = Vec::new();
-            if let Some(Some(value)) = per_page {
+            if let Some(value) = per_page {
                 query_params.push(("per_page".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
-            if let Some(Some(value)) = order {
+            if let Some(value) = order {
                 query_params.push(("order".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
-            if let Some(Some(value)) = starting_after {
+            if let Some(value) = starting_after {
                 query_params.push(("starting_after".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             Some(query_params)
@@ -347,7 +347,7 @@ impl UsersClient {
                         let response: serde_json::Value = client.execute_request(
                             Method::POST,
                             "/users",
-                            Some(serde_json::to_value(request_for_async).unwrap_or_default()),
+                            Some(serde_json::to_value(request).unwrap_or_default()),
                             Some(query_params),
                             options_for_request,
                         ).await?;
@@ -385,11 +385,11 @@ impl UsersClient {
             )
     }
 
-    pub async fn list_with_offset_step_pagination(&self, page: Option<Option<i32>>, limit: Option<Option<i32>>, order: Option<Option<Order>>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
+    pub async fn list_with_offset_step_pagination(&self, page: Option<i32>, limit: Option<i32>, order: Option<Order>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = {
             let mut query_params = Vec::new();
-            if let Some(Some(value)) = order {
+            if let Some(value) = order {
                 query_params.push(("order".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             Some(query_params)
@@ -453,11 +453,11 @@ impl UsersClient {
             )
     }
 
-    pub async fn list_with_offset_pagination_has_next_page(&self, page: Option<Option<i32>>, limit: Option<Option<i32>>, order: Option<Option<Order>>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
+    pub async fn list_with_offset_pagination_has_next_page(&self, page: Option<i32>, limit: Option<i32>, order: Option<Order>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = {
             let mut query_params = Vec::new();
-            if let Some(Some(value)) = order {
+            if let Some(value) = order {
                 query_params.push(("order".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             Some(query_params)
@@ -521,7 +521,7 @@ impl UsersClient {
             )
     }
 
-    pub async fn list_with_extended_results(&self, cursor: Option<Option<uuid::Uuid>>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
+    pub async fn list_with_extended_results(&self, cursor: Option<uuid::Uuid>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = None;
             let options_clone = options.clone();
@@ -571,7 +571,7 @@ impl UsersClient {
             )
     }
 
-    pub async fn list_with_extended_results_and_optional_data(&self, cursor: Option<Option<uuid::Uuid>>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
+    pub async fn list_with_extended_results_and_optional_data(&self, cursor: Option<uuid::Uuid>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = None;
             let options_clone = options.clone();
@@ -621,7 +621,7 @@ impl UsersClient {
             )
     }
 
-    pub async fn list_usernames(&self, starting_after: Option<Option<String>>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
+    pub async fn list_usernames(&self, starting_after: Option<String>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = None;
             let options_clone = options.clone();
@@ -671,7 +671,7 @@ impl UsersClient {
             )
     }
 
-    pub async fn list_with_global_config(&self, offset: Option<Option<i32>>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
+    pub async fn list_with_global_config(&self, offset: Option<i32>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = None;
             let options_clone = options.clone();

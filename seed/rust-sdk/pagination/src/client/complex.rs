@@ -37,8 +37,8 @@ impl ComplexClient {
                     Box::pin(async move {
                         let response: serde_json::Value = client.execute_request(
                             Method::POST,
-                            &format!("{}", index_for_async),
-                            Some(serde_json::to_value(request_for_async).unwrap_or_default()),
+                            &format!("{}", index),
+                            Some(serde_json::to_value(request).unwrap_or_default()),
                             Some(query_params),
                             options_for_request,
                         ).await?;
