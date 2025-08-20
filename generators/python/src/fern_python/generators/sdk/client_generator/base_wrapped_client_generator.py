@@ -1,12 +1,13 @@
-from .base_client_generator import BaseClientGenerator
+from .base_client_generator import BaseClientGenerator, ConstructorParameterT
 from .endpoint_function_generator import EndpointFunctionGenerator
 from .generated_root_client import GeneratedRootClient
 from fern_python.codegen import AST
 
 import fern.ir.resources as ir_types
+from typing import Generic
 
 
-class BaseWrappedClientGenerator(BaseClientGenerator):
+class BaseWrappedClientGenerator(Generic[ConstructorParameterT], BaseClientGenerator[ConstructorParameterT]):
     """Base class for client generators that wrap a raw client."""
 
     def _create_with_raw_response_method(self, *, is_async: bool) -> AST.FunctionDeclaration:

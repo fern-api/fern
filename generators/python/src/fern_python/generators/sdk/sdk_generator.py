@@ -451,7 +451,7 @@ class SdkGenerator(AbstractGenerator):
         source_file = context.source_file_factory.create(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         )
-        generated_root_client = RootClientGenerator(
+        root_client_generator = RootClientGenerator(
             context=context,
             package=ir.root_package,
             generated_environment=generated_environment,
@@ -462,7 +462,9 @@ class SdkGenerator(AbstractGenerator):
             oauth_scheme=oauth_scheme,
             endpoint_metadata_collector=endpoint_metadata_collector,
             websocket=None,
-        ).generate(source_file=source_file)
+        )
+        root_client_generator.generate(source_file=source_file)
+        generated_root_client = root_client_generator.get_generated_root_client()
         project.write_source_file(source_file=source_file, filepath=filepath)
 
         if ir.root_package.service is not None:

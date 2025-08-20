@@ -2,6 +2,7 @@ import typing
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List, Optional
+from typing_extensions import Unpack
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .constants import DEFAULT_BODY_PARAMETER_VALUE
@@ -22,6 +23,8 @@ class ConstructorParameter:
     private_member_name: typing.Optional[str] = None
     initializer: Optional[AST.Expression] = None
 
+ConstructorParameterT = typing.TypeVar("ConstructorParameterT", bound=ConstructorParameter)
+
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [
@@ -33,37 +36,32 @@ HTTPX_PRIMITIVE_DATA_TYPES = set(
 )
 
 
-class BaseClientGenerator(ABC):
+class BaseClientGeneratorKwargs(typing.TypedDict):
+    context: SdkGeneratorContext
+    package: ir_types.Package
+    class_name: str
+    async_class_name: str
+    snippet_registry: SnippetRegistry
+    snippet_writer: SnippetWriter
+    endpoint_metadata_collector: EndpointMetadataCollector
+    websocket: Optional[ir_types.WebSocketChannel]
+
+class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
     """Base class for client generators with common functionality."""
 
     RESPONSE_JSON_VARIABLE = EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE
     TOKEN_CONSTRUCTOR_PARAMETER_NAME = "token"
     TOKEN_MEMBER_NAME = "_token"
 
-    def __init__(
-        self,
-        *,
-        context: SdkGeneratorContext,
-        package: ir_types.Package,
-        subpackage_id: Optional[ir_types.SubpackageId],
-        class_name: str,
-        async_class_name: str,
-        generated_root_client: Optional[GeneratedRootClient],
-        snippet_registry: SnippetRegistry,
-        snippet_writer: SnippetWriter,
-        endpoint_metadata_collector: EndpointMetadataCollector,
-        websocket: Optional[ir_types.WebSocketChannel],
-    ):
-        self._context = context
-        self._package = package
-        self._subpackage_id = subpackage_id
-        self._class_name = class_name
-        self._async_class_name = async_class_name
-        self._generated_root_client = generated_root_client
-        self._snippet_registry = snippet_registry
-        self._snippet_writer = snippet_writer
-        self._endpoint_metadata_collector = endpoint_metadata_collector
-        self._websocket = websocket
+    def __init__(self, **kwargs: Unpack[BaseClientGeneratorKwargs]):
+        self._context = kwargs['context']
+        self._package = kwargs['package']
+        self._class_name = kwargs['class_name']
+        self._async_class_name = kwargs['async_class_name']
+        self._snippet_registry = kwargs['snippet_registry']
+        self._snippet_writer = kwargs['snippet_writer']
+        self._endpoint_metadata_collector = kwargs['endpoint_metadata_collector']
+        self._websocket = kwargs['websocket']
         self._is_default_body_parameter_used = False
 
     def generate(self, source_file: SourceFile) -> None:
@@ -165,7 +163,7 @@ class BaseClientGenerator(ABC):
         """
 
     @abstractmethod
-    def _get_constructor_parameters(self, *, is_async: bool) -> List[ConstructorParameter]:
+    def _get_constructor_parameters(self, *, is_async: bool) -> typing.List[ConstructorParameterT]:
         """
         Get constructor parameters for the client.
         This method should be implemented by subclasses.

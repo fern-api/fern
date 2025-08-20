@@ -131,8 +131,8 @@ class SnippetTemplateFactory:
         for param in client.parameters:
             if param.template is not None:
                 client_template_inputs.append(TemplateInput.factory.template(param.template))
-            elif param.instantiation is not None:
-                client_non_template_inputs.append(param.instantiation)
+            elif param.initializer is not None:
+                client_non_template_inputs.append(param.initializer)
 
         # Create a new instantiation snippet as the one on the root client on self already
         # has examples inputted into it, and we need the template sentinel present for auth.

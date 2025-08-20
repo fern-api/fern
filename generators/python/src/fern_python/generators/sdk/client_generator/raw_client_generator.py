@@ -7,7 +7,7 @@ from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 
 
-class RawClientGenerator(BaseClientGenerator):
+class RawClientGenerator(BaseClientGenerator[ConstructorParameter]):
     def generate(self, source_file: SourceFile) -> None:
         class_declaration = self._create_class_declaration(is_async=False)
         if self._is_default_body_parameter_used:

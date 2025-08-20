@@ -2,6 +2,7 @@ import typing
 from dataclasses import dataclass
 from typing import List, Optional
 
+
 from ..context.sdk_generator_context import SdkGeneratorContext
 from ..environment_generators import (
     GeneratedEnvironment,
@@ -19,7 +20,7 @@ from fern_python.generators.sdk.client_generator.endpoint_metadata_collector imp
 )
 from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
-    ConstructorParameter,
+    ConstructorParameter
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 
@@ -27,17 +28,13 @@ import fern.ir.resources as ir_types
 
 
 @dataclass
-class RootClientConstructorParameter:
-    constructor_parameter_name: str
-    type_hint: AST.TypeHint
+class RootClientConstructorParameter(ConstructorParameter):
     validation_check: typing.Optional[AST.Expression] = None
-    private_member_name: typing.Optional[str] = None
-    initializer: Optional[AST.Expression] = None
     exclude_from_wrapper_construction: Optional[bool] = False
     docs: Optional[str] = None
 
 
-class RootClientGenerator(BaseWrappedClientGenerator):
+class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParameter]):
     ROOT_CLASS_DOCSTRING = (
         "Use this class to access the different functions within the SDK. "
         "You can instantiate any number of clients with different configuration that will propagate to these functions."
@@ -78,10 +75,8 @@ class RootClientGenerator(BaseWrappedClientGenerator):
         super().__init__(
             context=context,
             package=package,
-            subpackage_id=None,
             class_name=class_name,
             async_class_name=async_class_name,
-            generated_root_client=None,
             snippet_registry=snippet_registry,
             snippet_writer=snippet_writer,
             endpoint_metadata_collector=endpoint_metadata_collector,
@@ -119,7 +114,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
                         constructor_parameter_name="client_id",
                         type_hint=AST.TypeHint.str_(),
                         private_member_name="client_id",
-                        instantiation=AST.Expression('client_id="YOUR_CLIENT_ID"'),
+                        initializer=AST.Expression('client_id="YOUR_CLIENT_ID"'),
                         # TODO: support OAuth credentials in templates
                         # template=TemplateGenerator.string_template(
                         #     is_optional=False,
@@ -140,7 +135,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
                         constructor_parameter_name="client_secret",
                         type_hint=AST.TypeHint.str_(),
                         private_member_name="client_secret",
-                        instantiation=AST.Expression('client_secret="YOUR_CLIENT_SECRET"'),
+                        initializer=AST.Expression('client_secret="YOUR_CLIENT_SECRET"'),
                         # TODO: support OAuth credentials in templates
                         # template=TemplateGenerator.string_template(
                         #     is_optional=False,
@@ -166,23 +161,24 @@ class RootClientGenerator(BaseWrappedClientGenerator):
                 )
             )
 
-    def generate(self, source_file: SourceFile) -> GeneratedRootClient:
-        exported_client_class_name = self._context.get_class_name_for_exported_root_client()
-        builder = RootClientGenerator.GeneratedRootClientBuilder(
-            # HACK: This is a hack to get the module path for the root client to be from the root of the project
-            module_path=self._context.get_module_path_in_project(()),
-            class_name=self._context.get_class_name_for_exported_root_client(),
-            async_class_name="Async" + exported_client_class_name,
-            constructor_parameters=self._root_client_constructor_params,
-        )
-        generated_root_client = builder.build()
+            exported_client_class_name = self._context.get_class_name_for_exported_root_client()
+            self._generated_root_client = RootClientGenerator.GeneratedRootClientBuilder(
+                # HACK: This is a hack to get the module path for the root client to be from the root of the project
+                module_path=self._context.get_module_path_in_project(()),
+                class_name=self._context.get_class_name_for_exported_root_client(),
+                async_class_name="Async" + exported_client_class_name,
+                constructor_parameters=self._root_client_constructor_params,
+            ).build()
+
+    def get_generated_root_client(self) -> GeneratedRootClient:
+        return self._generated_root_client
+
+    def generate(self, source_file: SourceFile) -> None:
         class_declaration = self._create_class_declaration(
             is_async=False,
-            generated_root_client=generated_root_client,
         )
         async_class_declaration = self._create_class_declaration(
             is_async=True,
-            generated_root_client=generated_root_client,
         )
 
         if self._is_default_body_parameter_used:
@@ -200,7 +196,6 @@ class RootClientGenerator(BaseWrappedClientGenerator):
             environments_union = self._environments_config.environments.get_as_union()
             if environments_union.type == "singleBaseUrl":
                 source_file.add_declaration(self._get_base_url_function_declaration(), should_export=False)
-        return generated_root_client
 
     def _write_root_class_docstring(self, writer: AST.NodeWriter) -> None:
         writer.write_line(self.ROOT_CLASS_DOCSTRING)
@@ -209,7 +204,6 @@ class RootClientGenerator(BaseWrappedClientGenerator):
         self,
         *,
         is_async: bool,
-        generated_root_client: GeneratedRootClient,
     ) -> AST.ClassDeclaration:
         constructor_parameters = self._get_constructor_parameters(is_async=is_async)
 
@@ -225,7 +219,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
 
         snippet = self._context.source_file_factory.create_snippet()
         snippet.add_expression(
-            generated_root_client.async_instantiation if is_async else generated_root_client.sync_instantiation
+            self._generated_root_client.async_instantiation if is_async else self._generated_root_client.sync_instantiation
         )
         class_declaration = AST.ClassDeclaration(
             name=self._async_class_name if is_async else self._class_name,
@@ -235,8 +229,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
                 ),
                 body=AST.CodeWriter(
                     self._get_write_constructor_body(
-                        is_async=is_async,
-                        constructor_parameters=constructor_parameters,
+                        is_async=is_async
                     ),
                 ),
             ),
@@ -259,7 +252,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
                         idempotency_headers=self._context.ir.idempotency_headers,
                         is_async=is_async,
                         client_wrapper_member_name=f"{self._get_raw_client_member_name()}.{self._get_client_wrapper_member_name()}",
-                        generated_root_client=generated_root_client,
+                        generated_root_client=self._generated_root_client,
                         snippet_writer=self._snippet_writer,
                         endpoint_metadata_collector=self._endpoint_metadata_collector,
                         is_raw_client=False,
@@ -283,7 +276,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
                 else:
                     # For non-stream parameter endpoints, use the regular approach
                     wrapper_method = self._create_wrapper_method(
-                        endpoint=endpoint, is_async=is_async, generated_root_client=generated_root_client
+                        endpoint=endpoint, is_async=is_async, generated_root_client=self._generated_root_client
                     )
                     class_declaration.add_method(wrapper_method)
 
@@ -303,7 +296,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
                         name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
                         type_hint=(
                             AST.TypeHint(self._context.get_reference_to_environments_class())
-                            if self._environments_config.default_environment is not None
+                            if self._environments_config is not None and self._environments_config.default_environment is not None
                             else AST.TypeHint.optional(
                                 AST.TypeHint(self._context.get_reference_to_environments_class())
                             )
@@ -323,7 +316,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
             else self._context.get_class_name_for_generated_raw_root_client()
         )
 
-    def get_raw_client_class_reference(self, *, is_async: bool) -> AST.TypeHint:
+    def get_raw_client_class_reference(self, *, is_async: bool) -> AST.ClassReference:
         return (
             self._context.get_async_raw_client_class_reference_for_root_client()
             if is_async
@@ -643,7 +636,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
         return parameters
 
     def _get_write_constructor_body(
-        self, *, is_async: bool, constructor_parameters: List[RootClientConstructorParameter]
+        self, *, is_async: bool
     ) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
             timeout_local_variable = "_defaulted_timeout"
@@ -670,6 +663,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
                 ),
             )
 
+            constructor_parameters = self._get_constructor_parameters(is_async=is_async)
             for param in constructor_parameters:
                 if param.validation_check is not None:
                     writer.write_node(param.validation_check)
@@ -723,7 +717,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
                 is_async=is_async,
                 use_oauth_token_provider=use_oauth_token_provider,
             )
-            for param in self._get_constructor_parameters(is_async=is_async):
+            for param in constructor_parameters:
                 if param.private_member_name is not None:
                     writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
             writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
@@ -930,11 +924,11 @@ class RootClientGenerator(BaseWrappedClientGenerator):
             )
         )
 
-        for wrapper_param in constructor_info.literal_headers:
+        for literal_header in constructor_info.literal_headers:
             client_wrapper_constructor_kwargs.append(
                 (
-                    wrapper_param.header.name.name.snake_case.safe_name,
-                    AST.Expression(wrapper_param.header.name.name.snake_case.safe_name),
+                    literal_header.header.name.name.snake_case.safe_name,
+                    AST.Expression(literal_header.header.name.name.snake_case.safe_name),
                 )
             )
 
@@ -989,9 +983,9 @@ class RootClientGenerator(BaseWrappedClientGenerator):
                     client_instantiation = AST.ClassInstantiation(
                         class_=client_class_reference,
                         args=[
-                            param.instantiation
+                            param.initializer
                             for param in self._constructor_parameters
-                            if param.instantiation is not None
+                            if param.initializer is not None
                         ],
                     )
 
