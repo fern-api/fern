@@ -90,7 +90,21 @@ export class RawClient {
                     writer.write(`)`);
                 });
         }
-        return undefined;
+        return ruby.codeblock((writer) => {
+            writer.writeLine(
+                `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalJSONRequest()}.new(`
+            );
+            writer.indent();
+            writer.writeLine(
+                `base_url: request_options[:base_url] || ${this.context.getEnvironmentsClassReference().toString()}::SANDBOX,`
+            );
+            writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
+            writer.write(`path: `);
+            this.writePathString({ writer, endpoint, pathParameterReferences: {} });
+            writer.newLine();
+            writer.dedent();
+            writer.write(`)`);
+        });
     }
 
     private writePathString({
