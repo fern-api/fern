@@ -31,6 +31,26 @@ impl ServiceClient {
         ).await
     }
 
+    pub async fn named_patch_with_mixed(&self, id: &String, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ClientError> {
+        self.http_client.execute_request(
+            Method::PATCH,
+            &format!("named-mixed/{}", id),
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
+    }
+
+    pub async fn optional_merge_patch_test(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ClientError> {
+        self.http_client.execute_request(
+            Method::PATCH,
+            "optional-merge-patch-test",
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
+    }
+
     pub async fn regular_patch(&self, id: &String, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ClientError> {
         self.http_client.execute_request(
             Method::PATCH,
