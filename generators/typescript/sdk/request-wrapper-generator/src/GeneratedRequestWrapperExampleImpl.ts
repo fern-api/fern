@@ -150,12 +150,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                 const properties = this.buildInlinedRequestBodyProperties(body, generatedType, context, opts);
                 
                 if (this.useLegacyFlatteningLogic) {
-                    return [
-                        ts.factory.createPropertyAssignment(
-                            getPropertyKey(this.bodyPropertyName),
-                            ts.factory.createObjectLiteralExpression(properties, true)
-                        )
-                    ];
+                    return properties;
                 } else {
                     if (this.flattenRequestParameters) {
                         return properties;

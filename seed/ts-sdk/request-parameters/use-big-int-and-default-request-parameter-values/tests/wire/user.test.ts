@@ -14,11 +14,9 @@ describe("User", () => {
         server.mockEndpoint().post("/user/username").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
 
         const response = await client.user.createUsername({
-            body: {
-                username: "username",
-                password: "password",
-                name: "test",
-            },
+            username: "username",
+            password: "password",
+            name: "test",
         });
         expect(response).toEqual(undefined);
     });

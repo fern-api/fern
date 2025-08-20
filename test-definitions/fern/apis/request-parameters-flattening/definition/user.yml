@@ -27,6 +27,18 @@ service:
         query-parameters:
           tags:
             type: list<string>
+    createUsernameWithoutQueryParameters:
+      path: /username
+      method: POST
+      request:
+        name: CreateUsernameRequestWithoutQueryParameters
+        body:
+          properties:
+            username: string
+            password: string
+            name:
+              type: string
+              default: 'test'
     getUsername:
       path: ''
       method: GET
