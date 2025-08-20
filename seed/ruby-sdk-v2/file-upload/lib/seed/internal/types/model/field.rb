@@ -1,8 +1,5 @@
 # frozen_string_literal: true
-<<<<<<< HEAD
 
-=======
->>>>>>> 2bc1d6b267 (feat(ruby): support multipart file upload requests)
 module Seed
   module Internal
     module Types
