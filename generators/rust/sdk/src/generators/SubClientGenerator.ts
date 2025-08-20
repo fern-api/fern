@@ -250,10 +250,13 @@ export class SubClientGenerator {
 
     private addQueryParameters(endpoint: HttpEndpoint, params: EndpointParameter[]): void {
         endpoint.queryParameters.forEach((queryParam) => {
+            // Check if the type is already optional from the IR
+            const isAlreadyOptional = this.isOptionalContainerType(queryParam.valueType);
+
             params.push({
                 name: queryParam.name.name.snakeCase.safeName,
                 type: generateRustTypeForTypeReference(queryParam.valueType),
-                optional: true,
+                optional: !isAlreadyOptional, // Only wrap in Option if not already optional
                 isRef: false
             });
         });
@@ -413,15 +416,29 @@ export class SubClientGenerator {
             return "None";
         }
 
+        // Check if this endpoint would benefit from enhanced query parameter handling
+        const shouldUseEnhancedBuilder = this.shouldUseEnhancedQueryBuilder(endpoint);
+
+        if (shouldUseEnhancedBuilder) {
+            return this.buildEnhancedQueryParameters(endpoint);
+        }
+
         // Generate code to build Vec<(String, String)> with query parameters
         const queryParamStatements = queryParams.map((queryParam) => {
             const paramName = queryParam.name.name.snakeCase.safeName;
             const wireValue = queryParam.name.wireValue;
             const isOptionalType = this.isOptionalContainerType(queryParam.valueType);
-            const pattern = isOptionalType ? `Some(Some(value))` : `Some(value)`;
-            const valueExpression = this.isComplexType(queryParam.valueType)
-                ? "serde_json::to_string(&value).unwrap_or_default()"
-                : "value.to_string()";
+            const pattern = `Some(value)`;
+
+            // Fix: Handle string types properly - no JSON serialization
+            let valueExpression: string;
+            if (this.isStringType(queryParam.valueType)) {
+                valueExpression = "value.clone()";
+            } else if (this.isComplexType(queryParam.valueType)) {
+                valueExpression = "serde_json::to_string(&value).unwrap_or_default()";
+            } else {
+                valueExpression = "value.to_string()";
+            }
 
             return `if let ${pattern} = ${paramName} {
                 query_params.push(("${wireValue}".to_string(), ${valueExpression}));
@@ -505,10 +522,17 @@ export class SubClientGenerator {
             const paramName = queryParam.name.name.snakeCase.safeName;
             const wireValue = queryParam.name.wireValue;
             const isOptionalType = this.isOptionalContainerType(queryParam.valueType);
-            const pattern = isOptionalType ? `Some(Some(value))` : `Some(value)`;
-            const valueExpression = this.isComplexType(queryParam.valueType)
-                ? "serde_json::to_string(&value).unwrap_or_default()"
-                : "value.to_string()";
+            const pattern = `Some(value)`;
+
+            // Fix: Handle string types properly - no JSON serialization
+            let valueExpression: string;
+            if (this.isStringType(queryParam.valueType)) {
+                valueExpression = "value.clone()";
+            } else if (this.isComplexType(queryParam.valueType)) {
+                valueExpression = "serde_json::to_string(&value).unwrap_or_default()";
+            } else {
+                valueExpression = "value.to_string()";
+            }
 
             return `if let ${pattern} = ${paramName} {
                 query_params.push(("${wireValue}".to_string(), ${valueExpression}));
@@ -618,6 +642,18 @@ export class SubClientGenerator {
             container: () => true,
             unknown: () => true,
             _other: () => true
+        });
+    }
+
+    private isStringType(typeRef: TypeReference): boolean {
+        return TypeReference._visit(typeRef, {
+            primitive: (primitive) => {
+                return primitive.v1 === PrimitiveTypeV1.String;
+            },
+            named: () => false,
+            container: () => false,
+            unknown: () => false,
+            _other: () => false
         });
     }
 
@@ -1046,5 +1082,70 @@ export class SubClientGenerator {
             });
         }
         return "per_page"; // Default fallback
+    }
+
+    // =============================================================================
+    // ENHANCED QUERY PARAMETER METHODS
+    // =============================================================================
+
+    private shouldUseEnhancedQueryBuilder(endpoint: HttpEndpoint): boolean {
+        const queryParams = endpoint.queryParameters;
+
+        // Use enhanced builder if:
+        // 1. There's a parameter named "query" (structured query string)
+        // 2. There are many query parameters (>5) suggesting complex filtering
+        // 3. There's a mix of sort parameters (sortBy, sortOrder) indicating advanced querying
+        return (
+            queryParams.some(
+                (param) =>
+                    param.name.wireValue === "query" || // Structured query parameter
+                    param.name.wireValue === "filter" || // Generic filter parameter
+                    param.name.wireValue.includes("sort") // Sort-related parameters
+            ) || queryParams.length > 5
+        ); // Many parameters suggest complex usage
+    }
+
+    private buildEnhancedQueryParameters(endpoint: HttpEndpoint): string {
+        const queryParams = endpoint.queryParameters;
+        const statements: string[] = [];
+
+        queryParams.forEach((param) => {
+            const paramName = param.name.name.snakeCase.safeName;
+            const wireValue = param.name.wireValue;
+            const isOptionalType = this.isOptionalContainerType(param.valueType);
+            const pattern = `Some(value)`;
+
+            if (wireValue === "query" && this.isStringType(param.valueType)) {
+                // Handle structured query strings with fallback
+                statements.push(`
+            if let ${pattern} = ${paramName} {
+                // Try to parse as structured query, fall back to simple if it fails
+                if let Err(_) = query_builder.add_structured_query(&value) {
+                    query_builder.add_simple("${wireValue}", &value);
+                }
+            }`);
+            } else {
+                // Handle regular parameters
+                let valueExpression: string;
+                if (this.isStringType(param.valueType)) {
+                    valueExpression = "&value";
+                } else if (this.isComplexType(param.valueType)) {
+                    valueExpression = "&serde_json::to_string(&value).unwrap_or_default()";
+                } else {
+                    valueExpression = "&value.to_string()";
+                }
+
+                statements.push(`
+            if let ${pattern} = ${paramName} {
+                query_builder.add_simple("${wireValue}", ${valueExpression});
+            }`);
+            }
+        });
+
+        return `{
+            let mut query_builder = crate::QueryParameterBuilder::new();${statements.join("")}
+            let params = query_builder.build();
+            if params.is_empty() { None } else { Some(params) }
+        }`;
     }
 }
