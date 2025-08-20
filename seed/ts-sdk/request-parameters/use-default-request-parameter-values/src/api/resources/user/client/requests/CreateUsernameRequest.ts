@@ -5,13 +5,19 @@
 /**
  * @example
  *     {
- *         username: "username",
- *         password: "password",
- *         name: "test"
+ *         tags: ["tags", "tags"],
+ *         body: {
+ *             username: "username",
+ *             password: "password",
+ *             name: "test"
+ *         }
  *     }
  */
 export interface CreateUsernameRequest {
-    username: string;
-    password: string;
-    name: string;
+    tags: string[];
+    body: {
+        username: string;
+        password: string;
+        name: string;
+    };
 }

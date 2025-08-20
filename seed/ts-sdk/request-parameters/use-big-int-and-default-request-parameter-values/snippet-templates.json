@@ -59,6 +59,33 @@
                                 {
                                     "value": {
                                         "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "tags: [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "delimiter": ",\n\t\t\t",
+                                        "innerTemplate": {
+                                            "imports": [],
+                                            "templateString": "$FERN_INPUT",
+                                            "isOptional": true,
+                                            "templateInputs": [
+                                                {
+                                                    "location": "RELATIVE",
+                                                    "type": "payload"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "QUERY",
+                                            "path": "tags",
+                                            "type": "payload"
+                                        },
+                                        "type": "iterable"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
                                         "templateString": "username: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [

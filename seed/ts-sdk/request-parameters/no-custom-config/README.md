@@ -24,9 +24,12 @@ import { SeedRequestParametersClient } from "@fern/request-parameters";
 
 const client = new SeedRequestParametersClient({ environment: "YOUR_BASE_URL" });
 await client.user.createUsername({
-    username: "username",
-    password: "password",
-    name: "test",
+    tags: ["tags", "tags"],
+    body: {
+        username: "username",
+        password: "password",
+        name: "test",
+    },
 });
 ```
 

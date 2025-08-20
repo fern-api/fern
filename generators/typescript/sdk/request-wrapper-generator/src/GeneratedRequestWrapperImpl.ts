@@ -290,7 +290,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             example,
             packageId: this.packageId,
             endpointName: this.endpoint.name,
-            requestBody: this.endpoint.requestBody
+            requestBody: this.endpoint.requestBody,
+            dangerouslyFlattenRequestParameters: this.dangerouslyFlattenRequestParameters
         });
     }
 
@@ -374,7 +375,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public areBodyPropertiesInlined(): boolean {
-        return this.endpoint.requestBody != null && this.endpoint.requestBody.type === "inlinedRequestBody";
+        return this.endpoint.requestBody != null && 
+               (this.endpoint.requestBody.type === "inlinedRequestBody" || this.dangerouslyFlattenRequestParameters);
     }
 
     public withQueryParameter({
@@ -767,6 +769,34 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return hasDefaultValue && Boolean(useDefaultValues);
     }
 
+    private isComplexType(typeReference: TypeReference): boolean {
+        if (typeReference.type === "primitive") {
+            return false;
+        }
+        if (typeReference.type === "container") {
+            const container = typeReference.container;
+            if (container.type === "list") {
+                return this.isComplexType(container.list);
+            }
+            if (container.type === "map") {
+                return true;
+            }
+            if (container.type === "set") {
+                return this.isComplexType(container.set);
+            }
+            if (container.type === "optional") {
+                return this.isComplexType(container.optional);
+            }
+            if (container.type === "nullable") {
+                return this.isComplexType(container.nullable);
+            }
+            if (container.type === "literal") {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private createBodyTypeFromInlinedProperties(
         inlinedRequestBody: InlinedRequestBody,
         context: SdkContext
@@ -842,12 +872,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
         const typeDeclaration = this.getTypeDeclaration(referenceToRequestBody.requestBodyType, context);
         
-        if (typeDeclaration?.shape.type !== "object") {
+        if (typeDeclaration?.shape.type === "object") {
+            this.addPropertiesFromTypeDeclaration(properties, typeDeclaration, context);
+        } else {
             this.addUnflattenedReferencedRequestBodyProperties(properties, referenceToRequestBody, context);
-            return;
         }
-
-        this.addPropertiesFromTypeDeclaration(properties, typeDeclaration, context);
     }
 
     private addUnflattenedInlinedRequestBodyProperties(
@@ -914,10 +943,29 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             const propertyType = context.type.getReferenceToType(property.valueType);
             const hasDefaultValue = this.hasDefaultValue(property.valueType, context);
             
+            let typeNode = propertyType.typeNodeWithoutUndefined;
+            
+            if (this.isComplexType(property.valueType)) {
+                const parentTypeName = typeDeclaration.name.name.pascalCase.safeName;
+                const propertyName = property.name.wireValue;
+                
+                typeNode = ts.factory.createIndexedAccessTypeNode(
+                    ts.factory.createTypeReferenceNode(
+                        ts.factory.createQualifiedName(
+                            ts.factory.createIdentifier("SeedRequestParameters"),
+                            ts.factory.createIdentifier(parentTypeName)
+                        )
+                    ),
+                    ts.factory.createLiteralTypeNode(
+                        ts.factory.createStringLiteral(propertyName)
+                    )
+                );
+            }
+            
             properties.push({
                 name: getPropertyKey(property.name.wireValue),
                 safeName: getPropertyKey(property.name.wireValue),
-                type: propertyType.typeNodeWithoutUndefined,
+                type: typeNode,
                 isOptional: propertyType.isOptional || hasDefaultValue,
                 docs: property.docs != null ? [property.docs] : undefined
             });

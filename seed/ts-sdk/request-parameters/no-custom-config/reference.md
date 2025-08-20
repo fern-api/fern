@@ -16,9 +16,12 @@
 
 ```typescript
 await client.user.createUsername({
-    username: "username",
-    password: "password",
-    name: "test",
+    tags: ["tags", "tags"],
+    body: {
+        username: "username",
+        password: "password",
+        name: "test",
+    },
 });
 ```
 
