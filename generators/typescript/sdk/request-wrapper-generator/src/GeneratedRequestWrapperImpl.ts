@@ -18,7 +18,8 @@ import {
     PathParameter,
     QueryParameter,
     TypeDeclaration,
-    TypeReference
+    TypeReference,
+    ContainerType
 } from "@fern-fern/ir-sdk/api";
 import {
     generateInlinePropertiesModule,
@@ -775,26 +776,44 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         }
         if (typeReference.type === "container") {
             const container = typeReference.container;
-            if (container.type === "list") {
-                return this.isComplexType(container.list);
+            if (container.type === "literal") {
+                return false;
             }
             if (container.type === "map") {
                 return true;
             }
-            if (container.type === "set") {
-                return this.isComplexType(container.set);
-            }
-            if (container.type === "optional") {
-                return this.isComplexType(container.optional);
-            }
-            if (container.type === "nullable") {
-                return this.isComplexType(container.nullable);
-            }
-            if (container.type === "literal") {
-                return false;
-            }
+            return this.isComplexType(this.getContainerValueType(container));
         }
         return true;
+    }
+
+    private getContainerValueType(container: ContainerType): TypeReference {
+        switch (container.type) {
+            case "list":
+                return container.list;
+            case "set":
+                return container.set;
+            case "optional":
+                return container.optional;
+            case "nullable":
+                return container.nullable;
+            default:
+                throw new Error(`Unsupported container type: ${container.type}`);
+        }
+    }
+
+    private createIndexedAccessType(parentTypeName: string, propertyName: string): ts.TypeNode {
+        return ts.factory.createIndexedAccessTypeNode(
+            ts.factory.createTypeReferenceNode(
+                ts.factory.createQualifiedName(
+                    ts.factory.createIdentifier("SeedRequestParameters"),
+                    ts.factory.createIdentifier(parentTypeName)
+                )
+            ),
+            ts.factory.createLiteralTypeNode(
+                ts.factory.createStringLiteral(propertyName)
+            )
+        );
     }
 
     private createBodyTypeFromInlinedProperties(
@@ -943,24 +962,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             const propertyType = context.type.getReferenceToType(property.valueType);
             const hasDefaultValue = this.hasDefaultValue(property.valueType, context);
             
-            let typeNode = propertyType.typeNodeWithoutUndefined;
-            
-            if (this.isComplexType(property.valueType)) {
-                const parentTypeName = typeDeclaration.name.name.pascalCase.safeName;
-                const propertyName = property.name.wireValue;
-                
-                typeNode = ts.factory.createIndexedAccessTypeNode(
-                    ts.factory.createTypeReferenceNode(
-                        ts.factory.createQualifiedName(
-                            ts.factory.createIdentifier("SeedRequestParameters"),
-                            ts.factory.createIdentifier(parentTypeName)
-                        )
-                    ),
-                    ts.factory.createLiteralTypeNode(
-                        ts.factory.createStringLiteral(propertyName)
-                    )
-                );
-            }
+            const typeNode = this.isComplexType(property.valueType)
+                ? this.createIndexedAccessType(typeDeclaration.name.name.pascalCase.safeName, property.name.wireValue)
+                : propertyType.typeNodeWithoutUndefined;
             
             properties.push({
                 name: getPropertyKey(property.name.wireValue),
