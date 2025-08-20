@@ -58,7 +58,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
         return {
             code: ruby.codeblock((writer) => {
                 writer.writeLine(`${QUERY_PARAM_NAMES_VN} = ${toExplicitArray(this.getQueryParameterNames())}`);
-                writer.writeLine(`${QUERY_PARAMETER_BAG_NAME} = ${this.getParameterName()}.extract!(*${QUERY_PARAM_NAMES_VN})`);
+                writer.writeLine(`${QUERY_PARAMETER_BAG_NAME} = params.slice(*${QUERY_PARAM_NAMES_VN})`);
+                writer.writeLine(`params = params.except(*${QUERY_PARAM_NAMES_VN})`);
             }),
             queryParameterBagReference: QUERY_PARAMETER_BAG_NAME
         };
@@ -76,13 +77,16 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return {
                 code: ruby.codeblock((writer) => {
                     writer.writeLine(`${PATH_PARAM_NAMES_VN} = ${toExplicitArray(this.getPathParameterNames())}`);
-                    writer.write(`${BODY_BAG_NAME} = ${this.getParameterName()}.except(*${PATH_PARAM_NAMES_VN})`);
                 }),
-                requestBodyReference: ruby.codeblock((writer) => { writer.write(BODY_BAG_NAME) })
+                requestBodyReference: ruby.codeblock((writer) => {
+                    writer.write(`params.except(*${PATH_PARAM_NAMES_VN})`);
+                })
             };
         }
         return {
-            requestBodyReference: ruby.codeblock((writer) => { writer.write(this.getParameterName()) })
+            requestBodyReference: ruby.codeblock((writer) => {
+                writer.write("params");
+            })
         }
     }
 

@@ -13,8 +13,6 @@ export declare namespace HttpEndpointGenerator {
 }
 
 export const HTTP_RESPONSE_VN = "_response";
-export const PATH_PARAMS_VN = "_path_params";
-export const QUERY_PARAMS_VN = "_query_params";
 export const PARAMS_VN = "params";
 
 export class HttpEndpointGenerator {
@@ -47,18 +45,14 @@ export class HttpEndpointGenerator {
 
         const statements: ruby.AstNode[] = [];
 
-        const queryParameterCodeBlock = request?.getQueryParameterCodeBlock();
-        if (queryParameterCodeBlock != null) {
-            statements.push(queryParameterCodeBlock.code);
-        }
-        const headerParameterCodeBlock = request?.getHeaderParameterCodeBlock();
-        if (headerParameterCodeBlock != null) {
-            statements.push(headerParameterCodeBlock.code);
-        }
-
         const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
         if (requestBodyCodeBlock?.code != null) {
             statements.push(requestBodyCodeBlock.code);
+        }
+
+        const queryParameterCodeBlock = request?.getQueryParameterCodeBlock();
+        if (queryParameterCodeBlock?.code != null) {
+            statements.push(queryParameterCodeBlock.code);
         }
 
         const pathParameterReferences = this.getPathParameterReferences({ endpoint });
@@ -137,7 +131,7 @@ export class HttpEndpointGenerator {
             const parameterName = this.getPathParameterName({
                 pathParameter: pathParam
             });
-            pathParameterReferences[pathParam.name.originalName] = `${PATH_PARAMS_VN}[:${parameterName}]`;
+            pathParameterReferences[pathParam.name.originalName] = `${PARAMS_VN}[:${parameterName}]`;
         }
         return pathParameterReferences;
     }

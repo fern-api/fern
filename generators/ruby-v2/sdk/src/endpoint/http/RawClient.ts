@@ -46,7 +46,8 @@ export class RawClient {
                         `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalJSONRequest()}.new(`
                     );
                     writer.indent();
-                    writer.writeLine(`method: ${endpoint.method.toUpperCase()},`);
+                    writer.writeLine(`base_url: request_options[:base_url] || ${this.context.getEnvironmentsClassReference().toString()}::SANDBOX,`);
+                    writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
                     writer.write(`path: `);
                     this.writePathString({ writer, endpoint, pathParameterReferences: pathParameterReferences ?? {} });
                     writer.writeLine(",");
