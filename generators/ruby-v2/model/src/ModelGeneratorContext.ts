@@ -20,7 +20,7 @@ export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCus
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return ruby.classReference({
             modules: this.getModuleNamesForTypeId(typeId),
-            name: typeDeclaration.name.name.pascalCase.safeName,
+            name: typeDeclaration.name.name.pascalCase.safeName
         });
     }
 
