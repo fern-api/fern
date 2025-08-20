@@ -73,11 +73,12 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
 
         try {
             await this.generateReference({ context });
-        } catch (e: any) {
+        } catch (error) {
             context.logger.warn("Failed to generate reference.md, this is OK.");
-            context.logger.warn("associated error");
-            context.logger.warn(e.message);
-            context.logger.warn(e.stack);
+            if (error instanceof Error) {
+                context.logger.warn((error as Error)?.message);
+                context.logger.warn((error as Error)?.stack ?? "");
+            }
         }
 
         await context.project.persist();

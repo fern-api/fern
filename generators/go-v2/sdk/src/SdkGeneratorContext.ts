@@ -736,7 +736,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             case "bytes":
                 throw new Error("Returning bytes is not supported");
             case "streaming":
-            case "streamParameter":
+            case "streamParameter": {
                 const streamingResponse = this.getStreamingResponse(httpEndpoint);
                 if (!streamingResponse) {
                     throw new Error(
@@ -744,6 +744,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
                     );
                 }
                 return this.getStreamPayload(streamingResponse);
+            }
             default:
                 assertNever(responseBody);
         }
