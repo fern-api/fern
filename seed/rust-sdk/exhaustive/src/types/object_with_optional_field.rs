@@ -15,7 +15,6 @@ pub struct ObjectWithOptionalField {
     pub double: Option<f64>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub bool: Option<bool>,
-    #[serde(with = "chrono::serde::ts_seconds_option")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub datetime: Option<chrono::DateTime<chrono::Utc>>,
     #[serde(skip_serializing_if = "Option::is_none")]

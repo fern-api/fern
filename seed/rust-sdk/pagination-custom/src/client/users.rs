@@ -18,7 +18,7 @@ impl UsersClient {
             let base_query_params = {
             let mut query_params = Vec::new();
             if let Some(value) = starting_after {
-                query_params.push(("starting_after".to_string(), serde_json::to_string(&value).unwrap_or_default()));
+                query_params.push(("starting_after".to_string(), value.clone()));
             }
             Some(query_params)
         };

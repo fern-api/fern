@@ -40,7 +40,7 @@ impl ServiceClient {
             {
             let mut query_params = Vec::new();
             if let Some(value) = maybe_string {
-                query_params.push(("maybeString".to_string(), serde_json::to_string(&value).unwrap_or_default()));
+                query_params.push(("maybeString".to_string(), value.clone()));
             }
             if let Some(value) = integer {
                 query_params.push(("integer".to_string(), value.to_string()));
@@ -52,7 +52,7 @@ impl ServiceClient {
                 query_params.push(("listOfStrings".to_string(), value.clone()));
             }
             if let Some(value) = optional_list_of_strings {
-                query_params.push(("optionalListOfStrings".to_string(), serde_json::to_string(&value).unwrap_or_default()));
+                query_params.push(("optionalListOfStrings".to_string(), value.clone()));
             }
             Some(query_params)
         },

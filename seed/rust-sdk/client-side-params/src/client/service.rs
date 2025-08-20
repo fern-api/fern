@@ -35,10 +35,10 @@ impl ServiceClient {
                 query_builder.add_simple("include_totals", &value.to_string());
             }
             if let Some(value) = fields {
-                query_builder.add_simple("fields", &serde_json::to_string(&value).unwrap_or_default());
+                query_builder.add_simple("fields", &value);
             }
             if let Some(value) = search {
-                query_builder.add_simple("search", &serde_json::to_string(&value).unwrap_or_default());
+                query_builder.add_simple("search", &value);
             }
             let params = query_builder.build();
             if params.is_empty() { None } else { Some(params) }
@@ -102,19 +102,19 @@ impl ServiceClient {
                 query_builder.add_simple("include_totals", &serde_json::to_string(&value).unwrap_or_default());
             }
             if let Some(value) = sort {
-                query_builder.add_simple("sort", &serde_json::to_string(&value).unwrap_or_default());
+                query_builder.add_simple("sort", &value);
             }
             if let Some(value) = connection {
-                query_builder.add_simple("connection", &serde_json::to_string(&value).unwrap_or_default());
+                query_builder.add_simple("connection", &value);
             }
             if let Some(value) = q {
-                query_builder.add_simple("q", &serde_json::to_string(&value).unwrap_or_default());
+                query_builder.add_simple("q", &value);
             }
             if let Some(value) = search_engine {
-                query_builder.add_simple("search_engine", &serde_json::to_string(&value).unwrap_or_default());
+                query_builder.add_simple("search_engine", &value);
             }
             if let Some(value) = fields {
-                query_builder.add_simple("fields", &serde_json::to_string(&value).unwrap_or_default());
+                query_builder.add_simple("fields", &value);
             }
             let params = query_builder.build();
             if params.is_empty() { None } else { Some(params) }
@@ -131,7 +131,7 @@ impl ServiceClient {
             {
             let mut query_params = Vec::new();
             if let Some(value) = fields {
-                query_params.push(("fields".to_string(), serde_json::to_string(&value).unwrap_or_default()));
+                query_params.push(("fields".to_string(), value.clone()));
             }
             if let Some(value) = include_fields {
                 query_params.push(("include_fields".to_string(), serde_json::to_string(&value).unwrap_or_default()));
@@ -180,13 +180,13 @@ impl ServiceClient {
             {
             let mut query_params = Vec::new();
             if let Some(value) = strategy {
-                query_params.push(("strategy".to_string(), serde_json::to_string(&value).unwrap_or_default()));
+                query_params.push(("strategy".to_string(), value.clone()));
             }
             if let Some(value) = name {
-                query_params.push(("name".to_string(), serde_json::to_string(&value).unwrap_or_default()));
+                query_params.push(("name".to_string(), value.clone()));
             }
             if let Some(value) = fields {
-                query_params.push(("fields".to_string(), serde_json::to_string(&value).unwrap_or_default()));
+                query_params.push(("fields".to_string(), value.clone()));
             }
             Some(query_params)
         },
@@ -202,7 +202,7 @@ impl ServiceClient {
             {
             let mut query_params = Vec::new();
             if let Some(value) = fields {
-                query_params.push(("fields".to_string(), serde_json::to_string(&value).unwrap_or_default()));
+                query_params.push(("fields".to_string(), value.clone()));
             }
             Some(query_params)
         },
@@ -218,7 +218,7 @@ impl ServiceClient {
             {
             let mut query_builder = crate::QueryParameterBuilder::new();
             if let Some(value) = fields {
-                query_builder.add_simple("fields", &serde_json::to_string(&value).unwrap_or_default());
+                query_builder.add_simple("fields", &value);
             }
             if let Some(value) = include_fields {
                 query_builder.add_simple("include_fields", &serde_json::to_string(&value).unwrap_or_default());
@@ -256,7 +256,7 @@ impl ServiceClient {
             {
             let mut query_params = Vec::new();
             if let Some(value) = fields {
-                query_params.push(("fields".to_string(), serde_json::to_string(&value).unwrap_or_default()));
+                query_params.push(("fields".to_string(), value.clone()));
             }
             if let Some(value) = include_fields {
                 query_params.push(("include_fields".to_string(), serde_json::to_string(&value).unwrap_or_default()));

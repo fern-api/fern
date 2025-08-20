@@ -12,7 +12,6 @@ pub struct Type {
     pub three: String,
     pub four: bool,
     pub five: i64,
-    #[serde(with = "chrono::serde::ts_seconds")]
     pub six: chrono::DateTime<chrono::Utc>,
     pub seven: chrono::NaiveDate,
     pub eight: uuid::Uuid,
@@ -32,7 +31,6 @@ pub struct Type {
     pub twentyone: u64,
     pub twentytwo: f32,
     pub twentythree: num_bigint::BigInt,
-    #[serde(with = "chrono::serde::ts_seconds_option")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub twentyfour: Option<chrono::DateTime<chrono::Utc>>,
     #[serde(skip_serializing_if = "Option::is_none")]

@@ -6,10 +6,8 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Metadata {
     #[serde(rename = "createdAt")]
-    #[serde(with = "chrono::serde::ts_seconds")]
     pub created_at: chrono::DateTime<chrono::Utc>,
     #[serde(rename = "updatedAt")]
-    #[serde(with = "chrono::serde::ts_seconds")]
     pub updated_at: chrono::DateTime<chrono::Utc>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub avatar: Option<String>,

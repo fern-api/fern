@@ -27,10 +27,10 @@ impl UserClient {
                 query_builder.add_simple("id", &value.to_string());
             }
             if let Some(value) = date {
-                query_builder.add_simple("date", &value.to_string());
+                query_builder.add_simple("date", &value.to_rfc3339());
             }
             if let Some(value) = deadline {
-                query_builder.add_simple("deadline", &value.to_string());
+                query_builder.add_simple("deadline", &value.to_rfc3339());
             }
             if let Some(value) = bytes {
                 query_builder.add_simple("bytes", &value.to_string());
@@ -42,13 +42,13 @@ impl UserClient {
                 query_builder.add_simple("userList", &serde_json::to_string(&value).unwrap_or_default());
             }
             if let Some(value) = optional_deadline {
-                query_builder.add_simple("optionalDeadline", &serde_json::to_string(&value).unwrap_or_default());
+                query_builder.add_simple("optionalDeadline", &value.to_rfc3339());
             }
             if let Some(value) = key_value {
                 query_builder.add_simple("keyValue", &serde_json::to_string(&value).unwrap_or_default());
             }
             if let Some(value) = optional_string {
-                query_builder.add_simple("optionalString", &serde_json::to_string(&value).unwrap_or_default());
+                query_builder.add_simple("optionalString", &value);
             }
             if let Some(value) = nested_user {
                 query_builder.add_simple("nestedUser", &serde_json::to_string(&value).unwrap_or_default());

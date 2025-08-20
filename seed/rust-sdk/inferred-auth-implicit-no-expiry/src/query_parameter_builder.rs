@@ -1,4 +1,4 @@
-use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
+use percent_encoding::{utf8_percent_encode, CONTROLS};
 use thiserror::Error;
 
 /// Generic query parameter builder for various query patterns
@@ -24,8 +24,8 @@ impl QueryParameterBuilder {
 
     /// Add a simple key-value parameter with URL encoding
     pub fn add_simple<T: ToString>(&mut self, key: &str, value: T) {
-        let encoded_key = utf8_percent_encode(key, NON_ALPHANUMERIC).to_string();
-        let encoded_value = utf8_percent_encode(&value.to_string(), NON_ALPHANUMERIC).to_string();
+        let encoded_key = utf8_percent_encode(key, CONTROLS).to_string();
+        let encoded_value = utf8_percent_encode(&value.to_string(), CONTROLS).to_string();
         self.params.push((encoded_key, encoded_value));
     }
 
@@ -60,8 +60,8 @@ pub fn parse_structured_query(query: &str) -> Result<Vec<(String, String)>, Quer
             // Handle comma-separated values
             for value in values.split(',') {
                 let clean_value = value.trim_matches('"'); // Remove quotes
-                let encoded_key = utf8_percent_encode(key, NON_ALPHANUMERIC).to_string();
-                let encoded_value = utf8_percent_encode(clean_value, NON_ALPHANUMERIC).to_string();
+                let encoded_key = utf8_percent_encode(key, CONTROLS).to_string();
+                let encoded_value = utf8_percent_encode(clean_value, CONTROLS).to_string();
                 params.push((encoded_key, encoded_value));
             }
         } else {
