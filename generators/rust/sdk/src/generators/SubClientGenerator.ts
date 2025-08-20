@@ -10,6 +10,7 @@ import {
     OffsetPagination,
     Pagination,
     PrimitiveTypeV1,
+    QueryParameter,
     ResponseProperty,
     Subpackage,
     TypeReference
@@ -342,7 +343,7 @@ export class SubClientGenerator {
         return this.buildQueryParameterStatements(filteredParams);
     }
 
-    private buildQueryParameterStatements(queryParams: any[]): string {
+    private buildQueryParameterStatements(queryParams: QueryParameter[]): string {
         const queryParamStatements = queryParams.map((queryParam) => {
             const paramName = queryParam.name.name.snakeCase.safeName;
             const wireValue = queryParam.name.wireValue;
@@ -365,7 +366,7 @@ export class SubClientGenerator {
 
         return `{
             let mut query_params = Vec::new();
-            ${queryParamStatements.join("\\n            ")}
+            ${queryParamStatements.join("\n            ")}
             Some(query_params)
         }`;
     }
@@ -758,7 +759,7 @@ export class SubClientGenerator {
         const cloningStatements = params
             .filter((param) => param.isRef)
             .map((param) => `let ${param.name}_clone = ${param.name}.clone();`)
-            .join("\\n            ");
+            .join("\n            ");
 
         // Extract the cursor parameter name from the pagination configuration
         const cursorParamName = this.getCursorParamName(cursor);
@@ -818,7 +819,7 @@ export class SubClientGenerator {
         const cloningStatements = params
             .filter((param) => param.isRef)
             .map((param) => `let ${param.name}_clone = ${param.name}.clone();`)
-            .join("\\n            ");
+            .join("\n            ");
 
         const pageParamName = offset.page?.property?.name?.wireValue || "page";
 
@@ -878,7 +879,7 @@ export class SubClientGenerator {
         const cloningStatements = params
             .filter((param) => param.isRef)
             .map((param) => `let ${param.name}_clone = ${param.name}.clone();`)
-            .join("\\n            ");
+            .join("\n            ");
 
         return `let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = ${queryParams};
@@ -927,7 +928,7 @@ export class SubClientGenerator {
         const cloningStatements = params
             .filter((param) => param.isRef)
             .map((param) => `let ${param.name}_for_async = ${param.name}_clone.clone();`)
-            .join("\\n                    ");
+            .join("\n                    ");
 
         return cloningStatements;
     }
