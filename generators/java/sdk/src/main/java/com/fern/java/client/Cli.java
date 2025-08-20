@@ -8,7 +8,6 @@ import com.fern.ir.core.ObjectMappers;
 import com.fern.ir.model.auth.AuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.commons.ErrorId;
-import com.fern.ir.model.http.HttpService;
 import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.ir.model.publish.DirectPublish;
@@ -68,7 +67,6 @@ import com.fern.java.output.gradle.ParsedGradleDependency;
 import com.palantir.common.streams.KeyedStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -525,7 +523,6 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                     .artifact("mockwebserver")
                     .version(ParsedGradleDependency.OKHTTP_VERSION)
                     .build());
-
         }
     }
 }

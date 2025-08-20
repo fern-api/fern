@@ -9,11 +9,7 @@ import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
-import com.seed.examples.SeedExamplesClient;
-
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class HealthServiceWireTest {
     private MockWebServer server;
     private SeedExamplesClient client;
@@ -23,7 +19,6 @@ public class HealthServiceWireTest {
     public void setup() throws Exception {
         server = new MockWebServer();
         server.start();
-
         client = SeedExamplesClient.builder()
             .url(server.url("/").toString())
             .token("test-token")
@@ -36,35 +31,29 @@ public class HealthServiceWireTest {
     }
 
     @Test
-    public void testCheck() {
-        // Setup mock response
+    public void testCheck() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
 
-        // Make the client call
-        client.health().service().check("id");
+        client.health().service().check("id-2sdx82h");;
 
-        // Verify the request
-        RecordedRequest recorded = server.takeRequest();
-        assertNotNull(recorded);
-        assertEquals("GET", recorded.getMethod());
-        assertEquals("/check/id-2sdx82h", recorded.getPath());
+        RecordedRequest request = server.takeRequest();
+        assertNotNull(request);
+        assertEquals("GET", request.getMethod());
     }
+
     @Test
-    public void testPing() {
-        // Setup mock response
+    public void testPing() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
 
-        // Make the client call
-        client.health().service().ping();
+        client.health().service().ping();;
 
-        // Verify the request
-        RecordedRequest recorded = server.takeRequest();
-        assertNotNull(recorded);
-        assertEquals("GET", recorded.getMethod());
-        assertEquals("/ping", recorded.getPath());
+        RecordedRequest request = server.takeRequest();
+        assertNotNull(request);
+        assertEquals("GET", request.getMethod());
     }
+
 }

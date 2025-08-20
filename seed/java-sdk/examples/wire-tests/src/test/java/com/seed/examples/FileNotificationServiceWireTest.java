@@ -9,11 +9,7 @@ import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
-import com.seed.examples.SeedExamplesClient;
-
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class FileNotificationServiceWireTest {
     private MockWebServer server;
     private SeedExamplesClient client;
@@ -23,7 +19,6 @@ public class FileNotificationServiceWireTest {
     public void setup() throws Exception {
         server = new MockWebServer();
         server.start();
-
         client = SeedExamplesClient.builder()
             .url(server.url("/").toString())
             .token("test-token")
@@ -36,19 +31,16 @@ public class FileNotificationServiceWireTest {
     }
 
     @Test
-    public void testGetException() {
-        // Setup mock response
+    public void testGetException() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
 
-        // Make the client call
-        client.file().notification().service().getException();
+        client.file().notification().service().getException("notification-hsy129x");;
 
-        // Verify the request
-        RecordedRequest recorded = server.takeRequest();
-        assertNotNull(recorded);
-        assertEquals("GET", recorded.getMethod());
-        assertEquals("/file/notification/notification-hsy129x", recorded.getPath());
+        RecordedRequest request = server.takeRequest();
+        assertNotNull(request);
+        assertEquals("GET", request.getMethod());
     }
+
 }

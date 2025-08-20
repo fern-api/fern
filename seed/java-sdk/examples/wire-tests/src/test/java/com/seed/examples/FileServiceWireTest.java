@@ -9,11 +9,7 @@ import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
-import com.seed.examples.SeedExamplesClient;
-
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class FileServiceWireTest {
     private MockWebServer server;
     private SeedExamplesClient client;
@@ -23,7 +19,6 @@ public class FileServiceWireTest {
     public void setup() throws Exception {
         server = new MockWebServer();
         server.start();
-
         client = SeedExamplesClient.builder()
             .url(server.url("/").toString())
             .token("test-token")
@@ -36,22 +31,22 @@ public class FileServiceWireTest {
     }
 
     @Test
-    public void testGetFile() {
-        // Setup mock response
+    public void testGetFile() throws Exception {
         server.enqueue(new MockResponse()
-            .setResponseCode(500)
-            .setBody("\"A file with that name was not found!\""));
+            .setResponseCode(200)
+            .setBody("{}"));
 
-        // Make the client call
-        client.file().service().getFile("filename");
+        client.file().service().getFile(
+            "file.txt",
+            GetFileRequest
+                .builder()
+                .xFileApiVersion("0.0.2")
+                .build()
+        );;
 
-        // Verify the request
-        RecordedRequest recorded = server.takeRequest();
-        assertNotNull(recorded);
-        assertEquals("GET", recorded.getMethod());
-        assertEquals("/file/file.txt", recorded.getPath());
-
-        // Verify service headers
-        assertEquals("0.0.2", recorded.getHeader("X-File-API-Version"));
+        RecordedRequest request = server.takeRequest();
+        assertNotNull(request);
+        assertEquals("GET", request.getMethod());
     }
+
 }

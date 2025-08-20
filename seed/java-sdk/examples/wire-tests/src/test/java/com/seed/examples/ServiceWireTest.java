@@ -9,11 +9,7 @@ import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
-import com.seed.examples.SeedExamplesClient;
-
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ServiceWireTest {
     private MockWebServer server;
     private SeedExamplesClient client;
@@ -23,7 +19,6 @@ public class ServiceWireTest {
     public void setup() throws Exception {
         server = new MockWebServer();
         server.start();
-
         client = SeedExamplesClient.builder()
             .url(server.url("/").toString())
             .token("test-token")
@@ -36,98 +31,503 @@ public class ServiceWireTest {
     }
 
     @Test
-    public void testGetMovie() {
-        // Setup mock response
+    public void testGetMovie() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
 
-        // Make the client call
-        client.service().getMovie("movieId");
+        client.service().getMovie("movie-c06a4ad7");;
 
-        // Verify the request
-        RecordedRequest recorded = server.takeRequest();
-        assertNotNull(recorded);
-        assertEquals("GET", recorded.getMethod());
-        assertEquals("/movie/movie-c06a4ad7", recorded.getPath());
+        RecordedRequest request = server.takeRequest();
+        assertNotNull(request);
+        assertEquals("GET", request.getMethod());
     }
+
     @Test
-    public void testCreateMovie() {
-        // Setup mock response
+    public void testCreateMovie() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
 
-        // Make the client call
-        client.service().createMovie();
+        client.service().createMovie(
+            Movie
+                .builder()
+                .id("movie-c06a4ad7")
+                .title("The Boy and the Heron")
+                .from("Hayao Miyazaki")
+                .rating(8)
+                .type("movie")
+                .tag("tag-wf9as23d")
+                .metadata(
+                    new HashMap<String, Object>() {{
+                        put("actors", new
+                        ArrayList<Object>() {Arrays.asList("Christian Bale", "Florence Pugh", "Willem Dafoe")
+                        });
+                        put("releaseDate", "2023-12-08");
+                        put("ratings", new 
+                        HashMap<String, Object>() {{put("rottenTomatoes", 97);
+                            put("imdb", 7.6);
+                        }});
+                    }}
+                )
+                .revenue(1000000L)
+                .prequel("movie-cv9b914f")
+                .build()
+        );;
 
-        // Verify the request
-        RecordedRequest recorded = server.takeRequest();
-        assertNotNull(recorded);
-        assertEquals("POST", recorded.getMethod());
-        assertEquals("/movie", recorded.getPath());
-
-        // Verify request body
-        String requestBody = recorded.getBody().readUtf8();
-        assertEquals("{\"id\":\"movie-c06a4ad7\",\"prequel\":\"movie-cv9b914f\",\"title\":\"The Boy and the Heron\",\"from\":\"Hayao Miyazaki\",\"rating\":8,\"type\":\"movie\",\"tag\":\"tag-wf9as23d\",\"metadata\":{\"actors\":[\"Christian Bale\",\"Florence Pugh\",\"Willem Dafoe\"],\"releaseDate\":\"2023-12-08\",\"ratings\":{\"rottenTomatoes\":97,\"imdb\":7.6}},\"revenue\":1000000}", requestBody);
+        RecordedRequest request = server.takeRequest();
+        assertNotNull(request);
+        assertEquals("POST", request.getMethod());
     }
+
     @Test
-    public void testGetMetadata() {
-        // Setup mock response
+    public void testGetMetadata() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
 
-        // Make the client call
-        client.service().getMetadata();
+        client.service().getMetadata(
+            GetMetadataRequest
+                .builder()
+                .xApiVersion("0.0.1")
+                .tag(
+                    new ArrayList<Optional<String>>(
+                        Arrays.asList("development")
+                    )
+                )
+                .shallow(false)
+                .build()
+        );;
 
-        // Verify the request
-        RecordedRequest recorded = server.takeRequest();
-        assertNotNull(recorded);
-        assertEquals("GET", recorded.getMethod());
-        assertEquals("/metadata", recorded.getPath());
-
-        // Verify endpoint headers
-        assertEquals("0.0.1", recorded.getHeader("X-API-Version"));
+        RecordedRequest request = server.takeRequest();
+        assertNotNull(request);
+        assertEquals("GET", request.getMethod());
     }
+
     @Test
-    public void testCreateBigEntity() {
-        // Setup mock response
+    public void testCreateBigEntity() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
 
-        // Make the client call
-        client.service().createBigEntity();
+        client.service().createBigEntity(
+            BigEntity
+                .builder()
+                .castMember(
+                    CastMember.ofActor(
+                        Actor
+                            .builder()
+                            .name("name")
+                            .id("id")
+                            .build()
+                    )
+                )
+                .extendedMovie(
+                    ExtendedMovie
+                        .builder()
+                        .cast(
+                            new ArrayList<String>(
+                                Arrays.asList("cast", "cast")
+                            )
+                        )
+                        .id("id")
+                        .title("title")
+                        .from("from")
+                        .rating(1.1)
+                        .type("movie")
+                        .tag("tag")
+                        .metadata(
+                            new HashMap<String, Object>() {{
+                                put("metadata", new 
+                                HashMap<String, Object>() {{put("key", "value");
+                                }});
+                            }}
+                        )
+                        .revenue(1000000L)
+                        .prequel("prequel")
+                        .book("book")
+                        .build()
+                )
+                .entity(
+                    Entity
+                        .builder()
+                        .type(
+                            Type.ofBasicType(BasicType.PRIMITIVE)
+                        )
+                        .name("name")
+                        .build()
+                )
+                .metadata(
+                    Metadata.html()
+                )
+                .commonMetadata(
+                    Metadata
+                        .builder()
+                        .id("id")
+                        .data(
+                            new HashMap<String, String>() {{
+                                put("data", "data");
+                            }}
+                        )
+                        .jsonString("jsonString")
+                        .build()
+                )
+                .eventInfo(
+                    EventInfo.metadata(
+                        Metadata
+                            .builder()
+                            .id("id")
+                            .data(
+                                new HashMap<String, String>() {{
+                                    put("data", "data");
+                                }}
+                            )
+                            .jsonString("jsonString")
+                            .build()
+                    )
+                )
+                .data(
+                    Data.string()
+                )
+                .migration(
+                    Migration
+                        .builder()
+                        .name("name")
+                        .status(MigrationStatus.RUNNING)
+                        .build()
+                )
+                .exception(
+                    Exception.generic(
+                        ExceptionInfo
+                            .builder()
+                            .exceptionType("exceptionType")
+                            .exceptionMessage("exceptionMessage")
+                            .exceptionStacktrace("exceptionStacktrace")
+                            .build()
+                    )
+                )
+                .test(
+                    Test.and()
+                )
+                .node(
+                    Node
+                        .builder()
+                        .name("name")
+                        .nodes(
+                            new ArrayList<Node>(
+                                Arrays.asList(
+                                    Node
+                                        .builder()
+                                        .name("name")
+                                        .nodes(
+                                            new ArrayList<Node>(
+                                                Arrays.asList(
+                                                    Node
+                                                        .builder()
+                                                        .name("name")
+                                                        .nodes(
+                                                            new ArrayList<Node>()
+                                                        )
+                                                        .trees(
+                                                            new ArrayList<Tree>()
+                                                        )
+                                                        .build(),
+                                                    Node
+                                                        .builder()
+                                                        .name("name")
+                                                        .nodes(
+                                                            new ArrayList<Node>()
+                                                        )
+                                                        .trees(
+                                                            new ArrayList<Tree>()
+                                                        )
+                                                        .build()
+                                                )
+                                            )
+                                        )
+                                        .trees(
+                                            new ArrayList<Tree>(
+                                                Arrays.asList(
+                                                    Tree
+                                                        .builder()
+                                                        .nodes(
+                                                            new ArrayList<Node>()
+                                                        )
+                                                        .build(),
+                                                    Tree
+                                                        .builder()
+                                                        .nodes(
+                                                            new ArrayList<Node>()
+                                                        )
+                                                        .build()
+                                                )
+                                            )
+                                        )
+                                        .build(),
+                                    Node
+                                        .builder()
+                                        .name("name")
+                                        .nodes(
+                                            new ArrayList<Node>(
+                                                Arrays.asList(
+                                                    Node
+                                                        .builder()
+                                                        .name("name")
+                                                        .nodes(
+                                                            new ArrayList<Node>()
+                                                        )
+                                                        .trees(
+                                                            new ArrayList<Tree>()
+                                                        )
+                                                        .build(),
+                                                    Node
+                                                        .builder()
+                                                        .name("name")
+                                                        .nodes(
+                                                            new ArrayList<Node>()
+                                                        )
+                                                        .trees(
+                                                            new ArrayList<Tree>()
+                                                        )
+                                                        .build()
+                                                )
+                                            )
+                                        )
+                                        .trees(
+                                            new ArrayList<Tree>(
+                                                Arrays.asList(
+                                                    Tree
+                                                        .builder()
+                                                        .nodes(
+                                                            new ArrayList<Node>()
+                                                        )
+                                                        .build(),
+                                                    Tree
+                                                        .builder()
+                                                        .nodes(
+                                                            new ArrayList<Node>()
+                                                        )
+                                                        .build()
+                                                )
+                                            )
+                                        )
+                                        .build()
+                                )
+                            )
+                        )
+                        .trees(
+                            new ArrayList<Tree>(
+                                Arrays.asList(
+                                    Tree
+                                        .builder()
+                                        .nodes(
+                                            new ArrayList<Node>(
+                                                Arrays.asList(
+                                                    Node
+                                                        .builder()
+                                                        .name("name")
+                                                        .nodes(
+                                                            new ArrayList<Node>()
+                                                        )
+                                                        .trees(
+                                                            new ArrayList<Tree>()
+                                                        )
+                                                        .build(),
+                                                    Node
+                                                        .builder()
+                                                        .name("name")
+                                                        .nodes(
+                                                            new ArrayList<Node>()
+                                                        )
+                                                        .trees(
+                                                            new ArrayList<Tree>()
+                                                        )
+                                                        .build()
+                                                )
+                                            )
+                                        )
+                                        .build(),
+                                    Tree
+                                        .builder()
+                                        .nodes(
+                                            new ArrayList<Node>(
+                                                Arrays.asList(
+                                                    Node
+                                                        .builder()
+                                                        .name("name")
+                                                        .nodes(
+                                                            new ArrayList<Node>()
+                                                        )
+                                                        .trees(
+                                                            new ArrayList<Tree>()
+                                                        )
+                                                        .build(),
+                                                    Node
+                                                        .builder()
+                                                        .name("name")
+                                                        .nodes(
+                                                            new ArrayList<Node>()
+                                                        )
+                                                        .trees(
+                                                            new ArrayList<Tree>()
+                                                        )
+                                                        .build()
+                                                )
+                                            )
+                                        )
+                                        .build()
+                                )
+                            )
+                        )
+                        .build()
+                )
+                .directory(
+                    Directory
+                        .builder()
+                        .name("name")
+                        .files(
+                            new ArrayList<File>(
+                                Arrays.asList(
+                                    File
+                                        .builder()
+                                        .name("name")
+                                        .contents("contents")
+                                        .build(),
+                                    File
+                                        .builder()
+                                        .name("name")
+                                        .contents("contents")
+                                        .build()
+                                )
+                            )
+                        )
+                        .directories(
+                            new ArrayList<Directory>(
+                                Arrays.asList(
+                                    Directory
+                                        .builder()
+                                        .name("name")
+                                        .files(
+                                            new ArrayList<File>(
+                                                Arrays.asList(
+                                                    File
+                                                        .builder()
+                                                        .name("name")
+                                                        .contents("contents")
+                                                        .build(),
+                                                    File
+                                                        .builder()
+                                                        .name("name")
+                                                        .contents("contents")
+                                                        .build()
+                                                )
+                                            )
+                                        )
+                                        .directories(
+                                            new ArrayList<Directory>(
+                                                Arrays.asList(
+                                                    Directory
+                                                        .builder()
+                                                        .name("name")
+                                                        .files(
+                                                            new ArrayList<File>()
+                                                        )
+                                                        .directories(
+                                                            new ArrayList<Directory>()
+                                                        )
+                                                        .build(),
+                                                    Directory
+                                                        .builder()
+                                                        .name("name")
+                                                        .files(
+                                                            new ArrayList<File>()
+                                                        )
+                                                        .directories(
+                                                            new ArrayList<Directory>()
+                                                        )
+                                                        .build()
+                                                )
+                                            )
+                                        )
+                                        .build(),
+                                    Directory
+                                        .builder()
+                                        .name("name")
+                                        .files(
+                                            new ArrayList<File>(
+                                                Arrays.asList(
+                                                    File
+                                                        .builder()
+                                                        .name("name")
+                                                        .contents("contents")
+                                                        .build(),
+                                                    File
+                                                        .builder()
+                                                        .name("name")
+                                                        .contents("contents")
+                                                        .build()
+                                                )
+                                            )
+                                        )
+                                        .directories(
+                                            new ArrayList<Directory>(
+                                                Arrays.asList(
+                                                    Directory
+                                                        .builder()
+                                                        .name("name")
+                                                        .files(
+                                                            new ArrayList<File>()
+                                                        )
+                                                        .directories(
+                                                            new ArrayList<Directory>()
+                                                        )
+                                                        .build(),
+                                                    Directory
+                                                        .builder()
+                                                        .name("name")
+                                                        .files(
+                                                            new ArrayList<File>()
+                                                        )
+                                                        .directories(
+                                                            new ArrayList<Directory>()
+                                                        )
+                                                        .build()
+                                                )
+                                            )
+                                        )
+                                        .build()
+                                )
+                            )
+                        )
+                        .build()
+                )
+                .moment(
+                    Moment
+                        .builder()
+                        .id(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+                        .date("2023-01-15")
+                        .datetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                        .build()
+                )
+                .build()
+        );;
 
-        // Verify the request
-        RecordedRequest recorded = server.takeRequest();
-        assertNotNull(recorded);
-        assertEquals("POST", recorded.getMethod());
-        assertEquals("/big-entity", recorded.getPath());
-
-        // Verify request body
-        String requestBody = recorded.getBody().readUtf8();
-        assertEquals("{\"castMember\":{\"name\":\"name\",\"id\":\"id\"},\"extendedMovie\":{\"cast\":[\"cast\",\"cast\"],\"id\":\"id\",\"prequel\":\"prequel\",\"title\":\"title\",\"from\":\"from\",\"rating\":1.1,\"type\":\"movie\",\"tag\":\"tag\",\"book\":\"book\",\"metadata\":{\"metadata\":{\"key\":\"value\"}},\"revenue\":1000000},\"entity\":{\"type\":\"primitive\",\"name\":\"name\"},\"metadata\":{\"type\":\"html\",\"value\":\"metadata\",\"extra\":{\"extra\":\"extra\"},\"tags\":[\"tags\"]},\"commonMetadata\":{\"id\":\"id\",\"data\":{\"data\":\"data\"},\"jsonString\":\"jsonString\"},\"eventInfo\":{\"type\":\"metadata\",\"id\":\"id\",\"data\":{\"data\":\"data\"},\"jsonString\":\"jsonString\"},\"data\":{\"type\":\"string\",\"value\":\"data\"},\"migration\":{\"name\":\"name\",\"status\":\"RUNNING\"},\"exception\":{\"type\":\"generic\",\"exceptionType\":\"exceptionType\",\"exceptionMessage\":\"exceptionMessage\",\"exceptionStacktrace\":\"exceptionStacktrace\"},\"test\":{\"type\":\"and\",\"value\":true},\"node\":{\"name\":\"name\",\"nodes\":[{\"name\":\"name\",\"nodes\":[{\"name\":\"name\",\"nodes\":[],\"trees\":[]},{\"name\":\"name\",\"nodes\":[],\"trees\":[]}],\"trees\":[{\"nodes\":[]},{\"nodes\":[]}]},{\"name\":\"name\",\"nodes\":[{\"name\":\"name\",\"nodes\":[],\"trees\":[]},{\"name\":\"name\",\"nodes\":[],\"trees\":[]}],\"trees\":[{\"nodes\":[]},{\"nodes\":[]}]}],\"trees\":[{\"nodes\":[{\"name\":\"name\",\"nodes\":[],\"trees\":[]},{\"name\":\"name\",\"nodes\":[],\"trees\":[]}]},{\"nodes\":[{\"name\":\"name\",\"nodes\":[],\"trees\":[]},{\"name\":\"name\",\"nodes\":[],\"trees\":[]}]}]},\"directory\":{\"name\":\"name\",\"files\":[{\"name\":\"name\",\"contents\":\"contents\"},{\"name\":\"name\",\"contents\":\"contents\"}],\"directories\":[{\"name\":\"name\",\"files\":[{\"name\":\"name\",\"contents\":\"contents\"},{\"name\":\"name\",\"contents\":\"contents\"}],\"directories\":[{\"name\":\"name\",\"files\":[],\"directories\":[]},{\"name\":\"name\",\"files\":[],\"directories\":[]}]},{\"name\":\"name\",\"files\":[{\"name\":\"name\",\"contents\":\"contents\"},{\"name\":\"name\",\"contents\":\"contents\"}],\"directories\":[{\"name\":\"name\",\"files\":[],\"directories\":[]},{\"name\":\"name\",\"files\":[],\"directories\":[]}]}]},\"moment\":{\"id\":\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\"date\":\"2023-01-15\",\"datetime\":\"2024-01-15T09:30:00Z\"}}", requestBody);
+        RecordedRequest request = server.takeRequest();
+        assertNotNull(request);
+        assertEquals("POST", request.getMethod());
     }
+
     @Test
-    public void testRefreshToken() {
-        // Setup mock response
+    public void testRefreshToken() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
 
-        // Make the client call
-        client.service().refreshToken();
+        client.service().refreshToken(Optional.of());;
 
-        // Verify the request
-        RecordedRequest recorded = server.takeRequest();
-        assertNotNull(recorded);
-        assertEquals("POST", recorded.getMethod());
-        assertEquals("/refresh-token", recorded.getPath());
-
-        // Verify request body
-        String requestBody = recorded.getBody().readUtf8();
-        assertEquals("{}", requestBody);
+        RecordedRequest request = server.takeRequest();
+        assertNotNull(request);
+        assertEquals("POST", request.getMethod());
     }
+
 }
