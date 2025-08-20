@@ -9,8 +9,6 @@ from .base_wrapped_client_generator import BaseWrappedClientGenerator
 from .websocket_connect_method_generator import WebsocketConnectMethodGenerator
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
-from fern_python.codegen import AST, SourceFile
-from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 import fern.ir.resources as ir_types
 
 class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
