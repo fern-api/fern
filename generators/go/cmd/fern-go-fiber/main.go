@@ -40,6 +40,7 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.ClientConstructorName,
 		config.ImportPath,
 		config.PackageName,
+		config.PackagePath,
 		config.ExportedClientName,
 		config.PackageLayout,
 		config.UnionVersion,
