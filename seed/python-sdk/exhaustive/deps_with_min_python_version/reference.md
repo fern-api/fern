@@ -1262,6 +1262,9 @@ client.endpoints.http_methods.test_delete(
 <dd>
 
 ```python
+import datetime
+import uuid
+
 from seed import SeedExhaustive
 
 client = SeedExhaustive(
@@ -1269,11 +1272,25 @@ client = SeedExhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 client.endpoints.object.get_and_return_with_optional_field(
-    string="test",
-    integer=21991583578,
-    long_=9223372036854776000,
-    double=3.14,
+    string="string",
+    integer=1,
+    long_=1000000,
+    double=1.1,
     bool_=True,
+    datetime=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    date=datetime.date.fromisoformat(
+        "2023-01-15",
+    ),
+    uuid_=uuid.UUID(
+        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ),
+    base_64="SGVsbG8gd29ybGQh",
+    list_=["list", "list"],
+    set_={"set"},
+    map_={1: "map"},
+    bigint=1000000,
 )
 
 ```
@@ -1844,7 +1861,6 @@ client = SeedExhaustive(
 client.endpoints.object.test_integer_overflow_edge_cases(
     string="large-negative",
     integer=-1000000000000,
-    long_=-1000000000000,
     double=-1000000000000.0,
     bool_=True,
 )

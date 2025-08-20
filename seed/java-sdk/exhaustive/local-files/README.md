@@ -4,6 +4,10 @@
 
 The Seed Java library provides convenient access to the Seed API from Java.
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:
@@ -120,6 +124,32 @@ client.endpoints().container().getAndReturnListOfPrimitives(
     RequestOptions
         .builder()
         .timeout(10)
+        .build()
+);
+```
+
+### Custom Headers
+
+The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
+
+```java
+import com.fern.sdk.SeedExhaustiveClient;
+import com.fern.sdk.core.RequestOptions;
+
+// Client level
+SeedExhaustiveClient client = SeedExhaustiveClient
+    .builder()
+    .addHeader("X-Custom-Header", "custom-value")
+    .addHeader("X-Request-Id", "abc-123")
+    .build();
+;
+
+// Request level
+client.endpoints().container().getAndReturnListOfPrimitives(
+    ...,
+    RequestOptions
+        .builder()
+        .addHeader("X-Request-Header", "request-value")
         .build()
 );
 ```

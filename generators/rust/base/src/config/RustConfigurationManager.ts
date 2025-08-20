@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { RUST_KEYWORDS, RUST_RESERVED_TYPES } from "../constants";
 import { AbstractRustGeneratorContext } from "../context/AbstractRustGeneratorContext";
 import { BaseRustCustomConfigSchema } from "./BaseRustConfigSchema";

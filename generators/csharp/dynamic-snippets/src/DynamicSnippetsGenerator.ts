@@ -1,6 +1,5 @@
 import {
     AbstractDynamicSnippetsGenerator,
-    AbstractFormatter,
     FernGeneratorExec,
     Options
 } from "@fern-api/browser-compatible-base-generator";

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module seed
+module Seed
   module Internal
     module Types
       module Unknown
-        include seed::Internal::Types::Type
+        include Seed::Internal::Types::Type
 
         def coerce(value)
           value

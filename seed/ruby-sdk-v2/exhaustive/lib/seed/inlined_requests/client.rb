@@ -2,10 +2,8 @@
 module Seed
   module InlinedRequests
     class Client
-      # @option client [Seed::Internal::Http::RawClient]
-      #
       # @return [Seed::InlinedRequests::Client]
-      def initialize(client)
+      def initialize(client:)
         @client = client
       end
 

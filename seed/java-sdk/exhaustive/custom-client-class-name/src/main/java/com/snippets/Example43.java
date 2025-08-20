@@ -10,6 +10,6 @@ public class Example43 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().urls().withUnderscores();
+        client.endpoints().primitive().getAndReturnBase64("SGVsbG8gd29ybGQh".getBytes());
     }
 }

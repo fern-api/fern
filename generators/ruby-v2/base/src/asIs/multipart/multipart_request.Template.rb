@@ -4,7 +4,7 @@ module <%= gem_namespace %>
   module Internal
     module Multipart
       # @api private
-      class Request <%= gem_namespace %>::Internal::Http::BaseRequest
+      class Request < <%= gem_namespace %>::Internal::Http::BaseRequest
         attr_reader :body
 
         # @param base_url [String] The base URL for the request

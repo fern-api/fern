@@ -32,10 +32,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
 
         const class_ = ruby.class_({
             name: this.wrapper.wrapperName.pascalCase.safeName,
-            superclass: ruby.classReference({
-                name: "Model",
-                modules: ["Internal", "Types"]
-            })
+            superclass: this.context.getModelClassReference()
         });
 
         for (const pathParameter of this.endpoint.allPathParameters) {

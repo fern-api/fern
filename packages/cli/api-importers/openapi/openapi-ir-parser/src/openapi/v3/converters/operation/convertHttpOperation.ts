@@ -1,5 +1,3 @@
-import { MediaType } from "@fern-api/core-utils";
-
 import {
     EndpointSdkName,
     EndpointWithExample,
@@ -23,7 +21,6 @@ import { convertServer } from "../convertServer";
 import { ConvertedParameters, convertParameters } from "../endpoint/convertParameters";
 import { convertRequest, convertToSingleRequest } from "../endpoint/convertRequest";
 import { convertResponse } from "../endpoint/convertResponse";
-import { isApplicationJsonMediaType } from "../endpoint/getApplicationJsonSchema";
 
 export function convertHttpOperation({
     operationContext,

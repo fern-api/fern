@@ -117,6 +117,9 @@ jobs:
           title: "chore(ruby): update ruby-model seed"
           branch: update-ruby-model-seed
           delete-branch: true
+          labels: |
+            seed
+            language/ruby
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
@@ -160,6 +163,9 @@ jobs:
           title: "chore(ruby): update ruby-sdk seed"
           branch: update-ruby-sdk-seed
           delete-branch: true
+          labels: |
+            seed
+            language/ruby
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
@@ -203,6 +209,9 @@ jobs:
           title: "chore(python): update pydantic seed"
           branch: update-pydantic-seed
           delete-branch: true
+          labels: |
+            seed
+            language/python
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
@@ -246,6 +255,9 @@ jobs:
           title: "chore(python): update python-sdk seed"
           branch: update-python-sdk-seed
           delete-branch: true
+          labels: |
+            seed
+            language/python
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
@@ -289,6 +301,9 @@ jobs:
           title: "chore(python): update fastapi seed"
           branch: update-fastapi-seed
           delete-branch: true
+          labels: |
+            seed
+            language/python
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
@@ -332,6 +347,9 @@ jobs:
           title: "chore(openapi): update openapi seed"
           branch: update-openapi-seed
           delete-branch: true
+          labels: |
+            seed
+            language/openapi
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
@@ -375,6 +393,9 @@ jobs:
           title: "chore(postman): update postman seed"
           branch: update-postman-seed
           delete-branch: true
+          labels: |
+            seed
+            language/postman
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
@@ -418,6 +439,9 @@ jobs:
           title: "chore(java): update java-sdk seed"
           branch: update-java-sdk-seed
           delete-branch: true
+          labels: |
+            seed
+            language/java
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
@@ -461,6 +485,9 @@ jobs:
           title: "chore(java): update java-model seed"
           branch: update-java-model-seed
           delete-branch: true
+          labels: |
+            seed
+            language/java
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
@@ -504,6 +531,9 @@ jobs:
           title: "chore(java): update java-spring seed"
           branch: update-java-spring-seed
           delete-branch: true
+          labels: |
+            seed
+            language/java
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
@@ -547,6 +577,9 @@ jobs:
           title: "chore(typescript): update typescript-sdk seed"
           branch: update-typescript-sdk-seed
           delete-branch: true
+          labels: |
+            seed
+            language/typescript
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
@@ -590,6 +623,9 @@ jobs:
           title: "chore(typescript): update typescript-express seed"
           branch: update-typescript-express-seed
           delete-branch: true
+          labels: |
+            seed
+            language/typescript
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
@@ -633,6 +669,9 @@ jobs:
           title: "chore(go): update go-fiber seed"
           branch: update-go-fiber-seed
           delete-branch: true
+          labels: |
+            seed
+            language/go
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
@@ -676,6 +715,9 @@ jobs:
           title: "chore(go): update go-model seed"
           branch: update-go-model-seed
           delete-branch: true
+          labels: |
+            seed
+            language/go
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
@@ -719,6 +761,9 @@ jobs:
           title: "chore(go): update go-sdk seed"
           branch: update-go-sdk-seed
           delete-branch: true
+          labels: |
+            seed
+            language/go
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
@@ -762,6 +807,9 @@ jobs:
           title: "chore(csharp): update csharp-model seed"
           branch: update-csharp-model-seed
           delete-branch: true
+          labels: |
+            seed
+            language/csharp
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
@@ -805,6 +853,9 @@ jobs:
           title: "chore(csharp): update csharp-sdk seed"
           branch: update-csharp-sdk-seed
           delete-branch: true
+          labels: |
+            seed
+            language/csharp
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
@@ -848,6 +899,9 @@ jobs:
           title: "chore(php): update php-model seed"
           branch: update-php-model-seed
           delete-branch: true
+          labels: |
+            seed
+            language/php
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
@@ -891,6 +945,9 @@ jobs:
           title: "chore(php): update php-sdk seed"
           branch: update-php-sdk-seed
           delete-branch: true
+          labels: |
+            seed
+            language/php
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'

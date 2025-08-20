@@ -10,8 +10,4 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->noAuth->postWithNoAuth(
-    [
-        'key' => "value",
-    ],
-);
+$client->noReqBody->getWithNoRequestBody();

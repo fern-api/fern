@@ -1,8 +1,4 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { Options } from "execa";
-import { cp, mkdir } from "fs/promises";
 import stripAnsi from "strip-ansi";
-import tmp from "tmp-promise";
 
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";

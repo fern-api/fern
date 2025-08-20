@@ -5,6 +5,8 @@ package com.seed.variables;
 
 import com.seed.variables.core.ClientOptions;
 import com.seed.variables.core.Environment;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import okhttp3.OkHttpClient;
 
@@ -12,6 +14,8 @@ public class SeedVariablesClientBuilder {
     private Optional<Integer> timeout = Optional.empty();
 
     private Optional<Integer> maxRetries = Optional.empty();
+
+    private final Map<String, String> customHeaders = new HashMap<>();
 
     private Environment environment;
 
@@ -46,6 +50,19 @@ public class SeedVariablesClientBuilder {
         return this;
     }
 
+    /**
+     * Add a custom header to be sent with all requests.
+     * For headers that need to be computed dynamically or conditionally, use the setAdditional() method override instead.
+     *
+     * @param name The header name
+     * @param value The header value
+     * @return This builder for method chaining
+     */
+    public SeedVariablesClientBuilder addHeader(String name, String value) {
+        this.customHeaders.put(name, value);
+        return this;
+    }
+
     public SeedVariablesClientBuilder rootVariable(String rootVariable) {
         clientOptionsBuilder.rootVariable(rootVariable);
         return this;
@@ -58,6 +75,9 @@ public class SeedVariablesClientBuilder {
         setHttpClient(builder);
         setTimeouts(builder);
         setRetries(builder);
+        for (Map.Entry<String, String> header : this.customHeaders.entrySet()) {
+            builder.addHeader(header.getKey(), header.getValue());
+        }
         setAdditional(builder);
         return builder.build();
     }

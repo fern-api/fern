@@ -27,5 +27,12 @@
     "declarationMap": true,
     "sourceMap": true
   },
-  "exclude": ["node_modules", "dist", ".turbo", ".github", ".husky", "__snapshots__"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".turbo",
+    ".github",
+    ".husky",
+    "__snapshots__"
+  ]
 }

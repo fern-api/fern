@@ -29,6 +29,10 @@ Add the dependency in your `pom.xml` file:
 </dependency>
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:
@@ -134,6 +138,32 @@ client.service().get(
     RequestOptions
         .builder()
         .timeout(10)
+        .build()
+);
+```
+
+### Custom Headers
+
+The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
+
+```java
+import com.seed.publicObject.SeedPublicObjectClient;
+import com.seed.publicObject.core.RequestOptions;
+
+// Client level
+SeedPublicObjectClient client = SeedPublicObjectClient
+    .builder()
+    .addHeader("X-Custom-Header", "custom-value")
+    .addHeader("X-Request-Id", "abc-123")
+    .build();
+;
+
+// Request level
+client.service().get(
+    ...,
+    RequestOptions
+        .builder()
+        .addHeader("X-Request-Header", "request-value")
         .build()
 );
 ```

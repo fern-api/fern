@@ -3,6 +3,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import tmp from "tmp-promise";
+import { FixtureConfigurations } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { Semaphore } from "../../Semaphore";
 import { convertGeneratorWorkspaceToFernWorkspace } from "../../utils/convertSeedWorkspaceToFernWorkspace";
@@ -104,11 +105,17 @@ export async function runWithCustomFixture({
             return;
         }
 
+        const runFixtureConfig: FixtureConfigurations = {
+            customConfig: generatorGroup.config,
+            outputFolder: "",
+            ...customFixtureConfig
+        };
+
         await testRunner.build();
 
         await testRunner.run({
             fixture: "custom",
-            configuration: customFixtureConfig,
+            configuration: runFixtureConfig,
             inspect,
             absolutePathToApiDefinition: pathToFixture,
             outputDir: absolutePathToOutput
@@ -140,7 +147,7 @@ function getGeneratorGroup({
     image: string;
     imageAliases?: string[];
     absolutePathToOutput: AbsoluteFilePath;
-}): { group: GeneratorGroup; invocation: GeneratorInvocation } | undefined {
+}): { group: GeneratorGroup; invocation: GeneratorInvocation; config: object } | undefined {
     const groups = apiWorkspace.generatorsConfiguration?.groups;
     for (const group of groups ?? []) {
         for (const generator of group.generators) {
@@ -155,7 +162,8 @@ function getGeneratorGroup({
                         ...group,
                         generators: [invocation]
                     },
-                    invocation
+                    invocation,
+                    config: generator.config as object
                 };
             }
         }

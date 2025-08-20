@@ -1,9 +1,4 @@
-import { NamedArgument } from "@fern-api/browser-compatible-base-generator";
-
 import { csharp } from "..";
-import { AnonymousFunction } from "../csharp";
-import { ClassInstantiation } from "./ClassInstantiation";
-import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 

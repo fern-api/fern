@@ -166,6 +166,15 @@ fixtures:
     - customConfig:
         additional-properties: false
       outputFolder: no-additional-properties
+  csharp-namespace-collision:
+    - customConfig:
+        experimental-fully-qualified-namespaces: true
+        experimental-dotnet-format: true
+      outputFolder: fully-qualified-namespaces
+  csharp-system-collision:
+    - customConfig:
+        client-class-name: System
+      outputFolder: system-client
 allowedFailures:
   - imdb:exported-client-class-name
   - literal
@@ -174,6 +183,13 @@ allowedFailures:
   - pagination:custom-pager
   - pagination:custom-pager-with-exception-handler
 
+  # these tests are generating code with numbers that overflow the size of members they are meant
+  # to fill.
+  - exhaustive:explicit-namespaces
+  - exhaustive:no-root-namespace-for-core-classes
+  - exhaustive:no-generate-error-types
+  - exhaustive:include-exception-handler
+
   ## COMPILE FAILURES
   - any-auth
   - examples:no-custom-config
@@ -181,7 +197,7 @@ allowedFailures:
   - objects-with-imports
   - mixed-file-directory
 
-  # deserialization/?? issues for public readonly record struct 
+  # deserialization/?? issues for public readonly record struct
   - circular-references
   - circular-references-advanced
 

@@ -7,7 +7,7 @@ import {
     TypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { PostmanExampleResponse, PostmanHeader } from "@fern-fern/postman-sdk/api";
-import { isEqual, startCase, values } from "lodash";
+import { isEqual, startCase } from "lodash";
 
 import { GeneratedExampleRequest } from "./request/GeneratedExampleRequest";
 

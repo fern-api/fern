@@ -14,7 +14,7 @@ public class Example53
             }
         );
 
-        await client.NoReqBody.GetWithNoRequestBodyAsync();
+        await client.NoReqBody.PostWithNoRequestBodyAsync();
     }
 
 }
