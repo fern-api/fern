@@ -10,6 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->primitive->getAndReturnLong(
-    1000000,
+$client->endpoints->primitive->getAndReturnDouble(
+    1.1,
 );

@@ -181,7 +181,7 @@ public record EventInfo
                         "Failed to deserialize SeedExamples.Commons.Metadata"
                     ),
                 "tag" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
             return new EventInfo(discriminator, value);

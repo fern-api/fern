@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "user": {
+      "$ref": "#/definitions/System.User"
+    }
+  },
+  "required": [
+    "name",
+    "user"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "System.User": {
+      "type": "object",
+      "properties": {
+        "line1": {
+          "type": "string"
+        },
+        "line2": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "zip": {
+          "type": "string"
+        },
+        "country": {
+          "const": "USA"
+        }
+      },
+      "required": [
+        "line1",
+        "city",
+        "state",
+        "zip",
+        "country"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

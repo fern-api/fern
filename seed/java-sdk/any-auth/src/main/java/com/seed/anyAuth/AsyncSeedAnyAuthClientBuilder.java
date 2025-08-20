@@ -7,6 +7,8 @@ import com.seed.anyAuth.core.ClientOptions;
 import com.seed.anyAuth.core.Environment;
 import com.seed.anyAuth.core.OAuthTokenSupplier;
 import com.seed.anyAuth.resources.auth.AuthClient;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import okhttp3.OkHttpClient;
 
@@ -14,6 +16,8 @@ public class AsyncSeedAnyAuthClientBuilder {
     private Optional<Integer> timeout = Optional.empty();
 
     private Optional<Integer> maxRetries = Optional.empty();
+
+    private final Map<String, String> customHeaders = new HashMap<>();
 
     private String token = System.getenv("MY_TOKEN");
 
@@ -92,6 +96,19 @@ public class AsyncSeedAnyAuthClientBuilder {
         return this;
     }
 
+    /**
+     * Add a custom header to be sent with all requests.
+     * For headers that need to be computed dynamically or conditionally, use the setAdditional() method override instead.
+     *
+     * @param name The header name
+     * @param value The header value
+     * @return This builder for method chaining
+     */
+    public AsyncSeedAnyAuthClientBuilder addHeader(String name, String value) {
+        this.customHeaders.put(name, value);
+        return this;
+    }
+
     protected ClientOptions buildClientOptions() {
         ClientOptions.Builder builder = ClientOptions.builder();
         setEnvironment(builder);
@@ -99,6 +116,9 @@ public class AsyncSeedAnyAuthClientBuilder {
         setHttpClient(builder);
         setTimeouts(builder);
         setRetries(builder);
+        for (Map.Entry<String, String> header : this.customHeaders.entrySet()) {
+            builder.addHeader(header.getKey(), header.getValue());
+        }
         setAdditional(builder);
         return builder.build();
     }

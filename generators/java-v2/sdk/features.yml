@@ -46,3 +46,8 @@ features:
     description: |
       The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
+  - id: CUSTOM_HEADERS
+    advanced: true
+    description: |
+      The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
+

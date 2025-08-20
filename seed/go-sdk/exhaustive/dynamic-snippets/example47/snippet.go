@@ -15,7 +15,7 @@ func do() {
             "<token>",
         ),
     )
-    client.NoReqBody.PostWithNoRequestBody(
+    client.Endpoints.Urls.NoEndingSlash(
         context.TODO(),
     )
 }

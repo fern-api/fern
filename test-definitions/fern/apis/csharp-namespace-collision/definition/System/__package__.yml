@@ -1,0 +1,29 @@
+types:
+  Task:
+    properties:
+      name: string
+      user: User
+
+  User:
+    properties:
+      line1: string
+      line2: optional<string>
+      city: string
+      state: string
+      zip: string
+      country: literal<"USA">
+
+service:
+  auth: false
+  base-path: /users
+  endpoints:
+    createUser:
+      method: POST
+      path: ""
+      request: User
+      response: User
+    createTask:
+      method: POST
+      path: ""
+      request: Task
+      response: Task

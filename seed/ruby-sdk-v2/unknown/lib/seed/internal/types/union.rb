@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module seed
+module Seed
   module Internal
     module Types
       # Define a union between two types
       module Union
-        include seed::Internal::Types::Type
+        include Seed::Internal::Types::Type
 
         def members
           @members ||= []

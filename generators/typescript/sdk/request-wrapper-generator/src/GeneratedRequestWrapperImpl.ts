@@ -3,13 +3,11 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExampleEndpointCall,
     FileProperty,
-    FileUploadBodyProperty,
     FileUploadRequest,
     FileUploadRequestProperty,
     HttpEndpoint,
     HttpHeader,
     HttpRequestBody,
-    HttpRequestBodyReference,
     HttpService,
     InlinedRequestBody,
     InlinedRequestBodyProperty,
@@ -36,13 +34,7 @@ import {
     RequestWrapperNonBodyPropertyWithData,
     SdkContext
 } from "@fern-typescript/contexts";
-import {
-    InterfaceDeclarationStructure,
-    ModuleDeclarationStructure,
-    PropertySignatureStructure,
-    StructureKind,
-    ts
-} from "ts-morph";
+import { InterfaceDeclarationStructure, ModuleDeclarationStructure, StructureKind, ts } from "ts-morph";
 import { RequestWrapperExampleGenerator } from "./RequestWrapperExampleGenerator";
 
 export declare namespace GeneratedRequestWrapperImpl {
