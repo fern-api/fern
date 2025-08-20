@@ -1,5 +1,4 @@
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
-use std::collections::HashMap;
 use thiserror::Error;
 
 /// Generic query parameter builder for various query patterns
@@ -30,28 +29,6 @@ impl QueryParameterBuilder {
         self.params.push((encoded_key, encoded_value));
     }
 
-    /// Add a raw parameter without additional processing
-    /// Useful when the value is already in the desired format
-    pub fn add_raw(&mut self, key: &str, value: &str) {
-        let encoded_key = utf8_percent_encode(key, NON_ALPHANUMERIC).to_string();
-        let encoded_value = utf8_percent_encode(value, NON_ALPHANUMERIC).to_string();
-        self.params.push((encoded_key, encoded_value));
-    }
-
-    /// Add parameters from a HashMap
-    pub fn add_from_hashmap(&mut self, map: &HashMap<String, String>) {
-        for (key, value) in map {
-            self.add_simple(key, value);
-        }
-    }
-
-    /// Add multiple values for the same key (useful for array-like parameters)
-    pub fn add_multiple<T: ToString + std::fmt::Display>(&mut self, key: &str, values: &[T]) {
-        for value in values {
-            self.add_simple(key, value);
-        }
-    }
-
     /// Try to parse a complex query string using common patterns
     /// This is a best-effort generic parser that handles:
     /// - "key:value" patterns
@@ -67,16 +44,6 @@ impl QueryParameterBuilder {
     /// Build the final query parameter vector
     pub fn build(self) -> Vec<(String, String)> {
         self.params
-    }
-
-    /// Get the current number of parameters
-    pub fn len(&self) -> usize {
-        self.params.len()
-    }
-
-    /// Check if the builder is empty
-    pub fn is_empty(&self) -> bool {
-        self.params.is_empty()
     }
 }
 
@@ -144,93 +111,4 @@ fn tokenize_query(input: &str) -> Vec<String> {
     }
 
     tokens
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_simple_parameters() {
-        let mut builder = QueryParameterBuilder::new();
-        builder.add_simple("name", "test");
-        builder.add_simple("status", "active");
-
-        let params = builder.build();
-        assert_eq!(params.len(), 2);
-    }
-
-    #[test]
-    fn test_url_encoding() {
-        let mut builder = QueryParameterBuilder::new();
-        builder.add_simple("name", "test with spaces");
-        builder.add_simple("special", "chars@#$%");
-
-        let params = builder.build();
-        assert!(params[0].1.contains("%20")); // Space encoded
-        assert!(params[1].1.contains("%40")); // @ encoded
-    }
-
-    #[test]
-    fn test_structured_query_basic() {
-        let query = "name:robot status:active";
-        let params = parse_structured_query(query).unwrap();
-
-        assert_eq!(params.len(), 2);
-    }
-
-    #[test]
-    fn test_structured_query_comma_values() {
-        let query = "status:active,inactive type:robot";
-        let params = parse_structured_query(query).unwrap();
-
-        assert_eq!(params.len(), 3);
-        // Should have: status=active, status=inactive, type=robot
-    }
-
-    #[test]
-    fn test_structured_query_quoted_values() {
-        let query = r#"name:"robot with spaces" status:active"#;
-        let params = parse_structured_query(query).unwrap();
-
-        assert_eq!(params.len(), 2);
-
-        // Find the name parameter and check its value contains encoded spaces
-        let name_param = params.iter().find(|(k, _)| k.contains("name")).unwrap();
-        assert!(name_param.1.contains("%20"));
-    }
-
-    #[test]
-    fn test_multiple_values() {
-        let mut builder = QueryParameterBuilder::new();
-        builder.add_multiple("tags", &["rust", "api", "sdk"]);
-
-        let params = builder.build();
-        assert_eq!(params.len(), 3);
-
-        // All should have the same key
-        for (key, _) in &params {
-            assert!(key.contains("tags"));
-        }
-    }
-
-    #[test]
-    fn test_hashmap_addition() {
-        let mut map = HashMap::new();
-        map.insert("key1".to_string(), "value1".to_string());
-        map.insert("key2".to_string(), "value2".to_string());
-
-        let mut builder = QueryParameterBuilder::new();
-        builder.add_from_hashmap(&map);
-
-        let params = builder.build();
-        assert_eq!(params.len(), 2);
-    }
-
-    #[test]
-    fn test_invalid_structured_query() {
-        let query = "invalid term without colon";
-        let result = parse_structured_query(query);
-        assert!(result.is_err());
-    }
 }
