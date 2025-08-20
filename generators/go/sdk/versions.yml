@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.6.1
+  changelogEntry:
+    - summary: |
+        Add reference.md doc generation
+      type: feat
+  createdAt: '2025-08-20'
+  irVersion: 58
+
 - version: 1.6.0
   changelogEntry:
     - summary: |

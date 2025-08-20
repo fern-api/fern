@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 
@@ -51,18 +52,12 @@ func (g *Generator) Run() error {
 	stderr := bytes.NewBuffer(nil)
 	cmd := exec.Command("node", "--enable-source-maps", v2BinPath, configFilepath)
 
-	// If logs are needed from the Go-V2 generator:
-	// cmd.Stdout = io.MultiWriter(stdout, os.Stdout)
-	// cmd.Stderr = io.MultiWriter(stderr, os.Stderr)
-	cmd.Stdout = stdout
-	cmd.Stderr = stderr
+	// write to process stdout as well to capture all logs
+	cmd.Stdout = io.MultiWriter(stdout, os.Stdout)
+	cmd.Stderr = io.MultiWriter(stderr, os.Stderr)
+
 	if err := cmd.Run(); err != nil {
-		stderrString := stderr.String()
-		g.coordinator.Log(
-			generatorexec.LogLevelWarn,
-			fmt.Sprintf("Failed to run go-v2 generator; stdout: %s, stderr: %s", stdout.String(), stderrString),
-		)
-		return errors.New(stderrString)
+		return fmt.Errorf("failed to run go-v2 generator: %s", stderr.String())
 	}
 
 	return g.coordinator.Log(
