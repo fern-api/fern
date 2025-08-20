@@ -65,7 +65,18 @@ export class RawClient {
             case "bytes":
                 return undefined;
             case "multipartform":
-                return undefined;
+                return ruby.codeblock((writer) => {
+                    writer.writeLine(
+                        `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = Deep.new(`
+                    );
+                    writer.indent();
+                    writer.writeLine(`method: ${endpoint.method.toUpperCase()},`);
+                    writer.write(`path: `);
+                    this.writePathString({ writer, endpoint, pathParameterReferences: pathParameterReferences ?? {} });
+                    writer.writeLine(",");
+                    writer.dedent();
+                    writer.write(`)`);
+                });
         }
         return undefined;
     }

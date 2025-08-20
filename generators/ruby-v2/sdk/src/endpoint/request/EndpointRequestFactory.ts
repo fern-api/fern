@@ -2,6 +2,7 @@ import { HttpEndpoint, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { EndpointRequest } from "./EndpointRequest";
+import { FileUploadEndpointRequest } from "./FileUploadEndpointRequest";
 import { ReferencedEndpointRequest } from "./ReferencedEndpointRequest";
 
 export declare namespace CreateEndpointRequest {
@@ -20,7 +21,12 @@ export function createEndpointRequest({
     serviceId
 }: CreateEndpointRequest.Args): EndpointRequest | undefined {
     return sdkRequest.shape._visit<EndpointRequest | undefined>({
-        wrapper: (wrapper) => undefined,
+        wrapper: () => {
+            if (endpoint.requestBody?.type === "fileUpload") {
+                return new FileUploadEndpointRequest(context, sdkRequest, endpoint, endpoint.requestBody);
+            } 
+            return undefined;
+        },
         justRequestBody: (value) => {
             if (value.type === "bytes") {
                 return undefined;
