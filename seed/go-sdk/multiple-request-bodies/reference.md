@@ -58,28 +58,3 @@ client.UploadJsonDocument(
 </dd>
 </dl>
 </details>
-
-<details><summary><code>client.UploadPdfDocument(request) -> *fern.UploadDocumentResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-example call
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
