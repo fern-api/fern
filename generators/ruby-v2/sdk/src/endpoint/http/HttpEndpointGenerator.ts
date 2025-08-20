@@ -65,6 +65,11 @@ export class HttpEndpointGenerator {
             bodyReference: requestBodyCodeBlock?.requestBodyReference
         });
 
+        const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
+        if (requestBodyCodeBlock?.code != null) {
+            statements.push(requestBodyCodeBlock.code);
+        }
+
         if (sendRequestCodeBlock != null) {
             statements.push(sendRequestCodeBlock);
         } else {

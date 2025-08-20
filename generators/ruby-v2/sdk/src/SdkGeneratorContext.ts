@@ -48,6 +48,14 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         );
     }
 
+    public getClassReferenceForTypeId(typeId: TypeId): ruby.ClassReference {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return ruby.classReference({
+            modules: this.getModuleNamesForTypeId(typeId),
+            name: typeDeclaration.name.name.pascalCase.safeName
+        });
+    }
+
     public getFileNameForTypeId(typeId: TypeId): string {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return typeDeclaration.name.name.snakeCase.safeName + ".rb";
@@ -146,6 +154,13 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return ruby.classReference({
             name: "Request",
             modules: [this.getRootModule().name, "Internal", "JSON"]
+        });
+    }
+
+    public getReferenceToInternalMultipartRequest(): ruby.ClassReference {
+        return ruby.classReference({
+            name: "Request",
+            modules: [this.getRootModule().name, "Internal", "Multipart"]
         });
     }
 

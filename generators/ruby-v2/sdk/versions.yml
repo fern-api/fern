@@ -1,10 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 1.0.0-rc12
+- version: 1.0.0-rc13
   createdAt: "2025-08-20"
   changelogEntry:
     - type: feat
       summary: >-
         Implement Wrapped Request Endpoints.
+  irVersion: 58
+
+- version: 1.0.0-rc12
+  createdAt: "2025-08-20"
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Support multipart form uploads.
   irVersion: 58
 
 - version: 1.0.0-rc11
