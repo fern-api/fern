@@ -11,6 +11,7 @@ module Seed
       # @return [untyped]
       def post(request_options: {}, **params)
 <<<<<<< HEAD
+<<<<<<< HEAD
         _request = params
         _response = @client.send(_request)
         return if _response.code >= "200" && _response.code < "300"
@@ -34,8 +35,45 @@ module Seed
         hi this is not a file, alias_list_of_object
 
         _request = Deep.new(
+=======
+        body = Internal::Multipart::FormData.new
+        
+        if params[maybe_string]
+          body.add_part(params[:maybe_string].to_form_data_part(name: "maybe_string"))
+        endif params[integer]
+          body.add_part(params[:integer].to_form_data_part(name: "integer"))
+        endif params[file]
+          body.add(Internal::Multipart::FilePart.new(file, File.new(params[file]), "application/octet-stream"))
+        endif params[file_list]
+          body.add(Internal::Multipart::FilePart.new(file_list, File.new(params[file_list]), "application/octet-stream"))
+        endif params[maybe_file]
+          body.add(Internal::Multipart::FilePart.new(maybe_file, File.new(params[maybe_file]), "application/octet-stream"))
+        endif params[maybe_file_list]
+          body.add(Internal::Multipart::FilePart.new(maybe_file_list, File.new(params[maybe_file_list]), "application/octet-stream"))
+        endif params[maybe_integer]
+          body.add_part(params[:maybe_integer].to_form_data_part(name: "maybe_integer"))
+        endif params[optional_list_of_strings]
+          body.add_part(params[:optional_list_of_strings].to_form_data_part(name: "optional_list_of_strings"))
+        endif params[list_of_objects]
+          body.add_part(params[:list_of_objects].to_form_data_part(name: "list_of_objects"))
+        endif params[optional_metadata]
+          body.add_part(params[:optional_metadata].to_form_data_part(name: "optional_metadata"))
+        endif params[optional_object_type]
+          body.add_part(params[:optional_object_type].to_form_data_part(name: "optional_object_type"))
+        endif params[optional_id]
+          body.add_part(params[:optional_id].to_form_data_part(name: "optional_id"))
+        endif params[alias_object]
+          body.add_part(params[:alias_object].to_form_data_part(name: "alias_object"))
+        endif params[list_of_alias_object]
+          body.add_part(params[:list_of_alias_object].to_form_data_part(name: "list_of_alias_object"))
+        endif params[alias_list_of_object]
+          body.add_part(params[:alias_list_of_object].to_form_data_part(name: "alias_list_of_object"))
+        end
+        _request = Seed::Internal::Multipart::Request.new(
+>>>>>>> a419d24f88 (chore(ruby): fix sdks)
           method: POST,
           path: "",
+          body: body,
         )
         _response = @client.send(_request)
         if _response.code >= "200" && _response.code < "300"
@@ -49,6 +87,7 @@ module Seed
       # @return [untyped]
       def just_file(request_options: {}, **params)
 <<<<<<< HEAD
+<<<<<<< HEAD
         _request = params
         _response = @client.send(_request)
         return if _response.code >= "200" && _response.code < "300"
@@ -58,8 +97,17 @@ module Seed
         hi this is a file, file
 
         _request = Deep.new(
+=======
+        body = Internal::Multipart::FormData.new
+        
+        if params[file]
+          body.add(Internal::Multipart::FilePart.new(file, File.new(params[file]), "application/octet-stream"))
+        end
+        _request = Seed::Internal::Multipart::Request.new(
+>>>>>>> a419d24f88 (chore(ruby): fix sdks)
           method: POST,
           path: "/just-file",
+          body: body,
         )
         _response = @client.send(_request)
         if _response.code >= "200" && _response.code < "300"
@@ -73,6 +121,7 @@ module Seed
       # @return [untyped]
       def just_file_with_query_params(request_options: {}, **params)
 <<<<<<< HEAD
+<<<<<<< HEAD
         _request = params
         _response = @client.send(_request)
         return if _response.code >= "200" && _response.code < "300"
@@ -82,8 +131,17 @@ module Seed
         hi this is a file, file
 
         _request = Deep.new(
+=======
+        body = Internal::Multipart::FormData.new
+        
+        if params[file]
+          body.add(Internal::Multipart::FilePart.new(file, File.new(params[file]), "application/octet-stream"))
+        end
+        _request = Seed::Internal::Multipart::Request.new(
+>>>>>>> a419d24f88 (chore(ruby): fix sdks)
           method: POST,
           path: "/just-file-with-query-params",
+          body: body,
         )
         _response = @client.send(_request)
         if _response.code >= "200" && _response.code < "300"
@@ -97,6 +155,7 @@ module Seed
       # @return [untyped]
       def with_content_type(request_options: {}, **params)
 <<<<<<< HEAD
+<<<<<<< HEAD
         _request = params
         _response = @client.send(_request)
         return if _response.code >= "200" && _response.code < "300"
@@ -109,8 +168,23 @@ module Seed
         hi this is not a file, foo_bar
 
         _request = Deep.new(
+=======
+        body = Internal::Multipart::FormData.new
+        
+        if params[file]
+          body.add(Internal::Multipart::FilePart.new(file, File.new(params[file]), "application/octet-stream"))
+        endif params[foo]
+          body.add_part(params[:foo].to_form_data_part(name: "foo"))
+        endif params[bar]
+          body.add_part(params[:bar].to_form_data_part(name: "bar"))
+        endif params[foo_bar]
+          body.add_part(params[:foo_bar].to_form_data_part(name: "foo_bar"))
+        end
+        _request = Seed::Internal::Multipart::Request.new(
+>>>>>>> a419d24f88 (chore(ruby): fix sdks)
           method: POST,
           path: "/with-content-type",
+          body: body,
         )
         _response = @client.send(_request)
         if _response.code >= "200" && _response.code < "300"
@@ -124,6 +198,7 @@ module Seed
       # @return [untyped]
       def with_form_encoding(request_options: {}, **params)
 <<<<<<< HEAD
+<<<<<<< HEAD
         _request = params
         _response = @client.send(_request)
         return if _response.code >= "200" && _response.code < "300"
@@ -135,8 +210,21 @@ module Seed
         hi this is not a file, bar
 
         _request = Deep.new(
+=======
+        body = Internal::Multipart::FormData.new
+        
+        if params[file]
+          body.add(Internal::Multipart::FilePart.new(file, File.new(params[file]), "application/octet-stream"))
+        endif params[foo]
+          body.add_part(params[:foo].to_form_data_part(name: "foo"))
+        endif params[bar]
+          body.add_part(params[:bar].to_form_data_part(name: "bar"))
+        end
+        _request = Seed::Internal::Multipart::Request.new(
+>>>>>>> a419d24f88 (chore(ruby): fix sdks)
           method: POST,
           path: "/with-form-encoding",
+          body: body,
         )
         _response = @client.send(_request)
         if _response.code >= "200" && _response.code < "300"
@@ -149,6 +237,7 @@ module Seed
 
       # @return [untyped]
       def with_form_encoded_containers(request_options: {}, **params)
+<<<<<<< HEAD
 <<<<<<< HEAD
         _request = params
         _response = @client.send(_request)
@@ -174,8 +263,47 @@ module Seed
         hi this is not a file, alias_list_of_object
 
         _request = Deep.new(
+=======
+        body = Internal::Multipart::FormData.new
+        
+        if params[maybe_string]
+          body.add_part(params[:maybe_string].to_form_data_part(name: "maybe_string"))
+        endif params[integer]
+          body.add_part(params[:integer].to_form_data_part(name: "integer"))
+        endif params[file]
+          body.add(Internal::Multipart::FilePart.new(file, File.new(params[file]), "application/octet-stream"))
+        endif params[file_list]
+          body.add(Internal::Multipart::FilePart.new(file_list, File.new(params[file_list]), "application/octet-stream"))
+        endif params[maybe_file]
+          body.add(Internal::Multipart::FilePart.new(maybe_file, File.new(params[maybe_file]), "application/octet-stream"))
+        endif params[maybe_file_list]
+          body.add(Internal::Multipart::FilePart.new(maybe_file_list, File.new(params[maybe_file_list]), "application/octet-stream"))
+        endif params[maybe_integer]
+          body.add_part(params[:maybe_integer].to_form_data_part(name: "maybe_integer"))
+        endif params[optional_list_of_strings]
+          body.add_part(params[:optional_list_of_strings].to_form_data_part(name: "optional_list_of_strings"))
+        endif params[list_of_objects]
+          body.add_part(params[:list_of_objects].to_form_data_part(name: "list_of_objects"))
+        endif params[optional_metadata]
+          body.add_part(params[:optional_metadata].to_form_data_part(name: "optional_metadata"))
+        endif params[optional_object_type]
+          body.add_part(params[:optional_object_type].to_form_data_part(name: "optional_object_type"))
+        endif params[optional_id]
+          body.add_part(params[:optional_id].to_form_data_part(name: "optional_id"))
+        endif params[list_of_objects_with_optionals]
+          body.add_part(params[:list_of_objects_with_optionals].to_form_data_part(name: "list_of_objects_with_optionals"))
+        endif params[alias_object]
+          body.add_part(params[:alias_object].to_form_data_part(name: "alias_object"))
+        endif params[list_of_alias_object]
+          body.add_part(params[:list_of_alias_object].to_form_data_part(name: "list_of_alias_object"))
+        endif params[alias_list_of_object]
+          body.add_part(params[:alias_list_of_object].to_form_data_part(name: "alias_list_of_object"))
+        end
+        _request = Seed::Internal::Multipart::Request.new(
+>>>>>>> a419d24f88 (chore(ruby): fix sdks)
           method: POST,
           path: "",
+          body: body,
         )
         _response = @client.send(_request)
         if _response.code >= "200" && _response.code < "300"
@@ -189,6 +317,7 @@ module Seed
       # @return [String]
       def optional_args(request_options: {}, **params)
 <<<<<<< HEAD
+<<<<<<< HEAD
         _request = params
         _response = @client.send(_request)
         return if _response.code >= "200" && _response.code < "300"
@@ -199,8 +328,19 @@ module Seed
         hi this is not a file, request
 
         _request = Deep.new(
+=======
+        body = Internal::Multipart::FormData.new
+        
+        if params[image_file]
+          body.add(Internal::Multipart::FilePart.new(image_file, File.new(params[image_file]), "application/octet-stream"))
+        endif params[request]
+          body.add_part(params[:request].to_form_data_part(name: "request"))
+        end
+        _request = Seed::Internal::Multipart::Request.new(
+>>>>>>> a419d24f88 (chore(ruby): fix sdks)
           method: POST,
           path: "/optional-args",
+          body: body,
         )
         _response = @client.send(_request)
         if _response.code >= "200" && _response.code < "300"
@@ -214,6 +354,7 @@ module Seed
       # @return [String]
       def with_inline_type(request_options: {}, **params)
 <<<<<<< HEAD
+<<<<<<< HEAD
         _request = params
         _response = @client.send(_request)
         return if _response.code >= "200" && _response.code < "300"
@@ -224,8 +365,19 @@ module Seed
         hi this is not a file, request
 
         _request = Deep.new(
+=======
+        body = Internal::Multipart::FormData.new
+        
+        if params[file]
+          body.add(Internal::Multipart::FilePart.new(file, File.new(params[file]), "application/octet-stream"))
+        endif params[request]
+          body.add_part(params[:request].to_form_data_part(name: "request"))
+        end
+        _request = Seed::Internal::Multipart::Request.new(
+>>>>>>> a419d24f88 (chore(ruby): fix sdks)
           method: POST,
           path: "/inline-type",
+          body: body,
         )
         _response = @client.send(_request)
         if _response.code >= "200" && _response.code < "300"

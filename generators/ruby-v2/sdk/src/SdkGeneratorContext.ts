@@ -148,6 +148,13 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         });
     }
 
+    public getReferenceToInternalMultipartRequest(): ruby.ClassReference {
+        return ruby.classReference({
+            name: "Request",
+            modules: [this.getRootModule().name, "Internal", "Multipart"]
+        });
+    }
+
     public getReferenceToTypeId(typeId: TypeId): ruby.ClassReference {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return ruby.classReference({
