@@ -1,6 +1,6 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { DefaultBaseGoCustomConfigSchema } from "@fern-api/go-ast";
+import { defaultBaseGoCustomConfigSchema } from "@fern-api/go-ast";
 import { AbstractGoGeneratorCli } from "@fern-api/go-base";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 
@@ -33,11 +33,11 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
         if (parsed != null) {
             return {
-                ...DefaultBaseGoCustomConfigSchema,
+                ...defaultBaseGoCustomConfigSchema,
                 ...parsed
             };
         }
-        return DefaultBaseGoCustomConfigSchema;
+        return defaultBaseGoCustomConfigSchema;
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
