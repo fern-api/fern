@@ -89,6 +89,9 @@ class BaseWrappedClientGenerator(Generic[ConstructorParameterT], BaseClientGener
             )
 
         # Use EndpointFunctionGenerator to create the wrapper method
+        if self._package.service is None:
+            raise ValueError("Package must have a service to generate endpoints")
+
         endpoint_generator = EndpointFunctionGenerator(
             context=self._context,
             package=self._package,

@@ -175,3 +175,17 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
         Get a function to write the constructor body.
         This method should be implemented by subclasses.
         """
+
+    @abstractmethod
+    def get_raw_client_class_name(self, *, is_async: bool) -> str:
+        """
+        Get the name of the raw client class.
+        This method should be implemented by subclasses.
+        """
+
+    @abstractmethod
+    def get_raw_client_class_reference(self, *, is_async: bool) -> AST.ClassReference:
+        """
+        Get the reference to the raw client class.
+        This method should be implemented by subclasses.
+        """
