@@ -169,6 +169,9 @@ fixtures:
         module:
           path: github.com/idempotency-headers/fern
         includeLegacyClientOptions: true
+  literals-unions:
+    - outputFolder: no-custom-config
+      customConfig: null
 scripts:
   - docker: golang:1.18-alpine
     commands:
