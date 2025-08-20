@@ -111,6 +111,6 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 }
 
-function toExplicitArray(strings: string[]): string {
-    return `["${strings.join(`", "`)}"]`;
+function toExplicitArray(s: string[]): string {
+    return `["${s.join('", "')}"]`;
 }
