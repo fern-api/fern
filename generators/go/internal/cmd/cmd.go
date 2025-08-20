@@ -337,7 +337,7 @@ func customConfigFromConfig(c *generatorexec.GeneratorConfig) (*customConfig, er
 
 	// We use a custom decoder here to validate the custom configuration fields.
 	decoder := json.NewDecoder(bytes.NewReader(configBytes))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields(); allow v2-side-only config fields (zod will ensure they're valid)
 
 	config := new(customConfig)
 	if err := decoder.Decode(config); err != nil {
