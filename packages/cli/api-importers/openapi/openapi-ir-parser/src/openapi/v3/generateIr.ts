@@ -67,14 +67,7 @@ export function generateIr({
 
     const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
         Object.entries(openApi.components?.securitySchemes ?? {}).map(([key, securityScheme]) => {
-            const convertedSecurityScheme = convertSecurityScheme(securityScheme, source);
-            if (convertedSecurityScheme == undefined) {
-                throw new Error(`Security scheme conversion failed for ${key}: ${JSON.stringify(securityScheme)}`);
-            }
-            if (convertedSecurityScheme == null) {
-                return [];
-            }
-            return [key, convertSecurityScheme(securityScheme, source)];
+            return [key, convertSecurityScheme(securityScheme, source, key)];
         })
     );
     const authHeaders = new Set(
