@@ -57,6 +57,8 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         this.generateClients(context);
         this.generateRawClients(context);
 
+        await context.snippetGenerator.populateSnippetsCache();
+
         if (this.shouldGenerateReadme(context)) {
             try {
                 const endpointSnippets = this.generateSnippets({ context });
