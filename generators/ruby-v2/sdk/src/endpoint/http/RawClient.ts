@@ -65,7 +65,27 @@ export class RawClient {
             case "bytes":
                 return undefined;
             case "multipartform":
-                return undefined;
+                return ruby.codeblock((writer) => {
+                    writer.writeLine(
+                        `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalMultipartRequest()}.new(`
+                    );
+                    writer.indent();
+                    writer.writeLine(`method: ${endpoint.method.toUpperCase()},`);
+                    writer.write(`path: `);
+                    this.writePathString({ writer, endpoint, pathParameterReferences: pathParameterReferences ?? {} });
+                    writer.writeLine(",");
+                    if (headerBagReference != null) {
+                        writer.writeLine(`headers: ${headerBagReference},`);
+                    }
+                    if (queryBagReference != null) {
+                        writer.writeLine(`query: ${queryBagReference},`);
+                    }
+                    if (bodyReference != null) {
+                        writer.writeLine(`body: ${bodyReference},`);
+                    }
+                    writer.dedent();
+                    writer.write(`)`);
+                });
         }
         return undefined;
     }
