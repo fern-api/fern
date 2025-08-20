@@ -46,7 +46,6 @@ public final class SpringHttpMethodToAnnotationSpec implements HttpMethod.Visito
     }
 
     private String[] determineConsumesTypes(HttpRequestBody requestBody, HttpMethod method) {
-        // Check if this is a merge-patch request
         boolean isMergePatch = requestBody.visit(new HttpRequestBody.Visitor<Boolean>() {
             @Override
             public Boolean visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
@@ -80,12 +79,10 @@ public final class SpringHttpMethodToAnnotationSpec implements HttpMethod.Visito
             }
         });
 
-        // For PATCH methods with merge-patch content type, accept both standard JSON and merge-patch
         if (isMergePatch && method.visit(new IsPatchMethodVisitor())) {
             return new String[] {"application/json", "application/merge-patch+json"};
         }
 
-        // Default to standard JSON
         return new String[] {"application/json"};
     }
 
@@ -170,7 +167,6 @@ public final class SpringHttpMethodToAnnotationSpec implements HttpMethod.Visito
             if (consumesArray.length == 1) {
                 annotationSpecBuilder.addMember("consumes", "$S", consumesArray[0]);
             } else {
-                // Multiple content types - use array notation
                 annotationSpecBuilder.addMember(
                         "consumes",
                         "{$L}",
