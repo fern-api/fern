@@ -97,6 +97,11 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         } catch (_) {
             // It's okay if rubocop fails to run.
         }
+
+        await loggingExeca(context.logger, "bundle", ["install"], {
+            cwd: context.project.absolutePathToOutputDirectory,
+            doNotPipeOutput: true
+        });
     }
 
     private generateRequests(context: SdkGeneratorContext, service: HttpService, serviceId: string) {
