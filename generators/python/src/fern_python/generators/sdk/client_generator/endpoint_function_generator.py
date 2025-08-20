@@ -354,7 +354,7 @@ class EndpointFunctionGenerator:
 
     def _get_stream_func_return_type(self) -> AST.TypeHint:
         underlying_type = self._get_response_body_underlying_type(
-            response_body=self._endpoint.response.body, is_async=self._is_async
+            response_body=self._endpoint.response.body if self._endpoint.response is not None else None, is_async=self._is_async
         )
         underlying_type_wrapped = (
             AST.TypeHint.async_iterator(underlying_type) if self._is_async else AST.TypeHint.iterator(underlying_type)
@@ -1628,6 +1628,7 @@ class EndpointFunctionGenerator:
             data_attribute = "data"
             if is_streaming_endpoint(self._endpoint):
                 response_variable = "r"
+                body: list[AST.AstNode] = []
                 if self._is_async:
                     body = [
                         AST.ForStatement(
@@ -1687,7 +1688,7 @@ class EndpointFunctionGenerator:
 
 
 def is_streaming_endpoint(endpoint: ir_types.HttpEndpoint) -> bool:
-    return (
+    return bool(
         endpoint.response is not None
         and endpoint.response.body
         and (

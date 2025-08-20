@@ -1,4 +1,5 @@
 from typing import Dict, List, Optional, Tuple, Union, cast
+from typing_extensions import assert_never
 
 import fdr.api.v_1.read as FdrApiV1Read
 from fdr import (
@@ -933,6 +934,9 @@ class SnippetTemplateFactory:
             return "PATCH"
         if method is ir_types.HttpMethod.DELETE:
             return "DELETE"
+        if method is ir_types.HttpMethod.HEAD:
+            return "HEAD"
+        assert_never(method)
 
     def generate_templates(self) -> List[SnippetRegistryEntry]:
         snippet_templates: List[SnippetRegistryEntry] = []

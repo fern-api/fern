@@ -474,8 +474,8 @@ class ClientWrapperGenerator:
                 if param.private_member_name is not None:
                     writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
                     params_empty = False
-            for param in literal_headers:
-                writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
+            for literal_header in literal_headers:
+                writer.write_line(f"self.{literal_header.private_member_name} = {literal_header.constructor_parameter_name}")
                 params_empty = False
             if params_empty:
                 writer.write_line("pass")
