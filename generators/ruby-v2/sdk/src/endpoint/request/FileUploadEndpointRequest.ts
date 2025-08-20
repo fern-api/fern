@@ -1,8 +1,8 @@
 
 import { ruby } from "@fern-api/ruby-ast";
-import { FileUploadRequest, HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
+import { FileUploadBodyProperty, FileUploadRequest, HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RAW_CLIENT_REQUEST_VARIABLE_NAME, RawClient } from "../http/RawClient";
+import { RawClient } from "../http/RawClient";
 import { EndpointRequest, HeaderParameterCodeBlock, QueryParameterCodeBlock, RequestBodyCodeBlock } from "./EndpointRequest";
 
 
@@ -32,19 +32,51 @@ export class FileUploadEndpointRequest extends EndpointRequest {
             writer.writeLine();
             for (const property of this.fileUploadRequest.properties) {
                 if (property.type === "file") {
-                    // File property handling
-                    writer.writeLine(`if params[:${property.value.key.wireValue}]`);
-                    writer.indent();
-                    writer.writeLine(`body.add(Internal::Multipart::FilePart.new(:${property.value.key.wireValue}, File.new(params[:${property.value.key.wireValue}]), "application/octet-stream"))`);
-                    writer.dedent();
-                    writer.writeLine("end");
+                    writer.writeNode(ruby.ifElse({
+                        if: {
+                            condition: ruby.codeblock((writer) => {
+                                writer.write(`params[:${property.value.key.wireValue}]`);
+                            }),
+                            thenBody: [
+                                ruby.codeblock((writer) => {
+                                    writer.writeLine(`body.add_part(params[:${property.value.key.wireValue}].to_form_data_part(name: "${property.value.key.wireValue}"))`);
+                                })
+                            ],
+                        },
+                    }));
                 } else {
-                    // Body property handling
-                    writer.writeLine(`if params[:${property.name.wireValue}]`);
-                    writer.indent();
-                    writer.writeLine(`body.add_part(params[:${property.name.wireValue}].to_form_data_part(name: "${property.name.wireValue}"))`);
-                    writer.dedent();
-                    writer.writeLine("end");
+                    writer.writeNode(ruby.ifElse({
+                        if: {
+                            condition: ruby.codeblock((writer) => {
+                                writer.write(`params[:${property.name.wireValue}]`);
+                            }),
+                            thenBody: [
+                                ruby.codeblock((writer) => {
+                                    const keywordArguments = [
+                                        ruby.keywordArgument({
+                                            name: "name",
+                                            value: ruby.TypeLiteral.string(property.name.wireValue),
+                                        }),
+                                        ruby.keywordArgument({
+                                            name: "value",
+                                            value: this.getFormDataPartForNonFileProperty(property) ?? ruby.codeblock(""),
+                                        }),
+                                    ]
+                                    if (property.contentType) {
+                                        keywordArguments.push(ruby.keywordArgument({
+                                            name: "content_type",
+                                            value: ruby.TypeLiteral.string(property.contentType),
+                                        }));
+                                    }
+                                    writer.writeNode(ruby.invokeMethod({
+                                        method: "add",
+                                        on: ruby.codeblock("body"),
+                                        arguments_: keywordArguments,
+                                    }))
+                                }),
+                            ],
+                        },
+                    }));
                 }
             }
         });
@@ -54,6 +86,30 @@ export class FileUploadEndpointRequest extends EndpointRequest {
                 writer.write(`body`);
             })
         };
+    }
+
+    private getFormDataPartForNonFileProperty(property: FileUploadBodyProperty): ruby.CodeBlock | undefined {
+        switch (property.style) {
+            case "json":
+                return ruby.codeblock((writer) => {
+                    writer.write("JSON.generate(");
+                    if (property.valueType.type === "named") {
+                        writer.writeNode(this.context.getClassReferenceForTypeId(property.valueType.typeId));
+                        writer.write(".new(");
+                        writer.write(`params[:${property.name.wireValue}]`);
+                        writer.write(")");
+                        writer.write(".to_h");
+                    } else {
+                        writer.write(`params[:${property.name.wireValue}]`);
+                    }
+                    writer.write(")");
+                });
+            case "form":
+                return undefined;
+        }
+        return ruby.codeblock((writer) => {
+            writer.write(`params[:${property.name.wireValue}]`);
+        });
     }
     
     public getRequestType(): RawClient.RequestBodyType | undefined {

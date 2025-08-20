@@ -12,41 +12,75 @@ module Seed
       def post(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
 
-        body.add_part(params[:maybe_string].to_form_data_part(name: "maybe_string")) if params[:maybe_string]
-        body.add_part(params[:integer].to_form_data_part(name: "integer")) if params[:integer]
-        if params[:file]
-          body.add(Internal::Multipart::FilePart.new(:file, File.new(params[:file]), "application/octet-stream"))
+        if params[:maybe_string]
+          body.add(
+            name: "maybe_string",
+            value: params[:maybe_string]
+          )
         end
-        if params[:file_list]
-          body.add(Internal::Multipart::FilePart.new(:file_list, File.new(params[:file_list]),
-                                                     "application/octet-stream"))
+        if params[:integer]
+          body.add(
+            name: "integer",
+            value: params[:integer]
+          )
         end
-        if params[:maybe_file]
-          body.add(Internal::Multipart::FilePart.new(:maybe_file, File.new(params[:maybe_file]),
-                                                     "application/octet-stream"))
+        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
+        body.add_part(params[:file_list].to_form_data_part(name: "file_list")) if params[:file_list]
+        body.add_part(params[:maybe_file].to_form_data_part(name: "maybe_file")) if params[:maybe_file]
+        body.add_part(params[:maybe_file_list].to_form_data_part(name: "maybe_file_list")) if params[:maybe_file_list]
+        if params[:maybe_integer]
+          body.add(
+            name: "maybe_integer",
+            value: params[:maybe_integer]
+          )
         end
-        if params[:maybe_file_list]
-          body.add(Internal::Multipart::FilePart.new(:maybe_file_list, File.new(params[:maybe_file_list]),
-                                                     "application/octet-stream"))
-        end
-        body.add_part(params[:maybe_integer].to_form_data_part(name: "maybe_integer")) if params[:maybe_integer]
         if params[:optional_list_of_strings]
-          body.add_part(params[:optional_list_of_strings].to_form_data_part(name: "optional_list_of_strings"))
+          body.add(
+            name: "optional_list_of_strings",
+            value: params[:optional_list_of_strings]
+          )
         end
-        body.add_part(params[:list_of_objects].to_form_data_part(name: "list_of_objects")) if params[:list_of_objects]
+        if params[:list_of_objects]
+          body.add(
+            name: "list_of_objects",
+            value: params[:list_of_objects]
+          )
+        end
         if params[:optional_metadata]
-          body.add_part(params[:optional_metadata].to_form_data_part(name: "optional_metadata"))
+          body.add(
+            name: "optional_metadata",
+            value: params[:optional_metadata]
+          )
         end
         if params[:optional_object_type]
-          body.add_part(params[:optional_object_type].to_form_data_part(name: "optional_object_type"))
+          body.add(
+            name: "optional_object_type",
+            value: params[:optional_object_type]
+          )
         end
-        body.add_part(params[:optional_id].to_form_data_part(name: "optional_id")) if params[:optional_id]
-        body.add_part(params[:alias_object].to_form_data_part(name: "alias_object")) if params[:alias_object]
+        if params[:optional_id]
+          body.add(
+            name: "optional_id",
+            value: params[:optional_id]
+          )
+        end
+        if params[:alias_object]
+          body.add(
+            name: "alias_object",
+            value: params[:alias_object]
+          )
+        end
         if params[:list_of_alias_object]
-          body.add_part(params[:list_of_alias_object].to_form_data_part(name: "list_of_alias_object"))
+          body.add(
+            name: "list_of_alias_object",
+            value: params[:list_of_alias_object]
+          )
         end
         if params[:alias_list_of_object]
-          body.add_part(params[:alias_list_of_object].to_form_data_part(name: "alias_list_of_object"))
+          body.add(
+            name: "alias_list_of_object",
+            value: params[:alias_list_of_object]
+          )
         end
 
         _request = Seed::Internal::Multipart::Request.new(
@@ -64,9 +98,7 @@ module Seed
       def just_file(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
 
-        if params[:file]
-          body.add(Internal::Multipart::FilePart.new(:file, File.new(params[:file]), "application/octet-stream"))
-        end
+        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
 
         _request = Seed::Internal::Multipart::Request.new(
           method: POST,
@@ -83,9 +115,7 @@ module Seed
       def just_file_with_query_params(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
 
-        if params[:file]
-          body.add(Internal::Multipart::FilePart.new(:file, File.new(params[:file]), "application/octet-stream"))
-        end
+        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
 
         _request = Seed::Internal::Multipart::Request.new(
           method: POST,
@@ -102,12 +132,27 @@ module Seed
       def with_content_type(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
 
-        if params[:file]
-          body.add(Internal::Multipart::FilePart.new(:file, File.new(params[:file]), "application/octet-stream"))
+        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
+        if params[:foo]
+          body.add(
+            name: "foo",
+            value: params[:foo]
+          )
         end
-        body.add_part(params[:foo].to_form_data_part(name: "foo")) if params[:foo]
-        body.add_part(params[:bar].to_form_data_part(name: "bar")) if params[:bar]
-        body.add_part(params[:foo_bar].to_form_data_part(name: "foo_bar")) if params[:foo_bar]
+        if params[:bar]
+          body.add(
+            name: "bar",
+            value: JSON.generate(Seed::Service::Types::MyObject.new(params[:bar]).to_h),
+            content_type: "application/json"
+          )
+        end
+        if params[:foo_bar]
+          body.add(
+            name: "foo_bar",
+            value: JSON.generate(params[:foo_bar]),
+            content_type: "application/json"
+          )
+        end
 
         _request = Seed::Internal::Multipart::Request.new(
           method: POST,
@@ -124,11 +169,19 @@ module Seed
       def with_form_encoding(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
 
-        if params[:file]
-          body.add(Internal::Multipart::FilePart.new(:file, File.new(params[:file]), "application/octet-stream"))
+        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
+        if params[:foo]
+          body.add(
+            name: "foo",
+            value:
+          )
         end
-        body.add_part(params[:foo].to_form_data_part(name: "foo")) if params[:foo]
-        body.add_part(params[:bar].to_form_data_part(name: "bar")) if params[:bar]
+        if params[:bar]
+          body.add(
+            name: "bar",
+            value:
+          )
+        end
 
         _request = Seed::Internal::Multipart::Request.new(
           method: POST,
@@ -145,44 +198,81 @@ module Seed
       def with_form_encoded_containers(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
 
-        body.add_part(params[:maybe_string].to_form_data_part(name: "maybe_string")) if params[:maybe_string]
-        body.add_part(params[:integer].to_form_data_part(name: "integer")) if params[:integer]
-        if params[:file]
-          body.add(Internal::Multipart::FilePart.new(:file, File.new(params[:file]), "application/octet-stream"))
+        if params[:maybe_string]
+          body.add(
+            name: "maybe_string",
+            value:
+          )
         end
-        if params[:file_list]
-          body.add(Internal::Multipart::FilePart.new(:file_list, File.new(params[:file_list]),
-                                                     "application/octet-stream"))
+        if params[:integer]
+          body.add(
+            name: "integer",
+            value:
+          )
         end
-        if params[:maybe_file]
-          body.add(Internal::Multipart::FilePart.new(:maybe_file, File.new(params[:maybe_file]),
-                                                     "application/octet-stream"))
+        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
+        body.add_part(params[:file_list].to_form_data_part(name: "file_list")) if params[:file_list]
+        body.add_part(params[:maybe_file].to_form_data_part(name: "maybe_file")) if params[:maybe_file]
+        body.add_part(params[:maybe_file_list].to_form_data_part(name: "maybe_file_list")) if params[:maybe_file_list]
+        if params[:maybe_integer]
+          body.add(
+            name: "maybe_integer",
+            value:
+          )
         end
-        if params[:maybe_file_list]
-          body.add(Internal::Multipart::FilePart.new(:maybe_file_list, File.new(params[:maybe_file_list]),
-                                                     "application/octet-stream"))
-        end
-        body.add_part(params[:maybe_integer].to_form_data_part(name: "maybe_integer")) if params[:maybe_integer]
         if params[:optional_list_of_strings]
-          body.add_part(params[:optional_list_of_strings].to_form_data_part(name: "optional_list_of_strings"))
+          body.add(
+            name: "optional_list_of_strings",
+            value:
+          )
         end
-        body.add_part(params[:list_of_objects].to_form_data_part(name: "list_of_objects")) if params[:list_of_objects]
+        if params[:list_of_objects]
+          body.add(
+            name: "list_of_objects",
+            value:
+          )
+        end
         if params[:optional_metadata]
-          body.add_part(params[:optional_metadata].to_form_data_part(name: "optional_metadata"))
+          body.add(
+            name: "optional_metadata",
+            value:
+          )
         end
         if params[:optional_object_type]
-          body.add_part(params[:optional_object_type].to_form_data_part(name: "optional_object_type"))
+          body.add(
+            name: "optional_object_type",
+            value:
+          )
         end
-        body.add_part(params[:optional_id].to_form_data_part(name: "optional_id")) if params[:optional_id]
+        if params[:optional_id]
+          body.add(
+            name: "optional_id",
+            value:
+          )
+        end
         if params[:list_of_objects_with_optionals]
-          body.add_part(params[:list_of_objects_with_optionals].to_form_data_part(name: "list_of_objects_with_optionals"))
+          body.add(
+            name: "list_of_objects_with_optionals",
+            value:
+          )
         end
-        body.add_part(params[:alias_object].to_form_data_part(name: "alias_object")) if params[:alias_object]
+        if params[:alias_object]
+          body.add(
+            name: "alias_object",
+            value:
+          )
+        end
         if params[:list_of_alias_object]
-          body.add_part(params[:list_of_alias_object].to_form_data_part(name: "list_of_alias_object"))
+          body.add(
+            name: "list_of_alias_object",
+            value:
+          )
         end
         if params[:alias_list_of_object]
-          body.add_part(params[:alias_list_of_object].to_form_data_part(name: "alias_list_of_object"))
+          body.add(
+            name: "alias_list_of_object",
+            value:
+          )
         end
 
         _request = Seed::Internal::Multipart::Request.new(
@@ -200,11 +290,14 @@ module Seed
       def optional_args(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
 
-        if params[:image_file]
-          body.add(Internal::Multipart::FilePart.new(:image_file, File.new(params[:image_file]),
-                                                     "application/octet-stream"))
+        body.add_part(params[:image_file].to_form_data_part(name: "image_file")) if params[:image_file]
+        if params[:request]
+          body.add(
+            name: "request",
+            value: JSON.generate(params[:request]),
+            content_type: "application/json; charset=utf-8"
+          )
         end
-        body.add_part(params[:request].to_form_data_part(name: "request")) if params[:request]
 
         _request = Seed::Internal::Multipart::Request.new(
           method: POST,
@@ -221,10 +314,13 @@ module Seed
       def with_inline_type(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
 
-        if params[:file]
-          body.add(Internal::Multipart::FilePart.new(:file, File.new(params[:file]), "application/octet-stream"))
+        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
+        if params[:request]
+          body.add(
+            name: "request",
+            value: params[:request]
+          )
         end
-        body.add_part(params[:request].to_form_data_part(name: "request")) if params[:request]
 
         _request = Seed::Internal::Multipart::Request.new(
           method: POST,
