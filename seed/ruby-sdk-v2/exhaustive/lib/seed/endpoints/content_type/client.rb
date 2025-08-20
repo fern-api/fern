@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
   module Endpoints
@@ -11,33 +12,30 @@ module Seed
         # @return [untyped]
         def post_json_patch_content_type(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            method: POST,
+            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            method: "POST",
             path: "/foo/bar",
-            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params[:request]).to_h,
+            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params[:request]).to_h
           )
           _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return
-          else
-            raise _response.body
-          end
+          return if _response.code >= "200" && _response.code < "300"
+
+          raise _response.body
         end
 
         # @return [untyped]
         def post_json_patch_content_with_charset_type(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            method: POST,
+            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            method: "POST",
             path: "/foo/baz",
-            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params[:request]).to_h,
+            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params[:request]).to_h
           )
           _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return
-          else
-            raise _response.body
-          end
-        end
+          return if _response.code >= "200" && _response.code < "300"
 
+          raise _response.body
+        end
       end
     end
   end
