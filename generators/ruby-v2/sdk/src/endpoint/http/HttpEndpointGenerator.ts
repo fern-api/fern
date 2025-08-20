@@ -12,7 +12,8 @@ export declare namespace HttpEndpointGenerator {
     }
 }
 
-export const HTTP_RESPONSE_VARIABLE_NAME = "_response";
+export const HTTP_RESPONSE_VN = "_response";
+export const PARAMS_VN = "params";
 
 export class HttpEndpointGenerator {
     private context: SdkGeneratorContext;
@@ -44,38 +45,41 @@ export class HttpEndpointGenerator {
 
         const statements: ruby.AstNode[] = [];
 
-        const pathParameterReferences = this.getPathParameterReferences({ endpoint });
+        const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
+        if (requestBodyCodeBlock?.code != null) {
+            statements.push(requestBodyCodeBlock.code);
+        }
 
+        const queryParameterCodeBlock = request?.getQueryParameterCodeBlock();
+        if (queryParameterCodeBlock?.code != null) {
+            statements.push(queryParameterCodeBlock.code);
+        }
+
+        const pathParameterReferences = this.getPathParameterReferences({ endpoint });
         const sendRequestCodeBlock = rawClient.sendRequest({
             baseUrl: ruby.codeblock(""),
             pathParameterReferences,
             endpoint,
             requestType: request?.getRequestType(),
-            bodyReference: request?.getRequestBodyCodeBlock()?.requestBodyReference
+            queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+            bodyReference: requestBodyCodeBlock?.requestBodyReference
         });
-
-        const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
-        if (requestBodyCodeBlock?.code != null) {
-            statements.push(requestBodyCodeBlock.code);
-        }
 
         if (sendRequestCodeBlock != null) {
             statements.push(sendRequestCodeBlock);
         } else {
             statements.push(
                 ruby.codeblock((writer) => {
-                    writer.write(`_request = params`);
+                    writer.write(`_request = ${PARAMS_VN}`);
                 })
             );
         }
 
         statements.push(
-            ruby.codeblock(`${HTTP_RESPONSE_VARIABLE_NAME} = @client.send(${RAW_CLIENT_REQUEST_VARIABLE_NAME})`),
+            ruby.codeblock(`${HTTP_RESPONSE_VN} = @client.send(${RAW_CLIENT_REQUEST_VARIABLE_NAME})`),
             ruby.ifElse({
                 if: {
-                    condition: ruby.codeblock(
-                        `${HTTP_RESPONSE_VARIABLE_NAME}.code >= "200" && ${HTTP_RESPONSE_VARIABLE_NAME}.code < "300"`
-                    ),
+                    condition: ruby.codeblock(`${HTTP_RESPONSE_VN}.code >= "200" && ${HTTP_RESPONSE_VN}.code < "300"`),
                     thenBody: [
                         ruby.codeblock((writer) => {
                             if (endpoint.response?.body == null) {
@@ -97,7 +101,7 @@ export class HttpEndpointGenerator {
                     ]
                 },
                 elseBody: ruby.codeblock((writer) => {
-                    writer.writeLine(`raise ${HTTP_RESPONSE_VARIABLE_NAME}.body`);
+                    writer.writeLine(`raise ${HTTP_RESPONSE_VN}.body`);
                 })
             })
         );
@@ -114,7 +118,7 @@ export class HttpEndpointGenerator {
                     })
                 ],
                 keywordSplat: ruby.parameters.keywordSplat({
-                    name: "params"
+                    name: PARAMS_VN
                 })
             },
             statements
@@ -127,7 +131,7 @@ export class HttpEndpointGenerator {
             const parameterName = this.getPathParameterName({
                 pathParameter: pathParam
             });
-            pathParameterReferences[pathParam.name.originalName] = `params[:${parameterName}]`;
+            pathParameterReferences[pathParam.name.originalName] = `${PARAMS_VN}[:${parameterName}]`;
         }
         return pathParameterReferences;
     }
@@ -146,7 +150,7 @@ export class HttpEndpointGenerator {
         switch (typeReference.type) {
             case "named":
                 writer.writeLine(
-                    `${this.context.getReferenceToTypeId(typeReference.typeId)}.load(${HTTP_RESPONSE_VARIABLE_NAME}.body)`
+                    `${this.context.getReferenceToTypeId(typeReference.typeId)}.load(${HTTP_RESPONSE_VN}.body)`
                 );
                 break;
             default:

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
   module Endpoints
@@ -6,7 +7,6 @@ module Seed
       def initialize(client:)
         @client = client
       end
-
     end
   end
 end

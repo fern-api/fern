@@ -34,17 +34,14 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
             name: CLIENT_CLASS_NAME
         });
 
-        const rootModule = this.context.getRootModule();
-
-        let nestedModule = rootModule;
-        for (const filepath of this.subpackage.fernFilepath.allParts) {
-            const module = ruby.module({
-                name: filepath.pascalCase.safeName
-            });
-            nestedModule.addStatement(module);
-            nestedModule = module;
-        }
-        nestedModule.addStatement(clientClass);
+        const modules = [
+            this.context.getRootModule(),
+            ...this.subpackage.fernFilepath.allParts.map((path) =>
+                ruby.module({
+                    name: path.pascalCase.safeName
+                })
+            )
+        ];
 
         clientClass.addStatement(
             ruby.method({
@@ -72,7 +69,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
             node: ruby.codeblock((writer) => {
                 ruby.comment({ docs: "frozen_string_literal: true" });
                 writer.newLine();
-                rootModule.write(writer);
+                ruby.wrapInModules(clientClass, modules).write(writer);
             }),
             directory: this.getFilepath(),
             filename: `client.rb`,

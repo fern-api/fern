@@ -8,7 +8,7 @@ export function getViolationsForMisshapenExample(
 ): ExampleViolation[] {
     return [
         {
-            message: `Expected example to be ${expectedTypeIncludingArticle}. Example is: ${JSON.stringify(example)}`
+            message: `Expected example to be ${expectedTypeIncludingArticle}. Example is: ${typeof example != "number" ? JSON.stringify(example) : example}`
         }
     ];
 }
