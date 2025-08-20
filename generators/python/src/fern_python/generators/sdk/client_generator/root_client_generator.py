@@ -160,14 +160,15 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 )
             )
 
-            exported_client_class_name = self._context.get_class_name_for_exported_root_client()
-            self._generated_root_client = RootClientGenerator.GeneratedRootClientBuilder(
-                # HACK: This is a hack to get the module path for the root client to be from the root of the project
-                module_path=self._context.get_module_path_in_project(()),
-                class_name=self._context.get_class_name_for_exported_root_client(),
-                async_class_name="Async" + exported_client_class_name,
-                constructor_parameters=self._root_client_constructor_params,
-            ).build()
+        exported_client_class_name = self._context.get_class_name_for_exported_root_client()
+        root_client_builder = RootClientGenerator.GeneratedRootClientBuilder(
+            # HACK: This is a hack to get the module path for the root client to be from the root of the project
+            module_path=self._context.get_module_path_in_project(()),
+            class_name=self._context.get_class_name_for_exported_root_client(),
+            async_class_name="Async" + exported_client_class_name,
+            constructor_parameters=self._root_client_constructor_params,
+        )
+        self._generated_root_client = root_client_builder.build()
 
     def get_generated_root_client(self) -> GeneratedRootClient:
         return self._generated_root_client
