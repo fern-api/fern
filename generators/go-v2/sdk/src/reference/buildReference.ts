@@ -35,21 +35,16 @@ function getEndpointReferencesForService({
 }): FernGeneratorCli.EndpointReference[] {
     return service.endpoints
         .map((endpoint) => {
-            // TEMPORARY WORKAROUND
-            let singleEndpointSnippet: SingleEndpointSnippet = {
-                exampleIdentifier: "a",
-                endpointCall: "example call"
-            }
-            // -------------
+            let singleEndpointSnippet;
             const exampleCall = context.maybeGetExampleEndpointCall(endpoint);
             if (exampleCall) {
-                const maybeSingleEndpointSnippet = context.snippetGenerator.getSingleEndpointSnippet({
+                singleEndpointSnippet = context.snippetGenerator.getSingleEndpointSnippet({
                     endpoint,
                     example: exampleCall
                 });
-                if (maybeSingleEndpointSnippet) {
-                    singleEndpointSnippet = maybeSingleEndpointSnippet;
-                }
+            }
+            if (!singleEndpointSnippet) {
+                return undefined;
             }
             return getEndpointReference({
                 context,
