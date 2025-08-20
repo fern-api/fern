@@ -32,6 +32,7 @@ export class GeneratedUnionTypeSchemaImpl<Context extends ModelContext>
         const discriminant = this.shape.discriminant;
 
         this.generatedUnionSchema = new GeneratedUnionSchema({
+            shape: this.shape,
             typeName: superInit.typeName,
             discriminant,
             shouldIncludeDefaultCaseInTransform: true,

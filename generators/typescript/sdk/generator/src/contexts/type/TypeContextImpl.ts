@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     DeclaredTypeName,
     ExampleTypeReference,
@@ -39,6 +40,7 @@ export declare namespace TypeContextImpl {
         omitUndefined: boolean;
         useDefaultRequestParameterValues: boolean;
         context: BaseContext;
+        generateReadWriteOnlyTypes: boolean;
     }
 }
 
@@ -77,7 +79,8 @@ export class TypeContextImpl implements TypeContext {
         allowExtraFields,
         omitUndefined,
         useDefaultRequestParameterValues,
-        context
+        context,
+        generateReadWriteOnlyTypes
     }: TypeContextImpl.Init) {
         this.npmPackage = npmPackage;
         this.isForSnippet = isForSnippet;
@@ -102,7 +105,8 @@ export class TypeContextImpl implements TypeContext {
             useBigInt,
             enableInlineTypes,
             allowExtraFields,
-            omitUndefined
+            omitUndefined,
+            generateReadWriteOnlyTypes
         });
         this.typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
             context,
@@ -111,7 +115,8 @@ export class TypeContextImpl implements TypeContext {
             useBigInt,
             enableInlineTypes,
             allowExtraFields,
-            omitUndefined
+            omitUndefined,
+            generateReadWriteOnlyTypes
         });
     }
 
@@ -175,7 +180,11 @@ export class TypeContextImpl implements TypeContext {
         }
     }
 
-    public generateForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode {
+    public generateForInlineUnion(typeName: DeclaredTypeName): {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    } {
         const generatedType = this.getGeneratedType(typeName);
         return generatedType.generateForInlineUnion(this.context);
     }
@@ -358,12 +367,16 @@ export class TypeContextImpl implements TypeContext {
 
     public needsRequestResponseTypeVariantById(typeId: TypeId): { request: boolean; response: boolean } {
         const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeId);
-        switch (typeDeclaration.shape.type) {
+        return this.needsRequestResponseTypeVariantByType(typeDeclaration.shape);
+    }
+
+    public needsRequestResponseTypeVariantByType(type: FernIr.Type): { request: boolean; response: boolean } {
+        switch (type.type) {
             case "object": {
                 let request = false;
                 let response = false;
                 // Check properties
-                for (const prop of typeDeclaration.shape.properties) {
+                for (const prop of type.properties) {
                     if (prop.propertyAccess === "READ_ONLY") {
                         request = true;
                     }
@@ -373,14 +386,22 @@ export class TypeContextImpl implements TypeContext {
                     const result = this.needsRequestResponseTypeVariant(prop.valueType);
                     request = request || result.request;
                     response = response || result.response;
+                    if (request && response) {
+                        // no need to continue checking
+                        break;
+                    }
                 }
                 // Check extends
-                if (typeDeclaration.shape.extends != null) {
-                    for (const extTypeName of typeDeclaration.shape.extends) {
+                if (type.extends != null) {
+                    for (const extTypeName of type.extends) {
                         const extTypeRef = { type: "named", typeId: extTypeName.typeId } as TypeReference;
                         const result = this.needsRequestResponseTypeVariant(extTypeRef);
                         request = request || result.request;
                         response = response || result.response;
+                        if (request && response) {
+                            // no need to continue checking
+                            break;
+                        }
                     }
                 }
                 return { request, response };
@@ -388,7 +409,7 @@ export class TypeContextImpl implements TypeContext {
             case "union": {
                 let request = false;
                 let response = false;
-                for (const member of typeDeclaration.shape.types) {
+                for (const member of type.types) {
                     switch (member.shape.propertiesType) {
                         case "noProperties":
                             break;
@@ -405,26 +426,45 @@ export class TypeContextImpl implements TypeContext {
                             break;
                         }
                     }
+                    if (request && response) {
+                        // no need to continue checking
+                        break;
+                    }
                 }
                 return { request, response };
             }
             case "undiscriminatedUnion": {
                 let request = false;
                 let response = false;
-                for (const member of typeDeclaration.shape.members) {
+                for (const member of type.members) {
                     const result = this.needsRequestResponseTypeVariant(member.type);
                     request = request || result.request;
                     response = response || result.response;
+                    if (request && response) {
+                        // no need to continue checking
+                        break;
+                    }
                 }
                 return { request, response };
             }
             case "enum":
                 return { request: false, response: false };
             case "alias": {
-                return this.needsRequestResponseTypeVariant(typeDeclaration.shape.aliasOf);
+                return this.needsRequestResponseTypeVariant(type.aliasOf);
             }
             default:
-                assertNever(typeDeclaration.shape);
+                assertNever(type);
         }
+    }
+
+    public typeNameToTypeReference(typeName: DeclaredTypeName): TypeReference {
+        return TypeReference.named({
+            default: undefined,
+            displayName: typeName.displayName,
+            fernFilepath: typeName.fernFilepath,
+            inline: undefined,
+            name: typeName.name,
+            typeId: typeName.typeId
+        });
     }
 }

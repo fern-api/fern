@@ -21,6 +21,7 @@ export declare namespace AbstractTypeReferenceConverter {
         enableInlineTypes: boolean;
         allowExtraFields: boolean;
         omitUndefined: boolean;
+        generateReadWriteOnlyTypes: boolean;
     }
 }
 
@@ -98,6 +99,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
     protected enableInlineTypes: boolean;
     protected allowExtraFields: boolean;
     protected omitUndefined: boolean;
+    protected generateReadWriteOnlyTypes: boolean;
 
     constructor({
         context,
@@ -106,7 +108,8 @@ export abstract class AbstractTypeReferenceConverter<T> {
         useBigInt,
         enableInlineTypes,
         allowExtraFields,
-        omitUndefined
+        omitUndefined,
+        generateReadWriteOnlyTypes
     }: AbstractTypeReferenceConverter.Init) {
         this.context = context;
         this.treatUnknownAsAny = treatUnknownAsAny;
@@ -115,6 +118,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
         this.enableInlineTypes = enableInlineTypes;
         this.allowExtraFields = allowExtraFields;
         this.omitUndefined = omitUndefined;
+        this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
     }
 
     public convert(params: ConvertTypeReferenceParams): T {

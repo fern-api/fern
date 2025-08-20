@@ -23,25 +23,49 @@ export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends Base
         this.enableInlineTypes = enableInlineTypes;
     }
 
-    public generateForInlineUnion(context: Context): ts.TypeNode {
+    public needsRequestResponse(context: Context): { request: boolean; response: boolean } {
+        return context.type.needsRequestResponseTypeVariantById(this.extended.typeId);
+    }
+
+    public generateForInlineUnion(context: Context): {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    } {
         const typeDeclaration = context.type.getTypeDeclaration(this.extended);
         if (typeDeclaration.inline) {
             const type = context.type.getGeneratedType(typeDeclaration.name);
             return type.generateForInlineUnion(context);
         }
-        return context.type.getReferenceToNamedType(this.extended).getTypeNode();
+        const reference = context.type.getReferenceToType(context.type.typeNameToTypeReference(this.extended));
+        return {
+            typeNode: reference.typeNode,
+            requestTypeNode: reference.requestTypeNode,
+            responseTypeNode: reference.responseTypeNode
+        };
     }
 
-    public getExtendsForInterface(context: Context): ts.TypeNode[] {
+    public getExtendsForInterface(context: Context): {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    }[] {
         const typeDeclaration = context.type.getTypeDeclaration(this.extended);
         if (this.enableInlineTypes && typeDeclaration.inline) {
             // inline types don't inherit the properties from the interface, but have the properties directly on the parent interface
             return [];
         }
-        return [context.type.getReferenceToNamedType(this.extended).getTypeNode()];
+
+        return [context.type.getReferenceToType(context.type.typeNameToTypeReference(this.extended))];
     }
 
-    public getDiscriminantPropertiesForInterface(context: Context): OptionalKind<PropertySignatureStructure>[] {
+    public getDiscriminantPropertiesForInterface(context: Context): {
+        property: PropertySignatureStructure;
+        requestProperty: PropertySignatureStructure | undefined;
+        responseProperty: PropertySignatureStructure | undefined;
+        isReadonly: boolean;
+        isWriteonly: boolean;
+    }[] {
         const typeDeclaration = context.type.getTypeDeclaration(this.extended);
         if (this.enableInlineTypes && typeDeclaration.inline) {
             const type = context.type.getGeneratedType(typeDeclaration.name);
@@ -64,7 +88,13 @@ export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends Base
         return type.generateModule(context);
     }
 
-    public getNonDiscriminantPropertiesForInterface(): OptionalKind<PropertySignatureStructure>[] {
+    public getNonDiscriminantPropertiesForInterface(): {
+        property: PropertySignatureStructure;
+        requestProperty: PropertySignatureStructure | undefined;
+        responseProperty: PropertySignatureStructure | undefined;
+        isReadonly: boolean;
+        isWriteonly: boolean;
+    }[] {
         return [];
     }
 

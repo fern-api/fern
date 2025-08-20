@@ -50,7 +50,8 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
                     includeSerdeLayer: this.includeSerdeLayer,
                     retainOriginalCasing: this.retainOriginalCasing,
                     noOptionalProperties: this.noOptionalProperties,
-                    enableInlineTypes: this.enableInlineTypes
+                    enableInlineTypes: this.enableInlineTypes,
+                    generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes
                 })
         );
 
@@ -58,6 +59,7 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
 
         this.generatedUnion = new GeneratedUnionImpl({
             typeName: this.typeName,
+            shape: this.shape,
             includeUtilsOnUnionMembers,
             includeOtherInUnionTypes,
             getReferenceToUnion: this.getReferenceToSelf.bind(this),
@@ -75,7 +77,8 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
             retainOriginalCasing: this.retainOriginalCasing,
             noOptionalProperties: this.noOptionalProperties,
             inline: this.inline,
-            enableInlineTypes: this.enableInlineTypes
+            enableInlineTypes: this.enableInlineTypes,
+            generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes
         });
     }
 
@@ -85,7 +88,11 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
         return this.generatedUnion.generateStatements(context);
     }
 
-    public generateForInlineUnion(context: Context): ts.TypeNode {
+    public generateForInlineUnion(context: Context): {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    } {
         return this.generatedUnion.generateForInlineUnion(context);
     }
 

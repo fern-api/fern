@@ -1,4 +1,5 @@
-import { ObjectProperty } from "@fern-fern/ir-sdk/api";
+import { assertNever } from "@fern-api/core-utils";
+import { ObjectProperty, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import {
     FernWriters,
     getPropertyKey,
@@ -22,13 +23,14 @@ import {
     VariableStatementStructure,
     WriterFunction
 } from "ts-morph";
-
+import { FernIr } from "../../../../../packages/ir-sdk/src";
 import { KnownSingleUnionType } from "./known-single-union-type/KnownSingleUnionType";
 import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType";
 
 export declare namespace GeneratedUnionImpl {
     export interface Init<Context extends ModelContext> {
         typeName: string;
+        shape: UnionTypeDeclaration | undefined;
         discriminant: string;
         getDocs: ((context: Context) => string | null | undefined) | undefined;
         parsedSingleUnionTypes: KnownSingleUnionType<Context>[];
@@ -46,6 +48,7 @@ export declare namespace GeneratedUnionImpl {
         noOptionalProperties: boolean;
         inline: boolean;
         enableInlineTypes: boolean;
+        generateReadWriteOnlyTypes: boolean;
     }
 }
 
@@ -63,22 +66,25 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     public readonly discriminant: string;
     public readonly visitPropertyName = GeneratedUnionImpl.VISIT_UTIL_PROPERTY_NAME;
 
-    private getDocs: ((context: Context) => string | null | undefined) | undefined;
-    private typeName: string;
-    private parsedSingleUnionTypes: KnownSingleUnionType<Context>[];
-    private unknownSingleUnionType: ParsedSingleUnionType<Context>;
-    private includeUtilsOnUnionMembers: boolean;
-    private includeOtherInUnionTypes: boolean;
-    private baseProperties: ObjectProperty[];
-    private includeSerdeLayer: boolean;
-    private retainOriginalCasing: boolean;
-    private includeConstBuilders: boolean;
-    private noOptionalProperties: boolean;
-    private inline: boolean;
-    private enableInlineTypes: boolean;
+    private readonly getDocs: ((context: Context) => string | null | undefined) | undefined;
+    private readonly typeName: string;
+    private readonly shape: UnionTypeDeclaration | undefined;
+    private readonly parsedSingleUnionTypes: KnownSingleUnionType<Context>[];
+    private readonly unknownSingleUnionType: ParsedSingleUnionType<Context>;
+    private readonly includeUtilsOnUnionMembers: boolean;
+    private readonly includeOtherInUnionTypes: boolean;
+    private readonly baseProperties: ObjectProperty[];
+    private readonly includeSerdeLayer: boolean;
+    private readonly retainOriginalCasing: boolean;
+    private readonly includeConstBuilders: boolean;
+    private readonly noOptionalProperties: boolean;
+    private readonly inline: boolean;
+    private readonly enableInlineTypes: boolean;
+    private readonly generateReadWriteOnlyTypes: boolean;
 
     constructor({
         typeName,
+        shape,
         discriminant,
         getDocs,
         parsedSingleUnionTypes,
@@ -92,12 +98,14 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         retainOriginalCasing,
         noOptionalProperties,
         inline,
-        enableInlineTypes
+        enableInlineTypes,
+        generateReadWriteOnlyTypes
     }: GeneratedUnionImpl.Init<Context>) {
         this.getReferenceToUnion = getReferenceToUnion;
         this.discriminant = discriminant;
         this.getDocs = getDocs;
         this.typeName = typeName;
+        this.shape = shape;
         this.parsedSingleUnionTypes = parsedSingleUnionTypes;
         this.unknownSingleUnionType = unknownSingleUnionType;
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
@@ -109,13 +117,14 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         this.noOptionalProperties = noOptionalProperties;
         this.inline = inline;
         this.enableInlineTypes = enableInlineTypes;
+        this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
     }
 
     public generateStatements(
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
         const statements: (string | WriterFunction | StatementStructures)[] = [
-            this.generateTypeAlias(context),
+            this.generateTypeAlias({ context, whatFor: "normal" }),
             this.generateModule(context)
         ];
 
@@ -128,14 +137,33 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         return statements;
     }
 
-    public generateForInlineUnion(context: Context): ts.TypeNode {
-        return ts.factory.createParenthesizedType(
-            ts.factory.createUnionTypeNode(
-                this.getAllSingleUnionTypesForAlias().map((singleUnionType) =>
-                    singleUnionType.generateForInlineUnion(context, this)
-                )
-            )
+    public generateForInlineUnion(context: Context): {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    } {
+        const getTypesForInlineUnion = this.getAllSingleUnionTypesForAlias().map((singleUnionType) =>
+            singleUnionType.generateForInlineUnion(context, this)
         );
+        return {
+            typeNode: ts.factory.createParenthesizedType(
+                ts.factory.createUnionTypeNode(getTypesForInlineUnion.map((type) => type.typeNode))
+            ),
+            requestTypeNode: this.generateReadWriteOnlyTypes
+                ? ts.factory.createParenthesizedType(
+                      ts.factory.createUnionTypeNode(
+                          getTypesForInlineUnion.map((type) => type.requestTypeNode ?? type.typeNode)
+                      )
+                  )
+                : undefined,
+            responseTypeNode: this.generateReadWriteOnlyTypes
+                ? ts.factory.createParenthesizedType(
+                      ts.factory.createUnionTypeNode(
+                          getTypesForInlineUnion.map((type) => type.responseTypeNode ?? type.typeNode)
+                      )
+                  )
+                : undefined
+        };
     }
 
     public getReferenceTo(context: Context): ts.TypeNode {
@@ -269,15 +297,54 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
      * TYPE ALIAS *
      **************/
 
-    private generateTypeAlias(context: Context): TypeAliasDeclarationStructure {
+    private generateTypeAlias({
+        context,
+        whatFor
+    }: {
+        context: Context;
+        whatFor: "normal" | "request" | "response";
+    }): TypeAliasDeclarationStructure {
+        let typeName = (() => {
+            switch (whatFor) {
+                case "normal":
+                    return this.typeName;
+                case "request":
+                    return "Request";
+                case "response":
+                    return "Response";
+                default:
+                    assertNever(whatFor);
+            }
+        })();
         const typeAlias: TypeAliasDeclarationStructure = {
             kind: StructureKind.TypeAlias,
-            name: this.typeName,
+            name: typeName,
             type: getWriterForMultiLineUnionType(
-                this.getAllSingleUnionTypesForAlias().map((singleUnionType) => ({
-                    node: this.getReferenceToSingleUnionType(singleUnionType, context),
-                    docs: singleUnionType.getDocs()
-                }))
+                this.getAllSingleUnionTypesForAlias().map((singleUnionType) => {
+                    let node = this.getReferenceToSingleUnionType(singleUnionType, context);
+                    if (this.generateReadWriteOnlyTypes && whatFor !== "normal") {
+                        const needsRequestResponse = singleUnionType.needsRequestResponse(context);
+                        if (needsRequestResponse.request && whatFor === "request") {
+                            node = ts.factory.createTypeReferenceNode(
+                                ts.factory.createQualifiedName(
+                                    ts.factory.createIdentifier(getTextOfTsNode(node)),
+                                    "Request"
+                                )
+                            );
+                        } else if (needsRequestResponse.response && whatFor === "response") {
+                            node = ts.factory.createTypeReferenceNode(
+                                ts.factory.createQualifiedName(
+                                    ts.factory.createIdentifier(getTextOfTsNode(node)),
+                                    "Response"
+                                )
+                            );
+                        }
+                    }
+                    return {
+                        node,
+                        docs: singleUnionType.getDocs()
+                    };
+                })
             ),
             isExported: true
         };
@@ -293,14 +360,14 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             return ts.factory.createTypeReferenceNode(
                 ts.factory.createQualifiedName(
                     ts.factory.createIdentifier(this.typeName),
-                    singleUnionType.getInterfaceName()
+                    singleUnionType.getTypeName()
                 )
             );
         }
         return ts.factory.createTypeReferenceNode(
             ts.factory.createQualifiedName(
                 this.getReferenceToUnion(context).getEntityName(),
-                singleUnionType.getInterfaceName()
+                singleUnionType.getTypeName()
             )
         );
     }
@@ -310,12 +377,6 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
      **********/
 
     private generateModule(context: Context): ModuleDeclarationStructure {
-        const module: ModuleDeclarationStructure = {
-            kind: StructureKind.Module,
-            name: this.typeName,
-            isExported: true,
-            hasDeclareKeyword: false
-        };
         const statements = [...this.getSingleUnionTypeInterfaces(context)];
         if (this.includeUtilsOnUnionMembers) {
             statements.push(this.getUtilsInterface(context));
@@ -324,9 +385,44 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             statements.push(this.getVisitorInterface(context));
         }
         if (this.hasBaseInterface()) {
-            statements.push(this.getBaseInterface(context));
+            const baseInterface = this.getBaseInterface(context);
+            statements.push(baseInterface.normal);
+            if (baseInterface.request || baseInterface.response) {
+                const baseModuleStatements = [];
+                if (baseInterface.request) {
+                    baseModuleStatements.push(baseInterface.request);
+                }
+                if (baseInterface.response) {
+                    baseModuleStatements.push(baseInterface.response);
+                }
+                statements.push({
+                    kind: StructureKind.Module,
+                    name: GeneratedUnionImpl.BASE_INTERFACE_NAME,
+                    statements: baseModuleStatements,
+                    isExported: true
+                });
+            }
         }
-        module.statements = statements;
+
+        if (this.shape) {
+            const needsRequestResponseTypeVariant = context.type.needsRequestResponseTypeVariantByType(
+                FernIr.Type.union(this.shape)
+            );
+            if (needsRequestResponseTypeVariant.request) {
+                statements.push(this.generateTypeAlias({ context, whatFor: "request" }));
+            }
+            if (needsRequestResponseTypeVariant.response) {
+                statements.push(this.generateTypeAlias({ context, whatFor: "response" }));
+            }
+        }
+
+        const module: ModuleDeclarationStructure = {
+            kind: StructureKind.Module,
+            name: this.typeName,
+            isExported: true,
+            hasDeclareKeyword: false,
+            statements
+        };
         return module;
     }
 
@@ -337,11 +433,34 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         );
 
         for (const interface_ of interfaces) {
-            if (this.hasBaseInterface()) {
-                interface_.extends.push(ts.factory.createTypeReferenceNode(GeneratedUnionImpl.BASE_INTERFACE_NAME));
+            const hasBaseInterfaces = this.hasBaseInterfaces(context);
+            if (hasBaseInterfaces.normal) {
+                interface_.extends.push({
+                    typeNode: ts.factory.createTypeReferenceNode(GeneratedUnionImpl.BASE_INTERFACE_NAME),
+                    requestTypeNode: hasBaseInterfaces.request
+                        ? ts.factory.createTypeReferenceNode(
+                              ts.factory.createQualifiedName(
+                                  ts.factory.createIdentifier(GeneratedUnionImpl.BASE_INTERFACE_NAME),
+                                  "Request"
+                              )
+                          )
+                        : undefined,
+                    responseTypeNode: hasBaseInterfaces.response
+                        ? ts.factory.createTypeReferenceNode(
+                              ts.factory.createQualifiedName(
+                                  ts.factory.createIdentifier(GeneratedUnionImpl.BASE_INTERFACE_NAME),
+                                  "Response"
+                              )
+                          )
+                        : undefined
+                });
             }
             if (this.includeUtilsOnUnionMembers) {
-                interface_.extends.push(ts.factory.createTypeReferenceNode(GeneratedUnionImpl.UTILS_INTERFACE_NAME));
+                interface_.extends.push({
+                    typeNode: ts.factory.createTypeReferenceNode(GeneratedUnionImpl.UTILS_INTERFACE_NAME),
+                    requestTypeNode: undefined,
+                    responseTypeNode: undefined
+                });
             }
         }
 
@@ -350,11 +469,59 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                 kind: StructureKind.Interface,
                 name: interface_.name,
                 isExported: true,
-                extends: interface_.extends.map(getTextOfTsNode),
-                properties: interface_.properties
+                extends: interface_.extends.map((e) => getTextOfTsNode(e.typeNode)),
+                properties: interface_.properties.map((p) => p.property)
             });
             if (interface_.module) {
                 statements.push(interface_.module);
+            }
+            if (this.generateReadWriteOnlyTypes) {
+                const anyRequestExtends = interface_.extends.some((e) => e.requestTypeNode != null);
+                const anyResponseExtends = interface_.extends.some((e) => e.responseTypeNode != null);
+                const anyReadonlyProperties = interface_.properties.some((p) => p.isReadonly);
+                const anyWriteonlyProperties = interface_.properties.some((p) => p.isWriteonly);
+                const anyRequestProperties = interface_.properties.some((p) => p.requestProperty != null);
+                const anyResponseProperties = interface_.properties.some((p) => p.responseProperty != null);
+
+                if (
+                    anyRequestExtends ||
+                    anyResponseExtends ||
+                    anyReadonlyProperties ||
+                    anyWriteonlyProperties ||
+                    anyRequestProperties ||
+                    anyResponseProperties
+                ) {
+                    const requestExtends = interface_.extends.map((e) => e.requestTypeNode ?? e.typeNode);
+                    const responseExtends = interface_.extends.map((e) => e.responseTypeNode ?? e.typeNode);
+                    const requestProperties = interface_.properties.filter((p) => p.isReadonly === false);
+                    const responseProperties = interface_.properties.filter((p) => p.isWriteonly === false);
+                    const moduleStatements: StatementStructures[] = [];
+                    if (anyRequestExtends || anyReadonlyProperties || anyRequestProperties) {
+                        moduleStatements.push({
+                            kind: StructureKind.Interface,
+                            name: "Request",
+                            isExported: true,
+                            extends: requestExtends.map((e) => getTextOfTsNode(e)),
+                            properties: requestProperties.map((p) => p.requestProperty ?? p.property)
+                        });
+                    }
+                    if (anyResponseExtends || anyWriteonlyProperties || anyResponseProperties) {
+                        moduleStatements.push({
+                            kind: StructureKind.Interface,
+                            name: "Response",
+                            isExported: true,
+                            extends: responseExtends.map((e) => getTextOfTsNode(e)),
+                            properties: responseProperties.map((p) => p.responseProperty ?? p.property)
+                        });
+                    }
+
+                    statements.push({
+                        kind: StructureKind.Module,
+                        name: interface_.name,
+                        isExported: true,
+                        statements: moduleStatements
+                    });
+                }
             }
         }
         return statements;
@@ -374,20 +541,91 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         };
     }
 
-    private getBaseInterface(context: Context): InterfaceDeclarationStructure {
-        return {
+    private getBaseInterface(context: Context): {
+        normal: InterfaceDeclarationStructure;
+        request: InterfaceDeclarationStructure | undefined;
+        response: InterfaceDeclarationStructure | undefined;
+    } {
+        const properties = this.baseProperties.map((p) => {
+            const type = context.type.getReferenceToType(p.valueType);
+            const property = {
+                name: getPropertyKey(this._getBasePropertyKey(p)),
+                docs: p.docs != null ? [p.docs] : undefined,
+                type: getTextOfTsNode(this.noOptionalProperties ? type.typeNode : type.typeNodeWithoutUndefined),
+                hasQuestionToken: !this.noOptionalProperties && type.isOptional
+            };
+            return {
+                property,
+                requestProperty: type.requestTypeNode
+                    ? {
+                          ...property,
+                          type: getTextOfTsNode(
+                              this.noOptionalProperties
+                                  ? type.requestTypeNode
+                                  : (type.requestTypeNodeWithoutUndefined as ts.TypeNode)
+                          )
+                      }
+                    : undefined,
+                responseProperty: type.responseTypeNode
+                    ? {
+                          ...property,
+                          type: getTextOfTsNode(
+                              this.noOptionalProperties
+                                  ? type.responseTypeNode
+                                  : (type.responseTypeNodeWithoutUndefined as ts.TypeNode)
+                          )
+                      }
+                    : undefined
+            };
+        });
+        const baseExtends = (this.shape?.extends ?? []).map((shapeExtend) => {
+            const ref = context.type.getReferenceToType(context.type.typeNameToTypeReference(shapeExtend));
+            return {
+                normal: ref.typeNode,
+                request: ref.requestTypeNode,
+                response: ref.responseTypeNode
+            };
+        });
+
+        const normal: InterfaceDeclarationStructure = {
             kind: StructureKind.Interface,
             name: GeneratedUnionImpl.BASE_INTERFACE_NAME,
-            properties: this.baseProperties.map((property) => {
-                const type = context.type.getReferenceToType(property.valueType);
-                return {
-                    name: getPropertyKey(this._getBasePropertyKey(property)),
-                    docs: property.docs != null ? [property.docs] : undefined,
-                    type: getTextOfTsNode(this.noOptionalProperties ? type.typeNode : type.typeNodeWithoutUndefined),
-                    hasQuestionToken: !this.noOptionalProperties && type.isOptional
-                };
-            }),
+            extends: baseExtends.map((ext) => getTextOfTsNode(ext.normal)),
+            properties: properties.map((p) => p.property),
             isExported: true
+        };
+        if (!this.generateReadWriteOnlyTypes) {
+            return {
+                normal,
+                request: undefined,
+                response: undefined
+            };
+        }
+        const anyRequestProps = properties.some((p) => p.requestProperty != null);
+        const anyResponseProps = properties.some((p) => p.responseProperty != null);
+        const anyRequestExtends = baseExtends.some((ext) => ext.request != null);
+        const anyResponseExtends = baseExtends.some((ext) => ext.response != null);
+
+        return {
+            normal,
+            request:
+                anyRequestProps || anyRequestExtends
+                    ? {
+                          ...normal,
+                          name: "Request",
+                          extends: baseExtends.map((ext) => getTextOfTsNode(ext.request ?? ext.normal)),
+                          properties: properties.map((p) => p.requestProperty ?? p.property)
+                      }
+                    : undefined,
+            response:
+                anyResponseProps || anyResponseExtends
+                    ? {
+                          ...normal,
+                          name: "Response",
+                          extends: baseExtends.map((ext) => getTextOfTsNode(ext.response ?? ext.normal)),
+                          properties: properties.map((p) => p.responseProperty ?? p.property)
+                      }
+                    : undefined
         };
     }
 
@@ -598,7 +836,48 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     }
 
     private hasBaseInterface(): boolean {
-        return this.baseProperties.length > 0;
+        return this.baseProperties.length > 0 || (this.shape?.extends ?? []).length > 0;
+    }
+
+    private hasBaseInterfaces(context: Context): {
+        normal: boolean;
+        request: boolean;
+        response: boolean;
+    } {
+        const hasNormal = this.baseProperties.length > 0 || (this.shape?.extends ?? []).length > 0;
+        if (!this.generateReadWriteOnlyTypes) {
+            return {
+                normal: hasNormal,
+                request: false,
+                response: false
+            };
+        }
+
+        let hasRequest = false;
+        let hasResponse = false;
+        if (hasNormal && this.shape) {
+            const properties = this.baseProperties.map((p) => {
+                const type = context.type.getReferenceToType(p.valueType);
+                return {
+                    requestProperty: type.requestTypeNode ? true : false,
+                    responseProperty: type.responseTypeNode ? true : false
+                };
+            });
+            const baseExtends = (this.shape?.extends ?? []).map((shapeExtend) => {
+                const ref = context.type.getReferenceToType(context.type.typeNameToTypeReference(shapeExtend));
+                return {
+                    request: ref.requestTypeNode ? true : false,
+                    response: ref.responseTypeNode ? true : false
+                };
+            });
+            hasRequest = properties.some((p) => p.requestProperty) || baseExtends.some((ext) => ext.request);
+            hasResponse = properties.some((p) => p.responseProperty) || baseExtends.some((ext) => ext.response);
+        }
+        return {
+            normal: hasNormal,
+            request: hasRequest,
+            response: hasResponse
+        };
     }
 
     private getSingleUnionType(discriminantValue: string | number): KnownSingleUnionType<Context> {

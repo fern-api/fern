@@ -17,6 +17,7 @@ export declare namespace ParsedSingleUnionTypeForError {
         noOptionalProperties: boolean;
         retainOriginalCasing: boolean;
         enableInlineTypes: boolean;
+        generateReadWriteOnlyTypes: boolean;
     }
 }
 
@@ -33,16 +34,19 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
         includeUtilsOnUnionMembers,
         noOptionalProperties,
         retainOriginalCasing,
-        enableInlineTypes
+        enableInlineTypes,
+        generateReadWriteOnlyTypes
     }: ParsedSingleUnionTypeForError.Init) {
         const errorDeclaration = errorResolver.getErrorDeclarationFromName(error.error);
         super({
             singleUnionType: getSingleUnionTypeGenerator({
+                getTypeName: () => this.getTypeName(),
                 errorDiscriminationStrategy,
                 errorDeclaration,
                 noOptionalProperties,
                 retainOriginalCasing,
-                enableInlineTypes
+                enableInlineTypes,
+                generateReadWriteOnlyTypes
             }),
             includeUtilsOnUnionMembers
         });
@@ -57,7 +61,7 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
         return this.responseError.docs;
     }
 
-    public getInterfaceName(): string {
+    public getTypeName(): string {
         return this.errorDeclaration.discriminantValue.name.pascalCase.unsafeName;
     }
 
@@ -82,6 +86,13 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
             ? this.errorDeclaration.discriminantValue.name.originalName
             : this.errorDeclaration.discriminantValue.name.camelCase.unsafeName;
     }
+
+    public needsRequestResponse(): { request: boolean; response: boolean } {
+        return {
+            request: false,
+            response: false
+        };
+    }
 }
 
 const CONTENT_PROPERTY_FOR_STATUS_CODE_DISCRIMINATED_ERRORS = "content";
@@ -91,13 +102,17 @@ function getSingleUnionTypeGenerator({
     errorDeclaration,
     noOptionalProperties,
     retainOriginalCasing,
-    enableInlineTypes
+    enableInlineTypes,
+    getTypeName,
+    generateReadWriteOnlyTypes
 }: {
     errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     errorDeclaration: ErrorDeclaration;
     noOptionalProperties: boolean;
     retainOriginalCasing: boolean;
     enableInlineTypes: boolean;
+    getTypeName: () => string;
+    generateReadWriteOnlyTypes: boolean;
 }): SingleUnionTypeGenerator<SdkContext> {
     if (errorDeclaration.type == null) {
         return new NoPropertiesSingleUnionTypeGenerator();
@@ -114,10 +129,12 @@ function getSingleUnionTypeGenerator({
     });
 
     return new SinglePropertySingleUnionTypeGenerator<SdkContext>({
+        getTypeName,
         propertyName,
         getReferenceToPropertyType: (context) => context.type.getReferenceToType(type),
         getReferenceToPropertyTypeForInlineUnion: (context) => context.type.getReferenceToTypeForInlineUnion(type),
         noOptionalProperties,
-        enableInlineTypes
+        enableInlineTypes,
+        generateReadWriteOnlyTypes
     });
 }

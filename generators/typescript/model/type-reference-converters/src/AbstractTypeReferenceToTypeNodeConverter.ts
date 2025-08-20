@@ -8,16 +8,23 @@ import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./Ab
 export declare namespace AbstractTypeReferenceToTypeNodeConverter {
     export interface Init extends AbstractTypeReferenceConverter.Init {
         getReferenceToNamedType: (typeName: DeclaredTypeName, params: ConvertTypeReferenceParams) => ts.EntityName;
-        generateForInlineUnion: (typeName: DeclaredTypeName) => ts.TypeNode;
+        generateForInlineUnion: (typeName: DeclaredTypeName) => {
+            typeNode: ts.TypeNode;
+            requestTypeNode: ts.TypeNode | undefined;
+            responseTypeNode: ts.TypeNode | undefined;
+        };
     }
 }
-
 export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractTypeReferenceConverter<TypeReferenceNode> {
     protected getReferenceToNamedType: (
         typeName: DeclaredTypeName,
         params: ConvertTypeReferenceParams
     ) => ts.EntityName;
-    protected generateForInlineUnion: (typeName: DeclaredTypeName) => ts.TypeNode;
+    protected generateForInlineUnion: (typeName: DeclaredTypeName) => {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    };
 
     constructor({
         getReferenceToNamedType,
@@ -42,14 +49,19 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         });
 
         let typeNodeWithoutUndefined: ts.TypeNode;
+        let requestTypeNodeWithoutUndefined: ts.TypeNode | undefined;
+        let responseTypeNodeWithoutUndefined: ts.TypeNode | undefined;
         const typeDeclaration = this.context.type.getTypeDeclaration(typeName);
         if (this.enableInlineTypes && typeDeclaration.inline) {
             if (ConvertTypeReferenceParams.isInlinePropertyParams(params)) {
-                typeNodeWithoutUndefined = this.createTypeRefenceForInlinePropertyNamedType(params);
+                typeNodeWithoutUndefined = this.createTypeReferenceForInlinePropertyNamedType(params);
             } else if (ConvertTypeReferenceParams.isInlineAliasParams(params)) {
-                typeNodeWithoutUndefined = this.createTypeRefenceForInlineAliasNamedType(typeName, params);
+                typeNodeWithoutUndefined = this.createTypeReferenceForInlineAliasNamedType(typeName, params);
             } else if (ConvertTypeReferenceParams.isForInlineUnionParams(params)) {
-                typeNodeWithoutUndefined = this.createTypeRefenceForInlineNamedTypeForInlineUnion(typeName);
+                const types = this.createTypeReferenceForInlineNamedTypeForInlineUnion(typeName);
+                typeNodeWithoutUndefined = types.typeNode;
+                requestTypeNodeWithoutUndefined = types.requestTypeNode;
+                responseTypeNodeWithoutUndefined = types.responseTypeNode;
             } else {
                 typeNodeWithoutUndefined = ts.factory.createTypeReferenceNode(
                     this.getReferenceToNamedType(typeName, params)
@@ -62,40 +74,52 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         }
 
         const needsRequestResponseTypeVariant = this.context.type.needsRequestResponseTypeVariantById(typeName.typeId);
-        const requestTypeNodeWithoutUndefined = needsRequestResponseTypeVariant.request
-            ? this.addRequestToTypeNode(typeNodeWithoutUndefined)
-            : undefined;
-        const responseTypeNodeWithoutUndefined = needsRequestResponseTypeVariant.response
-            ? this.addResponseToTypeNode(typeNodeWithoutUndefined)
-            : undefined;
+        if (!requestTypeNodeWithoutUndefined && needsRequestResponseTypeVariant.request) {
+            requestTypeNodeWithoutUndefined = this.addRequestToTypeNode(typeNodeWithoutUndefined);
+        }
+        if (!responseTypeNodeWithoutUndefined && needsRequestResponseTypeVariant.response) {
+            responseTypeNodeWithoutUndefined = this.addResponseToTypeNode(typeNodeWithoutUndefined);
+        }
         if (!isOptional) {
             return this.generateNonOptionalTypeReferenceNode({
                 typeNode: typeNodeWithoutUndefined,
-                requestTypeNode: requestTypeNodeWithoutUndefined,
-                responseTypeNode: responseTypeNodeWithoutUndefined
+                requestTypeNode: this.generateReadWriteOnlyTypes ? requestTypeNodeWithoutUndefined : undefined,
+                responseTypeNode: this.generateReadWriteOnlyTypes ? responseTypeNodeWithoutUndefined : undefined
             });
         } else {
             return {
                 isOptional: true,
                 typeNodeWithoutUndefined,
                 typeNode: this.addUndefinedToTypeNode(typeNodeWithoutUndefined),
-                requestTypeNode: requestTypeNodeWithoutUndefined
-                    ? this.addUndefinedToTypeNode(requestTypeNodeWithoutUndefined)
+                requestTypeNode: this.generateReadWriteOnlyTypes
+                    ? requestTypeNodeWithoutUndefined
+                        ? this.addUndefinedToTypeNode(requestTypeNodeWithoutUndefined)
+                        : undefined
                     : undefined,
-                requestTypeNodeWithoutUndefined: requestTypeNodeWithoutUndefined,
-                responseTypeNode: responseTypeNodeWithoutUndefined
-                    ? this.addUndefinedToTypeNode(responseTypeNodeWithoutUndefined)
+                requestTypeNodeWithoutUndefined: this.generateReadWriteOnlyTypes
+                    ? requestTypeNodeWithoutUndefined
                     : undefined,
-                responseTypeNodeWithoutUndefined: responseTypeNodeWithoutUndefined
+                responseTypeNode: this.generateReadWriteOnlyTypes
+                    ? responseTypeNodeWithoutUndefined
+                        ? this.addUndefinedToTypeNode(responseTypeNodeWithoutUndefined)
+                        : undefined
+                    : undefined,
+                responseTypeNodeWithoutUndefined: this.generateReadWriteOnlyTypes
+                    ? responseTypeNodeWithoutUndefined
+                    : undefined
             };
         }
     }
 
-    private createTypeRefenceForInlineNamedTypeForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode {
+    private createTypeReferenceForInlineNamedTypeForInlineUnion(typeName: DeclaredTypeName): {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    } {
         return this.generateForInlineUnion(typeName);
     }
 
-    private createTypeRefenceForInlineAliasNamedType(
+    private createTypeReferenceForInlineAliasNamedType(
         typeName: DeclaredTypeName,
         params: ConvertTypeReferenceParams.InlineAliasTypeParams
     ): ts.TypeNode {
@@ -117,7 +141,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         return ts.factory.createTypeReferenceNode(name);
     }
 
-    private createTypeRefenceForInlinePropertyNamedType({
+    private createTypeReferenceForInlinePropertyNamedType({
         parentTypeName,
         propertyName,
         genericIn
@@ -365,20 +389,22 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         const optionalValueTypeNode = valueType.isOptional ? valueType : this.optional(map.valueType, params);
         return this.generateNonOptionalTypeReferenceNode({
             typeNode: ts.factory.createTypeReferenceNode("Record", [keyType.typeNode, optionalValueTypeNode.typeNode]),
-            requestTypeNode:
-                keyType.requestTypeNode || optionalValueTypeNode.requestTypeNode
+            requestTypeNode: this.generateReadWriteOnlyTypes
+                ? keyType.requestTypeNode || optionalValueTypeNode.requestTypeNode
                     ? ts.factory.createTypeReferenceNode("Record", [
                           keyType.requestTypeNode ?? keyType.typeNode,
                           optionalValueTypeNode.requestTypeNode ?? optionalValueTypeNode.typeNode
                       ])
-                    : undefined,
-            responseTypeNode:
-                keyType.responseTypeNode || optionalValueTypeNode.responseTypeNode
+                    : undefined
+                : undefined,
+            responseTypeNode: this.generateReadWriteOnlyTypes
+                ? keyType.responseTypeNode || optionalValueTypeNode.responseTypeNode
                     ? ts.factory.createTypeReferenceNode("Record", [
                           keyType.responseTypeNode ?? keyType.typeNode,
                           optionalValueTypeNode.responseTypeNode ?? optionalValueTypeNode.typeNode
                       ])
                     : undefined
+                : undefined
         });
     }
 }

@@ -1,17 +1,37 @@
+import { ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
-
 import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator";
 
-export class NoPropertiesSingleUnionTypeGenerator<Context> implements SingleUnionTypeGenerator<Context> {
-    public generateForInlineUnion(context: Context): ts.TypeNode {
-        return ts.factory.createTypeLiteralNode([]);
+export class NoPropertiesSingleUnionTypeGenerator<Context extends ModelContext>
+    implements SingleUnionTypeGenerator<Context>
+{
+    public generateForInlineUnion(context: Context): {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    } {
+        return {
+            typeNode: ts.factory.createTypeLiteralNode([]),
+            requestTypeNode: undefined,
+            responseTypeNode: undefined
+        };
     }
 
-    public getExtendsForInterface(): ts.TypeNode[] {
+    public getExtendsForInterface(): {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    }[] {
         return [];
     }
 
-    public getDiscriminantPropertiesForInterface(context: Context): OptionalKind<PropertySignatureStructure>[] {
+    public getDiscriminantPropertiesForInterface(context: Context): {
+        property: PropertySignatureStructure;
+        requestProperty: PropertySignatureStructure | undefined;
+        responseProperty: PropertySignatureStructure | undefined;
+        isReadonly: boolean;
+        isWriteonly: boolean;
+    }[] {
         return [];
     }
 
@@ -19,7 +39,13 @@ export class NoPropertiesSingleUnionTypeGenerator<Context> implements SingleUnio
         return undefined;
     }
 
-    public getNonDiscriminantPropertiesForInterface(): OptionalKind<PropertySignatureStructure>[] {
+    public getNonDiscriminantPropertiesForInterface(): {
+        property: PropertySignatureStructure;
+        requestProperty: PropertySignatureStructure | undefined;
+        responseProperty: PropertySignatureStructure | undefined;
+        isReadonly: boolean;
+        isWriteonly: boolean;
+    }[] {
         return [];
     }
 
@@ -41,5 +67,9 @@ export class NoPropertiesSingleUnionTypeGenerator<Context> implements SingleUnio
 
     public getBuilderArgsFromExistingValue(): ts.Expression[] {
         return [];
+    }
+
+    public needsRequestResponse(): { request: boolean; response: boolean } {
+        return { request: false, response: false };
     }
 }

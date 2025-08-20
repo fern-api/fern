@@ -1,4 +1,4 @@
-import { NameAndWireValue, ObjectProperty } from "@fern-fern/ir-sdk/api";
+import { NameAndWireValue, ObjectProperty, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getPropertyKey, getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
 import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts";
@@ -8,6 +8,7 @@ import { RawSingleUnionType } from "./RawSingleUnionType";
 
 export declare namespace GeneratedUnionSchema {
     export interface Init<Context extends ModelContext> extends AbstractGeneratedSchema.Init {
+        shape: UnionTypeDeclaration | undefined;
         discriminant: NameAndWireValue;
         singleUnionTypes: RawSingleUnionType<Context>[];
         baseProperties?: ObjectProperty[];
@@ -19,18 +20,20 @@ export declare namespace GeneratedUnionSchema {
 }
 
 export class GeneratedUnionSchema<Context extends ModelContext> extends AbstractGeneratedSchema<Context> {
-    private static VALUE_PARAMETER_NAME = "value";
-    private static BASE_SCHEMA_NAME = "_Base";
+    private static readonly VALUE_PARAMETER_NAME = "value";
+    private static readonly BASE_SCHEMA_NAME = "_Base";
 
-    private discriminant: NameAndWireValue;
-    private singleUnionTypes: RawSingleUnionType<Context>[];
-    private baseProperties: ObjectProperty[];
-    private getGeneratedUnion: (context: Context) => GeneratedUnion<Context>;
-    protected getReferenceToSchema: (context: Context) => Reference;
-    private shouldIncludeDefaultCaseInTransform: boolean;
-    private includeUtilsOnUnionMembers: boolean;
+    private readonly discriminant: NameAndWireValue;
+    private readonly singleUnionTypes: RawSingleUnionType<Context>[];
+    private readonly baseProperties: ObjectProperty[];
+    private readonly getGeneratedUnion: (context: Context) => GeneratedUnion<Context>;
+    protected readonly getReferenceToSchema: (context: Context) => Reference;
+    private readonly shouldIncludeDefaultCaseInTransform: boolean;
+    private readonly includeUtilsOnUnionMembers: boolean;
+    private readonly shape: UnionTypeDeclaration | undefined;
 
     constructor({
+        shape,
         discriminant,
         singleUnionTypes,
         baseProperties = [],
@@ -41,6 +44,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
         ...superInit
     }: GeneratedUnionSchema.Init<Context>) {
         super(superInit);
+        this.shape = shape;
         this.discriminant = discriminant;
         this.singleUnionTypes = singleUnionTypes;
         this.baseProperties = baseProperties;
@@ -87,6 +91,10 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                         type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                         hasQuestionToken: type.isOptional
                     };
+                }),
+                extends: this.shape?.extends.map((ext) => {
+                    const type = context.typeSchema.getReferenceToRawNamedType(ext);
+                    return getTextOfTsNode(type.getTypeNode());
                 }),
                 isExported: true
             });
@@ -308,6 +316,6 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
     }
 
     private hasBaseInterface(): boolean {
-        return this.baseProperties.length > 0;
+        return this.baseProperties.length > 0 || (this.shape?.extends ?? []).length > 0;
     }
 }

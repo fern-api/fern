@@ -149,6 +149,7 @@ export declare namespace SdkGenerator {
         omitFernHeaders: boolean;
         useDefaultRequestParameterValues: boolean;
         packageManager: "pnpm" | "yarn";
+        generateReadWriteOnlyTypes: boolean;
     }
 }
 
@@ -369,7 +370,8 @@ export class SdkGenerator {
             includeSerdeLayer: config.includeSerdeLayer,
             noOptionalProperties: config.noOptionalProperties,
             retainOriginalCasing: config.retainOriginalCasing,
-            enableInlineTypes: config.enableInlineTypes
+            enableInlineTypes: config.enableInlineTypes,
+            generateReadWriteOnlyTypes: config.generateReadWriteOnlyTypes
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
@@ -392,7 +394,8 @@ export class SdkGenerator {
             includeSerdeLayer: config.includeSerdeLayer,
             retainOriginalCasing: config.retainOriginalCasing,
             noOptionalProperties: config.noOptionalProperties,
-            enableInlineTypes: config.enableInlineTypes
+            enableInlineTypes: config.enableInlineTypes,
+            generateReadWriteOnlyTypes: config.generateReadWriteOnlyTypes
         });
         this.sdkEndpointTypeSchemasGenerator = new SdkEndpointTypeSchemasGenerator({
             errorResolver: this.errorResolver,
@@ -1575,7 +1578,8 @@ export class SdkGenerator {
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath,
             formDataSupport: this.config.formDataSupport,
-            useDefaultRequestParameterValues: this.config.useDefaultRequestParameterValues
+            useDefaultRequestParameterValues: this.config.useDefaultRequestParameterValues,
+            generateReadWriteOnlyTypes: this.config.generateReadWriteOnlyTypes
         });
     }
 

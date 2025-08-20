@@ -22,7 +22,7 @@ export abstract class AbstractUnknownSingleUnionType<
         return ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword);
     }
 
-    public getInterfaceName(): string {
+    public getTypeName(): string {
         return AbstractUnknownSingleUnionType.INTERFACE_NAME;
     }
 

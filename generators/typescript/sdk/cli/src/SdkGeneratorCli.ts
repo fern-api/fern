@@ -73,7 +73,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             packagePath: parsed?.packagePath,
             omitFernHeaders: parsed?.omitFernHeaders ?? false,
             useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false,
-            packageManager: parsed?.packageManager ?? "yarn"
+            packageManager: parsed?.packageManager ?? "yarn",
+            generateReadWriteOnlyTypes: parsed?.experimentalGenerateReadWriteOnlyTypes ?? false
         };
 
         if (parsed?.noSerdeLayer === false && typeof parsed?.enableInlineTypes === "undefined") {
@@ -85,6 +86,12 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         if (parsed?.noSerdeLayer === false && parsed?.enableInlineTypes === true) {
             logger.error("Incompatible configuration: noSerdeLayer cannot be false while enableInlineTypes is true.");
         }
+        if (parsed?.noSerdeLayer === false && parsed?.experimentalGenerateReadWriteOnlyTypes === true) {
+            logger.error(
+                "Incompatible configuration: noSerdeLayer cannot be false while experimentalGenerateReadWriteOnlyTypes is true."
+            );
+        }
+
         return config;
     }
 
@@ -175,7 +182,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 packagePath: customConfig.packagePath,
                 omitFernHeaders: customConfig.omitFernHeaders ?? false,
                 useDefaultRequestParameterValues: customConfig.useDefaultRequestParameterValues ?? false,
-                packageManager: customConfig.packageManager
+                packageManager: customConfig.packageManager,
+                generateReadWriteOnlyTypes: customConfig.generateReadWriteOnlyTypes
             }
         });
         const typescriptProject = await sdkGenerator.generate();

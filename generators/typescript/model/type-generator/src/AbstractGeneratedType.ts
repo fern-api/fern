@@ -16,6 +16,7 @@ export declare namespace AbstractGeneratedType {
         retainOriginalCasing: boolean;
         /** Whether inline types should be inlined */
         enableInlineTypes: boolean;
+        generateReadWriteOnlyTypes: boolean;
     }
 }
 
@@ -31,7 +32,7 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
     protected readonly noOptionalProperties: boolean;
     protected readonly retainOriginalCasing: boolean;
     protected readonly enableInlineTypes: boolean;
-    protected readonly generateReadonlyWriteonlyTypes: boolean;
+    protected readonly generateReadWriteOnlyTypes: boolean;
 
     private docs: string | undefined;
 
@@ -45,7 +46,8 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
         includeSerdeLayer,
         noOptionalProperties,
         retainOriginalCasing,
-        enableInlineTypes
+        enableInlineTypes,
+        generateReadWriteOnlyTypes
     }: AbstractGeneratedType.Init<Shape, Context>) {
         this.typeName = typeName;
         this.shape = shape;
@@ -57,7 +59,7 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
         this.noOptionalProperties = noOptionalProperties;
         this.retainOriginalCasing = retainOriginalCasing;
         this.enableInlineTypes = enableInlineTypes;
-        this.generateReadonlyWriteonlyTypes = true;
+        this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
     }
 
     protected getDocs(context: Context): string | undefined {
@@ -86,7 +88,11 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
     public abstract generateStatements(
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[];
-    public abstract generateForInlineUnion(context: Context): ts.TypeNode;
+    public abstract generateForInlineUnion(context: Context): {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    };
     public abstract generateModule(context: Context): ModuleDeclarationStructure | undefined;
     public abstract buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression;
 }

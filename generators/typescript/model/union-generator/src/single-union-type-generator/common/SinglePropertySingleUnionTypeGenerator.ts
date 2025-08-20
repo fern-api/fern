@@ -1,59 +1,99 @@
 import { getPropertyKey, getTextOfTsNode, TypeReferenceNode } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/contexts";
-import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
-
+import { ModuleDeclarationStructure, PropertySignatureStructure, StructureKind, ts } from "ts-morph";
 import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator";
 
 export declare namespace SinglePropertySingleUnionTypeGenerator {
     export interface Init<Context> {
         propertyName: string;
+        getTypeName: () => string;
         getReferenceToPropertyType: (context: Context) => TypeReferenceNode;
         getReferenceToPropertyTypeForInlineUnion: (context: Context) => TypeReferenceNode;
         noOptionalProperties: boolean;
         enableInlineTypes: boolean;
+        generateReadWriteOnlyTypes: boolean;
     }
 }
 
 export class SinglePropertySingleUnionTypeGenerator<Context extends ModelContext>
     implements SingleUnionTypeGenerator<Context>
 {
-    private static BUILDER_PARAMETER_NAME = "value";
+    private static readonly BUILDER_PARAMETER_NAME = "value";
 
-    private propertyName: string;
-    private getReferenceToPropertyType: (context: Context) => TypeReferenceNode;
-    private getReferenceToPropertyTypeForInlineUnion: (context: Context) => TypeReferenceNode;
-    private noOptionalProperties: boolean;
+    private readonly propertyName: string;
+    private readonly getReferenceToPropertyType: (context: Context) => TypeReferenceNode;
+    private readonly getReferenceToPropertyTypeForInlineUnion: (context: Context) => TypeReferenceNode;
+    private readonly noOptionalProperties: boolean;
+    private readonly generateReadWriteOnlyTypes: boolean;
 
     constructor({
         propertyName,
         getReferenceToPropertyType,
         getReferenceToPropertyTypeForInlineUnion,
-        noOptionalProperties
+        noOptionalProperties,
+        generateReadWriteOnlyTypes
     }: SinglePropertySingleUnionTypeGenerator.Init<Context>) {
         this.propertyName = propertyName;
         this.getReferenceToPropertyType = getReferenceToPropertyType;
         this.getReferenceToPropertyTypeForInlineUnion = getReferenceToPropertyTypeForInlineUnion;
         this.noOptionalProperties = noOptionalProperties;
+        this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
     }
 
-    public generateForInlineUnion(context: Context): ts.TypeNode {
+    public generateForInlineUnion(context: Context): {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    } {
         const typeReference = this.getReferenceToPropertyTypeForInlineUnion(context);
         const hasOptionalToken = !this.noOptionalProperties && typeReference.isOptional;
-        return ts.factory.createTypeLiteralNode([
-            ts.factory.createPropertySignature(
-                undefined,
-                getPropertyKey(this.propertyName),
-                hasOptionalToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
-                this.noOptionalProperties ? typeReference.typeNode : typeReference.typeNodeWithoutUndefined
-            )
-        ]);
+        return {
+            typeNode: ts.factory.createTypeLiteralNode([
+                ts.factory.createPropertySignature(
+                    undefined,
+                    getPropertyKey(this.propertyName),
+                    hasOptionalToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
+                    this.noOptionalProperties ? typeReference.typeNode : typeReference.typeNodeWithoutUndefined
+                )
+            ]),
+            requestTypeNode: ts.factory.createTypeLiteralNode([
+                ts.factory.createPropertySignature(
+                    undefined,
+                    getPropertyKey(this.propertyName),
+                    hasOptionalToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
+                    this.noOptionalProperties
+                        ? (typeReference.requestTypeNode ?? typeReference.typeNode)
+                        : (typeReference.requestTypeNodeWithoutUndefined ?? typeReference.typeNodeWithoutUndefined)
+                )
+            ]),
+            responseTypeNode: ts.factory.createTypeLiteralNode([
+                ts.factory.createPropertySignature(
+                    undefined,
+                    getPropertyKey(this.propertyName),
+                    hasOptionalToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
+                    this.noOptionalProperties
+                        ? (typeReference.responseTypeNode ?? typeReference.typeNode)
+                        : (typeReference.responseTypeNodeWithoutUndefined ?? typeReference.typeNodeWithoutUndefined)
+                )
+            ])
+        };
     }
 
-    public getExtendsForInterface(): ts.TypeNode[] {
+    public getExtendsForInterface(): {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    }[] {
         return [];
     }
 
-    public getDiscriminantPropertiesForInterface(context: Context): OptionalKind<PropertySignatureStructure>[] {
+    public getDiscriminantPropertiesForInterface(context: Context): {
+        property: PropertySignatureStructure;
+        requestProperty: PropertySignatureStructure | undefined;
+        responseProperty: PropertySignatureStructure | undefined;
+        isReadonly: boolean;
+        isWriteonly: boolean;
+    }[] {
         return [];
     }
 
@@ -61,13 +101,46 @@ export class SinglePropertySingleUnionTypeGenerator<Context extends ModelContext
         return undefined;
     }
 
-    public getNonDiscriminantPropertiesForInterface(context: Context): OptionalKind<PropertySignatureStructure>[] {
+    public getNonDiscriminantPropertiesForInterface(context: Context): {
+        property: PropertySignatureStructure;
+        requestProperty: PropertySignatureStructure | undefined;
+        responseProperty: PropertySignatureStructure | undefined;
+        isReadonly: boolean;
+        isWriteonly: boolean;
+    }[] {
         const type = this.getReferenceToPropertyType(context);
+        const hasQuestionToken = !this.noOptionalProperties && type.isOptional;
+        const property: PropertySignatureStructure = {
+            kind: StructureKind.PropertySignature,
+            name: getPropertyKey(this.propertyName),
+            type: getTextOfTsNode(this.noOptionalProperties ? type.typeNode : type.typeNodeWithoutUndefined),
+            hasQuestionToken
+        };
         return [
             {
-                name: getPropertyKey(this.propertyName),
-                type: getTextOfTsNode(this.noOptionalProperties ? type.typeNode : type.typeNodeWithoutUndefined),
-                hasQuestionToken: !this.noOptionalProperties && type.isOptional
+                property,
+                requestProperty: type.requestTypeNode
+                    ? {
+                          ...property,
+                          type: getTextOfTsNode(
+                              this.noOptionalProperties
+                                  ? type.requestTypeNode
+                                  : (type.requestTypeNodeWithoutUndefined as ts.TypeNode)
+                          )
+                      }
+                    : undefined,
+                responseProperty: type.responseTypeNode
+                    ? {
+                          ...property,
+                          type: getTextOfTsNode(
+                              this.noOptionalProperties
+                                  ? type.responseTypeNode
+                                  : (type.responseTypeNodeWithoutUndefined as ts.TypeNode)
+                          )
+                      }
+                    : undefined,
+                isReadonly: false,
+                isWriteonly: false
             }
         ];
     }
@@ -109,5 +182,16 @@ export class SinglePropertySingleUnionTypeGenerator<Context extends ModelContext
 
     public getBuilderArgsFromExistingValue(existingValue: ts.Expression): ts.Expression[] {
         return [ts.factory.createPropertyAccessExpression(existingValue, this.propertyName)];
+    }
+
+    public needsRequestResponse(context: Context): { request: boolean; response: boolean } {
+        if (!this.generateReadWriteOnlyTypes) {
+            return {
+                request: false,
+                response: false
+            };
+        }
+        const ref = this.getReferenceToPropertyType(context);
+        return { request: ref.requestTypeNode != null, response: ref.responseTypeNode != null };
     }
 }

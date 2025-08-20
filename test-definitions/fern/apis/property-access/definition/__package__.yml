@@ -39,6 +39,45 @@ types:
         docs: User profile verification status
         type: string
         access: read-only
+
+  UserOrAdmin:
+    docs: Example of an undiscriminated union
+    discriminated: false
+    union:
+      - User
+      - Admin
+
+  Admin:
+    docs: Admin user object
+    extends: User
+    properties:
+      adminLevel:
+        docs: The level of admin privileges.
+        type: string
+
+  UserOrAdminDiscriminated:
+    base-properties:
+      normal: string
+      foo: Foo
+    extends: Foo
+    docs: Example of an discriminated union
+    union:
+      user: User
+      admin:
+        key: admin
+        type: Admin
+      empty: {}
+
+  Foo:
+    properties:
+      normal: string
+      read:
+        type: string
+        access: read-only
+      write:
+        type: string
+        access: write-only
+
 service:
   auth: false
   base-path: /users

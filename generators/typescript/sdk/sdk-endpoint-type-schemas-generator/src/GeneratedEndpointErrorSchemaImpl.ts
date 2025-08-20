@@ -29,6 +29,7 @@ export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorS
         this.endpoint = endpoint;
 
         this.GeneratedSdkErrorUnionSchema = new GeneratedUnionSchema<SdkContext>({
+            shape: undefined,
             typeName: GeneratedEndpointErrorSchemaImpl.ERROR_SCHEMA_NAME,
             shouldIncludeDefaultCaseInTransform: false,
             includeUtilsOnUnionMembers: true,

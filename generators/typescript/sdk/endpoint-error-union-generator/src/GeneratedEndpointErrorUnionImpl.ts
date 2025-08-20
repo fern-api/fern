@@ -18,6 +18,7 @@ export declare namespace GeneratedEndpointErrorUnionImpl {
         noOptionalProperties: boolean;
         retainOriginalCasing: boolean;
         enableInlineTypes: boolean;
+        generateReadWriteOnlyTypes: boolean;
     }
 }
 
@@ -36,7 +37,8 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
         includeSerdeLayer,
         noOptionalProperties,
         retainOriginalCasing,
-        enableInlineTypes
+        enableInlineTypes,
+        generateReadWriteOnlyTypes
     }: GeneratedEndpointErrorUnionImpl.Init) {
         this.endpoint = endpoint;
 
@@ -47,6 +49,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
         const unknownErrorSingleUnionTypeGenerator = new UnknownErrorSingleUnionTypeGenerator({ discriminant });
         const includeUtilsOnUnionMembers = includeSerdeLayer;
         this.errorUnion = new GeneratedUnionImpl<SdkContext>({
+            shape: undefined,
             typeName: GeneratedEndpointErrorUnionImpl.ERROR_INTERFACE_NAME,
             includeUtilsOnUnionMembers,
             includeConstBuilders: true,
@@ -61,7 +64,8 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
                         includeUtilsOnUnionMembers,
                         noOptionalProperties,
                         retainOriginalCasing,
-                        enableInlineTypes
+                        enableInlineTypes,
+                        generateReadWriteOnlyTypes
                     })
             ),
             getReferenceToUnion: (context) =>
@@ -80,7 +84,8 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
             retainOriginalCasing,
             enableInlineTypes,
             // generate separate root types for errors in union
-            inline: false
+            inline: false,
+            generateReadWriteOnlyTypes
         });
     }
 

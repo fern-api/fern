@@ -320,6 +320,12 @@ fixtures:
         noSerdeLayer: true
         shouldGenerateWebsocketClients: true
       outputFolder: no-serde
+  property-access:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - customConfig:
+        experimentalGenerateReadWriteOnlyTypes: true
+      outputFolder: generate-read-write-only-types
 scripts:
   - docker: fernapi/ts-seed
     commands:

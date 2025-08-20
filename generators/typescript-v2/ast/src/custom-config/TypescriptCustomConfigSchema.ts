@@ -50,6 +50,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     includeOtherInUnionTypes: z.optional(z.boolean()),
     generateWireTests: z.optional(z.boolean()),
     noScripts: z.optional(z.boolean()),
+    experimentalGenerateReadWriteOnlyTypes: z.optional(z.boolean()),
 
     // deprecated
     timeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),

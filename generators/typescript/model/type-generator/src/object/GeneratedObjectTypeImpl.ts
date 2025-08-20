@@ -29,7 +29,7 @@ interface Property {
     docs: string | undefined;
     irProperty: ObjectProperty | undefined;
     isReadonly: boolean;
-    isWriteOnly: boolean;
+    isWriteonly: boolean;
 }
 
 export class GeneratedObjectTypeImpl<Context extends BaseContext>
@@ -54,38 +54,115 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         return statements;
     }
 
-    public generateForInlineUnion(context: Context): ts.TypeNode {
-        return ts.factory.createTypeLiteralNode(
-            this.generatePropertiesInternal(context).map(({ name, type, hasQuestionToken, docs, irProperty }) => {
-                let propertyValue: ts.TypeNode = type;
-                if (irProperty) {
-                    const inlineUnionRef = context.type.getReferenceToTypeForInlineUnion(irProperty.valueType);
-                    propertyValue = hasQuestionToken
-                        ? inlineUnionRef.typeNode
-                        : inlineUnionRef.typeNodeWithoutUndefined;
-                }
-                return ts.factory.createPropertySignature(
-                    undefined,
-                    ts.factory.createIdentifier(getPropertyKey(name)),
-                    hasQuestionToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
-                    propertyValue
-                );
-            })
-        );
+    public generateForInlineUnion(context: Context): {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    } {
+        return {
+            typeNode: ts.factory.createTypeLiteralNode(
+                this.generatePropertiesInternal(context).map(({ name, type, hasQuestionToken, docs, irProperty }) => {
+                    let propertyValue: ts.TypeNode = type;
+                    if (irProperty) {
+                        const inlineUnionRef = context.type.getReferenceToTypeForInlineUnion(irProperty.valueType);
+                        propertyValue = hasQuestionToken
+                            ? inlineUnionRef.typeNode
+                            : inlineUnionRef.typeNodeWithoutUndefined;
+                    }
+                    return ts.factory.createPropertySignature(
+                        undefined,
+                        ts.factory.createIdentifier(getPropertyKey(name)),
+                        hasQuestionToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
+                        propertyValue
+                    );
+                })
+            ),
+            requestTypeNode: this.generateReadWriteOnlyTypes
+                ? ts.factory.createTypeLiteralNode(
+                      this.generatePropertiesInternal(context)
+                          .filter(({ isReadonly }) => !isReadonly)
+                          .map(({ name, type, requestType, hasQuestionToken, irProperty }) => {
+                              let propertyValue: ts.TypeNode = requestType ?? type;
+                              if (irProperty) {
+                                  const inlineUnionRef = context.type.getReferenceToTypeForInlineUnion(
+                                      irProperty.valueType
+                                  );
+                                  propertyValue = hasQuestionToken
+                                      ? (inlineUnionRef.requestTypeNode ?? inlineUnionRef.typeNode)
+                                      : (inlineUnionRef.requestTypeNodeWithoutUndefined ??
+                                        inlineUnionRef.typeNodeWithoutUndefined);
+                              }
+                              return ts.factory.createPropertySignature(
+                                  undefined,
+                                  ts.factory.createIdentifier(getPropertyKey(name)),
+                                  hasQuestionToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
+                                  propertyValue
+                              );
+                          })
+                  )
+                : undefined,
+            responseTypeNode: this.generateReadWriteOnlyTypes
+                ? ts.factory.createTypeLiteralNode(
+                      this.generatePropertiesInternal(context)
+                          .filter(({ isWriteonly }) => !isWriteonly)
+                          .map(({ name, type, responseType, hasQuestionToken, irProperty }) => {
+                              let propertyValue: ts.TypeNode = responseType ?? type;
+                              if (irProperty) {
+                                  const inlineUnionRef = context.type.getReferenceToTypeForInlineUnion(
+                                      irProperty.valueType
+                                  );
+                                  propertyValue = hasQuestionToken
+                                      ? (inlineUnionRef.responseTypeNode ?? inlineUnionRef.typeNode)
+                                      : (inlineUnionRef.responseTypeNodeWithoutUndefined ??
+                                        inlineUnionRef.typeNodeWithoutUndefined);
+                              }
+                              return ts.factory.createPropertySignature(
+                                  undefined,
+                                  ts.factory.createIdentifier(getPropertyKey(name)),
+                                  hasQuestionToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
+                                  propertyValue
+                              );
+                          })
+                  )
+                : undefined
+        };
     }
 
-    public generateProperties(context: Context): PropertySignatureStructure[] {
-        return this.generatePropertiesInternal(context).map(({ name, type, hasQuestionToken, docs }) => {
-            const propertyNode: PropertySignatureStructure = {
-                kind: StructureKind.PropertySignature,
-                name: getPropertyKey(name),
-                type: getTextOfTsNode(type),
-                hasQuestionToken,
-                docs: docs != null ? [{ description: docs }] : undefined
-            };
-
-            return propertyNode;
-        });
+    public generateProperties(context: Context): {
+        property: PropertySignatureStructure;
+        requestProperty: PropertySignatureStructure | undefined;
+        responseProperty: PropertySignatureStructure | undefined;
+        isReadonly: boolean;
+        isWriteonly: boolean;
+    }[] {
+        return this.generatePropertiesInternal(context).map(
+            ({ name, type, requestType, responseType, hasQuestionToken, docs, isReadonly, isWriteonly }) => {
+                const property: PropertySignatureStructure = {
+                    kind: StructureKind.PropertySignature,
+                    name: getPropertyKey(name),
+                    type: getTextOfTsNode(type),
+                    hasQuestionToken,
+                    docs: docs != null ? [{ description: docs }] : undefined
+                };
+                return {
+                    property,
+                    requestProperty: requestType
+                        ? ({
+                              ...property,
+                              type: getTextOfTsNode(requestType)
+                          } as PropertySignatureStructure)
+                        : undefined,
+                    responseProperty: responseType
+                        ? ({
+                              ...property,
+                              type: getTextOfTsNode(responseType)
+                          } as PropertySignatureStructure)
+                        : undefined,
+                    isReadonly,
+                    isWriteonly
+                };
+            }
+        );
     }
 
     private generatePropertiesInternal(context: Context): Property[] {
@@ -97,12 +174,18 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                 hasQuestionToken: !this.noOptionalProperties && value.isOptional,
                 docs: property.docs,
                 irProperty: property,
-                isReadonly: property.propertyAccess === "READ_ONLY",
-                isWriteOnly: property.propertyAccess === "WRITE_ONLY",
-                requestType: this.noOptionalProperties ? value.requestTypeNode : value.requestTypeNodeWithoutUndefined,
-                responseType: this.noOptionalProperties
-                    ? value.responseTypeNode
-                    : value.responseTypeNodeWithoutUndefined
+                isReadonly: this.generateReadWriteOnlyTypes ? property.propertyAccess === "READ_ONLY" : false,
+                isWriteonly: this.generateReadWriteOnlyTypes ? property.propertyAccess === "WRITE_ONLY" : false,
+                requestType: this.generateReadWriteOnlyTypes
+                    ? this.noOptionalProperties
+                        ? value.requestTypeNode
+                        : value.requestTypeNodeWithoutUndefined
+                    : undefined,
+                responseType: this.generateReadWriteOnlyTypes
+                    ? this.noOptionalProperties
+                        ? value.responseTypeNode
+                        : value.responseTypeNodeWithoutUndefined
+                    : undefined
             };
             return propertyNode;
         });
@@ -114,7 +197,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                 docs: "Accepts any additional properties",
                 irProperty: undefined,
                 isReadonly: false,
-                isWriteOnly: false,
+                isWriteonly: false,
                 requestType: undefined,
                 responseType: undefined
             });
@@ -126,7 +209,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         const interfaceNode: InterfaceDeclarationStructure = {
             kind: StructureKind.Interface,
             name: this.typeName,
-            properties: [...this.generateProperties(context)],
+            properties: [...this.generateProperties(context).map((p) => p.property)],
             isExported: true
         };
 
@@ -230,13 +313,8 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     }
 
     public generateModule(context: Context): ModuleDeclarationStructure | undefined {
-        if (!this.enableInlineTypes) {
-            return undefined;
-        }
-
-        const requestResponseStatements = this.generateRequestResponseModuleStatements(context);
-
         const inlineTypeStatements = this.generateInlineTypeModuleStatements(context);
+        const requestResponseStatements = this.generateRequestResponseModuleStatements(context);
 
         const moduleStatements = [...inlineTypeStatements, ...requestResponseStatements];
         if (moduleStatements.length === 0) {
@@ -256,31 +334,44 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     private generateRequestResponseModuleStatements(
         context: Context
     ): (string | WriterFunction | StatementStructures)[] {
-        if (!this.generateReadonlyWriteonlyTypes) {
+        if (!this.generateReadWriteOnlyTypes) {
             return [];
         }
 
         const properties = this.generatePropertiesInternal(context);
         const propertiesToOmitFromResponse = properties
-            .filter((prop) => prop.isWriteOnly || prop.responseType)
+            .filter((prop) => prop.isWriteonly || prop.responseType)
             .map((prop) => prop.name);
         const propertiesToOmitFromRequest = properties
             .filter((prop) => prop.isReadonly || prop.requestType)
             .map((prop) => prop.name);
+        const extendsTypeReferences = this.shape.extends.map((e) => {
+            const ref = context.type.getReferenceToType(context.type.typeNameToTypeReference(e));
+            return {
+                typeNode: ref.typeNode,
+                requestTypeNode: ref.requestTypeNode,
+                responseTypeNode: ref.responseTypeNode
+            };
+        });
+        const extendsToRewriteRequest = extendsTypeReferences.filter((e) => e.requestTypeNode);
+        const extendsToRewriteResponse = extendsTypeReferences.filter((e) => e.responseTypeNode);
         const needsRequestTypeVariants = properties.filter((prop) => prop.requestType);
         const needsResponseTypeVariants = properties.filter((prop) => prop.responseType);
 
         const statements: (string | WriterFunction | StatementStructures)[] = [];
         const requestTypeIntersections: ts.TypeNode[] = [];
-        if (propertiesToOmitFromRequest.length > 0) {
+        if (propertiesToOmitFromRequest.length > 0 || extendsToRewriteRequest.length > 0) {
             requestTypeIntersections.push(
                 ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Omit"), [
                     ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(this.typeName), undefined),
-                    ts.factory.createUnionTypeNode(
-                        propertiesToOmitFromRequest.map((prop) =>
+                    ts.factory.createUnionTypeNode([
+                        ...propertiesToOmitFromRequest.map((prop) =>
                             ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(prop))
+                        ),
+                        ...extendsToRewriteRequest.map((e) =>
+                            ts.factory.createTypeOperatorNode(ts.SyntaxKind.KeyOfKeyword, e.typeNode)
                         )
-                    )
+                    ])
                 ])
             );
         }
@@ -299,6 +390,13 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                 )
             );
         }
+
+        requestTypeIntersections.push(
+            ...extendsToRewriteRequest
+                .filter((e) => e.requestTypeNode != null)
+                .map((e) => e.requestTypeNode as ts.TypeNode)
+        );
+
         if (requestTypeIntersections.length > 0) {
             statements.push(
                 getTextOfTsNode(
@@ -316,15 +414,18 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         }
 
         const responseTypeIntersections: ts.TypeNode[] = [];
-        if (propertiesToOmitFromResponse.length > 0) {
+        if (propertiesToOmitFromResponse.length > 0 || extendsToRewriteResponse.length > 0) {
             responseTypeIntersections.push(
                 ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Omit"), [
                     ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(this.typeName), undefined),
-                    ts.factory.createUnionTypeNode(
-                        propertiesToOmitFromResponse.map((prop) =>
+                    ts.factory.createUnionTypeNode([
+                        ...propertiesToOmitFromResponse.map((prop) =>
                             ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(prop))
+                        ),
+                        ...extendsToRewriteResponse.map((e) =>
+                            ts.factory.createTypeOperatorNode(ts.SyntaxKind.KeyOfKeyword, e.typeNode)
                         )
-                    )
+                    ])
                 ])
             );
         }
@@ -343,6 +444,13 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                 )
             );
         }
+
+        responseTypeIntersections.push(
+            ...extendsToRewriteResponse
+                .filter((e) => e.responseTypeNode != null)
+                .map((e) => e.responseTypeNode as ts.TypeNode)
+        );
+
         if (responseTypeIntersections.length > 0) {
             statements.push(
                 getTextOfTsNode(

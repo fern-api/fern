@@ -9,12 +9,20 @@ export interface ParsedSingleUnionType<Context extends ModelContext> {
     getDiscriminantValueAsExpression: () => ts.Expression;
     getDiscriminantValueOrThrow(): string | number;
     getDiscriminantValueType(): ts.TypeNode;
-    getInterfaceName(): string;
+    getTypeName(): string;
+    needsRequestResponse(context: Context): { request: boolean; response: boolean };
     getInterfaceDeclaration(
         context: Context,
         generatedUnion: GeneratedUnionImpl<Context>
     ): ParsedSingleUnionType.InterfaceDeclaration;
-    generateForInlineUnion(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.TypeNode;
+    generateForInlineUnion(
+        context: Context,
+        generatedUnion: GeneratedUnionImpl<Context>
+    ): {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    };
     getBuilder(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.ArrowFunction;
     getBuilderName(): string;
     getBuilderArgsFromExistingValue(existingValue: ts.Expression): ts.Expression[];
@@ -30,8 +38,18 @@ export interface ParsedSingleUnionType<Context extends ModelContext> {
 export declare namespace ParsedSingleUnionType {
     export interface InterfaceDeclaration {
         name: string;
-        extends: ts.TypeNode[];
-        properties: OptionalKind<PropertySignatureStructure>[];
+        extends: {
+            typeNode: ts.TypeNode;
+            requestTypeNode: ts.TypeNode | undefined;
+            responseTypeNode: ts.TypeNode | undefined;
+        }[];
+        properties: {
+            property: PropertySignatureStructure;
+            requestProperty: PropertySignatureStructure | undefined;
+            responseProperty: PropertySignatureStructure | undefined;
+            isReadonly: boolean;
+            isWriteonly: boolean;
+        }[];
         module: ModuleDeclarationStructure | undefined;
     }
 }
