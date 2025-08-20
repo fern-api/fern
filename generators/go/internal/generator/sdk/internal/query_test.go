@@ -247,9 +247,9 @@ func TestQueryValuesWithDefaults(t *testing.T) {
 		}
 
 		defaults := map[string]interface{}{
-			"Name":    "default-name",
-			"Age":     25,
-			"Enabled": true,
+			"name":    "default-name",
+			"age":     25,
+			"enabled": true,
 		}
 
 		values, err := QueryValuesWithDefaults(&example{}, defaults)
@@ -265,9 +265,9 @@ func TestQueryValuesWithDefaults(t *testing.T) {
 		}
 
 		defaults := map[string]interface{}{
-			"Name":    "default-name",
-			"Age":     25,
-			"Enabled": true,
+			"name":    "default-name",
+			"age":     25,
+			"enabled": true,
 		}
 
 		values, err := QueryValuesWithDefaults(&example{
@@ -286,9 +286,9 @@ func TestQueryValuesWithDefaults(t *testing.T) {
 		}
 
 		defaults := map[string]interface{}{
-			"Name":        "default-name",
-			"Age":         25,
-			"NonExistent": "should-be-ignored",
+			"name":        "default-name",
+			"age":         25,
+			"nonexistent": "should-be-ignored",
 		}
 
 		values, err := QueryValuesWithDefaults(&example{}, defaults)
@@ -304,9 +304,9 @@ func TestQueryValuesWithDefaults(t *testing.T) {
 		}
 
 		defaults := map[string]interface{}{
-			"Count":   int(100),     // int -> int64 conversion
-			"Rate":    float32(2.5), // float32 -> float64 conversion
-			"Message": "hello",      // string -> string (no conversion needed)
+			"count":   int(100),     // int -> int64 conversion
+			"rate":    float32(2.5), // float32 -> float64 conversion
+			"message": "hello",      // string -> string (no conversion needed)
 		}
 
 		values, err := QueryValuesWithDefaults(&example{}, defaults)
@@ -323,9 +323,9 @@ func TestQueryValuesWithDefaults(t *testing.T) {
 
 		defaultOptional := "default-optional"
 		defaults := map[string]interface{}{
-			"Required": "default-required",
-			"Optional": &defaultOptional, // pointer type
-			"Count":    42,
+			"required": "default-required",
+			"optional": &defaultOptional, // pointer type
+			"count":    42,
 		}
 
 		values, err := QueryValuesWithDefaults(&example{

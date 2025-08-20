@@ -43,6 +43,11 @@ func prepareValue(v interface{}) (reflect.Value, url.Values, error) {
 		return reflect.Value{}, nil, fmt.Errorf("query: Values() expects struct input. Got %v", val.Kind())
 	}
 
+	err := reflectValue(values, val, "")
+	if err != nil {
+		return reflect.Value{}, nil, err
+	}
+
 	return val, values, nil
 }
 
@@ -53,20 +58,13 @@ func prepareValue(v interface{}) (reflect.Value, url.Values, error) {
 //
 // Ref: https://github.com/google/go-querystring
 func QueryValues(v interface{}) (url.Values, error) {
-	val, values, err := prepareValue(v)
-	if err != nil {
-		return values, err
-	}
-
-	err = reflectValue(values, val, "")
+	_, values, err := prepareValue(v)
 	return values, err
 }
 
 // QueryValuesWithDefaults encodes url.Values from request objects
 // and default values, merging the defaults into the request.
-// Default values are applied to struct fields that are zero values (empty, nil, or unset).
-// If a field has a non-zero value in the struct, it takes precedence over the default.
-// The defaults map uses field names as keys and the default values as map values.
+// It's expected that the values of defaults are wire names.
 func QueryValuesWithDefaults(v interface{}, defaults map[string]interface{}) (url.Values, error) {
 	val, values, err := prepareValue(v)
 	if err != nil {
@@ -80,18 +78,27 @@ func QueryValuesWithDefaults(v interface{}, defaults map[string]interface{}) (ur
 		fieldType := valType.Field(i)
 		fieldName := fieldType.Name
 
+		if fieldType.PkgPath != "" && !fieldType.Anonymous {
+			// Skip unexported fields.
+			continue
+		}
+
 		// check if field is zero value and we have a default for it
 		if field.CanSet() && field.IsZero() {
-			if defaultVal, exists := defaults[fieldName]; exists {
-				defaultReflectVal := reflect.ValueOf(defaultVal)
-				if defaultReflectVal.Type().ConvertibleTo(field.Type()) {
-					field.Set(defaultReflectVal.Convert(field.Type()))
-				}
+			tag := fieldType.Tag.Get("url")
+			if tag == "" || tag == "-" {
+				continue
+			}
+			wireName, _ := parseTag(tag)
+			if wireName == "" {
+				wireName = fieldName
+			}
+			if defaultVal, exists := defaults[wireName]; exists {
+				values.Set(wireName, valueString(reflect.ValueOf(defaultVal), tagOptions{}, reflect.StructField{}))
 			}
 		}
 	}
 
-	err = reflectValue(values, val, "")
 	return values, err
 }
 
