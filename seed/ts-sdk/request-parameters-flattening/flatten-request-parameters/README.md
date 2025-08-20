@@ -1,14 +1,14 @@
 # Seed TypeScript Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
-[![npm shield](https://img.shields.io/npm/v/@fern/request-parameters)](https://www.npmjs.com/package/@fern/request-parameters)
+[![npm shield](https://img.shields.io/npm/v/@fern/request-parameters-flattening)](https://www.npmjs.com/package/@fern/request-parameters-flattening)
 
 The Seed TypeScript library provides convenient access to the Seed API from TypeScript.
 
 ## Installation
 
 ```sh
-npm i -s @fern/request-parameters
+npm i -s @fern/request-parameters-flattening
 ```
 
 ## Reference
@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedRequestParametersClient } from "@fern/request-parameters";
+import { SeedRequestParametersClient } from "@fern/request-parameters-flattening";
 
 const client = new SeedRequestParametersClient({ environment: "YOUR_BASE_URL" });
 await client.user.createUsername({
@@ -37,7 +37,7 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedRequestParameters } from "@fern/request-parameters";
+import { SeedRequestParameters } from "@fern/request-parameters-flattening";
 
 const request: SeedRequestParameters.CreateUsernameRequest = {
     ...
@@ -50,7 +50,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedRequestParametersError } from "@fern/request-parameters";
+import { SeedRequestParametersError } from "@fern/request-parameters-flattening";
 
 try {
     await client.user.createUsername(...);
@@ -161,7 +161,7 @@ The SDK provides a way for you to customize the underlying HTTP client / Fetch f
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedRequestParametersClient } from "@fern/request-parameters";
+import { SeedRequestParametersClient } from "@fern/request-parameters-flattening";
 
 const client = new SeedRequestParametersClient({
     ...

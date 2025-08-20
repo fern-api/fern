@@ -39,9 +39,9 @@ export class SeedRequestParametersClient {
             headers: mergeHeaders(
                 {
                     "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/request-parameters",
+                    "X-Fern-SDK-Name": "@fern/request-parameters-flattening",
                     "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/request-parameters/0.0.1",
+                    "User-Agent": "@fern/request-parameters-flattening/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },

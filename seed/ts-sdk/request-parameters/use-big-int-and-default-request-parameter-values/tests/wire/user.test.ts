@@ -14,7 +14,6 @@ describe("User", () => {
         server.mockEndpoint().post("/user/username").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
 
         const response = await client.user.createUsername({
-            tags: ["tags", "tags"],
             body: {
                 username: "username",
                 password: "password",

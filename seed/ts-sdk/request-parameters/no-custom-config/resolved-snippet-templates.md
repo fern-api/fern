@@ -5,7 +5,6 @@ const client = new SeedRequestParametersClient({
   environment: "YOUR_BASE_URL",
 });
 await client.user.createUsername({
-  tags: ["tags", "tags"],
   username: "username",
   password: "password",
   name: "test",

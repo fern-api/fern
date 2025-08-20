@@ -1,7 +1,7 @@
 [
     {
         "sdk": {
-            "package": "@fern/request-parameters",
+            "package": "@fern/request-parameters-flattening",
             "version": "0.0.1",
             "type": "typescript"
         },
@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedRequestParametersClient } from \"@fern/request-parameters\";"
+                    "import { SeedRequestParametersClient } from \"@fern/request-parameters-flattening\";"
                 ],
                 "templateString": "const client = new SeedRequestParametersClient($FERN_INPUT);",
                 "isOptional": false,
@@ -144,7 +144,7 @@
     },
     {
         "sdk": {
-            "package": "@fern/request-parameters",
+            "package": "@fern/request-parameters-flattening",
             "version": "0.0.1",
             "type": "typescript"
         },
@@ -156,7 +156,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "import { SeedRequestParametersClient } from \"@fern/request-parameters\";"
+                    "import { SeedRequestParametersClient } from \"@fern/request-parameters-flattening\";"
                 ],
                 "templateString": "const client = new SeedRequestParametersClient($FERN_INPUT);",
                 "isOptional": false,

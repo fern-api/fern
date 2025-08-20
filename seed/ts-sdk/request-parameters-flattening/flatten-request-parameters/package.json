@@ -1,8 +1,8 @@
 {
-    "name": "@fern/request-parameters",
+    "name": "@fern/request-parameters-flattening",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:request-parameters/fern",
+    "repository": "github:request-parameters-flattening/fern",
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

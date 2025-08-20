@@ -16,7 +16,6 @@
 
 ```typescript
 await client.user.createUsername({
-    tags: ["tags", "tags"],
     body: {
         username: "username",
         password: "password",

@@ -1,5 +1,5 @@
 ```typescript
-import { SeedRequestParametersClient } from "@fern/request-parameters";
+import { SeedRequestParametersClient } from "@fern/request-parameters-flattening";
 
 const client = new SeedRequestParametersClient({
   environment: "YOUR_BASE_URL",
@@ -15,7 +15,7 @@ await client.user.createUsername({
 
 
 ```typescript
-import { SeedRequestParametersClient } from "@fern/request-parameters";
+import { SeedRequestParametersClient } from "@fern/request-parameters-flattening";
 
 const client = new SeedRequestParametersClient({
   environment: "YOUR_BASE_URL",
