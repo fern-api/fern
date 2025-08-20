@@ -184,6 +184,7 @@ class SdkGenerator(AbstractGenerator):
                 basic=lambda _: None,
                 header=lambda _: None,
                 oauth=lambda oauth: oauth,
+                inferred=lambda _: None,
             )
             if maybe_oauth_scheme is not None and generator_config.generate_oauth_clients
             else None
