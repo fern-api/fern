@@ -1,11 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 1.5.8
+- version: 1.6.1
   changelogEntry:
     - summary: |
         Add reference.md doc generation
       type: feat
   createdAt: '2025-08-20'
-  irVersion: 59
+  irVersion: 58
+
+- version: 1.6.0
+  changelogEntry:
+    - summary: |
+        Add support for specifying a custom subdirectory to generate into.
+      type: feat
+  createdAt: '2025-08-20'
+  irVersion: 58
+
+- version: 1.5.8
+  changelogEntry:
+    - summary: |
+        Fix named string literals in undiscriminated unions.
+      type: fix
+  createdAt: '2025-08-20'
+  irVersion: 58
 
 - version: 1.5.7-rc0
   changelogEntry:
@@ -26,7 +42,7 @@
 - version: 1.5.4
   changelogEntry:
     - summary: |
-        If enum values contain a slash, the go generator now effectively escapes these and makes sure that the 
+        If enum values contain a slash, the go generator now effectively escapes these and makes sure that the
         Go SDK will still compile.
       type: fix
   createdAt: '2025-08-01'
@@ -150,7 +166,7 @@
 - version: 0.37.3
   changelogEntry:
     - summary: |
-        Install the generator-cli at build time as a fallback if runtime installation fails. 
+        Install the generator-cli at build time as a fallback if runtime installation fails.
       type: fix
   createdAt: '2025-05-01'
   irVersion: 57

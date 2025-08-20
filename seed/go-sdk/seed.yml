@@ -64,6 +64,9 @@ fixtures:
             - GET /movie/{movieId}
             - method: POST
               path: /movie
+    - outputFolder: package-path
+      customConfig:
+        packagePath: pleaseinhere
   go-bytes-request:
     - outputFolder: no-custom-config
       customConfig: null
@@ -81,6 +84,12 @@ fixtures:
         packageLayout: flat
         clientName: Acme
         clientConstructorName: New
+    - outputFolder: package-path
+      customConfig:
+        packagePath: inhereplease
+    - outputFolder: deep-package-path
+      customConfig:
+        packagePath: all/the/way/in/here/please
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1
@@ -169,6 +178,9 @@ fixtures:
         module:
           path: github.com/idempotency-headers/fern
         includeLegacyClientOptions: true
+  literals-unions:
+    - outputFolder: no-custom-config
+      customConfig: null
 scripts:
   - docker: golang:1.18-alpine
     commands:
