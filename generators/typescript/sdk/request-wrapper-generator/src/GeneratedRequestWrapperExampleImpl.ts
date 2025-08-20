@@ -20,7 +20,8 @@ export declare namespace GeneratedRequestWrapperExampleImpl {
         packageId: PackageId;
         endpointName: Name;
         requestBody: HttpRequestBody | undefined;
-        dangerouslyFlattenRequestParameters: boolean;
+        flattenRequestParameters: boolean;
+        useLegacyFlatteningLogic: boolean;
     }
 }
 
@@ -30,7 +31,8 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
     private packageId: PackageId;
     private endpointName: Name;
     private requestBody: HttpRequestBody | undefined;
-    private dangerouslyFlattenRequestParameters: boolean;
+    private flattenRequestParameters: boolean;
+    private useLegacyFlatteningLogic: boolean;
 
     constructor({
         bodyPropertyName,
@@ -38,14 +40,16 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
         packageId,
         endpointName,
         requestBody,
-        dangerouslyFlattenRequestParameters
+        flattenRequestParameters,
+        useLegacyFlatteningLogic
     }: GeneratedRequestWrapperExampleImpl.Init) {
         this.bodyPropertyName = bodyPropertyName;
         this.example = example;
         this.packageId = packageId;
         this.endpointName = endpointName;
         this.requestBody = requestBody;
-        this.dangerouslyFlattenRequestParameters = dangerouslyFlattenRequestParameters;
+        this.flattenRequestParameters = flattenRequestParameters;
+        this.useLegacyFlatteningLogic = useLegacyFlatteningLogic;
     }
 
     public build(context: SdkContext, opts: GetReferenceOpts): ts.Expression {
@@ -145,32 +149,50 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
             inlinedRequestBody: (body) => {
                 const properties = this.buildInlinedRequestBodyProperties(body, generatedType, context, opts);
                 
-                if (this.dangerouslyFlattenRequestParameters) {
-                    return properties;
-                } else {
+                if (this.useLegacyFlatteningLogic) {
                     return [
                         ts.factory.createPropertyAssignment(
                             getPropertyKey(this.bodyPropertyName),
                             ts.factory.createObjectLiteralExpression(properties, true)
                         )
                     ];
+                } else {
+                    if (this.flattenRequestParameters) {
+                        return properties;
+                    } else {
+                        return [
+                            ts.factory.createPropertyAssignment(
+                                getPropertyKey(this.bodyPropertyName),
+                                ts.factory.createObjectLiteralExpression(properties, true)
+                            )
+                        ];
+                    }
                 }
             },
             reference: (type) => {
                 const generatedExample = context.type.getGeneratedExample(type).build(context, opts);
                 
-                if (this.dangerouslyFlattenRequestParameters && ts.isObjectLiteralExpression(generatedExample)) {
-                    return generatedExample.properties.filter((prop): prop is ts.PropertyAssignment => 
-                        ts.isPropertyAssignment(prop)
-                    );
+                if (this.useLegacyFlatteningLogic) {
+                    return [
+                        ts.factory.createPropertyAssignment(
+                            getPropertyKey(this.bodyPropertyName),
+                            generatedExample
+                        )
+                    ];
+                } else {
+                    if (this.flattenRequestParameters && ts.isObjectLiteralExpression(generatedExample)) {
+                        return generatedExample.properties.filter((prop): prop is ts.PropertyAssignment => 
+                            ts.isPropertyAssignment(prop)
+                        );
+                    } else {
+                        return [
+                            ts.factory.createPropertyAssignment(
+                                getPropertyKey(this.bodyPropertyName),
+                                generatedExample
+                            )
+                        ];
+                    }
                 }
-                
-                return [
-                    ts.factory.createPropertyAssignment(
-                        getPropertyKey(this.bodyPropertyName),
-                        generatedExample
-                    )
-                ];
             },
             _other: () => {
                 throw new Error(UNKNOWN_REQUEST_TYPE_ERROR);

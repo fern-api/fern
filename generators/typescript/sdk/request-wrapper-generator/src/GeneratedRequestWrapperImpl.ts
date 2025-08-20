@@ -60,6 +60,7 @@ export declare namespace GeneratedRequestWrapperImpl {
         shouldInlinePathParameters: boolean;
         formDataSupport: "Node16" | "Node18";
         flattenRequestParameters: boolean;
+        useLegacyFlatteningLogic: boolean;
     }
 }
 
@@ -79,6 +80,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private _shouldInlinePathParameters: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly flattenRequestParameters: boolean;
+    private readonly useLegacyFlatteningLogic: boolean;
 
     constructor({
         service,
@@ -91,7 +93,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         enableInlineTypes,
         shouldInlinePathParameters,
         formDataSupport,
-        dangerouslyFlattenRequestParameters
+        flattenRequestParameters,
+        useLegacyFlatteningLogic
     }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
@@ -104,6 +107,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         this._shouldInlinePathParameters = shouldInlinePathParameters;
         this.formDataSupport = formDataSupport;
         this.flattenRequestParameters = flattenRequestParameters;
+        this.useLegacyFlatteningLogic = useLegacyFlatteningLogic;
     }
 
     public shouldInlinePathParameters(): boolean {
@@ -234,18 +238,41 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         if (requestBody != null) {
             HttpRequestBody._visit(requestBody, {
                 inlinedRequestBody: (inlinedRequestBody) => {
-                    this.addRequestBodyProperties({
-                        properties,
-                        inlinedRequestBody,
-                        context
-                    });
+                    if (this.useLegacyFlatteningLogic) {
+                        for (const property of this.getAllNonLiteralPropertiesFromInlinedRequest({
+                            inlinedRequestBody,
+                            context
+                        })) {
+                            const requestProperty = this.getInlineProperty(inlinedRequestBody, property, context);
+                            properties.push(requestProperty);
+                        }
+                    } else {
+                        if (this.flattenRequestParameters) {
+                            this.addFlattenedInlinedRequestBodyProperties(properties, inlinedRequestBody, context);
+                        } else {
+                            this.addUnflattenedInlinedRequestBodyProperties(properties, inlinedRequestBody, context);
+                        }
+                    }
                 },
                 reference: (referenceToRequestBody) => {
-                    this.addRequestBodyProperties({
-                        properties,
-                        referenceToRequestBody,
-                        context
-                    });
+                    if (this.useLegacyFlatteningLogic) {
+                        const type = context.type.getReferenceToType(referenceToRequestBody.requestBodyType);
+                        const name = this.getReferencedBodyPropertyName();
+                        const requestProperty: GeneratedRequestWrapper.Property = {
+                            name,
+                            safeName: name,
+                            type: type.typeNodeWithoutUndefined,
+                            isOptional: type.isOptional,
+                            docs: referenceToRequestBody.docs != null ? [referenceToRequestBody.docs] : undefined
+                        };
+                        properties.push(requestProperty);
+                    } else {
+                        if (this.flattenRequestParameters) {
+                            this.addFlattenedReferencedRequestBodyProperties(properties, referenceToRequestBody, context);
+                        } else {
+                            this.addUnflattenedReferencedRequestBodyProperties(properties, referenceToRequestBody, context);
+                        }
+                    }
                 },
                 fileUpload: (fileUploadRequest) => {
                     for (const property of fileUploadRequest.properties) {
@@ -292,7 +319,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             packageId: this.packageId,
             endpointName: this.endpoint.name,
             requestBody: this.endpoint.requestBody,
-            flattenRequestParameters: this.flattenRequestParameters
+            flattenRequestParameters: this.flattenRequestParameters,
+            useLegacyFlatteningLogic: this.useLegacyFlatteningLogic
         });
     }
 
@@ -376,8 +404,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public areBodyPropertiesInlined(): boolean {
+        if (this.useLegacyFlatteningLogic) {
+            return this.endpoint.requestBody != null && this.endpoint.requestBody.type === "inlinedRequestBody";
+        }
+        
         return this.endpoint.requestBody != null && 
-               (this.endpoint.requestBody.type === "inlinedRequestBody" || this.dangerouslyFlattenRequestParameters);
+               (this.endpoint.requestBody.type === "inlinedRequestBody" || this.flattenRequestParameters);
     }
 
     public withQueryParameter({
@@ -839,31 +871,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return ts.factory.createTypeLiteralNode(properties);
     }
 
-    private addRequestBodyProperties({
-        properties,
-        context,
-        ...requestBody
-    }: {
-        properties: GeneratedRequestWrapper.Property[];
-        context: SdkContext;
-    } & (
-        | { inlinedRequestBody: InlinedRequestBody }
-        | { referenceToRequestBody: HttpRequestBodyReference }
-    )) {
-        if (this.dangerouslyFlattenRequestParameters) {
-            if ('inlinedRequestBody' in requestBody) {
-                this.addFlattenedInlinedRequestBodyProperties(properties, requestBody.inlinedRequestBody, context);
-            } else {
-                this.addFlattenedReferencedRequestBodyProperties(properties, requestBody.referenceToRequestBody, context);
-            }
-        } else {
-            if ('inlinedRequestBody' in requestBody) {
-                this.addUnflattenedInlinedRequestBodyProperties(properties, requestBody.inlinedRequestBody, context);
-            } else {
-                this.addUnflattenedReferencedRequestBodyProperties(properties, requestBody.referenceToRequestBody, context);
-            }
-        }
-    }
+
 
     private addFlattenedInlinedRequestBodyProperties(
         properties: GeneratedRequestWrapper.Property[],

@@ -150,6 +150,7 @@ export declare namespace SdkGenerator {
         useDefaultRequestParameterValues: boolean;
         packageManager: "pnpm" | "yarn";
         flattenRequestParameters: boolean;
+        useLegacyFlatteningLogic: boolean;
     }
 }
 
@@ -1577,7 +1578,8 @@ export class SdkGenerator {
             relativeTestPath: this.relativeTestPath,
             formDataSupport: this.config.formDataSupport,
             useDefaultRequestParameterValues: this.config.useDefaultRequestParameterValues,
-            flattenRequestParameters: this.config.flattenRequestParameters
+            flattenRequestParameters: this.config.flattenRequestParameters,
+            useLegacyFlatteningLogic: this.config.useLegacyFlatteningLogic
         });
     }
 

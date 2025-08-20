@@ -11,14 +11,16 @@ export class RequestWrapperExampleGenerator {
         packageId,
         endpointName,
         requestBody,
-        dangerouslyFlattenRequestParameters
+        flattenRequestParameters,
+        useLegacyFlatteningLogic
     }: {
         bodyPropertyName: string;
         example: ExampleEndpointCall;
         packageId: PackageId;
         endpointName: Name;
         requestBody: HttpRequestBody | undefined;
-        dangerouslyFlattenRequestParameters: boolean;
+        flattenRequestParameters: boolean;
+        useLegacyFlatteningLogic: boolean;
     }): GeneratedRequestWrapperExample {
         return new GeneratedRequestWrapperExampleImpl({
             bodyPropertyName,
@@ -26,7 +28,8 @@ export class RequestWrapperExampleGenerator {
             packageId,
             endpointName,
             requestBody,
-            dangerouslyFlattenRequestParameters
+            flattenRequestParameters,
+            useLegacyFlatteningLogic
         });
     }
 }
