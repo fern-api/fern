@@ -1,6 +1,6 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { DefaultBaseGoCustomConfigSchema } from "@fern-api/go-ast";
+import { defaultBaseGoCustomConfigSchema } from "@fern-api/go-ast";
 import { AbstractGoGeneratorCli } from "@fern-api/go-base";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 
@@ -9,6 +9,7 @@ import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ClientGenerator } from "./client/ClientGenerator";
 import { RawClientGenerator } from "./raw-client/RawClientGenerator";
+import { buildReference } from "./reference/buildReference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
@@ -33,11 +34,11 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
         if (parsed != null) {
             return {
-                ...DefaultBaseGoCustomConfigSchema,
+                ...defaultBaseGoCustomConfigSchema,
                 ...parsed
             };
         }
-        return DefaultBaseGoCustomConfigSchema;
+        return defaultBaseGoCustomConfigSchema;
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
@@ -56,6 +57,8 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         this.generateClients(context);
         this.generateRawClients(context);
 
+        await context.snippetGenerator.populateSnippetsCache();
+
         if (this.shouldGenerateReadme(context)) {
             try {
                 const endpointSnippets = this.generateSnippets({ context });
@@ -65,6 +68,16 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
                 });
             } catch (e) {
                 context.logger.warn("Failed to generate README.md, this is OK.");
+            }
+        }
+
+        try {
+            await this.generateReference({ context });
+        } catch (error) {
+            context.logger.warn("Failed to generate reference.md, this is OK.");
+            if (error instanceof Error) {
+                context.logger.warn((error as Error)?.message);
+                context.logger.warn((error as Error)?.stack ?? "");
             }
         }
 
@@ -191,5 +204,14 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
             default:
                 return hasSnippetFilepath;
         }
+    }
+
+    private async generateReference({ context }: { context: SdkGeneratorContext }): Promise<void> {
+        const builder = buildReference({ context });
+        const content = await context.generatorAgent.generateReference(builder);
+
+        context.project.addRawFiles(
+            new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)
+        );
     }
 }

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"path/filepath"
 	"strings"
 
 	"github.com/fern-api/fern-go"
@@ -71,6 +72,7 @@ type Config struct {
 	ImportPath                   string
 	ExportedClientName           string
 	PackageName                  string
+	PackagePath                  string
 	PackageLayout                string
 	UnionVersion                 string
 	Module                       *generator.ModuleConfig
@@ -224,6 +226,7 @@ func newConfig(configFilename string) (*Config, error) {
 		ClientConstructorName:        customConfig.ClientConstructorName,
 		ImportPath:                   customConfig.ImportPath,
 		PackageName:                  customConfig.PackageName,
+		PackagePath:                  customConfig.PackagePath,
 		ExportedClientName:           customConfig.ExportedClientName,
 		PackageLayout:                customConfig.PackageLayout,
 		UnionVersion:                 customConfig.UnionVersion,
@@ -277,6 +280,7 @@ type customConfig struct {
 	ClientConstructorName        string        `json:"clientConstructorName,omitempty"`
 	ImportPath                   string        `json:"importPath,omitempty"`
 	PackageName                  string        `json:"packageName,omitempty"`
+	PackagePath                  string        `json:"packagePath,omitempty"`
 	ExportedClientName           string        `json:"exportedClientName,omitempty"`
 	PackageLayout                string        `json:"packageLayout,omitempty"`
 	UnionVersion                 string        `json:"union,omitempty"`
@@ -287,6 +291,39 @@ type moduleConfig struct {
 	Path    string            `json:"path,omitempty"`
 	Version string            `json:"version,omitempty"`
 	Imports map[string]string `json:"imports,omitempty"`
+}
+
+// ValidateRelativePath checks if a path is relative and valid
+func validateRelativePath(path string) error {
+	// empty is valid
+	if path == "" {
+		return nil
+	}
+
+	// check if absolute
+	if filepath.IsAbs(path) {
+		return fmt.Errorf("path must be relative, got absolute path: %s", path)
+	}
+
+	// check for any illegal traversal
+	if strings.HasPrefix(path, "..") || strings.Contains(path, "/../") {
+		return fmt.Errorf("for safety reasons, path can't traverse up with /../: %s", path)
+	}
+
+	// check for invalid chars
+	invalidChars := []string{"<", ">", ":", "\"", "|", "?", "*"}
+	for _, char := range invalidChars {
+		if strings.Contains(path, char) {
+			return fmt.Errorf("path contains invalid character '%s': %s", char, path)
+		}
+	}
+
+	// Check for paths that are too long (common limit is 260 characters on Windows)
+	if len(path) > 260 {
+		return fmt.Errorf("path too long (%d characters, max 260): %s", len(path), path)
+	}
+
+	return nil
 }
 
 func customConfigFromConfig(c *generatorexec.GeneratorConfig) (*customConfig, error) {
@@ -305,6 +342,14 @@ func customConfigFromConfig(c *generatorexec.GeneratorConfig) (*customConfig, er
 	config := new(customConfig)
 	if err := decoder.Decode(config); err != nil {
 		return nil, fmt.Errorf("failed to read custom configuration: %v", err)
+	}
+
+	// Validate the import and package paths.
+	if err := validateRelativePath(config.ImportPath); err != nil {
+		return nil, err
+	}
+	if err := validateRelativePath(config.PackagePath); err != nil {
+		return nil, err
 	}
 
 	return applyCustomConfigDefaultsForV1(config), nil
