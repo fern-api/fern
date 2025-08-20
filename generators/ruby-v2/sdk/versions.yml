@@ -21,6 +21,7 @@
     - type: fix
       summary: >-
         Generate a Rubocop file and autocorrect the generated code.
+  irVersion: 58
 
 - version: 1.0.0-rc9
   createdAt: "2025-08-18"
