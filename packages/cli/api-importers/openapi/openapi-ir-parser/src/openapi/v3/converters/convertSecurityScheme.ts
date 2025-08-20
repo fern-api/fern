@@ -1,6 +1,6 @@
+import { assertNever } from "@fern-api/core-utils";
 import { EnumSchema, SecurityScheme, Source } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
-
 import { getExtension } from "../../../getExtension";
 import { convertEnum } from "../../../schema/convertEnum";
 import { convertSchemaWithExampleToSchema } from "../../../schema/utils/convertSchemaWithExampleToSchema";
@@ -13,7 +13,6 @@ import {
     HeaderSecuritySchemeNames,
     SecuritySchemeNames
 } from "../extensions/getSecuritySchemeNameAndEnvvars";
-import { assertNever } from "@fern-api/core-utils";
 
 export function convertSecurityScheme(
     securityScheme: OpenAPIV3.SecuritySchemeObject | OpenAPIV3.ReferenceObject,
