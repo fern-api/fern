@@ -5,10 +5,14 @@ module Seed
     module Multipart
       # @api private
 <<<<<<< HEAD
+<<<<<<< HEAD
       class Request
 =======
       class Request Seed::Internal::Http::BaseRequest
 >>>>>>> 2bc1d6b267 (feat(ruby): support multipart file upload requests)
+=======
+      class Request < Seed::Internal::Http::BaseRequest
+>>>>>>> 77d7a57281 (Small updates to SDK)
         attr_reader :body
 
         # @param base_url [String] The base URL for the request

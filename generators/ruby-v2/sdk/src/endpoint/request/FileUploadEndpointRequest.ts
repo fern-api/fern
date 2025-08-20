@@ -32,31 +32,19 @@ export class FileUploadEndpointRequest extends EndpointRequest {
             writer.writeLine();
             for (const property of this.fileUploadRequest.properties) {
                 if (property.type === "file") {
-                    writer.writeNode(ruby.ifElse({
-                        if: {
-                            condition: ruby.codeblock((writer) => {
-                                writer.write(`params[${property.value.key.wireValue}]`);
-                            }),
-                            thenBody: [
-                                ruby.codeblock((writer) => {
-                                    writer.writeLine(`body.add(Internal::Multipart::FilePart.new(${property.value.key.wireValue}, File.new(params[${property.value.key.wireValue}]), "application/octet-stream"))`);
-                                })
-                            ]
-                        }
-                    }));
+                    // File property handling
+                    writer.writeLine(`if params[:${property.value.key.wireValue}]`);
+                    writer.indent();
+                    writer.writeLine(`body.add(Internal::Multipart::FilePart.new(:${property.value.key.wireValue}, File.new(params[:${property.value.key.wireValue}]), "application/octet-stream"))`);
+                    writer.dedent();
+                    writer.writeLine("end");
                 } else {
-                    writer.writeNode(ruby.ifElse({
-                        if: {
-                            condition: ruby.codeblock((writer) => {
-                                writer.write(`params[${property.name.wireValue}]`);
-                            }),
-                            thenBody: [
-                                ruby.codeblock((writer) => {
-                                    writer.writeLine(`body.add_part(params[:${property.name.wireValue}].to_form_data_part(name: "${property.name.wireValue}"))`);
-                                })
-                            ]
-                        }
-                    }));
+                    // Body property handling
+                    writer.writeLine(`if params[:${property.name.wireValue}]`);
+                    writer.indent();
+                    writer.writeLine(`body.add_part(params[:${property.name.wireValue}].to_form_data_part(name: "${property.name.wireValue}"))`);
+                    writer.dedent();
+                    writer.writeLine("end");
                 }
             }
         });
