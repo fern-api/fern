@@ -1,4 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { loggingExeca } from "@fern-api/logging-execa";
 import { AbstractRubyGeneratorCli } from "@fern-api/ruby-base";
 import { generateModels } from "@fern-api/ruby-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -87,6 +88,13 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         });
 
         await context.project.persist();
+
+        try {
+            await loggingExeca(context.logger, "rubocop", ["-A"], {
+                cwd: context.project.absolutePathToOutputDirectory,
+                doNotPipeOutput: true
+            });
+        } catch (_) {}
     }
 
     private generateRequests(context: SdkGeneratorContext, service: HttpService, serviceId: string) {
