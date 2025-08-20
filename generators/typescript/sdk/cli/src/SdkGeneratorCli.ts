@@ -177,7 +177,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 omitFernHeaders: customConfig.omitFernHeaders ?? false,
                 useDefaultRequestParameterValues: customConfig.useDefaultRequestParameterValues ?? false,
                 packageManager: customConfig.packageManager,
-                dangerouslyFlattenRequestParameters: customConfig.dangerouslyFlattenRequestParameters ?? false
+                flattenRequestParameters: customConfig.flattenRequestParameters ?? false
             }
         });
         const typescriptProject = await sdkGenerator.generate();

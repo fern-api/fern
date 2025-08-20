@@ -17,7 +17,7 @@ export declare namespace RequestWrapperGenerator {
             enableInlineTypes: boolean;
             shouldInlinePathParameters: boolean;
             formDataSupport: "Node16" | "Node18";
-            dangerouslyFlattenRequestParameters: boolean;
+            flattenRequestParameters: boolean;
         }
     }
 }
@@ -34,7 +34,7 @@ export class RequestWrapperGenerator {
         enableInlineTypes,
         shouldInlinePathParameters,
         formDataSupport,
-        dangerouslyFlattenRequestParameters
+                    flattenRequestParameters
     }: RequestWrapperGenerator.generateRequestWrapper.Args): GeneratedRequestWrapper {
         return new GeneratedRequestWrapperImpl({
             packageId,
@@ -47,7 +47,7 @@ export class RequestWrapperGenerator {
             enableInlineTypes,
             shouldInlinePathParameters,
             formDataSupport,
-            dangerouslyFlattenRequestParameters
+            flattenRequestParameters
         });
     }
 }

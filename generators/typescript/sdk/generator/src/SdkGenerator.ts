@@ -149,7 +149,7 @@ export declare namespace SdkGenerator {
         omitFernHeaders: boolean;
         useDefaultRequestParameterValues: boolean;
         packageManager: "pnpm" | "yarn";
-        dangerouslyFlattenRequestParameters: boolean;
+        flattenRequestParameters: boolean;
     }
 }
 
@@ -1577,7 +1577,7 @@ export class SdkGenerator {
             relativeTestPath: this.relativeTestPath,
             formDataSupport: this.config.formDataSupport,
             useDefaultRequestParameterValues: this.config.useDefaultRequestParameterValues,
-            dangerouslyFlattenRequestParameters: this.config.dangerouslyFlattenRequestParameters
+            flattenRequestParameters: this.config.flattenRequestParameters
         });
     }
 

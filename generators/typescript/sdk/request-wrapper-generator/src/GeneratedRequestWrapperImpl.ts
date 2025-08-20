@@ -59,7 +59,7 @@ export declare namespace GeneratedRequestWrapperImpl {
         enableInlineTypes: boolean;
         shouldInlinePathParameters: boolean;
         formDataSupport: "Node16" | "Node18";
-        dangerouslyFlattenRequestParameters: boolean;
+        flattenRequestParameters: boolean;
     }
 }
 
@@ -78,7 +78,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private enableInlineTypes: boolean;
     private _shouldInlinePathParameters: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
-    private readonly dangerouslyFlattenRequestParameters: boolean;
+    private readonly flattenRequestParameters: boolean;
 
     constructor({
         service,
@@ -103,7 +103,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         this.enableInlineTypes = enableInlineTypes;
         this._shouldInlinePathParameters = shouldInlinePathParameters;
         this.formDataSupport = formDataSupport;
-        this.dangerouslyFlattenRequestParameters = dangerouslyFlattenRequestParameters;
+        this.flattenRequestParameters = flattenRequestParameters;
     }
 
     public shouldInlinePathParameters(): boolean {
@@ -292,7 +292,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             packageId: this.packageId,
             endpointName: this.endpoint.name,
             requestBody: this.endpoint.requestBody,
-            dangerouslyFlattenRequestParameters: this.dangerouslyFlattenRequestParameters
+            flattenRequestParameters: this.flattenRequestParameters
         });
     }
 
