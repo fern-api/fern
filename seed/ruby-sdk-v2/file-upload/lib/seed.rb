@@ -27,9 +27,19 @@ require_relative "seed/internal/types/hash"
 require_relative "seed/internal/types/unknown"
 
 # API Types
-require_relative "seed/imdb/types/movie"
-require_relative "seed/imdb/types/create_movie_request"
+require_relative "seed/service/types/my_object_with_optional"
+require_relative "seed/service/types/my_object"
+require_relative "seed/service/types/object_type"
+require_relative "seed/service/types/my_inline_type"
 
 # Client Types
 require_relative "seed/client"
-require_relative "seed/imdb/client"
+require_relative "seed/service/client"
+require_relative "seed/service/types/my_request"
+require_relative "seed/service/types/just_file_request"
+require_relative "seed/service/types/just_file_with_query_params_request"
+require_relative "seed/service/types/with_content_type_request"
+require_relative "seed/service/types/with_form_encoding_request"
+require_relative "seed/service/types/my_other_request"
+require_relative "seed/service/types/optional_args_request"
+require_relative "seed/service/types/inline_type_request"

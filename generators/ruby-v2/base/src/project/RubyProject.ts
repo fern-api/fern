@@ -8,9 +8,11 @@ import { template } from "lodash-es";
 import { join as pathJoin } from "path";
 import { topologicalCompareAsIsFiles } from "../AsIs";
 import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
+import { RubocopFile } from "./RubocopFile";
 
 const GEMFILE_FILENAME = "Gemfile";
 const RAKEFILE_FILENAME = "Rakefile";
+const RUBOCOP_FILENAME = ".rubocop.yml";
 
 /**
  * In memory representation of a Ruby project.
@@ -31,6 +33,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await this.createAsIsFiles();
         await this.writeAsIsFiles();
         await this.createModuleFile();
+        await this.createRubocoopFile();
     }
 
     private async createGemfile(): Promise<void> {
@@ -49,6 +52,14 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await writeFile(
             join(this.absolutePathToOutputDirectory, RelativeFilePath.of(RAKEFILE_FILENAME)),
             await rakefile.toString()
+        );
+    }
+
+    private async createRubocoopFile(): Promise<void> {
+        const rubocoopFile = new RubocopFile({ context: this.context });
+        await writeFile(
+            join(this.absolutePathToOutputDirectory, RelativeFilePath.of(RUBOCOP_FILENAME)),
+            await rubocoopFile.toString()
         );
     }
 
@@ -236,14 +247,14 @@ class ModuleFile {
                 this.project.getAsIsOutputDirectory(),
                 RelativeFilePath.of(this.project.getAsIsOutputFilename(filename).replaceAll(".rb", ""))
             );
-            contents += `require_relative '${relative(this.filePath, absoluteFilePath)}'\n`;
+            contents += `require_relative "${relative(this.filePath, absoluteFilePath)}"\n`;
             visitedPaths.add(absoluteFilePath.toString());
         });
 
         const coreFilePaths = this.project.getCoreAbsoluteFilePaths();
         coreFilePaths.forEach((filePath) => {
             if (!visitedPaths.has(filePath.toString())) {
-                contents += `require_relative '${relative(this.filePath, filePath)}'\n`;
+                contents += `require_relative "${relative(this.filePath, filePath)}"\n`;
                 visitedPaths.add(filePath.toString());
             }
         });
