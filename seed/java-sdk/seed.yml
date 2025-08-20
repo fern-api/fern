@@ -139,7 +139,10 @@ fixtures:
   file-upload:
     - customConfig:
         wrapped-aliases: true
-      outputFolder: wrapped-aliases
+  examples:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
     - customConfig:
         inline-file-properties: true
         inline-path-parameters: true

@@ -15,6 +15,7 @@ import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { buildReference } from "./reference/buildReference";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
+import { WireTestGenerator } from "./wire-tests/WireTestGenerator";
 
 export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -92,6 +93,10 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
                 context.logger.warn("Failed to generate snippets.json, this is OK");
             }
         }
+
+        // Generate wire tests if enabled
+        const wireTestGenerator = new WireTestGenerator(context);
+        await wireTestGenerator.generate();
 
         await context.project.persist();
     }
