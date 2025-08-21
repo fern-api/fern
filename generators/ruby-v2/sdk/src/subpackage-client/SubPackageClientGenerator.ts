@@ -36,14 +36,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
             name: CLIENT_CLASS_NAME
         });
 
-        const modules = [
-            this.context.getRootModule(),
-            ...this.subpackage.fernFilepath.allParts.map((path) =>
-                ruby.module({
-                    name: path.pascalCase.safeName
-                })
-            )
-        ];
+        const modules = this.getClientModuleNames().map((name) => ruby.module({ name }));
 
         clientClass.addStatement(
             ruby.method({
@@ -87,6 +80,13 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
         });
     }
 
+    private getClientModuleNames(): string[] {
+        return [
+            this.context.getRootModule().name,
+            ...this.subpackage.fernFilepath.allParts.map((path) => path.pascalCase.safeName)
+        ];
+    }
+
     protected getFilepath(): RelativeFilePath {
         return this.context.getLocationForSubpackageId(this.subpackageId);
     }
@@ -120,7 +120,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
 
     private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
         return new ruby.Method({
-            name: subpackage.name.camelCase.safeName,
+            name: subpackage.name.snakeCase.safeName,
             kind: ruby.MethodKind.Instance,
             returnType: ruby.Type.class_(
                 ruby.classReference({
@@ -132,10 +132,10 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
             statements: [
                 ruby.codeblock((writer) => {
                     writer.writeLine(
-                        `@${subpackage.name.camelCase.safeName} ||= ` +
-                            `${rootModule.name}::` +
+                        `@${subpackage.name.snakeCase.safeName} ||= ` +
+                            `${this.getClientModuleNames().join("::")}::` +
                             `${subpackage.name.pascalCase.safeName}::` +
-                            `Client.new(client: @raw_client)`
+                            `Client.new(client: @client)`
                     );
                 })
             ]
