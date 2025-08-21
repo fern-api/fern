@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |
+        - added support for API keys in query params.
+        - improved error message around converting security schemas
+      type: chore
+  irVersion: 59
+  createdAt: "2025-08-20"
+  version: 0.66.20
+
+- changelogEntry:
     - summary: Handle multipart/mixed content types in endpoint responses.
       type: chore
   irVersion: 59
