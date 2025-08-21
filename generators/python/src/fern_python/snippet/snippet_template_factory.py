@@ -57,6 +57,7 @@ from fern_python.generators.sdk.client_generator.request_body_parameters.referen
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.snippet.snippet_writer import SnippetWriter
 from fern_python.snippet.template_utils import TEMPLATE_SENTINEL
+from typing_extensions import assert_never
 
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate
@@ -130,8 +131,8 @@ class SnippetTemplateFactory:
         for param in client.parameters:
             if param.template is not None:
                 client_template_inputs.append(TemplateInput.factory.template(param.template))
-            elif param.instantiation is not None:
-                client_non_template_inputs.append(param.instantiation)
+            elif param.initializer is not None:
+                client_non_template_inputs.append(param.initializer)
 
         # Create a new instantiation snippet as the one on the root client on self already
         # has examples inputted into it, and we need the template sentinel present for auth.
@@ -933,6 +934,9 @@ class SnippetTemplateFactory:
             return "PATCH"
         if method is ir_types.HttpMethod.DELETE:
             return "DELETE"
+        if method is ir_types.HttpMethod.HEAD:
+            return "HEAD"
+        assert_never(method)
 
     def generate_templates(self) -> List[SnippetRegistryEntry]:
         snippet_templates: List[SnippetRegistryEntry] = []
