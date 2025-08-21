@@ -442,6 +442,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return this.callInternalFunc({ name: "QueryValues", arguments_, multiline: false });
     }
 
+    public callQueryValuesWithDefaults(arguments_: go.AstNode[]): go.FuncInvocation {
+        return this.callInternalFunc({ name: "QueryValuesWithDefaults", arguments_, multiline: true });
+    }
+
     public getPageTypeReference(valueType: go.Type): go.TypeReference {
         return go.typeReference({
             name: "Page",

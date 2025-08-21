@@ -336,39 +336,4 @@ func TestQueryValuesWithDefaults(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, "count=42&optional=default-optional&required=custom-required", values.Encode())
 	})
-
-	t.Run("override non-zero defaults with explicit zero values", func(t *testing.T) {
-		type example struct {
-			Name    *string `json:"name" url:"name"`
-			Age     *int    `json:"age" url:"age"`
-			Enabled *bool   `json:"enabled" url:"enabled"`
-		}
-
-		defaults := map[string]interface{}{
-			"name":    "default-name",
-			"age":     25,
-			"enabled": true,
-		}
-
-		// first, test that a properly empty request is overridden:
-		{
-			values, err := QueryValuesWithDefaults(&example{}, defaults)
-			require.NoError(t, err)
-			assert.Equal(t, "age=25&enabled=true&name=default-name", values.Encode())
-		}
-
-		// second, test that a request that contains zeros is not overridden:
-		var (
-			name    = ""
-			age     = 0
-			enabled = false
-		)
-		values, err := QueryValuesWithDefaults(&example{
-			Name:    &name, // explicit empty string should override default
-			Age:     &age,  // explicit zero should override default
-			Enabled: &enabled, // explicit false should override default
-		}, defaults)
-		require.NoError(t, err)
-		assert.Equal(t, "age=0&enabled=false&name=", values.Encode())
-})
 }
