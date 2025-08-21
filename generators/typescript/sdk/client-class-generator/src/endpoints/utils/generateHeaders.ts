@@ -50,16 +50,19 @@ export function generateHeaders({
         statements.push(
             ts.factory.createVariableStatement(
                 undefined,
-                ts.factory.createVariableDeclarationList([
-                    ts.factory.createVariableDeclaration(
-                        "_authRequest",
-                        undefined,
-                        context.coreUtilities.auth.AuthRequest._getReferenceToType(),
-                        context.coreUtilities.auth.AuthProvider.getAuthRequest.invoke(
-                            generatedSdkClientClass.getReferenceToAuthProviderOrThrow()
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            "_authRequest",
+                            undefined,
+                            context.coreUtilities.auth.AuthRequest._getReferenceToType(),
+                            context.coreUtilities.auth.AuthProvider.getAuthRequest.invoke(
+                                generatedSdkClientClass.getReferenceToAuthProviderOrThrow()
+                            )
                         )
-                    )
-                ])
+                    ],
+                    ts.NodeFlags.Const
+                )
             )
         );
         authProviderHeaders = ts.factory.createIdentifier("_authRequest.headers");
