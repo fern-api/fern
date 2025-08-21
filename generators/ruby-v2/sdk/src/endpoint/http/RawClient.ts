@@ -128,12 +128,11 @@ export class RawClient {
             if (part.pathParameter != null) {
                 const reference = pathParameterReferences[part.pathParameter];
                 if (reference == null) {
-                    throw new Error(
-                        `Failed to find request parameter for the endpoint ${endpoint.id} with path parameter ${part.pathParameter}`
-                    );
+                    rubyPath += `#{${part.tail}`;
+                } else {
+                    // Insert Ruby interpolation for the path parameter
+                    rubyPath += `#{${reference}}${part.tail}`;
                 }
-                // Insert Ruby interpolation for the path parameter
-                rubyPath += `#{${reference}}${part.tail}`;
             } else {
                 rubyPath += part.tail;
             }

@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 
 module Seed
   module Endpoints
@@ -13,11 +12,17 @@ module Seed
         #
         # @return [String]
         def get_with_path(request_options: {}, **params)
-          _request = params
+          _request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            method: "GET",
+            path: "/params/path/#{"
+          )
           _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
-
-          raise _response.body
+          if _response.code >= "200" && _response.code < "300"
+            return 
+          else
+            raise _response.body
+          end
         end
 
         # GET with path param
@@ -27,52 +32,58 @@ module Seed
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "GET",
-            path: "/params/path/#{params[:param]}"
+            path: "/params/path/#{params[:param]}",
           )
           _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
-
-          raise _response.body
+          if _response.code >= "200" && _response.code < "300"
+            return 
+          else
+            raise _response.body
+          end
         end
 
         # GET with query param
         #
         # @return [untyped]
         def get_with_query(request_options: {}, **params)
-          _query_param_names = %w[query number]
+          _query_param_names = ["query", "number"]
           _query = params.slice(*_query_param_names)
-          params.except(*_query_param_names)
+          params = params.except(*_query_param_names)
 
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "GET",
             path: "/params",
-            query: _query
+            query: _query,
           )
           _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
-
-          raise _response.body
+          if _response.code >= "200" && _response.code < "300"
+            return
+          else
+            raise _response.body
+          end
         end
 
         # GET with multiple of same query param
         #
         # @return [untyped]
         def get_with_allow_multiple_query(request_options: {}, **params)
-          _query_param_names = %w[query number]
+          _query_param_names = ["query", "number"]
           _query = params.slice(*_query_param_names)
-          params.except(*_query_param_names)
+          params = params.except(*_query_param_names)
 
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "GET",
             path: "/params",
-            query: _query
+            query: _query,
           )
           _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
-
-          raise _response.body
+          if _response.code >= "200" && _response.code < "300"
+            return
+          else
+            raise _response.body
+          end
         end
 
         # GET with path and query params
@@ -87,12 +98,14 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "GET",
             path: "/params/path-query/#{params[:param]}",
-            query: _query
+            query: _query,
           )
           _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
-
-          raise _response.body
+          if _response.code >= "200" && _response.code < "300"
+            return
+          else
+            raise _response.body
+          end
         end
 
         # GET with path and query params
@@ -107,12 +120,14 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "GET",
             path: "/params/path-query/#{params[:param]}",
-            query: _query
+            query: _query,
           )
           _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
-
-          raise _response.body
+          if _response.code >= "200" && _response.code < "300"
+            return
+          else
+            raise _response.body
+          end
         end
 
         # PUT to update with path param
@@ -123,12 +138,14 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "PUT",
             path: "/params/path/#{params[:param]}",
-            body: params[:request]
+            body: params[:request],
           )
           _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
-
-          raise _response.body
+          if _response.code >= "200" && _response.code < "300"
+            return 
+          else
+            raise _response.body
+          end
         end
 
         # PUT to update with path param
@@ -141,38 +158,16 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "PUT",
             path: "/params/path/#{params[:param]}",
-            body: params.except(*_path_param_names)
+            body: params.except(*_path_param_names),
           )
           _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
-
-          raise _response.body
+          if _response.code >= "200" && _response.code < "300"
+            return 
+          else
+            raise _response.body
+          end
         end
 
-        # @return [Seed::Endpoints::Client]
-        def endpoints
-          @endpoints ||= Seed::Endpoints::Client.new(client: @raw_client)
-        end
-
-        # @return [Seed::InlinedRequests::Client]
-        def inlinedRequests
-          @inlinedRequests ||= Seed::InlinedRequests::Client.new(client: @raw_client)
-        end
-
-        # @return [Seed::NoAuth::Client]
-        def noAuth
-          @noAuth ||= Seed::NoAuth::Client.new(client: @raw_client)
-        end
-
-        # @return [Seed::NoReqBody::Client]
-        def noReqBody
-          @noReqBody ||= Seed::NoReqBody::Client.new(client: @raw_client)
-        end
-
-        # @return [Seed::ReqWithHeaders::Client]
-        def reqWithHeaders
-          @reqWithHeaders ||= Seed::ReqWithHeaders::Client.new(client: @raw_client)
-        end
       end
     end
   end
