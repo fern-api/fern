@@ -1,12 +1,11 @@
 package com.seed.examples;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +13,6 @@ public class ServiceWireTest {
     private MockWebServer server;
     private SeedExamplesClient client;
     private ObjectMapper objectMapper = new ObjectMapper();
-
     @BeforeEach
     public void setup() throws Exception {
         server = new MockWebServer();
@@ -24,31 +22,25 @@ public class ServiceWireTest {
             .token("test-token")
             .build();
     }
-
     @AfterEach
     public void teardown() throws Exception {
         server.shutdown();
     }
-
     @Test
     public void testGetMovie() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-
         client.service().getMovie("movie-c06a4ad7");;
-
         RecordedRequest request = server.takeRequest();
-        assertNotNull(request);
-        assertEquals("GET", request.getMethod());
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("GET", request.getMethod());
     }
-
     @Test
     public void testCreateMovie() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-
         client.service().createMovie(
             Movie
                 .builder()
@@ -74,18 +66,15 @@ public class ServiceWireTest {
                 .prequel("movie-cv9b914f")
                 .build()
         );;
-
         RecordedRequest request = server.takeRequest();
-        assertNotNull(request);
-        assertEquals("POST", request.getMethod());
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("POST", request.getMethod());
     }
-
     @Test
     public void testGetMetadata() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-
         client.service().getMetadata(
             GetMetadataRequest
                 .builder()
@@ -98,18 +87,15 @@ public class ServiceWireTest {
                 .shallow(false)
                 .build()
         );;
-
         RecordedRequest request = server.takeRequest();
-        assertNotNull(request);
-        assertEquals("GET", request.getMethod());
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("GET", request.getMethod());
     }
-
     @Test
     public void testCreateBigEntity() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-
         client.service().createBigEntity(
             BigEntity
                 .builder()
@@ -511,23 +497,18 @@ public class ServiceWireTest {
                 )
                 .build()
         );;
-
         RecordedRequest request = server.takeRequest();
-        assertNotNull(request);
-        assertEquals("POST", request.getMethod());
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("POST", request.getMethod());
     }
-
     @Test
     public void testRefreshToken() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-
         client.service().refreshToken(Optional.of());;
-
         RecordedRequest request = server.takeRequest();
-        assertNotNull(request);
-        assertEquals("POST", request.getMethod());
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("POST", request.getMethod());
     }
-
 }

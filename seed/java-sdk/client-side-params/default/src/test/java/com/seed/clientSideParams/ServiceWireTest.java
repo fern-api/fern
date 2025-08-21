@@ -1,12 +1,11 @@
 package com.seed.clientSideParams;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +13,6 @@ public class ServiceWireTest {
     private MockWebServer server;
     private SeedClientSideParamsClient client;
     private ObjectMapper objectMapper = new ObjectMapper();
-
     @BeforeEach
     public void setup() throws Exception {
         server = new MockWebServer();
@@ -24,18 +22,15 @@ public class ServiceWireTest {
             .token("test-token")
             .build();
     }
-
     @AfterEach
     public void teardown() throws Exception {
         server.shutdown();
     }
-
     @Test
     public void testListResources() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-
         client.service().listResources(
             ListResourcesRequest
                 .builder()
@@ -48,18 +43,15 @@ public class ServiceWireTest {
                 .search("search")
                 .build()
         );;
-
         RecordedRequest request = server.takeRequest();
-        assertNotNull(request);
-        assertEquals("GET", request.getMethod());
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("GET", request.getMethod());
     }
-
     @Test
     public void testGetResource() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-
         client.service().getResource(
             "resourceId",
             GetResourceRequest
@@ -68,18 +60,15 @@ public class ServiceWireTest {
                 .format("json")
                 .build()
         );;
-
         RecordedRequest request = server.takeRequest();
-        assertNotNull(request);
-        assertEquals("GET", request.getMethod());
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("GET", request.getMethod());
     }
-
     @Test
     public void testSearchResources() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-
         client.service().searchResources(
             SearchResourcesRequest
                 .builder()
@@ -95,18 +84,15 @@ public class ServiceWireTest {
                 )
                 .build()
         );;
-
         RecordedRequest request = server.takeRequest();
-        assertNotNull(request);
-        assertEquals("POST", request.getMethod());
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("POST", request.getMethod());
     }
-
     @Test
     public void testListUsers() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-
         client.service().listUsers(
             ListUsersRequest
                 .builder()
@@ -120,18 +106,15 @@ public class ServiceWireTest {
                 .fields("fields")
                 .build()
         );;
-
         RecordedRequest request = server.takeRequest();
-        assertNotNull(request);
-        assertEquals("GET", request.getMethod());
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("GET", request.getMethod());
     }
-
     @Test
     public void testGetUserById() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-
         client.service().getUserById(
             "userId",
             GetUserRequest
@@ -140,18 +123,15 @@ public class ServiceWireTest {
                 .includeFields(true)
                 .build()
         );;
-
         RecordedRequest request = server.takeRequest();
-        assertNotNull(request);
-        assertEquals("GET", request.getMethod());
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("GET", request.getMethod());
     }
-
     @Test
     public void testCreateUser() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-
         client.service().createUser(
             CreateUserRequest
                 .builder()
@@ -178,18 +158,15 @@ public class ServiceWireTest {
                 )
                 .build()
         );;
-
         RecordedRequest request = server.takeRequest();
-        assertNotNull(request);
-        assertEquals("POST", request.getMethod());
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("POST", request.getMethod());
     }
-
     @Test
     public void testUpdateUser() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-
         client.service().updateUser(
             "userId",
             UpdateUserRequest
@@ -217,31 +194,25 @@ public class ServiceWireTest {
                 .blocked(true)
                 .build()
         );;
-
         RecordedRequest request = server.takeRequest();
-        assertNotNull(request);
-        assertEquals("PATCH", request.getMethod());
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("PATCH", request.getMethod());
     }
-
     @Test
     public void testDeleteUser() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-
         client.service().deleteUser("userId");;
-
         RecordedRequest request = server.takeRequest();
-        assertNotNull(request);
-        assertEquals("DELETE", request.getMethod());
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("DELETE", request.getMethod());
     }
-
     @Test
     public void testListConnections() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-
         client.service().listConnections(
             ListConnectionsRequest
                 .builder()
@@ -250,18 +221,15 @@ public class ServiceWireTest {
                 .fields("fields")
                 .build()
         );;
-
         RecordedRequest request = server.takeRequest();
-        assertNotNull(request);
-        assertEquals("GET", request.getMethod());
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("GET", request.getMethod());
     }
-
     @Test
     public void testGetConnection() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-
         client.service().getConnection(
             "connectionId",
             GetConnectionRequest
@@ -269,18 +237,15 @@ public class ServiceWireTest {
                 .fields("fields")
                 .build()
         );;
-
         RecordedRequest request = server.takeRequest();
-        assertNotNull(request);
-        assertEquals("GET", request.getMethod());
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("GET", request.getMethod());
     }
-
     @Test
     public void testListClients() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-
         client.service().listClients(
             ListClientsRequest
                 .builder()
@@ -298,18 +263,15 @@ public class ServiceWireTest {
                 )
                 .build()
         );;
-
         RecordedRequest request = server.takeRequest();
-        assertNotNull(request);
-        assertEquals("GET", request.getMethod());
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("GET", request.getMethod());
     }
-
     @Test
     public void testGetClient() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-
         client.service().getClient(
             "clientId",
             GetClientRequest
@@ -318,10 +280,8 @@ public class ServiceWireTest {
                 .includeFields(true)
                 .build()
         );;
-
         RecordedRequest request = server.takeRequest();
-        assertNotNull(request);
-        assertEquals("GET", request.getMethod());
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("GET", request.getMethod());
     }
-
 }

@@ -9,9 +9,84 @@ import { convertIr } from "../utils/convertIr";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 
 export class WireTestGenerator {
-    private dynamicSnippetsGenerator: DynamicSnippetsGenerator | undefined;
-
     constructor(private readonly context: SdkGeneratorContext) {}
+
+    private createTestClassBoilerplate(
+        className: string,
+        clientClassName: string,
+        hasAuth: boolean
+    ): (writer: any) => void {
+        return (writer: any) => {
+            // Add imports
+            writer.addImport("org.junit.jupiter.api.Assertions");
+            writer.addImport("com.fasterxml.jackson.databind.ObjectMapper");
+            writer.addImport("okhttp3.mockwebserver.MockResponse");
+            writer.addImport("okhttp3.mockwebserver.MockWebServer");
+            writer.addImport("okhttp3.mockwebserver.RecordedRequest");
+            writer.addImport("org.junit.jupiter.api.AfterEach");
+            writer.addImport("org.junit.jupiter.api.BeforeEach");
+            writer.addImport("org.junit.jupiter.api.Test");
+
+            writer.writeLine(`public class ${className} {`);
+            writer.indent();
+
+            // Fields
+            writer.writeLine("private MockWebServer server;");
+            writer.writeLine(`private ${clientClassName} client;`);
+            writer.writeLine("private ObjectMapper objectMapper = new ObjectMapper();");
+
+            // Setup method
+            writer.writeLine("@BeforeEach");
+            writer.writeLine("public void setup() throws Exception {");
+            writer.indent();
+            writer.writeLine("server = new MockWebServer();");
+            writer.writeLine("server.start();");
+            writer.writeLine(`client = ${clientClassName}.builder()`);
+            writer.indent();
+            writer.writeLine('.url(server.url("/").toString())');
+            if (hasAuth) {
+                writer.writeLine('.token("test-token")');
+            }
+            writer.writeLine(".build();");
+            writer.dedent();
+            writer.dedent();
+            writer.writeLine("}");
+
+            // Teardown method
+            writer.writeLine("@AfterEach");
+            writer.writeLine("public void teardown() throws Exception {");
+            writer.indent();
+            writer.writeLine("server.shutdown();");
+            writer.dedent();
+            writer.writeLine("}");
+        };
+    }
+
+    private createTestMethod(endpoint: HttpEndpoint, snippet: string): (writer: any) => void {
+        return (writer: any) => {
+            const testMethodName = `test${this.toMethodName(endpoint.name.pascalCase.safeName)}`;
+            const methodCall = this.extractMethodCall(snippet);
+
+            writer.writeLine("@Test");
+            writer.writeLine(`public void ${testMethodName}() throws Exception {`);
+            writer.indent();
+
+            writer.writeLine("server.enqueue(new MockResponse()");
+            writer.indent();
+            writer.writeLine(".setResponseCode(200)");
+            writer.writeLine('.setBody("{}"));');
+            writer.dedent();
+
+            writer.writeLine(`${methodCall};`);
+
+            writer.writeLine("RecordedRequest request = server.takeRequest();");
+            writer.writeLine("Assertions.assertNotNull(request);");
+            writer.writeLine(`Assertions.assertEquals("${endpoint.method}", request.getMethod());`);
+
+            writer.dedent();
+            writer.writeLine("}");
+        };
+    }
 
     public async generate(): Promise<void> {
         if (!this.context.customConfig["enable-wire-tests"]) {
@@ -28,17 +103,20 @@ export class WireTestGenerator {
         }
 
         const convertedIr = convertIr(dynamicIr);
-        this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
+        const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             ir: convertedIr,
             config: this.context.config
         });
 
-        await this.generateTestFiles(dynamicIr);
+        await this.generateTestFiles(dynamicIr, dynamicSnippetsGenerator);
 
         this.context.logger.info("Wire test generation complete");
     }
 
-    private async generateTestFiles(dynamicIr: dynamic.DynamicIntermediateRepresentation): Promise<void> {
+    private async generateTestFiles(
+        dynamicIr: dynamic.DynamicIntermediateRepresentation,
+        dynamicSnippetsGenerator: DynamicSnippetsGenerator
+    ): Promise<void> {
         const endpointsByService = this.groupEndpointsByService();
 
         for (const [serviceName, endpoints] of endpointsByService.entries()) {
@@ -55,7 +133,12 @@ export class WireTestGenerator {
                 `Generating wire test for service: ${serviceName} with ${endpointsWithExamples.length} endpoints`
             );
 
-            const testClass = await this.generateTestClass(serviceName, endpointsWithExamples, dynamicIr);
+            const testClass = await this.generateTestClass(
+                serviceName,
+                endpointsWithExamples,
+                dynamicIr,
+                dynamicSnippetsGenerator
+            );
             const testFileName = `${this.toClassName(serviceName)}WireTest.java`;
             const testFilePath = this.getTestFilePath();
 
@@ -68,7 +151,8 @@ export class WireTestGenerator {
     private async generateTestClass(
         serviceName: string,
         endpoints: HttpEndpoint[],
-        dynamicIr: dynamic.DynamicIntermediateRepresentation
+        dynamicIr: dynamic.DynamicIntermediateRepresentation,
+        dynamicSnippetsGenerator: DynamicSnippetsGenerator
     ): Promise<string> {
         const className = `${this.toClassName(serviceName)}WireTest`;
         const clientClassName = this.context.getRootClientClassName();
@@ -79,92 +163,30 @@ export class WireTestGenerator {
             if (dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0) {
                 const firstExample = dynamicEndpoint.examples[0];
                 if (firstExample) {
-                    const snippet = await this.generateSnippetForExample(firstExample);
-                    endpointSnippets.set(endpoint.id, snippet);
+                    try {
+                        const snippet = await this.generateSnippetForExample(firstExample, dynamicSnippetsGenerator);
+                        endpointSnippets.set(endpoint.id, snippet);
+                    } catch (error) {
+                        this.context.logger.warn(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
+                        // Skip this endpoint if snippet generation fails
+                        continue;
+                    }
                 }
             }
         }
 
+        const hasAuth = this.context.ir.auth?.schemes && this.context.ir.auth.schemes.length > 0;
+
         const testClass = java.codeblock((writer) => {
-            writer.writeLine("import static org.junit.jupiter.api.Assertions.*;");
-            writer.newLine();
-            writer.writeLine("import com.fasterxml.jackson.databind.ObjectMapper;");
-            writer.writeLine("import okhttp3.mockwebserver.MockResponse;");
-            writer.writeLine("import okhttp3.mockwebserver.MockWebServer;");
-            writer.writeLine("import okhttp3.mockwebserver.RecordedRequest;");
-            writer.writeLine("import org.junit.jupiter.api.AfterEach;");
-            writer.writeLine("import org.junit.jupiter.api.BeforeEach;");
-            writer.writeLine("import org.junit.jupiter.api.Test;");
-            writer.newLine();
+            // Write test class boilerplate (imports, fields, setup/teardown)
+            this.createTestClassBoilerplate(className, clientClassName, hasAuth)(writer);
 
-            writer.writeLine(`public class ${className} {`);
-            writer.indent();
-
-            writer.writeLine("private MockWebServer server;");
-            writer.writeLine(`private ${clientClassName} client;`);
-            writer.writeLine("private ObjectMapper objectMapper = new ObjectMapper();");
-            writer.newLine();
-
-            writer.writeLine("@BeforeEach");
-            writer.writeLine("public void setup() throws Exception {");
-            writer.indent();
-            writer.writeLine("server = new MockWebServer();");
-            writer.writeLine("server.start();");
-            writer.writeLine(`client = ${clientClassName}.builder()`);
-            writer.indent();
-            writer.writeLine('.url(server.url("/").toString())');
-
-            if (this.context.ir.auth?.schemes && this.context.ir.auth.schemes.length > 0) {
-                writer.writeLine('.token("test-token")');
-            }
-
-            writer.writeLine(".build();");
-            writer.dedent();
-            writer.dedent();
-            writer.writeLine("}");
-            writer.newLine();
-
-            writer.writeLine("@AfterEach");
-            writer.writeLine("public void teardown() throws Exception {");
-            writer.indent();
-            writer.writeLine("server.shutdown();");
-            writer.dedent();
-            writer.writeLine("}");
-            writer.newLine();
-
+            // Add test methods for each endpoint that has a successfully generated snippet
             for (const endpoint of endpoints) {
-                const dynamicEndpoint = dynamicIr.endpoints[endpoint.id];
-                if (!dynamicEndpoint?.examples || dynamicEndpoint.examples.length === 0) {
-                    continue;
-                }
-
-                const testMethodName = `test${this.toMethodName(endpoint.name.pascalCase.safeName)}`;
-                writer.writeLine("@Test");
-                writer.writeLine(`public void ${testMethodName}() throws Exception {`);
-                writer.indent();
-
                 const snippet = endpointSnippets.get(endpoint.id);
                 if (snippet) {
-                    const methodCall = this.extractMethodCall(snippet);
-
-                    writer.writeLine("server.enqueue(new MockResponse()");
-                    writer.indent();
-                    writer.writeLine(".setResponseCode(200)");
-                    writer.writeLine('.setBody("{}"));');
-                    writer.dedent();
-                    writer.newLine();
-
-                    writer.writeLine(`${methodCall};`);
-                    writer.newLine();
-
-                    writer.writeLine("RecordedRequest request = server.takeRequest();");
-                    writer.writeLine("assertNotNull(request);");
-                    writer.writeLine(`assertEquals("${endpoint.method}", request.getMethod());`);
+                    this.createTestMethod(endpoint, snippet)(writer);
                 }
-
-                writer.dedent();
-                writer.writeLine("}");
-                writer.newLine();
             }
 
             writer.dedent();
@@ -178,90 +200,101 @@ export class WireTestGenerator {
         });
     }
 
-    private async generateSnippetForExample(example: dynamic.EndpointExample): Promise<string> {
-        if (!this.dynamicSnippetsGenerator) {
-            return "// Snippet generation failed";
+    private async generateSnippetForExample(
+        example: dynamic.EndpointExample,
+        dynamicSnippetsGenerator: DynamicSnippetsGenerator
+    ): Promise<string> {
+        const snippetRequest = convertDynamicEndpointSnippetRequest(example);
+        const response = await dynamicSnippetsGenerator.generate(snippetRequest, { style: Style.Concise });
+        if (!response.snippet) {
+            throw new Error("No snippet generated for example");
         }
-
-        try {
-            const snippetRequest = convertDynamicEndpointSnippetRequest(example);
-            const response = await this.dynamicSnippetsGenerator.generate(snippetRequest, { style: Style.Concise });
-            return response.snippet || "// No snippet generated";
-        } catch (error) {
-            this.context.logger.debug(`Failed to generate snippet: ${error}`);
-            return "// Snippet generation failed";
-        }
+        return response.snippet;
     }
 
     private extractMethodCall(fullSnippet: string): string {
         const lines = fullSnippet.split("\n");
 
+        // Find the line where client is instantiated and where the client call starts
+        let clientInstantiationIndex = -1;
         let clientCallStartIndex = -1;
-        let indentLevel = 0;
 
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
-            if (line && line.includes("client.") && !line.includes("SeedExamplesClient client")) {
+            if (!line) continue;
+
+            // Look for client instantiation (contains "client =" or specific client class name)
+            if (line.includes("client =") || line.includes("Client client =")) {
+                clientInstantiationIndex = i;
+            }
+
+            // Look for client method call (after instantiation)
+            if (clientInstantiationIndex !== -1 && i > clientInstantiationIndex && line.includes("client.")) {
                 clientCallStartIndex = i;
-                indentLevel = line.length - line.trimStart().length;
                 break;
             }
         }
 
         if (clientCallStartIndex === -1) {
+            this.context.logger.debug("Could not find client method call in snippet");
             return "// TODO: Add client call";
         }
 
+        // Extract the complete method call
         const methodCallLines: string[] = [];
-        let openParens = 0;
-        let closeParens = 0;
-        let inCall = false;
+        let braceDepth = 0;
+        let parenDepth = 0;
+        let foundSemicolon = false;
 
         for (let i = clientCallStartIndex; i < lines.length; i++) {
             const line = lines[i];
-            if (!line) {
-                continue;
-            }
+            if (!line && methodCallLines.length === 0) continue;
 
-            const trimmedLine = line.trim();
-
-            if (!inCall && trimmedLine === "") {
-                continue;
-            }
-
-            if (!inCall && line.includes("client.")) {
-                inCall = true;
-            }
-
-            if (inCall) {
+            if (line !== undefined) {
                 methodCallLines.push(line);
 
+                // Track brace and parenthesis depth
                 for (const char of line) {
-                    if (char === "(") {
-                        openParens++;
-                    }
-                    if (char === ")") {
-                        closeParens++;
-                    }
+                    if (char === "{") braceDepth++;
+                    if (char === "}") braceDepth--;
+                    if (char === "(") parenDepth++;
+                    if (char === ")") parenDepth--;
                 }
 
-                if (openParens > 0 && openParens === closeParens && line.includes(";")) {
+                // Check for statement termination
+                if (line.includes(";") && braceDepth === 0 && parenDepth === 0) {
+                    foundSemicolon = true;
                     break;
                 }
             }
         }
 
-        if (methodCallLines.length > 0) {
-            const fullCall = methodCallLines
-                .map((line) => line.substring(Math.min(indentLevel, line.length)))
-                .join("\n")
-                .trim();
-
-            this.context.logger.debug(`Extracted method call: ${fullCall}`);
-            return fullCall;
+        if (!foundSemicolon || methodCallLines.length === 0) {
+            this.context.logger.debug("Could not extract complete method call");
+            return "// TODO: Add client call";
         }
 
-        return "// TODO: Add client call";
+        // Clean up the extracted lines - remove common indentation
+        const nonEmptyLines = methodCallLines.filter((line) => line && line.trim().length > 0);
+        if (nonEmptyLines.length === 0) {
+            return "// TODO: Add client call";
+        }
+
+        const minIndent = Math.min(
+            ...nonEmptyLines.map((line) => {
+                if (!line) return 0;
+                const match = line.match(/^(\s*)/);
+                return match?.[1]?.length ?? 0;
+            })
+        );
+
+        const cleanedLines = methodCallLines.map((line) =>
+            line && line.length > minIndent ? line.substring(minIndent) : line || ""
+        );
+
+        const result = cleanedLines.join("\n").trim();
+        this.context.logger.debug(`Extracted method call: ${result}`);
+        return result;
     }
 
     private groupEndpointsByService(): Map<string, HttpEndpoint[]> {
