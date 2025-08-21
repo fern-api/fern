@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
-import { rust, UseStatement, Statement, Expression } from "@fern-api/rust-codegen";
+import { Expression, rust, Statement, UseStatement } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 
 import {
