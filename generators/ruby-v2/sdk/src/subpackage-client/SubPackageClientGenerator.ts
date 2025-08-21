@@ -135,7 +135,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
                         `@${subpackage.name.snakeCase.safeName} ||= ` +
                             `${this.getClientModuleNames().join("::")}::` +
                             `${subpackage.name.pascalCase.safeName}::` +
-                            `Client.new(client: @raw_client)`
+                            `Client.new(client: @client)`
                     );
                 })
             ]
