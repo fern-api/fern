@@ -235,15 +235,9 @@ fixtures:
         useDefaultRequestParameterValues: true
         useBigInt: true
       outputFolder: use-big-int-and-default-request-parameter-values
-  request-parameters-flattening:
     - customConfig:
         flattenRequestParameters: true
-        useLegacyFlatteningLogic: false
       outputFolder: flatten-request-parameters
-    - customConfig:
-        flattenRequestParameters: false
-        useLegacyFlatteningLogic: false
-      outputFolder: unflatten-request-parameters
   trace:
     - customConfig: null
       outputFolder: no-custom-config

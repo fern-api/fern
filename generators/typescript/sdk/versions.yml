@@ -2,10 +2,10 @@
 - version: 2.8.3
   changelogEntry:
     - summary: |
-        Add `flattenRequestParameters` and `useLegacyFlatteningLogic` to the SDK generator config.
+        Add `flattenRequestParameters` to the SDK generator config.
         `flattenRequestParameters` is a boolean that controls whether to flatten request parameters.
-        `useLegacyFlatteningLogic` is a boolean that controls whether to use the legacy flattening logic.
-        The default is `false` for `flattenRequestParameters` and `true` for `useLegacyFlatteningLogic`.
+        When `false` (default), the legacy flattening logic is used.
+        When `true`, the new flattening logic is used.
 
         ```yml
         # In generators.yml
@@ -15,7 +15,6 @@
               - name: fernapi/fern-typescript-sdk
                 config:
                   flattenRequestParameters: true
-                  useLegacyFlatteningLogic: false
         ```
       type: feat
   createdAt: '2025-08-20'

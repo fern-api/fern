@@ -23,7 +23,6 @@ export declare namespace RequestWrapperContextImpl {
         enableInlineTypes: boolean;
         formDataSupport: "Node16" | "Node18";
         flattenRequestParameters: boolean;
-        useLegacyFlatteningLogic: boolean;
     }
 }
 
@@ -41,7 +40,6 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     private enableInlineTypes: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly flattenRequestParameters: boolean;
-    private readonly useLegacyFlatteningLogic: boolean;
 
     constructor({
         requestWrapperGenerator,
@@ -56,8 +54,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         inlinePathParameters,
         enableInlineTypes,
         formDataSupport,
-        flattenRequestParameters,
-        useLegacyFlatteningLogic
+        flattenRequestParameters
     }: RequestWrapperContextImpl.Init) {
         this.requestWrapperGenerator = requestWrapperGenerator;
         this.requestWrapperDeclarationReferencer = requestWrapperDeclarationReferencer;
@@ -72,7 +69,6 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         this.enableInlineTypes = enableInlineTypes;
         this.formDataSupport = formDataSupport;
         this.flattenRequestParameters = flattenRequestParameters;
-        this.useLegacyFlatteningLogic = useLegacyFlatteningLogic;
     }
 
     public shouldInlinePathParameters(sdkRequest: SdkRequest | undefined | null): boolean {
@@ -121,8 +117,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
             enableInlineTypes: this.enableInlineTypes,
             shouldInlinePathParameters: this.shouldInlinePathParameters(endpoint.sdkRequest),
             formDataSupport: this.formDataSupport,
-            flattenRequestParameters: this.flattenRequestParameters,
-            useLegacyFlatteningLogic: this.useLegacyFlatteningLogic
+            flattenRequestParameters: this.flattenRequestParameters
         });
     }
 

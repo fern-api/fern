@@ -60,7 +60,6 @@ export declare namespace GeneratedRequestWrapperImpl {
         shouldInlinePathParameters: boolean;
         formDataSupport: "Node16" | "Node18";
         flattenRequestParameters: boolean;
-        useLegacyFlatteningLogic: boolean;
     }
 }
 
@@ -80,7 +79,6 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private _shouldInlinePathParameters: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly flattenRequestParameters: boolean;
-    private readonly useLegacyFlatteningLogic: boolean;
 
     constructor({
         service,
@@ -93,8 +91,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         enableInlineTypes,
         shouldInlinePathParameters,
         formDataSupport,
-        flattenRequestParameters,
-        useLegacyFlatteningLogic
+        flattenRequestParameters
     }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
@@ -107,7 +104,6 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         this._shouldInlinePathParameters = shouldInlinePathParameters;
         this.formDataSupport = formDataSupport;
         this.flattenRequestParameters = flattenRequestParameters;
-        this.useLegacyFlatteningLogic = useLegacyFlatteningLogic;
     }
 
     public shouldInlinePathParameters(): boolean {
@@ -238,7 +234,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         if (requestBody != null) {
             HttpRequestBody._visit(requestBody, {
                 inlinedRequestBody: (inlinedRequestBody) => {
-                    if (this.useLegacyFlatteningLogic) {
+                    if (this.flattenRequestParameters) {
+                        this.addFlattenedInlinedRequestBodyProperties(properties, inlinedRequestBody, context);
+                    } else {
                         for (const property of this.getAllNonLiteralPropertiesFromInlinedRequest({
                             inlinedRequestBody,
                             context
@@ -246,22 +244,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                             const requestProperty = this.getInlineProperty(inlinedRequestBody, property, context);
                             properties.push(requestProperty);
                         }
-                    } else {
-                        if (this.flattenRequestParameters) {
-                            this.addFlattenedInlinedRequestBodyProperties(properties, inlinedRequestBody, context);
-                        } else {
-                            // When unflattening, if there are no query parameters, flatten body properties directly
-                            // instead of wrapping them in a body property
-                            if (this.getAllQueryParameters().length === 0) {
-                                this.addFlattenedInlinedRequestBodyProperties(properties, inlinedRequestBody, context);
-                            } else {
-                                this.addUnflattenedInlinedRequestBodyProperties(properties, inlinedRequestBody, context);
-                            }
-                        }
                     }
                 },
                 reference: (referenceToRequestBody) => {
-                    if (this.useLegacyFlatteningLogic) {
+                    if (this.flattenRequestParameters) {
+                        this.addFlattenedReferencedRequestBodyProperties(properties, referenceToRequestBody, context);
+                    } else {
                         const type = context.type.getReferenceToType(referenceToRequestBody.requestBodyType);
                         const name = this.getReferencedBodyPropertyName();
                         const requestProperty: GeneratedRequestWrapper.Property = {
@@ -272,18 +260,6 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                             docs: referenceToRequestBody.docs != null ? [referenceToRequestBody.docs] : undefined
                         };
                         properties.push(requestProperty);
-                    } else {
-                        if (this.flattenRequestParameters) {
-                            this.addFlattenedReferencedRequestBodyProperties(properties, referenceToRequestBody, context);
-                        } else {
-                            // When unflattening, if there are no query parameters, flatten body properties directly
-                            // instead of wrapping them in a body property
-                            if (this.getAllQueryParameters().length === 0) {
-                                this.addFlattenedReferencedRequestBodyProperties(properties, referenceToRequestBody, context);
-                            } else {
-                                this.addUnflattenedReferencedRequestBodyProperties(properties, referenceToRequestBody, context);
-                            }
-                        }
                     }
                 },
                 fileUpload: (fileUploadRequest) => {
@@ -331,8 +307,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             packageId: this.packageId,
             endpointName: this.endpoint.name,
             requestBody: this.endpoint.requestBody,
-            flattenRequestParameters: this.flattenRequestParameters,
-            useLegacyFlatteningLogic: this.useLegacyFlatteningLogic
+            flattenRequestParameters: this.flattenRequestParameters
         });
     }
 
@@ -416,10 +391,6 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public areBodyPropertiesInlined(): boolean {
-        if (this.useLegacyFlatteningLogic) {
-            return this.endpoint.requestBody != null && this.endpoint.requestBody.type === "inlinedRequestBody";
-        }
-        
         return this.endpoint.requestBody != null && 
                (this.endpoint.requestBody.type === "inlinedRequestBody" || this.flattenRequestParameters);
     }
@@ -905,7 +876,15 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         context: SdkContext
     ) {
         if (referenceToRequestBody.requestBodyType.type !== "named") {
-            this.addUnflattenedReferencedRequestBodyProperties(properties, referenceToRequestBody, context);
+            const type = context.type.getReferenceToType(referenceToRequestBody.requestBodyType);
+            const name = this.getReferencedBodyPropertyName();
+            properties.push({
+                name,
+                safeName: name,
+                type: type.typeNodeWithoutUndefined,
+                isOptional: type.isOptional,
+                docs: referenceToRequestBody.docs != null ? [referenceToRequestBody.docs] : undefined
+            });
             return;
         }
 
@@ -914,48 +893,19 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         if (typeDeclaration?.shape.type === "object") {
             this.addPropertiesFromTypeDeclaration(properties, typeDeclaration, context);
         } else {
-            this.addUnflattenedReferencedRequestBodyProperties(properties, referenceToRequestBody, context);
-        }
-    }
-
-    private addUnflattenedInlinedRequestBodyProperties(
-        properties: GeneratedRequestWrapper.Property[],
-        inlinedRequestBody: InlinedRequestBody,
-        context: SdkContext
-    ) {
-        const bodyProperties = this.getAllNonLiteralPropertiesFromInlinedRequest({
-            inlinedRequestBody,
-            context
-        });
-
-        if (bodyProperties.length > 0) {
-            const bodyType = this.createBodyTypeFromInlinedProperties(inlinedRequestBody, context);
+            const type = context.type.getReferenceToType(referenceToRequestBody.requestBodyType);
+            const name = this.getReferencedBodyPropertyName();
             properties.push({
-                name: BODY_PROPERTY_NAME,
-                safeName: BODY_PROPERTY_SAFE_NAME,
-                type: bodyType,
-                isOptional: false,
-                docs: undefined
+                name,
+                safeName: name,
+                type: type.typeNodeWithoutUndefined,
+                isOptional: type.isOptional,
+                docs: referenceToRequestBody.docs != null ? [referenceToRequestBody.docs] : undefined
             });
         }
     }
 
-    private addUnflattenedReferencedRequestBodyProperties(
-        properties: GeneratedRequestWrapper.Property[],
-        referenceToRequestBody: HttpRequestBodyReference,
-        context: SdkContext
-    ) {
-        const type = context.type.getReferenceToType(referenceToRequestBody.requestBodyType);
-        const name = this.getReferencedBodyPropertyName();
-        
-        properties.push({
-            name,
-            safeName: name,
-            type: type.typeNodeWithoutUndefined,
-            isOptional: type.isOptional,
-            docs: referenceToRequestBody.docs != null ? [referenceToRequestBody.docs] : undefined
-        });
-    }
+
 
     private getTypeDeclaration(
         requestBodyType: TypeReference.Named,

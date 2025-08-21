@@ -45,11 +45,9 @@ export class User {
      * @example
      *     await client.user.createUsername({
      *         tags: ["tags", "tags"],
-     *         body: {
-     *             username: "username",
-     *             password: "password",
-     *             name: "test"
-     *         }
+     *         username: "username",
+     *         password: "password",
+     *         name: "test"
      *     })
      */
     public createUsername(
@@ -173,7 +171,7 @@ export class User {
         requestOptions?: User.RequestOptions,
     ): Promise<core.WithRawResponse<SeedRequestParameters.User>> {
         const {
-            limit = 10,
+            limit,
             id,
             date,
             deadline,
@@ -187,14 +185,11 @@ export class User {
             optionalUser,
             excludeUser,
             filter,
-            longParam = 9223372036854776000,
-            bigIntParam = "18446744073709551615",
+            longParam,
+            bigIntParam,
         } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (limit != null) {
-            _queryParams["limit"] = limit.toString();
-        }
-
+        _queryParams["limit"] = limit.toString();
         _queryParams["id"] = id;
         _queryParams["date"] = date;
         _queryParams["deadline"] = deadline;
@@ -227,14 +222,8 @@ export class User {
             _queryParams["filter"] = filter;
         }
 
-        if (longParam != null) {
-            _queryParams["longParam"] = longParam.toString();
-        }
-
-        if (bigIntParam != null) {
-            _queryParams["bigIntParam"] = bigIntParam;
-        }
-
+        _queryParams["longParam"] = longParam.toString();
+        _queryParams["bigIntParam"] = bigIntParam;
         var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

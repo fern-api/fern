@@ -15,11 +15,9 @@ describe("User", () => {
 
         const response = await client.user.createUsername({
             tags: ["tags", "tags"],
-            body: {
-                username: "username",
-                password: "password",
-                name: "test",
-            },
+            username: "username",
+            password: "password",
+            name: "test",
         });
         expect(response).toEqual(undefined);
     });
@@ -72,8 +70,8 @@ describe("User", () => {
                 tags: ["tags", "tags"],
             },
             filter: "filter",
-            longParam: BigInt("1000000"),
-            bigIntParam: BigInt("1000000"),
+            longParam: 1000000,
+            bigIntParam: "1000000",
         });
         expect(response).toEqual({
             name: "name",

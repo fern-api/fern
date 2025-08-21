@@ -24,6 +24,9 @@ service:
             name:
               type: string
               default: 'test'
+        query-parameters:
+          tags:
+            type: list<string>
     getUsername:
       path: ''
       method: GET
