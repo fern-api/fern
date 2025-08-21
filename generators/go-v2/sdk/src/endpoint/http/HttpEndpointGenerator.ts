@@ -510,7 +510,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             case "unknown":
                 return undefined;
             default:
-                assertNever(typeReference)
+                assertNever(typeReference);
         }
     }
 
