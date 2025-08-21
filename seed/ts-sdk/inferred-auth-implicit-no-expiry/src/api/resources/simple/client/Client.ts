@@ -50,8 +50,8 @@ export class Simple {
     }
 
     private async __getSomething(requestOptions?: Simple.RequestOptions): Promise<core.WithRawResponse<void>> {
-        var _authRequest: core.AuthRequest = await this._authProvider.getAuthRequest();
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        const _authRequest: core.AuthRequest = await this._authProvider.getAuthRequest();
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
             requestOptions?.headers,

@@ -60,7 +60,7 @@ export class Union {
         request: SeedExhaustive.types.Animal,
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.Animal>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,

@@ -79,7 +79,7 @@ export class Playlist {
             _queryParams["optionalDatetime"] = optionalDatetime;
         }
 
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -178,7 +178,7 @@ export class Playlist {
             _queryParams["multipleField"] = multipleField;
         }
 
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -246,7 +246,7 @@ export class Playlist {
         playlistId: SeedTrace.PlaylistId,
         requestOptions?: Playlist.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.getPlaylist.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -341,7 +341,7 @@ export class Playlist {
     ): Promise<
         core.WithRawResponse<core.APIResponse<SeedTrace.Playlist | undefined, SeedTrace.playlist.updatePlaylist.Error>>
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -426,7 +426,7 @@ export class Playlist {
         playlistId: SeedTrace.PlaylistId,
         requestOptions?: Playlist.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.playlist.deletePlaylist.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),

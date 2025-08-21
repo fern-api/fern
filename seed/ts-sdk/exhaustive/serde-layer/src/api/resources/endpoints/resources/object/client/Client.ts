@@ -73,7 +73,7 @@ export class Object_ {
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -157,7 +157,7 @@ export class Object_ {
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -245,7 +245,7 @@ export class Object_ {
         request: SeedExhaustive.types.ObjectWithMapOfMap,
         requestOptions?: Object_.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithMapOfMap>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -348,7 +348,7 @@ export class Object_ {
         request: SeedExhaustive.types.NestedObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithOptionalField>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -454,7 +454,7 @@ export class Object_ {
         request: SeedExhaustive.types.NestedObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithRequiredField>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -576,7 +576,7 @@ export class Object_ {
         request: SeedExhaustive.types.NestedObjectWithRequiredField[],
         requestOptions?: Object_.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithRequiredField>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -695,7 +695,7 @@ export class Object_ {
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,

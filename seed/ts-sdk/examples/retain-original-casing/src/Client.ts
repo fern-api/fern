@@ -85,7 +85,7 @@ export class SeedExamplesClient {
         request: string,
         requestOptions?: SeedExamplesClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -151,7 +151,7 @@ export class SeedExamplesClient {
         request: SeedExamples.Type,
         requestOptions?: SeedExamplesClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExamples.Identifier>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,

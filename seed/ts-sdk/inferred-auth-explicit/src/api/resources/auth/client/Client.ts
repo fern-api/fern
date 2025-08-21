@@ -61,7 +61,7 @@ export class Auth {
         requestOptions?: Auth.RequestOptions,
     ): Promise<core.WithRawResponse<SeedInferredAuthExplicit.TokenResponse>> {
         const { "X-Api-Key": xApiKey, ..._body } = request;
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ "X-Api-Key": xApiKey }),
             requestOptions?.headers,
@@ -139,7 +139,7 @@ export class Auth {
         requestOptions?: Auth.RequestOptions,
     ): Promise<core.WithRawResponse<SeedInferredAuthExplicit.TokenResponse>> {
         const { "X-Api-Key": xApiKey, ..._body } = request;
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ "X-Api-Key": xApiKey }),
             requestOptions?.headers,
