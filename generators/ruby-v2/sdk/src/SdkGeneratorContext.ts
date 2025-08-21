@@ -146,6 +146,14 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         });
     }
 
+    public getDefaultEnvironmentClassReference(): ruby.ClassReference {
+        const defaultEnvironmentName = this.ir.environments?.defaultEnvironment ?? "SANDBOX";
+        return ruby.classReference({
+            name: defaultEnvironmentName,
+            modules: [this.getRootModule().name, "Environment"]
+        });
+    }
+
     public getRootClientClassName(): string {
         return `Client`;
     }
