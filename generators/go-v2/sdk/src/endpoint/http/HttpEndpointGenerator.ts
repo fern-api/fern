@@ -453,16 +453,17 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 if (typeReference.container.type === "optional") {
                     return this.extractDefaultValue(typeReference.container.optional);
                 }
-                break
-            case "named":
+                break;
+            case "named": {
                 const typeDeclaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (typeDeclaration.shape.type === "alias") {
                     return this.extractDefaultValue(typeDeclaration.shape.aliasOf);
                 }
-                break
+                break;
+            }
             case "primitive":
                 if (!typeReference.primitive.v2) {
-                    break
+                    break;
                 }
 
                 return typeReference.primitive.v2._visit<go.TypeInstantiation | undefined>({
@@ -504,7 +505,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     uuid: () => undefined,
                     base64: () => undefined,
                     bigInteger: () => undefined,
-                    _other: () => undefined,
+                    _other: () => undefined
                 });
         }
         return undefined;
@@ -527,27 +528,38 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
 
         // extract and populate defaults
-        const defaults = []
+        const defaults = [];
         if (this.context.customConfig.useDefaultRequestParameterValues) {
             for (const queryParameter of endpoint.queryParameters) {
-                const defaultValue = this.extractDefaultValue(queryParameter.valueType)
+                const defaultValue = this.extractDefaultValue(queryParameter.valueType);
                 if (!defaultValue) {
-                    continue
+                    continue;
                 }
                 defaults.push({
                     key: go.TypeInstantiation.string(queryParameter.name.wireValue),
                     value: defaultValue
-                })
+                });
             }
         }
-        const defaults_map = go.TypeInstantiation.map({keyType: go.Type.string(), valueType: go.Type.any(), entries: defaults})
+        const defaults_map = go.TypeInstantiation.map({
+            keyType: go.Type.string(),
+            valueType: go.Type.any(),
+            entries: defaults
+        });
 
         return go.codeblock((writer) => {
             writer.write("queryParams, err := ");
             if (!defaults.length) {
-                writer.writeNode(this.context.callQueryValues([go.codeblock(endpointRequest.getRequestParameterName())]));
+                writer.writeNode(
+                    this.context.callQueryValues([go.codeblock(endpointRequest.getRequestParameterName())])
+                );
             } else {
-                writer.writeNode(this.context.callQueryValuesWithDefaults([go.codeblock(endpointRequest.getRequestParameterName()), defaults_map]));
+                writer.writeNode(
+                    this.context.callQueryValuesWithDefaults([
+                        go.codeblock(endpointRequest.getRequestParameterName()),
+                        defaults_map
+                    ])
+                );
             }
             writer.newLine();
             writer.writeLine("if err != nil {");
