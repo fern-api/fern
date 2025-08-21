@@ -1,7 +1,4 @@
-from typing import Any, Dict
-
-
-class ForceMultipartDict(Dict[str, Any]):
+class ForceMultipartDict():
     """
     A dictionary subclass that always evaluates to True in boolean contexts.
 
