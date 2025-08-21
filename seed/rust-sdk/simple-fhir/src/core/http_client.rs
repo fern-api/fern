@@ -183,15 +183,15 @@ impl HttpClient {
         serde_json::from_str(&text).map_err(ClientError::JsonParseError)
     }
 
-    /// Execute a streaming request that returns a raw Response for file downloads
-    pub async fn execute_streaming_request(
+    /// Execute a request that returns raw bytes for file downloads
+    pub async fn execute_bytes_download_request(
         &self,
         method: Method,
         path: &str,
         body: Option<serde_json::Value>,
         query_params: Option<Vec<(String, String)>>,
         options: Option<RequestOptions>,
-    ) -> Result<Response, ClientError> {
+    ) -> Result<Vec<u8>, ClientError> {
         let url = format!(
             "{}/{}", 
             self.config.base_url.trim_end_matches('/'), 
@@ -216,8 +216,10 @@ impl HttpClient {
         self.apply_auth_headers(&mut req, &options)?;
         self.apply_custom_headers(&mut req, &options)?;
         
-        // Execute with retries and return the raw response for streaming
-        self.execute_with_retries(req, &options).await
+        // Execute with retries and download bytes
+        let response = self.execute_with_retries(req, &options).await?;
+        crate::core::download_file(response).await
+            .map_err(ClientError::RequestError)
     }
 
     /// Execute a multipart form request for file uploads

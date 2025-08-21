@@ -1,6 +1,6 @@
 use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
 use reqwest::{Method};
-use crate::core::{File, FormDataBuilder};
+use crate::core::{File};
 
 pub struct ServiceClient {
     pub http_client: HttpClient,
@@ -12,14 +12,14 @@ impl ServiceClient {
         Ok(Self { http_client })
     }
 
-    pub async fn get(&self, options: Option<RequestOptions>) -> Result<crate::core::FileStream, ClientError> {
-        self.http_client.execute_streaming_request(
+    pub async fn get(&self, options: Option<RequestOptions>) -> Result<Vec<u8>, ClientError> {
+        self.http_client.execute_bytes_download_request(
             Method::GET,
             "/helloworld.txt",
             None,
             None,
             options,
-        ).await.map(|response| crate::core::FileStream::new(response))
+        ).await
     }
 
 }

@@ -1,7 +1,7 @@
 use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
-use crate::core::{File, FormDataBuilder};
+use crate::core::{File};
 
 pub struct PathClient {
     pub http_client: HttpClient,
