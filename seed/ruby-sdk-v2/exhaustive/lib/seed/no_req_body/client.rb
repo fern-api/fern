@@ -9,8 +9,12 @@ module Seed
       end
 
       # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
-      def get_with_no_request_body(request_options: {}, **params)
-        _request = params
+      def get_with_no_request_body(request_options: {}, **_params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          method: "GET",
+          path: "/no-req-body"
+        )
         _response = @client.send(_request)
         if _response.code >= "200" && _response.code < "300"
           return Seed::Types::Object_::Types::ObjectWithOptionalField.load(_response.body)
@@ -20,37 +24,16 @@ module Seed
       end
 
       # @return [String]
-      def post_with_no_request_body(request_options: {}, **params)
-        _request = params
+      def post_with_no_request_body(request_options: {}, **_params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          method: "POST",
+          path: "/no-req-body"
+        )
         _response = @client.send(_request)
         return if _response.code >= "200" && _response.code < "300"
 
         raise _response.body
-      end
-
-      # @return [Seed::Endpoints::Client]
-      def endpoints
-        @endpoints ||= Seed::Endpoints::Client.new(client: @raw_client)
-      end
-
-      # @return [Seed::InlinedRequests::Client]
-      def inlinedRequests
-        @inlinedRequests ||= Seed::InlinedRequests::Client.new(client: @raw_client)
-      end
-
-      # @return [Seed::NoAuth::Client]
-      def noAuth
-        @noAuth ||= Seed::NoAuth::Client.new(client: @raw_client)
-      end
-
-      # @return [Seed::NoReqBody::Client]
-      def noReqBody
-        @noReqBody ||= Seed::NoReqBody::Client.new(client: @raw_client)
-      end
-
-      # @return [Seed::ReqWithHeaders::Client]
-      def reqWithHeaders
-        @reqWithHeaders ||= Seed::ReqWithHeaders::Client.new(client: @raw_client)
       end
     end
   end

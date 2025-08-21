@@ -143,7 +143,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
     }
 
     private getSubpackages(): Subpackage[] {
-        return this.context.ir.rootPackage.subpackages.map((subpackageId) => {
+        return this.subpackage.subpackages.map((subpackageId) => {
             return this.context.getSubpackageOrThrow(subpackageId);
         });
     }
