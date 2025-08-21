@@ -453,17 +453,17 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 if (typeReference.container.type === "optional") {
                     return this.extractDefaultValue(typeReference.container.optional);
                 }
-                break;
+                return undefined;
             case "named": {
                 const typeDeclaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (typeDeclaration.shape.type === "alias") {
                     return this.extractDefaultValue(typeDeclaration.shape.aliasOf);
                 }
-                break;
+                return undefined;
             }
             case "primitive":
                 if (!typeReference.primitive.v2) {
-                    break;
+                    return undefined;
                 }
 
                 return typeReference.primitive.v2._visit<go.TypeInstantiation | undefined>({
@@ -507,8 +507,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     bigInteger: () => undefined,
                     _other: () => undefined
                 });
+            case "unknown":
+                return undefined;
+            default:
+                assertNever(typeReference)
         }
-        return undefined;
     }
 
     private buildQueryParameters({
