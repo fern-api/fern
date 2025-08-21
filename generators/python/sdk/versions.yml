@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.26.1
+  changelogEntry:
+    - summary: Additional handling of inferred auth
+      type: chore
+  createdAt: "2025-08-20"
+  irVersion: 59
+
 - version: 4.26.0
   changelogEntry:
     - summary: Bumped IR version to 59.
