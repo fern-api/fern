@@ -19,6 +19,7 @@ client = SeedRequestParameters(
     base_url="https://yourhost.com/path/to/api",
 )
 client.user.create_username(
+    tags=["tags", "tags"],
     username="username",
     password="password",
     name="test",
@@ -34,6 +35,97 @@ client.user.create_username(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**tags:** `typing.Sequence[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**username:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**password:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username_with_referenced_type</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedRequestParameters
+
+client = SeedRequestParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.user.create_username_with_referenced_type(
+    tags=["tags", "tags"],
+    username="username",
+    password="password",
+    name="test",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tags:** `typing.Sequence[str]` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
