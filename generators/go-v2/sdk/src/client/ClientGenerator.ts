@@ -142,7 +142,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             }
             fields.push({
                 name: this.context.getClassName(subpackage.name),
-                value: this.instantiateClient({ subpackage })
+                value: this.instantiateSubClient({ subpackage })
             });
         }
         if (this.service != null && this.service.endpoints.length > 0) {
@@ -187,7 +187,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         );
         return {
             name: this.context.getClientConstructorName(this.subpackage),
-            parameters: [this.context.getRequestOptionsParameter()],
+            parameters: [this.isRootClient ? this.context.getVariadicRequestOptionParameter() : this.context.getRequestOptionsParameter()],
             body: go.codeblock((writer) => {
                 if (this.isRootClient) {
                     writer.write("options := ");
@@ -329,17 +329,8 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         return go.selector({ on: go.codeblock("options"), selector: go.codeblock(this.context.getFieldName(name)) });
     }
 
-    private instantiateClient({ subpackage }: { subpackage: Subpackage }): go.TypeInstantiation {
-
-        return this.isRootClient? 
-        go.TypeInstantiation.reference(
-            go.invokeFunc({
-                func: this.getClientConstructor({ subpackage }),
-                arguments_: [go.codeblock("opts...")],
-                multiline: false
-            })
-        )
-        : go.TypeInstantiation.reference(
+    private instantiateSubClient({ subpackage }: { subpackage: Subpackage }): go.TypeInstantiation {
+        return go.TypeInstantiation.reference(
             go.invokeFunc({
                 func: this.getClientConstructor({ subpackage }),
                 arguments_: [go.codeblock("options")],
