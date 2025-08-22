@@ -14,6 +14,7 @@ import {
     InlinedRequestBodyProperty,
     Name,
     NameAndWireValue,
+    ObjectProperty,
     PathParameter,
     QueryParameter,
     TypeDeclaration,
@@ -671,6 +672,16 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         };
     }
 
+    public getPropertyNameOfTypeDeclarationProperty(property: ObjectProperty): RequestWrapperNonBodyProperty {
+        return {
+            safeName: property.name.name.camelCase.safeName,
+            propertyName:
+                this.includeSerdeLayer && !this.retainOriginalCasing 
+                    ? property.name.name.camelCase.unsafeName 
+                    : property.name.wireValue
+        };
+    }
+
     public getAllPathParameters(): PathParameter[] {
         return this.endpoint.allPathParameters;
     }
@@ -844,7 +855,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         for (const property of typeDeclaration.shape.properties) {
             const propertyType = context.type.getReferenceToType(property.valueType);
             const hasDefaultValue = this.hasDefaultValue(property.valueType, context);
-            const propertyName = this.getInlinedRequestBodyPropertyKeyFromName(property.name);
+            const propertyName = this.getPropertyNameOfTypeDeclarationProperty(property);
             
             const typeNode = propertyType.typeNodeWithoutUndefined;
             
