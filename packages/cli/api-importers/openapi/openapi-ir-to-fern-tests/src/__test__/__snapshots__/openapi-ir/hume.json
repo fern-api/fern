@@ -1919,8 +1919,8 @@
                 "value": "error",
                 "type": "string"
               },
-              "groupName": [],
               "description": "The type of message sent through the socket; for a Web Socket Error message, this must be `error`.\n\nThis message indicates a disruption in the WebSocket connection, such as an unexpected disconnection, protocol error, or data transmission issue.",
+              "groupName": [],
               "type": "literal"
             },
             "audiences": [],
@@ -5401,8 +5401,8 @@
                 "value": "assistant_input",
                 "type": "string"
               },
-              "groupName": [],
               "description": "The type of message sent through the socket; must be `assistant_input` for our server to correctly identify and process it as an Assistant Input message.",
+              "groupName": [],
               "type": "literal"
             },
             "audiences": [],
@@ -5548,8 +5548,8 @@
                 "value": "audio_input",
                 "type": "string"
               },
-              "groupName": [],
               "description": "The type of message sent through the socket; must be `audio_input` for our server to correctly identify and process it as an Audio Input message.\n\nThis message is used for sending audio input data to EVI for processing and expression measurement. Audio data should be sent as a continuous stream, encoded in Base64.",
+              "groupName": [],
               "type": "literal"
             },
             "audiences": [],
@@ -5826,8 +5826,8 @@
                   "value": "pause_assistant_message",
                   "type": "string"
                 },
-                "groupName": [],
                 "description": "The type of message sent through the socket; must be `pause_assistant_message` for our server to correctly identify and process it as a Pause Assistant message.\n\nOnce this message is sent, EVI will not respond until a [Resume Assistant message](/reference/empathic-voice-interface-evi/chat/chat#send.Resume%20Assistant%20Message.type) is sent. When paused, EVI won’t respond, but transcriptions of your audio inputs will still be recorded.",
+                "groupName": [],
                 "type": "literal"
               },
               "groupName": [],
@@ -5896,8 +5896,8 @@
                   "value": "resume_assistant_message",
                   "type": "string"
                 },
-                "groupName": [],
                 "description": "The type of message sent through the socket; must be `resume_assistant_message` for our server to correctly identify and process it as a Resume Assistant message.\n\nUpon resuming, if any audio input was sent during the pause, EVI will retain context from all messages sent but only respond to the last user message. (e.g., If you ask EVI two questions while paused and then send a `resume_assistant_message`, EVI will respond to the second question and have added the first question to its conversation context.)",
+                "groupName": [],
                 "type": "literal"
               },
               "groupName": [],
@@ -5962,8 +5962,8 @@
                 "value": "session_settings",
                 "type": "string"
               },
-              "groupName": [],
               "description": "The type of message sent through the socket; must be `session_settings` for our server to correctly identify and process it as a Session Settings message.\n\nSession settings are temporary and apply only to the current Chat session. These settings can be adjusted dynamically based on the requirements of each session to ensure optimal performance and user experience.\n\nFor more information, please refer to the [Session Settings section](/docs/empathic-voice-interface-evi/configuration#session-settings) on the EVI Configuration page.",
+              "groupName": [],
               "type": "literal"
             },
             "audiences": [],
@@ -6407,8 +6407,8 @@
                   "value": "tool_error",
                   "type": "string"
                 },
-                "groupName": [],
                 "description": "The type of message sent through the socket; for a Tool Error message, this must be `tool_error`.\n\nUpon receiving a [Tool Call message](/reference/empathic-voice-interface-evi/chat/chat#receive.Tool%20Call%20Message.type) and failing to invoke the function, this message is sent to notify EVI of the tool's failure.",
+                "groupName": [],
                 "type": "literal"
               },
               "groupName": [],
@@ -6620,8 +6620,8 @@
                   "value": "tool_response",
                   "type": "string"
                 },
-                "groupName": [],
                 "description": "The type of message sent through the socket; for a Tool Response message, this must be `tool_response`.\n\nUpon receiving a [Tool Call message](/reference/empathic-voice-interface-evi/chat/chat#receive.Tool%20Call%20Message.type) and successfully invoking the function, this message is sent to convey the result of the function call back to EVI.",
+                "groupName": [],
                 "type": "literal"
               },
               "groupName": [],
@@ -6795,8 +6795,8 @@
                 "value": "user_input",
                 "type": "string"
               },
-              "groupName": [],
               "description": "The type of message sent through the socket; must be `user_input` for our server to correctly identify and process it as a User Input message.",
+              "groupName": [],
               "type": "literal"
             },
             "audiences": [],
@@ -6875,8 +6875,8 @@
                 "value": "assistant_end",
                 "type": "string"
               },
-              "groupName": [],
               "description": "The type of message sent through the socket; for an Assistant End message, this must be `assistant_end`.\n\nThis message indicates the conclusion of the assistant’s response, signaling that the assistant has finished speaking for the current conversational turn.",
+              "groupName": [],
               "type": "literal"
             },
             "audiences": [],
@@ -6938,8 +6938,8 @@
                 "value": "assistant_message",
                 "type": "string"
               },
-              "groupName": [],
               "description": "The type of message sent through the socket; for an Assistant Message, this must be `assistant_message`.\n\nThis message contains both a transcript of the assistant’s response and the expression measurement predictions of the assistant’s audio output.",
+              "groupName": [],
               "type": "literal"
             },
             "audiences": [],
@@ -7351,8 +7351,8 @@
                 "value": "chat_metadata",
                 "type": "string"
               },
-              "groupName": [],
               "description": "The type of message sent through the socket; for a Chat Metadata message, this must be `chat_metadata`.\n\nThe Chat Metadata message is the first message you receive after establishing a connection with EVI and contains important identifiers for the current Chat session.",
+              "groupName": [],
               "type": "literal"
             },
             "audiences": [],
@@ -8463,8 +8463,8 @@
                   "value": "tool_call",
                   "type": "string"
                 },
-                "groupName": [],
                 "description": "The type of message sent through the socket; for a Tool Call message, this must be `tool_call`.\n\nThis message indicates that the supplemental LLM has detected a need to invoke the specified tool.",
+                "groupName": [],
                 "type": "literal"
               },
               "groupName": [],
@@ -8563,8 +8563,8 @@
                 "value": "user_interruption",
                 "type": "string"
               },
-              "groupName": [],
               "description": "The type of message sent through the socket; for a User Interruption message, this must be `user_interruption`.\n\nThis message indicates the user has interrupted the assistant’s response. EVI detects the interruption in real-time and sends this message to signal the interruption event. This message allows the system to stop the current audio playback, clear the audio queue, and prepare to handle new user input.",
+              "groupName": [],
               "type": "literal"
             },
             "audiences": [],

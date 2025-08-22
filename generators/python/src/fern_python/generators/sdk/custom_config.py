@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Literal, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union, cast
 
 import pydantic
 from fern_python.codegen.module_manager import ModuleExport
@@ -120,7 +120,7 @@ class SDKCustomConfig(pydantic.BaseModel):
         obj.use_typeddict_requests = use_typeddict_requests
         obj.pydantic_config.use_typeddict_requests = use_typeddict_requests
 
-        return obj
+        return cast(SDKCustomConfig, obj)
 
     @pydantic.model_validator(mode="after")
     def propagate_use_inheritance_for_extended_models(self) -> "SDKCustomConfig":

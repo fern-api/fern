@@ -45,6 +45,9 @@ export class DynamicSnippetsGoTestGenerator {
                 this.context.logger.error(
                     `Failed to generate dynamic snippet for endpoint ${JSON.stringify(request.endpoint)}: ${error}`
                 );
+                if (error instanceof Error && error.stack) {
+                    this.context.logger.error(error.stack);
+                }
             }
         }
         this.context.logger.debug("Done generating dynamic snippet tests");

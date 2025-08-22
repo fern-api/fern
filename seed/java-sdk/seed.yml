@@ -145,6 +145,15 @@ fixtures:
         inline-path-parameters: true
       outputFolder: inline-file-properties
     - outputFolder: no-custom-config
+  examples:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
+    - customConfig:
+        inline-file-properties: true
+        inline-path-parameters: true
+      outputFolder: inline-file-properties
+    - outputFolder: no-custom-config
   nullable:
     - customConfig:
         wrapped-aliases: true

@@ -70,10 +70,11 @@ export function convertObject({
 }): SchemaWithExample {
     const allRequired = [...(required ?? [])];
     const propertiesToConvert = { ...properties };
-    const inlinedParentProperties: ObjectPropertyWithExample[] = [];
+    let inlinedParentProperties: ObjectPropertyWithExample[] = [];
     const parents: ReferencedAllOfInfo[] = [];
+
     for (const allOfElement of allOf) {
-        if (isReferenceObject(allOfElement)) {
+        if (!context.options.inlineAllOfSchemas && isReferenceObject(allOfElement)) {
             // if allOf element is a discriminated union, then don't inherit from it
             const resolvedReference = context.resolveSchemaReference(allOfElement);
             if (resolvedReference.discriminator != null && resolvedReference.discriminator.mapping != null) {
@@ -141,7 +142,26 @@ export function convertObject({
                 properties: getAllProperties({ schema: allOfElement, context, breadcrumbs, source, namespace })
             });
             context.markSchemaAsReferencedByNonRequest(schemaId);
+        } else if (isReferenceObject(allOfElement)) {
+            const resolvedReference = context.resolveSchemaReference(allOfElement);
+            const convertedSchema = convertSchema(resolvedReference, false, context, breadcrumbs, source, namespace);
+            if (convertedSchema.type === "object") {
+                inlinedParentProperties.push(...convertedSchema.properties);
+            }
         } else {
+            const required = allOfElement.required ?? [];
+            inlinedParentProperties = inlinedParentProperties.map((property) => {
+                if (
+                    (property.schema.type === "optional" || property.schema.type === "nullable") &&
+                    required.includes(property.key)
+                ) {
+                    return {
+                        ...property,
+                        schema: property.schema.value
+                    };
+                }
+                return property;
+            });
             const allOfSchema = convertSchema(allOfElement, false, context, breadcrumbs, source, namespace);
             if (allOfSchema.type === "object") {
                 inlinedParentProperties.push(...allOfSchema.properties);

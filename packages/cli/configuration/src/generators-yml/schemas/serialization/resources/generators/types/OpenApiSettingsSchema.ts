@@ -28,6 +28,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "additional-properties-defaults-to": core.serialization.boolean().optional(),
         "type-dates-as-strings": core.serialization.boolean().optional(),
         "preserve-single-schema-oneof": core.serialization.boolean().optional(),
+        "inline-all-of-schemas": core.serialization.boolean().optional(),
     })
     .extend(BaseApiSettingsSchema);
 
@@ -46,5 +47,6 @@ export declare namespace OpenApiSettingsSchema {
         "additional-properties-defaults-to"?: boolean | null;
         "type-dates-as-strings"?: boolean | null;
         "preserve-single-schema-oneof"?: boolean | null;
+        "inline-all-of-schemas"?: boolean | null;
     }
 }
