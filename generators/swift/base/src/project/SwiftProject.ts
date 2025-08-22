@@ -1,5 +1,5 @@
 import { mkdir } from "node:fs/promises";
-import { AbstractProject } from "@fern-api/base-generator";
+import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
 
@@ -9,7 +9,7 @@ import { SwiftFile } from "./SwiftFile";
 
 export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>> {
     /** Files stored in the the project root. */
-    private readonly rootFiles: SwiftFile[] = [];
+    private readonly rootFiles: File[] = [];
     /** Files stored in the `Sources` directory. */
     private readonly srcFiles: SwiftFile[] = [];
     private readonly srcFileNamesWithoutExtension = new Set<string>();
@@ -33,7 +33,7 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         return join(this.absolutePathToOutputDirectory, this.srcDirectory);
     }
 
-    public addRootFiles(...files: SwiftFile[]): void {
+    public addRootFiles(...files: File[]): void {
         this.rootFiles.push(...files);
     }
 

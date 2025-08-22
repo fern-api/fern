@@ -20,6 +20,7 @@ export class SdkGeneratorContext extends AbstractSwiftGeneratorContext<SdkCustom
         this.generatorAgent = new SwiftGeneratorAgent({
             logger: this.logger,
             config: this.config,
+            readmeConfigBuilder: new ReadmeConfigBuilder(),
             ir: this.ir
         });
     }

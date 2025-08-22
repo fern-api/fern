@@ -1,7 +1,7 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractSwiftGeneratorCli, SwiftFile } from "@fern-api/swift-base";
+import { AbstractSwiftGeneratorCli } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import {
     AliasGenerator,
@@ -91,13 +91,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 context,
                 endpointSnippets: snippets.endpoints
             });
-            context.project.addRootFiles(
-                new SwiftFile({
-                    filename: "README.md",
-                    fileContents: content,
-                    directory: RelativeFilePath.of("")
-                })
-            );
+            context.project.addRootFiles(new File("README.md", RelativeFilePath.of(""), content));
         } catch (e) {
             context.logger.warn("Failed to generate README.md, this is OK.");
         }
