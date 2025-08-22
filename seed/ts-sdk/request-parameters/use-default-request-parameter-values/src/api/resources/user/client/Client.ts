@@ -113,6 +113,82 @@ export class User {
     }
 
     /**
+     * @param {SeedRequestParameters.CreateUsernameReferencedRequest} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.createUsernameWithReferencedType({
+     *         tags: ["tags", "tags"],
+     *         body: {
+     *             username: "username",
+     *             password: "password",
+     *             name: "test"
+     *         }
+     *     })
+     */
+    public createUsernameWithReferencedType(
+        request: SeedRequestParameters.CreateUsernameReferencedRequest,
+        requestOptions?: User.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__createUsernameWithReferencedType(request, requestOptions));
+    }
+
+    private async __createUsernameWithReferencedType(
+        request: SeedRequestParameters.CreateUsernameReferencedRequest,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const { tags, body: _body } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        _queryParams["tags"] = toJson(tags);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/user/username-referenced",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            requestType: "json",
+            body: _body,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedRequestParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedRequestParametersError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedRequestParametersTimeoutError(
+                    "Timeout exceeded when calling POST /user/username-referenced.",
+                );
+            case "unknown":
+                throw new errors.SeedRequestParametersError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
      * @param {SeedRequestParameters.GetUsersRequest} request
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *

@@ -13,6 +13,17 @@
         },
         {
             "id": {
+                "path": "/user/username-referenced",
+                "method": "POST",
+                "identifier_override": "endpoint_user.createUsernameWithReferencedType"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedRequestParametersClient } from \"@fern/request-parameters\";\n\nconst client = new SeedRequestParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUsernameWithReferencedType({\n    tags: [\"tags\", \"tags\"],\n    body: {\n        username: \"username\",\n        password: \"password\",\n        name: \"test\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/user",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getUsername"
