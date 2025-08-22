@@ -67,7 +67,11 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
                     endpointSnippets
                 });
             } catch (e) {
-                context.logger.warn("Failed to generate README.md, this is OK.");
+                context.logger.error("Failed to generate README.md");
+                if (e instanceof Error) {
+                    context.logger.debug(e.message);
+                    context.logger.debug(e.stack ?? "");
+                }
             }
         }
 

@@ -2396,6 +2396,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public hasAnyEndpointsWithAuth(): boolean {
         return this.anyEndpointWithAuth;
     }
+
+    public getAuthProviderInstance(): AuthProviderInstance | undefined {
+        return this.authProvider;
+    }
 }
 
 type CustomHeader = { type: "global"; header: HttpHeader } | { type: "authScheme"; header: HeaderAuthScheme };

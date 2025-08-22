@@ -1678,6 +1678,16 @@
               "type": "null"
             }
           ]
+        },
+        "inline-all-of-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

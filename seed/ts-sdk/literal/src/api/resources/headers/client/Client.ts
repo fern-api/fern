@@ -65,7 +65,7 @@ export class Headers {
         request: SeedLiteral.SendLiteralsInHeadersRequest,
         requestOptions?: Headers.RequestOptions,
     ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 "X-Endpoint-Version": "02-12-2024",

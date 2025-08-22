@@ -181,6 +181,12 @@ fixtures:
   literals-unions:
     - outputFolder: no-custom-config
       customConfig: null
+  mixed-case:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: default-values
+      customConfig:
+        useDefaultRequestParameterValues: true
 scripts:
   - docker: golang:1.18-alpine
     commands:

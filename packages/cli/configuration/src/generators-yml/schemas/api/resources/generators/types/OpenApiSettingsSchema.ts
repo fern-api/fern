@@ -39,4 +39,9 @@ export interface OpenApiSettingsSchema extends FernDefinition.BaseApiSettingsSch
      * Defaults to false.
      */
     "preserve-single-schema-oneof"?: boolean;
+    /**
+     * Whether to inline allOf schemas. If false, allOf schemas will be
+     * extended in the code generation.
+     */
+    "inline-all-of-schemas"?: boolean;
 }

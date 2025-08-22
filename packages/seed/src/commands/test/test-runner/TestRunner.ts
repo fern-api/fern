@@ -141,10 +141,11 @@ export abstract class TestRunner {
             const customConfig =
                 this.generator.workspaceConfig.defaultCustomConfig != null || configuration?.customConfig != null
                     ? {
-                          ...(this.generator.workspaceConfig.defaultCustomConfig ?? {}),
-                          ...((configuration?.customConfig as Record<string, unknown>) ?? {})
+                          ...this.generator.workspaceConfig.defaultCustomConfig,
+                          ...(configuration?.customConfig as Record<string, unknown>)
                       }
                     : undefined;
+            console.log("customConfig", customConfig);
             const publishConfig = configuration?.publishConfig;
             const outputMode = configuration?.outputMode ?? this.generator.workspaceConfig.defaultOutputMode;
             const irVersion = this.generator.workspaceConfig.irVersion;
@@ -224,7 +225,11 @@ export abstract class TestRunner {
             const scriptStopwatch = new Stopwatch();
             scriptStopwatch.start();
 
-            const scriptResponse = await this.scriptRunner.run({ taskContext, outputDir, id });
+            const scriptResponse = await this.scriptRunner.run({
+                taskContext,
+                outputDir,
+                id
+            });
 
             scriptStopwatch.stop();
             metrics.compileTime = scriptStopwatch.duration();

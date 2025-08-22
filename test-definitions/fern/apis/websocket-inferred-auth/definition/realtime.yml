@@ -1,0 +1,89 @@
+# yaml-language-server: $schema=./../../../../../fern.schema.json
+channel:
+  path: /realtime/{id}
+  auth: true
+  path-parameters:
+    id: string
+  query-parameters:
+    model: optional<string>
+    temperature: optional<integer>
+  messages:
+    send:
+      display-name: Send
+      origin: client
+      body: SendEvent
+    send_snake_case:
+      display-name: send_snake
+      origin: client
+      body: send_snake_case
+    send2:
+      display-name: Send2
+      origin: client
+      body: SendEvent2
+    receive:
+      display-name: Receive
+      origin: server
+      body: ReceiveEvent
+    receive_snake_case:
+      display-name: Receive
+      origin: server
+      body: receive_snake_case
+    receive2:
+      display-name: Receive2
+      origin: server
+      body: ReceiveEvent2
+    receive3:
+      display-name: Receive3
+      origin: server
+      body: ReceiveEvent3
+  examples:
+    - name: Default example
+      path-parameters:
+        id: doc_123
+      messages:
+        - type: send
+          body:
+            sendText: "uvxcdv12344412b"
+            sendParam: 123
+        - type: receive
+          body:
+            alpha: "The weather for today..."
+            beta: 123
+        - type: send2
+          body:
+            sendText2: "uvxcdv12344412b"
+            sendParam2: true
+        - type: receive2
+          body:
+            gamma: "The weather for today..."
+            delta: 123
+            epsilon: true
+types:
+  SendEvent:
+    properties:
+      sendText: string
+      sendParam: integer
+  send_snake_case:
+    properties:
+      send_text: string
+      send_param: integer
+  ReceiveEvent:
+    properties:
+      alpha: string
+      beta: integer
+  receive_snake_case:
+    properties:
+      receive_text: string
+      receive_int: integer
+  SendEvent2:
+    properties:
+      sendText2: string
+      sendParam2: boolean
+  ReceiveEvent2:
+    properties:
+      gamma: string
+      delta: integer
+      epsilon: boolean
+  ReceiveEvent3:
+    properties:
+      receiveText3: string

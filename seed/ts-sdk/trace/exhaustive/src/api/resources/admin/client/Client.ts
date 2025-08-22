@@ -67,7 +67,7 @@ export class Admin {
         request: SeedTrace.TestSubmissionStatus,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.updateTestSubmissionStatus.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -144,7 +144,7 @@ export class Admin {
         request: SeedTrace.TestSubmissionUpdate,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.sendTestSubmissionUpdate.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -217,7 +217,7 @@ export class Admin {
         request: SeedTrace.WorkspaceSubmissionStatus,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.updateWorkspaceSubmissionStatus.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -294,7 +294,7 @@ export class Admin {
         request: SeedTrace.WorkspaceSubmissionUpdate,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -455,7 +455,7 @@ export class Admin {
         request: SeedTrace.StoreTracedTestCaseRequest,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedTestCase.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -605,7 +605,7 @@ export class Admin {
         request: SeedTrace.TraceResponseV2[],
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedTestCaseV2.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -758,7 +758,7 @@ export class Admin {
         request: SeedTrace.StoreTracedWorkspaceRequest,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedWorkspace.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -905,7 +905,7 @@ export class Admin {
         request: SeedTrace.TraceResponseV2[],
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedWorkspaceV2.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
