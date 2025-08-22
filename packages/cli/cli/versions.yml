@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Add `kwargs` as a reserved word in python so that generated SDKs continue to compile.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-18"
+  version: 0.66.20
+
+- changelogEntry:
     - summary: Handle multipart/mixed content types in endpoint responses.
       type: chore
   irVersion: 59
