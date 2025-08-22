@@ -1,6 +1,6 @@
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
 import { basename } from "@fern-api/path-utils";
-
+import path from "path";
 import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema";
 
 const DEFAULT_MODULE_PATH = "sdk";
@@ -24,13 +24,13 @@ function getImportPath({
     config: FernGeneratorExec.config.GeneratorConfig;
     customConfig: BaseGoCustomConfigSchema | undefined;
 }): string {
-    return (
+    const importPath =
         customConfig?.importPath ??
         customConfig?.module?.path ??
         (config.output.mode.type === "github"
             ? trimPrefix(config.output.mode.repoUrl, "https://")
-            : DEFAULT_MODULE_PATH)
-    );
+            : DEFAULT_MODULE_PATH);
+    return path.join(importPath, customConfig?.packagePath ?? "");
 }
 
 function getMajorVersionSuffix({ config }: { config: FernGeneratorExec.config.GeneratorConfig }): string | undefined {

@@ -2,7 +2,6 @@ import { assertNever } from "@fern-api/core-utils";
 
 import { java } from "..";
 import { ClassReference } from "./ClassReference";
-import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { ArraysClassReference, OptionalClassReference, Type } from "./Type";

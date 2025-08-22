@@ -29,9 +29,7 @@ generatorType: SDK
 defaultOutputMode: github
 
 customFixtureConfig:
-  customConfig:
-    generateWireTests: true
-    noSerdeLayer: true
+  customConfig: {}
 fixtures:
   imdb:
     - customConfig: null
@@ -323,6 +321,14 @@ fixtures:
         noSerdeLayer: true
         shouldGenerateWebsocketClients: true
       outputFolder: no-serde
+  websocket-bearer-auth:
+    - customConfig:
+        shouldGenerateWebsocketClients: true
+      outputFolder: websockets
+  websocket-inferred-auth:
+    - customConfig:
+        shouldGenerateWebsocketClients: true
+      outputFolder: websockets
 scripts:
   - docker: fernapi/ts-seed
     commands:

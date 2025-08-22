@@ -1,8 +1,6 @@
-import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Identifier } from "./Identifier";
-import { TypeInstantiation } from "./TypeInstantiation";
 
 export declare namespace Switch {
     interface Args {

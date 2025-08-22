@@ -4,7 +4,6 @@ import {
     Enum,
     EnumVariant,
     Expression,
-    Field,
     ImplBlock,
     MatchArm,
     Method,

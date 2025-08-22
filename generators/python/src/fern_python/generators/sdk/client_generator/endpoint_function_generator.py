@@ -42,8 +42,8 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
     get_base_url,
     get_base_url_property_name,
 )
-from fern_python.snippet import SnippetWriter
 from fern_python.generators.sdk.names import get_variable_member_name
+from fern_python.snippet import SnippetWriter
 
 import fern.ir.resources as ir_types
 
@@ -354,7 +354,8 @@ class EndpointFunctionGenerator:
 
     def _get_stream_func_return_type(self) -> AST.TypeHint:
         underlying_type = self._get_response_body_underlying_type(
-            response_body=self._endpoint.response.body, is_async=self._is_async
+            response_body=self._endpoint.response.body if self._endpoint.response is not None else None,
+            is_async=self._is_async,
         )
         underlying_type_wrapped = (
             AST.TypeHint.async_iterator(underlying_type) if self._is_async else AST.TypeHint.iterator(underlying_type)
@@ -1013,10 +1014,8 @@ class EndpointFunctionGenerator:
                 if path_parameter.variable is not None:
                     # path parameter is backed by variable => reference from client wrapper
                     variable = next(
-                        (variable
-                         for variable in self._context.ir.variables
-                         if variable.id == path_parameter.variable),
-                        None
+                        (variable for variable in self._context.ir.variables if variable.id == path_parameter.variable),
+                        None,
                     )
                     if variable is None:
                         raise RuntimeError(f"Variable does not exist: {path_parameter.variable}")
@@ -1628,6 +1627,7 @@ class EndpointFunctionGenerator:
             data_attribute = "data"
             if is_streaming_endpoint(self._endpoint):
                 response_variable = "r"
+                body: list[AST.AstNode] = []
                 if self._is_async:
                     body = [
                         AST.ForStatement(
@@ -1687,7 +1687,7 @@ class EndpointFunctionGenerator:
 
 
 def is_streaming_endpoint(endpoint: ir_types.HttpEndpoint) -> bool:
-    return (
+    return bool(
         endpoint.response is not None
         and endpoint.response.body
         and (
@@ -2102,6 +2102,7 @@ def unwrap_optional_type(
         if container_as_union.type == "nullable":
             return unwrap_optional_type(container_as_union.nullable)
     return type_reference
+
 
 def filter_variable_path_parameters(path_parameters: List[ir_types.PathParameter]) -> List[ir_types.PathParameter]:
     return [param for param in path_parameters if param.variable is None]

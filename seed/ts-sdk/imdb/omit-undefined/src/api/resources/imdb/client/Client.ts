@@ -61,7 +61,7 @@ export class Imdb {
         request: SeedApi.CreateMovieRequest,
         requestOptions?: Imdb.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.MovieId>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -131,7 +131,7 @@ export class Imdb {
         movieId: SeedApi.MovieId,
         requestOptions?: Imdb.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.Movie>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,

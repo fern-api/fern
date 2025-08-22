@@ -11,10 +11,9 @@ import {
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
 import { Audiences } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
-import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
-import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
 import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";

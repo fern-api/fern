@@ -1,10 +1,4 @@
-import {
-    AbsoluteFilePath,
-    getDirectoryContents,
-    getDirectoryContentsForSnapshot,
-    join,
-    RelativeFilePath
-} from "@fern-api/fs-utils";
+import { AbsoluteFilePath, getDirectoryContentsForSnapshot, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { cp } from "fs/promises";
 import tmp from "tmp-promise";

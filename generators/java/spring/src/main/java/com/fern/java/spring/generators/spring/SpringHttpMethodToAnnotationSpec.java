@@ -15,8 +15,13 @@
  */
 package com.fern.java.spring.generators.spring;
 
+import com.fern.ir.model.http.BytesRequest;
+import com.fern.ir.model.http.FileUploadRequest;
 import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.ir.model.http.HttpMethod;
+import com.fern.ir.model.http.HttpRequestBody;
+import com.fern.ir.model.http.HttpRequestBodyReference;
+import com.fern.ir.model.http.InlinedRequestBody;
 import com.fern.java.utils.HttpPathUtils;
 import com.squareup.javapoet.AnnotationSpec;
 import java.util.Optional;
@@ -29,13 +34,93 @@ import org.springframework.web.bind.annotation.PutMapping;
 public final class SpringHttpMethodToAnnotationSpec implements HttpMethod.Visitor<AnnotationSpec> {
 
     private final String path;
-    private final Optional<String> consumes;
+    private final Optional<String[]> consumes;
     private final Optional<String> produces;
+    private final HttpMethod httpMethod;
 
     public SpringHttpMethodToAnnotationSpec(HttpEndpoint httpEndpoint) {
         this.path = HttpPathUtils.getPathWithCurlyBracedPathParams(httpEndpoint.getPath());
-        this.consumes = httpEndpoint.getRequestBody().map(_body -> "application/json");
+        this.httpMethod = httpEndpoint.getMethod();
+        this.consumes = httpEndpoint.getRequestBody().map(body -> determineConsumesTypes(body, httpMethod));
         this.produces = httpEndpoint.getResponse().map(_body -> "application/json");
+    }
+
+    private String[] determineConsumesTypes(HttpRequestBody requestBody, HttpMethod method) {
+        boolean isMergePatch = requestBody.visit(new HttpRequestBody.Visitor<Boolean>() {
+            @Override
+            public Boolean visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
+                return inlinedRequestBody
+                        .getContentType()
+                        .map(ct -> ct.equals("application/merge-patch+json"))
+                        .orElse(false);
+            }
+
+            @Override
+            public Boolean visitReference(HttpRequestBodyReference reference) {
+                return reference
+                        .getContentType()
+                        .map(ct -> ct.equals("application/merge-patch+json"))
+                        .orElse(false);
+            }
+
+            @Override
+            public Boolean visitFileUpload(FileUploadRequest fileUpload) {
+                return false;
+            }
+
+            @Override
+            public Boolean visitBytes(BytesRequest bytes) {
+                return false;
+            }
+
+            @Override
+            public Boolean _visitUnknown(Object unknownType) {
+                return false;
+            }
+        });
+
+        if (isMergePatch && method.visit(new IsPatchMethodVisitor())) {
+            return new String[] {"application/json", "application/merge-patch+json"};
+        }
+
+        return new String[] {"application/json"};
+    }
+
+    private static class IsPatchMethodVisitor implements HttpMethod.Visitor<Boolean> {
+        @Override
+        public Boolean visitGet() {
+            return false;
+        }
+
+        @Override
+        public Boolean visitPost() {
+            return false;
+        }
+
+        @Override
+        public Boolean visitPut() {
+            return false;
+        }
+
+        @Override
+        public Boolean visitDelete() {
+            return false;
+        }
+
+        @Override
+        public Boolean visitPatch() {
+            return true;
+        }
+
+        @Override
+        public Boolean visitHead() {
+            return false;
+        }
+
+        @Override
+        public Boolean visitUnknown(String unknownType) {
+            return false;
+        }
     }
 
     @Override
@@ -78,7 +163,19 @@ public final class SpringHttpMethodToAnnotationSpec implements HttpMethod.Visito
             annotationSpecBuilder.addMember("produces", "$S", produces.get());
         }
         if (consumes.isPresent()) {
-            annotationSpecBuilder.addMember("consumes", "$S", consumes.get());
+            String[] consumesArray = consumes.get();
+            if (consumesArray.length == 1) {
+                annotationSpecBuilder.addMember("consumes", "$S", consumesArray[0]);
+            } else {
+                annotationSpecBuilder.addMember(
+                        "consumes",
+                        "{$L}",
+                        String.join(
+                                ", ",
+                                java.util.Arrays.stream(consumesArray)
+                                        .map(ct -> "\"" + ct + "\"")
+                                        .toArray(String[]::new)));
+            }
         }
         return annotationSpecBuilder.build();
     }

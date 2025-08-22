@@ -10,18 +10,14 @@ import {
     KeywordSplatParameter,
     Method,
     MethodInvocation,
-    MethodKind,
     Module_,
     PositionalArgument,
     PositionalParameter,
     PositionalSplatParameter,
     TypeParameter,
-    Writer,
     YieldParameter
 } from "./ast";
 import { IfElse } from "./ast/IfElse";
-
-import * as TypeLiteral from "./ast/TypeLiteral";
 
 export {
     Class_,

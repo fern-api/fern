@@ -1041,10 +1041,10 @@ packages:
             }
         engines: { node: ">=10" }
 
-    caniuse-lite@1.0.30001735:
+    caniuse-lite@1.0.30001736:
         resolution:
             {
-                integrity: sha512-EV/laoX7Wq2J9TQlyIXRxTJqIw4sxfXS4OYgudGxBYRuTv0q7AM6yMEpU/Vo1I94thg9U6EZ2NfZx9GJq83u7w==,
+                integrity: sha512-ImpN5gLEY8gWeqfLUyEF4b7mYWcYoR2Si1VhnrbM4JizRFmfGaAQ12PhNykq6nvI4XvKLrsp8Xde74D5phJOSw==,
             }
 
     chalk@4.1.2:
@@ -1266,10 +1266,10 @@ packages:
             }
         engines: { node: ">= 0.4" }
 
-    electron-to-chromium@1.5.207:
+    electron-to-chromium@1.5.208:
         resolution:
             {
-                integrity: sha512-mryFrrL/GXDTmAtIVMVf+eIXM09BBPlO5IQ7lUyKmK8d+A4VpRGG+M3ofoVef6qyF8s60rJei8ymlJxjUA8Faw==,
+                integrity: sha512-ozZyibehoe7tOhNaf16lKmljVf+3npZcJIEbJRVftVsmAg5TeA1mGS9dVCZzOwr2xT7xK15V0p7+GZqSPgkuPg==,
             }
 
     emittery@0.13.1:
@@ -3038,10 +3038,10 @@ packages:
             }
         engines: { node: ">=10" }
 
-    yoctocolors-cjs@2.1.2:
+    yoctocolors-cjs@2.1.3:
         resolution:
             {
-                integrity: sha512-cYVsTjKl8b+FrnidjibDWskAv7UKOfcwaVZdp/it9n1s9fU3IkgDbhdIRKCW4JDsAlECJY0ytoVPT3sK6kideA==,
+                integrity: sha512-U/PBtDf35ff0D8X8D0jfdzHYEPFxAI7jJlxZXwCSez5M3190m+QobIfh+sWDWSHMCWWJN2AWamkegn6vr6YBTw==,
             }
         engines: { node: ">=18" }
 
@@ -3269,7 +3269,7 @@ snapshots:
             mute-stream: 2.0.0
             signal-exit: 4.1.0
             wrap-ansi: 6.2.0
-            yoctocolors-cjs: 2.1.2
+            yoctocolors-cjs: 2.1.3
         optionalDependencies:
             "@types/node": 18.19.123
 
@@ -3788,8 +3788,8 @@ snapshots:
 
     browserslist@4.25.3:
         dependencies:
-            caniuse-lite: 1.0.30001735
-            electron-to-chromium: 1.5.207
+            caniuse-lite: 1.0.30001736
+            electron-to-chromium: 1.5.208
             node-releases: 2.0.19
             update-browserslist-db: 1.1.3(browserslist@4.25.3)
 
@@ -3814,7 +3814,7 @@ snapshots:
 
     camelcase@6.3.0: {}
 
-    caniuse-lite@1.0.30001735: {}
+    caniuse-lite@1.0.30001736: {}
 
     chalk@4.1.2:
         dependencies:
@@ -3920,7 +3920,7 @@ snapshots:
             es-errors: 1.3.0
             gopd: 1.2.0
 
-    electron-to-chromium@1.5.207: {}
+    electron-to-chromium@1.5.208: {}
 
     emittery@0.13.1: {}
 
@@ -5092,4 +5092,4 @@ snapshots:
 
     yocto-queue@0.1.0: {}
 
-    yoctocolors-cjs@2.1.2: {}
+    yoctocolors-cjs@2.1.3: {}

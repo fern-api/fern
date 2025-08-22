@@ -4,7 +4,6 @@ import {
     getPropertyKey,
     getTextOfTsKeyword,
     getTextOfTsNode,
-    maybeAddDocsNode,
     maybeAddDocsStructure,
     writerToString
 } from "@fern-typescript/commons";

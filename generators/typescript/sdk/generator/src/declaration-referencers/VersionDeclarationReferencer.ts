@@ -1,6 +1,5 @@
 import { ApiVersionScheme } from "@fern-fern/ir-sdk/api";
 import {
-    ExportedDirectory,
     ExportedFilePath,
     ExportsManager,
     getReferenceToExportViaNamespaceImport,
