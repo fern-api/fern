@@ -48,12 +48,11 @@ export class ReadmeConfigBuilder {
     }
 
     private getLanguageInfo(context: SdkGeneratorContext): FernGeneratorCli.LanguageInfo {
-        // TODO(kafkas): Implement
-        return {
-            type: "typescript",
-            _visit: (visitor) => {
-                return visitor.typescript({});
+        return FernGeneratorCli.LanguageInfo.swift({
+            publishInfo: {
+                gitUrl: "", // TODO(kafkas): Implement
+                minVersion: "0.1.0" // TODO(kafkas): Implement
             }
-        };
+        });
     }
 }
