@@ -24,7 +24,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/user/username",
+              "raw": "{{baseUrl}}/user/username?tags=%5B%22tags%22%2C%22tags%22%5D",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -32,7 +32,13 @@
                 "user",
                 "username"
               ],
-              "query": [],
+              "query": [
+                {
+                  "key": "tags",
+                  "description": null,
+                  "value": "[\"tags\",\"tags\"]"
+                }
+              ],
               "variable": []
             },
             "header": [
@@ -62,7 +68,7 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/user/username",
+                  "raw": "{{baseUrl}}/user/username?tags=%5B%22tags%22%2C%22tags%22%5D",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -70,7 +76,105 @@
                     "user",
                     "username"
                   ],
-                  "query": [],
+                  "query": [
+                    {
+                      "key": "tags",
+                      "description": null,
+                      "value": "[\"tags\",\"tags\"]"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"username\": \"username\",\n    \"password\": \"password\",\n    \"name\": \"test\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Create Username With Referenced Type",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/user/username-referenced?tags=%5B%22tags%22%2C%22tags%22%5D",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                "username-referenced"
+              ],
+              "query": [
+                {
+                  "key": "tags",
+                  "description": null,
+                  "value": "[\"tags\",\"tags\"]"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"username\",\n    \"password\": \"password\",\n    \"name\": \"test\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/user/username-referenced?tags=%5B%22tags%22%2C%22tags%22%5D",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "user",
+                    "username-referenced"
+                  ],
+                  "query": [
+                    {
+                      "key": "tags",
+                      "description": null,
+                      "value": "[\"tags\",\"tags\"]"
+                    }
+                  ],
                   "variable": []
                 },
                 "header": [
