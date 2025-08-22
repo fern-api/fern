@@ -14,7 +14,7 @@ import (
 type RawClient struct {
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
+	options *core.RequestOptions
 }
 
 func NewRawClient(options *core.RequestOptions) *RawClient {
@@ -26,7 +26,6 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
@@ -43,7 +42,7 @@ func (r *RawClient) PostJsonPatchContentType(
 	)
 	endpointURL := baseURL + "/foo/bar"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	raw, err := r.caller.Call(
@@ -82,7 +81,7 @@ func (r *RawClient) PostJsonPatchContentWithCharsetType(
 	)
 	endpointURL := baseURL + "/foo/baz"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	raw, err := r.caller.Call(

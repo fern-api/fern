@@ -10,7 +10,6 @@ import (
 	option "github.com/enum/fern/option"
 	pathparam "github.com/enum/fern/pathparam"
 	queryparam "github.com/enum/fern/queryparam"
-	http "net/http"
 )
 
 type Client struct {
@@ -19,18 +18,19 @@ type Client struct {
 	PathParam      *pathparam.Client
 	QueryParam     *queryparam.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		Headers:        headers.NewClient(opts...),
-		InlinedRequest: inlinedrequest.NewClient(opts...),
-		PathParam:      pathparam.NewClient(opts...),
-		QueryParam:     queryparam.NewClient(opts...),
+		Headers:        headers.NewClient(options),
+		InlinedRequest: inlinedrequest.NewClient(options),
+		PathParam:      pathparam.NewClient(options),
+		QueryParam:     queryparam.NewClient(options),
+		options:        options,
 		baseURL:        options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -38,6 +38,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

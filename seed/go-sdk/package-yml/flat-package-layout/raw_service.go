@@ -13,7 +13,7 @@ import (
 type RawServiceClient struct {
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
+	options *core.RequestOptions
 }
 
 func NewRawServiceClient(options *core.RequestOptions) *RawServiceClient {
@@ -25,7 +25,6 @@ func NewRawServiceClient(options *core.RequestOptions) *RawServiceClient {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
@@ -47,7 +46,7 @@ func (r *RawServiceClient) Nop(
 		nestedId,
 	)
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	raw, err := r.caller.Call(

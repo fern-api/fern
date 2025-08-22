@@ -14,7 +14,7 @@ import (
 type RawClient struct {
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
+	options *core.RequestOptions
 }
 
 func NewRawClient(options *core.RequestOptions) *RawClient {
@@ -26,7 +26,6 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
@@ -43,7 +42,7 @@ func (r *RawClient) GetMovie(
 	)
 	endpointURL := baseURL + "/movie"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response *fern.Response
@@ -84,7 +83,7 @@ func (r *RawClient) GetMovieDocs(
 	)
 	endpointURL := baseURL + "/movie"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response *fern.Response
@@ -125,7 +124,7 @@ func (r *RawClient) GetMovieName(
 	)
 	endpointURL := baseURL + "/movie"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response *fern.StringResponse
@@ -166,7 +165,7 @@ func (r *RawClient) GetMovieMetadata(
 	)
 	endpointURL := baseURL + "/movie"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response *fern.Response
@@ -207,7 +206,7 @@ func (r *RawClient) GetOptionalMovie(
 	)
 	endpointURL := baseURL + "/movie"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response *fern.Response
@@ -248,7 +247,7 @@ func (r *RawClient) GetOptionalMovieDocs(
 	)
 	endpointURL := baseURL + "/movie"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response fern.OptionalWithDocs
@@ -289,7 +288,7 @@ func (r *RawClient) GetOptionalMovieName(
 	)
 	endpointURL := baseURL + "/movie"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response fern.OptionalStringResponse

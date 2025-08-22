@@ -14,7 +14,7 @@ import (
 type RawClient struct {
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
+	options *core.RequestOptions
 }
 
 func NewRawClient(options *core.RequestOptions) *RawClient {
@@ -26,7 +26,6 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
@@ -42,7 +41,7 @@ func (r *RawClient) GetWithNoRequestBody(
 	)
 	endpointURL := baseURL + "/no-req-body"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response *types.ObjectWithOptionalField
@@ -81,7 +80,7 @@ func (r *RawClient) PostWithNoRequestBody(
 	)
 	endpointURL := baseURL + "/no-req-body"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response string
