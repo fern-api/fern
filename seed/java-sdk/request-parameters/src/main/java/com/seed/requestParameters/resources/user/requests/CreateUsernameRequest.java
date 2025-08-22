@@ -9,9 +9,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.requestParameters.core.ObjectMappers;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
@@ -19,6 +22,8 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CreateUsernameRequest.Builder.class)
 public final class CreateUsernameRequest {
+    private final List<String> tags;
+
     private final String username;
 
     private final String password;
@@ -28,11 +33,21 @@ public final class CreateUsernameRequest {
     private final Map<String, Object> additionalProperties;
 
     private CreateUsernameRequest(
-            String username, String password, String name, Map<String, Object> additionalProperties) {
+            List<String> tags,
+            String username,
+            String password,
+            String name,
+            Map<String, Object> additionalProperties) {
+        this.tags = tags;
         this.username = username;
         this.password = password;
         this.name = name;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("tags")
+    public List<String> getTags() {
+        return tags;
     }
 
     @JsonProperty("username")
@@ -62,12 +77,15 @@ public final class CreateUsernameRequest {
     }
 
     private boolean equalTo(CreateUsernameRequest other) {
-        return username.equals(other.username) && password.equals(other.password) && name.equals(other.name);
+        return tags.equals(other.tags)
+                && username.equals(other.username)
+                && password.equals(other.password)
+                && name.equals(other.name);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.username, this.password, this.name);
+        return Objects.hash(this.tags, this.username, this.password, this.name);
     }
 
     @java.lang.Override
@@ -95,6 +113,12 @@ public final class CreateUsernameRequest {
 
     public interface _FinalStage {
         CreateUsernameRequest build();
+
+        _FinalStage tags(List<String> tags);
+
+        _FinalStage addTags(String tags);
+
+        _FinalStage addAllTags(List<String> tags);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -105,6 +129,8 @@ public final class CreateUsernameRequest {
 
         private String name;
 
+        private List<String> tags = new ArrayList<>();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -112,6 +138,7 @@ public final class CreateUsernameRequest {
 
         @java.lang.Override
         public Builder from(CreateUsernameRequest other) {
+            tags(other.getTags());
             username(other.getUsername());
             password(other.getPassword());
             name(other.getName());
@@ -140,8 +167,28 @@ public final class CreateUsernameRequest {
         }
 
         @java.lang.Override
+        public _FinalStage addAllTags(List<String> tags) {
+            this.tags.addAll(tags);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage addTags(String tags) {
+            this.tags.add(tags);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "tags", nulls = Nulls.SKIP)
+        public _FinalStage tags(List<String> tags) {
+            this.tags.clear();
+            this.tags.addAll(tags);
+            return this;
+        }
+
+        @java.lang.Override
         public CreateUsernameRequest build() {
-            return new CreateUsernameRequest(username, password, name, additionalProperties);
+            return new CreateUsernameRequest(tags, username, password, name, additionalProperties);
         }
     }
 }
