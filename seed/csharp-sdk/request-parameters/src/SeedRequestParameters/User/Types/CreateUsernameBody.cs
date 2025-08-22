@@ -1,13 +1,15 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedRequestParameters.Core;
 
 namespace SeedRequestParameters;
 
 [Serializable]
-public record CreateUsernameRequest
+public record CreateUsernameBody : IJsonOnDeserialized
 {
-    [JsonIgnore]
-    public IEnumerable<string> Tags { get; set; } = new List<string>();
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("username")]
     public required string Username { get; set; }
@@ -17,6 +19,12 @@ public record CreateUsernameRequest
 
     [JsonPropertyName("name")]
     public required string Name { get; set; }
+
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

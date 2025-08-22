@@ -4,7 +4,7 @@ using SeedRequestParameters;
 namespace SeedRequestParameters.Test.Unit.MockServer;
 
 [TestFixture]
-public class CreateUsernameTest : BaseMockServerTest
+public class CreateUsernameWithReferencedTypeTest : BaseMockServerTest
 {
     [Test]
     public void MockServerTest()
@@ -21,20 +21,23 @@ public class CreateUsernameTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/user/username")
+                    .WithPath("/user/username-referenced")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(async () =>
-            await Client.User.CreateUsernameAsync(
-                new CreateUsernameRequest
+            await Client.User.CreateUsernameWithReferencedTypeAsync(
+                new CreateUsernameReferencedRequest
                 {
                     Tags = new List<string>() { "tags", "tags" },
-                    Username = "username",
-                    Password = "password",
-                    Name = "test",
+                    Body = new CreateUsernameBody
+                    {
+                        Username = "username",
+                        Password = "password",
+                        Name = "test",
+                    },
                 }
             )
         );
