@@ -1,0 +1,309 @@
+{
+  "title": "Pet Store API",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Create a new pet",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostPetsRequest",
+      "request": {
+        "schema": {
+          "generatedName": "PostPetsRequest",
+          "schema": "CreatePetRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Pet created successfully",
+        "schema": {
+          "generatedName": "PostPetsResponse",
+          "schema": "Pet",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 201,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/pets",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "type": {
+                "value": {
+                  "value": "pet",
+                  "type": "string"
+                },
+                "type": "literal"
+              },
+              "name": {
+                "value": {
+                  "value": "Fluffy",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 123,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "type": {
+                  "value": {
+                    "value": "pet",
+                    "type": "string"
+                  },
+                  "type": "literal"
+                },
+                "name": {
+                  "value": {
+                    "value": "Fluffy",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "breed": {
+                  "value": {
+                    "value": "Golden Retriever",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "status": {
+                  "value": {
+                    "value": "active",
+                    "type": "string"
+                  },
+                  "type": "literal"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "CreatePetRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "createPetRequestType",
+            "key": "type",
+            "schema": {
+              "value": {
+                "value": "pet",
+                "type": "string"
+              },
+              "generatedName": "CreatePetRequestType",
+              "groupName": [],
+              "type": "literal"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "createPetRequestName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "example": "Fluffy",
+                "type": "string"
+              },
+              "generatedName": "CreatePetRequestName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "createPetRequestBreed",
+            "key": "breed",
+            "schema": {
+              "generatedName": "createPetRequestBreed",
+              "value": {
+                "schema": {
+                  "example": "Golden Retriever",
+                  "type": "string"
+                },
+                "generatedName": "CreatePetRequestBreed",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CreatePetRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Pet": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "petId",
+            "key": "id",
+            "schema": {
+              "schema": {
+                "example": 123,
+                "type": "int"
+              },
+              "generatedName": "PetId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "petType",
+            "key": "type",
+            "schema": {
+              "value": {
+                "value": "pet",
+                "type": "string"
+              },
+              "generatedName": "PetType",
+              "groupName": [],
+              "type": "literal"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "petName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "example": "Fluffy",
+                "type": "string"
+              },
+              "generatedName": "PetName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "petBreed",
+            "key": "breed",
+            "schema": {
+              "generatedName": "petBreed",
+              "value": {
+                "schema": {
+                  "example": "Golden Retriever",
+                  "type": "string"
+                },
+                "generatedName": "PetBreed",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "petStatus",
+            "key": "status",
+            "schema": {
+              "value": {
+                "value": "active",
+                "type": "string"
+              },
+              "generatedName": "PetStatus",
+              "groupName": [],
+              "type": "literal"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Pet",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
