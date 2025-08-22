@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
 - changelogEntry:
-    - summary: | 
+    - summary: Nested protobuf types have correct type ids in converted ir.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-22"
+  version: 0.66.22
+
+- changelogEntry:
+    - summary: |
         Introduce an OpenAPI setting called `inline-all-of-schemas` which recursively 
         visits the scheme definitions of allOf schemas and inlines them into the child. 
 
