@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Nested protobuf types have correct type ids in converted ir.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-18"
+  version: 0.66.20
+
+- changelogEntry:
     - summary: Handle multipart/mixed content types in endpoint responses.
       type: chore
   irVersion: 59
