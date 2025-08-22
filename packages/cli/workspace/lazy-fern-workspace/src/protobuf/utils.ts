@@ -50,7 +50,7 @@ export const PROTOBUF_MODULE_PACKAGE_JSON = `{
 `;
 
 export const PROTOBUF_SHELL_PROXY = `#!/usr/bin/env bash
-fern protoc-gen-fern "$@"
+fernlocal protoc-gen-fern "$@"
 `;
 
 export const createEmptyProtobufLogger = (): Logger => {
