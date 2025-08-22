@@ -46,6 +46,10 @@ export abstract class AbstractRubyGeneratorContext<
         return this.customConfig.module ?? snakeCase(this.config.organization);
     }
 
+    public getFixtureNameFromIR(): string {
+        return snakeCase(this.ir.apiName.pascalCase.safeName);
+    }
+
     public getRootModule(): ruby.Module_ {
         return ruby.module({
             name: capitalize(this.getRootFolderName()),
