@@ -65,6 +65,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getEndpointSnippetString(endpoint: FernGeneratorExec.Endpoint): string {
         // TODO(kafkas): Implement
-        return "endpoint snippet string";
+        return `print("Hello, world!")\n`;
     }
 }
