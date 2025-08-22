@@ -19,6 +19,7 @@ type RawAcme struct {
 
 func NewRawAcme(options *core.RequestOptions) *RawAcme {
 	return &RawAcme{
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{

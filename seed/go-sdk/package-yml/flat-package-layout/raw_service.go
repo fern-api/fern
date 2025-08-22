@@ -18,6 +18,7 @@ type RawServiceClient struct {
 
 func NewRawServiceClient(options *core.RequestOptions) *RawServiceClient {
 	return &RawServiceClient{
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{

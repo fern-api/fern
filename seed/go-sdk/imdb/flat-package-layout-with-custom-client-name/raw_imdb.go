@@ -18,6 +18,7 @@ type RawImdbClient struct {
 
 func NewRawImdbClient(options *core.RequestOptions) *RawImdbClient {
 	return &RawImdbClient{
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
