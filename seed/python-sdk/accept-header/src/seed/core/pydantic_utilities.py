@@ -147,7 +147,10 @@ class UniversalBaseModel(pydantic.BaseModel):
 
             dict_dump = super().dict(**kwargs_with_defaults_exclude_unset_include_fields)
 
-        return convert_and_respect_annotation_metadata(object_=dict_dump, annotation=self.__class__, direction="write")
+        return cast(
+            Dict[str, Any],
+            convert_and_respect_annotation_metadata(object_=dict_dump, annotation=self.__class__, direction="write"),
+        )
 
 
 def _union_list_of_pydantic_dicts(source: List[Any], destination: List[Any]) -> List[Any]:
