@@ -49,8 +49,8 @@ export abstract class AbstractGeneratorCli<
                     break;
                 case "downloadFiles":
                     // jsklan: Do not merge!!
-                    // await this.writeForDownload(context);
-                    await this.writeForGithub(context);
+                    await this.writeForDownload(context);
+                    // await this.writeForGithub(context);
                     break;
                 default:
                     assertNever(config.output.mode);
