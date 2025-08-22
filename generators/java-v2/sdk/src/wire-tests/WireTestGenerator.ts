@@ -1,12 +1,12 @@
-import { DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
 import { File, Style } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { java } from "@fern-api/java-ast";
-import { HttpEndpoint, dynamic } from "@fern-fern/ir-sdk/api";
-
+import { Writer } from "@fern-api/java-ast/src/ast";
+import { DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
+import { dynamic, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertIr } from "../utils/convertIr";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
+import { convertIr } from "../utils/convertIr";
 
 export class WireTestGenerator {
     constructor(private readonly context: SdkGeneratorContext) {}
@@ -15,8 +15,8 @@ export class WireTestGenerator {
         className: string,
         clientClassName: string,
         hasAuth: boolean
-    ): (writer: any) => void {
-        return (writer: any) => {
+    ): (writer: Writer) => void {
+        return (writer) => {
             // Add imports
             writer.addImport("org.junit.jupiter.api.Assertions");
             writer.addImport("com.fasterxml.jackson.databind.ObjectMapper");
@@ -62,8 +62,8 @@ export class WireTestGenerator {
         };
     }
 
-    private createTestMethod(endpoint: HttpEndpoint, snippet: string): (writer: any) => void {
-        return (writer: any) => {
+    private createTestMethod(endpoint: HttpEndpoint, snippet: string): (writer: Writer) => void {
+        return (writer) => {
             const testMethodName = `test${this.toMethodName(endpoint.name.pascalCase.safeName)}`;
             const methodCall = this.extractMethodCall(snippet);
 
@@ -221,7 +221,9 @@ export class WireTestGenerator {
 
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
-            if (!line) continue;
+            if (!line) {
+                continue;
+            }
 
             // Look for client instantiation (contains "client =" or specific client class name)
             if (line.includes("client =") || line.includes("Client client =")) {
@@ -248,17 +250,24 @@ export class WireTestGenerator {
 
         for (let i = clientCallStartIndex; i < lines.length; i++) {
             const line = lines[i];
-            if (!line && methodCallLines.length === 0) continue;
+            if (!line && methodCallLines.length === 0) {
+                continue;
+            }
 
             if (line !== undefined) {
                 methodCallLines.push(line);
 
                 // Track brace and parenthesis depth
                 for (const char of line) {
-                    if (char === "{") braceDepth++;
-                    if (char === "}") braceDepth--;
-                    if (char === "(") parenDepth++;
-                    if (char === ")") parenDepth--;
+                    if (char === "{") {
+                        braceDepth++;
+                    } else if (char === "}") {
+                        braceDepth--;
+                    } else if (char === "(") {
+                        parenDepth++;
+                    } else if (char === ")") {
+                        parenDepth--;
+                    }
                 }
 
                 // Check for statement termination
@@ -282,7 +291,9 @@ export class WireTestGenerator {
 
         const minIndent = Math.min(
             ...nonEmptyLines.map((line) => {
-                if (!line) return 0;
+                if (!line) {
+                    return 0;
+                }
                 const match = line.match(/^(\s*)/);
                 return match?.[1]?.length ?? 0;
             })
