@@ -1,8 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.6.4-rc0
+  changelogEntry:
+    - summary: |
+        Redesign the client to share RequestOptions across all subclients.
+      type: fix
+  createdAt: '2025-08-22'
+  irVersion: 58
+
 - version: 1.6.3
   changelogEntry:
     - summary: |
-        Update the dyanmic snippet generator to handle list values in the request body. 
+        Update the dyanmic snippet generator to handle list values in the request body.
         Previously, it would throw an error.
       type: fix
   createdAt: '2025-08-21'

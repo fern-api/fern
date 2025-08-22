@@ -14,7 +14,7 @@ import (
 type RawClient struct {
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
+	options *core.RequestOptions
 }
 
 func NewRawClient(options *core.RequestOptions) *RawClient {
@@ -26,7 +26,6 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
@@ -43,7 +42,7 @@ func (r *RawClient) Get(
 	)
 	endpointURL := baseURL
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response *undiscriminated.MyUnion
@@ -83,7 +82,7 @@ func (r *RawClient) GetMetadata(
 	)
 	endpointURL := baseURL + "/metadata"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response undiscriminated.Metadata
@@ -123,7 +122,7 @@ func (r *RawClient) UpdateMetadata(
 	)
 	endpointURL := baseURL + "/metadata"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response bool
@@ -164,7 +163,7 @@ func (r *RawClient) Call(
 	)
 	endpointURL := baseURL + "/call"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response bool
@@ -205,7 +204,7 @@ func (r *RawClient) DuplicateTypesUnion(
 	)
 	endpointURL := baseURL + "/duplicate"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response *undiscriminated.UnionWithDuplicateTypes
@@ -246,7 +245,7 @@ func (r *RawClient) NestedUnions(
 	)
 	endpointURL := baseURL + "/nested"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response string

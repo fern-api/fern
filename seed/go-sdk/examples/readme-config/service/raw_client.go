@@ -14,7 +14,7 @@ import (
 type RawClient struct {
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
+	options *core.RequestOptions
 }
 
 func NewRawClient(options *core.RequestOptions) *RawClient {
@@ -26,7 +26,6 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
@@ -46,7 +45,7 @@ func (r *RawClient) GetMovie(
 		movieId,
 	)
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response *fern.Movie
@@ -86,7 +85,7 @@ func (r *RawClient) CreateMovie(
 	)
 	endpointURL := baseURL + "/movie"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response fern.MovieId
@@ -134,7 +133,7 @@ func (r *RawClient) GetMetadata(
 		endpointURL += "?" + queryParams.Encode()
 	}
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	headers.Add("X-API-Version", request.XApiVersion)
@@ -175,7 +174,7 @@ func (r *RawClient) CreateBigEntity(
 	)
 	endpointURL := baseURL + "/big-entity"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response *fern.Response
@@ -216,7 +215,7 @@ func (r *RawClient) RefreshToken(
 	)
 	endpointURL := baseURL + "/refresh-token"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	raw, err := r.caller.Call(

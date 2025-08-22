@@ -7,21 +7,21 @@ import (
 	imdb "github.com/imdb/fern/imdb"
 	internal "github.com/imdb/fern/internal"
 	option "github.com/imdb/fern/option"
-	http "net/http"
 )
 
 type Client struct {
 	Imdb *imdb.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		Imdb:    imdb.NewClient(opts...),
+		Imdb:    imdb.NewClient(options),
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -29,6 +29,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

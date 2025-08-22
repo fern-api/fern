@@ -16,7 +16,7 @@ import (
 type RawClient struct {
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
+	options *core.RequestOptions
 }
 
 func NewRawClient(options *core.RequestOptions) *RawClient {
@@ -28,7 +28,6 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
@@ -49,7 +48,7 @@ func (r *RawClient) Post(
 	)
 	endpointURL := baseURL
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -161,7 +160,7 @@ func (r *RawClient) JustFile(
 	)
 	endpointURL := baseURL + "/just-file"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -216,7 +215,7 @@ func (r *RawClient) JustFileWithQueryParams(
 		endpointURL += "?" + queryParams.Encode()
 	}
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -265,7 +264,7 @@ func (r *RawClient) WithContentType(
 	)
 	endpointURL := baseURL + "/with-content-type"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -325,7 +324,7 @@ func (r *RawClient) WithFormEncoding(
 	)
 	endpointURL := baseURL + "/with-form-encoding"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -383,7 +382,7 @@ func (r *RawClient) WithFormEncodedContainers(
 	)
 	endpointURL := baseURL
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -501,7 +500,7 @@ func (r *RawClient) OptionalArgs(
 	)
 	endpointURL := baseURL + "/optional-args"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -557,7 +556,7 @@ func (r *RawClient) WithInlineType(
 	)
 	endpointURL := baseURL + "/inline-type"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -609,7 +608,7 @@ func (r *RawClient) Simple(
 	)
 	endpointURL := baseURL + "/snippet"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	raw, err := r.caller.Call(

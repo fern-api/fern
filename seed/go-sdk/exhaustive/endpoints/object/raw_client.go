@@ -14,7 +14,7 @@ import (
 type RawClient struct {
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
+	options *core.RequestOptions
 }
 
 func NewRawClient(options *core.RequestOptions) *RawClient {
@@ -26,7 +26,6 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
@@ -43,7 +42,7 @@ func (r *RawClient) GetAndReturnWithOptionalField(
 	)
 	endpointURL := baseURL + "/object/get-and-return-with-optional-field"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response *types.ObjectWithOptionalField
@@ -84,7 +83,7 @@ func (r *RawClient) GetAndReturnWithRequiredField(
 	)
 	endpointURL := baseURL + "/object/get-and-return-with-required-field"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response *types.ObjectWithRequiredField
@@ -125,7 +124,7 @@ func (r *RawClient) GetAndReturnWithMapOfMap(
 	)
 	endpointURL := baseURL + "/object/get-and-return-with-map-of-map"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response *types.ObjectWithMapOfMap
@@ -166,7 +165,7 @@ func (r *RawClient) GetAndReturnNestedWithOptionalField(
 	)
 	endpointURL := baseURL + "/object/get-and-return-nested-with-optional-field"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response *types.NestedObjectWithOptionalField
@@ -211,7 +210,7 @@ func (r *RawClient) GetAndReturnNestedWithRequiredField(
 		string_,
 	)
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response *types.NestedObjectWithRequiredField
@@ -252,7 +251,7 @@ func (r *RawClient) GetAndReturnNestedWithRequiredFieldAsList(
 	)
 	endpointURL := baseURL + "/object/get-and-return-nested-with-required-field-list"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response *types.NestedObjectWithRequiredField
@@ -293,7 +292,7 @@ func (r *RawClient) TestIntegerOverflowEdgeCases(
 	)
 	endpointURL := baseURL + "/object/test-integer-overflow-edge-cases"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response *types.ObjectWithOptionalField

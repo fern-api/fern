@@ -13,7 +13,7 @@ import (
 type RawImdbClient struct {
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
+	options *core.RequestOptions
 }
 
 func NewRawImdbClient(options *core.RequestOptions) *RawImdbClient {
@@ -25,7 +25,6 @@ func NewRawImdbClient(options *core.RequestOptions) *RawImdbClient {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
@@ -42,7 +41,7 @@ func (r *RawImdbClient) CreateMovie(
 	)
 	endpointURL := baseURL + "/movies/create-movie"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response MovieId
@@ -86,7 +85,7 @@ func (r *RawImdbClient) GetMovie(
 		movieId,
 	)
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	errorCodes := internal.ErrorCodes{
