@@ -73,6 +73,11 @@ class AbstractGenerator(ABC):
         ):
             exclude_types_from_init_exports = generator_config.custom_config.get("exclude_types_from_init_exports")
 
+        lazy_imports = (
+            generator_config.custom_config is not None
+            and generator_config.custom_config.get("lazy_imports", False)
+        )
+
         with Project(
             filepath=generator_config.output.path,
             relative_path_to_project=os.path.join(
@@ -93,6 +98,7 @@ class AbstractGenerator(ABC):
             license_=generator_config.license,
             user_defined_toml=user_defined_toml,
             exclude_types_from_init_exports=exclude_types_from_init_exports,
+            lazy_imports=lazy_imports,
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper,
