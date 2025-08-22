@@ -8,6 +8,7 @@ import {
     HttpEndpoint,
     HttpHeader,
     HttpRequestBody,
+    HttpRequestBodyReference,
     HttpService,
     InlinedRequestBody,
     InlinedRequestBodyProperty,
