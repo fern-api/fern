@@ -6,7 +6,7 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts, getPropertyKey, PackageId } from "@fern-typescript/commons";
-import { GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts";
+import { GeneratedRequestWrapper, GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 const DEFAULT_FILE_PATH = "/path/to/your/file";
@@ -54,7 +54,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
 
     private buildExample({ context, opts }: { context: SdkContext; opts: GetReferenceOpts }): ts.Expression {
         const generatedType = context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpointName);
-        
+
         const fileProperties = this.buildFileProperties(context, generatedType);
         const headerProperties = this.buildHeaderProperties(context, generatedType, opts);
         const pathParamProperties = this.buildPathParamProperties(context, generatedType, opts);
@@ -73,7 +73,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
         );
     }
 
-    private buildFileProperties(context: SdkContext, generatedType: any): ts.PropertyAssignment[] {
+    private buildFileProperties(context: SdkContext, generatedType: GeneratedRequestWrapper): ts.PropertyAssignment[] {
         const fileProperties = [];
         if (context.inlineFileProperties && this.requestBody != null && this.requestBody.type === "fileUpload") {
             for (const property of this.requestBody.properties) {
@@ -109,7 +109,11 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
         return fileProperties;
     }
 
-    private buildHeaderProperties(context: SdkContext, generatedType: any, opts: GetReferenceOpts): ts.PropertyAssignment[] {
+    private buildHeaderProperties(
+        context: SdkContext,
+        generatedType: GeneratedRequestWrapper,
+        opts: GetReferenceOpts
+    ): ts.PropertyAssignment[] {
         return [...this.example.serviceHeaders, ...this.example.endpointHeaders]
             .filter((header) => this.isNotLiteral(header.value.shape))
             .map((header) => {
@@ -120,7 +124,11 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
             });
     }
 
-    private buildPathParamProperties(context: SdkContext, generatedType: any, opts: GetReferenceOpts): ts.PropertyAssignment[] {
+    private buildPathParamProperties(
+        context: SdkContext,
+        generatedType: GeneratedRequestWrapper,
+        opts: GetReferenceOpts
+    ): ts.PropertyAssignment[] {
         return generatedType.shouldInlinePathParameters()
             ? [...this.example.servicePathParameters, ...this.example.endpointPathParameters].map((pathParam) => {
                   return ts.factory.createPropertyAssignment(
@@ -131,7 +139,11 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
             : [];
     }
 
-    private buildQueryParamProperties(context: SdkContext, generatedType: any, opts: GetReferenceOpts): ts.PropertyAssignment[] {
+    private buildQueryParamProperties(
+        context: SdkContext,
+        generatedType: GeneratedRequestWrapper,
+        opts: GetReferenceOpts
+    ): ts.PropertyAssignment[] {
         return [...this.example.queryParameters].map((queryParam) => {
             return ts.factory.createPropertyAssignment(
                 getPropertyKey(generatedType.getPropertyNameOfQueryParameterFromName(queryParam.name).propertyName),
@@ -140,45 +152,51 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
         });
     }
 
-    private buildBodyProperties(context: SdkContext, generatedType: any, opts: GetReferenceOpts): ts.PropertyAssignment[] {
-        return this.example.request?._visit<ts.PropertyAssignment[]>({
-            inlinedRequestBody: (body) => {
-                const properties = this.buildInlinedRequestBodyProperties(body, generatedType, context, opts);
-                
-                if (this.flattenRequestParameters) {
-                    return properties;
-                } else {
-                    return properties;
-                }
-            },
-            reference: (type) => {
-                const generatedExample = context.type.getGeneratedExample(type).build(context, opts);
-                
-                if (this.flattenRequestParameters) {
-                    if (ts.isObjectLiteralExpression(generatedExample)) {
-                        return generatedExample.properties.filter((prop): prop is ts.PropertyAssignment => 
-                            ts.isPropertyAssignment(prop)
-                        );
+    private buildBodyProperties(
+        context: SdkContext,
+        generatedType: GeneratedRequestWrapper,
+        opts: GetReferenceOpts
+    ): ts.PropertyAssignment[] {
+        return (
+            this.example.request?._visit<ts.PropertyAssignment[]>({
+                inlinedRequestBody: (body) => {
+                    const properties = this.buildInlinedRequestBodyProperties(body, generatedType, context, opts);
+
+                    if (this.flattenRequestParameters) {
+                        return properties;
+                    } else {
+                        return properties;
                     }
-                    return [];
-                } else {
-                    if (ts.isObjectLiteralExpression(generatedExample)) {
-                        return generatedExample.properties.filter((prop): prop is ts.PropertyAssignment => 
-                            ts.isPropertyAssignment(prop)
-                        );
+                },
+                reference: (type) => {
+                    const generatedExample = context.type.getGeneratedExample(type).build(context, opts);
+
+                    if (this.flattenRequestParameters) {
+                        if (ts.isObjectLiteralExpression(generatedExample)) {
+                            return generatedExample.properties.filter((prop): prop is ts.PropertyAssignment =>
+                                ts.isPropertyAssignment(prop)
+                            );
+                        }
+                        return [];
+                    } else {
+                        if (ts.isObjectLiteralExpression(generatedExample)) {
+                            return generatedExample.properties.filter((prop): prop is ts.PropertyAssignment =>
+                                ts.isPropertyAssignment(prop)
+                            );
+                        }
+                        return [];
                     }
-                    return [];
+                },
+                _other: () => {
+                    throw new Error(UNKNOWN_REQUEST_TYPE_ERROR);
                 }
-            },
-            _other: () => {
-                throw new Error(UNKNOWN_REQUEST_TYPE_ERROR);
-            }
-        }) ?? [];
+            }) ?? []
+        );
     }
 
     private buildInlinedRequestBodyProperties(
         body: any,
-        generatedType: any,
+        generatedType: GeneratedRequestWrapper,
         context: SdkContext,
         opts: GetReferenceOpts
     ): ts.PropertyAssignment[] {
@@ -186,17 +204,18 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
             return [];
         }
 
-        const filteredProperties = body.properties
-            .filter((property: any) => property && this.isNotLiteral(property.value?.shape));
-        
+        const filteredProperties = body.properties.filter(
+            (property: any) => property && this.isNotLiteral(property.value?.shape)
+        );
+
         return filteredProperties
             .map((property: any) => this.buildPropertyAssignment(property, generatedType, context, opts))
-            .filter(Boolean);
+            .filter((prop: ts.PropertyAssignment | null): prop is ts.PropertyAssignment => prop !== null);
     }
 
     private buildPropertyAssignment(
         property: any,
-        generatedType: any,
+        generatedType: GeneratedRequestWrapper,
         context: SdkContext,
         opts: GetReferenceOpts
     ): ts.PropertyAssignment | null {
@@ -207,7 +226,6 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                 return this.buildDefaultPropertyAssignment(property, generatedType, context, opts);
             }
         } catch (error) {
-            console.warn(`Failed to build property assignment for ${property?.name?.wireValue}:`, error);
             return null;
         }
     }
@@ -218,7 +236,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
         opts: GetReferenceOpts
     ): ts.PropertyAssignment {
         const originalTypeForProperty = context.type.getGeneratedType(property.originalTypeDeclaration);
-        
+
         if (originalTypeForProperty.type === "union") {
             const propertyKey = originalTypeForProperty.getSinglePropertyKey({
                 name: property.name,
@@ -233,11 +251,11 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                 context.type.getGeneratedExample(property.value).build(context, opts)
             );
         }
-        
+
         if (originalTypeForProperty.type !== "object") {
             throw new Error(INVALID_PROPERTY_TYPE_ERROR(originalTypeForProperty.type));
         }
-        
+
         const key = originalTypeForProperty.getPropertyKey({
             propertyWireKey: property.name.wireValue
         });
@@ -249,7 +267,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
 
     private buildDefaultPropertyAssignment(
         property: any,
-        generatedType: any,
+        generatedType: GeneratedRequestWrapper,
         context: SdkContext,
         opts: GetReferenceOpts
     ): ts.PropertyAssignment {
