@@ -37,12 +37,7 @@ import {
     RequestWrapperNonBodyPropertyWithData,
     SdkContext
 } from "@fern-typescript/contexts";
-import {
-    InterfaceDeclarationStructure,
-    ModuleDeclarationStructure,
-    StructureKind,
-    ts
-} from "ts-morph";
+import { InterfaceDeclarationStructure, ModuleDeclarationStructure, StructureKind, ts } from "ts-morph";
 import { RequestWrapperExampleGenerator } from "./RequestWrapperExampleGenerator";
 
 export declare namespace GeneratedRequestWrapperImpl {
@@ -110,12 +105,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         if (!this.shouldInlinePathParameters()) {
             return [];
         }
-        
+
         const sdkRequest = this.endpoint.sdkRequest;
         if (!sdkRequest || sdkRequest.shape.type !== "wrapper") {
             return [];
         }
-        
+
         return [...this.service.pathParameters, ...this.endpoint.pathParameters];
     }
 
@@ -229,7 +224,10 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             HttpRequestBody._visit(requestBody, {
                 inlinedRequestBody: (inlinedRequestBody) => {
                     if (this.flattenRequestParameters) {
-                        const inlinedProperties = this.getFlattenedInlinedRequestBodyProperties(inlinedRequestBody, context);
+                        const inlinedProperties = this.getFlattenedInlinedRequestBodyProperties(
+                            inlinedRequestBody,
+                            context
+                        );
                         properties.push(...inlinedProperties);
                     } else {
                         for (const property of this.getAllNonLiteralPropertiesFromInlinedRequest({
@@ -243,7 +241,10 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 },
                 reference: (referenceToRequestBody) => {
                     if (this.flattenRequestParameters) {
-                        const referencedProperties = this.getFlattenedReferencedRequestBodyProperties(referenceToRequestBody, context);
+                        const referencedProperties = this.getFlattenedReferencedRequestBodyProperties(
+                            referenceToRequestBody,
+                            context
+                        );
                         properties.push(...referencedProperties);
                     } else {
                         const type = context.type.getReferenceToType(referenceToRequestBody.requestBodyType);
@@ -316,7 +317,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return examples
             .map((example) => {
                 const generatedExample = this.generateExample(example);
-                const exampleStr = "@example\n" + getTextOfTsNode(generatedExample.build(context, { isForComment: true }));
+                const exampleStr =
+                    "@example\n" + getTextOfTsNode(generatedExample.build(context, { isForComment: true }));
                 return exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
             })
             .join("\n\n");
@@ -387,8 +389,10 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public areBodyPropertiesInlined(): boolean {
-        return this.endpoint.requestBody != null && 
-               (this.endpoint.requestBody.type === "inlinedRequestBody" || this.flattenRequestParameters);
+        return (
+            this.endpoint.requestBody != null &&
+            (this.endpoint.requestBody.type === "inlinedRequestBody" || this.flattenRequestParameters)
+        );
     }
 
     public withQueryParameter({
@@ -676,8 +680,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return {
             safeName: property.name.name.camelCase.safeName,
             propertyName:
-                this.includeSerdeLayer && !this.retainOriginalCasing 
-                    ? property.name.name.camelCase.unsafeName 
+                this.includeSerdeLayer && !this.retainOriginalCasing
+                    ? property.name.name.camelCase.unsafeName
                     : property.name.wireValue
         };
     }
@@ -748,12 +752,18 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         if (this.formDataSupport === "Node16") {
             types.push(
                 this.maybeWrapFileArray({ property, value: ts.factory.createTypeReferenceNode("File") }),
-                this.maybeWrapFileArray({ property, value: context.externalDependencies.fs.ReadStream._getReferenceToType() }),
+                this.maybeWrapFileArray({
+                    property,
+                    value: context.externalDependencies.fs.ReadStream._getReferenceToType()
+                }),
                 this.maybeWrapFileArray({ property, value: ts.factory.createTypeReferenceNode("Blob") })
             );
         } else {
             types.push(
-                this.maybeWrapFileArray({ property, value: context.coreUtilities.fileUtils.FileLike._getReferenceToType() })
+                this.maybeWrapFileArray({
+                    property,
+                    value: context.coreUtilities.fileUtils.FileLike._getReferenceToType()
+                })
             );
         }
 
@@ -796,7 +806,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         context: SdkContext
     ): GeneratedRequestWrapper.Property[] {
         const properties: GeneratedRequestWrapper.Property[] = [];
-        
+
         if (referenceToRequestBody.requestBodyType.type !== "named") {
             const type = context.type.getReferenceToType(referenceToRequestBody.requestBodyType);
             const name = this.getReferencedBodyPropertyName();
@@ -811,7 +821,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         }
 
         const typeDeclaration = this.getTypeDeclaration(referenceToRequestBody.requestBodyType, context);
-        
+
         if (typeDeclaration?.shape.type === "object") {
             const typeProperties = this.getPropertiesFromTypeDeclaration(typeDeclaration, context);
             properties.push(...typeProperties);
@@ -826,14 +836,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 docs: referenceToRequestBody.docs != null ? [referenceToRequestBody.docs] : undefined
             });
         }
-        
+
         return properties;
     }
 
-    private getTypeDeclaration(
-        requestBodyType: TypeReference.Named,
-        context: SdkContext
-    ) {
+    private getTypeDeclaration(requestBodyType: TypeReference.Named, context: SdkContext) {
         return context.type.getTypeDeclaration({
             typeId: requestBodyType.typeId,
             fernFilepath: requestBodyType.fernFilepath,
@@ -847,7 +854,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         context: SdkContext
     ): GeneratedRequestWrapper.Property[] {
         const properties: GeneratedRequestWrapper.Property[] = [];
-        
+
         if (typeDeclaration.shape.type !== "object") {
             return properties;
         }
@@ -856,9 +863,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             const propertyType = context.type.getReferenceToType(property.valueType);
             const hasDefaultValue = this.hasDefaultValue(property.valueType, context);
             const propertyName = this.getPropertyNameOfTypeDeclarationProperty(property);
-            
+
             const typeNode = propertyType.typeNodeWithoutUndefined;
-            
+
             properties.push({
                 name: getPropertyKey(propertyName.propertyName),
                 safeName: getPropertyKey(propertyName.safeName),
@@ -867,7 +874,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 docs: property.docs != null ? [property.docs] : undefined
             });
         }
-        
+
         return properties;
     }
 }
