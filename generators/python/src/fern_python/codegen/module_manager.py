@@ -39,10 +39,11 @@ class ModuleExportsLine:
 
 def _write_dynamic_exports_dict(writer: AST.Writer, sorted_export_module_mapping: List[Tuple[str, str]]) -> None:
     writer.write_line(
-        '_dynamic_imports: typing.Dict[str, str] = {'
-        + ', '.join(f'"{export}": "{module}"' for export, module in sorted_export_module_mapping)
-        + '}'
+        "_dynamic_imports: typing.Dict[str, str] = {"
+        + ", ".join(f'"{export}": "{module}"' for export, module in sorted_export_module_mapping)
+        + "}"
     )
+
 
 def _write_attr_function(writer: AST.Writer) -> None:
     writer.write_line("def __getattr__(attr_name: str) -> object:")
@@ -50,7 +51,9 @@ def _write_attr_function(writer: AST.Writer) -> None:
         writer.write_line("module_name = _dynamic_imports.get(attr_name)")
         writer.write_line("if module_name is None:")
         with writer.indent():
-            writer.write_line('raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")')
+            writer.write_line(
+                'raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")'
+            )
         writer.write_line("try:")
         with writer.indent():
             writer.write_line("module = import_module(module_name, __package__)")
@@ -63,11 +66,13 @@ def _write_attr_function(writer: AST.Writer) -> None:
         with writer.indent():
             writer.write_line('raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e')
 
+
 def _write_dir_func(writer: AST.Writer) -> None:
     writer.write_line("def __dir__():")
     with writer.indent():
         writer.write_line("lazy_attrs = list(_dynamic_imports.keys())")
         writer.write_line("return sorted(lazy_attrs)")
+
 
 class ModuleManager:
     """
@@ -138,10 +143,14 @@ class ModuleManager:
                 writer.write_line("from importlib import import_module")
 
             sorted_exports = self._build_sorted_exports(module_info)
-            all_exports = {export: module_exports_line.exported_from for module_exports_line in sorted_exports for export in module_exports_line.exports}
+            all_exports = {
+                export: module_exports_line.exported_from
+                for module_exports_line in sorted_exports
+                for export in module_exports_line.exports
+            }
             sorted_export_module_mapping = sorted(all_exports.items())
 
-            if len(sorted_exports) > 0 and self._lazy_imports:
+            if len(sorted_export_module_mapping) > 0 and self._lazy_imports:
                 # We only import the modules if we're in a type-checking context.
                 writer.write_newline_if_last_line_not
                 writer.write_line("if typing.TYPE_CHECKING:")
@@ -155,8 +164,10 @@ class ModuleManager:
             else:
                 self._write_imports(writer, sorted_exports)
 
-            if len(sorted_exports) > 0:
-                writer.write_line("__all__ = [" + ", ".join(f'"{export}"' for export, _ in sorted_export_module_mapping) + "]")
+            if len(sorted_export_module_mapping) > 0:
+                writer.write_line(
+                    "__all__ = [" + ", ".join(f'"{export}"' for export, _ in sorted_export_module_mapping) + "]"
+                )
             writer.write_to_file(
                 os.path.join(filepath if module_info.from_src else base_filepath, *module, "__init__.py")
             )

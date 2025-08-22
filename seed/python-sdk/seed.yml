@@ -229,6 +229,9 @@ fixtures:
         pydantic_config:
           use_pydantic_field_aliases: true
       outputFolder: aliases_with_validation
+    - customConfig:
+        lazy_imports: true
+      outputFolder: lazy-imports
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
