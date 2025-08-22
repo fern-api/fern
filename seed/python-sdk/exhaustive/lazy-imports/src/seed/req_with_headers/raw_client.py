@@ -15,6 +15,7 @@ OMIT = typing.cast(typing.Any, ...)
 class RawReqWithHeadersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.WE_SHOULD_LAZY_IMPORT = 1
 
     def get_with_custom_header(
         self,
@@ -63,6 +64,7 @@ class RawReqWithHeadersClient:
 class AsyncRawReqWithHeadersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.WE_SHOULD_LAZY_IMPORT = 1
 
     async def get_with_custom_header(
         self,

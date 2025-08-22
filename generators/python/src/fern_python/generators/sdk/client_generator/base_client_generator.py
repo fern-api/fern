@@ -122,6 +122,8 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
                             initializer=AST.Expression(param.constructor_parameter_name),
                         )
                     )
+            if self._context.custom_config.lazy_imports:
+                writer.write_line("self.WE_SHOULD_LAZY_IMPORT = 1")
 
         return _write_constructor_body_base
 

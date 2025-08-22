@@ -18,6 +18,7 @@ OMIT = typing.cast(typing.Any, ...)
 class RawContainerClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.WE_SHOULD_LAZY_IMPORT = 1
 
     def get_and_return_list_of_primitives(
         self, *, request: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
@@ -304,6 +305,7 @@ class RawContainerClient:
 class AsyncRawContainerClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.WE_SHOULD_LAZY_IMPORT = 1
 
     async def get_and_return_list_of_primitives(
         self, *, request: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None

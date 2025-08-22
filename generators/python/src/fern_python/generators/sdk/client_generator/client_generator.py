@@ -126,21 +126,24 @@ class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
             for subpackage_id in self._package.subpackages:
                 subpackage = self._context.ir.subpackages[subpackage_id]
                 if subpackage.has_endpoints_in_tree:
-                    writer.write_node(
-                        AST.VariableDeclaration(
-                            name=f"self.{subpackage.name.snake_case.safe_name}",
-                            initializer=AST.Expression(
-                                AST.ClassInstantiation(
-                                    class_=(
-                                        self._context.get_reference_to_async_subpackage_service(subpackage_id)
-                                        if is_async
-                                        else self._context.get_reference_to_subpackage_service(subpackage_id)
-                                    ),
-                                    kwargs=kwargs,
-                                )
-                            ),
+                    if self._context.custom_config.lazy_imports:
+                        writer.write_line(f"self._{subpackage.name.snake_case.safe_name} = None")
+                    else:
+                        writer.write_node(
+                            AST.VariableDeclaration(
+                                name=f"self.{subpackage.name.snake_case.safe_name}",
+                                initializer=AST.Expression(
+                                    AST.ClassInstantiation(
+                                        class_=(
+                                            self._context.get_reference_to_async_subpackage_service(subpackage_id)
+                                            if is_async
+                                            else self._context.get_reference_to_subpackage_service(subpackage_id)
+                                        ),
+                                        kwargs=kwargs,
+                                    )
+                                ),
+                            )
                         )
-                    )
-                    writer.write_line()
+                        writer.write_line()
 
         return _write_constructor_body

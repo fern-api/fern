@@ -6,8 +6,10 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 class RawEndpointsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.WE_SHOULD_LAZY_IMPORT = 1
 
 
 class AsyncRawEndpointsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.WE_SHOULD_LAZY_IMPORT = 1
