@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, Tuple, Union, cast
+from typing import Callable, Dict, List, Optional, Tuple, Union, cast
 
 import fdr.api.v_1.read as FdrApiV1Read
 from fdr import (
@@ -423,7 +423,7 @@ class SnippetTemplateFactory:
     ) -> Union[Template, None]:
         sut_shape = sut.shape.get_as_union()
         if self._use_typeddict_requests:
-            get_template_string = lambda snippet_template_str: (
+            get_template_string: Callable[[str], str] = lambda snippet_template_str: (
                 f"{name}: {snippet_template_str}" if name is not None else f"{snippet_template_str}"
             )
             snippet_template = TypeddictDiscriminatedUnionSnippetGenerator(

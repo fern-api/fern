@@ -1694,7 +1694,7 @@ def is_streaming_endpoint(endpoint: ir_types.HttpEndpoint) -> bool:
             endpoint.response.body.get_as_union().type == "streaming"
             or endpoint.response.body.get_as_union().type == "fileDownload"
             or (
-                endpoint.response.body.get_as_union().type == "stream_parameter"
+                endpoint.response.body.get_as_union().type == "streamParameter"
                 and endpoint.sdk_request is not None
                 and endpoint.sdk_request.stream_parameter is not None
             )
@@ -1719,13 +1719,8 @@ def _is_request_body_optional(request_body: ir_types.HttpRequestBody) -> bool:
 
 def _is_type_reference_optional(type_reference: ir_types.TypeReference) -> bool:
     union = type_reference.get_as_union()
-    if union.type == "reference":
-        request_body = union.request_body_type.get_as_union()
-        if request_body.type == "container":
-            return (
-                request_body.container.get_as_union().type == "optional"
-                or request_body.container.get_as_union().type == "nullable"
-            )
+    if union.type == "container":
+        return union.container.get_as_union().type == "optional" or union.container.get_as_union().type == "nullable"
     return False
 
 
