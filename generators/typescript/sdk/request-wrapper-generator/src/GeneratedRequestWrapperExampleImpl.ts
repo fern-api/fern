@@ -148,41 +148,26 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                 if (this.flattenRequestParameters) {
                     return properties;
                 } else {
-                    const hasQueryParameters = this.example.queryParameters != null && 
-                        this.example.queryParameters.length > 0;
-                    if (!hasQueryParameters) {
-                        return properties;
-                    } else {
-                        return [
-                            ts.factory.createPropertyAssignment(
-                                getPropertyKey(this.bodyPropertyName),
-                                ts.factory.createObjectLiteralExpression(properties, true)
-                            )
-                        ];
-                    }
+                    return properties;
                 }
             },
             reference: (type) => {
                 const generatedExample = context.type.getGeneratedExample(type).build(context, opts);
                 
-                if (this.flattenRequestParameters && ts.isObjectLiteralExpression(generatedExample)) {
-                    return generatedExample.properties.filter((prop): prop is ts.PropertyAssignment => 
-                        ts.isPropertyAssignment(prop)
-                    );
-                } else {
-                    const hasQueryParameters = this.example.queryParameters.length > 0;
-                    if (!hasQueryParameters && ts.isObjectLiteralExpression(generatedExample)) {
+                if (this.flattenRequestParameters) {
+                    if (ts.isObjectLiteralExpression(generatedExample)) {
                         return generatedExample.properties.filter((prop): prop is ts.PropertyAssignment => 
                             ts.isPropertyAssignment(prop)
                         );
-                    } else {
-                        return [
-                            ts.factory.createPropertyAssignment(
-                                getPropertyKey(this.bodyPropertyName),
-                                generatedExample
-                            )
-                        ];
                     }
+                    return [];
+                } else {
+                    if (ts.isObjectLiteralExpression(generatedExample)) {
+                        return generatedExample.properties.filter((prop): prop is ts.PropertyAssignment => 
+                            ts.isPropertyAssignment(prop)
+                        );
+                    }
+                    return [];
                 }
             },
             _other: () => {

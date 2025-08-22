@@ -6,11 +6,9 @@
  * @example
  *     {
  *         tags: ["tags", "tags"],
- *         body: {
- *             username: "username",
- *             password: "password",
- *             name: "test"
- *         }
+ *         username: "username",
+ *         password: "password",
+ *         name: "test"
  *     }
  */
 export interface CreateUsernameRequest {

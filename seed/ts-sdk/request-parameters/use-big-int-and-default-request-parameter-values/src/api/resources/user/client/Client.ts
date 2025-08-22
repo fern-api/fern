@@ -45,11 +45,9 @@ export class User {
      * @example
      *     await client.user.createUsername({
      *         tags: ["tags", "tags"],
-     *         body: {
-     *             username: "username",
-     *             password: "password",
-     *             name: "test"
-     *         }
+     *         username: "username",
+     *         password: "password",
+     *         name: "test"
      *     })
      */
     public createUsername(
