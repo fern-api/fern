@@ -37,7 +37,15 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
     private serviceId: ServiceId | undefined;
     private service: HttpService | undefined;
 
-    constructor({ fernFilepath, isRootClient = false, subpackage, nestedSubpackages, context, serviceId, service }: ClientGenerator.Args) {
+    constructor({
+        fernFilepath,
+        isRootClient = false,
+        subpackage,
+        nestedSubpackages,
+        context,
+        serviceId,
+        service
+    }: ClientGenerator.Args) {
         super(context);
         this.isRootClient = isRootClient;
         this.fernFilepath = fernFilepath;
@@ -115,7 +123,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 name: "baseURL",
                 type: go.Type.string()
             }),
-            this.context.caller.getField(),
+            this.context.caller.getField()
         );
 
         return new GoFile({
@@ -183,11 +191,15 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                         )
                     })
                 )
-            },
+            }
         );
         return {
             name: this.context.getClientConstructorName(this.subpackage),
-            parameters: [this.isRootClient ? this.context.getVariadicRequestOptionParameter() : this.context.getRequestOptionsParameter()],
+            parameters: [
+                this.isRootClient
+                    ? this.context.getVariadicRequestOptionParameter()
+                    : this.context.getRequestOptionsParameter()
+            ],
             body: go.codeblock((writer) => {
                 if (this.isRootClient) {
                     writer.write("options := ");

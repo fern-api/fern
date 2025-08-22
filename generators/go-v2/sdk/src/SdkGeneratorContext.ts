@@ -336,7 +336,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return go.parameter({
             name: "options",
             type: this.getRequestOptionsType()
-        })
+        });
     }
 
     public getRequestOptionTypeReference(): go.TypeReference {

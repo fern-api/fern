@@ -40,7 +40,7 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
                 name: "baseURL",
                 type: go.Type.string()
             }),
-            this.context.caller.getField(),
+            this.context.caller.getField()
         );
 
         struct.addField(
