@@ -57,7 +57,7 @@ export class Enum {
         request: SeedExhaustive.types.WeatherReport,
         requestOptions?: Enum.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.WeatherReport>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,

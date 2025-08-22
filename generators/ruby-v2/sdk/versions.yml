@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc17
+  createdAt: "2025-08-20"
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix reference request methods.
+  irVersion: 58
+
+- version: 1.0.0-rc16
+  createdAt: "2025-08-20"
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix subpackage client generation.
+  irVersion: 58
+
 - version: 1.0.0-rc15
   createdAt: "2025-08-20"
   changelogEntry:

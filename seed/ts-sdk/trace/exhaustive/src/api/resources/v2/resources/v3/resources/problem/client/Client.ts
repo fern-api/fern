@@ -71,7 +71,7 @@ export class Problem {
             >
         >
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -139,7 +139,7 @@ export class Problem {
             core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2[], SeedTrace.v2.v3.problem.getProblems.Error>
         >
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -210,7 +210,7 @@ export class Problem {
             core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getLatestProblem.Error>
         >
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -286,7 +286,7 @@ export class Problem {
             core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getProblemVersion.Error>
         >
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),

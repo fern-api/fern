@@ -56,7 +56,7 @@ export class BasicAuth {
     private async __getWithBasicAuth(
         requestOptions?: BasicAuth.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -138,7 +138,7 @@ export class BasicAuth {
         request?: unknown,
         requestOptions?: BasicAuth.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,

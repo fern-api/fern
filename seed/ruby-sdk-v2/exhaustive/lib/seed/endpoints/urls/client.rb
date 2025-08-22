@@ -10,8 +10,12 @@ module Seed
         end
 
         # @return [String]
-        def with_mixed_case(request_options: {}, **params)
-          _request = params
+        def with_mixed_case(request_options: {}, **_params)
+          _request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            method: "GET",
+            path: "/urls/MixedCase"
+          )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"
 
@@ -19,8 +23,12 @@ module Seed
         end
 
         # @return [String]
-        def no_ending_slash(request_options: {}, **params)
-          _request = params
+        def no_ending_slash(request_options: {}, **_params)
+          _request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            method: "GET",
+            path: "/urls/no-ending-slash"
+          )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"
 
@@ -28,8 +36,12 @@ module Seed
         end
 
         # @return [String]
-        def with_ending_slash(request_options: {}, **params)
-          _request = params
+        def with_ending_slash(request_options: {}, **_params)
+          _request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            method: "GET",
+            path: "/urls/with-ending-slash/"
+          )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"
 
@@ -37,37 +49,16 @@ module Seed
         end
 
         # @return [String]
-        def with_underscores(request_options: {}, **params)
-          _request = params
+        def with_underscores(request_options: {}, **_params)
+          _request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            method: "GET",
+            path: "/urls/with_underscores"
+          )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"
 
           raise _response.body
-        end
-
-        # @return [Seed::Endpoints::Client]
-        def endpoints
-          @endpoints ||= Seed::Endpoints::Client.new(client: @raw_client)
-        end
-
-        # @return [Seed::InlinedRequests::Client]
-        def inlinedRequests
-          @inlinedRequests ||= Seed::InlinedRequests::Client.new(client: @raw_client)
-        end
-
-        # @return [Seed::NoAuth::Client]
-        def noAuth
-          @noAuth ||= Seed::NoAuth::Client.new(client: @raw_client)
-        end
-
-        # @return [Seed::NoReqBody::Client]
-        def noReqBody
-          @noReqBody ||= Seed::NoReqBody::Client.new(client: @raw_client)
-        end
-
-        # @return [Seed::ReqWithHeaders::Client]
-        def reqWithHeaders
-          @reqWithHeaders ||= Seed::ReqWithHeaders::Client.new(client: @raw_client)
         end
       end
     end

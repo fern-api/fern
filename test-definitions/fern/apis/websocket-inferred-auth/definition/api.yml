@@ -1,0 +1,6 @@
+name: websocket-auth
+auth: InferredAuthScheme
+auth-schemes:
+  InferredAuthScheme:
+    scheme: bearer
+    get-token: POST /token

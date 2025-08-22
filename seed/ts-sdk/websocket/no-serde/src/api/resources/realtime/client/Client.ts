@@ -45,9 +45,7 @@ export class Realtime {
             _queryParams["temperature"] = temperature.toString();
         }
 
-        let _headers: Record<string, string> = {
-            ...headers,
-        };
+        let _headers: Record<string, unknown> = { ...headers };
         const socket = new core.ReconnectingWebSocket({
             url: core.url.join(
                 (await core.Supplier.get(this._options["baseUrl"])) ??

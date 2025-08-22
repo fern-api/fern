@@ -2,16 +2,22 @@ import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 
 import {
+    BooleanType,
+    DoubleType,
     HttpEndpoint,
     HttpRequestBody,
     HttpResponseBody,
     HttpService,
+    IntegerType,
     JsonResponse,
+    LongType,
     Pagination,
     SdkRequestBodyType,
     ServiceId,
     StreamingResponse,
-    Subpackage
+    StringType,
+    Subpackage,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
@@ -440,6 +446,74 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
+    // Extracts the default field from a TypeReference as a TypeInstantiation.
+    private extractDefaultValue(typeReference: TypeReference): go.TypeInstantiation | undefined {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.extractDefaultValue(typeReference.container.optional);
+                }
+                return undefined;
+            case "named": {
+                const typeDeclaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.extractDefaultValue(typeDeclaration.shape.aliasOf);
+                }
+                return undefined;
+            }
+            case "primitive":
+                if (!typeReference.primitive.v2) {
+                    return undefined;
+                }
+
+                return typeReference.primitive.v2._visit<go.TypeInstantiation | undefined>({
+                    integer: (integerType: IntegerType) => {
+                        if (integerType.default != null) {
+                            return go.TypeInstantiation.int(integerType.default);
+                        }
+                        return undefined;
+                    },
+                    long: (longType: LongType) => {
+                        if (longType.default != null) {
+                            return go.TypeInstantiation.int64(longType.default);
+                        }
+                        return undefined;
+                    },
+                    double: (doubleType: DoubleType) => {
+                        if (doubleType.default != null) {
+                            return go.TypeInstantiation.float64(doubleType.default);
+                        }
+                        return undefined;
+                    },
+                    string: (stringType: StringType) => {
+                        if (stringType.default != null) {
+                            return go.TypeInstantiation.string(stringType.default);
+                        }
+                        return undefined;
+                    },
+                    boolean: (booleanType: BooleanType) => {
+                        if (booleanType.default != null) {
+                            return go.TypeInstantiation.bool(booleanType.default);
+                        }
+                        return undefined;
+                    },
+                    uint: () => undefined,
+                    uint64: () => undefined,
+                    float: () => undefined,
+                    date: () => undefined,
+                    dateTime: () => undefined,
+                    uuid: () => undefined,
+                    base64: () => undefined,
+                    bigInteger: () => undefined,
+                    _other: () => undefined
+                });
+            case "unknown":
+                return undefined;
+            default:
+                assertNever(typeReference);
+        }
+    }
+
     private buildQueryParameters({
         signature,
         endpoint,
@@ -455,9 +529,41 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (endpointRequest == null || endpoint.queryParameters.length === 0) {
             return undefined;
         }
+
+        // extract and populate defaults
+        const defaults = [];
+        if (this.context.customConfig.useDefaultRequestParameterValues) {
+            for (const queryParameter of endpoint.queryParameters) {
+                const defaultValue = this.extractDefaultValue(queryParameter.valueType);
+                if (!defaultValue) {
+                    continue;
+                }
+                defaults.push({
+                    key: go.TypeInstantiation.string(queryParameter.name.wireValue),
+                    value: defaultValue
+                });
+            }
+        }
+        const defaults_map = go.TypeInstantiation.map({
+            keyType: go.Type.string(),
+            valueType: go.Type.any(),
+            entries: defaults
+        });
+
         return go.codeblock((writer) => {
             writer.write("queryParams, err := ");
-            writer.writeNode(this.context.callQueryValues([go.codeblock(endpointRequest.getRequestParameterName())]));
+            if (!defaults.length) {
+                writer.writeNode(
+                    this.context.callQueryValues([go.codeblock(endpointRequest.getRequestParameterName())])
+                );
+            } else {
+                writer.writeNode(
+                    this.context.callQueryValuesWithDefaults([
+                        go.codeblock(endpointRequest.getRequestParameterName()),
+                        defaults_map
+                    ])
+                );
+            }
             writer.newLine();
             writer.writeLine("if err != nil {");
             writer.indent();

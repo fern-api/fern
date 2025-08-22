@@ -19,7 +19,8 @@ export const baseGoCustomConfigSchema = z.object({
     inlineFileProperties: z.boolean().optional(),
     packageLayout: z.enum(["flat", "nested"]).optional(),
     union: z.enum(["v0", "v1"]).optional(),
-    useReaderForBytesRequest: z.boolean().optional()
+    useReaderForBytesRequest: z.boolean().optional(),
+    useDefaultRequestParameterValues: z.boolean().optional()
 });
 
 export type BaseGoCustomConfigSchema = z.infer<typeof baseGoCustomConfigSchema>;

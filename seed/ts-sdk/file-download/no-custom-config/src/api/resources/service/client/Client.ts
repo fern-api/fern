@@ -47,7 +47,7 @@ export class Service {
     }
 
     private async __simple(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<void>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -97,7 +97,7 @@ export class Service {
     private async __downloadFile(
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<core.BinaryResponse>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher<core.BinaryResponse>({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??

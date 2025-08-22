@@ -135,7 +135,7 @@ export class Problem {
         request: SeedTrace.CreateProblemRequest,
         requestOptions?: Problem.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.CreateProblemResponse>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -284,7 +284,7 @@ export class Problem {
         request: SeedTrace.CreateProblemRequest,
         requestOptions?: Problem.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.UpdateProblemResponse>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -360,7 +360,7 @@ export class Problem {
         problemId: SeedTrace.ProblemId,
         requestOptions?: Problem.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -449,7 +449,7 @@ export class Problem {
         request: SeedTrace.GetDefaultStarterFilesRequest,
         requestOptions?: Problem.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.GetDefaultStarterFilesResponse>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),

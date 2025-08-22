@@ -32,7 +32,7 @@ export class Params {
     __getWithPath(param, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
-            var _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            let _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${encodeURIComponent(param)}`),
                 method: "GET",
@@ -87,7 +87,7 @@ export class Params {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
             const { param } = request;
-            var _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            let _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${encodeURIComponent(param)}`),
                 method: "GET",
@@ -146,7 +146,7 @@ export class Params {
             const _queryParams = {};
             _queryParams["query"] = query;
             _queryParams["number"] = number_.toString();
-            var _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            let _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/params"),
                 method: "GET",
@@ -215,7 +215,7 @@ export class Params {
             else {
                 _queryParams["number"] = number_.toString();
             }
-            var _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            let _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/params"),
                 method: "GET",
@@ -273,7 +273,7 @@ export class Params {
             const { query } = request;
             const _queryParams = {};
             _queryParams["query"] = query;
-            var _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            let _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path-query/${encodeURIComponent(param)}`),
                 method: "GET",
@@ -331,7 +331,7 @@ export class Params {
             const { param, query } = request;
             const _queryParams = {};
             _queryParams["query"] = query;
-            var _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            let _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path-query/${encodeURIComponent(param)}`),
                 method: "GET",
@@ -384,7 +384,7 @@ export class Params {
     __modifyWithPath(param, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
-            var _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            let _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${encodeURIComponent(param)}`),
                 method: "PUT",
@@ -443,7 +443,7 @@ export class Params {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
             const { param, body: _body } = request;
-            var _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            let _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${encodeURIComponent(param)}`),
                 method: "PUT",

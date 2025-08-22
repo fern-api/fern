@@ -1,0 +1,8 @@
+name: websocket-bearer-auth
+auth: Bearer
+auth-schemes:
+  Bearer:
+    scheme: bearer
+    token:
+      name: apiKey
+      env: SEED_API_KEY
