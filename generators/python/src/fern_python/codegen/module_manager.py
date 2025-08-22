@@ -46,7 +46,7 @@ def _write_dynamic_exports_dict(writer: AST.Writer, sorted_export_module_mapping
 
 
 def _write_attr_function(writer: AST.Writer) -> None:
-    writer.write_line("def __getattr__(attr_name: str) -> builtins.object:")
+    writer.write_line("def __getattr__(attr_name: str) -> typing.Any:")
     with writer.indent():
         writer.write_line("module_name = _dynamic_imports.get(attr_name)")
         writer.write_line("if module_name is None:")
@@ -147,7 +147,6 @@ class ModuleManager:
             sorted_export_module_mapping = sorted(all_exports.items())
 
             if len(sorted_export_module_mapping) > 0 and self._lazy_imports:
-                writer.write_line("import builtins")
                 writer.write_line("import typing")
                 writer.write_line("from importlib import import_module")
 
@@ -164,10 +163,9 @@ class ModuleManager:
                 self._write_imports(writer, sorted_exports)
 
             if len(sorted_export_module_mapping) > 0:
-                writer.write("__all__")
-                if self._lazy_imports:
-                    writer.write(": typing.List[str]")
-                writer.write_line(" = [" + ", ".join(f'"{export}"' for export, _ in sorted_export_module_mapping) + "]")
+                writer.write_line(
+                    "__all__ = [" + ", ".join(f'"{export}"' for export, _ in sorted_export_module_mapping) + "]"
+                )
             writer.write_to_file(
                 os.path.join(filepath if module_info.from_src else base_filepath, *module, "__init__.py")
             )

@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-import builtins
 import typing
 from importlib import import_module
 
@@ -19,7 +18,7 @@ _dynamic_imports: typing.Dict[str, str] = {
 }
 
 
-def __getattr__(attr_name: str) -> builtins.object:
+def __getattr__(attr_name: str) -> typing.Any:
     module_name = _dynamic_imports.get(attr_name)
     if module_name is None:
         raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
@@ -38,4 +37,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__: typing.List[str] = ["Error", "ErrorCategory", "ErrorCode", "PutResponse"]
+__all__ = ["Error", "ErrorCategory", "ErrorCode", "PutResponse"]
