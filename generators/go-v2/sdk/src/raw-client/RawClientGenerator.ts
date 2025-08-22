@@ -41,9 +41,12 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
                 type: go.Type.string()
             }),
             this.context.caller.getField(),
+        );
+
+        struct.addField(
             go.field({
-                name: "header",
-                type: go.Type.reference(this.context.getNetHttpHeaderTypeReference())
+                name: "options",
+                type: this.context.getRequestOptionsType()
             })
         );
 
@@ -112,15 +115,6 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
                                                 selector: go.codeblock("MaxAttempts")
                                             })
                                         )
-                                    })
-                                )
-                            },
-                            {
-                                name: "header",
-                                value: go.TypeInstantiation.reference(
-                                    go.selector({
-                                        on: go.codeblock("options"),
-                                        selector: go.codeblock("ToHeader()")
                                     })
                                 )
                             }

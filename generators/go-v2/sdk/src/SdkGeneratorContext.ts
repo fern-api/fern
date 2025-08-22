@@ -332,6 +332,13 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
+    public getRequestOptionsParameter(): go.Parameter {
+        return go.parameter({
+            name: "options",
+            type: this.getVariadicIdempotentRequestOptionType()
+        })
+    }
+
     public getRequestOptionTypeReference(): go.TypeReference {
         return go.typeReference({
             name: "RequestOption",
