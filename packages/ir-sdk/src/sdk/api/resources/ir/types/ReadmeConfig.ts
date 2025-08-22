@@ -16,6 +16,7 @@ export interface ReadmeConfig {
      */
     defaultEndpoint: FernIr.EndpointId | undefined;
     bannerLink: string | undefined;
+    apiName: string | undefined;
     introduction: string | undefined;
     apiReferenceLink: string | undefined;
     /**

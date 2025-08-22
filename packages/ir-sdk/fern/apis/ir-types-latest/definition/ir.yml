@@ -79,6 +79,7 @@ types:
           endpoint for pagination), so the default is a no-op in those cases.
         type: optional<commons.EndpointId>
       bannerLink: optional<string>
+      apiName: optional<string>
       introduction: optional<string>
       apiReferenceLink: optional<string>
       features:

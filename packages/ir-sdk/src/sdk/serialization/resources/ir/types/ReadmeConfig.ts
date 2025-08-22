@@ -12,6 +12,7 @@ export const ReadmeConfig: core.serialization.ObjectSchema<serializers.ReadmeCon
     core.serialization.objectWithoutOptionalProperties({
         defaultEndpoint: EndpointId.optional(),
         bannerLink: core.serialization.string().optional(),
+        apiName: core.serialization.string().optional(),
         introduction: core.serialization.string().optional(),
         apiReferenceLink: core.serialization.string().optional(),
         features: core.serialization.record(FeatureId, core.serialization.list(EndpointId)).optional(),
@@ -21,6 +22,7 @@ export declare namespace ReadmeConfig {
     export interface Raw {
         defaultEndpoint?: EndpointId.Raw | null;
         bannerLink?: string | null;
+        apiName?: string | null;
         introduction?: string | null;
         apiReferenceLink?: string | null;
         features?: Record<FeatureId.Raw, EndpointId.Raw[]> | null;
