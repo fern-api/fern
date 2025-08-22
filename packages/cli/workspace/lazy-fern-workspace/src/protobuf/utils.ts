@@ -50,7 +50,7 @@ export const PROTOBUF_MODULE_PACKAGE_JSON = `{
 `;
 
 export const PROTOBUF_SHELL_PROXY = `#!/usr/bin/env bash
-FERN_NO_VERSION_REDIRECTION=true node /Volumes/git/fern/packages/cli/cli/dist/prod/cli.cjs protoc-gen-fern "$@"
+fern protoc-gen-fern "$@"
 `;
 
 export const createEmptyProtobufLogger = (): Logger => {
