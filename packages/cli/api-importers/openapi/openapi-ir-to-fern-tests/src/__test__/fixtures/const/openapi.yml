@@ -1,0 +1,61 @@
+openapi: 3.1.0
+info:
+  title: Pet Store API
+  version: 1.0.0
+
+paths:
+  /pets:
+    post:
+      summary: Create a new pet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePetRequest'
+      responses:
+        '201':
+          description: Pet created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+
+components:
+  schemas:
+    CreatePetRequest:
+      type: object
+      required:
+        - type
+        - name
+      properties:
+        type:
+          const: "pet"
+        name:
+          type: string
+          example: "Fluffy"
+        breed:
+          type: string
+          example: "Golden Retriever"
+
+    Pet:
+      type: object
+      required:
+        - id
+        - type
+        - name
+        - status
+      properties:
+        id:
+          type: integer
+          example: 123
+        type:
+          const: "pet"
+        name:
+          type: string
+          example: "Fluffy"
+        breed:
+          type: string
+          example: "Golden Retriever"
+        status:
+          const: "active"
