@@ -1,6 +1,7 @@
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
+import { SDKRequirements } from "../requirements";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
 
@@ -43,14 +44,20 @@ export class ReadmeConfigBuilder {
             bannerLink: context.ir.readmeConfig?.bannerLink,
             introduction: context.ir.readmeConfig?.introduction,
             features,
-            requirements: []
+            requirements: [
+                `Swift ${SDKRequirements.minSwiftVersion}+`,
+                `iOS ${SDKRequirements.minIOSVersion}+`,
+                `macOS ${SDKRequirements.minMacOSVersion}+`,
+                `tvOS ${SDKRequirements.minTVOSVersion}+`,
+                `watchOS ${SDKRequirements.minWatchOSVersion}+`
+            ]
         };
     }
 
     private getLanguageInfo(context: SdkGeneratorContext): FernGeneratorCli.LanguageInfo {
         return FernGeneratorCli.LanguageInfo.swift({
             publishInfo: {
-                gitUrl: "", // TODO(kafkas): Implement
+                gitUrl: "https://github.com/kafkas/swift-sdk.git", // TODO(kafkas): Implement
                 minVersion: "0.1.0" // TODO(kafkas): Implement
             }
         });
