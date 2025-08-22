@@ -1,0 +1,31 @@
+openapi: 3.1.0
+info:
+  title: Inline allOf schemas with required property overrides
+  version: 1.0.0
+
+components:
+  schemas:
+    Base:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+      required:
+        - id
+        - name
+
+    ChildMakesDescriptionRequired:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+            - id
+            - name
+            - description
+          # 'description' is now required, even though it wasn't in Base
+
+paths: {}

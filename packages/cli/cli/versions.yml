@@ -1,5 +1,26 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: | 
+        Introduce an OpenAPI setting called `inline-all-of-schemas` which recursively 
+        visits the scheme definitions of allOf schemas and inlines them into the child. 
+
+        The benefit of doing this is that a child schema can modify whether or not a parent 
+        property is required. Without this setting, Fern would ignore the child schema's 
+        declaration of optional and prefer the parent schema's instead. 
+
+        Add the following to your `generators.yml`: 
+
+        ```yml generators.yml 
+        api: 
+          settings: 
+            inline-all-of-schemas: true
+        ```
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-18"
+  version: 0.66.21
+
+- changelogEntry:
     - summary: Add `kwargs` as a reserved word in python so that generated SDKs continue to compile.
       type: fix
   irVersion: 59
