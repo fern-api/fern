@@ -91,6 +91,10 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
                         typeReference: this.getClassReference(),
                         fields: [
                             {
+                                name: "options",
+                                value: go.TypeInstantiation.reference(go.codeblock("options"))
+                            },
+                            {
                                 name: "baseURL",
                                 value: go.TypeInstantiation.reference(
                                     go.selector({
