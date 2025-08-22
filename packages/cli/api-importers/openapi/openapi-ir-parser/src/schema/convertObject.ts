@@ -73,7 +73,6 @@ export function convertObject({
     let inlinedParentProperties: ObjectPropertyWithExample[] = [];
     const parents: ReferencedAllOfInfo[] = [];
 
-
     for (const allOfElement of allOf) {
         if (!context.options.inlineAllOfSchemas && isReferenceObject(allOfElement)) {
             // if allOf element is a discriminated union, then don't inherit from it
