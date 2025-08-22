@@ -2149,6 +2149,16 @@
     "generators.ReadmeSchema": {
       "type": "object",
       "properties": {
+        "sdkName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "bannerLink": {
           "oneOf": [
             {
