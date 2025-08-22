@@ -4,19 +4,13 @@ using SeedRequestParameters.Core;
 namespace SeedRequestParameters;
 
 [Serializable]
-public record CreateUsernameRequest
+public record CreateUsernameReferencedRequest
 {
     [JsonIgnore]
     public IEnumerable<string> Tags { get; set; } = new List<string>();
 
-    [JsonPropertyName("username")]
-    public required string Username { get; set; }
-
-    [JsonPropertyName("password")]
-    public required string Password { get; set; }
-
-    [JsonPropertyName("name")]
-    public required string Name { get; set; }
+    [JsonIgnore]
+    public required CreateUsernameBody Body { get; set; }
 
     /// <inheritdoc />
     public override string ToString()
