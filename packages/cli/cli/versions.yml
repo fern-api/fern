@@ -4,7 +4,7 @@
     - summary: Nested protobuf types have correct type ids in converted ir.
       type: fix
   irVersion: 59
-  createdAt: "2025-08-18"
+  createdAt: "2025-08-22"
   version: 0.66.21
 
 - changelogEntry:
