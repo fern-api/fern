@@ -138,7 +138,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "PUT",
             path: "/params/path/#{params[:param]}",
-            body: params[:request],
+            body: params,
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"

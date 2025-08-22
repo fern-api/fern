@@ -15,7 +15,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/union",
-            body: Seed::Types::Union::Types::Animal.new(params[:request]).to_h
+            body: Seed::Types::Union::Types::Animal.new(params).to_h
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"

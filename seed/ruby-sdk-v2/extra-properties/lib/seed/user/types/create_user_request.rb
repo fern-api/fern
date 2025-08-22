@@ -1,5 +1,13 @@
+# frozen_string_literal: true
 
 module Seed
-    module User
-        class CreateUserRequest; endend
+  module User
+    module Types
+      class CreateUserRequest < Internal::Types::Model
+        field :type, -> { String }, optional: false, nullable: false
+        field :version, -> { String }, optional: false, nullable: false
+        field :name, -> { String }, optional: false, nullable: false
+      end
+    end
+  end
 end

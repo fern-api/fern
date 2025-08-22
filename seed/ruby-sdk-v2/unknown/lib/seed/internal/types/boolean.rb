@@ -4,7 +4,7 @@ module Seed
   module Internal
     module Types
       module Boolean
-      extend Seed::Internal::Types::Union
+        extend Seed::Internal::Types::Union
 
         member TrueClass
         member FalseClass
@@ -31,4 +31,4 @@ module Seed
       end
     end
   end
-end 
+end

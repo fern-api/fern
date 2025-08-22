@@ -16,7 +16,7 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "POST",
           path: "/no-auth",
-          body: params[:request]
+          body: params
         )
         _response = @client.send(_request)
         return if _response.code >= "200" && _response.code < "300"

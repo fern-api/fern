@@ -20,23 +20,23 @@ module Seed
     end
 
     # @return [Seed::InlinedRequests::Client]
-    def inlinedRequests
-      @inlinedRequests ||= Seed::InlinedRequests::Client.new(client: @raw_client)
+    def inlined_requests
+      @inlined_requests ||= Seed::InlinedRequests::Client.new(client: @raw_client)
     end
 
     # @return [Seed::NoAuth::Client]
-    def noAuth
-      @noAuth ||= Seed::NoAuth::Client.new(client: @raw_client)
+    def no_auth
+      @no_auth ||= Seed::NoAuth::Client.new(client: @raw_client)
     end
 
     # @return [Seed::NoReqBody::Client]
-    def noReqBody
-      @noReqBody ||= Seed::NoReqBody::Client.new(client: @raw_client)
+    def no_req_body
+      @no_req_body ||= Seed::NoReqBody::Client.new(client: @raw_client)
     end
 
     # @return [Seed::ReqWithHeaders::Client]
-    def reqWithHeaders
-      @reqWithHeaders ||= Seed::ReqWithHeaders::Client.new(client: @raw_client)
+    def req_with_headers
+      @req_with_headers ||= Seed::ReqWithHeaders::Client.new(client: @raw_client)
     end
   end
 end

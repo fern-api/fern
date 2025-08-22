@@ -1,9 +1,12 @@
+# frozen_string_literal: true
 
 module Seed
-    module Service
-        class ListResourcesRequest
-            field :page_limit, Integer, optional: false, nullable: false
-            field :before_date, String, optional: false, nullable: false
-        end
+  module Service
+    module Types
+      class ListResourcesRequest < Internal::Types::Model
+        field :page_limit, -> { Integer }, optional: false, nullable: false
+        field :before_date, -> { String }, optional: false, nullable: false
+      end
     end
+  end
 end

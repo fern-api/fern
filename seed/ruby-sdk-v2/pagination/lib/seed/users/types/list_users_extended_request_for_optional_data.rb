@@ -1,8 +1,11 @@
+# frozen_string_literal: true
 
 module Seed
-    module Users
-        class ListUsersExtendedRequestForOptionalData
-            field :cursor, String, optional: true, nullable: false
-
+  module Users
+    module Types
+      class ListUsersExtendedRequestForOptionalData < Internal::Types::Model
+        field :cursor, -> { String }, optional: true, nullable: false
+      end
     end
+  end
 end

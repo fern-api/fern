@@ -334,8 +334,12 @@ module Seed
       end
 
       # @return [untyped]
-      def simple(request_options: {}, **params)
-        _request = params
+      def simple(request_options: {}, **_params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          method: "POST",
+          path: "/snippet"
+        )
         _response = @client.send(_request)
         return if _response.code >= "200" && _response.code < "300"
 

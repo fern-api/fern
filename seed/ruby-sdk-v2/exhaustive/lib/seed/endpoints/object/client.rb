@@ -15,7 +15,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/object/get-and-return-with-optional-field",
-            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params[:request]).to_h
+            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params).to_h
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -31,7 +31,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/object/get-and-return-with-required-field",
-            body: Seed::Types::Object_::Types::ObjectWithRequiredField.new(params[:request]).to_h
+            body: Seed::Types::Object_::Types::ObjectWithRequiredField.new(params).to_h
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -47,7 +47,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/object/get-and-return-with-map-of-map",
-            body: Seed::Types::Object_::Types::ObjectWithMapOfMap.new(params[:request]).to_h
+            body: Seed::Types::Object_::Types::ObjectWithMapOfMap.new(params).to_h
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -63,7 +63,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/object/get-and-return-nested-with-optional-field",
-            body: Seed::Types::Object_::Types::NestedObjectWithOptionalField.new(params[:request]).to_h
+            body: Seed::Types::Object_::Types::NestedObjectWithOptionalField.new(params).to_h
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -79,7 +79,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/object/get-and-return-nested-with-required-field/#{params[:string]}",
-            body: Seed::Types::Object_::Types::NestedObjectWithRequiredField.new(params[:request]).to_h
+            body: Seed::Types::Object_::Types::NestedObjectWithRequiredField.new(params).to_h
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -95,7 +95,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/object/get-and-return-nested-with-required-field-list",
-            body: params[:request]
+            body: params
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -111,7 +111,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/object/test-integer-overflow-edge-cases",
-            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params[:request]).to_h
+            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params).to_h
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
