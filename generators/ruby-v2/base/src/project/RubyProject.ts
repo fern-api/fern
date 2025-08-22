@@ -32,6 +32,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await this.writeRawFiles();
         await this.createAsIsFiles();
         await this.writeAsIsFiles();
+        await this.createTestFiles();
         await this.createModuleFile();
         await this.createRubocoopFile();
     }
@@ -66,6 +67,12 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
     private async createModuleFile(): Promise<void> {
         const moduleFile = new ModuleFile({ context: this.context, project: this });
         moduleFile.writeFile();
+    }
+
+    private async createTestFiles(): Promise<void> {
+        // Create custom test file for quick testing per fixture
+        const customTestFile = new CustomTestFile({ context: this.context, project: this });
+        await customTestFile.writeFile();
     }
 
     private async createAsIsFiles(): Promise<void> {
@@ -214,6 +221,55 @@ class Rakefile {
             t.test_globs = ["test/custom.test.rb"]
             end
         `;
+    }
+}
+
+declare namespace CustomTestFile {
+    interface Args {
+        context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+        project: RubyProject;
+    }
+}
+
+class CustomTestFile {
+    private context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+    private project: RubyProject;
+    public readonly filePath: AbsoluteFilePath;
+    public readonly fileName: string;
+
+    public constructor({ context, project }: CustomTestFile.Args) {
+        this.context = context;
+        this.project = project;
+        this.filePath = join(project.absolutePathToOutputDirectory, RelativeFilePath.of("test"));
+        this.fileName = "custom.test.rb";
+    }
+
+    public toString(): string {
+        return dedent`
+            # frozen_string_literal: true
+
+            =begin
+            This is a custom test file, if you wish to add more tests
+            to your SDK.
+            Be sure to mark this file in \`.fernignore\`.
+            
+            If you include example requests/responses in your fern definition,
+            you will have tests automatically generated for you.
+            =end
+
+            # This test is run via command line: rake customtest
+            describe "Custom Test" do
+                it "Defalt" do
+                    refute false
+                end
+            end
+        `;
+    }
+
+    public async writeFile(): Promise<void> {
+        // Ensure the test directory exists before writing the file
+        await mkdir(this.filePath, { recursive: true });
+        await writeFile(join(this.filePath, RelativeFilePath.of(this.fileName)), this.toString());
     }
 }
 
