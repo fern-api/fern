@@ -80,7 +80,7 @@ function convertSecuritySchemeHelper(
                 passwordEnvVar: basicSecuritySchemeNamingAndEnvvar?.password?.env
             });
         } else {
-            throw new Error(`Unsupported HTTP scheme: ${securityScheme.scheme}`);
+            throw new Error(`Unsupported HTTP scheme - ${key}: ${securityScheme.scheme}`);
         }
     } else if (securityScheme.type === "openIdConnect") {
         return SecurityScheme.bearer({
