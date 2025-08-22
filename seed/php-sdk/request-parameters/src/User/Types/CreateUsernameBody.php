@@ -1,17 +1,12 @@
 <?php
 
-namespace Seed\User\Requests;
+namespace Seed\User\Types;
 
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class CreateUsernameRequest extends JsonSerializableType
+class CreateUsernameBody extends JsonSerializableType
 {
-    /**
-     * @var array<string> $tags
-     */
-    public array $tags;
-
     /**
      * @var string $username
      */
@@ -32,7 +27,6 @@ class CreateUsernameRequest extends JsonSerializableType
 
     /**
      * @param array{
-     *   tags: array<string>,
      *   username: string,
      *   password: string,
      *   name: string,
@@ -41,9 +35,16 @@ class CreateUsernameRequest extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
-        $this->tags = $values['tags'];
         $this->username = $values['username'];
         $this->password = $values['password'];
         $this->name = $values['name'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }
