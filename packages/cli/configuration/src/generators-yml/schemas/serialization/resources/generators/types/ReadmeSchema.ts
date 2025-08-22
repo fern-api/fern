@@ -9,6 +9,7 @@ import { ReadmeEndpointSchema } from "./ReadmeEndpointSchema";
 
 export const ReadmeSchema: core.serialization.ObjectSchema<serializers.ReadmeSchema.Raw, FernDefinition.ReadmeSchema> =
     core.serialization.object({
+        sdkName: core.serialization.string().optional(),
         bannerLink: core.serialization.string().optional(),
         introduction: core.serialization.string().optional(),
         apiReferenceLink: core.serialization.string().optional(),
@@ -20,6 +21,7 @@ export const ReadmeSchema: core.serialization.ObjectSchema<serializers.ReadmeSch
 
 export declare namespace ReadmeSchema {
     export interface Raw {
+        sdkName?: string | null;
         bannerLink?: string | null;
         introduction?: string | null;
         apiReferenceLink?: string | null;

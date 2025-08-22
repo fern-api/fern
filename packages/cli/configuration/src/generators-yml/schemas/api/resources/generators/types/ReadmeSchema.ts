@@ -5,6 +5,7 @@
 import * as FernDefinition from "../../../index";
 
 export interface ReadmeSchema {
+    sdkName?: string;
     bannerLink?: string;
     introduction?: string;
     apiReferenceLink?: string;
