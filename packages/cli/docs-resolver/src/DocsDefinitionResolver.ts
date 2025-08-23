@@ -112,6 +112,7 @@ export class DocsDefinitionResolver {
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
     private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean> = new Map();
+    private markdownFilesToTags: Map<AbsoluteFilePath, string[]> = new Map();
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
         this._parsedDocsConfig = await parseDocsConfiguration({
             rawDocsConfiguration: this.docsWorkspace.config,
@@ -156,6 +157,9 @@ export class DocsDefinitionResolver {
 
         // create a map of markdown files to their noindex values
         this.markdownFilesToNoIndex = await this.getMarkdownFilesToNoIndex(this.parsedDocsConfig.pages);
+        
+        // create a map of markdown files to their tags
+        this.markdownFilesToTags = await this.getMarkdownFilesToTags(this.parsedDocsConfig.pages)
 
         // replaces all instances of <Markdown src="path/to/file.md" /> with the content of the referenced markdown file
         // this should happen before we parse image paths, as the referenced markdown files may contain images.
@@ -342,6 +346,27 @@ export class DocsDefinitionResolver {
             }
         }
         return mdxFilePathToNoIndex;
+    }
+    
+    /**
+     * Creates a list of markdown files that have noindex:true specified in the frontmatter
+     * @param pages - the pages to check
+     * @returns a map of markdown files to their noindex value
+     */
+    private async getMarkdownFilesToTags(
+        pages: Record<RelativeFilePath, string>
+    ): Promise<Map<AbsoluteFilePath, string[]>> {
+        const mdxFilePathToTags = new Map<AbsoluteFilePath, string[]>();
+        for (const [relativePath, markdown] of Object.entries(pages)) {
+            const frontmatter = matter(markdown);
+            const tags = frontmatter.data.tags;
+            if (typeof tags === "string") {
+                mdxFilePathToTags.set(this.resolveFilepath(relativePath), tags.split(",").flatMap(item => item.trim()));
+            } else if (Array.isArray(tags)) {
+                mdxFilePathToTags.set(this.resolveFilepath(relativePath), tags);
+            }
+        }
+        return mdxFilePathToTags;
     }
 
     /**
@@ -925,6 +950,7 @@ export class DocsDefinitionResolver {
         const changelogResolver = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
             this.markdownFilesToNoIndex,
+            this.markdownFilesToTags,
             item.changelog,
             this.docsWorkspace,
             this.#idgen
@@ -1050,6 +1076,7 @@ export class DocsDefinitionResolver {
         const changelogResolver = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
             this.markdownFilesToNoIndex,
+            this.markdownFilesToTags,
             changelog,
             this.docsWorkspace,
             this.#idgen
