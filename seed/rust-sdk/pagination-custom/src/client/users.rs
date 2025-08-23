@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 use crate::{AsyncPaginator, PaginationResult};
@@ -8,12 +8,12 @@ pub struct UsersClient {
 }
 
 impl UsersClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn list_usernames_custom(&self, starting_after: Option<String>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ClientError> {
+    pub async fn list_usernames_custom(&self, starting_after: Option<String>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = {
             let mut query_params = Vec::new();

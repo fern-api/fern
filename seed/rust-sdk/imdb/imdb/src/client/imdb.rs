@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -7,12 +7,12 @@ pub struct ImdbClient {
 }
 
 impl ImdbClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn create_movie(&self, request: &CreateMovieRequest, options: Option<RequestOptions>) -> Result<MovieId, ClientError> {
+    pub async fn create_movie(&self, request: &CreateMovieRequest, options: Option<RequestOptions>) -> Result<MovieId, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/movies/create-movie",
@@ -22,7 +22,7 @@ impl ImdbClient {
         ).await
     }
 
-    pub async fn get_movie(&self, movie_id: &MovieId, options: Option<RequestOptions>) -> Result<Movie, ClientError> {
+    pub async fn get_movie(&self, movie_id: &MovieId, options: Option<RequestOptions>) -> Result<Movie, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("/movies/{}", movie_id.0),

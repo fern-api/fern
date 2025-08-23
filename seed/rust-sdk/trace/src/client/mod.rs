@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError};
+use crate::{ClientConfig, ApiError};
 
 pub mod v_2;
 pub mod admin;
@@ -21,7 +21,7 @@ pub struct TraceClient {
 }
 
 impl TraceClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
             v_2: V2Client::new(config.clone())?,

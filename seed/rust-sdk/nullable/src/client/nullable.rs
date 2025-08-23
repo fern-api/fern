@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -7,12 +7,12 @@ pub struct NullableClient {
 }
 
 impl NullableClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn get_users(&self, usernames: Option<String>, avatar: Option<String>, activated: Option<bool>, tags: Option<Option<String>>, extra: Option<Option<bool>>, options: Option<RequestOptions>) -> Result<Vec<User>, ClientError> {
+    pub async fn get_users(&self, usernames: Option<String>, avatar: Option<String>, activated: Option<bool>, tags: Option<Option<String>>, extra: Option<Option<bool>>, options: Option<RequestOptions>) -> Result<Vec<User>, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             "/users",
@@ -40,7 +40,7 @@ impl NullableClient {
         ).await
     }
 
-    pub async fn create_user(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<User, ClientError> {
+    pub async fn create_user(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<User, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/users",
@@ -50,7 +50,7 @@ impl NullableClient {
         ).await
     }
 
-    pub async fn delete_user(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<bool, ClientError> {
+    pub async fn delete_user(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<bool, ApiError> {
         self.http_client.execute_request(
             Method::DELETE,
             "/users",

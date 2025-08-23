@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use std::time::Duration;
-use crate::{ClientConfig, ClientError};
+use crate::{ClientConfig, ApiError};
 use crate::client::AnyAuthClient;
 
 /// Builder for creating API clients with custom configuration
@@ -71,7 +71,7 @@ impl ApiClientBuilder {
     }
     
     /// Build the client with validation
-    pub fn build(self) -> Result<AnyAuthClient, ClientError> {  
+    pub fn build(self) -> Result<AnyAuthClient, ApiError> {  
         // Call the client constructor with all authentication parameters
         AnyAuthClient::new(self.config)
     }

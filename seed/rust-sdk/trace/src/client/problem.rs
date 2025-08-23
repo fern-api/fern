@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -7,12 +7,12 @@ pub struct ProblemClient {
 }
 
 impl ProblemClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn get_lightweight_problems(&self, options: Option<RequestOptions>) -> Result<Vec<LightweightProblemInfoV2>, ClientError> {
+    pub async fn get_lightweight_problems(&self, options: Option<RequestOptions>) -> Result<Vec<LightweightProblemInfoV2>, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             "/problems-v2/lightweight-problem-info",
@@ -22,7 +22,7 @@ impl ProblemClient {
         ).await
     }
 
-    pub async fn get_problems(&self, options: Option<RequestOptions>) -> Result<Vec<ProblemInfoV2>, ClientError> {
+    pub async fn get_problems(&self, options: Option<RequestOptions>) -> Result<Vec<ProblemInfoV2>, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             "/problems-v2/problem-info",
@@ -32,7 +32,7 @@ impl ProblemClient {
         ).await
     }
 
-    pub async fn get_latest_problem(&self, problem_id: &ProblemId, options: Option<RequestOptions>) -> Result<ProblemInfoV2, ClientError> {
+    pub async fn get_latest_problem(&self, problem_id: &ProblemId, options: Option<RequestOptions>) -> Result<ProblemInfoV2, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("/problems-v2/problem-info/{}", problem_id.0),
@@ -42,7 +42,7 @@ impl ProblemClient {
         ).await
     }
 
-    pub async fn get_problem_version(&self, problem_id: &ProblemId, problem_version: i32, options: Option<RequestOptions>) -> Result<ProblemInfoV2, ClientError> {
+    pub async fn get_problem_version(&self, problem_id: &ProblemId, problem_version: i32, options: Option<RequestOptions>) -> Result<ProblemInfoV2, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("/problems-v2/problem-info/{}{}", problem_id.0, problem_version),

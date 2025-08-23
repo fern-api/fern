@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError};
+use crate::{ClientConfig, ApiError};
 
 pub mod complex;
 pub mod users;
@@ -9,7 +9,7 @@ pub struct PaginationClient {
 }
 
 impl PaginationClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
             complex: ComplexClient::new(config.clone())?,

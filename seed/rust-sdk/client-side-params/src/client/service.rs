@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -7,12 +7,12 @@ pub struct ServiceClient {
 }
 
 impl ServiceClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn list_resources(&self, page: Option<i32>, per_page: Option<i32>, sort: Option<String>, order: Option<String>, include_totals: Option<bool>, fields: Option<String>, search: Option<String>, options: Option<RequestOptions>) -> Result<Vec<Resource>, ClientError> {
+    pub async fn list_resources(&self, page: Option<i32>, per_page: Option<i32>, sort: Option<String>, order: Option<String>, include_totals: Option<bool>, fields: Option<String>, search: Option<String>, options: Option<RequestOptions>) -> Result<Vec<Resource>, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             "/api/resources",
@@ -47,7 +47,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn get_resource(&self, resource_id: &String, include_metadata: Option<bool>, format: Option<String>, options: Option<RequestOptions>) -> Result<Resource, ClientError> {
+    pub async fn get_resource(&self, resource_id: &String, include_metadata: Option<bool>, format: Option<String>, options: Option<RequestOptions>) -> Result<Resource, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("/api/resources/{}", resource_id),
@@ -66,7 +66,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn search_resources(&self, limit: Option<i32>, offset: Option<i32>, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<SearchResponse, ClientError> {
+    pub async fn search_resources(&self, limit: Option<i32>, offset: Option<i32>, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<SearchResponse, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/api/resources/search",
@@ -85,7 +85,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn list_users(&self, page: Option<i32>, per_page: Option<i32>, include_totals: Option<bool>, sort: Option<String>, connection: Option<String>, q: Option<String>, search_engine: Option<String>, fields: Option<String>, options: Option<RequestOptions>) -> Result<PaginatedUserResponse, ClientError> {
+    pub async fn list_users(&self, page: Option<i32>, per_page: Option<i32>, include_totals: Option<bool>, sort: Option<String>, connection: Option<String>, q: Option<String>, search_engine: Option<String>, fields: Option<String>, options: Option<RequestOptions>) -> Result<PaginatedUserResponse, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             "/api/users",
@@ -123,7 +123,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn get_user_by_id(&self, user_id: &String, fields: Option<String>, include_fields: Option<bool>, options: Option<RequestOptions>) -> Result<User, ClientError> {
+    pub async fn get_user_by_id(&self, user_id: &String, fields: Option<String>, include_fields: Option<bool>, options: Option<RequestOptions>) -> Result<User, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("/api/users/{}", user_id),
@@ -142,7 +142,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn create_user(&self, request: &CreateUserRequest, options: Option<RequestOptions>) -> Result<User, ClientError> {
+    pub async fn create_user(&self, request: &CreateUserRequest, options: Option<RequestOptions>) -> Result<User, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/api/users",
@@ -152,7 +152,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn update_user(&self, user_id: &String, request: &UpdateUserRequest, options: Option<RequestOptions>) -> Result<User, ClientError> {
+    pub async fn update_user(&self, user_id: &String, request: &UpdateUserRequest, options: Option<RequestOptions>) -> Result<User, ApiError> {
         self.http_client.execute_request(
             Method::PATCH,
             &format!("/api/users/{}", user_id),
@@ -162,7 +162,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn delete_user(&self, user_id: &String, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn delete_user(&self, user_id: &String, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::DELETE,
             &format!("/api/users/{}", user_id),
@@ -172,7 +172,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn list_connections(&self, strategy: Option<String>, name: Option<String>, fields: Option<String>, options: Option<RequestOptions>) -> Result<Vec<Connection>, ClientError> {
+    pub async fn list_connections(&self, strategy: Option<String>, name: Option<String>, fields: Option<String>, options: Option<RequestOptions>) -> Result<Vec<Connection>, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             "/api/connections",
@@ -194,7 +194,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn get_connection(&self, connection_id: &String, fields: Option<String>, options: Option<RequestOptions>) -> Result<Connection, ClientError> {
+    pub async fn get_connection(&self, connection_id: &String, fields: Option<String>, options: Option<RequestOptions>) -> Result<Connection, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("/api/connections/{}", connection_id),
@@ -210,7 +210,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn list_clients(&self, fields: Option<String>, include_fields: Option<bool>, page: Option<i32>, per_page: Option<i32>, include_totals: Option<bool>, is_global: Option<bool>, is_first_party: Option<bool>, app_type: Option<Vec<String>>, options: Option<RequestOptions>) -> Result<PaginatedClientResponse, ClientError> {
+    pub async fn list_clients(&self, fields: Option<String>, include_fields: Option<bool>, page: Option<i32>, per_page: Option<i32>, include_totals: Option<bool>, is_global: Option<bool>, is_first_party: Option<bool>, app_type: Option<Vec<String>>, options: Option<RequestOptions>) -> Result<PaginatedClientResponse, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             "/api/clients",
@@ -248,7 +248,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn get_client(&self, client_id: &String, fields: Option<String>, include_fields: Option<bool>, options: Option<RequestOptions>) -> Result<Client, ClientError> {
+    pub async fn get_client(&self, client_id: &String, fields: Option<String>, include_fields: Option<bool>, options: Option<RequestOptions>) -> Result<Client, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("/api/clients/{}", client_id),

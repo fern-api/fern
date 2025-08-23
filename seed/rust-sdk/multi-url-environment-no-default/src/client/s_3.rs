@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 
 pub struct S3Client {
@@ -6,12 +6,12 @@ pub struct S3Client {
 }
 
 impl S3Client {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn get_presigned_url(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<String, ClientError> {
+    pub async fn get_presigned_url(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/s3/presigned-url",

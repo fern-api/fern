@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -7,12 +7,12 @@ pub struct UnionClient {
 }
 
 impl UnionClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn get(&self, id: &String, options: Option<RequestOptions>) -> Result<Shape, ClientError> {
+    pub async fn get(&self, id: &String, options: Option<RequestOptions>) -> Result<Shape, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("/{}", id),
@@ -22,7 +22,7 @@ impl UnionClient {
         ).await
     }
 
-    pub async fn update(&self, request: &Shape, options: Option<RequestOptions>) -> Result<bool, ClientError> {
+    pub async fn update(&self, request: &Shape, options: Option<RequestOptions>) -> Result<bool, ApiError> {
         self.http_client.execute_request(
             Method::PATCH,
             "",

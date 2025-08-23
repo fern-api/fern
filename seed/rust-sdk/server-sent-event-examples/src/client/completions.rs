@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -7,12 +7,12 @@ pub struct CompletionsClient {
 }
 
 impl CompletionsClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn stream(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<serde_json::Value, ClientError> {
+    pub async fn stream(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<serde_json::Value, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "stream",

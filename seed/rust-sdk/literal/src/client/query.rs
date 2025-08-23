@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -7,12 +7,12 @@ pub struct QueryClient {
 }
 
 impl QueryClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn send(&self, prompt: Option<String>, optional_prompt: Option<String>, alias_prompt: Option<AliasToPrompt>, alias_optional_prompt: Option<AliasToPrompt>, query: Option<String>, stream: Option<bool>, optional_stream: Option<bool>, alias_stream: Option<AliasToStream>, alias_optional_stream: Option<AliasToStream>, options: Option<RequestOptions>) -> Result<SendResponse, ClientError> {
+    pub async fn send(&self, prompt: Option<String>, optional_prompt: Option<String>, alias_prompt: Option<AliasToPrompt>, alias_optional_prompt: Option<AliasToPrompt>, query: Option<String>, stream: Option<bool>, optional_stream: Option<bool>, alias_stream: Option<AliasToStream>, alias_optional_stream: Option<AliasToStream>, options: Option<RequestOptions>) -> Result<SendResponse, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "query",

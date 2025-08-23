@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -7,12 +7,12 @@ pub struct UserClient {
 }
 
 impl UserClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn get_user(&self, tenant_id: &String, user_id: &String, options: Option<RequestOptions>) -> Result<User, ClientError> {
+    pub async fn get_user(&self, tenant_id: &String, user_id: &String, options: Option<RequestOptions>) -> Result<User, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("/{}{}", tenant_id, user_id),
@@ -22,7 +22,7 @@ impl UserClient {
         ).await
     }
 
-    pub async fn create_user(&self, tenant_id: &String, request: &User, options: Option<RequestOptions>) -> Result<User, ClientError> {
+    pub async fn create_user(&self, tenant_id: &String, request: &User, options: Option<RequestOptions>) -> Result<User, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             &format!("/{}", tenant_id),
@@ -32,7 +32,7 @@ impl UserClient {
         ).await
     }
 
-    pub async fn update_user(&self, tenant_id: &String, user_id: &String, request: &User, options: Option<RequestOptions>) -> Result<User, ClientError> {
+    pub async fn update_user(&self, tenant_id: &String, user_id: &String, request: &User, options: Option<RequestOptions>) -> Result<User, ApiError> {
         self.http_client.execute_request(
             Method::PATCH,
             &format!("/{}{}", tenant_id, user_id),
@@ -42,7 +42,7 @@ impl UserClient {
         ).await
     }
 
-    pub async fn search_users(&self, tenant_id: &String, user_id: &String, limit: Option<i32>, options: Option<RequestOptions>) -> Result<Vec<User>, ClientError> {
+    pub async fn search_users(&self, tenant_id: &String, user_id: &String, limit: Option<i32>, options: Option<RequestOptions>) -> Result<Vec<User>, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("/{}{}", tenant_id, user_id),

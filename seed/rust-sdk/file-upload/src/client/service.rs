@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -7,12 +7,12 @@ pub struct ServiceClient {
 }
 
 impl ServiceClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn post(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn post(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "",
@@ -22,7 +22,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn just_file(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn just_file(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/just-file",
@@ -32,7 +32,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn just_file_with_query_params(&self, maybe_string: Option<String>, integer: Option<i32>, maybe_integer: Option<i32>, list_of_strings: Option<String>, optional_list_of_strings: Option<String>, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn just_file_with_query_params(&self, maybe_string: Option<String>, integer: Option<i32>, maybe_integer: Option<i32>, list_of_strings: Option<String>, optional_list_of_strings: Option<String>, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/just-file-with-query-params",
@@ -60,7 +60,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn with_content_type(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn with_content_type(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/with-content-type",
@@ -70,7 +70,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn with_form_encoding(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn with_form_encoding(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/with-form-encoding",
@@ -80,7 +80,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn with_form_encoded_containers(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn with_form_encoded_containers(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "",
@@ -90,7 +90,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn optional_args(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<String, ClientError> {
+    pub async fn optional_args(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/optional-args",
@@ -100,7 +100,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn with_inline_type(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<String, ClientError> {
+    pub async fn with_inline_type(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/inline-type",
@@ -110,7 +110,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn simple(&self, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn simple(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/snippet",

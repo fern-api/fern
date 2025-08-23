@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -7,12 +7,12 @@ pub struct ParamsClient {
 }
 
 impl ParamsClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn get_with_path(&self, param: &String, options: Option<RequestOptions>) -> Result<String, ClientError> {
+    pub async fn get_with_path(&self, param: &String, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("/params/path/{}", param),
@@ -22,7 +22,7 @@ impl ParamsClient {
         ).await
     }
 
-    pub async fn get_with_inline_path(&self, param: &String, options: Option<RequestOptions>) -> Result<String, ClientError> {
+    pub async fn get_with_inline_path(&self, param: &String, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("/params/path/{}", param),
@@ -32,7 +32,7 @@ impl ParamsClient {
         ).await
     }
 
-    pub async fn get_with_query(&self, query: Option<String>, number: Option<i32>, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn get_with_query(&self, query: Option<String>, number: Option<i32>, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::GET,
             "/params",
@@ -55,7 +55,7 @@ impl ParamsClient {
         ).await
     }
 
-    pub async fn get_with_allow_multiple_query(&self, query: Option<String>, number: Option<i32>, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn get_with_allow_multiple_query(&self, query: Option<String>, number: Option<i32>, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::GET,
             "/params",
@@ -78,7 +78,7 @@ impl ParamsClient {
         ).await
     }
 
-    pub async fn get_with_path_and_query(&self, param: &String, query: Option<String>, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn get_with_path_and_query(&self, param: &String, query: Option<String>, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("/params/path-query/{}", param),
@@ -98,7 +98,7 @@ impl ParamsClient {
         ).await
     }
 
-    pub async fn get_with_inline_path_and_query(&self, param: &String, query: Option<String>, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn get_with_inline_path_and_query(&self, param: &String, query: Option<String>, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("/params/path-query/{}", param),
@@ -118,7 +118,7 @@ impl ParamsClient {
         ).await
     }
 
-    pub async fn modify_with_path(&self, param: &String, request: &String, options: Option<RequestOptions>) -> Result<String, ClientError> {
+    pub async fn modify_with_path(&self, param: &String, request: &String, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client.execute_request(
             Method::PUT,
             &format!("/params/path/{}", param),
@@ -128,7 +128,7 @@ impl ParamsClient {
         ).await
     }
 
-    pub async fn modify_with_inline_path(&self, param: &String, request: &String, options: Option<RequestOptions>) -> Result<String, ClientError> {
+    pub async fn modify_with_inline_path(&self, param: &String, request: &String, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client.execute_request(
             Method::PUT,
             &format!("/params/path/{}", param),

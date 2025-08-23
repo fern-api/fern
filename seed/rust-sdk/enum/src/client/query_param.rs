@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -7,12 +7,12 @@ pub struct QueryParamClient {
 }
 
 impl QueryParamClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn send(&self, operand: Option<Operand>, maybe_operand: Option<Operand>, operand_or_color: Option<ColorOrOperand>, maybe_operand_or_color: Option<ColorOrOperand>, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn send(&self, operand: Option<Operand>, maybe_operand: Option<Operand>, operand_or_color: Option<ColorOrOperand>, maybe_operand_or_color: Option<ColorOrOperand>, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "query",
@@ -37,7 +37,7 @@ impl QueryParamClient {
         ).await
     }
 
-    pub async fn send_list(&self, operand: Option<Operand>, maybe_operand: Option<Operand>, operand_or_color: Option<ColorOrOperand>, maybe_operand_or_color: Option<ColorOrOperand>, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn send_list(&self, operand: Option<Operand>, maybe_operand: Option<Operand>, operand_or_color: Option<ColorOrOperand>, maybe_operand_or_color: Option<ColorOrOperand>, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "query-list",
