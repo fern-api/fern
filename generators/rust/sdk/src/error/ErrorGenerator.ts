@@ -64,6 +64,9 @@ export class ErrorGenerator {
         variants.push(this.buildHttpErrorVariant());
         variants.push(this.buildNetworkErrorVariant());
         variants.push(this.buildSerializationErrorVariant());
+        variants.push(this.buildConfigurationErrorVariant());
+        variants.push(this.buildInvalidHeaderErrorVariant());
+        variants.push(this.buildRequestCloneErrorVariant());
 
         return variants;
     }
@@ -104,6 +107,28 @@ export class ErrorGenerator {
             name: "Serialization",
             attributes: [this.createErrorAttribute("Serialization error: {0}")],
             data: [Type.reference(new Reference({ name: "serde_json::Error" }))]
+        });
+    }
+
+    private buildConfigurationErrorVariant(): EnumVariant {
+        return new EnumVariant({
+            name: "Configuration",
+            attributes: [this.createErrorAttribute("Configuration error: {0}")],
+            data: [Type.string()]
+        });
+    }
+
+    private buildInvalidHeaderErrorVariant(): EnumVariant {
+        return new EnumVariant({
+            name: "InvalidHeader",
+            attributes: [this.createErrorAttribute("Invalid header value")]
+        });
+    }
+
+    private buildRequestCloneErrorVariant(): EnumVariant {
+        return new EnumVariant({
+            name: "RequestClone",
+            attributes: [this.createErrorAttribute("Could not clone request for retry")]
         });
     }
 

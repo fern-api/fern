@@ -78,7 +78,7 @@ export class SubClientGenerator {
         const imports = [
             new UseStatement({
                 path: "crate",
-                items: ["ClientConfig", "ClientError", "HttpClient", "RequestOptions"]
+                items: ["ClientConfig", "ApiError", "HttpClient", "RequestOptions"]
             }),
             new UseStatement({
                 path: "reqwest",
@@ -131,7 +131,7 @@ export class SubClientGenerator {
 
     private generateConstructor(): rust.Client.SimpleMethod {
         const selfType = rust.Type.reference(rust.reference({ name: "Self" }));
-        const errorType = rust.Type.reference(rust.reference({ name: "ClientError" }));
+        const errorType = rust.Type.reference(rust.reference({ name: "ApiError" }));
         const returnType = rust.Type.result(selfType, errorType);
 
         // Use simple parameter signature with just config
@@ -198,7 +198,7 @@ export class SubClientGenerator {
 
         const returnType = rust.Type.result(
             this.getReturnType(endpoint),
-            rust.Type.reference(rust.reference({ name: "ClientError" }))
+            rust.Type.reference(rust.reference({ name: "ApiError" }))
         );
 
         return {
@@ -746,7 +746,7 @@ export class SubClientGenerator {
                     genericArgs: [itemType]
                 })
             ),
-            rust.Type.reference(rust.reference({ name: "ClientError" }))
+            rust.Type.reference(rust.reference({ name: "ApiError" }))
         );
 
         // Generate pagination logic based on pagination type
