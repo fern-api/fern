@@ -8,6 +8,8 @@ export interface ReadmeSchema {
     bannerLink?: string;
     introduction?: string;
     apiReferenceLink?: string;
+    apiName?: string;
+    disabledFeatures?: Set<string>;
     /** If set, use this endpoint's snippet as the default whenever possible */
     defaultEndpoint?: FernDefinition.ReadmeEndpointSchema;
     /** Specifies a list of endpoints associated with the feature */
