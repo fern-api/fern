@@ -10,7 +10,7 @@ public final class InlinedRequestsClient: Sendable {
     /// POST with custom object in request body, response is an object
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func postWithObjectBodyandResponse(request: PostWithObjectBody, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
+    public func postWithObjectBodyandResponse(request: Requests.PostWithObjectBody, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
         return try await httpClient.performRequest(
             method: .post,
             path: "/req-bodies/object",

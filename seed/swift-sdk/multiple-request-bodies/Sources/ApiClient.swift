@@ -83,7 +83,7 @@ public final class ApiClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func uploadJsonDocument(request: UploadDocumentRequest, requestOptions: RequestOptions? = nil) async throws -> UploadDocumentResponse {
+    public func uploadJsonDocument(request: Requests.UploadDocumentRequest, requestOptions: RequestOptions? = nil) async throws -> UploadDocumentResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/documents/upload",

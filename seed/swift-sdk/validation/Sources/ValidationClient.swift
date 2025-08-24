@@ -53,7 +53,7 @@ public final class ValidationClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func create(request: CreateRequest, requestOptions: RequestOptions? = nil) async throws -> Type {
+    public func create(request: Requests.CreateRequest, requestOptions: RequestOptions? = nil) async throws -> Type {
         return try await httpClient.performRequest(
             method: .post,
             path: "/create",
