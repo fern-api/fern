@@ -2,7 +2,7 @@ import { values } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
 import { AsIsFiles } from "../AsIs";
 
-export class SymbolRegistry {
+export class ProjectSymbolRegistry {
     private static readonly reservedSymbols = [
         "Swift",
         "Foundation",
@@ -12,13 +12,13 @@ export class SymbolRegistry {
     ];
 
     /**
-     * Creates a new SymbolRegistry instance with reserved Swift/Foundation symbols
+     * Creates a new ProjectSymbolRegistry instance with reserved Swift/Foundation symbols
      * and all AsIs file symbols pre-registered to avoid collisions.
      *
-     * @returns A new SymbolRegistry instance ready for use
+     * @returns A new ProjectSymbolRegistry instance ready for use
      */
-    public static create(): SymbolRegistry {
-        const registry = new SymbolRegistry(SymbolRegistry.reservedSymbols);
+    public static create(): ProjectSymbolRegistry {
+        const registry = new ProjectSymbolRegistry(ProjectSymbolRegistry.reservedSymbols);
         Object.values(AsIsFiles).forEach((definition) => {
             definition.symbolNames.forEach((symbolName) => {
                 registry.registerAsIsSymbol(symbolName);
