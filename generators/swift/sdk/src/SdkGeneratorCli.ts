@@ -1,6 +1,6 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever, noop } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, SwiftFile } from "@fern-api/swift-base";
 import {
     AliasGenerator,
@@ -112,13 +112,14 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             const fernFilepathDir = context.getDirectoryForFernFilepath(subpackage.fernFilepath);
             context.project.addSourceFile({
                 nameCandidateWithoutExtension: class_.name,
-                directory: RelativeFilePath.of(`Resources/${fernFilepathDir}`),
+                directory: join(context.resourcesDirectory, RelativeFilePath.of(fernFilepathDir)),
                 contents: [class_]
             });
         });
     }
 
     private generateSourceRequestFiles(context: SdkGeneratorContext): void {
+        // TODO(kafkas): Change to allow namespaced request symbols
         Object.entries(context.ir.services).forEach(([_, service]) => {
             service.endpoints.forEach((endpoint) => {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {

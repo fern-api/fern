@@ -68,6 +68,7 @@ export abstract class AbstractSwiftGeneratorContext<
             project.symbolRegistry.registerSchemaTypeSymbol(typeId, typeDeclaration.name.name.pascalCase.unsafeName);
         });
         Object.entries(ir.services).forEach(([_, service]) => {
+            // TODO(kafkas): Change to allow namespaced request symbols
             service.endpoints.forEach((endpoint) => {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     project.symbolRegistry.registerInlineRequestTypeSymbol(
@@ -98,12 +99,16 @@ export abstract class AbstractSwiftGeneratorContext<
         return this.ir.apiName.pascalCase.unsafeName;
     }
 
-    public get schemasDirectory(): RelativeFilePath {
-        return RelativeFilePath.of("Schemas");
-    }
-
     public get requestsDirectory(): RelativeFilePath {
         return RelativeFilePath.of("Requests");
+    }
+
+    public get resourcesDirectory(): RelativeFilePath {
+        return RelativeFilePath.of("Resources");
+    }
+
+    public get schemasDirectory(): RelativeFilePath {
+        return RelativeFilePath.of("Schemas");
     }
 
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
