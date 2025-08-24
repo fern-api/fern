@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct RegularPatchRequest: Codable, Hashable, Sendable {
         public let field1: String?
         public let field2: Int?

@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct ListUsersBodyCursorPaginationRequest: Codable, Hashable, Sendable {
         /// The object that contains the cursor used for pagination
         /// in order to fetch the next page of results.

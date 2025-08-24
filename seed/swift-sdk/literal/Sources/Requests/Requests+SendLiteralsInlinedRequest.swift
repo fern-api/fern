@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct SendLiteralsInlinedRequest: Codable, Hashable, Sendable {
         public let prompt: YouAreAHelpfulAssistant
         public let context: YoureSuperWise?

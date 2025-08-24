@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct PostWithObjectBody: Codable, Hashable, Sendable {
         public let string: String
         public let integer: Int

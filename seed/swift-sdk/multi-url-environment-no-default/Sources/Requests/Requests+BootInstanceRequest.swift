@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct BootInstanceRequest: Codable, Hashable, Sendable {
         public let size: String
         /// Additional properties that are not explicitly defined in the schema

@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct NamedMixedPatchRequest: Codable, Hashable, Sendable {
         public let appId: String?
         public let instructions: JSONValue

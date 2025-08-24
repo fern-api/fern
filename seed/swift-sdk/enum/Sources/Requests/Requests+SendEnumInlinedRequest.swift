@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct SendEnumInlinedRequest: Codable, Hashable, Sendable {
         public let operand: Operand
         public let maybeOperand: Operand?

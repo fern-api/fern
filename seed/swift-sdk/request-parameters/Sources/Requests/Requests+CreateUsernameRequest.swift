@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct CreateUsernameRequest: Codable, Hashable, Sendable {
         public let username: String
         public let password: String

@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct InlinedChildRequest: Codable, Hashable, Sendable {
         public let parent: String
         public let child: String

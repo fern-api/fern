@@ -49,10 +49,9 @@ export class Extension extends AstNode {
             writer.write(conformance);
         });
         writer.write(" {");
-        writer.newLine();
-        writer.indent();
         if (this.initializers.length > 0) {
             writer.newLine();
+            writer.indent();
             this.initializers.forEach((initializer, initializerIdx) => {
                 if (initializerIdx > 0) {
                     writer.newLine();
@@ -60,9 +59,11 @@ export class Extension extends AstNode {
                 initializer.write(writer);
                 writer.newLine();
             });
+            writer.dedent();
         }
         if (this.methods.length > 0) {
             writer.newLine();
+            writer.indent();
             this.methods.forEach((method, methodIdx) => {
                 if (methodIdx > 0) {
                     writer.newLine();
@@ -70,9 +71,11 @@ export class Extension extends AstNode {
                 method.write(writer);
                 writer.newLine();
             });
+            writer.dedent();
         }
         if (this.nestedTypes.length > 0) {
             writer.newLine();
+            writer.indent();
             this.nestedTypes.forEach((nestedType, nestedTypeIdx) => {
                 if (nestedTypeIdx > 0) {
                     writer.newLine();
@@ -80,8 +83,8 @@ export class Extension extends AstNode {
                 nestedType.write(writer);
                 writer.newLine();
             });
+            writer.dedent();
         }
-        writer.dedent();
         writer.write("}");
     }
 }

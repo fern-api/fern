@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct StoreTracedTestCaseRequest: Codable, Hashable, Sendable {
         public let result: TestCaseResultWithStdout
         public let traceResponses: [TraceResponse]

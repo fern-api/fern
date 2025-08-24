@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct GenerateRequest: Codable, Hashable, Sendable {
         public let stream: Bool
         public let numEvents: Int

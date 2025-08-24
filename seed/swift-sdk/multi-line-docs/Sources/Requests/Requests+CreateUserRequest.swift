@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct CreateUserRequest: Codable, Hashable, Sendable {
         /// The name of the user to create.
         /// This name is unique to each user.

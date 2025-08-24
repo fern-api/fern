@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct DeleteUserRequest: Codable, Hashable, Sendable {
         /// The user to delete.
         public let username: JSONValue?

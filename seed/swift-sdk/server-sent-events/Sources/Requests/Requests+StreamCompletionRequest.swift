@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct StreamCompletionRequest: Codable, Hashable, Sendable {
         public let query: String
         /// Additional properties that are not explicitly defined in the schema

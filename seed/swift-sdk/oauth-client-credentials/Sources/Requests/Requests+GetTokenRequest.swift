@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct GetTokenRequest: Codable, Hashable, Sendable {
         public let clientId: String
         public let clientSecret: String

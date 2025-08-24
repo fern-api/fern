@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct PatchComplexRequest: Codable, Hashable, Sendable {
         public let name: String?
         public let age: Int?

@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct SearchResourcesRequest: Codable, Hashable, Sendable {
         /// Search query text
         public let query: String?

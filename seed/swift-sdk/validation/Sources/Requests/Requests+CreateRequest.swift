@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct CreateRequest: Codable, Hashable, Sendable {
         public let decimal: Double
         public let even: Int

@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct OptionalMergePatchRequest: Codable, Hashable, Sendable {
         public let requiredField: String
         public let optionalString: String?

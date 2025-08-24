@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct GetDefaultStarterFilesRequest: Codable, Hashable, Sendable {
         public let inputParams: [VariableTypeAndName]
         public let outputType: VariableType

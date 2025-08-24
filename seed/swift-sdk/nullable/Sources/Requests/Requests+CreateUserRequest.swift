@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct CreateUserRequest: Codable, Hashable, Sendable {
         public let username: String
         public let tags: [String]?

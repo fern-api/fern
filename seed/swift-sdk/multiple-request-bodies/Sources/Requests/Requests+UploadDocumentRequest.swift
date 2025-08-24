@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct UploadDocumentRequest: Codable, Hashable, Sendable {
         public let author: String?
         public let tags: [String]?

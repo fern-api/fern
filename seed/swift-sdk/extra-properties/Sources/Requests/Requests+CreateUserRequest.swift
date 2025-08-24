@@ -1,7 +1,6 @@
 import Foundation
 
 extension Requests {
-
     public struct CreateUserRequest: Codable, Hashable, Sendable {
         public let type: CreateUserRequest
         public let version: V1
