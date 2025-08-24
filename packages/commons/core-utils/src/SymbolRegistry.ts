@@ -4,7 +4,7 @@ import { assertNever } from "./assertNever";
 type SymbolId = string;
 type SymbolName = string;
 
-type ConflictResolutionStrategy = "append-underscore" | "append-number";
+type ConflictResolutionStrategy = "underscore-suffix" | "numbered-suffix";
 
 export interface SymbolRegistryOptions {
     reservedSymbolNames?: SymbolName[];
@@ -18,7 +18,7 @@ export interface SymbolRegistryOptions {
 export class SymbolRegistry {
     public static defaultOptions: Required<SymbolRegistryOptions> = {
         reservedSymbolNames: [],
-        conflictResolutionStrategy: "append-underscore"
+        conflictResolutionStrategy: "underscore-suffix"
     };
 
     private readonly symbolSet: Set<SymbolName>;
@@ -68,12 +68,12 @@ export class SymbolRegistry {
         const [baseSymbolName] = candidates;
         let symbolName = baseSymbolName;
 
-        if (this.conflictResolutionStrategy === "append-number") {
+        if (this.conflictResolutionStrategy === "numbered-suffix") {
             let counter = 2;
             while (this.isSymbolNameRegistered(symbolName)) {
                 symbolName = `${baseSymbolName}${counter++}`;
             }
-        } else if (this.conflictResolutionStrategy === "append-underscore") {
+        } else if (this.conflictResolutionStrategy === "underscore-suffix") {
             while (this.isSymbolNameRegistered(symbolName)) {
                 symbolName += "_";
             }
