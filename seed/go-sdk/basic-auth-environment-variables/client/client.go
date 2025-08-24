@@ -7,16 +7,15 @@ import (
 	core "github.com/basic-auth-environment-variables/fern/core"
 	internal "github.com/basic-auth-environment-variables/fern/internal"
 	option "github.com/basic-auth-environment-variables/fern/option"
-	http "net/http"
 	os "os"
 )
 
 type Client struct {
 	BasicAuth *basicauth.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -28,7 +27,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 		options.AccessToken = os.Getenv("PASSWORD")
 	}
 	return &Client{
-		BasicAuth: basicauth.NewClient(opts...),
+		BasicAuth: basicauth.NewClient(options),
+		options:   options,
 		baseURL:   options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -36,6 +36,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

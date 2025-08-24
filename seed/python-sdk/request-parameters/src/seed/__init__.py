@@ -4,7 +4,15 @@
 
 from . import user
 from .client import AsyncSeedRequestParameters, SeedRequestParameters
-from .user import NestedUser, User
+from .user import CreateUsernameBody, NestedUser, User
 from .version import __version__
 
-__all__ = ["AsyncSeedRequestParameters", "NestedUser", "SeedRequestParameters", "User", "__version__", "user"]
+__all__ = [
+    "AsyncSeedRequestParameters",
+    "CreateUsernameBody",
+    "NestedUser",
+    "SeedRequestParameters",
+    "User",
+    "__version__",
+    "user",
+]

@@ -16,15 +16,15 @@ import (
 type Client struct {
 	WithRawResponse *RawClient
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
-func NewClient(opts ...option.RequestOption) *Client {
-	options := core.NewRequestOptions(opts...)
+func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
 		WithRawResponse: NewRawClient(options),
+		options:         options,
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -32,7 +32,6 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
@@ -53,7 +52,7 @@ func (c *Client) ListWithCursorPagination(
 		return nil, err
 	}
 	headers := internal.MergeHeaders(
-		c.header.Clone(),
+		c.options.ToHeader(),
 		options.ToHeader(),
 	)
 	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
@@ -110,7 +109,7 @@ func (c *Client) ListWithMixedTypeCursorPagination(
 		return nil, err
 	}
 	headers := internal.MergeHeaders(
-		c.header.Clone(),
+		c.options.ToHeader(),
 		options.ToHeader(),
 	)
 	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
@@ -183,7 +182,7 @@ func (c *Client) ListWithOffsetPagination(
 		return nil, err
 	}
 	headers := internal.MergeHeaders(
-		c.header.Clone(),
+		c.options.ToHeader(),
 		options.ToHeader(),
 	)
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
@@ -243,7 +242,7 @@ func (c *Client) ListWithDoubleOffsetPagination(
 		return nil, err
 	}
 	headers := internal.MergeHeaders(
-		c.header.Clone(),
+		c.options.ToHeader(),
 		options.ToHeader(),
 	)
 	prepareCall := func(pageRequest *internal.PageRequest[*float64]) *internal.CallParams {
@@ -319,7 +318,7 @@ func (c *Client) ListWithOffsetStepPagination(
 		return nil, err
 	}
 	headers := internal.MergeHeaders(
-		c.header.Clone(),
+		c.options.ToHeader(),
 		options.ToHeader(),
 	)
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
@@ -379,7 +378,7 @@ func (c *Client) ListWithOffsetPaginationHasNextPage(
 		return nil, err
 	}
 	headers := internal.MergeHeaders(
-		c.header.Clone(),
+		c.options.ToHeader(),
 		options.ToHeader(),
 	)
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
@@ -439,7 +438,7 @@ func (c *Client) ListWithExtendedResults(
 		return nil, err
 	}
 	headers := internal.MergeHeaders(
-		c.header.Clone(),
+		c.options.ToHeader(),
 		options.ToHeader(),
 	)
 	prepareCall := func(pageRequest *internal.PageRequest[*uuid.UUID]) *internal.CallParams {
@@ -496,7 +495,7 @@ func (c *Client) ListWithExtendedResultsAndOptionalData(
 		return nil, err
 	}
 	headers := internal.MergeHeaders(
-		c.header.Clone(),
+		c.options.ToHeader(),
 		options.ToHeader(),
 	)
 	prepareCall := func(pageRequest *internal.PageRequest[*uuid.UUID]) *internal.CallParams {
@@ -553,7 +552,7 @@ func (c *Client) ListUsernames(
 		return nil, err
 	}
 	headers := internal.MergeHeaders(
-		c.header.Clone(),
+		c.options.ToHeader(),
 		options.ToHeader(),
 	)
 	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
@@ -613,7 +612,7 @@ func (c *Client) ListWithGlobalConfig(
 		return nil, err
 	}
 	headers := internal.MergeHeaders(
-		c.header.Clone(),
+		c.options.ToHeader(),
 		options.ToHeader(),
 	)
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {

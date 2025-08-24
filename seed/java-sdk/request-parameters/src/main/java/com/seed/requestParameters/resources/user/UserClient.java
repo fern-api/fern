@@ -5,6 +5,7 @@ package com.seed.requestParameters.resources.user;
 
 import com.seed.requestParameters.core.ClientOptions;
 import com.seed.requestParameters.core.RequestOptions;
+import com.seed.requestParameters.resources.user.requests.CreateUsernameReferencedRequest;
 import com.seed.requestParameters.resources.user.requests.CreateUsernameRequest;
 import com.seed.requestParameters.resources.user.requests.GetUsersRequest;
 import com.seed.requestParameters.resources.user.types.User;
@@ -32,6 +33,15 @@ public class UserClient {
 
     public void createUsername(CreateUsernameRequest request, RequestOptions requestOptions) {
         this.rawClient.createUsername(request, requestOptions).body();
+    }
+
+    public void createUsernameWithReferencedType(CreateUsernameReferencedRequest request) {
+        this.rawClient.createUsernameWithReferencedType(request).body();
+    }
+
+    public void createUsernameWithReferencedType(
+            CreateUsernameReferencedRequest request, RequestOptions requestOptions) {
+        this.rawClient.createUsernameWithReferencedType(request, requestOptions).body();
     }
 
     public User getUsername(GetUsersRequest request) {

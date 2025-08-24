@@ -11,7 +11,6 @@ import (
 	noreqbody "github.com/exhaustive/fern/noreqbody"
 	option "github.com/exhaustive/fern/option"
 	reqwithheaders "github.com/exhaustive/fern/reqwithheaders"
-	http "net/http"
 )
 
 type Client struct {
@@ -21,19 +20,20 @@ type Client struct {
 	NoReqBody       *noreqbody.Client
 	ReqWithHeaders  *reqwithheaders.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		Endpoints:       client.NewClient(opts...),
-		InlinedRequests: inlinedrequests.NewClient(opts...),
-		NoAuth:          noauth.NewClient(opts...),
-		NoReqBody:       noreqbody.NewClient(opts...),
-		ReqWithHeaders:  reqwithheaders.NewClient(opts...),
+		Endpoints:       client.NewClient(options),
+		InlinedRequests: inlinedrequests.NewClient(options),
+		NoAuth:          noauth.NewClient(options),
+		NoReqBody:       noreqbody.NewClient(options),
+		ReqWithHeaders:  reqwithheaders.NewClient(options),
+		options:         options,
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -41,6 +41,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
