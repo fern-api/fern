@@ -1,4 +1,5 @@
 import { assertDefined } from "./assertDefined";
+import { assertNever } from "./assertNever";
 
 type SymbolId = string;
 type SymbolName = string;
@@ -10,6 +11,10 @@ export interface SymbolRegistryOptions {
     conflictResolutionStrategy?: ConflictResolutionStrategy;
 }
 
+/**
+ * A registry that maps symbol IDs to unique symbol names, preventing naming conflicts.
+ * When conflicts occur, names are automatically resolved using the configured strategy.
+ */
 export class SymbolRegistry {
     public static defaultOptions: Required<SymbolRegistryOptions> = {
         reservedSymbolNames: [],
@@ -37,6 +42,11 @@ export class SymbolRegistry {
         return this.symbolMap.get(symbolId);
     }
 
+    /**
+     * Registers a new symbol with the given ID and name candidates.
+     * Returns the first available name from candidates, or a conflict-resolved version.
+     * @throws Error if the symbol ID is already registered
+     */
     public registerSymbol(symbolId: SymbolId, nameCandidates: [string, ...string[]]) {
         const isAlreadyRegistered = this.isSymbolIdRegistered(symbolId);
         if (isAlreadyRegistered) {
@@ -54,11 +64,23 @@ export class SymbolRegistry {
                 return symbolName;
             }
         }
-        let [symbolName] = candidates;
-        // TODO: Implement append number strategy
-        while (this.isSymbolNameRegistered(symbolName)) {
-            symbolName += "_";
+
+        const [baseSymbolName] = candidates;
+        let symbolName = baseSymbolName;
+
+        if (this.conflictResolutionStrategy === "append-number") {
+            let counter = 2;
+            while (this.isSymbolNameRegistered(symbolName)) {
+                symbolName = `${baseSymbolName}${counter++}`;
+            }
+        } else if (this.conflictResolutionStrategy === "append-underscore") {
+            while (this.isSymbolNameRegistered(symbolName)) {
+                symbolName += "_";
+            }
+        } else {
+            assertNever(this.conflictResolutionStrategy);
         }
+
         return symbolName;
     }
 
