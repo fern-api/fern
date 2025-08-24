@@ -55,11 +55,9 @@ export class ReadmeConfigBuilder {
     }
 
     private getLanguageInfo(context: SdkGeneratorContext): FernGeneratorCli.LanguageInfo {
+        const spmDetails = context.getSPMDetails();
         return FernGeneratorCli.LanguageInfo.swift({
-            publishInfo: {
-                gitUrl: "https://github.com/kafkas/swift-sdk.git", // TODO(kafkas): Implement
-                minVersion: "0.1.0" // TODO(kafkas): Implement
-            }
+            publishInfo: spmDetails ?? undefined
         });
     }
 }
