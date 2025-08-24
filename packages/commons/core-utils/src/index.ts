@@ -24,6 +24,7 @@ export { removeSuffix } from "./removeSuffix";
 export { replaceEnvVariables } from "./replaceEnvVars";
 export { type SetRequired } from "./setRequired";
 export { stripLeadingSlash } from "./stripLeadingSlash";
+export { SymbolRegistry, type SymbolRegistryOptions } from "./SymbolRegistry";
 export { titleCase } from "./titleCase";
 export type { ContainerRunner, Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types";
 export { validateAgainstJsonSchema } from "./validateAgainstJsonSchema";

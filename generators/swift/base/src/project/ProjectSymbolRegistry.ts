@@ -1,6 +1,5 @@
-import { assertDefined, values } from "@fern-api/core-utils";
+import { assertDefined, SymbolRegistry, values } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
-import { SymbolRegistry } from "./SymbolRegistry";
 
 const SYMBOL_ID_PREFIX = "symbol_id:";
 
