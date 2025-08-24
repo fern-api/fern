@@ -67,11 +67,11 @@ export abstract class AbstractSwiftGeneratorContext<
         Object.entries(ir.types).forEach(([typeId, typeDeclaration]) => {
             project.symbolRegistry.registerSchemaTypeSymbol(typeId, typeDeclaration.name.name.pascalCase.unsafeName);
         });
+        project.symbolRegistry.registerRequestsContainerSymbol();
         Object.entries(ir.services).forEach(([_, service]) => {
-            // TODO(kafkas): Change to allow namespaced request symbols
             service.endpoints.forEach((endpoint) => {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
-                    project.symbolRegistry.registerInlineRequestTypeSymbol(
+                    project.symbolRegistry.registerRequestTypeSymbol(
                         endpoint.id,
                         endpoint.requestBody.name.pascalCase.unsafeName
                     );
