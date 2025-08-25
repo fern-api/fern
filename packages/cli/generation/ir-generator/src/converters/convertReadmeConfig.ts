@@ -12,7 +12,7 @@ export function convertReadmeConfig({
     const readmeEndpointCache = new ReadmeEndpointCache(services);
     return {
         apiName: readme.apiName,
-        disabledFeatures: readme.disabledFeatures,
+        disabledFeatures: readme.disabledSections,
         apiReferenceLink: readme.apiReferenceLink,
         bannerLink: readme.bannerLink,
         introduction: readme.introduction,

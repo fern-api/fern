@@ -82,7 +82,7 @@ types:
       introduction: optional<string>
       apiReferenceLink: optional<string>
       apiName: optional<string>
-      disabledFeatures:
+      disabledSections:
         type: optional<set<commons.FeatureId>>
       features:
         docs: |

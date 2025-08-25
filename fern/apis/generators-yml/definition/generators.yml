@@ -85,7 +85,7 @@ types:
       introduction: optional<string>
       apiReferenceLink: optional<string>
       apiName: optional<string>
-      disabledFeatures:
+      disabledSections:
         type: optional<set<string>>
       defaultEndpoint:
         type: optional<ReadmeEndpointSchema>

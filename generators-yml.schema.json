@@ -2189,7 +2189,7 @@
             }
           ]
         },
-        "disabledFeatures": {
+        "disabledSections": {
           "oneOf": [
             {
               "type": "array",

@@ -157,7 +157,7 @@ fixtures:
     - customConfig:
       readmeConfig:
         apiName: "CustomName"
-        disabledFeatures:
+        disabledSections:
           - "contributing"
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com

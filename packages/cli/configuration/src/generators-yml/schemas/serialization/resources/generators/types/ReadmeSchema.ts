@@ -13,7 +13,7 @@ export const ReadmeSchema: core.serialization.ObjectSchema<serializers.ReadmeSch
         introduction: core.serialization.string().optional(),
         apiReferenceLink: core.serialization.string().optional(),
         apiName: core.serialization.string().optional(),
-        disabledFeatures: core.serialization.set(core.serialization.string()).optional(),
+        disabledSections: core.serialization.set(core.serialization.string()).optional(),
         defaultEndpoint: ReadmeEndpointSchema.optional(),
         features: core.serialization
             .record(core.serialization.string(), core.serialization.list(ReadmeEndpointSchema))
@@ -26,7 +26,7 @@ export declare namespace ReadmeSchema {
         introduction?: string | null;
         apiReferenceLink?: string | null;
         apiName?: string | null;
-        disabledFeatures?: string[] | null;
+        disabledSections?: string[] | null;
         defaultEndpoint?: ReadmeEndpointSchema.Raw | null;
         features?: Record<string, ReadmeEndpointSchema.Raw[]> | null;
     }
