@@ -15,8 +15,8 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Primitive.GetAndReturnLong(
+    client.Endpoints.Primitive.GetAndReturnBase64(
         context.TODO(),
-        1000000,
+        []byte("SGVsbG8gd29ybGQh"),
     )
 }

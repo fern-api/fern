@@ -233,66 +233,6 @@
         },
         {
             "id": {
-                "path": "/object/test-integer-overflow-edge-cases",
-                "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.testIntegerOverflowEdgeCases"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.testIntegerOverflowEdgeCases({\n    string: \"boundary-test\",\n    integer: 2147483647,\n    double: 1.7976931348623157e+308,\n    bool: true\n});\n"
-            },
-            "example_identifier": "BoundaryValues"
-        },
-        {
-            "id": {
-                "path": "/object/test-integer-overflow-edge-cases",
-                "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.testIntegerOverflowEdgeCases"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.testIntegerOverflowEdgeCases({\n    string: \"just-over-boundary\",\n    integer: 2147483648,\n    double: 2,\n    bool: false\n});\n"
-            },
-            "example_identifier": "JustOverBoundary"
-        },
-        {
-            "id": {
-                "path": "/object/test-integer-overflow-edge-cases",
-                "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.testIntegerOverflowEdgeCases"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.testIntegerOverflowEdgeCases({\n    string: \"just-under-boundary\",\n    integer: -2147483649,\n    double: -2,\n    bool: true\n});\n"
-            },
-            "example_identifier": "JustUnderBoundary"
-        },
-        {
-            "id": {
-                "path": "/object/test-integer-overflow-edge-cases",
-                "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.testIntegerOverflowEdgeCases"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.testIntegerOverflowEdgeCases({\n    string: \"large-positive\",\n    integer: 1000000000000,\n    double: 1000000000000,\n    bool: false\n});\n"
-            },
-            "example_identifier": "LargePositiveValue"
-        },
-        {
-            "id": {
-                "path": "/object/test-integer-overflow-edge-cases",
-                "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.testIntegerOverflowEdgeCases"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.testIntegerOverflowEdgeCases({\n    string: \"large-negative\",\n    integer: -1000000000000,\n    double: -1000000000000,\n    bool: true\n});\n"
-            },
-            "example_identifier": "LargeNegativeValue"
-        },
-        {
-            "id": {
                 "path": "/params/path/{param}",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithPath"
