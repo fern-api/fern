@@ -368,7 +368,7 @@
         "**/*.schema.json",
         "**/__test__/**/*.json",
         "**/__snapshots__",
-		"**/fixtures/**/*.json",
+        "**/fixtures/**/*.json",
         "seed/**/*",
         "docker/seed/**",
         "**/*.yaml",
