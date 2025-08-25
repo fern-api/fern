@@ -73,7 +73,7 @@ func (r *RawClient) Post(
 		}
 	}
 	if request.MaybeInteger != nil {
-		if err := writer.WriteField("maybe_integer", fmt.Sprintf("%v", *request.MaybeInteger)); err != nil {
+		if err := writer.WriteField("maybe_integer", fmt.Sprintf("%v", request.MaybeInteger)); err != nil {
 			return nil, err
 		}
 	}
@@ -401,7 +401,7 @@ func (r *RawClient) WithFormEncodedContainers(
 		}
 	}
 	if request.MaybeInteger != nil {
-		if err := writer.WriteField("maybe_integer", fmt.Sprintf("%v", *request.MaybeInteger)); err != nil {
+		if err := writer.WriteField("maybe_integer", fmt.Sprintf("%v", request.MaybeInteger)); err != nil {
 			return nil, err
 		}
 	}
