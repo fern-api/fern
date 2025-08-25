@@ -10,7 +10,8 @@
         "trailingComma": "none",
         "printWidth": 120,
         "bracketSpacing": true,
-        "arrowParens": "avoid"
+        "arrowParens": "avoid",
+        "endOfLine": "lf"
       }
     }
   ]

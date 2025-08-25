@@ -1,10 +1,3 @@
-# Ignore all files by default
-*
-
-# Only process YAML files
-!**/*.yml
-!**/*.yaml
-
 # Ignore specific YAML files
 pnpm-lock.yaml
 yarn.lock
@@ -26,3 +19,35 @@ generated/
 __snapshots__/
 *.tempate.*
 *.template.*
+
+# Ignore all other file types (but allow YAML)
+*.js
+*.jsx
+*.ts
+*.tsx
+*.json
+*.md
+*.css
+*.scss
+*.html
+*.xml
+*.txt
+*.log
+*.sh
+*.bat
+*.ps1
+*.py
+*.rb
+*.java
+*.go
+*.rs
+*.cpp
+*.c
+*.h
+*.cs
+*.php
+*.sql
+*.graphql
+*.vue
+*.svelte
+*.astro
