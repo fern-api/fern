@@ -258,6 +258,10 @@ fixtures:
     - customConfig:
         includeApiReference: true
       readmeConfig:
+        apiName: "CustomName"
+        disabledFeatures:
+          - "contributing"
+          - "fern-shield"
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie

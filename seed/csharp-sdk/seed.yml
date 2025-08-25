@@ -60,6 +60,10 @@ fixtures:
       outputFolder: no-custom-config
     - customConfig: null
       readmeConfig:
+        apiName: "CustomName"
+        disabledFeatures:
+          - "contributing"
+          - "fern-shield"
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie
