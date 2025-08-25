@@ -20,7 +20,7 @@ export class DynamicTypeMapper {
     public convert(args: DynamicTypeMapper.Args): go.Type {
         switch (args.typeReference.type) {
             case "list":
-                return go.Type.slice(this.convert({ typeReference: args.typeReference }));
+                return go.Type.slice(this.convert({ typeReference: args.typeReference.value }));
             case "literal":
                 return this.convertLiteral({ literal: args.typeReference.value });
             case "map":

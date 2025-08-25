@@ -59,7 +59,7 @@ export class User {
         userId: SeedVersion.UserId,
         requestOptions?: User.RequestOptions,
     ): Promise<core.WithRawResponse<SeedVersion.User>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ "X-API-Version": requestOptions?.xApiVersion }),
             requestOptions?.headers,

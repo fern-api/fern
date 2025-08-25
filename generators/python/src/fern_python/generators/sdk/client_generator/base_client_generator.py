@@ -7,10 +7,10 @@ from ..context.sdk_generator_context import SdkGeneratorContext
 from .constants import DEFAULT_BODY_PARAMETER_VALUE
 from .endpoint_metadata_collector import EndpointMetadataCollector
 from .endpoint_response_code_writer import EndpointResponseCodeWriter
-from .generated_root_client import GeneratedRootClient
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.snippet import SnippetRegistry, SnippetWriter
+from typing_extensions import Unpack
 
 import fern.ir.resources as ir_types
 
@@ -23,6 +23,9 @@ class ConstructorParameter:
     initializer: Optional[AST.Expression] = None
 
 
+ConstructorParameterT = typing.TypeVar("ConstructorParameterT", bound=ConstructorParameter)
+
+
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [
         ir_types.PrimitiveTypeV1.STRING,
@@ -33,37 +36,33 @@ HTTPX_PRIMITIVE_DATA_TYPES = set(
 )
 
 
-class BaseClientGenerator(ABC):
+class BaseClientGeneratorKwargs(typing.TypedDict):
+    context: SdkGeneratorContext
+    package: ir_types.Package
+    class_name: str
+    async_class_name: str
+    snippet_registry: SnippetRegistry
+    snippet_writer: SnippetWriter
+    endpoint_metadata_collector: EndpointMetadataCollector
+    websocket: Optional[ir_types.WebSocketChannel]
+
+
+class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
     """Base class for client generators with common functionality."""
 
     RESPONSE_JSON_VARIABLE = EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE
     TOKEN_CONSTRUCTOR_PARAMETER_NAME = "token"
     TOKEN_MEMBER_NAME = "_token"
 
-    def __init__(
-        self,
-        *,
-        context: SdkGeneratorContext,
-        package: ir_types.Package,
-        subpackage_id: Optional[ir_types.SubpackageId],
-        class_name: str,
-        async_class_name: str,
-        generated_root_client: Optional[GeneratedRootClient],
-        snippet_registry: SnippetRegistry,
-        snippet_writer: SnippetWriter,
-        endpoint_metadata_collector: EndpointMetadataCollector,
-        websocket: Optional[ir_types.WebSocketChannel],
-    ):
-        self._context = context
-        self._package = package
-        self._subpackage_id = subpackage_id
-        self._class_name = class_name
-        self._async_class_name = async_class_name
-        self._generated_root_client = generated_root_client
-        self._snippet_registry = snippet_registry
-        self._snippet_writer = snippet_writer
-        self._endpoint_metadata_collector = endpoint_metadata_collector
-        self._websocket = websocket
+    def __init__(self, **kwargs: Unpack[BaseClientGeneratorKwargs]):
+        self._context = kwargs["context"]
+        self._package = kwargs["package"]
+        self._class_name = kwargs["class_name"]
+        self._async_class_name = kwargs["async_class_name"]
+        self._snippet_registry = kwargs["snippet_registry"]
+        self._snippet_writer = kwargs["snippet_writer"]
+        self._endpoint_metadata_collector = kwargs["endpoint_metadata_collector"]
+        self._websocket = kwargs["websocket"]
         self._is_default_body_parameter_used = False
 
     def generate(self, source_file: SourceFile) -> None:
@@ -165,7 +164,7 @@ class BaseClientGenerator(ABC):
         """
 
     @abstractmethod
-    def _get_constructor_parameters(self, *, is_async: bool) -> List[ConstructorParameter]:
+    def _get_constructor_parameters(self, *, is_async: bool) -> typing.List[ConstructorParameterT]:
         """
         Get constructor parameters for the client.
         This method should be implemented by subclasses.
@@ -175,5 +174,19 @@ class BaseClientGenerator(ABC):
     def _get_write_constructor_body(self, *, is_async: bool) -> CodeWriterFunction:
         """
         Get a function to write the constructor body.
+        This method should be implemented by subclasses.
+        """
+
+    @abstractmethod
+    def get_raw_client_class_name(self, *, is_async: bool) -> str:
+        """
+        Get the name of the raw client class.
+        This method should be implemented by subclasses.
+        """
+
+    @abstractmethod
+    def get_raw_client_class_reference(self, *, is_async: bool) -> AST.ClassReference:
+        """
+        Get the reference to the raw client class.
         This method should be implemented by subclasses.
         """

@@ -6,21 +6,21 @@ import (
 	core "github.com/imdb/fern/core"
 	internal "github.com/imdb/fern/internal"
 	option "github.com/imdb/fern/option"
-	http "net/http"
 )
 
 type Acme struct {
 	Imdb *ImdbClient
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func New(opts ...option.RequestOption) *Acme {
 	options := core.NewRequestOptions(opts...)
 	return &Acme{
-		Imdb:    NewImdbClient(opts...),
+		Imdb:    NewImdbClient(options),
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -28,6 +28,5 @@ func New(opts ...option.RequestOption) *Acme {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

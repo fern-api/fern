@@ -75,7 +75,7 @@ export class Reference {
         request: SeedLiteral.SendRequest,
         requestOptions?: Reference.RequestOptions,
     ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 "X-API-Version": requestOptions?.version ?? "02-02-2024",

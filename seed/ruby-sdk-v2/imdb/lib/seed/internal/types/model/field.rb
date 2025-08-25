@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Seed
   module Internal
     module Types
@@ -24,4 +25,4 @@ module Seed
       end
     end
   end
-end 
+end

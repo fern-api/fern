@@ -7,6 +7,13 @@ types:
     properties:
       name: string
       user: User
+  CreateUsernameBody:
+    properties:
+      username: string
+      password: string
+      name:
+        type: string
+        default: 'test'
 
 service:
   base-path: /user
@@ -21,14 +28,23 @@ service:
           properties:
             username: string
             password: string
-            # required:
-            #   - username
-            #   - password
             name:
               type: string
-              default: "test"
+              default: 'test'
+        query-parameters:
+          tags:
+            type: list<string>
+    createUsernameWithReferencedType:
+      path: /username-referenced
+      method: POST
+      request:
+        name: CreateUsernameReferencedRequest
+        body: CreateUsernameBody
+        query-parameters:
+          tags:
+            type: list<string>
     getUsername:
-      path: ""
+      path: ''
       method: GET
       request:
         name: GetUsersRequest
@@ -58,5 +74,5 @@ service:
             default: 9223372036854775807
           bigIntParam:
             type: bigint
-            default: "18446744073709551615"
+            default: '18446744073709551615'
       response: User

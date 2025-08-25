@@ -764,7 +764,12 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		var literal string
 		isLiteral := isLiteralType(unionMember.Type, t.writer.types)
 		if isLiteral {
-			literal = literalToValue(unionMember.Type.Container.Literal)
+			if unionMember.Type.Container != nil {
+				literal = literalToValue(unionMember.Type.Container.Literal)
+			} else if unionMember.Type.Named != nil {
+				// isLiteralType() validates that this lengthy series of accesses works
+				literal = literalToValue(t.writer.types[unionMember.Type.Named.TypeId].Shape.Alias.AliasOf.Container.Literal)
+			}
 		}
 		hasLiteral = hasLiteral || isLiteral
 

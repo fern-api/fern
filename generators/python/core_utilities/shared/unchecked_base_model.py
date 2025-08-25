@@ -125,11 +125,11 @@ class UncheckedBaseModel(UniversalBaseModel):
 def _validate_collection_items_compatible(collection: typing.Any, target_type: typing.Type[typing.Any]) -> bool:
     """
     Validate that all items in a collection are compatible with the target type.
-    
+
     Args:
         collection: The collection to validate (list, set, or dict values)
         target_type: The target type to validate against
-        
+
     Returns:
         True if all items are compatible, False otherwise
     """
@@ -184,7 +184,7 @@ def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], obj
 def _convert_union_type(type_: typing.Type[typing.Any], object_: typing.Any) -> typing.Any:
     base_type = get_origin(type_) or type_
     union_type = type_
-    if base_type == typing_extensions.Annotated:
+    if base_type == typing_extensions.Annotated:  # type: ignore[comparison-overlap]
         union_type = get_args(type_)[0]
         annotated_metadata = get_args(type_)[1:]
         for metadata in annotated_metadata:
@@ -215,11 +215,11 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
         return None
 
     base_type = get_origin(type_) or type_
-    is_annotated = base_type == typing_extensions.Annotated
+    is_annotated = base_type == typing_extensions.Annotated  # type: ignore[comparison-overlap]
     maybe_annotation_members = get_args(type_)
     is_annotated_union = is_annotated and is_union(get_origin(maybe_annotation_members[0]))
 
-    if base_type == typing.Any:
+    if base_type == typing.Any:  # type: ignore[comparison-overlap]
         return object_
 
     if base_type == dict:

@@ -81,6 +81,8 @@ export abstract class AbstractRubyGeneratorContext<
 
     public abstract getLocationForTypeId(typeId: TypeId): RelativeFilePath;
 
+    public abstract getClassReferenceForTypeId(typeId: TypeId): ruby.ClassReference;
+
     public abstract getFileNameForTypeId(typeId: TypeId): string;
 
     public abstract getModuleNamesForTypeId(typeId: TypeId): string[];

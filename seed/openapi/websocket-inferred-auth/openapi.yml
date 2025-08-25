@@ -1,0 +1,186 @@
+openapi: 3.0.1
+info:
+  title: websocket-auth
+  version: ''
+paths:
+  /token:
+    post:
+      operationId: auth_getTokenWithClientCredentials
+      tags:
+        - Auth
+      parameters:
+        - name: X-Api-Key
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+                audience:
+                  type: string
+                  const: https://api.example.com
+                grant_type:
+                  type: string
+                  const: client_credentials
+                scope:
+                  type: string
+                  nullable: true
+              required:
+                - client_id
+                - client_secret
+                - audience
+                - grant_type
+  /token/refresh:
+    post:
+      operationId: auth_refreshToken
+      tags:
+        - Auth
+      parameters:
+        - name: X-Api-Key
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+                refresh_token:
+                  type: string
+                audience:
+                  type: string
+                  const: https://api.example.com
+                grant_type:
+                  type: string
+                  const: refresh_token
+                scope:
+                  type: string
+                  nullable: true
+              required:
+                - client_id
+                - client_secret
+                - refresh_token
+                - audience
+                - grant_type
+components:
+  schemas:
+    TokenResponse:
+      title: TokenResponse
+      type: object
+      description: An OAuth token response.
+      properties:
+        access_token:
+          type: string
+        refresh_token:
+          type: string
+          nullable: true
+      required:
+        - access_token
+    SendEvent:
+      title: SendEvent
+      type: object
+      properties:
+        sendText:
+          type: string
+        sendParam:
+          type: integer
+      required:
+        - sendText
+        - sendParam
+    send_snake_case:
+      title: send_snake_case
+      type: object
+      properties:
+        send_text:
+          type: string
+        send_param:
+          type: integer
+      required:
+        - send_text
+        - send_param
+    ReceiveEvent:
+      title: ReceiveEvent
+      type: object
+      properties:
+        alpha:
+          type: string
+        beta:
+          type: integer
+      required:
+        - alpha
+        - beta
+    receive_snake_case:
+      title: receive_snake_case
+      type: object
+      properties:
+        receive_text:
+          type: string
+        receive_int:
+          type: integer
+      required:
+        - receive_text
+        - receive_int
+    SendEvent2:
+      title: SendEvent2
+      type: object
+      properties:
+        sendText2:
+          type: string
+        sendParam2:
+          type: boolean
+      required:
+        - sendText2
+        - sendParam2
+    ReceiveEvent2:
+      title: ReceiveEvent2
+      type: object
+      properties:
+        gamma:
+          type: string
+        delta:
+          type: integer
+        epsilon:
+          type: boolean
+      required:
+        - gamma
+        - delta
+        - epsilon
+    ReceiveEvent3:
+      title: ReceiveEvent3
+      type: object
+      properties:
+        receiveText3:
+          type: string
+      required:
+        - receiveText3
+  securitySchemes: {}

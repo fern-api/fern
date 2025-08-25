@@ -17,6 +17,7 @@ export declare namespace BaseOpenAPIWorkspace {
         exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
         useBytesForBinaryResponse: boolean | undefined;
         respectForwardCompatibleEnums: boolean | undefined;
+        inlineAllOfSchemas: boolean | undefined;
     }
 
     export type Settings = Partial<OpenAPISettings>;
@@ -31,6 +32,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
     public useBytesForBinaryResponse: boolean | undefined;
     public respectForwardCompatibleEnums: boolean | undefined;
+    public inlineAllOfSchemas: boolean | undefined;
     private converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -43,6 +45,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.exampleGeneration = args.exampleGeneration;
         this.useBytesForBinaryResponse = args.useBytesForBinaryResponse;
         this.respectForwardCompatibleEnums = args.respectForwardCompatibleEnums;
+        this.inlineAllOfSchemas = args.inlineAllOfSchemas;
         this.converter = new FernDefinitionConverter(args);
     }
 

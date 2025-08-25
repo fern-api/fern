@@ -16,6 +16,18 @@ env:
   TURBO_TEAM: "buildwithfern"
 
 jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Compile
+        run: pnpm compile
+
   depcheck:
     runs-on: ubuntu-latest
     steps:

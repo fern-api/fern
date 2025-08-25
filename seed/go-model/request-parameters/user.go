@@ -125,3 +125,70 @@ func (n *NestedUser) String() string {
 	}
 	return fmt.Sprintf("%#v", n)
 }
+
+type CreateUsernameBody struct {
+	Username string `json:"username" url:"username"`
+	Password string `json:"password" url:"password"`
+	Name     string `json:"name" url:"name"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateUsernameBody) GetUsername() string {
+	if c == nil {
+		return ""
+	}
+	return c.Username
+}
+
+func (c *CreateUsernameBody) GetPassword() string {
+	if c == nil {
+		return ""
+	}
+	return c.Password
+}
+
+func (c *CreateUsernameBody) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateUsernameBody) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateUsernameBody) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler CreateUsernameBody
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateUsernameBody(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateUsernameBody) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}

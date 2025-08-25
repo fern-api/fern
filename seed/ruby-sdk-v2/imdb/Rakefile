@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 task :test do
   puts "No tests for now"
 end
