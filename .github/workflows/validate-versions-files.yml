@@ -1,8 +1,7 @@
 name: Validate versions.yml files
 
 on:
-  pull_request:
-  workflow_dispatch:
+  workflow_call:
 
 jobs:
   validate:
@@ -127,4 +126,3 @@ jobs:
         with:
           schema-path: "fern-versions-yml.schema.json"
           file-path: "generators/rust/model/versions.yml"
-
