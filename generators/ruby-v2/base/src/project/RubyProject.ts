@@ -195,7 +195,6 @@ class GemspecFile {
     public async toString(): Promise<string> {
         const moduleFolderName = this.context.getRootFolderName();
         const moduleName = this.context.getRootModule().name;
-        
         const license = this.context.getLicenseFromConfig();
 
         return dedent`
@@ -384,7 +383,7 @@ class VersionFile {
         this.context = context;
         this.project = project;
         this.filePath = join(
-            project.absolutePathToOutputDirectory, 
+            project.absolutePathToOutputDirectory,
             RelativeFilePath.of(`lib/${context.getRootFolderName()}`)
         );
         this.fileName = "version.rb";
