@@ -65,9 +65,9 @@ class Reference:
 
     has_been_dynamically_imported: bool = False
     """
-    This should be set to True if the reference has been dynamically imported at this point in the code.
+    This should be set to True if the reference has been dynamically imported at this point in the code and can safely be used.
 
-    This should only be set in conjunction with `import_if_type_checking`.
+    Typically, this might be set in conjunction with `import_if_type_checking` for implementing lazy imports.
     """
 
     require_postponed_annotations: bool = False

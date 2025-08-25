@@ -18,14 +18,23 @@ class EndpointsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawEndpointsClient(client_wrapper=client_wrapper)
         self.container = ContainerClient(client_wrapper=client_wrapper)
+
         self.content_type = ContentTypeClient(client_wrapper=client_wrapper)
+
         self.enum = EnumClient(client_wrapper=client_wrapper)
+
         self.http_methods = HttpMethodsClient(client_wrapper=client_wrapper)
+
         self.object = ObjectClient(client_wrapper=client_wrapper)
+
         self.params = ParamsClient(client_wrapper=client_wrapper)
+
         self.primitive = PrimitiveClient(client_wrapper=client_wrapper)
+
         self.put = PutClient(client_wrapper=client_wrapper)
+
         self.union = UnionClient(client_wrapper=client_wrapper)
+
         self.urls = UrlsClient(client_wrapper=client_wrapper)
 
     @property
@@ -44,14 +53,23 @@ class AsyncEndpointsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawEndpointsClient(client_wrapper=client_wrapper)
         self.container = AsyncContainerClient(client_wrapper=client_wrapper)
+
         self.content_type = AsyncContentTypeClient(client_wrapper=client_wrapper)
+
         self.enum = AsyncEnumClient(client_wrapper=client_wrapper)
+
         self.http_methods = AsyncHttpMethodsClient(client_wrapper=client_wrapper)
+
         self.object = AsyncObjectClient(client_wrapper=client_wrapper)
+
         self.params = AsyncParamsClient(client_wrapper=client_wrapper)
+
         self.primitive = AsyncPrimitiveClient(client_wrapper=client_wrapper)
+
         self.put = AsyncPutClient(client_wrapper=client_wrapper)
+
         self.union = AsyncUnionClient(client_wrapper=client_wrapper)
+
         self.urls = AsyncUrlsClient(client_wrapper=client_wrapper)
 
     @property

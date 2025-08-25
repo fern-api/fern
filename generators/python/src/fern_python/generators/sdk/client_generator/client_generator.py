@@ -261,5 +261,6 @@ class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
                                 ),
                             )
                         )
+                        writer.write_line()
 
         return _write_constructor_body
