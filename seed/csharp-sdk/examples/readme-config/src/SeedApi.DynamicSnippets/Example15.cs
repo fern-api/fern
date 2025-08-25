@@ -20,6 +20,7 @@ public class Example15
                 Title = "title",
                 From = "from",
                 Rating = 1.1,
+                Type = "movie",
                 Tag = "tag",
                 Book = "book",
                 Metadata = new Dictionary<string, object>(){

@@ -66,6 +66,7 @@ await client.Service.CreateBigEntityAsync(
             Title = "Pulp Fiction",
             From = "Quentin Tarantino",
             Rating = 8.5,
+            Type = "movie",
             Tag = "tag-12efs9dv",
             Metadata = new Dictionary<string, object>(){
                 ["academyAward"] = true,
@@ -110,6 +111,7 @@ await client.Service.CreateMovieAsync(
         Title = "The Boy and the Heron",
         From = "Hayao Miyazaki",
         Rating = 8,
+        Type = "movie",
         Tag = "development",
         Metadata = new Dictionary<string, object>(){
             ["actors"] = new List<object>() {
