@@ -84,6 +84,9 @@ types:
       bannerLink: optional<string>
       introduction: optional<string>
       apiReferenceLink: optional<string>
+      apiName: optional<string>
+      disabledSections:
+        type: optional<set<string>>
       defaultEndpoint:
         type: optional<ReadmeEndpointSchema>
         docs: "If set, use this endpoint's snippet as the default whenever possible"

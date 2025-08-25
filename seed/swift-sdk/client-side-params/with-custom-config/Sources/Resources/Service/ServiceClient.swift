@@ -58,7 +58,7 @@ public final class ServiceClient: Sendable {
     /// - Parameter limit: Maximum results to return
     /// - Parameter offset: Offset for pagination
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func searchResources(limit: Int, offset: Int, request: SearchResourcesRequest, requestOptions: RequestOptions? = nil) async throws -> SearchResponse {
+    public func searchResources(limit: Int, offset: Int, request: Requests.SearchResourcesRequest, requestOptions: RequestOptions? = nil) async throws -> SearchResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/api/resources/search",

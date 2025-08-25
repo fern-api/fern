@@ -187,7 +187,7 @@ func (c *Client) ListWithOffsetPagination(
 	)
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
-			queryParams.Set("page", fmt.Sprintf("%v", pageRequest.Cursor))
+			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
 		nextURL := endpointURL
 		if len(queryParams) > 0 {
@@ -247,7 +247,7 @@ func (c *Client) ListWithDoubleOffsetPagination(
 	)
 	prepareCall := func(pageRequest *internal.PageRequest[*float64]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
-			queryParams.Set("page", fmt.Sprintf("%v", pageRequest.Cursor))
+			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
 		nextURL := endpointURL
 		if len(queryParams) > 0 {
@@ -323,7 +323,7 @@ func (c *Client) ListWithOffsetStepPagination(
 	)
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
-			queryParams.Set("page", fmt.Sprintf("%v", pageRequest.Cursor))
+			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
 		nextURL := endpointURL
 		if len(queryParams) > 0 {
@@ -383,7 +383,7 @@ func (c *Client) ListWithOffsetPaginationHasNextPage(
 	)
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
-			queryParams.Set("page", fmt.Sprintf("%v", pageRequest.Cursor))
+			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
 		nextURL := endpointURL
 		if len(queryParams) > 0 {
@@ -443,7 +443,7 @@ func (c *Client) ListWithExtendedResults(
 	)
 	prepareCall := func(pageRequest *internal.PageRequest[*uuid.UUID]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
-			queryParams.Set("cursor", fmt.Sprintf("%v", pageRequest.Cursor))
+			queryParams.Set("cursor", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
 		nextURL := endpointURL
 		if len(queryParams) > 0 {
@@ -500,7 +500,7 @@ func (c *Client) ListWithExtendedResultsAndOptionalData(
 	)
 	prepareCall := func(pageRequest *internal.PageRequest[*uuid.UUID]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
-			queryParams.Set("cursor", fmt.Sprintf("%v", pageRequest.Cursor))
+			queryParams.Set("cursor", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
 		nextURL := endpointURL
 		if len(queryParams) > 0 {
@@ -617,7 +617,7 @@ func (c *Client) ListWithGlobalConfig(
 	)
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
-			queryParams.Set("offset", fmt.Sprintf("%v", pageRequest.Cursor))
+			queryParams.Set("offset", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
 		nextURL := endpointURL
 		if len(queryParams) > 0 {

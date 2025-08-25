@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.6.5-rc0
+  changelogEntry:
+    - summary: |
+        Fix certain instances of fmt.Sprintf'd values failing to be dereferenced.
+      type: fix
+  createdAt: '2025-08-25'
+  irVersion: 58
+
 - version: 1.6.4-rc0
   changelogEntry:
     - summary: |

@@ -1,0 +1,267 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "username": {
+      "type": "string"
+    },
+    "nullableString": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullableInteger": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullableBoolean": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullableDate": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullableObject": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/nullable-optional.Address"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullableList": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullableMap": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalString": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalInteger": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalBoolean": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalDate": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalObject": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/nullable-optional.Address"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalList": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalMap": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalNullableString": {
+      "oneOf": [
+        {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalNullableObject": {
+      "oneOf": [
+        {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/nullable-optional.Address"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "username",
+    "nullableString",
+    "nullableInteger",
+    "nullableBoolean",
+    "nullableDate",
+    "nullableObject",
+    "nullableList",
+    "nullableMap"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "nullable-optional.Address": {
+      "type": "object",
+      "properties": {
+        "street": {
+          "type": "string"
+        },
+        "city": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "zipCode": {
+          "type": "string"
+        },
+        "country": {
+          "oneOf": [
+            {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "street",
+        "city",
+        "zipCode"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

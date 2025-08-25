@@ -81,6 +81,9 @@ types:
       bannerLink: optional<string>
       introduction: optional<string>
       apiReferenceLink: optional<string>
+      apiName: optional<string>
+      disabledFeatures:
+        type: optional<set<commons.FeatureId>>
       features:
         docs: |
           If specified, configures the list of endpoints to associate

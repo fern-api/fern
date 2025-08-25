@@ -1,6 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for semantic distinction between `nullable<T>` and `optional<T>` types via `use-nullable-annotation` flag.
+        When enabled, `nullable<T>` generates as raw type `T` with `@Nullable` annotation, while `optional<T>` remains as `Optional<T>`.
+        This provides proper API semantics for fields that can be null vs those that may be absent from requests.
+        
+        ```yaml
+        customConfig:
+          use-nullable-annotation: true
+        ```
+      type: feat
+  createdAt: '2025-08-25'
+  irVersion: 58
+  version: 1.8.0
+- changelogEntry:
+    - summary: |
         Fix PATCH endpoints with merge-patch content type to accept both application/json 
         and application/merge-patch+json for backward compatibility.
       type: fix

@@ -525,8 +525,11 @@ export function generateIntermediateRepresentation({
         }
     };
 
+    const resolvedReadme = readme ?? workspace.generatorsConfiguration?.rawConfiguration.readme;
     const readmeConfig =
-        readme != null ? convertReadmeConfig({ readme, services: intermediateRepresentation.services }) : undefined;
+        resolvedReadme != null
+            ? convertReadmeConfig({ readme: resolvedReadme, services: intermediateRepresentation.services })
+            : undefined;
 
     const finalIR = formatAllDocs({
         ...intermediateRepresentationForAudiences,

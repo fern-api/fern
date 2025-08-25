@@ -93,7 +93,7 @@ export async function generateAndSnapshotIR({
         smartCasing: true,
         exampleGeneration: { disabled: false },
         disableDynamicExamples: true,
-        readme: undefined,
+        readme: workspace.generatorsConfiguration?.rawConfiguration.readme,
         version: undefined,
         packageName: undefined,
         context,
