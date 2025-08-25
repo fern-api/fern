@@ -1,4 +1,4 @@
-description: 'Too many requests'
+description: "Too many requests"
 content:
   application/json:
     schema:

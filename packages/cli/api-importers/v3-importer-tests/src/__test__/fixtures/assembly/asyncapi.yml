@@ -52,7 +52,7 @@ channels:
             token:
               description: "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)"
               type: string
-    parameters: 
+    parameters:
       userId:
         description: The ID of the user.
         schema:
@@ -75,17 +75,17 @@ channels:
           - $ref: "#/components/messages/FinalTranscript"
           - $ref: "#/components/messages/SessionTerminated"
           - $ref: "#/components/messages/RealtimeError"
-    
-    x-fern-examples: 
-      - messages: 
-        - messageId: SendAudio
-          type: publish
-          value: 
-            audio_data: "base64-encoded-audio-data"
-        - messageId: TerminateSession
-          type: publish
-          value: 
-            terminate_session: true
+
+    x-fern-examples:
+      - messages:
+          - messageId: SendAudio
+            type: publish
+            value:
+              audio_data: "base64-encoded-audio-data"
+          - messageId: TerminateSession
+            type: publish
+            value:
+              terminate_session: true
 
 components:
   messages:

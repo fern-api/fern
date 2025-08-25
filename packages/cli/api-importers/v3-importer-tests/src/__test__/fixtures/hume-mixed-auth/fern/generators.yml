@@ -2,4 +2,3 @@ api:
   - path: ../evi-asyncapi.json
   - path: ../evi-openapi.json
     overrides: ../evi-openapi-overrides.yml
-

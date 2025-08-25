@@ -37,7 +37,7 @@ components:
         associatedPersons:
           type: array
           items:
-            $ref: '#/components/schemas/Person'
+            $ref: "#/components/schemas/Person"
     Person:
       type: object
       properties:

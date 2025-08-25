@@ -8,10 +8,10 @@ logo:
   height: 28
 colors:
   accent-primary:
-    dark: '#0b0a18'
-    light: '#847AF9'
+    dark: "#0b0a18"
+    light: "#847AF9"
   background:
-    dark: '#0A141B'
+    dark: "#0A141B"
 layout:
   searchbar-placement: header
   page-width: full

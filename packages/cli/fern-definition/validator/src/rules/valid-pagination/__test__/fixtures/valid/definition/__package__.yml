@@ -2,7 +2,7 @@ types:
   UsernameCursor:
     properties:
       cursor: UsernamePage
-  
+
   UsernamePage:
     properties:
       usernames: list<string>

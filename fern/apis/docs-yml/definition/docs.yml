@@ -140,7 +140,7 @@ types:
 
       # Deprecated
       "ai-chat": optional<AIChatConfig>
-      
+
       "ai-search": optional<AIChatConfig>
 
       # seo
@@ -166,15 +166,15 @@ types:
 
   TabId: string
 
-  AIChatConfig: 
-    properties: 
+  AIChatConfig:
+    properties:
       model: optional<AIChatModel>
-      "system-prompt": 
+      "system-prompt":
         type: optional<string>
-        docs: This is a system prompt that acts as context given to the LLM for AI chat. 
-    
-  AIChatModel: 
-    enum: 
+        docs: This is a system prompt that acts as context given to the LLM for AI chat.
+
+  AIChatModel:
+    enum:
       - value: "claude-3.5"
         name: claude_3_5
       - value: "claude-3.7"
@@ -251,7 +251,6 @@ types:
         type: optional<string>
         docs: |
           @default: `main`
-
 
   VersionConfig:
     extends: [WithPermissions, WithFeatureFlags]
@@ -1034,7 +1033,7 @@ types:
         type: optional<boolean>
         availability: deprecated
         docs: |
-          OpenAPI parser rewrite, now deprecated.  
+          OpenAPI parser rewrite, now deprecated.
       openapi-parser-v3:
         type: optional<boolean>
         availability: pre-release

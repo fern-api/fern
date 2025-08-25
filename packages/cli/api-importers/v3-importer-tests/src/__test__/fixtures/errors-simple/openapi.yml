@@ -10,7 +10,7 @@ components:
     Error:
       type: object
       additionalProperties: false
-      required: 
+      required:
         - error
       properties:
         error:
@@ -44,7 +44,7 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/Error"
-            
+
 paths:
   /trees:
     get:

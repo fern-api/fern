@@ -237,7 +237,7 @@ types:
 
   TextResponse:
     extends: commons.WithDocs
-  
+
   BytesResponse:
     extends: commons.WithDocs
 

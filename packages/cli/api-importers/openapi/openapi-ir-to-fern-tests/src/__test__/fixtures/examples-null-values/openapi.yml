@@ -12,14 +12,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserCreate'
+              $ref: "#/components/schemas/UserCreate"
       responses:
-        '200':
+        "200":
           description: User created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
           examples:
             example1:
               value:
@@ -51,25 +51,25 @@ components:
         email:
           type: string
         settings:
-          $ref: '#/components/schemas/UserSettings'
+          $ref: "#/components/schemas/UserSettings"
 
     User:
       type: object
       properties:
         id:
           type: string
-        name: 
+        name:
           type: string
         email:
-          type: [string, 'null']
+          type: [string, "null"]
         createdAt:
           type: string
           format: date-time
-          
+
         settings:
-          $ref: '#/components/schemas/UserSettings'
+          $ref: "#/components/schemas/UserSettings"
         stats:
-          $ref: '#/components/schemas/UserStats'
+          $ref: "#/components/schemas/UserStats"
 
     UserSettings:
       type: object
@@ -93,4 +93,3 @@ components:
         accountStatus:
           type: string
           enum: [active, suspended, deleted]
-

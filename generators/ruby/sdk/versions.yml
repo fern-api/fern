@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 - version: 0.8.2
-  createdAt: '2024-08-05'
+  createdAt: "2024-08-05"
   changelogEntry:
     - type: fix
       summary: >-
@@ -10,7 +10,7 @@
   irVersion: 39
 
 - version: 0.8.1
-  createdAt: '2024-07-22'
+  createdAt: "2024-07-22"
   changelogEntry:
     - type: fix
       summary: Address serialization issues within iterable types
@@ -25,7 +25,7 @@
   irVersion: 39
 
 - version: 0.8.0
-  createdAt: '2024-07-03'
+  createdAt: "2024-07-03"
   changelogEntry:
     - type: fix
       summary: >-
@@ -34,7 +34,7 @@
   irVersion: 39
 
 - version: 0.8.0-rc0
-  createdAt: '2024-07-01'
+  createdAt: "2024-07-01"
   changelogEntry:
     - type: feat
       summary: >-
@@ -43,7 +43,7 @@
   irVersion: 39
 
 - version: 0.7.0-rc5
-  createdAt: '2024-04-08'
+  createdAt: "2024-04-08"
   changelogEntry:
     - type: feat
       summary: >-
@@ -53,7 +53,7 @@
   irVersion: 39
 
 - version: 0.7.0-rc4
-  createdAt: '2024-04-08'
+  createdAt: "2024-04-08"
   changelogEntry:
     - type: feat
       summary: >-
@@ -62,7 +62,7 @@
   irVersion: 39
 
 - version: 0.7.0-rc3
-  createdAt: '2024-04-08'
+  createdAt: "2024-04-08"
   changelogEntry:
     - type: fix
       summary: >-
@@ -71,7 +71,7 @@
   irVersion: 39
 
 - version: 0.7.0-rc2
-  createdAt: '2024-04-08'
+  createdAt: "2024-04-08"
   changelogEntry:
     - type: feat
       summary: >-
@@ -80,7 +80,7 @@
   irVersion: 39
 
 - version: 0.7.0-rc1
-  createdAt: '2024-04-08'
+  createdAt: "2024-04-08"
   changelogEntry:
     - type: feat
       summary: Address serialization issues within iterable types
@@ -90,7 +90,7 @@
   irVersion: 39
 
 - version: 0.7.0-rc0
-  createdAt: '2024-06-13'
+  createdAt: "2024-06-13"
   changelogEntry:
     - type: feat
       summary: Introduce automatic token refresh for OAuth credentials
@@ -103,35 +103,35 @@
   irVersion: 39
 
 - version: 0.6.3
-  createdAt: '2024-05-27'
+  createdAt: "2024-05-27"
   changelogEntry:
     - type: feat
       summary: Generated SDK snippets now leverage the full function module path.
   irVersion: 32
 
 - version: 0.6.2
-  createdAt: '2024-05-17'
+  createdAt: "2024-05-17"
   changelogEntry:
     - type: internal
       summary: The generator now uses the latest FDR SDK
   irVersion: 32
 
 - version: 0.6.1
-  createdAt: '2024-04-08'
+  createdAt: "2024-04-08"
   changelogEntry:
     - type: internal
       summary: Release Generator
   irVersion: 32
 
 - version: 0.6.1-rc0
-  createdAt: '2024-04-08'
+  createdAt: "2024-04-08"
   changelogEntry:
     - type: internal
       summary: Improve logging within the Ruby generator
   irVersion: 32
 
 - version: 0.6.0-rc1
-  createdAt: '2024-04-08'
+  createdAt: "2024-04-08"
   changelogEntry:
     - type: fix
       summary: >-
@@ -140,21 +140,21 @@
   irVersion: 32
 
 - version: 0.6.0-rc0
-  createdAt: '2024-04-08'
+  createdAt: "2024-04-08"
   changelogEntry:
     - type: feat
       summary: Introduce code snippets and examples for Ruby SDKs
   irVersion: 32
 
 - version: 0.5.0-rc2
-  createdAt: '2024-04-08'
+  createdAt: "2024-04-08"
   changelogEntry:
     - type: fix
       summary: Call JSON.parse prior to iterating through an iterable response
   irVersion: 32
 
 - version: 0.5.0-rc0
-  createdAt: '2024-04-09'
+  createdAt: "2024-04-09"
   changelogEntry:
     - type: feat
       summary: >-
@@ -171,7 +171,7 @@
   irVersion: 32
 
 - version: 0.4.0
-  createdAt: '2024-04-08'
+  createdAt: "2024-04-08"
   changelogEntry:
     - type: feat
       summary: >-
@@ -187,14 +187,14 @@
   irVersion: 32
 
 - version: 0.3.3
-  createdAt: '2024-03-22'
+  createdAt: "2024-03-22"
   changelogEntry:
     - type: internal
       summary: Leverage shared generator notification and config parsing logic.
   irVersion: 32
 
 - version: 0.3.2
-  createdAt: '2024-03-18'
+  createdAt: "2024-03-18"
   changelogEntry:
     - type: feat
       summary: >-
@@ -203,14 +203,14 @@
   irVersion: 32
 
 - version: 0.3.1
-  createdAt: '2024-03-12'
+  createdAt: "2024-03-12"
   changelogEntry:
     - type: fix
       summary: use strings instead of UUIDs, which are helper classes in Ruby
   irVersion: 32
 
 - version: 0.3.0
-  createdAt: '2024-02-27'
+  createdAt: "2024-02-27"
   changelogEntry:
     - type: fix
       summary: >-
@@ -230,7 +230,7 @@
   irVersion: 32
 
 - version: 0.2.0
-  createdAt: '2024-02-20'
+  createdAt: "2024-02-20"
   changelogEntry:
     - type: feat
       summary: Add support for idempotency headers
@@ -252,21 +252,21 @@
   irVersion: 32
 
 - version: 0.1.1
-  createdAt: '2024-02-15'
+  createdAt: "2024-02-15"
   changelogEntry:
     - type: internal
       summary: Ensure the Ruby generators do not have strict dependencies on the IR
   irVersion: 32
 
 - version: 0.1.0-rc0
-  createdAt: '2024-03-22'
+  createdAt: "2024-03-22"
   changelogEntry:
     - type: chore
       summary: Loosen the Faraday dependencies within the generated SDKs
   irVersion: 32
 
 - version: 0.1.0-rc0
-  createdAt: '2024-03-22'
+  createdAt: "2024-03-22"
   changelogEntry:
     - type: chore
       summary: Loosen the Faraday dependencies within the generated SDKs
@@ -281,7 +281,7 @@
   irVersion: 32
 
 - version: 0.0.6
-  createdAt: '2024-03-22'
+  createdAt: "2024-03-22"
   changelogEntry:
     - type: feat
       summary: >-
@@ -290,7 +290,7 @@
   irVersion: 32
 
 - version: 0.0.5
-  createdAt: '2024-03-22'
+  createdAt: "2024-03-22"
   changelogEntry:
     - type: fix
       summary: Address parsing issues within the SDK
@@ -305,7 +305,7 @@
   irVersion: 32
 
 - version: 0.0.4
-  createdAt: '2024-03-22'
+  createdAt: "2024-03-22"
   changelogEntry:
     - type: fix
       summary: >-
@@ -314,7 +314,7 @@
   irVersion: 32
 
 - version: 0.0.3
-  createdAt: '2024-03-22'
+  createdAt: "2024-03-22"
   changelogEntry:
     - type: fix
       summary: >-
@@ -323,14 +323,14 @@
   irVersion: 32
 
 - version: 0.0.2
-  createdAt: '2024-03-22'
+  createdAt: "2024-03-22"
   changelogEntry:
     - type: feat
       summary: Support rubygems output type within `generators.yml`
   irVersion: 32
 
 - version: 0.0.1
-  createdAt: '2024-02-01'
+  createdAt: "2024-02-01"
   changelogEntry:
     - type: feat
       summary: >-
@@ -339,7 +339,7 @@
   irVersion: 32
 
 - version: 0.0.0
-  createdAt: '2024-01-30'
+  createdAt: "2024-01-30"
   changelogEntry:
     - type: internal
       summary: Initialize the changelog

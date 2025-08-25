@@ -12,7 +12,7 @@ service:
     getToken:
       path: /token
       method: POST
-      request: 
+      request:
         name: GetTokenRequest
         body:
           properties:

@@ -18,21 +18,21 @@ types:
     properties:
       title: string
       rating: double
-  
-  Cast: 
-    base-properties: 
+
+  Cast:
+    base-properties:
       name: Name
-    union: 
+    union:
       actor: {}
       actress: {}
-  
+
   Name: string
 
   GenericTest<T>:
     properties:
       value: T
       other-value: Movie
-  
+
   GenericApplication:
     type: GenericTest<CreateMovieRequest>
     docs: This is a generic application type

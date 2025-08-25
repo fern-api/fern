@@ -3,8 +3,8 @@ info:
   version: 1.0.0
   title: Test API
 servers:
-- url: https://eta.testapi.com
-  description: prod
+  - url: https://eta.testapi.com
+    description: prod
 paths:
   /eta:
     get:
