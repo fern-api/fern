@@ -81,17 +81,6 @@ export abstract class AbstractRubyGeneratorContext<
         };
     }
 
-    // Debug method to inspect IR and config data
-    public debugIRData(): void {
-        console.log('=== IR Data Debug ===');
-        console.log('API Name:', this.ir.apiName);
-        console.log('API Name Original:', this.ir.apiName.originalName);
-        console.log('Config License:', this.config.license);
-        console.log('Config Output Mode:', this.config.output.mode);
-        console.log('Available IR Properties:', Object.keys(this.ir));
-        console.log('=====================');
-    }
-
     public getRootModule(): ruby.Module_ {
         return ruby.module({
             name: capitalize(this.getRootFolderName()),
