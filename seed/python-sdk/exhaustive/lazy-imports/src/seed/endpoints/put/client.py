@@ -11,6 +11,7 @@ from .types.put_response import PutResponse
 class PutClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawPutClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawPutClient:
@@ -55,6 +56,7 @@ class PutClient:
 class AsyncPutClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawPutClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawPutClient:

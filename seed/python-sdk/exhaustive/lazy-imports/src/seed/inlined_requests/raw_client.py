@@ -20,7 +20,6 @@ OMIT = typing.cast(typing.Any, ...)
 class RawInlinedRequestsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.WE_SHOULD_LAZY_IMPORT = 1
 
     def post_with_object_bodyand_response(
         self,
@@ -91,7 +90,6 @@ class RawInlinedRequestsClient:
 class AsyncRawInlinedRequestsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.WE_SHOULD_LAZY_IMPORT = 1
 
     async def post_with_object_bodyand_response(
         self,

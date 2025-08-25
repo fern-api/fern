@@ -18,7 +18,6 @@ OMIT = typing.cast(typing.Any, ...)
 class RawNoAuthClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.WE_SHOULD_LAZY_IMPORT = 1
 
     def post_with_no_auth(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
@@ -74,7 +73,6 @@ class RawNoAuthClient:
 class AsyncRawNoAuthClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.WE_SHOULD_LAZY_IMPORT = 1
 
     async def post_with_no_auth(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None

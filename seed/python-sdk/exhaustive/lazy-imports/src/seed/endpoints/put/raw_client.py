@@ -15,7 +15,6 @@ from .types.put_response import PutResponse
 class RawPutClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.WE_SHOULD_LAZY_IMPORT = 1
 
     def add(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[PutResponse]:
         """
@@ -54,7 +53,6 @@ class RawPutClient:
 class AsyncRawPutClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.WE_SHOULD_LAZY_IMPORT = 1
 
     async def add(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None

@@ -16,6 +16,7 @@ OMIT = typing.cast(typing.Any, ...)
 class HttpMethodsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawHttpMethodsClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawHttpMethodsClient:
@@ -262,6 +263,7 @@ class HttpMethodsClient:
 class AsyncHttpMethodsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawHttpMethodsClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawHttpMethodsClient:

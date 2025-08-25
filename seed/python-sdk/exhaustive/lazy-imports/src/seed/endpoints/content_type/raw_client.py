@@ -17,7 +17,6 @@ OMIT = typing.cast(typing.Any, ...)
 class RawContentTypeClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.WE_SHOULD_LAZY_IMPORT = 1
 
     def post_json_patch_content_type(
         self,
@@ -197,7 +196,6 @@ class RawContentTypeClient:
 class AsyncRawContentTypeClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.WE_SHOULD_LAZY_IMPORT = 1
 
     async def post_json_patch_content_type(
         self,

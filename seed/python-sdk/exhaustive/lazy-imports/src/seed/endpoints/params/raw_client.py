@@ -17,7 +17,6 @@ OMIT = typing.cast(typing.Any, ...)
 class RawParamsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.WE_SHOULD_LAZY_IMPORT = 1
 
     def get_with_path(
         self, param: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -325,7 +324,6 @@ class RawParamsClient:
 class AsyncRawParamsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.WE_SHOULD_LAZY_IMPORT = 1
 
     async def get_with_path(
         self, param: str, *, request_options: typing.Optional[RequestOptions] = None

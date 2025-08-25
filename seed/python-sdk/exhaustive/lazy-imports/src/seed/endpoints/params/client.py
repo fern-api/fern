@@ -13,6 +13,7 @@ OMIT = typing.cast(typing.Any, ...)
 class ParamsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawParamsClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawParamsClient:
@@ -305,6 +306,7 @@ class ParamsClient:
 class AsyncParamsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawParamsClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawParamsClient:

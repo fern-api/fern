@@ -13,7 +13,6 @@ from ...core.request_options import RequestOptions
 class RawUrlsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.WE_SHOULD_LAZY_IMPORT = 1
 
     def with_mixed_case(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[str]:
         """
@@ -143,7 +142,6 @@ class RawUrlsClient:
 class AsyncRawUrlsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.WE_SHOULD_LAZY_IMPORT = 1
 
     async def with_mixed_case(
         self, *, request_options: typing.Optional[RequestOptions] = None

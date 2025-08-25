@@ -20,7 +20,6 @@ OMIT = typing.cast(typing.Any, ...)
 class RawHttpMethodsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.WE_SHOULD_LAZY_IMPORT = 1
 
     def test_get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[str]:
         """
@@ -266,7 +265,6 @@ class RawHttpMethodsClient:
 class AsyncRawHttpMethodsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.WE_SHOULD_LAZY_IMPORT = 1
 
     async def test_get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None

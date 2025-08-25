@@ -18,7 +18,6 @@ OMIT = typing.cast(typing.Any, ...)
 class RawUnionClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.WE_SHOULD_LAZY_IMPORT = 1
 
     def get_and_return_union(
         self, *, request: Animal, request_options: typing.Optional[RequestOptions] = None
@@ -61,7 +60,6 @@ class RawUnionClient:
 class AsyncRawUnionClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.WE_SHOULD_LAZY_IMPORT = 1
 
     async def get_and_return_union(
         self, *, request: Animal, request_options: typing.Optional[RequestOptions] = None
