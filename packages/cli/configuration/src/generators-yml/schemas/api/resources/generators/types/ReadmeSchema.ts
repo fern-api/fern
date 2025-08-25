@@ -10,6 +10,8 @@ export interface ReadmeSchema {
     apiReferenceLink?: string;
     apiName?: string;
     disabledSections?: Set<string>;
+    /** If true, removes fern branding from the generated SDK files. Defaults to false. */
+    whiteLabel?: boolean;
     /** If set, use this endpoint's snippet as the default whenever possible */
     defaultEndpoint?: FernDefinition.ReadmeEndpointSchema;
     /** Specifies a list of endpoints associated with the feature */
