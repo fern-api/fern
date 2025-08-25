@@ -1,4 +1,4 @@
-package com.fern.java;
+w\package com.fern.java;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -329,8 +329,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
                             @Override
                             public Boolean visitFilesystem(Filesystem value) {
-                                // Always generate full project with Gradle files for local filesystem
-                                return true;
+                                return value.getGenerateFullProject();
                             }
 
                             @Override

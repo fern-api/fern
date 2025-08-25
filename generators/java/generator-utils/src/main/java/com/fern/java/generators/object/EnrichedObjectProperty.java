@@ -77,14 +77,12 @@ public interface EnrichedObjectProperty {
                 .addModifiers(Modifier.PUBLIC)
                 .returns(poetTypeName());
 
-        // Add @Nullable annotation if using nullable annotations and this is a nullable type
         boolean shouldUseNullableAnnotation =
                 useNullableAnnotation() && isNullable(objectProperty().getValueType());
         if (shouldUseNullableAnnotation) {
             getterBuilder.addAnnotation(NullableAnnotationUtils.getNullableAnnotation());
         }
 
-        // Only add Optional.empty() logic if we're NOT using nullable annotations
         if (nullable() && !shouldUseNullableAnnotation) {
             getterBuilder
                     .beginControlFlow("if ($L == null)", fieldSpec().get().name)

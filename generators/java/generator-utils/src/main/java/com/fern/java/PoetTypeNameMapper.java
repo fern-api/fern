@@ -18,7 +18,7 @@ import java.util.UUID;
 public final class PoetTypeNameMapper {
 
     private final AbstractPoetClassNameFactory poetClassNameFactory;
-    private final TypeReferenceToTypeNameConverter primitiveDisAllowedTypeReferenceConverter =
+private final TypeReferenceToTypeNameConverter primitiveDisAllowedTypeReferenceConverter =
             new TypeReferenceToTypeNameConverter(false);
     private final ContainerToTypeNameConverter containerToTypeNameConverter = new ContainerToTypeNameConverter();
     private final ICustomConfig customConfig;
@@ -272,10 +272,8 @@ public final class PoetTypeNameMapper {
         @Override
         public TypeName visitNullable(TypeReference typeReference) {
             if (customConfig.useNullableAnnotation()) {
-                // New behavior when flag is true: nullable<T> → T (with @Nullable annotation)
                 return typeReference.visit(primitiveDisAllowedTypeReferenceConverter);
             } else {
-                // Current/default behavior when flag is false: nullable<T> → Optional<T>
                 return visitOptional(typeReference);
             }
         }

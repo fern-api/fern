@@ -329,7 +329,6 @@ public final class BuilderGenerator {
             EnrichedObjectPropertyWithField enrichedObjectProperty, ClassName returnClass) {
         Builder parameterSpecBuilder = ParameterSpec.builder(
                 enrichedObjectProperty.enrichedObjectProperty.poetTypeName(), enrichedObjectProperty.fieldSpec.name);
-        // Only add @NotNull if the type is not nullable (considering the use-nullable-annotation flag)
         boolean isNullableField = enrichedObjectProperty.enrichedObjectProperty.nullable()
                 || enrichedObjectProperty.enrichedObjectProperty.aliasOfNullable();
         if (isNotNullableType(enrichedObjectProperty.enrichedObjectProperty.poetTypeName())
