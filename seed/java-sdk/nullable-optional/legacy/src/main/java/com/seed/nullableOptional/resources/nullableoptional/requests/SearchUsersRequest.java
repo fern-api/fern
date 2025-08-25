@@ -97,10 +97,10 @@ public final class SearchUsersRequest {
     }
 
     private boolean equalTo(SearchUsersRequest other) {
-        return java.util.Objects.equals(query, other.query)
-                && java.util.Objects.equals(department, other.department)
-                && java.util.Objects.equals(role, other.role)
-                && java.util.Objects.equals(isActive, other.isActive);
+        return query.equals(other.query)
+                && department.equals(other.department)
+                && role.equals(other.role)
+                && isActive.equals(other.isActive);
     }
 
     @java.lang.Override
