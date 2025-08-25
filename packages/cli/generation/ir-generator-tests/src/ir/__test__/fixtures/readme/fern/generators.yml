@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../../../../../../../../generators-yml.schema.json
 readme:
   apiName: "Readme Test"
-  disabledFeatures:
+  disabledSections:
     - "contributing"
   bannerLink: https://www.fernapi.com
   apiReferenceLink: https://www.docs.fernapi.com
