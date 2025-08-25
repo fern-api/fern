@@ -383,7 +383,10 @@ class VersionFile {
     public constructor({ context, project }: VersionFile.Args) {
         this.context = context;
         this.project = project;
-        this.filePath = join(project.absolutePathToOutputDirectory, RelativeFilePath.of(`lib/${context.getRootFolderName()}`));
+        this.filePath = join(
+            project.absolutePathToOutputDirectory, 
+            RelativeFilePath.of(`lib/${context.getRootFolderName()}`)
+        );
         this.fileName = "version.rb";
     }
 
