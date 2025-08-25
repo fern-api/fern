@@ -93,8 +93,16 @@ export async function runLocalGenerationForWorkspace({
                     return;
                 }
 
-                if (organization.ok && organization.body.selfHostedSdKs) {
-                    intermediateRepresentation.selfHosted = true;
+                if (organization.ok) {
+                    if (organization.body.selfHostedSdKs) {
+                        intermediateRepresentation.selfHosted = true;
+                    }
+                    if (organization.body.isWhitelabled) {
+                        if (intermediateRepresentation.readmeConfig == null) {
+                            intermediateRepresentation.readmeConfig = FernIr.EmptyReadmeConfig;
+                        }
+                        intermediateRepresentation.readmeConfig.whiteLabel = true;
+                    }
                 }
 
                 // Set the publish config on the intermediateRepresentation if available
