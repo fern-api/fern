@@ -40,7 +40,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
     }
 
     private async createGemspecfile(): Promise<void> {
-        const gemspecFilename = this.context.getFixtureNameFromIR() + ".gemspec";
+        const gemspecFilename = this.context.getRootFolderName() + ".gemspec";
         const gemspecFile = new GemspecFile({ context: this.context, project: this });
         await writeFile(
             join(this.absolutePathToOutputDirectory, RelativeFilePath.of(gemspecFilename)),
@@ -50,9 +50,6 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
 
     private async createGemfile(): Promise<void> {
         const gemfile = new Gemfile({ context: this.context });
-        this.context.logger.debug(`Gemfile base path ${this.absolutePathToOutputDirectory}`);
-        this.context.logger.debug(`Gemfile filename ${GEMFILE_FILENAME}`);
-        this.context.logger.debug(`Gemfile filename relative ${RelativeFilePath.of(GEMFILE_FILENAME)}`);
         await writeFile(
             join(this.absolutePathToOutputDirectory, RelativeFilePath.of(GEMFILE_FILENAME)),
             await gemfile.toString()
@@ -198,7 +195,7 @@ class GemspecFile {
     public async toString(): Promise<string> {
         const moduleFolderName = this.context.getRootFolderName();
         const moduleName = this.context.getRootModule().name;
-        const fixtureName = this.context.getFixtureNameFromIR();
+        
         const license = this.context.getLicenseFromConfig();
 
         return dedent`
@@ -207,19 +204,19 @@ class GemspecFile {
             require_relative "lib/${moduleFolderName}/version"
 
             Gem::Specification.new do |spec|
-            spec.name = "${fixtureName}"
+            spec.name = "${moduleFolderName}"
             spec.version = ${moduleName}::VERSION
             spec.authors = ["Fern"]
             spec.email = ["support@buildwithfern.com"]
-            spec.summary = "Ruby client library for the ${fixtureName} API"
+            spec.summary = "Ruby client library for the ${moduleName} API"
             spec.description = "The ${moduleName} Ruby library provides convenient access to the ${moduleName} API from Ruby."
-            spec.homepage = "https://github.com/fern-demo/square-ruby-sdk" # TODO
+            spec.homepage = ""
             spec.license = "${license}"
             spec.required_ruby_version = ">= 3.1.0"
-            #spec.metadata["homepage_uri"] = "https://github.com/fern-demo/square-ruby-sdk" # TODO
-            #spec.metadata["source_code_uri"] = "https://github.com/fern-demo/square-ruby-sdk" # TODO
-            #spec.metadata["changelog_uri"] = "https://github.com/fern-demo/square-ruby-sdk/blob/master/CHANGELOG.md" # TODO
-
+            spec.metadata["homepage_uri"] = ""
+            spec.metadata["source_code_uri"] = ""
+            spec.metadata["changelog_uri"] = ""
+            
             # Specify which files should be added to the gem when it is released.
             # The \`git ls-files -z\` loads the files in the RubyGem that have been added into git.
             gemspec = File.basename(__FILE__)
@@ -393,6 +390,7 @@ class VersionFile {
     public toString(): string {
         const seedName = this.context.getRootModule().name;
         const version = this.context.getVersionFromConfig();
+        this.context.logger.debug("this.config", JSON.stringify(this.context.config, null, 2));
         return dedent`
             # frozen_string_literal: true
 

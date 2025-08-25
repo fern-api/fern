@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    content_types (0.0.1)
+    seed (0.0.1)
 
 GEM
   remote: https://rubygems.org/
@@ -68,13 +68,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  content_types!
   minitest (~> 5.16)
   minitest-rg
   pry
   rake (~> 13.0)
   rubocop (~> 1.21)
   rubocop-minitest
+  seed!
   webmock
 
 BUNDLED WITH

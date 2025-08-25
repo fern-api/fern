@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    single_url_environment_no_default (0.0.1)
+    seed (0.0.1)
 
 GEM
   remote: https://rubygems.org/
@@ -74,7 +74,7 @@ DEPENDENCIES
   rake (~> 13.0)
   rubocop (~> 1.21)
   rubocop-minitest
-  single_url_environment_no_default!
+  seed!
   webmock
 
 BUNDLED WITH

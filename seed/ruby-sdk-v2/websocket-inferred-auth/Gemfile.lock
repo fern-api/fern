@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    websocket_auth (0.0.1)
+    seed (0.0.1)
 
 GEM
   remote: https://rubygems.org/
@@ -74,8 +74,8 @@ DEPENDENCIES
   rake (~> 13.0)
   rubocop (~> 1.21)
   rubocop-minitest
+  seed!
   webmock
-  websocket_auth!
 
 BUNDLED WITH
    2.5.22

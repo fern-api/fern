@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    oauth_client_credentials_with_variables (0.0.1)
+    seed (0.0.1)
 
 GEM
   remote: https://rubygems.org/
@@ -70,11 +70,11 @@ PLATFORMS
 DEPENDENCIES
   minitest (~> 5.16)
   minitest-rg
-  oauth_client_credentials_with_variables!
   pry
   rake (~> 13.0)
   rubocop (~> 1.21)
   rubocop-minitest
+  seed!
   webmock
 
 BUNDLED WITH
