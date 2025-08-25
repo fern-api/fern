@@ -5,6 +5,9 @@ package-lock.yaml
 *.lock.yaml
 *.lock.yml
 
+# Ignore template files used in generators
+**/asIs/**/*.yml
+
 # Ignore specific directories and files
 node_modules/
 dist/
