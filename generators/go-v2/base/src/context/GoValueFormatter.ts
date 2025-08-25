@@ -122,28 +122,26 @@ export class GoValueFormatter {
             isPrimitive = true;
         }
 
-        // merge the two
-        if (unwrapPrefix) {
-            const origPrefix = prefix;
-            prefix = origPrefix
+        // merge prefix and suffix with unwrap logic
+        const mergedPrefix = unwrapPrefix != undefined
+            ? (prefix != undefined
                 ? go.codeblock((writer) => {
-                      writer.writeNode(origPrefix);
-                      writer.writeNode(unwrapPrefix);
-                  })
-                : unwrapPrefix;
-        }
-        if (unwrapSuffix) {
-            const origSuffix = suffix;
-            suffix = origSuffix
+                    writer.writeNode(prefix);
+                    writer.writeNode(unwrapPrefix);
+                })
+                : unwrapPrefix)
+            : prefix;
+        const mergedSuffix = unwrapSuffix != undefined
+            ? (suffix != undefined
                 ? go.codeblock((writer) => {
-                      writer.writeNode(unwrapSuffix);
-                      writer.writeNode(origSuffix);
-                  })
-                : unwrapSuffix;
-        }
+                    writer.writeNode(unwrapSuffix);
+                    writer.writeNode(suffix);
+                })
+                : unwrapSuffix)
+            : suffix;
 
         return {
-            formatted: this.format({ prefix, suffix, value }),
+            formatted: this.format({ prefix: mergedPrefix, suffix: mergedSuffix, value }),
             zeroValue: this.context.goZeroValueMapper.convert({ reference }),
             isIterable: false,
             isOptional,
