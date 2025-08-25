@@ -301,9 +301,9 @@ types:
           If false, unwrap oneOf structures with a single schema.
           Defaults to false.
         default: false
-      inline-all-of-schemas: 
+      inline-all-of-schemas:
         type: optional<boolean>
-        docs: | 
+        docs: |
           Whether to inline allOf schemas. If false, allOf schemas will be 
           extended in the code generation.
         default: false
@@ -337,9 +337,9 @@ types:
       overrides: optional<string>
       namespace: optional<string>
       settings: optional<OpenAPISettingsSchema>
-  
-  OpenRPCSpecSchema: 
-    properties:   
+
+  OpenRPCSpecSchema:
+    properties:
       openrpc: string
       overrides: optional<string>
       namespace: optional<string>

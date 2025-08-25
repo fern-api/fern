@@ -4,7 +4,7 @@
     - summary: |
         Redesign the client to share RequestOptions across all subclients.
       type: fix
-  createdAt: '2025-08-22'
+  createdAt: "2025-08-22"
   irVersion: 58
 
 - version: 1.6.3
@@ -13,7 +13,7 @@
         Update the dyanmic snippet generator to handle list values in the request body.
         Previously, it would throw an error.
       type: fix
-  createdAt: '2025-08-21'
+  createdAt: "2025-08-21"
   irVersion: 58
 
 - version: 1.6.2
@@ -21,7 +21,7 @@
     - summary: |
         Add support for handling `default`s for query parameters.
       type: feat
-  createdAt: '2025-08-21'
+  createdAt: "2025-08-21"
   irVersion: 58
 
 - version: 1.6.1
@@ -29,7 +29,7 @@
     - summary: |
         Add reference.md doc generation
       type: feat
-  createdAt: '2025-08-20'
+  createdAt: "2025-08-20"
   irVersion: 58
 
 - version: 1.6.0
@@ -37,7 +37,7 @@
     - summary: |
         Add support for specifying a custom subdirectory to generate into.
       type: feat
-  createdAt: '2025-08-20'
+  createdAt: "2025-08-20"
   irVersion: 58
 
 - version: 1.5.8
@@ -45,7 +45,7 @@
     - summary: |
         Fix named string literals in undiscriminated unions.
       type: fix
-  createdAt: '2025-08-20'
+  createdAt: "2025-08-20"
   irVersion: 58
 
 - version: 1.5.7-rc0
@@ -53,7 +53,7 @@
     - summary: |
         Fix go sse event stream handling.
       type: fix
-  createdAt: '2025-08-07'
+  createdAt: "2025-08-07"
   irVersion: 58
 
 - version: 1.5.6
@@ -61,7 +61,7 @@
     - summary: |
         Publishing new version after reverting bad commit that released an rc version 1.5.5-rc0.
       type: chore
-  createdAt: '2025-08-07'
+  createdAt: "2025-08-07"
   irVersion: 58
 
 - version: 1.5.4
@@ -70,7 +70,7 @@
         If enum values contain a slash, the go generator now effectively escapes these and makes sure that the
         Go SDK will still compile.
       type: fix
-  createdAt: '2025-08-01'
+  createdAt: "2025-08-01"
   irVersion: 58
 
 - version: 1.5.3
@@ -78,7 +78,7 @@
     - summary: |
         Fix a regression where the `useReaderForBytesRequest` configuration option was not being respected after `1.5.0`.
       type: fix
-  createdAt: '2025-07-25'
+  createdAt: "2025-07-25"
   irVersion: 58
 
 - version: 1.5.2
@@ -86,7 +86,7 @@
     - summary: |
         Make sure that optional headers and query params are properly dereferenced before being sent to the server.
       type: fix
-  createdAt: '2025-07-21'
+  createdAt: "2025-07-21"
   irVersion: 58
 
 - version: 1.5.1
@@ -95,7 +95,7 @@
         Enum headers are now correctly serialized in API requests. When an endpoint specifies an enum type for a header
         parameter, the SDK will automatically serialize the enum value to its string representation as expected by the API.
       type: fix
-  createdAt: '2025-07-21'
+  createdAt: "2025-07-21"
   irVersion: 58
 
 - version: 1.5.0
@@ -103,7 +103,7 @@
     - summary: |
         Update the primary client to delegate to the new raw client to reduce code duplication.
       type: internal
-  createdAt: '2025-07-21'
+  createdAt: "2025-07-21"
   irVersion: 58
 
 - version: 1.4.0
@@ -112,7 +112,7 @@
         Add support for receiving raw response headers from API calls with the new `WithRawResponse` client field
         for multipart/form-data endpoints.
       type: feat
-  createdAt: '2025-07-01'
+  createdAt: "2025-07-01"
   irVersion: 58
 
 - version: 1.3.0
@@ -130,16 +130,15 @@
         originally released over three years ago, so this is well within the official Go support window found
         at https://go.dev/doc/devel/release#policy
       type: feat
-  createdAt: '2025-06-26'
+  createdAt: "2025-06-26"
   irVersion: 58
-
 
 - version: 1.2.0
   changelogEntry:
     - summary: |
         Add support for generating `README.md` when filesystem publishing is enabled.
       type: feat
-  createdAt: '2025-06-03'
+  createdAt: "2025-06-03"
   irVersion: 58
 
 - version: 1.1.0
@@ -151,7 +150,7 @@
         Update the file header to follow `go:generate` naming conventions. For details, see
         https://pkg.go.dev/cmd/go#hdr-Generate_Go_files_by_processing_source
       type: fix
-  createdAt: '2025-05-22'
+  createdAt: "2025-05-22"
   irVersion: 58
 - version: 1.0.0
   changelogEntry:
@@ -164,7 +163,7 @@
           - `useReaderForBytesRequest` is now `true` by default.
           - `union` is now `v1` by default.
       type: feat
-  createdAt: '2025-05-20'
+  createdAt: "2025-05-20"
   irVersion: 57
 - version: 0.38.0
   changelogEntry:
@@ -172,28 +171,28 @@
         Add support for the `useReaderForBytesRequest` configuration option, which generates
         `io.Reader` request parameters instead of `[]byte` request parameters.
       type: feat
-  createdAt: '2025-05-14'
+  createdAt: "2025-05-14"
   irVersion: 57
 - version: 0.37.5
   changelogEntry:
     - summary: |
         Add support for the custom introduction setting in the generated README.md.
       type: fix
-  createdAt: '2025-05-13'
+  createdAt: "2025-05-13"
   irVersion: 57
 - version: 0.37.4
   changelogEntry:
     - summary: |
         Fix an issue where enum values containing double quotes were not properly escaped in generated code.
       type: fix
-  createdAt: '2025-05-08'
+  createdAt: "2025-05-08"
   irVersion: 57
 - version: 0.37.3
   changelogEntry:
     - summary: |
         Install the generator-cli at build time as a fallback if runtime installation fails.
       type: fix
-  createdAt: '2025-05-01'
+  createdAt: "2025-05-01"
   irVersion: 57
 - version: 0.37.2
   changelogEntry:
@@ -520,7 +519,7 @@
         Add support for reading headers from environment variables (e.g. `X-API-Version`).
   irVersion: 40
 - version: 0.23.7
-  createdAt: '2024-09-06'
+  createdAt: "2024-09-06"
   changelogEntry:
     - type: fix
       summary: >-
@@ -528,13 +527,13 @@
         mistakenly dereferenced.
   irVersion: 40
 - version: 0.23.6
-  createdAt: '2024-09-05'
+  createdAt: "2024-09-05"
   changelogEntry:
     - type: internal
       summary: No changes.
   irVersion: 40
 - version: 0.23.5
-  createdAt: '2024-09-05'
+  createdAt: "2024-09-05"
   changelogEntry:
     - type: fix
       summary: >-
@@ -542,25 +541,25 @@
         successfully converted to their equivalent `string` representation for snippets.
   irVersion: 40
 - version: 0.23.4
-  createdAt: '2024-08-30'
+  createdAt: "2024-08-30"
   changelogEntry:
     - type: internal
       summary: No changes.
   irVersion: 40
 - version: 0.23.3
-  createdAt: '2024-08-30'
+  createdAt: "2024-08-30"
   changelogEntry:
     - type: internal
       summary: No changes.
   irVersion: 40
 - version: 0.23.2
-  createdAt: '2024-08-26'
+  createdAt: "2024-08-26"
   changelogEntry:
     - type: internal
       summary: No changes.
   irVersion: 40
 - version: 0.23.1
-  createdAt: '2024-08-19'
+  createdAt: "2024-08-19"
   changelogEntry:
     - type: fix
       summary: Fix literal value deserialization.
@@ -570,7 +569,7 @@
           error whenever any literal values do not exist or are mismatched.
   irVersion: 40
 - version: 0.23.0
-  createdAt: '2024-08-07'
+  createdAt: "2024-08-07"
   changelogEntry:
     - type: feat
       summary: Add support for always sending required properties.
@@ -582,7 +581,7 @@
           that is not explicitly set will send the default value for that type.
   irVersion: 40
 - version: 0.22.3
-  createdAt: '2024-07-22'
+  createdAt: "2024-07-22"
   changelogEntry:
     - type: fix
       summary: >-
@@ -591,19 +590,19 @@
         server's error.
   irVersion: 40
 - version: 0.22.2
-  createdAt: '2024-07-04'
+  createdAt: "2024-07-04"
   changelogEntry:
     - type: fix
       summary: Request types set to `nil` no longer send an explicit `null` value.
   irVersion: 40
 - version: 0.22.1
-  createdAt: '2024-06-11'
+  createdAt: "2024-06-11"
   changelogEntry:
     - type: fix
       summary: Array of `deepObject` query parameters are correctly serialized.
   irVersion: 40
 - version: 0.22.0
-  createdAt: '2024-05-21'
+  createdAt: "2024-05-21"
   changelogEntry:
     - type: feat
       summary: Add support for retrieving extra properties from response objects.
@@ -613,13 +612,13 @@
           accessible via the `GetExtraProperties` method.
   irVersion: 40
 - version: 0.21.3
-  createdAt: '2024-05-17'
+  createdAt: "2024-05-17"
   changelogEntry:
     - type: internal
       summary: The generator now uses the latest FDR SDK.
   irVersion: 40
 - version: 0.21.2
-  createdAt: '2024-05-07'
+  createdAt: "2024-05-07"
   changelogEntry:
     - type: fix
       summary: >-
@@ -627,7 +626,7 @@
         struct tag.
   irVersion: 40
 - version: 0.21.1
-  createdAt: '2024-04-29'
+  createdAt: "2024-04-29"
   changelogEntry:
     - type: fix
       summary: >-
@@ -637,13 +636,13 @@
       summary: Refactor endpoint URL mapping with `core.EncodeURL`.
   irVersion: 40
 - version: 0.21.0
-  createdAt: '2024-04-29'
+  createdAt: "2024-04-29"
   changelogEntry:
     - type: feat
       summary: Add support for cursor and offset pagination.
   irVersion: 40
 - version: 0.20.2
-  createdAt: '2024-04-26'
+  createdAt: "2024-04-26"
   changelogEntry:
     - type: internal
       summary: Enhance extra property serialization performance.
@@ -657,7 +656,7 @@
       summary: Resolve an issue with discriminated union serialization.
   irVersion: 40
 - version: 0.20.1
-  createdAt: '2024-04-25'
+  createdAt: "2024-04-25"
   changelogEntry:
     - type: fix
       summary: The `omitempty` struct tag is now only used for nil-able types.
@@ -667,25 +666,25 @@
         `omitempty` is used for a non-optional field.
   irVersion: 40
 - version: 0.20.0
-  createdAt: '2024-04-24'
+  createdAt: "2024-04-24"
   changelogEntry:
     - type: feat
       summary: The Go generator now supports extra properties.
   irVersion: 40
 - version: 0.19.0
-  createdAt: '2024-04-16'
+  createdAt: "2024-04-16"
   changelogEntry:
     - type: feat
       summary: The Go generator now supports environment variable scanning.
   irVersion: 35
 - version: 0.18.3
-  createdAt: '2024-04-15'
+  createdAt: "2024-04-15"
   changelogEntry:
     - type: fix
       summary: Path parameters are now applied in the correct order.
   irVersion: 35
 - version: 0.18.2
-  createdAt: '2024-04-02'
+  createdAt: "2024-04-02"
   changelogEntry:
     - type: fix
       summary: >-
@@ -694,13 +693,13 @@
         every call-site.
   irVersion: 35
 - version: 0.18.1
-  createdAt: '2024-03-12'
+  createdAt: "2024-03-12"
   changelogEntry:
     - type: fix
       summary: Go snippets correctly handle unknown examples.
   irVersion: 35
 - version: 0.18.0
-  createdAt: '2024-03-04'
+  createdAt: "2024-03-04"
   changelogEntry:
     - type: feat
       summary: >-
@@ -710,19 +709,19 @@
       summary: Add support for multiple files in upload endpoints.
   irVersion: 35
 - version: 0.17.0
-  createdAt: '2024-02-26'
+  createdAt: "2024-02-26"
   changelogEntry:
     - type: internal
       summary: No changes since previous release candidate.
   irVersion: 33
 - version: 0.17.0-rc1
-  createdAt: '2024-02-23'
+  createdAt: "2024-02-23"
   changelogEntry:
     - type: fix
       summary: Snippets for aliases to optional primitive values.
   irVersion: 33
 - version: 0.17.0-rc0
-  createdAt: '2024-02-21'
+  createdAt: "2024-02-21"
   changelogEntry:
     - type: fix
       summary: >-
@@ -732,25 +731,25 @@
       summary: Add support for generated endpoint snippets.
   irVersion: 33
 - version: 0.16.0
-  createdAt: '2024-02-12'
+  createdAt: "2024-02-12"
   changelogEntry:
     - type: feat
       summary: The generator now supports whitelabelling.
   irVersion: 33
 - version: 0.15.0
-  createdAt: '2024-02-09'
+  createdAt: "2024-02-09"
   changelogEntry:
     - type: feat
       summary: Enforce RFC3339 for date[time] serialization in request bodies.
   irVersion: 33
 - version: 0.14.1
-  createdAt: '2024-02-07'
+  createdAt: "2024-02-07"
   changelogEntry:
     - type: fix
       summary: Query parameter support for optional `time.Time` types.
   irVersion: 33
 - version: 0.14.0
-  createdAt: '2024-02-06'
+  createdAt: "2024-02-06"
   changelogEntry:
     - type: feat
       summary: Add support for `deepObject` query parameters.
@@ -758,7 +757,7 @@
       summary: Refactor query parameter serialization with `url` struct tags.
   irVersion: 33
 - version: 0.13.0
-  createdAt: '2024-01-31'
+  createdAt: "2024-01-31"
   changelogEntry:
     - type: feat
       summary: Add `packageName` generator configuration.
@@ -766,13 +765,13 @@
       summary: Add support for `bytes` request bodies wrapped in an in-lined request.
   irVersion: 32
 - version: 0.12.1
-  createdAt: '2024-01-31'
+  createdAt: "2024-01-31"
   changelogEntry:
     - type: fix
-      summary: '`text/plain` response handling.'
+      summary: "`text/plain` response handling."
   irVersion: 32
 - version: 0.12.0
-  createdAt: '2024-01-30'
+  createdAt: "2024-01-30"
   changelogEntry:
     - type: feat
       summary: >-
@@ -780,13 +779,13 @@
         `application/octet-stream`.
   irVersion: 32
 - version: 0.11.0
-  createdAt: '2024-01-29'
+  createdAt: "2024-01-29"
   changelogEntry:
     - type: feat
       summary: Add automatic retry with exponential backoff.
   irVersion: 32
 - version: 0.10.0
-  createdAt: '2024-01-25'
+  createdAt: "2024-01-25"
   changelogEntry:
     - type: feat
       summary: Refactor `ClientOption` as `RequestOption`.
@@ -804,19 +803,19 @@
         one literal.
   irVersion: 32
 - version: 0.9.4
-  createdAt: '2024-01-10'
+  createdAt: "2024-01-10"
   changelogEntry:
     - type: fix
       summary: File upload requests that specify query parameters.
   irVersion: 28
 - version: 0.9.3
-  createdAt: '2023-12-04'
+  createdAt: "2023-12-04"
   changelogEntry:
     - type: fix
       summary: Optional query parameter dereferencing issue.
   irVersion: 28
 - version: 0.9.2
-  createdAt: '2023-11-30'
+  createdAt: "2023-11-30"
   changelogEntry:
     - type: fix
       summary: >-
@@ -824,7 +823,7 @@
         than `1.X.X`.
   irVersion: 28
 - version: 0.9.1
-  createdAt: '2023-11-08'
+  createdAt: "2023-11-08"
   changelogEntry:
     - type: fix
       summary: Support boolean literals.
@@ -832,7 +831,7 @@
       summary: Union subtypes with no properties are now go 1.13 compatible.
   irVersion: 28
 - version: 0.9.0
-  createdAt: '2023-10-31'
+  createdAt: "2023-10-31"
   changelogEntry:
     - type: feat
       summary: Add support for streaming endpoints.

@@ -10,12 +10,12 @@ service:
       request:
         name: RequestObject
         docs: This is a test description
-        body: 
+        body:
           properties:
             random:
               type: string
       response: Object
-    
+
 types:
   Object:
     docs: This is another test description

@@ -1,4 +1,4 @@
 name: endpoint-level-base-path
 base-path: /{version}
-path-parameters: 
+path-parameters:
   version: string

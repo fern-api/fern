@@ -1,4 +1,4 @@
-types: 
+types:
   ReviewersSchema:
     properties:
       teams: optional<list<ReviewerSchema>>

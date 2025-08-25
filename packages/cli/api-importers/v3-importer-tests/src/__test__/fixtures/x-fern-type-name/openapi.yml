@@ -4,11 +4,11 @@ info:
   version: 0.0.0
 
 paths:
-  '/test-extension-x-fern-type-name':
+  "/test-extension-x-fern-type-name":
     get:
       summary: Get Workspace Audit Logs
       responses:
-        '200':
+        "200":
           description: A list of workspace audit logs
           content:
             application/json:
@@ -20,7 +20,7 @@ paths:
                     type: string
                     description: A simple string primitive
                   number_primitive:
-                    x-fern-type-name: Number Example  
+                    x-fern-type-name: Number Example
                     type: number
                     description: A simple number primitive
                   boolean_primitive:
@@ -31,7 +31,7 @@ paths:
                     x-fern-type-name: Object Example
                     type: object
                     properties:
-                      id: 
+                      id:
                         type: string
                       name:
                         type: string
@@ -53,5 +53,3 @@ paths:
                       - type: string
                       - type: number
                     description: Can be either a string or number
-
-

@@ -24,4 +24,3 @@ service:
       auth: true
       response:
         type: list<config.Config>
-

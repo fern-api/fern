@@ -1,8 +1,8 @@
 asyncapi: 2.6.0
 info:
-    title: WebSocket channels
-    version: 1.0.0
-    description: Channels for real-time updates.
+  title: WebSocket channels
+  version: 1.0.0
+  description: Channels for real-time updates.
 channels:
   /petowners:
     description: Private websocket channel for receiving updates about pet owners and their pets
@@ -27,14 +27,14 @@ channels:
                   type: object
                   properties:
                     petOwner:
-                      $ref: '#/components/schemas/PetOwner'
+                      $ref: "#/components/schemas/PetOwner"
                   required:
                     - petOwner
                     - pet
 components:
-    schemas:
-      PetOwner:
-        allOf:
-          - $ref: 'https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/asyncapi-2.6.0/spec.yaml#/components/schemas/User'
-          - $ref: 'https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/asyncapi-2.6.0/spec.yaml#/components/schemas/Pet'
-          - $ref: 'https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/asyncapi-2.6.0/spec.yaml#/components/schemas/Tag'
+  schemas:
+    PetOwner:
+      allOf:
+        - $ref: "https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/asyncapi-2.6.0/spec.yaml#/components/schemas/User"
+        - $ref: "https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/asyncapi-2.6.0/spec.yaml#/components/schemas/Pet"
+        - $ref: "https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/asyncapi-2.6.0/spec.yaml#/components/schemas/Tag"

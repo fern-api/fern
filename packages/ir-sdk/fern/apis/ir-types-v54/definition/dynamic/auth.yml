@@ -19,7 +19,7 @@ types:
     properties:
       username: commons.Name
       password: commons.Name
-  
+
   BasicAuthValues:
     properties:
       username: string
@@ -28,7 +28,7 @@ types:
   BearerAuth:
     properties:
       token: commons.Name
-  
+
   BearerAuthValues:
     properties:
       token: string
@@ -36,7 +36,7 @@ types:
   HeaderAuth:
     properties:
       header: types.NamedParameter
-  
+
   HeaderAuthValues:
     properties:
       value: unknown

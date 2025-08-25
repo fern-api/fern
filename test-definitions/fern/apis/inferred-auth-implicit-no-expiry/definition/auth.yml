@@ -15,7 +15,7 @@ service:
       method: POST
       request:
         name: GetTokenRequest
-        headers: 
+        headers:
           X-Api-Key: string
         body:
           properties:
@@ -29,9 +29,9 @@ service:
     refreshToken:
       path: /token/refresh
       method: POST
-      request: 
+      request:
         name: RefreshTokenRequest
-        headers: 
+        headers:
           X-Api-Key: string
         body:
           properties:

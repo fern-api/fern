@@ -1,4 +1,4 @@
-imports: 
+imports:
   root: __package__.yml
 
 service:
@@ -10,15 +10,14 @@ service:
       method: POST
       request:
         name: SendEnumInlinedRequest
-        body: 
-          properties: 
+        body:
+          properties:
             operand:
               type: root.Operand
             maybeOperand: optional<root.Operand>
             operandOrColor: root.ColorOrOperand
             maybeOperandOrColor: optional<root.ColorOrOperand>
-      examples: 
+      examples:
         - request:
             operand: $root.Operand.GreaterThan
             operandOrColor: $root.ColorOrOperand.Red
-      

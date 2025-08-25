@@ -19,4 +19,4 @@ service:
       path: /{movieId}
       path-parameters:
         movieId: MovieId
-      response: Movie 
+      response: Movie

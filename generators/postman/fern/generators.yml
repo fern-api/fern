@@ -4,9 +4,9 @@ groups:
     generators:
       - name: fernapi/fern-typescript-sdk
         version: 0.39.5
-        output: 
+        output:
           location: npm
           url: npm.buildwithfern.com
           package-name: "@fern-fern/postman-sdk"
-        config: 
+        config:
           timeoutInSeconds: infinity
