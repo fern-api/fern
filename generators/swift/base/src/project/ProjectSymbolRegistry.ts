@@ -94,27 +94,36 @@ export class ProjectSymbolRegistry {
      * @param preferredName Preferred name for the symbol
      * @returns The registered unique root client symbol name
      */
-    public registerRootClientSymbol(apiNamePascalCase: string): string {
-        return this.registry.registerSymbol(this.getRootClientSymbolId(), [
+    public registerRootClientSymbol(apiNamePascalCase: string, preferredName: string | undefined): string {
+        const candidates: [string, ...string[]] = [
             `${apiNamePascalCase}Client`,
             `${apiNamePascalCase}Api`,
             `${apiNamePascalCase}ApiClient`
-        ]);
+        ];
+        if (typeof preferredName === "string") {
+            candidates.unshift(preferredName);
+        }
+        return this.registry.registerSymbol(this.getRootClientSymbolId(), candidates);
     }
 
     /**
      * Registers and generates a unique symbol name for the environment enum.
-     * Tries candidate names in order: {API}Environment, {API}Environ, {API}Env.
+     * Tries preferred name first, then falls back to standard candidates.
      *
      * @param apiNamePascalCase The API name in PascalCase
+     * @param preferredName Preferred name for the symbol
      * @returns The generated unique environment symbol name
      */
-    public registerEnvironmentSymbol(apiNamePascalCase: string): string {
-        return this.registry.registerSymbol(this.getEnvironmentSymbolId(), [
+    public registerEnvironmentSymbol(apiNamePascalCase: string, preferredName: string | undefined): string {
+        const candidates: [string, ...string[]] = [
             `${apiNamePascalCase}Environment`,
             `${apiNamePascalCase}Environ`,
             `${apiNamePascalCase}Env`
-        ]);
+        ];
+        if (typeof preferredName === "string") {
+            candidates.unshift(preferredName);
+        }
+        return this.registry.registerSymbol(this.getEnvironmentSymbolId(), candidates);
     }
 
     public registerRequestsContainerSymbol(): string {
