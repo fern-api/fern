@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../generators-yml.schema.json
+
+readme:
+  apiName: "CustomName"
+  disabledFeatures:
+    - "contributing"
+    - "fern-shield"
