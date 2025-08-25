@@ -7,10 +7,25 @@ public final class UserClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func createUsername(request: CreateUsernameRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func createUsername(tags: [String], request: CreateUsernameRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/user/username",
+            queryParams: [
+                "tags": .stringArray(tags)
+            ],
+            body: request,
+            requestOptions: requestOptions
+        )
+    }
+
+    public func createUsernameWithReferencedType(tags: [String], request: CreateUsernameBody, requestOptions: RequestOptions? = nil) async throws -> Void {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/user/username-referenced",
+            queryParams: [
+                "tags": .stringArray(tags)
+            ],
             body: request,
             requestOptions: requestOptions
         )

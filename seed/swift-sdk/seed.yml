@@ -27,6 +27,12 @@ defaultOutputMode: github
 defaultCustomConfig: {}
 
 fixtures:
+  client-side-params:
+    - customConfig:
+        clientClassName: MyCustomClient
+      outputFolder: with-custom-config
+    - customConfig: null
+      outputFolder: no-custom-config
   pagination:
     - customConfig: null
       outputFolder: no-custom-config
@@ -37,3 +43,9 @@ fixtures:
         custom-pager-name: MyPager
         include-exception-handler: true
       outputFolder: custom-pager-with-exception-handler
+  single-url-environment-default:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        environmentEnumName: MyCustomEnvironment
+      outputFolder: with-custom-config
