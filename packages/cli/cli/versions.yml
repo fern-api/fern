@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Add support for readme config for API Name and disabled features list.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-25"
+  version: 0.66.24
+
+- changelogEntry:
     - summary: Add support for `const` JSON schema keyword, which parses to a single-valued enum.
       type: feat
   irVersion: 59

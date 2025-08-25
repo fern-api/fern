@@ -18,6 +18,8 @@ export interface ReadmeConfig {
     bannerLink: string | undefined;
     introduction: string | undefined;
     apiReferenceLink: string | undefined;
+    apiName: string | undefined;
+    disabledFeatures: Set<FernIr.FeatureId> | undefined;
     /**
      * If specified, configures the list of endpoints to associate
      * with each feature.
