@@ -26,15 +26,12 @@ export class SdkGeneratorContext extends AbstractSwiftGeneratorContext<SdkCustom
     }
 
     public getSPMDetails() {
-        if (this.ir.publishConfig?.type !== "github" || this.ir.publishConfig.repo == null) {
-            return undefined;
-        }
-        if (this.ir.dynamic?.generatorConfig?.outputConfig.type !== "publish") {
-            return undefined;
-        }
         return {
-            gitUrl: this.ir.publishConfig.repo,
-            minVersion: this.ir.dynamic.generatorConfig.outputConfig.value.version
+            gitUrl: (this.ir.publishConfig?.type === "github" && this.ir.publishConfig?.repo) || null,
+            minVersion:
+                (this.ir.dynamic?.generatorConfig?.outputConfig.type === "publish" &&
+                    this.ir.dynamic?.generatorConfig?.outputConfig.value.version) ||
+                null
         };
     }
 

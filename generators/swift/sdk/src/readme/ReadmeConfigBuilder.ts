@@ -57,7 +57,10 @@ export class ReadmeConfigBuilder {
     private getLanguageInfo(context: SdkGeneratorContext): FernGeneratorCli.LanguageInfo {
         const spmDetails = context.getSPMDetails();
         return FernGeneratorCli.LanguageInfo.swift({
-            publishInfo: spmDetails ?? undefined
+            publishInfo: {
+                gitUrl: spmDetails?.gitUrl ?? "<git-url>",
+                minVersion: spmDetails?.minVersion ?? "0.1.0"
+            }
         });
     }
 }
