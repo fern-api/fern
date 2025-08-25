@@ -7,21 +7,21 @@ import (
 	customauth "github.com/custom-auth/fern/customauth"
 	internal "github.com/custom-auth/fern/internal"
 	option "github.com/custom-auth/fern/option"
-	http "net/http"
 )
 
 type Client struct {
 	CustomAuth *customauth.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		CustomAuth: customauth.NewClient(opts...),
+		CustomAuth: customauth.NewClient(options),
+		options:    options,
 		baseURL:    options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -29,6 +29,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

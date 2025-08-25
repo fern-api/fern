@@ -21,6 +21,10 @@ This SDK requires:
 dotnet add package SeedExamples
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:

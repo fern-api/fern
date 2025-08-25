@@ -8,7 +8,6 @@ import (
 	internal "github.com/any-auth/fern/internal"
 	option "github.com/any-auth/fern/option"
 	user "github.com/any-auth/fern/user"
-	http "net/http"
 	os "os"
 )
 
@@ -16,9 +15,9 @@ type Client struct {
 	Auth *auth.Client
 	User *user.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -30,8 +29,9 @@ func NewClient(opts ...option.RequestOption) *Client {
 		options.ApiKey = os.Getenv("MY_API_KEY")
 	}
 	return &Client{
-		Auth:    auth.NewClient(opts...),
-		User:    user.NewClient(opts...),
+		Auth:    auth.NewClient(options),
+		User:    user.NewClient(options),
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -39,6 +39,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

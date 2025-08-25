@@ -15,6 +15,10 @@ This SDK requires:
 dotnet add package SeedRequestParameters
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:
@@ -26,6 +30,7 @@ var client = new SeedRequestParametersClient();
 await client.User.CreateUsernameAsync(
     new CreateUsernameRequest
     {
+        Tags = new List<string>() { "tags", "tags" },
         Username = "username",
         Password = "password",
         Name = "test",

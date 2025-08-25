@@ -7,7 +7,7 @@ public final class AuthClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getTokenWithClientCredentials(request: GetTokenRequest, requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
+    public func getTokenWithClientCredentials(request: Requests.GetTokenRequest, requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/token",
@@ -17,7 +17,7 @@ public final class AuthClient: Sendable {
         )
     }
 
-    public func refreshToken(request: RefreshTokenRequest, requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
+    public func refreshToken(request: Requests.RefreshTokenRequest, requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/token",

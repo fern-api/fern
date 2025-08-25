@@ -7,24 +7,22 @@ import (
 	cclient "github.com/folders/fern/a/c/client"
 	core "github.com/folders/fern/core"
 	internal "github.com/folders/fern/internal"
-	option "github.com/folders/fern/option"
-	http "net/http"
 )
 
 type Client struct {
 	B *client.Client
 	C *cclient.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
-func NewClient(opts ...option.RequestOption) *Client {
-	options := core.NewRequestOptions(opts...)
+func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
-		B:       client.NewClient(opts...),
-		C:       cclient.NewClient(opts...),
+		B:       client.NewClient(options),
+		C:       cclient.NewClient(options),
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -32,6 +30,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

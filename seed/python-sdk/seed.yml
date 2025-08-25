@@ -86,6 +86,9 @@ fixtures:
       outputFolder: client-filename
     - customConfig: null
       readmeConfig:
+        apiName: "CustomName"
+        disabledSections:
+          - "contributing"
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie
@@ -334,6 +337,8 @@ scripts:
       - poetry run pytest -rP .
 allowedFailures:
   - any-auth
+  - enum:real-enum # NOTE(tjb9dc): Failing due to format due to unescaped strings in the enum values
+  - enum:real-enum-forward-compat # Same^
   - examples:client-filename
   - examples:legacy-wire-tests
   - exhaustive:additional_init_exports

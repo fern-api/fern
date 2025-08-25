@@ -8,23 +8,22 @@ import (
 	service "github.com/folders/fern/folder/service"
 	internal "github.com/folders/fern/internal"
 	option "github.com/folders/fern/option"
-	http "net/http"
 )
 
 type Client struct {
 	WithRawResponse *RawClient
 	Service         *service.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
-func NewClient(opts ...option.RequestOption) *Client {
-	options := core.NewRequestOptions(opts...)
+func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
-		Service:         service.NewClient(opts...),
+		Service:         service.NewClient(options),
 		WithRawResponse: NewRawClient(options),
+		options:         options,
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -32,7 +31,6 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 

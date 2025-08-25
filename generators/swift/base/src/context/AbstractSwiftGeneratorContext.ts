@@ -56,15 +56,22 @@ export abstract class AbstractSwiftGeneratorContext<
      * finally subclient symbols last since they're unlikely to be used directly by end users.
      */
     private registerSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
-        project.symbolRegistry.registerRootClientSymbol(ir.apiName.pascalCase.unsafeName);
-        project.symbolRegistry.registerEnvironmentSymbol(ir.apiName.pascalCase.unsafeName);
+        project.symbolRegistry.registerRootClientSymbol(
+            ir.apiName.pascalCase.unsafeName,
+            this.customConfig.clientClassName
+        );
+        project.symbolRegistry.registerEnvironmentSymbol(
+            ir.apiName.pascalCase.unsafeName,
+            this.customConfig.environmentEnumName
+        );
         Object.entries(ir.types).forEach(([typeId, typeDeclaration]) => {
             project.symbolRegistry.registerSchemaTypeSymbol(typeId, typeDeclaration.name.name.pascalCase.unsafeName);
         });
+        project.symbolRegistry.registerRequestsContainerSymbol();
         Object.entries(ir.services).forEach(([_, service]) => {
             service.endpoints.forEach((endpoint) => {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
-                    project.symbolRegistry.registerInlineRequestTypeSymbol(
+                    project.symbolRegistry.registerRequestTypeSymbol(
                         endpoint.id,
                         endpoint.requestBody.name.pascalCase.unsafeName
                     );
@@ -92,12 +99,16 @@ export abstract class AbstractSwiftGeneratorContext<
         return this.ir.apiName.pascalCase.unsafeName;
     }
 
-    public get schemasDirectory(): RelativeFilePath {
-        return RelativeFilePath.of("Schemas");
-    }
-
     public get requestsDirectory(): RelativeFilePath {
         return RelativeFilePath.of("Requests");
+    }
+
+    public get resourcesDirectory(): RelativeFilePath {
+        return RelativeFilePath.of("Resources");
+    }
+
+    public get schemasDirectory(): RelativeFilePath {
+        return RelativeFilePath.of("Schemas");
     }
 
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
