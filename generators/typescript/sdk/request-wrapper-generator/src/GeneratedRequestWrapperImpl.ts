@@ -860,7 +860,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         }
 
         for (const property of typeDeclaration.shape.properties) {
-            const propertyType = context.type.getReferenceToType(property.valueType);
+            const propertyType = this.flattenRequestParameters
+                ? this.createNamespacedPropertyType(property, context)
+                : context.type.getReferenceToType(property.valueType);
             const hasDefaultValue = this.hasDefaultValue(property.valueType, context);
             const propertyName = this.getPropertyNameOfTypeDeclarationProperty(property);
 
@@ -876,5 +878,20 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         }
 
         return properties;
+    }
+
+    private createNamespacedPropertyType(
+        property: ObjectProperty,
+        context: SdkContext
+    ): TypeReferenceNode {
+        // Use getReferenceToTypeForInlineUnion to get the fully expanded inline type definition
+        // This gives us the actual structure (e.g., { headers?: Record<string, string>; url: string; })
+        // instead of a reference (e.g., SeedRequestParameters.CreateAgentRequestConfigurationEndpoint)
+        const unionType = context.type.getReferenceToTypeForInlineUnion(property.valueType);
+        return {
+            typeNode: unionType.typeNode,
+            typeNodeWithoutUndefined: unionType.typeNodeWithoutUndefined,
+            isOptional: unionType.isOptional
+        };
     }
 }

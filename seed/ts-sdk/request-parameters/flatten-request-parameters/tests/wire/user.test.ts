@@ -44,6 +44,71 @@ describe("User", () => {
         expect(response).toEqual(undefined);
     });
 
+    test("createAgent", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedRequestParametersClient({ environment: server.baseUrl });
+        const rawRequestBody = {
+            audio_speed: 1,
+            boosted_keywords: ["Load ID", "dispatch"],
+            configuration_endpoint: {
+                headers: { Authorization: "Bearer token123" },
+                timeout_ms: 7000,
+                url: "https://api.example.com/config",
+            },
+            name: "support-agent",
+            no_input_poke_sec: 30,
+            no_input_poke_text: "Are you still there?",
+            phone_number: "assign-automatically",
+            system_prompt: "You are an expert in {{subject}}. Be friendly, helpful and concise.",
+            template_variables: { customer_name: {}, subject: { default_value: "Chess" } },
+            timezone: "America/Los_Angeles",
+            tools: ["keypad_input"],
+            voice_id: "sarah",
+            welcome_message: "Hi {{customer_name}}. How can I help you today?",
+        };
+        const rawResponseBody = { id: "agent_12cf6e88-c254-4d3e-a149-a7f1bdd22783", name: "support-agent" };
+        server
+            .mockEndpoint()
+            .post("/user/agents")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.user.createAgent({
+            project: "main",
+            audio_speed: 1,
+            boosted_keywords: ["Load ID", "dispatch"],
+            configuration_endpoint: {
+                headers: {
+                    Authorization: "Bearer token123",
+                },
+                timeout_ms: 7000,
+                url: "https://api.example.com/config",
+            },
+            name: "support-agent",
+            no_input_poke_sec: 30,
+            no_input_poke_text: "Are you still there?",
+            phone_number: "assign-automatically",
+            system_prompt: "You are an expert in {{subject}}. Be friendly, helpful and concise.",
+            template_variables: {
+                customer_name: {},
+                subject: {
+                    default_value: "Chess",
+                },
+            },
+            timezone: "America/Los_Angeles",
+            tools: ["keypad_input"],
+            voice_id: "sarah",
+            welcome_message: "Hi {{customer_name}}. How can I help you today?",
+        });
+        expect(response).toEqual({
+            id: "agent_12cf6e88-c254-4d3e-a149-a7f1bdd22783",
+            name: "support-agent",
+        });
+    });
+
     test("getUsername", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedRequestParametersClient({ environment: server.baseUrl });

@@ -189,6 +189,109 @@ export class User {
     }
 
     /**
+     * Creates a new agent in a project.
+     *
+     * @param {SeedRequestParameters.AgentsCreateRequest} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.createAgent({
+     *         project: "main",
+     *         body: {
+     *             audio_speed: 1,
+     *             boosted_keywords: ["Load ID", "dispatch"],
+     *             configuration_endpoint: {
+     *                 headers: {
+     *                     "Authorization": "Bearer token123"
+     *                 },
+     *                 timeout_ms: 7000,
+     *                 url: "https://api.example.com/config"
+     *             },
+     *             name: "support-agent",
+     *             no_input_poke_sec: 30,
+     *             no_input_poke_text: "Are you still there?",
+     *             phone_number: "assign-automatically",
+     *             system_prompt: "You are an expert in {{subject}}. Be friendly, helpful and concise.",
+     *             template_variables: {
+     *                 "customer_name": {},
+     *                 "subject": {
+     *                     default_value: "Chess"
+     *                 }
+     *             },
+     *             timezone: "America/Los_Angeles",
+     *             tools: ["keypad_input"],
+     *             voice_id: "sarah",
+     *             welcome_message: "Hi {{customer_name}}. How can I help you today?"
+     *         }
+     *     })
+     */
+    public createAgent(
+        request: SeedRequestParameters.AgentsCreateRequest,
+        requestOptions?: User.RequestOptions,
+    ): core.HttpResponsePromise<SeedRequestParameters.AgentsCreateResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__createAgent(request, requestOptions));
+    }
+
+    private async __createAgent(
+        request: SeedRequestParameters.AgentsCreateRequest,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedRequestParameters.AgentsCreateResponse>> {
+        const { project, body: _body } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        if (project != null) {
+            _queryParams["project"] = project;
+        }
+
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/user/agents",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            requestType: "json",
+            body: _body,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as SeedRequestParameters.AgentsCreateResponse,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedRequestParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedRequestParametersError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedRequestParametersTimeoutError("Timeout exceeded when calling POST /user/agents.");
+            case "unknown":
+                throw new errors.SeedRequestParametersError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
      * @param {SeedRequestParameters.GetUsersRequest} request
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *

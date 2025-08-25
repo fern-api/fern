@@ -14,6 +14,134 @@ types:
       name:
         type: string
         default: 'test'
+  AgentsCreateResponse:
+    properties:
+      id:
+        docs: The ID of the created agent.
+        type: string
+      name:
+        docs: The name of the created agent.
+        type: string
+  CreateAgentRequest:
+    properties:
+      audio_format:
+        default: pcm_44100
+        docs: The audio format of the agent.
+        type: optional<CreateAgentRequestAudioFormat>
+      audio_speed:
+        default: 1
+        docs: The audio speed of the agent.
+        type: optional<double>
+        validation:
+          max: 1.5
+          min: 0.5
+          multipleOf: 0.1
+      boosted_keywords:
+        docs: >-
+          These words, or short phrases, will be more accurately recognized by
+          the agent.
+        type: optional<list<string>>
+      configuration_endpoint:
+        docs: >-
+          When not `null`, at the beginning of the conversation the agent will
+          make a POST request to this endpoint when to get configuration
+          options.
+        type: optional<CreateAgentRequestConfigurationEndpoint>
+      name:
+        docs: >-
+          The name of the agent. Can only contain lowercase letters, numbers and
+          hyphens. Must be unique within the project.
+        type: string
+      no_input_end_conversation_sec:
+        default: 180
+        docs: Seconds of silence before ending the conversation.
+        type: optional<integer>
+      no_input_poke_sec:
+        default: 180
+        docs: >-
+          Number of seconds of silence before sending a poke message. `null`
+          disables the poke message.
+        type: optional<integer>
+      no_input_poke_text:
+        default: Are you still there?
+        docs: The message to send after the specified silence.
+        type: optional<string>
+      phone_number: optional<literal<"assign-automatically">>
+      system_prompt:
+        default: Respond in 1-2 sentences.
+        docs: >-
+          Instructions for the conversation. Can contain template variables like
+          `{{subject}}`.
+        type: optional<string>
+      tasks:
+        docs: Array of task objects with `name` and `description` fields.
+        type: optional<list<Task>>
+      template_variables:
+        docs: >-
+          Variables that can be used in the welcome message and the system
+          prompt.
+        type: optional<map<string, CreateAgentRequestTemplateVariablesValue>>
+      timezone:
+        docs: >-
+          The timezone of the agent. Used to format system variables like
+          `{{system_time}}`.
+        type: optional<string>
+      tools:
+        docs: Array of built-in or custom tool names to use.
+        type: optional<list<CreateAgentRequestToolsItem>>
+      voice_id:
+        default: grant
+        docs: The voice ID to use.
+        type: optional<string>
+      welcome_message:
+        default: ''
+        docs: >-
+          Message to play when the conversation starts. Can contain template
+          variables like `{{customer_name}}`.
+        type: optional<string>
+  CreateAgentRequestAudioFormat:
+    default: pcm_44100
+    docs: The audio format of the agent.
+    enum:
+      - pcm_44100
+      - mulaw_8000
+    inline: true
+  CreateAgentRequestConfigurationEndpoint:
+    docs: >-
+      When not `null`, at the beginning of the conversation the agent will make
+      a POST request to this endpoint when to get configuration options.
+    inline: true
+    properties:
+      headers:
+        docs: Object of key-value pairs.
+        type: optional<map<string, string>>
+      timeout_ms:
+        default: 3000
+        docs: Timeout in milliseconds for the endpoint call.
+        type: optional<integer>
+      url:
+        docs: URL to call
+        type: string
+  CreateAgentRequestTemplateVariablesValue:
+    inline: true
+    properties:
+      default_value: optional<string>
+  CreateAgentRequestToolsItem:
+    discriminated: false
+    inline: true
+    union:
+      - literal<"keypad_input">
+      - literal<"natural_conversation_ending">
+      - docs: Custom tool
+        type: string
+  Task:
+    properties:
+      description:
+        docs: The description of the task.
+        type: string
+      name:
+        docs: The name of the task.
+        type: string
 
 service:
   base-path: /user
@@ -43,6 +171,63 @@ service:
         query-parameters:
           tags:
             type: list<string>
+    createAgent:
+      auth: true
+      docs: Creates a new agent in a project.
+      # errors:
+      #   - root.BadRequestError
+      #   - root.UnauthorizedError
+      #   - root.NotFoundError
+      #   - root.InternalServerError
+      examples:
+        - name: Created agent response
+          query-parameters:
+            project: main
+          request:
+            audio_speed: 1
+            boosted_keywords:
+              - Load ID
+              - dispatch
+            configuration_endpoint:
+              headers:
+                Authorization: Bearer token123
+              timeout_ms: 7000
+              url: https://api.example.com/config
+            name: support-agent
+            no_input_poke_sec: 30
+            no_input_poke_text: Are you still there?
+            phone_number: assign-automatically
+            system_prompt: >-
+              You are an expert in {{subject}}. Be friendly, helpful and
+              concise.
+            template_variables:
+              customer_name: {}
+              subject:
+                default_value: Chess
+            timezone: America/Los_Angeles
+            tools:
+              - keypad_input
+            voice_id: sarah
+            welcome_message: Hi {{customer_name}}. How can I help you today?
+          response:
+            body:
+              id: agent_12cf6e88-c254-4d3e-a149-a7f1bdd22783
+              name: support-agent
+      method: POST
+      path: /agents
+      request:
+        body: CreateAgentRequest
+        content-type: application/json
+        name: AgentsCreateRequest
+        query-parameters:
+          project:
+            default: main
+            docs: The name of the project to create the agent in.
+            type: optional<string>
+      response:
+        docs: Success response
+        status-code: 201
+        type: AgentsCreateResponse
     getUsername:
       path: ''
       method: GET

@@ -24,6 +24,18 @@
         },
         {
             "id": {
+                "path": "/user/agents",
+                "method": "POST",
+                "identifier_override": "endpoint_user.createAgent"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedRequestParametersClient } from \"@fern/request-parameters\";\n\nconst client = new SeedRequestParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createAgent({\n    project: \"main\",\n    audio_speed: 1,\n    boosted_keywords: [\"Load ID\", \"dispatch\"],\n    configuration_endpoint: {\n        headers: {\n            \"Authorization\": \"Bearer token123\"\n        },\n        timeout_ms: 7000,\n        url: \"https://api.example.com/config\"\n    },\n    name: \"support-agent\",\n    no_input_poke_sec: 30,\n    no_input_poke_text: \"Are you still there?\",\n    phone_number: \"assign-automatically\",\n    system_prompt: \"You are an expert in {{subject}}. Be friendly, helpful and concise.\",\n    template_variables: {\n        \"customer_name\": {},\n        \"subject\": {\n            default_value: \"Chess\"\n        }\n    },\n    timezone: \"America/Los_Angeles\",\n    tools: [\"keypad_input\"],\n    voice_id: \"sarah\",\n    welcome_message: \"Hi {{customer_name}}. How can I help you today?\"\n});\n"
+            },
+            "example_identifier": "Created agent response"
+        },
+        {
+            "id": {
                 "path": "/user",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getUsername"
