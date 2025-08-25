@@ -1064,54 +1064,6 @@ await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object.<a href="/src/SeedExhaustive/Endpoints/Object/ObjectClient.cs">TestIntegerOverflowEdgeCasesAsync</a>(Types.Object.ObjectWithOptionalField { ... }) -> Types.Object.ObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```csharp
-await client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(
-    new ObjectWithOptionalField
-    {
-        String = "boundary-test",
-        Integer = 2147483647,
-        Double = 1.7976931348623157e+308,
-        Bool = true,
-    }
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `Types.Object.ObjectWithOptionalField` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## Endpoints Params
 <details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithPathAsync</a>(param) -> string</code></summary>
 <dl>
