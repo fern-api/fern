@@ -38,6 +38,7 @@ export class GoValueFormatter {
         let prefix: go.AstNode | undefined;
         let suffix: go.AstNode | undefined;
         let unwrapPrefix: go.AstNode | undefined;
+        let unwrapSuffix: go.AstNode | undefined;
         let isOptional = false;
         let isPrimitive = false;
 
@@ -49,7 +50,7 @@ export class GoValueFormatter {
             if (this.context.needsOptionalDereference(reference)) {
                 if (enumType != null) {
                     unwrapPrefix = go.codeblock("string(*");
-                    suffix = go.codeblock(")");
+                    unwrapSuffix = go.codeblock(")");
                 } else {
                     unwrapPrefix = go.codeblock("*");
                 }
@@ -57,7 +58,7 @@ export class GoValueFormatter {
             isOptional = true;
         } else if (enumType != null) {
             unwrapPrefix = go.codeblock("string(");
-            suffix = go.codeblock(")");
+            unwrapSuffix = go.codeblock(")");
         }
 
         // define prefix
@@ -123,15 +124,22 @@ export class GoValueFormatter {
 
         // merge the two
         if (unwrapPrefix) {
-            if (prefix) {
-                const origPrefix = prefix;
-                prefix = go.codeblock((writer) => {
-                    writer.writeNode(origPrefix);
-                    writer.writeNode(unwrapPrefix);
-                });
-            } else {
-                prefix = unwrapPrefix;
-            }
+            const origPrefix = prefix;
+            prefix = origPrefix
+                ? go.codeblock((writer) => {
+                      writer.writeNode(origPrefix);
+                      writer.writeNode(unwrapPrefix);
+                  })
+                : unwrapPrefix;
+        }
+        if (unwrapSuffix) {
+            const origSuffix = suffix;
+            suffix = origSuffix
+                ? go.codeblock((writer) => {
+                      writer.writeNode(unwrapSuffix);
+                      writer.writeNode(origSuffix);
+                  })
+                : unwrapSuffix;
         }
 
         return {
