@@ -29,7 +29,12 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
-print("Hello, world!")
+import Foundation
+import Websocket
+
+try await client.doSomething(
+
+)
 ```
 
 ## Contributing
