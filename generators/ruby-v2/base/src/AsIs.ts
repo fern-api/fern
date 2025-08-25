@@ -1,5 +1,3 @@
-import { utimes } from "fs";
-
 export const AsIsFiles = {
     ModelField: "types/model/field.Template.rb",
     Model: "types/model.Template.rb",

@@ -10,7 +10,6 @@ import (
 	nestednoauthclient "github.com/oauth-client-credentials-nested-root/fern/nestednoauth/client"
 	option "github.com/oauth-client-credentials-nested-root/fern/option"
 	simple "github.com/oauth-client-credentials-nested-root/fern/simple"
-	http "net/http"
 )
 
 type Client struct {
@@ -19,18 +18,19 @@ type Client struct {
 	Nested       *nestedclient.Client
 	Simple       *simple.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		Auth:         client.NewClient(opts...),
-		NestedNoAuth: nestednoauthclient.NewClient(opts...),
-		Nested:       nestedclient.NewClient(opts...),
-		Simple:       simple.NewClient(opts...),
+		Auth:         client.NewClient(options),
+		NestedNoAuth: nestednoauthclient.NewClient(options),
+		Nested:       nestedclient.NewClient(options),
+		Simple:       simple.NewClient(options),
+		options:      options,
 		baseURL:      options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -38,6 +38,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

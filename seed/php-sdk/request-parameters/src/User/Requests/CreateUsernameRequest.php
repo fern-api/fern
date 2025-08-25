@@ -8,6 +8,11 @@ use Seed\Core\Json\JsonProperty;
 class CreateUsernameRequest extends JsonSerializableType
 {
     /**
+     * @var array<string> $tags
+     */
+    public array $tags;
+
+    /**
      * @var string $username
      */
     #[JsonProperty('username')]
@@ -27,6 +32,7 @@ class CreateUsernameRequest extends JsonSerializableType
 
     /**
      * @param array{
+     *   tags: array<string>,
      *   username: string,
      *   password: string,
      *   name: string,
@@ -35,6 +41,7 @@ class CreateUsernameRequest extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
+        $this->tags = $values['tags'];
         $this->username = $values['username'];
         $this->password = $values['password'];
         $this->name = $values['name'];

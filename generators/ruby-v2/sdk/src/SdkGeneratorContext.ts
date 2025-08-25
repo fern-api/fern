@@ -7,6 +7,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     HttpService,
     IntermediateRepresentation,
+    Name,
     ServiceId,
     Subpackage,
     SubpackageId,
@@ -45,6 +46,14 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             ...this.snakeNames(typeDeclaration).map(RelativeFilePath.of),
             RelativeFilePath.of(this.typesDirName)
         );
+    }
+
+    public getClassReferenceForTypeId(typeId: TypeId): ruby.ClassReference {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return ruby.classReference({
+            modules: this.getModuleNamesForTypeId(typeId),
+            name: typeDeclaration.name.name.pascalCase.safeName
+        });
     }
 
     public getFileNameForTypeId(typeId: TypeId): string {
@@ -137,6 +146,14 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         });
     }
 
+    public getDefaultEnvironmentClassReference(): ruby.ClassReference {
+        const defaultEnvironmentName = this.ir.environments?.defaultEnvironment ?? "SANDBOX";
+        return ruby.classReference({
+            name: defaultEnvironmentName,
+            modules: [this.getRootModule().name, "Environment"]
+        });
+    }
+
     public getRootClientClassName(): string {
         return `Client`;
     }
@@ -145,6 +162,13 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return ruby.classReference({
             name: "Request",
             modules: [this.getRootModule().name, "Internal", "JSON"]
+        });
+    }
+
+    public getReferenceToInternalMultipartRequest(): ruby.ClassReference {
+        return ruby.classReference({
+            name: "Request",
+            modules: [this.getRootModule().name, "Internal", "Multipart"]
         });
     }
 
@@ -157,6 +181,25 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
                 ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName),
                 "Types"
             ]
+        });
+    }
+
+    public getModuleNamesForServiceId(serviceId: ServiceId): string[] {
+        return [
+            this.getRootModule().name,
+            ...this.getSubpackageForServiceId(serviceId).fernFilepath.allParts.map((part) => part.pascalCase.safeName),
+            this.getTypesModule().name
+        ];
+    }
+
+    public getModulesForServiceId(serviceId: ServiceId): ruby.Module_[] {
+        return this.getModuleNamesForServiceId(serviceId).map((part) => ruby.module({ name: part }));
+    }
+
+    public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): ruby.ClassReference {
+        return ruby.classReference({
+            name: requestName.pascalCase.safeName,
+            modules: this.getModuleNamesForServiceId(serviceId)
         });
     }
 

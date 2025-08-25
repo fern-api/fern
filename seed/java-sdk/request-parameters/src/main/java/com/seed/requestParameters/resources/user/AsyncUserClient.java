@@ -5,6 +5,7 @@ package com.seed.requestParameters.resources.user;
 
 import com.seed.requestParameters.core.ClientOptions;
 import com.seed.requestParameters.core.RequestOptions;
+import com.seed.requestParameters.resources.user.requests.CreateUsernameReferencedRequest;
 import com.seed.requestParameters.resources.user.requests.CreateUsernameRequest;
 import com.seed.requestParameters.resources.user.requests.GetUsersRequest;
 import com.seed.requestParameters.resources.user.types.User;
@@ -33,6 +34,17 @@ public class AsyncUserClient {
 
     public CompletableFuture<Void> createUsername(CreateUsernameRequest request, RequestOptions requestOptions) {
         return this.rawClient.createUsername(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> createUsernameWithReferencedType(CreateUsernameReferencedRequest request) {
+        return this.rawClient.createUsernameWithReferencedType(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> createUsernameWithReferencedType(
+            CreateUsernameReferencedRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .createUsernameWithReferencedType(request, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<User> getUsername(GetUsersRequest request) {

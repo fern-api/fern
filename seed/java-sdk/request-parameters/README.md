@@ -42,6 +42,8 @@ package com.example.usage;
 
 import com.seed.requestParameters.SeedRequestParametersClient;
 import com.seed.requestParameters.resources.user.requests.CreateUsernameRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Example {
     public static void main(String[] args) {
@@ -52,6 +54,11 @@ public class Example {
         client.user().createUsername(
             CreateUsernameRequest
                 .builder()
+                .tags(
+                    new ArrayList<String>(
+                        Arrays.asList("tags", "tags")
+                    )
+                )
                 .username("username")
                 .password("password")
                 .name("test")
@@ -150,6 +157,32 @@ client.user().createUsername(
     RequestOptions
         .builder()
         .timeout(10)
+        .build()
+);
+```
+
+### Custom Headers
+
+The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
+
+```java
+import com.seed.requestParameters.SeedRequestParametersClient;
+import com.seed.requestParameters.core.RequestOptions;
+
+// Client level
+SeedRequestParametersClient client = SeedRequestParametersClient
+    .builder()
+    .addHeader("X-Custom-Header", "custom-value")
+    .addHeader("X-Request-Id", "abc-123")
+    .build();
+;
+
+// Request level
+client.user().createUsername(
+    ...,
+    RequestOptions
+        .builder()
+        .addHeader("X-Request-Header", "request-value")
         .build()
 );
 ```

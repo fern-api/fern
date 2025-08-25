@@ -1,6 +1,6 @@
 import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 
-import { PrimitiveTypeV1, SdkRequest, SingleUnionType, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
+import { PrimitiveTypeV1, SdkRequest, SingleUnionType, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { AbstractTypescriptMcpGeneratorContext } from "./AbstractTypescriptMcpGeneratorContext";
 

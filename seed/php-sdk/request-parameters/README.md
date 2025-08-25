@@ -30,6 +30,10 @@ use Seed\User\Requests\CreateUsernameRequest;
 $client = new SeedClient();
 $client->user->createUsername(
     new CreateUsernameRequest([
+        'tags' => [
+            'tags',
+            'tags',
+        ],
         'username' => 'username',
         'password' => 'password',
         'name' => 'test',

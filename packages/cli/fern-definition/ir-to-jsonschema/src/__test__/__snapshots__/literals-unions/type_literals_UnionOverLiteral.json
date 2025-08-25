@@ -1,0 +1,15 @@
+{
+  "anyOf": [
+    {
+      "type": "string"
+    },
+    {
+      "$ref": "#/definitions/literals.LiteralString"
+    }
+  ],
+  "definitions": {
+    "literals.LiteralString": {
+      "const": "literally"
+    }
+  }
+}

@@ -55,7 +55,7 @@ export class Service {
         request: string,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -119,7 +119,7 @@ export class Service {
         request: string,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -183,7 +183,7 @@ export class Service {
         request: string,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedResponseProperty.StringResponse>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -247,7 +247,7 @@ export class Service {
         request: string,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -311,7 +311,7 @@ export class Service {
         request: string,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedResponseProperty.Response | undefined>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -378,7 +378,7 @@ export class Service {
         request: string,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedResponseProperty.OptionalWithDocs | undefined>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -445,7 +445,7 @@ export class Service {
         request: string,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedResponseProperty.OptionalStringResponse | undefined>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??

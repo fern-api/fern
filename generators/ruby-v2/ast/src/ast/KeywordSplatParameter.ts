@@ -1,5 +1,3 @@
-import { AbstractWriter } from "@fern-api/browser-compatible-base-generator";
-
 import { AstNode } from "../ruby";
 import { Writer } from "./core/Writer";
 import { Parameter } from "./Parameter";

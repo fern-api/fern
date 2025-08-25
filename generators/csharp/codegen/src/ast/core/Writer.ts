@@ -159,7 +159,7 @@ ${this.buffer}`;
             // Filter out the current namespace.
             .filter((ns) => !this.isCurrentNamespace(ns))
             .filter((ns) => !isNamespaceImplicit(ns)) // System is implicitly imported
-            .map((ref) => `using ${ref};`)
+            .map((ref) => `using ${this.references[ref]?.some((each) => each?.global) ? "global::" : ""}${ref};`)
             .join("\n");
 
         if (result.length > 0) {

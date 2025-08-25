@@ -8,23 +8,23 @@ import (
 	internal "github.com/multi-url-environment-no-default/fern/internal"
 	option "github.com/multi-url-environment-no-default/fern/option"
 	s3 "github.com/multi-url-environment-no-default/fern/s3"
-	http "net/http"
 )
 
 type Client struct {
 	Ec2 *ec2.Client
 	S3  *s3.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		Ec2:     ec2.NewClient(opts...),
-		S3:      s3.NewClient(opts...),
+		Ec2:     ec2.NewClient(options),
+		S3:      s3.NewClient(options),
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -32,6 +32,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

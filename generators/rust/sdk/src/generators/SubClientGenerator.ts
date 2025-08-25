@@ -5,7 +5,6 @@ import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 
 import {
     ApiAuth,
-    AuthScheme,
     CursorPagination,
     HttpEndpoint,
     HttpRequestBody,

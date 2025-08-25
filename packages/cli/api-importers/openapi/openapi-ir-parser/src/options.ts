@@ -38,6 +38,8 @@ export interface ParseOpenAPIOptions {
     useBytesForBinaryResponse: boolean;
     /* Whether or not to respect forward compatible enums in OpenAPI specifications. */
     respectForwardCompatibleEnums: boolean;
+    /* Whether or not to inline allOf schemas. */
+    inlineAllOfSchemas: boolean;
 
     /* The filter to apply to the OpenAPI document. */
     filter: generatorsYml.OpenApiFilterSchema | undefined;
@@ -88,7 +90,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     respectForwardCompatibleEnums: false,
     additionalPropertiesDefaultsTo: false,
     typeDatesAsStrings: true,
-    preserveSingleSchemaOneOf: false
+    preserveSingleSchemaOneOf: false,
+    inlineAllOfSchemas: false
 };
 
 export function getParseOptions({
@@ -169,6 +172,10 @@ export function getParseOptions({
         preserveSingleSchemaOneOf:
             overrides?.preserveSingleSchemaOneOf ??
             options?.preserveSingleSchemaOneOf ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.preserveSingleSchemaOneOf
+            DEFAULT_PARSE_OPENAPI_SETTINGS.preserveSingleSchemaOneOf,
+        inlineAllOfSchemas:
+            overrides?.inlineAllOfSchemas ??
+            options?.inlineAllOfSchemas ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.inlineAllOfSchemas
     };
 }

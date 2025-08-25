@@ -80,7 +80,7 @@ public final class UndiscriminatedUnionTypeWithAliasMapVariant {
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(
                         value, new TypeReference<Map<AliasVariantType, OtherAliasVariantType>>() {}));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }
