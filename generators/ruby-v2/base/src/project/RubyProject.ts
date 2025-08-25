@@ -392,7 +392,7 @@ class VersionFile {
     public toString(): string {
         const seedName = this.context.getRootModule().name;
         const version = this.context.getVersionFromConfig();
-        this.context.logger.debug("this.config", JSON.stringify(this.context.config, null, 2));
+
         return dedent`
             # frozen_string_literal: true
 
