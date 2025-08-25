@@ -4,8 +4,7 @@ import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
     context "context"
-    types "github.com/exhaustive/fern/types"
-    fern "github.com/exhaustive/fern"
+    endpoints "github.com/exhaustive/fern/endpoints"
 )
 
 func do() {
@@ -17,21 +16,11 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Object.TestIntegerOverflowEdgeCases(
+    client.Endpoints.Params.GetWithPathAndQuery(
         context.TODO(),
-        &types.ObjectWithOptionalField{
-            String: fern.String(
-                "large-negative",
-            ),
-            Integer: fern.Int(
-                -1000000000000,
-            ),
-            Double: fern.Float64(
-                -1000000000000,
-            ),
-            Bool: fern.Bool(
-                true,
-            ),
+        "param",
+        &endpoints.GetWithPathAndQuery{
+            Query: "query",
         },
     )
 }
