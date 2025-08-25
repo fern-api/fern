@@ -2,8 +2,15 @@
 *
 
 # Only process YAML files
-!*.yml
-!*.yaml
+!**/*.yml
+!**/*.yaml
+
+# Ignore specific YAML files
+pnpm-lock.yaml
+yarn.lock
+package-lock.yaml
+*.lock.yaml
+*.lock.yml
 
 # Ignore specific directories and files
 node_modules/
