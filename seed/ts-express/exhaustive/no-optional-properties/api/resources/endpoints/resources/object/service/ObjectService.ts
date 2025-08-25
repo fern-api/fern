@@ -94,20 +94,6 @@ export interface ObjectServiceMethods {
         },
         next: express.NextFunction,
     ): void | Promise<void>;
-    testIntegerOverflowEdgeCases(
-        req: express.Request<
-            never,
-            SeedExhaustive.types.ObjectWithOptionalField,
-            SeedExhaustive.types.ObjectWithOptionalField,
-            never
-        >,
-        res: {
-            send: (responseBody: SeedExhaustive.types.ObjectWithOptionalField) => Promise<void>;
-            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
-            locals: any;
-        },
-        next: express.NextFunction,
-    ): void | Promise<void>;
 }
 
 export class ObjectService {
@@ -385,51 +371,6 @@ export class ObjectService {
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnNestedWithRequiredFieldAsList' unexpectedly threw ${error.constructor.name}.` +
-                                ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition.",
-                        );
-                        await error.send(res);
-                    } else {
-                        res.status(500).json("Internal Server Error");
-                    }
-                    next(error);
-                }
-            } else {
-                res.status(422).json({
-                    errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
-                    ),
-                });
-                next(request.errors);
-            }
-        });
-        this.router.post("/test-integer-overflow-edge-cases", async (req, res, next) => {
-            const request = serializers.types.ObjectWithOptionalField.parse(req.body);
-            if (request.ok) {
-                req.body = request.value;
-                try {
-                    await this.methods.testIntegerOverflowEdgeCases(
-                        req as any,
-                        {
-                            send: async (responseBody) => {
-                                res.json(
-                                    serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
-                                        unrecognizedObjectKeys: "strip",
-                                    }),
-                                );
-                            },
-                            cookie: res.cookie.bind(res),
-                            locals: res.locals,
-                        },
-                        next,
-                    );
-                    if (!res.writableEnded) {
-                        next();
-                    }
-                } catch (error) {
-                    if (error instanceof errors.SeedExhaustiveError) {
-                        console.warn(
-                            `Endpoint 'testIntegerOverflowEdgeCases' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
                                 " the endpoint's errors list in your Fern Definition.",
                         );
