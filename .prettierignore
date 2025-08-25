@@ -1,0 +1,21 @@
+# Ignore all files by default
+*
+
+# Only process YAML files
+!*.yml
+!*.yaml
+
+# Ignore specific directories and files
+node_modules/
+dist/
+lib/
+build/
+generated/
+.git/
+.husky/
+.github/
+.turbo/
+.vscode/
+__snapshots__/
+*.tempate.*
+*.template.*

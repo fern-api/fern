@@ -33,25 +33,11 @@
     "source.organizeImports.biome": "explicit",
     "source.fixAll.biome": "explicit"
   },
-  "editor.defaultFormatter": null,
-  "[typescript]": {
-    // Note: VSCode ignores this, but it's here to indicate biome should format Typescript.
-    "editor.defaultFormatter": "biomejs.biome",
-    "editor.formatOnSave": true
-  },
-  "[javascript]": {
-    // Note: VSCode ignores this, but it's here to indicate biome should format Javascript.
-    "editor.defaultFormatter": "biomejs.biome",
-    "editor.formatOnSave": true
-  },
-  "[json]": {
-    // Note: VSCode ignores this, but it's here to indicate biome should format JSON.
-    "editor.defaultFormatter": "biomejs.biome",
-    "editor.formatOnSave": true
-  },
+  // Note: VSCode ignores this, but it's here to indicate biome should be the default formatter.
+  "editor.defaultFormatter": "biomejs.biome",
   "[yaml]": {
+    // Biome doesn't support yaml formatting, so we use prettier instead
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
   },
   "python.analysis.typeCheckingMode": "basic",
   "dotnet.automaticallyCreateSolutionInWorkspace": false,
