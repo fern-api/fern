@@ -89,7 +89,6 @@ fixtures:
         apiName: "CustomName"
         disabledFeatures:
           - "contributing"
-          - "fern-shield"
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie
@@ -337,7 +336,7 @@ scripts:
       - poetry run mypy ./src ./tests
       - poetry run pytest -rP .
 allowedFailures:
-  - any-auth 
+  - any-auth
   - enum:real-enum # NOTE(tjb9dc): Failing due to format due to unescaped strings in the enum values
   - enum:real-enum-forward-compat # Same^
   - examples:client-filename

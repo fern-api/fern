@@ -59,7 +59,6 @@ fixtures:
         apiName: "CustomName"
         disabledFeatures:
           - "contributing"
-          - "fern-shield"
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /big-entity
