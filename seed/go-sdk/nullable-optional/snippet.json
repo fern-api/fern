@@ -1,0 +1,59 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/api/users",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.listUsers"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/nullable-optional/fern\"\n\tfernclient \"github.com/nullable-optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.NullableOptional.ListUsers(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersRequest{\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tOffset: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tIncludeDeleted: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tSortBy: fern.String(\n\t\t\t\"sortBy\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users",
+                "method": "POST",
+                "identifier_override": "endpoint_nullable-optional.createUser"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/nullable-optional/fern\"\n\tfernclient \"github.com/nullable-optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.NullableOptional.CreateUser(\n\tcontext.TODO(),\n\t\u0026fern.CreateUserRequest{\n\t\tUsername: \"username\",\n\t\tEmail: fern.String(\n\t\t\t\"email\",\n\t\t),\n\t\tPhone: fern.String(\n\t\t\t\"phone\",\n\t\t),\n\t\tAddress: \u0026fern.Address{\n\t\t\tStreet: \"street\",\n\t\t\tCity: fern.String(\n\t\t\t\t\"city\",\n\t\t\t),\n\t\t\tState: fern.String(\n\t\t\t\t\"state\",\n\t\t\t),\n\t\t\tZipCode: \"zipCode\",\n\t\t\tCountry: fern.String(\n\t\t\t\t\"country\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/search",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.searchUsers"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/nullable-optional/fern\"\n\tfernclient \"github.com/nullable-optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.NullableOptional.SearchUsers(\n\tcontext.TODO(),\n\t\u0026fern.SearchUsersRequest{\n\t\tQuery: \"query\",\n\t\tDepartment: fern.String(\n\t\t\t\"department\",\n\t\t),\n\t\tRole: fern.String(\n\t\t\t\"role\",\n\t\t),\n\t\tIsActive: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.getUser"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/nullable-optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.NullableOptional.GetUser(\n\tcontext.TODO(),\n\t\"userId\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_nullable-optional.updateUser"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/nullable-optional/fern\"\n\tfernclient \"github.com/nullable-optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.NullableOptional.UpdateUser(\n\tcontext.TODO(),\n\t\"userId\",\n\t\u0026fern.UpdateUserRequest{\n\t\tUsername: fern.String(\n\t\t\t\"username\",\n\t\t),\n\t\tEmail: fern.String(\n\t\t\t\"email\",\n\t\t),\n\t\tPhone: fern.String(\n\t\t\t\"phone\",\n\t\t),\n\t\tAddress: \u0026fern.Address{\n\t\t\tStreet: \"street\",\n\t\t\tCity: fern.String(\n\t\t\t\t\"city\",\n\t\t\t),\n\t\t\tState: fern.String(\n\t\t\t\t\"state\",\n\t\t\t),\n\t\t\tZipCode: \"zipCode\",\n\t\t\tCountry: fern.String(\n\t\t\t\t\"country\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        }
+    ]
+}
