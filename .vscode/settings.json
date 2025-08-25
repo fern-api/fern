@@ -44,7 +44,5 @@
   "dotnet.testWindow.disableAutoDiscovery": true,
   "dotnet.defaultSolution": "disable",
   "dotnet.projects.enableAutomaticRestore": false,
-  "cSpell.import": [
-    "cspell.json"
-  ]
+  "cSpell.import": ["cspell.json"]
 }
