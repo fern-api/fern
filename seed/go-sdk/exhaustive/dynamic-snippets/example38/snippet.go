@@ -15,8 +15,8 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Primitive.GetAndReturnDouble(
+    client.Endpoints.Put.Add(
         context.TODO(),
-        1.1,
+        "id",
     )
 }

@@ -15,9 +15,8 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Params.ModifyWithPath(
+    client.Endpoints.Primitive.GetAndReturnBool(
         context.TODO(),
-        "param",
-        "string",
+        true,
     )
 }
