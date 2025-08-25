@@ -18,7 +18,7 @@ import java.util.UUID;
 public final class PoetTypeNameMapper {
 
     private final AbstractPoetClassNameFactory poetClassNameFactory;
-private final TypeReferenceToTypeNameConverter primitiveDisAllowedTypeReferenceConverter =
+    private final TypeReferenceToTypeNameConverter primitiveDisAllowedTypeReferenceConverter =
             new TypeReferenceToTypeNameConverter(false);
     private final ContainerToTypeNameConverter containerToTypeNameConverter = new ContainerToTypeNameConverter();
     private final ICustomConfig customConfig;

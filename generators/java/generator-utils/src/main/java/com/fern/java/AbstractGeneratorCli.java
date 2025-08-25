@@ -1,4 +1,4 @@
-w\package com.fern.java;
+package com.fern.java;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

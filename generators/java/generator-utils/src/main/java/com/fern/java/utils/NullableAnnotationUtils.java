@@ -9,8 +9,7 @@ public final class NullableAnnotationUtils {
 
     private static final ClassName NULLABLE = ClassName.get("org.jetbrains.annotations", "Nullable");
 
-    private NullableAnnotationUtils() {
-    }
+    private NullableAnnotationUtils() {}
 
     /** Checks if a TypeReference is nullable<T> */
     public static boolean isNullableType(TypeReference typeReference) {

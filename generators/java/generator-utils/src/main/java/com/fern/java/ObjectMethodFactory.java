@@ -56,11 +56,9 @@ public class ObjectMethodFactory {
                                 .add("$L == $L.$L", fieldSpec.name, EqualsConstants.OTHER_PARAMETER, fieldSpec.name)
                                 .build();
                     } else {
-                        // Use Objects.equals for all non-primitive fields to handle null safely
                         return CodeBlock.builder()
                                 .add(
-                                        "$T.equals($L, $L.$L)",
-                                        Objects.class,
+                                        "$L.equals($L.$L)",
                                         fieldSpec.name,
                                         EqualsConstants.OTHER_PARAMETER,
                                         fieldSpec.name)
