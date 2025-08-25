@@ -124,7 +124,7 @@ export class GoValueFormatter {
         // merge the two
         if (unwrapPrefix) {
             if (prefix) {
-                const origPrefix = prefix
+                const origPrefix = prefix;
                 prefix = go.codeblock((writer) => {
                     writer.writeNode(origPrefix);
                     writer.writeNode(unwrapPrefix);
