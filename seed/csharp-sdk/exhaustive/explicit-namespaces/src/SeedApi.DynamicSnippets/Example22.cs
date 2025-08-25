@@ -1,6 +1,5 @@
 using global::System.Threading.Tasks;
 using SeedExhaustive;
-using SeedExhaustive.Types.Object;
 
 namespace Usage;
 
@@ -14,13 +13,8 @@ public class Example22
             }
         );
 
-        await client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(
-            new ObjectWithOptionalField{
-                String = "just-over-boundary",
-                Integer = 2147483648,
-                Double = 2,
-                Bool = false
-            }
+        await client.Endpoints.Params.GetWithPathAsync(
+            "param"
         );
     }
 
