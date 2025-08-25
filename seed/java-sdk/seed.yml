@@ -177,6 +177,13 @@ fixtures:
         client-class-name: BaseClient
         enable-extensible-builders: true
       outputFolder: extensible-builders
+  nullable-optional:
+    - customConfig:
+        use-nullable-annotation: true
+      outputFolder: with-nullable-annotation
+    - customConfig:
+        use-nullable-annotation: false
+      outputFolder: legacy
 scripts:
   - docker: fernapi/java-seed
     commands:

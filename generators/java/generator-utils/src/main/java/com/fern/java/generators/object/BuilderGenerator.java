@@ -329,7 +329,11 @@ public final class BuilderGenerator {
             EnrichedObjectPropertyWithField enrichedObjectProperty, ClassName returnClass) {
         Builder parameterSpecBuilder = ParameterSpec.builder(
                 enrichedObjectProperty.enrichedObjectProperty.poetTypeName(), enrichedObjectProperty.fieldSpec.name);
-        if (isNotNullableType(enrichedObjectProperty.enrichedObjectProperty.poetTypeName()) && builderNotNullChecks) {
+        boolean isNullableField = enrichedObjectProperty.enrichedObjectProperty.nullable()
+                || enrichedObjectProperty.enrichedObjectProperty.aliasOfNullable();
+        if (isNotNullableType(enrichedObjectProperty.enrichedObjectProperty.poetTypeName())
+                && builderNotNullChecks
+                && !isNullableField) {
             parameterSpecBuilder.addAnnotation(ClassName.get("org.jetbrains.annotations", "NotNull"));
         }
         MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(enrichedObjectProperty.fieldSpec.name)
