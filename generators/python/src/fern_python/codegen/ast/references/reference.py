@@ -63,6 +63,13 @@ class Reference:
     ```
     """
 
+    has_been_dynamically_imported: bool = False
+    """
+    This should be set to True if the reference has been dynamically imported at this point in the code.
+
+    This should only be set in conjunction with `import_if_type_checking`.
+    """
+
     require_postponed_annotations: bool = False
     """
     Certain functionality may call for `from __future__ import annotations`

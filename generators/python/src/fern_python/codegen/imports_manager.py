@@ -106,12 +106,12 @@ class ImportsManager:
         resolved_import = reference_resolver.resolve_import(import_)
         if resolved_import.import_ is not None:
             writer.write_line(
-                self._get_import_as_string(
+                self.get_import_as_string(
                     import_=resolved_import.import_,
                 )
             )
 
-    def _get_import_as_string(self, import_: AST.ReferenceImport) -> str:
+    def get_import_as_string(self, import_: AST.ReferenceImport, noqas: list[str] = []) -> str:
         module_str = (
             get_relative_module_path_str(
                 from_module=self._module_path,
@@ -128,11 +128,13 @@ class ImportsManager:
         if import_.alias is not None:
             s += f" as {import_.alias}"
 
-        if self._has_written_any_statements:
+        if noqas:
+            s += " # noqa: " + ", ".join(noqas)
+        elif self._has_written_any_statements:
             s += " # noqa: E402, F401, I001"
 
         if import_.alternative_import is not None:
-            alternative_import = self._get_import_as_string(import_.alternative_import)
+            alternative_import = self.get_import_as_string(import_.alternative_import)
             s = f"""
 try:
     {s} # type: ignore

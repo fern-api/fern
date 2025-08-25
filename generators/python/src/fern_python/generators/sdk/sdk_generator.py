@@ -525,6 +525,7 @@ class SdkGenerator(AbstractGenerator):
             class_name=context.get_client_class_name_for_subpackage_service(subpackage_id),
             async_class_name=context.get_class_name_of_async_subpackage_service(subpackage_id),
             generated_root_client=generated_root_client,
+            imports_manager=client_source_file.get_imports_manager(),
             snippet_registry=snippet_registry,
             snippet_writer=snippet_writer,
             endpoint_metadata_collector=endpoint_metadata_collector,
