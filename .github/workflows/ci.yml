@@ -159,7 +159,7 @@ jobs:
   generate-docs-test-windows:
     environment: Fern Dev
     if: ${{ github.repository == 'fern-api/fern' }}
-    runs-on: windows-2025
+    runs-on: windows-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -195,7 +195,7 @@ jobs:
   docs-dev-test-windows:
     environment: Fern Dev
     if: ${{ github.repository == 'fern-api/fern' }}
-    runs-on: windows-2025
+    runs-on: windows-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -236,7 +236,7 @@ jobs:
   live-test-dev-windows:
     environment: Fern Dev
     if: ${{ github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern' }}
-    runs-on: windows-2025
+    runs-on: windows-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
