@@ -196,22 +196,23 @@ class GemspecFile {
     }
 
     public async toString(): Promise<string> {
-        const seedName = this.context.getRootFolderName();
+        const moduleFolderName = this.context.getRootFolderName();
+        const moduleName = this.context.getRootModule().name;
         const fixtureName = this.context.getFixtureNameFromIR();
         const license = this.context.getLicenseFromConfig();
 
         return dedent`
             # frozen_string_literal: true
 
-            require_relative "lib/${seedName}/version"
+            require_relative "lib/${moduleFolderName}/version"
 
             Gem::Specification.new do |spec|
             spec.name = "${fixtureName}"
-            spec.version = "${seedName}::VERSION"
+            spec.version = ${moduleName}::VERSION
             spec.authors = ["Fern"]
             spec.email = ["support@buildwithfern.com"]
             spec.summary = "Ruby client library for the ${fixtureName} API"
-            spec.description = "The ${seedName} Ruby library provides convenient access to the ${seedName} API from Ruby."
+            spec.description = "The ${moduleName} Ruby library provides convenient access to the ${moduleName} API from Ruby."
             spec.homepage = "https://github.com/fern-demo/square-ruby-sdk" # TODO
             spec.license = "${license}"
             spec.required_ruby_version = ">= 3.1.0"
@@ -257,8 +258,26 @@ class Gemfile {
 
     public async toString(): Promise<string> {
         return dedent`
-            source 'https://rubygems.org'
-            gem 'rake'
+            # frozen_string_literal: true
+
+            source "https://rubygems.org"
+
+                gemspec
+
+                group :test, :development do
+                gem "rake", "~> 13.0"
+
+                gem "minitest", "~> 5.16"
+                gem "minitest-rg"
+
+                gem "rubocop", "~> 1.21"
+                gem "rubocop-minitest"
+
+                gem "pry"
+
+                gem "webmock"
+            end
+
         `;
     }
 }
@@ -372,7 +391,8 @@ class VersionFile {
     }
 
     public toString(): string {
-        const seedName = this.context.getRootFolderName();
+        const seedName = this.context.getRootModule().name;
+        this.context.debugIRData();
         const version = this.context.getVersionFromConfig();
         return dedent`
             # frozen_string_literal: true
