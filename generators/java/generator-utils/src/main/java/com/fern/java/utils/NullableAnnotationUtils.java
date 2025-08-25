@@ -7,7 +7,7 @@ import com.squareup.javapoet.ClassName;
 
 public final class NullableAnnotationUtils {
     
-    private static final ClassName NULLABLE = ClassName.get("javax.annotation", "Nullable");
+    private static final ClassName NULLABLE = ClassName.get("org.jetbrains.annotations", "Nullable");
     
     private NullableAnnotationUtils() {
         // Utility class
