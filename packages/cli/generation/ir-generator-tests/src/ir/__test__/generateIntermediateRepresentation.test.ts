@@ -120,7 +120,6 @@ it("generics", async () => {
     });
 }, 200_000);
 
-
 it("readme", async () => {
     const README_DIR = path.join(__dirname, "fixtures/readme/fern");
     await generateAndSnapshotIRFromPath({
