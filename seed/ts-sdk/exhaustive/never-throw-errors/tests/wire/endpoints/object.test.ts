@@ -477,47 +477,4 @@ describe("Object_", () => {
             rawResponse: expect.any(Object),
         });
     });
-
-    test("testIntegerOverflowEdgeCases", async () => {
-        const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-        const rawRequestBody = {
-            string: "boundary-test",
-            integer: 2147483647,
-            double: 1.7976931348623157e308,
-            bool: true,
-        };
-        const rawResponseBody = {
-            string: "boundary-test",
-            integer: 2147483647,
-            double: 1.7976931348623157e308,
-            bool: true,
-        };
-        server
-            .mockEndpoint()
-            .post("/object/test-integer-overflow-edge-cases")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.endpoints.object.testIntegerOverflowEdgeCases({
-            string: "boundary-test",
-            integer: 2147483647,
-            double: 1.7976931348623157e308,
-            bool: true,
-        });
-        expect(response).toEqual({
-            body: {
-                string: "boundary-test",
-                integer: 2147483647,
-                double: 1.7976931348623157e308,
-                bool: true,
-            },
-            ok: true,
-            headers: expect.any(Object),
-            rawResponse: expect.any(Object),
-        });
-    });
 });
