@@ -73,7 +73,7 @@ public final class Address {
   }
 
   private boolean equalTo(Address other) {
-    return java.util.Objects.equals(street, other.street) && java.util.Objects.equals(city, other.city) && java.util.Objects.equals(state, other.state) && java.util.Objects.equals(zipCode, other.zipCode) && java.util.Objects.equals(country, other.country);
+    return street.equals(other.street) && city.equals(other.city) && state.equals(other.state) && zipCode.equals(other.zipCode) && country.equals(other.country);
   }
 
   @java.lang.Override
