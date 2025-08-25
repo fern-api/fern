@@ -38,6 +38,7 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: "stable"
+          cache: false
 
       - name: Install protoc-gen-openapi
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
