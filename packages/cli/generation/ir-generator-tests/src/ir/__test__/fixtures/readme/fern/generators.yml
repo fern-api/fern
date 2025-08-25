@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../../../../../../../../../generators-yml.schema.json
+readme:
+  apiName: "Readme Test"
+  disabledFeatures:
+    - "contributing"
+  bannerLink: https://www.fernapi.com
+  apiReferenceLink: https://www.docs.fernapi.com
+  defaultEndpoint: POST /movies/create-movie
+  features:
+    timeouts:
+      - GET /movies/{id}
+      - method: POST
+        path: /movies/create-movie
+
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        output:
+          location: local-file-system
+          path: ../sdks/typescript
+        version: 2.8.4

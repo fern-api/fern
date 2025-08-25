@@ -10,6 +10,7 @@ export function convertReadmeConfig({
     services: Record<ServiceId, HttpService>;
 }): ReadmeConfig {
     const readmeEndpointCache = new ReadmeEndpointCache(services);
+    console.debug("readmeEndpointCache", readmeEndpointCache);
     return {
         apiName: readme.apiName,
         disabledFeatures: readme.disabledFeatures,

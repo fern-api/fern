@@ -120,6 +120,17 @@ it("generics", async () => {
     });
 }, 200_000);
 
+
+it("readme", async () => {
+    const README_DIR = path.join(__dirname, "fixtures/readme/fern");
+    await generateAndSnapshotIRFromPath({
+        absolutePathToIr: AbsoluteFilePath.of(IR_DIR),
+        absolutePathToWorkspace: AbsoluteFilePath.of(README_DIR),
+        audiences: { type: "all" },
+        workspaceName: "readme"
+    });
+}, 200_000);
+
 it("availability", async () => {
     const AVAILABILITY_DIR = path.join(__dirname, "fixtures/availability/fern");
     await generateAndSnapshotIRFromPath({
