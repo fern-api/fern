@@ -1,0 +1,14 @@
+{
+  "overrides": [
+    {
+      "files": "*.{yml,yaml}",
+      "options": {
+        "tabWidth": 2,
+        "useTabs": false,
+        "printWidth": 120,
+        "singleQuote": false,
+        "trailingComma": "none"
+      }
+    }
+  ]
+}
