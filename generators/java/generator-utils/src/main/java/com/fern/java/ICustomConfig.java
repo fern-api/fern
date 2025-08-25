@@ -92,7 +92,7 @@ public interface ICustomConfig {
     @Value.Default
     @JsonProperty("use-nullable-annotation")
     default Boolean useNullableAnnotation() {
-        return false;  // Default false keeps current behavior (nullable generates Optional)
+        return false; // Default false keeps current behavior (nullable generates Optional)
     }
 
     @JsonProperty("package-prefix")

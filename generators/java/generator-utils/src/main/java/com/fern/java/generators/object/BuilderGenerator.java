@@ -330,10 +330,10 @@ public final class BuilderGenerator {
         Builder parameterSpecBuilder = ParameterSpec.builder(
                 enrichedObjectProperty.enrichedObjectProperty.poetTypeName(), enrichedObjectProperty.fieldSpec.name);
         // Only add @NotNull if the type is not nullable (considering the use-nullable-annotation flag)
-        boolean isNullableField = enrichedObjectProperty.enrichedObjectProperty.nullable() 
+        boolean isNullableField = enrichedObjectProperty.enrichedObjectProperty.nullable()
                 || enrichedObjectProperty.enrichedObjectProperty.aliasOfNullable();
-        if (isNotNullableType(enrichedObjectProperty.enrichedObjectProperty.poetTypeName()) 
-                && builderNotNullChecks 
+        if (isNotNullableType(enrichedObjectProperty.enrichedObjectProperty.poetTypeName())
+                && builderNotNullChecks
                 && !isNullableField) {
             parameterSpecBuilder.addAnnotation(ClassName.get("org.jetbrains.annotations", "NotNull"));
         }

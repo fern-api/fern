@@ -60,7 +60,7 @@ public interface SpringCustomConfig extends ICustomConfig, IDownloadFilesCustomC
     @JsonProperty("use-nullable-annotation")
     @Override
     default Boolean useNullableAnnotation() {
-        return false;  // Default false keeps current behavior (nullable generates Optional)
+        return false; // Default false keeps current behavior (nullable generates Optional)
     }
 
     static ImmutableSpringCustomConfig.Builder builder() {
