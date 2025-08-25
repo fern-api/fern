@@ -50,7 +50,7 @@ export async function generateIrForWorkspaces({
                     disableExamples,
                     audiences,
                     version,
-                    readme,
+                    readme: readme ?? workspace.generatorsConfiguration?.rawConfiguration.readme,
                     directFromOpenapi
                 });
 
