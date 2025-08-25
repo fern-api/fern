@@ -22,7 +22,7 @@
         }
     },
     "apiDisplayName": null,
-    "apiDocs": "Test definition for literal schemas. ",
+    "apiDocs": "Test definition for literal schemas.",
     "auth": {
         "requirement": "ALL",
         "schemes": [],
