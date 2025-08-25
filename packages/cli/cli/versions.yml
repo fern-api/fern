@@ -4,7 +4,7 @@
       type: feat
   irVersion: 59
   createdAt: "2025-08-25"
-  version: 0.66.24
+  version: 0.66.25
 
 - changelogEntry:
     - summary: Add support for readme config for API Name and disabled features list.
