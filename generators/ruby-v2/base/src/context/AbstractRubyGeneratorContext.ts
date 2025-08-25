@@ -50,6 +50,48 @@ export abstract class AbstractRubyGeneratorContext<
         return snakeCase(this.ir.apiName.pascalCase.safeName);
     }
 
+    public getVersionFromConfig(): string | undefined {
+        return this.config.output.mode._visit<string | undefined>({
+            publish: (gpc) => gpc.version || undefined,
+            downloadFiles: () => undefined,
+            github: (gom) => gom.version || undefined,
+            _other: () => undefined
+        });
+    }
+
+    public getLicenseFromConfig(): string | undefined {
+        return this.config.license?._visit<string | undefined>({
+            basic: (l) => l.id,
+            custom: (l) => l.filename,
+            _other: () => undefined
+        });
+    }
+
+    public getApiInfoFromIR(): {
+        title?: string;
+        description?: string;
+        version?: string;
+        license?: string | undefined;
+    } {
+        // Get API info from IR and config
+        return {
+            title: this.ir.apiName.originalName,
+            version: this.getVersionFromConfig(),
+            license: this.getLicenseFromConfig(),
+        };
+    }
+
+    // Debug method to inspect IR and config data
+    public debugIRData(): void {
+        console.log('=== IR Data Debug ===');
+        console.log('API Name:', this.ir.apiName);
+        console.log('API Name Original:', this.ir.apiName.originalName);
+        console.log('Config License:', this.config.license);
+        console.log('Config Output Mode:', this.config.output.mode);
+        console.log('Available IR Properties:', Object.keys(this.ir));
+        console.log('=====================');
+    }
+
     public getRootModule(): ruby.Module_ {
         return ruby.module({
             name: capitalize(this.getRootFolderName()),

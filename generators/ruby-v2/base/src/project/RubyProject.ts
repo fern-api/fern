@@ -34,6 +34,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await this.createAsIsFiles();
         await this.writeAsIsFiles();
         await this.createTestFiles();
+        await this.createVersionFile();
         await this.createModuleFile();
         await this.createRubocoopFile();
     }
@@ -83,6 +84,12 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         // Create custom test file for quick testing per fixture
         const customTestFile = new CustomTestFile({ context: this.context, project: this });
         await customTestFile.writeFile();
+    }
+
+    private async createVersionFile(): Promise<void> {
+        // Create version.rb file per fixture
+        const versionFile = new VersionFile({ context: this.context, project: this });
+        await versionFile.writeFile();
     }
 
     private async createAsIsFiles(): Promise<void> {
@@ -189,22 +196,24 @@ class GemspecFile {
     }
 
     public async toString(): Promise<string> {
+        const seedName = this.context.getRootFolderName();
         const fixtureName = this.context.getFixtureNameFromIR();
+        const license = this.context.getLicenseFromConfig();
 
         return dedent`
             # frozen_string_literal: true
 
-            # require_relative "lib/${fixtureName}/version"
+            require_relative "lib/${seedName}/version"
 
             Gem::Specification.new do |spec|
             spec.name = "${fixtureName}"
-            spec.version = "0.0.1" # TODO ${fixtureName}::VERSION
+            spec.version = "${seedName}::VERSION"
             spec.authors = ["Fern"]
             spec.email = ["support@buildwithfern.com"]
             spec.summary = "Ruby client library for the ${fixtureName} API"
-            #spec.description = "The ${fixtureName} Ruby library provides convenient access to the ${fixtureName} API from Ruby."
+            spec.description = "The ${seedName} Ruby library provides convenient access to the ${seedName} API from Ruby."
             spec.homepage = "https://github.com/fern-demo/square-ruby-sdk" # TODO
-            spec.license = "MIT" # TODO
+            spec.license = "${license}"
             spec.required_ruby_version = ">= 3.1.0"
             #spec.metadata["homepage_uri"] = "https://github.com/fern-demo/square-ruby-sdk" # TODO
             #spec.metadata["source_code_uri"] = "https://github.com/fern-demo/square-ruby-sdk" # TODO
@@ -337,6 +346,45 @@ class CustomTestFile {
 
     public async writeFile(): Promise<void> {
         // Ensure the test directory exists before writing the file
+        await mkdir(this.filePath, { recursive: true });
+        await writeFile(join(this.filePath, RelativeFilePath.of(this.fileName)), this.toString());
+    }
+}
+
+declare namespace VersionFile {
+    interface Args {
+        context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+        project: RubyProject;
+    }
+}
+
+class VersionFile {
+    private context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+    private project: RubyProject;
+    public readonly filePath: AbsoluteFilePath;
+    public readonly fileName: string;
+
+    public constructor({ context, project }: VersionFile.Args) {
+        this.context = context;
+        this.project = project;
+        this.filePath = join(project.absolutePathToOutputDirectory, RelativeFilePath.of(`lib/${context.getRootFolderName()}`));
+        this.fileName = "version.rb";
+    }
+
+    public toString(): string {
+        const seedName = this.context.getRootFolderName();
+        const version = this.context.getVersionFromConfig();
+        return dedent`
+            # frozen_string_literal: true
+
+            module ${seedName}
+                VERSION = "${version}"
+            end
+        `;
+    }
+
+    public async writeFile(): Promise<void> {
+        // Ensure the lib directory exists before writing the file
         await mkdir(this.filePath, { recursive: true });
         await writeFile(join(this.filePath, RelativeFilePath.of(this.fileName)), this.toString());
     }
