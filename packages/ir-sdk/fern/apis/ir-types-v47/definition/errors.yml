@@ -22,8 +22,8 @@ types:
       errorId: commons.ErrorId
       fernFilepath: commons.FernFilepath
       name: commons.Name
-
-  # examples
+  
+  # examples 
 
   ExampleError:
     extends:

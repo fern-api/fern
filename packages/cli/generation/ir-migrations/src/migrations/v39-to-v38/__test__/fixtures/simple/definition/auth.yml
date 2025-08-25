@@ -14,7 +14,7 @@ service:
     getToken:
       path: /token
       method: POST
-      request:
+      request: 
         name: GetTokenRequest
         body:
           properties:
@@ -28,7 +28,7 @@ service:
     refreshToken:
       path: /token
       method: POST
-      request:
+      request: 
         name: RefreshTokenRequest
         body:
           properties:

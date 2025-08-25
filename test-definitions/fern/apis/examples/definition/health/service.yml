@@ -10,7 +10,7 @@ service:
       method: GET
       path: /check/{id}
       path-parameters:
-        id:
+        id: 
           type: string
           docs: The id to check
       examples:

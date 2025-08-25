@@ -1,15 +1,15 @@
-imports:
+imports: 
   auth: auth.yml
 
 name: any-auth
 
-auth:
-  any:
+auth: 
+  any: 
     - Bearer
     - ApiKey
     - OAuth
 auth-schemes:
-  Bearer:
+  Bearer:                     
     scheme: bearer
     token:
       env: MY_TOKEN
@@ -23,7 +23,9 @@ auth-schemes:
     client-id-env: MY_CLIENT_ID
     client-secret-env: MY_CLIENT_SECRET
     get-token:
-      endpoint: auth.getToken
+      endpoint: auth.getToken               
       response-properties:
-        access-token: $response.access_token
-        expires-in: $response.expires_in
+        access-token: $response.access_token 
+        expires-in: $response.expires_in    
+  
+

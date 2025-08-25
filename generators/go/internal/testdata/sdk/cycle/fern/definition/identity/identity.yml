@@ -7,3 +7,4 @@ types:
   Token:
     properties:
       username: user.Username
+

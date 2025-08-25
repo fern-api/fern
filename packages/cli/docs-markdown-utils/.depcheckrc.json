@@ -1,4 +1,8 @@
 {
-  "ignores": [],
-  "ignore-patterns": ["lib", "dist"]
+    "ignores": [
+    ],
+    "ignore-patterns": [
+        "lib",
+        "dist"
+    ]
 }

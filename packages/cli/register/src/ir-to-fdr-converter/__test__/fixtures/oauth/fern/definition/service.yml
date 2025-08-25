@@ -9,7 +9,7 @@ service:
       method: POST
       request:
         name: RequestObject
-        body:
+        body: 
           properties:
             client_id: string
             client_secret: string

@@ -143,11 +143,11 @@ types:
     properties:
       contentType: optional<string>
       style: optional<FileUploadBodyPropertyEncoding>
-  FileUploadBodyPropertyEncoding:
-    enum:
+  FileUploadBodyPropertyEncoding: 
+    enum: 
       - exploded
-      - json
-      - form
+      - json    
+      - form      
   FileProperty:
     union:
       file: FilePropertySingle
@@ -243,7 +243,7 @@ types:
 
   TextResponse:
     extends: commons.WithDocs
-
+  
   BytesResponse:
     extends: commons.WithDocs
 

@@ -8,6 +8,6 @@
     { "path": "../../../packages/commons/logging-execa" },
     { "path": "../../base" },
     { "path": "../ast" },
-    { "path": "../browser-compatible-base" }
+    { "path": "../browser-compatible-base" },
   ]
 }

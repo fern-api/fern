@@ -39,29 +39,29 @@ types:
     properties:
       value: string
     examples:
-      - name: One
-        value:
-          value: example1
-      - name: Two
-        value:
-          value: example2
-      - name: Three
-        value:
-          value: example3
+    - name: One
+      value:
+        value: example1
+    - name: Two
+      value:
+        value: example2
+    - name: Three
+      value:
+        value: example3
 
   ThankfulFactor:
     properties:
       value: string
     examples:
-      - name: One
-        value:
-          value: example1
-      - name: Two
-        value:
-          value: example2
-      - name: Three
-        value:
-          value: example3
+    - name: One
+      value:
+        value: example1
+    - name: Two
+      value:
+        value: example2
+    - name: Three
+      value:
+        value: example3
 
   JumboEnd:
     properties:
@@ -193,3 +193,4 @@ service:
       method: PATCH
       request: list<BigUnion>
       response: map<string, boolean>
+

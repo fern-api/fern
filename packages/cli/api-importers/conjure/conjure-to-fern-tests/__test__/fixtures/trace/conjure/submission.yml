@@ -440,92 +440,95 @@ types:
 
 services:
   ExecutionSesssionManagementService:
-    name: Responsible for spinning up and spinning down execution.
-    package: com.birch.trace.session
-    base-path: /sessions
-    endpoints:
-      createExecutionSession:
-        docs: Returns sessionId and execution server URL for session. Spins up server.
-        http: POST /create-session/{language}
-        args:
-          language: commons.Language
-        returns: ExecutionSessionResponse
+   name: Responsible for spinning up and spinning down execution.
+   package: com.birch.trace.session
+   base-path: /sessions
+   endpoints:
 
-      getExecutionSession:
-        docs: Returns execution server URL for session. Returns empty if session isn't registered.
-        http: GET /{sessionId}
-        args:
-          sessionId: string
-        returns: optional<ExecutionSessionResponse>
+     createExecutionSession:
+       docs: Returns sessionId and execution server URL for session. Spins up server.
+       http: POST /create-session/{language}
+       args:
+         language: commons.Language
+       returns: ExecutionSessionResponse
 
-      stopExecutionSession:
-        docs: Stops execution session. #TODO: only an admin should be able to trigger this
-        http: DELETE /stop/{sessionId}
-        args:
-          sessionId: string
+     getExecutionSession:
+       docs: Returns execution server URL for session. Returns empty if session isn't registered.
+       http: GET /{sessionId}
+       args:
+         sessionId: string
+       returns: optional<ExecutionSessionResponse>
 
-      getExecutionSessionsState:
-        http: GET /execution-sessions-state
-        returns: ExecutionSessionsState
+     stopExecutionSession:
+       docs: Stops execution session. #TODO: only an admin should be able to trigger this
+       http: DELETE /stop/{sessionId}
+       args:
+         sessionId: string
+
+     getExecutionSessionsState:
+       http: GET /execution-sessions-state
+       returns: ExecutionSessionsState
 
   SubmissionInfoService:
-    name: Responsible for serving information about submissions
-    package: com.birch.trace.submission
-    base-path: /submissions
-    endpoints:
-      getSubmissionState:
-        docs: Returns information about the submission
-        http: GET /{submissionId}
-        args:
-          submissionId: SubmissionId
-        returns: SubmissionState
+   name: Responsible for serving information about submissions
+   package: com.birch.trace.submission
+   base-path: /submissions
+   endpoints:
 
-      getSubmissionStateV2:
-        docs: Returns information about submission for problem V2
-        http: GET /v2/{submissionId}
-        args:
-          submissionId: SubmissionId
-        returns: SubmissionStateV2
+     getSubmissionState:
+       docs: Returns information about the submission
+       http: GET /{submissionId}
+       args:
+         submissionId: SubmissionId
+       returns: SubmissionState
 
-      getTraceResponsesPage:
-        docs: Returns traces for the submission and test case
-        http: POST /trace-respose/{submissionId}/testCase/{testCaseId}
-        args:
-          submissionId: SubmissionId
-          testCaseId: string
-          request: GetTraceResponsesPageRequest
-        returns: TraceResponsesPage
+     getSubmissionStateV2:
+       docs: Returns information about submission for problem V2
+       http: GET /v2/{submissionId}
+       args:
+         submissionId: SubmissionId
+       returns: SubmissionStateV2
 
-      getTraceResponsesV2Page:
-        docs: Returns traces for the submission and test case
-        http: POST /trace-response-v2/{submissionId}/testCase/{testCaseId}
-        args:
-          submissionId: SubmissionId
-          testCaseId: problemV2.TestCaseId
-          request: GetTraceResponsesPageRequest
-        returns: TraceResponsesPageV2
+     getTraceResponsesPage:
+       docs: Returns traces for the submission and test case
+       http: POST /trace-respose/{submissionId}/testCase/{testCaseId}
+       args:
+         submissionId: SubmissionId
+         testCaseId: string
+         request: GetTraceResponsesPageRequest
+       returns: TraceResponsesPage
 
-      getTraceResponsesPageForWorkspace:
-        docs: Returns traces for the workspace
-        http: POST /workspace-trace-response/{submissionId}
-        args:
-          submissionId: SubmissionId
-          request: GetTraceResponsesPageRequest
-        returns: TraceResponsesPage
+     getTraceResponsesV2Page:
+       docs: Returns traces for the submission and test case
+       http: POST /trace-response-v2/{submissionId}/testCase/{testCaseId}
+       args:
+         submissionId: SubmissionId
+         testCaseId: problemV2.TestCaseId
+         request: GetTraceResponsesPageRequest
+       returns: TraceResponsesPageV2
 
-      getTraceResponsesV2PageForWorkspace:
-        docs: Returns traces for the submission and test case
-        http: POST /workspace-trace-response-v2/{submissionId}
-        args:
-          submissionId: SubmissionId
-          request: GetTraceResponsesPageRequest
-        returns: TraceResponsesPageV2
+     getTraceResponsesPageForWorkspace:
+       docs: Returns traces for the workspace
+       http: POST /workspace-trace-response/{submissionId}
+       args:
+         submissionId: SubmissionId
+         request: GetTraceResponsesPageRequest
+       returns: TraceResponsesPage
+
+     getTraceResponsesV2PageForWorkspace:
+       docs: Returns traces for the submission and test case
+       http: POST /workspace-trace-response-v2/{submissionId}
+       args:
+         submissionId: SubmissionId
+         request: GetTraceResponsesPageRequest
+       returns: TraceResponsesPageV2
 
   WorkspaceInfoService:
     name: Workspace Info Service
     package: com.birch.trace.workspace
     base-path: /workspace
     endpoints:
+
       getWorkspaceStarterFiles:
         docs: Returns starter files for workspace
         http: GET /get-workspace-starter-files
@@ -535,3 +538,13 @@ services:
         docs: Returns starter files for workspace
         http: GET /get-workspace-starter-files-v2
         returns: WorkspaceStarterFilesResponseV2
+
+
+
+
+
+
+
+
+
+

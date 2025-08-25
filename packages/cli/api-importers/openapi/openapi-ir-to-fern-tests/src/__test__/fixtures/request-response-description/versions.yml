@@ -35,7 +35,7 @@
 - changelogEntry:
     - summary: |
         Fern's OpenAPI importer will now handle generating examples for declared 
-        errors so that they show up in the generated documentation.
+        errors so that they show up in the generated documentation. 
       type: fix
   irVersion: 53
   version: 0.44.4
@@ -98,7 +98,7 @@
     - summary: |
         The `valid-markdown` rule has been updated to try and parse the markdown file into a 
         valid AST. If the file fails to parse, `fern check` will log an error as well 
-        as the path to the markdown.
+        as the path to the markdown. 
       type: fix
   irVersion: 53
   version: 0.43.7
@@ -133,7 +133,7 @@
 - changelogEntry:
     - summary: |
         The OpenAPI parser now respects the content type in your OpenAPI spec, instead of always sending
-        `application/json`. With this upgrade, your SDKs will also start to send the correct content type.
+        `application/json`. With this upgrade, your SDKs will also start to send the correct content type. 
       type: fix
   irVersion: 53
   version: 0.43.4

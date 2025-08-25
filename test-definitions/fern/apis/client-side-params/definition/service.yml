@@ -75,12 +75,12 @@ service:
             docs: Offset for pagination
         body:
           properties:
-            query:
+            query: 
               type: optional<string>
               docs: Search query text
             filters: optional<map<string, unknown>>
       response: root.SearchResponse
-
+    
     # User management endpoints (Auth0-like)
     listUsers:
       docs: List or search for users
@@ -115,10 +115,10 @@ service:
           fields:
             type: optional<string>
             docs: Comma-separated list of fields to include or exclude
-      response:
+      response: 
         type: root.PaginatedUserResponse
         docs: Returns either PaginatedUserResponse (if include_totals=true) or list<User> (if include_totals=false)
-
+    
     getUserById:
       docs: Get a user by ID
       method: GET
@@ -136,7 +136,7 @@ service:
             default: true
             docs: true to include the fields specified, false to exclude them
       response: root.User
-
+    
     createUser:
       docs: Create a new user
       method: POST
@@ -144,7 +144,7 @@ service:
       request:
         body: root.CreateUserRequest
       response: root.User
-
+    
     updateUser:
       docs: Update a user
       method: PATCH
@@ -154,7 +154,7 @@ service:
       request:
         body: root.UpdateUserRequest
       response: root.User
-
+    
     deleteUser:
       docs: Delete a user
       method: DELETE
@@ -163,7 +163,7 @@ service:
         userId: string
       response:
         docs: No content on successful deletion
-
+    
     # Connection management endpoints (Auth0-style)
     listConnections:
       docs: List all connections
@@ -172,7 +172,7 @@ service:
       request:
         name: ListConnectionsRequest
         query-parameters:
-          strategy:
+          strategy: 
             type: optional<string>
             docs: Filter by strategy type (e.g., auth0, google-oauth2, samlp)
           name:
@@ -182,7 +182,7 @@ service:
             type: optional<string>
             docs: Comma-separated list of fields to include
       response: list<root.Connection>
-
+    
     getConnection:
       docs: Get a connection by ID
       method: GET
@@ -196,14 +196,14 @@ service:
             type: optional<string>
             docs: Comma-separated list of fields to include
       response: root.Connection
-
+    
     # Client/Application management endpoints
     listClients:
       docs: List all clients/applications
       method: GET
       path: /clients
       request:
-        name: ListClientsRequest
+        name: ListClientsRequest  
         query-parameters:
           fields:
             type: optional<string>
@@ -230,7 +230,7 @@ service:
             type: optional<list<string>>
             docs: Filter by application type (spa, native, regular_web, non_interactive)
       response: root.PaginatedClientResponse
-
+    
     getClient:
       docs: Get a client by ID
       method: GET

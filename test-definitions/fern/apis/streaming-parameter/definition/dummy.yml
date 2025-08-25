@@ -11,7 +11,7 @@ types:
 service:
   auth: false
   base-path: ""
-  endpoints:
+  endpoints:    
     generate:
       path: /generate
       method: POST
@@ -25,11 +25,11 @@ service:
       response: RegularResponse
       response-stream: StreamResponse
       examples:
-        - name: Default
+        - name: Default 
           request:
             stream: false
             num_events: 5
-          response:
-            body:
+          response: 
+            body: 
               id: id
               name: name

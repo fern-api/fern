@@ -14,13 +14,13 @@ types:
     properties:
       description: string
       account: optional<Account>
-
+  
   BaseResource:
     properties:
       id: string
       related_resources: list<ResourceList>
       memo: Memo
-
+  
   ResourceList:
     discriminated: false
     union:
@@ -28,7 +28,7 @@ types:
       - Patient
       - Practitioner
       - Script
-
+  
   Account:
     extends: BaseResource
     properties:
@@ -55,3 +55,4 @@ types:
     properties:
       resource_type: literal<"Script">
       name: string
+

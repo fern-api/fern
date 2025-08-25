@@ -29,7 +29,7 @@ types:
 
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   endpoints:
     add:
       auth: true
@@ -43,3 +43,4 @@ service:
       response:
         status-code: 200
         type: PutResponse
+

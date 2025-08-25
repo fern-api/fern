@@ -121,13 +121,13 @@ types:
   HttpInlineFileRequestBodyPropertySchema:
     extends: types.TypeReferenceDeclarationWithName
     properties:
-      style:
+      style: 
         type: optional<FormDataBodyEncodingStyle>
         docs: Defaults to json encoding
       content-type: optional<string>
-
-  FormDataBodyEncodingStyle:
-    enum:
+  
+  FormDataBodyEncodingStyle: 
+    enum: 
       - json
       - exploded
       - form

@@ -2,30 +2,30 @@ openapi: 3.0.3
 info:
   title: Test vnd.fern.user+json;version=1 and /application-json
   version: 1.0.0
-paths:
-  /vnd.fern.user+json;version=1:
-    get:
+paths: 
+  /vnd.fern.user+json;version=1: 
+    get: 
       responses:
-        "200":
+        "200": 
           description: "Success"
           content:
-            vnd.fern.user+json;version=1:
-              schema:
-                $ref: "#/components/schemas/Data"
-  /application-json:
-    get:
+            vnd.fern.user+json;version=1: 
+              schema: 
+                $ref: '#/components/schemas/Data'
+  /application-json: 
+    get: 
       responses:
-        "200":
+        "200": 
           description: "Success"
           content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Data"
-components:
-  schemas:
-    Data:
-      properties:
-        foo:
+            application/json: 
+              schema: 
+                $ref: '#/components/schemas/Data'
+components: 
+  schemas: 
+    Data: 
+      properties: 
+        foo: 
           type: string
-        bar:
+        bar: 
           type: string

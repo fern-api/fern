@@ -42,18 +42,19 @@ types:
   #   properties:
   #     endpoint: commons.EndpointReference
   #     expiryProperty: http.ResponseProperty
-  #     authenticatedRequestHeaders:
+  #     authenticatedRequestHeaders: 
   #       type: list<InferredAuthenticatedRequestHeader>
   #       docs: These headers will override the headers defined on the tokenEndpoint.
 
   InferredAuthenticatedRequestHeader:
-    docs: A header that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint.
+    docs:
+      A header that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint.
       These are not headers for the authorization endpoint.
     properties:
-      responseProperty:
+      responseProperty: 
         type: http.ResponseProperty
         docs: The property to retrieve the header value from the get token or refresh endpoint response.
-      headerName:
+      headerName: 
         type: string
         docs: |
           The header name to put the token in for any authenticated HTTP request. 
@@ -71,7 +72,7 @@ types:
       tokenEnvVar:
         type: optional<EnvironmentVariable>
         docs: The environment variable the SDK should use to read the token.
-
+  
   OAuthScheme:
     extends: commons.WithDocs
     docs: |

@@ -68,7 +68,7 @@ types:
       user_metadata: optional<map<string, unknown>>
       app_metadata: optional<map<string, unknown>>
       connection: string
-
+      
   UpdateUserRequest:
     properties:
       email: optional<string>

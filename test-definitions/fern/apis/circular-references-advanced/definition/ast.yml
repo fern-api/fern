@@ -1,7 +1,7 @@
 types:
   Animal:
     discriminated: false
-    union:
+    union: 
       - Cat
       - Dog
   Fruit:
@@ -21,7 +21,7 @@ types:
     properties:
       fruit: Fruit
   Acai:
-    extends:
+    extends: 
       - Berry
   Fig:
     properties:

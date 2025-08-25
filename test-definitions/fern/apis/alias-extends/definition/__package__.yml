@@ -13,7 +13,7 @@ service:
             child: string
 
 types:
-  AliasType:
+  AliasType: 
     type: Parent
     examples:
       - name: One
@@ -28,12 +28,13 @@ types:
         value:
           parent: Property from the parent
 
-  Child:
+  Child: 
     extends: Parent
-    properties:
+    properties: 
       child: string
     examples:
       - name: One
         value:
           parent: Property from the parent
           child: Property from the child
+

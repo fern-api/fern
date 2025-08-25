@@ -14,6 +14,7 @@ types:
     properties:
       end: string
 
+
 service:
   auth: false
   base-path: ""
@@ -35,3 +36,4 @@ service:
           response:
             body:
               - end: "bar"
+

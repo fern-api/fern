@@ -14,10 +14,10 @@ docs: |
 
   > warn
   > Bookings usually expire within 1 hour so you'll need to make your payment
-  > before the expiry date
+  > before the expiry date 
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   display-name: Payments
   endpoints:
     create-booking-payment:
@@ -49,7 +49,7 @@ service:
               exp_month: 12
               exp_year: 2025
               name: J. Doe
-              number: "4242424242424242"
+              number: '4242424242424242'
               object: card
           response:
             body:
@@ -69,7 +69,7 @@ service:
                 exp_month: 12
                 exp_year: 2025
                 name: J. Doe
-                number: "************4242"
+                number: '************4242'
                 object: card
               status: succeeded
         - name: Bank Account Payment
@@ -83,9 +83,9 @@ service:
               bank_name: Starling Bank
               country: gb
               name: J. Doe
-              number: "00012345"
+              number: '00012345'
               object: bank_account
-              sort_code: "000123"
+              sort_code: '000123'
           response:
             body:
               amount: 49.99
@@ -104,7 +104,7 @@ service:
                 exp_month: 12
                 exp_year: 2025
                 name: J. Doe
-                number: "************4242"
+                number: '************4242'
                 object: card
               status: succeeded
         - name: Card Payment 2
@@ -123,7 +123,7 @@ service:
               exp_month: 12
               exp_year: 2025
               name: J. Doe
-              number: "4242424242424242"
+              number: '4242424242424242'
               object: card
           response:
             body:
@@ -143,7 +143,7 @@ service:
                 exp_month: 12
                 exp_year: 2025
                 name: J. Doe
-                number: "************4242"
+                number: '************4242'
                 object: card
               status: succeeded
         - name: Bank Account Payment 2
@@ -162,7 +162,7 @@ service:
               exp_month: 12
               exp_year: 2025
               name: J. Doe
-              number: "4242424242424242"
+              number: '4242424242424242'
               object: card
           response:
             body:
@@ -177,9 +177,9 @@ service:
                 bank_name: Starling Bank
                 country: gb
                 name: J. Doe
-                number: "*********2345"
+                number: '*********2345'
                 object: bank_account
-                sort_code: "000123"
+                sort_code: '000123'
               status: succeeded
       method: POST
       path: /bookings/{bookingId}/payment

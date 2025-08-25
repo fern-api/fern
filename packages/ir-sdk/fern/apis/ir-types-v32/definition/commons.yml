@@ -30,11 +30,13 @@ types:
   SafeAndUnsafeString:
     properties:
       unsafeName:
-        docs: this name might overlap with reserved keywords of the language being
+        docs:
+          this name might overlap with reserved keywords of the language being
           generated
         type: string
       safeName:
-        docs: this name will NOT overlap with reserved keywords of the language being
+        docs:
+          this name will NOT overlap with reserved keywords of the language being
           generated
         type: string
   EscapedString:

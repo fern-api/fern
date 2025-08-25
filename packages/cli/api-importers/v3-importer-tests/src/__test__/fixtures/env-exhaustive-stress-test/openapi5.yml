@@ -3,8 +3,8 @@ info:
   version: 1.0.0
   title: Test API
 servers:
-  - url: https://mu.testapi.com
-    description: prod
+- url: https://mu.testapi.com
+  description: prod
 paths:
   /mu:
     get:

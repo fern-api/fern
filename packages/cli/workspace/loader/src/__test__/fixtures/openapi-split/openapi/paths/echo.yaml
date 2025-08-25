@@ -8,7 +8,7 @@ post:
     - api_key: []
     - basic_auth: []
   responses:
-    "200":
+    '200':
       description: OK
       headers:
         X-Rate-Limit:
@@ -31,7 +31,7 @@ post:
         text/csv:
           schema:
             type: string
-    "400":
+    '400':
       description: Unauthorized
   requestBody:
     content:

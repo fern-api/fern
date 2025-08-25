@@ -29,6 +29,7 @@ services:
     package: com.birch.trace.playlist
     base-path: /playlist
     endpoints:
+
       createPlaylist:
         docs: Create a new playlist
         http: POST /create

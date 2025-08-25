@@ -15,9 +15,9 @@ service:
         query-parameters:
           optionalString:
             type: OptionalString
-        body:
-          properties:
-            publicProperty:
+        body: 
+          properties: 
+            publicProperty: 
               type: optional<string>
             privateProperty: optional<integer>
       response: ImportingType

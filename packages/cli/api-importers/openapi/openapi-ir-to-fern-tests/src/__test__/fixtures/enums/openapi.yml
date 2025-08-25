@@ -7,7 +7,7 @@ paths:
     get:
       summary: Get Example
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -18,7 +18,7 @@ components:
     ExampleResponse:
       oneOf:
         - $ref: "#/components/schemas/StatusEnum"
-        - $ref: "#/components/schemas/PriorityEnum"
+        - $ref: "#/components/schemas/PriorityEnum" 
         - $ref: "#/components/schemas/ErrorCodeEnum"
     StatusEnum:
       type: string

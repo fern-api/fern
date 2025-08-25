@@ -7,7 +7,7 @@ service:
       method: POST
       request: MyUnion
       response: MyUnion
-
+    
     getMetadata:
       path: "/metadata"
       method: GET
@@ -30,13 +30,13 @@ service:
       method: POST
       request: Request
       response: boolean
-
+  
     duplicateTypesUnion:
       path: "/duplicate"
       method: POST
       request: UnionWithDuplicateTypes
       response: UnionWithDuplicateTypes
-
+    
     nestedUnions:
       path: "/nested"
       method: POST
@@ -63,6 +63,7 @@ types:
       - list<integer>
       - list<list<integer>>
       - set<string>
+
 
   NestedUnionL2:
     docs: |

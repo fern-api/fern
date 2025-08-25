@@ -11,6 +11,6 @@ components:
         id:
           type: string
           format: uuid
-        metadata:
+        metadata: 
           type: string
           format: json-string

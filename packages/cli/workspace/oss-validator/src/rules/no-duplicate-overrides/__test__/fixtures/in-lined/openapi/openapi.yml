@@ -25,7 +25,7 @@ paths:
             schema:
               type: string
       responses:
-        "201":
+        '201':
           description: Resource created successfully
           content:
             application/json:
@@ -47,7 +47,7 @@ paths:
             type: string
       operationId: operation-id-b
       responses:
-        "200":
+        '200':
           description: Successful retrieval
           content:
             application/json:

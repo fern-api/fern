@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
+
 service:
   base-path: /documents
   auth: false
@@ -12,12 +13,12 @@ service:
         body:
           properties:
             file: file
-            invalid-exploded:
+            invalid-exploded: 
               type: string
               style: exploded
-            exploded:
+            exploded: 
               type: list<string>
               style: exploded
-            exploded2:
+            exploded2: 
               type: optional<list<string>>
               style: exploded

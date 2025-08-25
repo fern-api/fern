@@ -10,19 +10,19 @@ service:
       method: POST
       request:
         name: SendLiteralsInHeadersRequest
-        headers:
+        headers: 
           X-Endpoint-Version:
             name: endpointVersion
             type: literal<"02-12-2024">
           X-Async:
             name: async
             type: literal<true>
-        body:
-          properties:
-            query:
+        body: 
+          properties: 
+            query: 
               type: string
       response: root.SendResponse
-      examples:
+      examples: 
         - headers:
             X-API-Version: "02-02-2024"
             X-API-Enable-Audit-Logging: true
@@ -30,8 +30,9 @@ service:
             X-Async: true
           request:
             query: "What is the weather today"
-          response:
-            body:
+          response: 
+            body: 
               message: "The weather is sunny"
               status: 200
               success: true
+      

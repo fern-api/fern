@@ -28,7 +28,7 @@ paths:
               properties:
                 stream:
                   type: boolean
-                  x-fern-audiences: ["public"]
+                  x-fern-audiences: [ "public" ]
       responses:
         "200":
           description: "Success!"

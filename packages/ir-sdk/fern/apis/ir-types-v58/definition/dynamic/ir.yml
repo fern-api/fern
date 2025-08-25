@@ -33,7 +33,7 @@ types:
           constructor.
         type: optional<list<types.NamedParameter>>
       generatorConfig: optional<GeneratorConfig>
-
+  
   GeneratorConfig:
     docs: |
       The configuration for the generator. This is a simplified version of the

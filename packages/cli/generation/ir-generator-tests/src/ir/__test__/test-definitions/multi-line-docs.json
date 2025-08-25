@@ -141,7 +141,7 @@
                             "wireValue": "less_than"
                         },
                         "availability": null,
-                        "docs": "The name and value should be similar\nare similar for less than."
+                        "docs": "The name and value should be similar\nare similar for less than. "
                     }
                 ]
             },

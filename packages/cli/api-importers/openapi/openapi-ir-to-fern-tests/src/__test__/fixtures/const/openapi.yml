@@ -12,14 +12,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreatePetRequest"
+              $ref: '#/components/schemas/CreatePetRequest'
       responses:
-        "201":
+        '201':
           description: Pet created successfully
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Pet"
+                $ref: '#/components/schemas/Pet'
 
 components:
   schemas:

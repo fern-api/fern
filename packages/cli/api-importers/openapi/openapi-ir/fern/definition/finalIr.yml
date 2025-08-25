@@ -118,13 +118,13 @@ types:
       messages: list<WebsocketMessageSchema>
       servers: list<WebsocketServer>
       examples: list<WebsocketSessionExample>
-
+  
   WebsocketMessageSchema:
     properties:
       name: string
       origin: WebsocketMessageOrigin
       body: Schema
-
+      
   WebsocketMessageOrigin:
     enum:
       - client
@@ -428,7 +428,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithSource
-    properties:
+    properties: 
       contentType: optional<string>
 
   FormUrlEncodedRequest:

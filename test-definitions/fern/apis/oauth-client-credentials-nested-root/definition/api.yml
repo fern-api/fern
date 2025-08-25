@@ -9,6 +9,6 @@ auth-schemes:
     type: client-credentials
     get-token:
       endpoint: auth.getToken
-      response-properties:
+      response-properties: 
         access-token: $response.access_token
         expires-in: $response.expires_in

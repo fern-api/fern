@@ -24,7 +24,9 @@
   "bin": {
     "fern-scripts": "./lib/cli.js"
   },
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",

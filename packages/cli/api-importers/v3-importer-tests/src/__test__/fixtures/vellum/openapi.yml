@@ -68,53 +68,53 @@ paths:
       operationId: execute_prompt_stream
       description: Executes a deployed Prompt and streams back the results.
       tags:
-        - execute-prompt-stream
+      - execute-prompt-stream
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ExecutePromptStreamRequest"
+              $ref: '#/components/schemas/ExecutePromptStreamRequest'
         required: true
       security:
-        - apiKeyAuth: []
+      - apiKeyAuth: []
       responses:
-        "200":
+        '200':
           content:
             application/x-ndjson:
               schema:
-                $ref: "#/components/schemas/ExecutePromptEvent"
-          description: ""
-        "400":
+                $ref: '#/components/schemas/ExecutePromptEvent'
+          description: ''
+        '400':
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ExecutePromptApiErrorResponse"
-          description: ""
-        "403":
+                $ref: '#/components/schemas/ExecutePromptApiErrorResponse'
+          description: ''
+        '403':
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ExecutePromptApiErrorResponse"
-          description: ""
-        "404":
+                $ref: '#/components/schemas/ExecutePromptApiErrorResponse'
+          description: ''
+        '404':
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ExecutePromptApiErrorResponse"
-          description: ""
-        "500":
+                $ref: '#/components/schemas/ExecutePromptApiErrorResponse'
+          description: ''
+        '500':
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ExecutePromptApiErrorResponse"
-          description: ""
+                $ref: '#/components/schemas/ExecutePromptApiErrorResponse'
+          description: ''
       x-fern-streaming: true
       x-fern-availability: ga
       x-fern-audiences:
-        - customers
+      - customers
       servers:
-        - url: https://predict.vellum.ai
-          x-name: Predict
+      - url: https://predict.vellum.ai
+        x-name: Predict
   /v1/document-indexes:
     post:
       operationId: document_indexes_create
@@ -1161,20 +1161,20 @@ components:
           type: string
           description: Details about why the request failed.
       required:
-        - detail
+      - detail
     ExecutePromptEvent:
       oneOf:
-        - $ref: "#/components/schemas/InitiatedExecutePromptEvent"
-        - $ref: "#/components/schemas/StreamingExecutePromptEvent"
-        - $ref: "#/components/schemas/FulfilledExecutePromptEvent"
-        - $ref: "#/components/schemas/RejectedExecutePromptEvent"
+      - $ref: '#/components/schemas/InitiatedExecutePromptEvent'
+      - $ref: '#/components/schemas/StreamingExecutePromptEvent'
+      - $ref: '#/components/schemas/FulfilledExecutePromptEvent'
+      - $ref: '#/components/schemas/RejectedExecutePromptEvent'
       discriminator:
         propertyName: state
         mapping:
-          INITIATED: "#/components/schemas/InitiatedExecutePromptEvent"
-          STREAMING: "#/components/schemas/StreamingExecutePromptEvent"
-          FULFILLED: "#/components/schemas/FulfilledExecutePromptEvent"
-          REJECTED: "#/components/schemas/RejectedExecutePromptEvent"
+          INITIATED: '#/components/schemas/InitiatedExecutePromptEvent'
+          STREAMING: '#/components/schemas/StreamingExecutePromptEvent'
+          FULFILLED: '#/components/schemas/FulfilledExecutePromptEvent'
+          REJECTED: '#/components/schemas/RejectedExecutePromptEvent'
     ExecutePromptStreamRequest:
       type: object
       properties:
@@ -1224,11 +1224,11 @@ components:
             used to capture additional monitoring data such as user id, session id,
             etc. for future analysis.
       required:
-        - inputs
+      - inputs
     InitiatedEnum:
       type: string
       enum:
-        - INITIATED
+      - INITIATED
     InitiatedPromptExecutionMeta:
       type: object
       description: The subset of the metadata tracked by Vellum during prompt execution
@@ -1252,83 +1252,83 @@ components:
         model has returned and begun streaming.
       properties:
         state:
-          $ref: "#/components/schemas/InitiatedEnum"
+          $ref: '#/components/schemas/InitiatedEnum'
         meta:
-          $ref: "#/components/schemas/InitiatedPromptExecutionMeta"
+          $ref: '#/components/schemas/InitiatedPromptExecutionMeta'
         execution_id:
           type: string
       required:
-        - execution_id
-        - state
+      - execution_id
+      - state
     StreamingEnum:
       type: string
       enum:
-        - STREAMING
+      - STREAMING
     PromptOutput:
       oneOf:
-        - $ref: "#/components/schemas/StringVellumValue"
-        - $ref: "#/components/schemas/JsonVellumValue"
-        - $ref: "#/components/schemas/ErrorVellumValue"
-        - $ref: "#/components/schemas/FunctionCallVellumValue"
+      - $ref: '#/components/schemas/StringVellumValue'
+      - $ref: '#/components/schemas/JsonVellumValue'
+      - $ref: '#/components/schemas/ErrorVellumValue'
+      - $ref: '#/components/schemas/FunctionCallVellumValue'
       discriminator:
         propertyName: type
         mapping:
-          STRING: "#/components/schemas/StringVellumValue"
-          JSON: "#/components/schemas/JsonVellumValue"
-          ERROR: "#/components/schemas/ErrorVellumValue"
-          FUNCTION_CALL: "#/components/schemas/FunctionCallVellumValue"
+          STRING: '#/components/schemas/StringVellumValue'
+          JSON: '#/components/schemas/JsonVellumValue'
+          ERROR: '#/components/schemas/ErrorVellumValue'
+          FUNCTION_CALL: '#/components/schemas/FunctionCallVellumValue'
     StringVellumValue:
       type: object
       description: A value representing a string.
       properties:
         type:
-          $ref: "#/components/schemas/StringEnum"
+          $ref: '#/components/schemas/StringEnum'
         value:
           type: string
           nullable: true
       required:
-        - type
-        - value
+      - type
+      - value
     StringEnum:
       type: string
       enum:
-        - STRING
+      - STRING
     JsonEnum:
       type: string
       enum:
-        - JSON
+      - JSON
     JsonVellumValue:
       type: object
       description: A value representing a JSON object.
       properties:
         type:
-          $ref: "#/components/schemas/JsonEnum"
+          $ref: '#/components/schemas/JsonEnum'
         value:
           nullable: true
       required:
-        - type
-        - value
+      - type
+      - value
     ErrorEnum:
       type: string
       enum:
-        - ERROR
+      - ERROR
     FunctionCallVellumValue:
       type: object
       description: A value representing a Function Call.
       properties:
         type:
-          $ref: "#/components/schemas/FunctionCallEnum"
+          $ref: '#/components/schemas/FunctionCallEnum'
         value:
           allOf:
-            - $ref: "#/components/schemas/FunctionCall"
+          - $ref: '#/components/schemas/FunctionCall'
           nullable: true
       required:
-        - type
-        - value
+      - type
+      - value
     FunctionCallEnum:
       type: string
       enum:
-        - FUNCTION_CALL
+      - FUNCTION_CALL
     FunctionCall:
       type: object
       description: The final resolved function call value.
@@ -1343,45 +1343,45 @@ components:
         name:
           type: string
       required:
-        - arguments
-        - name
+      - arguments
+      - name
     ErrorVellumValue:
       type: object
       description: A value representing an Error.
       properties:
         type:
-          $ref: "#/components/schemas/ErrorEnum"
+          $ref: '#/components/schemas/ErrorEnum'
         value:
           allOf:
-            - $ref: "#/components/schemas/VellumError"
+          - $ref: '#/components/schemas/VellumError'
           nullable: true
       required:
-        - type
-        - value
+      - type
+      - value
     StreamingExecutePromptEvent:
       type: object
       description: The data returned for each delta during the prompt execution stream.
       properties:
         state:
-          $ref: "#/components/schemas/StreamingEnum"
+          $ref: '#/components/schemas/StreamingEnum'
         output:
-          $ref: "#/components/schemas/PromptOutput"
+          $ref: '#/components/schemas/PromptOutput'
         output_index:
           type: integer
         execution_id:
           type: string
         meta:
-          $ref: "#/components/schemas/StreamingPromptExecutionMeta"
+          $ref: '#/components/schemas/StreamingPromptExecutionMeta'
         raw:
           type: object
           additionalProperties: {}
           description: The subset of the raw response from the model that the request
             opted into with `expand_raw`.
       required:
-        - execution_id
-        - output
-        - output_index
-        - state
+      - execution_id
+      - output
+      - output_index
+      - state
     StreamingPromptExecutionMeta:
       type: object
       description: The subset of the metadata tracked by Vellum during prompt execution
@@ -1393,26 +1393,26 @@ components:
     FulfilledEnum:
       type: string
       enum:
-        - FULFILLED
+      - FULFILLED
     FulfilledExecutePromptEvent:
       type: object
       description: The final data event returned indicating that the stream has ended
         and all final resolved values from the model can be found.
       properties:
         state:
-          $ref: "#/components/schemas/FulfilledEnum"
+          $ref: '#/components/schemas/FulfilledEnum'
         outputs:
           type: array
           items:
-            $ref: "#/components/schemas/PromptOutput"
+            $ref: '#/components/schemas/PromptOutput'
         execution_id:
           type: string
         meta:
-          $ref: "#/components/schemas/FulfilledPromptExecutionMeta"
+          $ref: '#/components/schemas/FulfilledPromptExecutionMeta'
       required:
-        - execution_id
-        - outputs
-        - state
+      - execution_id
+      - outputs
+      - state
     FulfilledPromptExecutionMeta:
       type: object
       description: The subset of the metadata tracked by Vellum during prompt execution
@@ -1423,37 +1423,37 @@ components:
           nullable: true
         finish_reason:
           allOf:
-            - $ref: "#/components/schemas/FinishReasonEnum"
+          - $ref: '#/components/schemas/FinishReasonEnum'
           nullable: true
         usage:
           allOf:
-            - $ref: "#/components/schemas/MLModelUsage"
+          - $ref: '#/components/schemas/MLModelUsage'
           nullable: true
         cost:
           allOf:
-            - $ref: "#/components/schemas/Price"
+          - $ref: '#/components/schemas/Price'
           nullable: true
     RejectedEnum:
       type: string
       enum:
-        - REJECTED
+      - REJECTED
     RejectedExecutePromptEvent:
       type: object
       description: The final data returned indicating an error occurred during the
         stream.
       properties:
         state:
-          $ref: "#/components/schemas/RejectedEnum"
+          $ref: '#/components/schemas/RejectedEnum'
         error:
-          $ref: "#/components/schemas/VellumError"
+          $ref: '#/components/schemas/VellumError'
         execution_id:
           type: string
         meta:
-          $ref: "#/components/schemas/RejectedPromptExecutionMeta"
+          $ref: '#/components/schemas/RejectedPromptExecutionMeta'
       required:
-        - error
-        - execution_id
-        - state
+      - error
+      - execution_id
+      - state
     RejectedPromptExecutionMeta:
       type: object
       description: The subset of the metadata tracked by Vellum during prompt execution
@@ -1464,7 +1464,7 @@ components:
           nullable: true
         finish_reason:
           allOf:
-            - $ref: "#/components/schemas/FinishReasonEnum"
+          - $ref: '#/components/schemas/FinishReasonEnum'
           nullable: true
     ExecuteWorkflowStreamRequest:
       type: object
@@ -1996,10 +1996,10 @@ components:
           type: number
           format: double
         unit:
-          $ref: "#/components/schemas/UnitEnum"
+          $ref: '#/components/schemas/UnitEnum'
       required:
-        - unit
-        - value
+      - unit
+      - value
     ProcessingFailureReasonEnum:
       enum:
         - EXCEEDED_CHARACTER_LIMIT
@@ -2914,9 +2914,9 @@ components:
         - input_values
     UnitEnum:
       enum:
-        - USD
+      - USD
       type: string
-      description: "* `USD` - USD"
+      description: '* `USD` - USD'
     UploadDocumentBodyRequest:
       type: object
       properties:
@@ -2996,18 +2996,18 @@ components:
         message:
           type: string
         code:
-          $ref: "#/components/schemas/VellumErrorCodeEnum"
+          $ref: '#/components/schemas/VellumErrorCodeEnum'
       required:
-        - code
-        - message
+      - code
+      - message
     VellumErrorCodeEnum:
       enum:
-        - INVALID_REQUEST
-        - INVALID_INPUTS
-        - PROVIDER_ERROR
-        - REQUEST_TIMEOUT
-        - INTERNAL_SERVER_ERROR
-        - USER_DEFINED_ERROR
+      - INVALID_REQUEST
+      - INVALID_INPUTS
+      - PROVIDER_ERROR
+      - REQUEST_TIMEOUT
+      - INTERNAL_SERVER_ERROR
+      - USER_DEFINED_ERROR
       type: string
       description: |-
         * `INVALID_REQUEST` - INVALID_REQUEST

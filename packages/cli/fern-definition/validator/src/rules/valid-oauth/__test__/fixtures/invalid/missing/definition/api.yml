@@ -4,7 +4,7 @@ imports:
 
 auth: OAuthScheme
 auth-schemes:
-  OAuthScheme:
+  OAuthScheme: 
     scheme: oauth
     type: client-credentials
     get-token:

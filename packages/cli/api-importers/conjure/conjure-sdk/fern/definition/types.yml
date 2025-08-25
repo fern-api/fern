@@ -1,74 +1,74 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-imports:
+imports: 
   commons: commons.yml
 
-types:
-  ConjureTypes:
-    properties:
+types: 
+  ConjureTypes: 
+    properties: 
       "conjure-imports": optional<map<string, string>>
       "definitions": optional<ConjureDefinitions>
-
-  ConjureDefinitions:
-    properties:
+  
+  ConjureDefinitions: 
+    properties: 
       objects: optional<map<string, ConjureTypeDeclaration>>
-
-  ConjureTypeDeclaration:
+  
+  ConjureTypeDeclaration: 
     discriminated: false
-    union:
+    union: 
       - ConjureAliasDeclaration
       - ConjureUnionDeclaration
       - ConjureObjectDeclaration
       - ConjureEnumDeclaration
-
-  ConjureAliasDeclaration:
-    properties:
+  
+  ConjureAliasDeclaration: 
+    properties: 
       alias: ConjureType
       docs: optional<string>
-
-  ConjureUnionDeclaration:
-    properties:
+  
+  ConjureUnionDeclaration: 
+    properties: 
       union: map<string, ConjureTypeReference>
-
-  ConjureObjectDeclaration:
-    properties:
+  
+  ConjureObjectDeclaration: 
+    properties: 
       fields: map<string, ConjureTypeReference>
 
-  ConjureEnumDeclaration:
-    properties:
+  ConjureEnumDeclaration: 
+    properties: 
       values: list<ConjureEnumVariant>
-
-  ConjureEnumVariant:
+  
+  ConjureEnumVariant: 
     discriminated: false
-    union:
+    union: 
       - string
       - ConjureEnumWithDocs
-
-  ConjureEnumWithDocs:
-    extends:
+  
+  ConjureEnumWithDocs: 
+    extends: 
       - commons.WithDocs
-    properties:
+    properties: 
       value: string
-
-  ConjureTypeReference:
+      
+  ConjureTypeReference: 
     discriminated: false
-    union:
+    union: 
       - ConjureType
       - ConjureTypeWithDocs
-
-  ConjureType:
+  
+  ConjureType: 
     discriminated: false
-    union:
+    union: 
       - ConjurePrimitive
       - string
-
-  ConjureTypeWithDocs:
-    properties:
+  
+  ConjureTypeWithDocs: 
+    properties: 
       type: ConjureType
       docs: optional<string>
-
-  ConjurePrimitive:
-    enum:
+    
+  ConjurePrimitive: 
+    enum: 
       - rid
       - string
       - safelong

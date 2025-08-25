@@ -303,6 +303,7 @@ service:
               the next page of results.
       response: root.UsernameCursor
 
+
     listWithGlobalConfig:
       method: GET
       path: ""

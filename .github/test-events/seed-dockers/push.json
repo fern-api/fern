@@ -1,8 +1,11 @@
 {
   "push": {
-    "paths": [".github/workflows/seed-dockers.yml", "docker/seed/Dockerfile.ts"]
+    "paths": [
+      ".github/workflows/seed-dockers.yml",
+      "docker/seed/Dockerfile.ts"
+    ]
   },
-  "repository": {
+  "repository":{
     "default_branch": "main"
   }
 }

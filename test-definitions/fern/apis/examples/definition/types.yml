@@ -48,38 +48,38 @@ types:
               rottenTomatoes: 97
               imdb: 7.6
           revenue: 1000000
-
-  CastMember:
+  
+  CastMember: 
     discriminated: false
-    union:
+    union: 
       - Actor
       - Actress
       - StuntDouble
-    examples:
+    examples: 
       - name: Example0
-        value:
+        value: 
           id: actor_123
           name: "Brad Pitt"
       - name: Example1
         value: $Actress.Example0
 
-  Actor:
-    properties:
+  Actor: 
+    properties: 
       name: string
       id: string
-
-  Actress:
-    properties:
+  
+  Actress: 
+    properties: 
       name: string
       id: string
-    examples:
+    examples: 
       - name: Example0
-        value:
+        value: 
           name: Jennifer Lawrence
           id: actor_456
-
-  StuntDouble:
-    properties:
+  
+  StuntDouble: 
+    properties: 
       name: string
       actorOrActressId: string
 
@@ -263,10 +263,10 @@ types:
           response: "Initializing..."
           identifiers:
             - type: primitive
-              value: "example"
+              value: 'example'
               label: Primitive
             - type: unknown
-              value: "{}"
+              value: '{}'
               label: Unknown
 
   ResponseType:
@@ -318,7 +318,7 @@ types:
       expression: string
     examples:
       - name: example1
-        value:
+        value: 
           expression: 0 */6 * * *
 
   RefreshTokenRequest:

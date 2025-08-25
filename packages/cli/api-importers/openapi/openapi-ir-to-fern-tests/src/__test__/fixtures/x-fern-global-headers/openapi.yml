@@ -4,10 +4,10 @@ info:
   version: 1.0.0
 x-fern-version:
   header: my-api-version
-  default: "1.0"
+  default: '1.0'
   values:
-    - "1.0"
-    - "latest"
+    - '1.0'
+    - 'latest'
 x-fern-global-headers:
   - header: my-api-key
     name: api-key-alias
@@ -65,7 +65,7 @@ paths:
               properties:
                 stream:
                   type: boolean
-                  x-fern-audiences: ["public"]
+                  x-fern-audiences: [ "public" ]
       responses:
         "200":
           description: "Success!"

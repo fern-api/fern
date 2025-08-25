@@ -1,7 +1,7 @@
 types:
   User:
     properties:
-      id:
+      id: 
         type: string
         access: read-only
       name: string

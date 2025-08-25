@@ -4,10 +4,16 @@
     "composite": true,
     "outDir": "lib",
     "rootDir": "src",
-    "types": ["vitest/globals"]
+    "types": [
+      "vitest/globals"
+    ]
   },
-  "include": ["./src/**/*"],
-  "exclude": ["./src/**/__test__/**/generated"],
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "./src/**/__test__/**/generated"
+  ],
   "references": [
     {
       "path": "../../../commons/fs-utils"

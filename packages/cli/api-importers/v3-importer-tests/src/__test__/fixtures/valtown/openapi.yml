@@ -8,7 +8,7 @@ info:
 
     https://api.val.town/openapi.json
   termsOfService: https://www.val.town/termsofuse
-  version: "1"
+  version: '1'
 components:
   securitySchemes:
     bearerAuth:
@@ -36,20 +36,20 @@ components:
           anyOf:
             - description: The user’s biography, if they have provided one
               type: string
-            - type: "null"
+            - type: 'null'
         username:
           anyOf:
             - description: >-
                 The user’s handle that they chose for themselves. Does not
                 include the @ symbol
               type: string
-            - type: "null"
+            - type: 'null'
         profileImageUrl:
           anyOf:
             - description: URL that points to the user’s profile image, if one exists
               format: uri
               type: string
-            - type: "null"
+            - type: 'null'
         url:
           format: uri
           description: URL of this user’s profile on Val Town’s website
@@ -129,7 +129,7 @@ components:
           anyOf:
             - type: string
             - type: number
-            - type: "null"
+            - type: 'null'
       required:
         - columns
         - columnTypes
@@ -154,7 +154,7 @@ components:
           anyOf:
             - description: TypeScript code associated with this val
               type: string
-            - type: "null"
+            - type: 'null'
         public:
           description: Whether this val is available publicly on Val Town
           type: boolean
@@ -218,11 +218,11 @@ components:
                 username:
                   anyOf:
                     - type: string
-                    - type: "null"
+                    - type: 'null'
               required:
                 - id
                 - username
-            - type: "null"
+            - type: 'null'
         likeCount:
           minimum: 0
           description: How many likes this val has received
@@ -235,7 +235,7 @@ components:
           anyOf:
             - description: This val’s readme, as Markdown
               type: string
-            - type: "null"
+            - type: 'null'
       required:
         - name
         - id
@@ -257,7 +257,7 @@ components:
         - version: 0
           name: counter
           code: export const count = 1;
-          createdAt: "2024-06-11T22:05:12.585Z"
+          createdAt: '2024-06-11T22:05:12.585Z'
           public: true
           id: 00000000-0000-0000-0000-000000000000
           privacy: public
@@ -283,7 +283,7 @@ components:
           anyOf:
             - description: TypeScript code associated with this val
               type: string
-            - type: "null"
+            - type: 'null'
         public:
           description: Whether this val is available publicly on Val Town
           type: boolean
@@ -347,11 +347,11 @@ components:
                 username:
                   anyOf:
                     - type: string
-                    - type: "null"
+                    - type: 'null'
               required:
                 - id
                 - username
-            - type: "null"
+            - type: 'null'
       required:
         - name
         - id
@@ -416,7 +416,7 @@ paths:
           required: true
           description: Search query
       responses:
-        "200":
+        '200':
           description: A paginated result set
           content:
             application/json:
@@ -427,9 +427,9 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: "#/components/schemas/BasicVal"
+                      $ref: '#/components/schemas/BasicVal'
                   links:
-                    $ref: "#/components/schemas/PaginationLinks"
+                    $ref: '#/components/schemas/PaginationLinks'
                 required:
                   - data
                   - links
@@ -447,12 +447,12 @@ paths:
           required: true
           description: Username of the user who you are looking for
       responses:
-        "200":
+        '200':
           description: Default Response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                $ref: '#/components/schemas/User'
   /v1/alias/{username}/{val_name}:
     get:
       operationId: aliasVal
@@ -473,7 +473,7 @@ paths:
           required: true
           description: Name of the val you’re looking for
       responses:
-        "200":
+        '200':
           description: A Val
           content:
             application/json:
@@ -496,7 +496,7 @@ paths:
                     anyOf:
                       - description: TypeScript code associated with this val
                         type: string
-                      - type: "null"
+                      - type: 'null'
                   public:
                     description: Whether this val is available publicly on Val Town
                     type: boolean
@@ -560,11 +560,11 @@ paths:
                           username:
                             anyOf:
                               - type: string
-                              - type: "null"
+                              - type: 'null'
                         required:
                           - id
                           - username
-                      - type: "null"
+                      - type: 'null'
                   likeCount:
                     minimum: 0
                     description: How many likes this val has received
@@ -577,7 +577,7 @@ paths:
                     anyOf:
                       - description: This val’s readme, as Markdown
                         type: string
-                      - type: "null"
+                      - type: 'null'
                 required:
                   - name
                   - id
@@ -600,7 +600,7 @@ paths:
         - me
       description: Get profile information for the current user
       responses:
-        "200":
+        '200':
           description: Your user information, with tier and email included
           content:
             application/json:
@@ -616,14 +616,14 @@ paths:
                     anyOf:
                       - description: The user’s biography, if they have provided one
                         type: string
-                      - type: "null"
+                      - type: 'null'
                   username:
                     anyOf:
                       - description: >-
                           The user’s handle that they chose for themselves. Does
                           not include the @ symbol
                         type: string
-                      - type: "null"
+                      - type: 'null'
                   profileImageUrl:
                     anyOf:
                       - description: >-
@@ -631,7 +631,7 @@ paths:
                           exists
                         format: uri
                         type: string
-                      - type: "null"
+                      - type: 'null'
                   url:
                     format: uri
                     description: URL of this user’s profile on Val Town’s website
@@ -652,7 +652,7 @@ paths:
                           - free
                           - pro
                         description: Your account tier
-                      - type: "null"
+                      - type: 'null'
                   email:
                     description: Your email address
                     type: string
@@ -697,7 +697,7 @@ paths:
           required: true
           description: Maximum items to return in each paginated response
       responses:
-        "200":
+        '200':
           description: A paginated result set
           content:
             application/json:
@@ -708,9 +708,9 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: "#/components/schemas/BasicVal"
+                      $ref: '#/components/schemas/BasicVal'
                   links:
-                    $ref: "#/components/schemas/PaginationLinks"
+                    $ref: '#/components/schemas/PaginationLinks'
                 required:
                   - data
                   - links
@@ -764,7 +764,7 @@ paths:
           required: true
           description: Whether to get comments you have received, given, or both
       responses:
-        "200":
+        '200':
           description: A paginated result set
           content:
             application/json:
@@ -796,7 +796,7 @@ paths:
                             username:
                               anyOf:
                                 - type: string
-                                - type: "null"
+                                - type: 'null'
                           required:
                             - id
                             - username
@@ -833,11 +833,11 @@ paths:
                                     username:
                                       anyOf:
                                         - type: string
-                                        - type: "null"
+                                        - type: 'null'
                                   required:
                                     - id
                                     - username
-                                - type: "null"
+                                - type: 'null'
                           required:
                             - name
                             - id
@@ -851,7 +851,7 @@ paths:
                         - author
                         - val
                   links:
-                    $ref: "#/components/schemas/PaginationLinks"
+                    $ref: '#/components/schemas/PaginationLinks'
                 required:
                   - data
                   - links
@@ -894,7 +894,7 @@ paths:
           required: false
           description: Include items created before this date
       responses:
-        "200":
+        '200':
           description: A paginated result set
           content:
             application/json:
@@ -925,13 +925,13 @@ paths:
                                     The username of the person who authored this
                                     val
                                   type: string
-                                - type: "null"
+                                - type: 'null'
                             author_id:
                               anyOf:
                                 - format: uuid
                                   description: The ID of the person who authored this val
                                   type: string
-                                - type: "null"
+                                - type: 'null'
                             name:
                               description: The name of this val
                               type: string
@@ -954,13 +954,13 @@ paths:
                                     The username of the person who authored this
                                     val
                                   type: string
-                                - type: "null"
+                                - type: 'null'
                             author_id:
                               anyOf:
                                 - format: uuid
                                   description: The ID of the person who authored this val
                                   type: string
-                                - type: "null"
+                                - type: 'null'
                             name:
                               description: The name of this val
                               type: string
@@ -977,7 +977,7 @@ paths:
                         - dependsOn
                         - referencedAt
                   links:
-                    $ref: "#/components/schemas/PaginationLinks"
+                    $ref: '#/components/schemas/PaginationLinks'
                 required:
                   - data
                   - links
@@ -995,7 +995,7 @@ paths:
           required: false
           description: If specified, only include blobs that start with this string
       responses:
-        "200":
+        '200':
           description: List of blobs that you’ve stored
           content:
             application/json:
@@ -1020,7 +1020,7 @@ paths:
               example:
                 - key: hello_world
                   size: 20
-                  lastModified: "2024-06-24T20:00:59.702Z"
+                  lastModified: '2024-06-24T20:00:59.702Z'
   /v1/blob/{key}:
     get:
       operationId: blobsGet
@@ -1037,7 +1037,7 @@ paths:
           required: true
           description: Key that uniquely identifies this blob
       responses:
-        "200":
+        '200':
           description: Binary contents of the returned file
           content:
             application/octet-stream:
@@ -1069,7 +1069,7 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        "201":
+        '201':
           description: Successfully stored as blob
     delete:
       operationId: blobsDelete
@@ -1088,7 +1088,7 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        "204":
+        '204':
           description: Blob successfully deleted
   /v1/users/{user_id}:
     get:
@@ -1104,12 +1104,12 @@ paths:
           required: true
           description: User Id
       responses:
-        "200":
+        '200':
           description: Default Response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                $ref: '#/components/schemas/User'
   /v1/users/{user_id}/vals:
     get:
       operationId: usersVals
@@ -1141,7 +1141,7 @@ paths:
           required: true
           description: User Id
       responses:
-        "200":
+        '200':
           description: A paginated result set
           content:
             application/json:
@@ -1152,9 +1152,9 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: "#/components/schemas/BasicVal"
+                      $ref: '#/components/schemas/BasicVal'
                   links:
-                    $ref: "#/components/schemas/PaginationLinks"
+                    $ref: '#/components/schemas/PaginationLinks'
                 required:
                   - data
                   - links
@@ -1197,7 +1197,7 @@ paths:
                                   - type: string
                                   - type: number
                                   - type: boolean
-                                  - type: "null"
+                                  - type: 'null'
                             - type: object
                               additionalProperties:
                                 title: TursoValue
@@ -1206,7 +1206,7 @@ paths:
                                   - type: string
                                   - type: number
                                   - type: boolean
-                                  - type: "null"
+                                  - type: 'null'
                       required:
                         - sql
                         - args
@@ -1227,12 +1227,12 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        "200":
+        '200':
           description: Default Response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ResultSet"
+                $ref: '#/components/schemas/ResultSet'
   /v1/sqlite/batch:
     post:
       operationId: sqliteBatch
@@ -1276,7 +1276,7 @@ paths:
                                     - type: string
                                     - type: number
                                     - type: boolean
-                                    - type: "null"
+                                    - type: 'null'
                               - type: object
                                 additionalProperties:
                                   title: TursoValue
@@ -1285,7 +1285,7 @@ paths:
                                     - type: string
                                     - type: number
                                     - type: boolean
-                                    - type: "null"
+                                    - type: 'null'
                         required:
                           - sql
                           - args
@@ -1306,7 +1306,7 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        "200":
+        '200':
           description: Array of results from the statements executed
           content:
             application/json:
@@ -1314,7 +1314,7 @@ paths:
                 description: Array of results from the statements executed
                 type: array
                 items:
-                  $ref: "#/components/schemas/ResultSet"
+                  $ref: '#/components/schemas/ResultSet'
               example:
                 - columns:
                     - id
@@ -1365,7 +1365,7 @@ paths:
                     - 1
         required: true
       responses:
-        "200":
+        '200':
           description: Default Response
           content:
             application/json:
@@ -1377,8 +1377,8 @@ paths:
                     additionalProperties: true
                   - type: array
                   - type: boolean
-                  - type: "null"
-        "400":
+                  - type: 'null'
+        '400':
           description: Default Response
           content:
             application/json:
@@ -1414,7 +1414,7 @@ paths:
           required: true
           description: TypeScript source code
       responses:
-        "200":
+        '200':
           description: Default Response
           content:
             application/json:
@@ -1426,8 +1426,8 @@ paths:
                     additionalProperties: true
                   - type: array
                   - type: boolean
-                  - type: "null"
-        "400":
+                  - type: 'null'
+        '400':
           description: The function throw an error or had invalid syntax
           content:
             application/json:
@@ -1468,7 +1468,7 @@ paths:
           description: Name of the val, in concatenated style, like username.valname
       deprecated: true
       responses:
-        "200":
+        '200':
           description: Default Response
     post:
       operationId: runPost
@@ -1499,7 +1499,7 @@ paths:
           description: Name of the val, in concatenated style, like username.valname
       deprecated: true
       responses:
-        "200":
+        '200':
           description: Default Response
   /v1/email:
     post:
@@ -1699,7 +1699,7 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        "200":
+        '200':
           description: Successfully sent email
           content:
             application/json:
@@ -1711,7 +1711,7 @@ paths:
                     type: string
                 required:
                   - message
-        "500":
+        '500':
           description: Default Response
           content:
             application/json:
@@ -1774,7 +1774,7 @@ paths:
             example:
               code: console.log(1);
               name: myVal
-              readme: "# My Val"
+              readme: '# My Val'
               privacy: public
               type: script
         required: true
@@ -1782,12 +1782,12 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        "200":
+        '200':
           description: Default Response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ExtendedVal"
+                $ref: '#/components/schemas/ExtendedVal'
     put:
       operationId: valsPut
       tags:
@@ -1821,7 +1821,7 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        "200":
+        '200':
           description: Default Response
   /v1/vals/{val_id}:
     get:
@@ -1838,12 +1838,12 @@ paths:
           required: true
           description: Id of a val
       responses:
-        "200":
+        '200':
           description: Default Response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ExtendedVal"
+                $ref: '#/components/schemas/ExtendedVal'
     put:
       operationId: valsUpdate
       tags:
@@ -1889,7 +1889,7 @@ paths:
             examples:
               example1:
                 value:
-                  readme: "# Updated readme"
+                  readme: '# Updated readme'
                   name: myVal
               example2:
                 value:
@@ -1908,7 +1908,7 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        "204":
+        '204':
           description: Val successfully updated
     delete:
       operationId: valsDelete
@@ -1926,9 +1926,9 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        "204":
+        '204':
           description: Val successfully deleted
-        "404":
+        '404':
           description: The val was not found
   /v1/vals/{val_id}/versions:
     get:
@@ -1962,7 +1962,7 @@ paths:
           required: true
           description: Id of a val
       responses:
-        "200":
+        '200':
           description: A paginated result set
           content:
             application/json:
@@ -1991,7 +1991,7 @@ paths:
                         - version
                         - createdAt
                   links:
-                    $ref: "#/components/schemas/PaginationLinks"
+                    $ref: '#/components/schemas/PaginationLinks'
                 required:
                   - data
                   - links
@@ -2046,7 +2046,7 @@ paths:
             example:
               code: console.log(1);
               name: myVal
-              readme: "# My Val"
+              readme: '# My Val'
               privacy: public
               type: script
         required: true
@@ -2062,12 +2062,12 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        "201":
+        '201':
           description: Default Response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ExtendedVal"
+                $ref: '#/components/schemas/ExtendedVal'
   /v1/vals/{val_id}/versions/{version}:
     get:
       operationId: valsGetVersion
@@ -2107,12 +2107,12 @@ paths:
           required: true
           description: The val version
       responses:
-        "200":
+        '200':
           description: Default Response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ExtendedVal"
+                $ref: '#/components/schemas/ExtendedVal'
     delete:
       operationId: valsDeleteVersion
       tags:
@@ -2136,9 +2136,9 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        "204":
+        '204':
           description: Version successfully deleted
-        "404":
+        '404':
           description: The val was not found
   /v1/vals/{val_id}/evaluations/{evaluation_id}/cancel:
     post:
@@ -2166,7 +2166,7 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        "200":
+        '200':
           description: >-
             The evaluation_id was successfully searched for and the evaluation
             was either already done or now has been cancelled
@@ -2183,7 +2183,7 @@ paths:
                     type: boolean
                 required:
                   - found
-        "404":
+        '404':
           description: Default Response
           content:
             application/json:

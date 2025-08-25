@@ -37,7 +37,7 @@ types:
     enum:
       - SQUARE
       - CIRCLE
-      - TRIANGLE
+      - TRIANGLE 
 
   Type:
     docs: |

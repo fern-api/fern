@@ -22,7 +22,7 @@ types:
       - DocumentUploadResult
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   endpoints:
     uploadJsonDocument:
       auth: true

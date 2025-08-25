@@ -5,3 +5,4 @@ service:
     getSomething:
       path: /get-something
       method: GET
+    

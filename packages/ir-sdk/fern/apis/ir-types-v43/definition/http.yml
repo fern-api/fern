@@ -159,7 +159,7 @@ types:
       wrapperName: commons.Name
       bodyKey: commons.Name
 
-  HttpResponse:
+  HttpResponse: 
     properties:
       status-code: optional<integer>
       body: optional<HttpResponseBody>
@@ -201,21 +201,21 @@ types:
     extends: commons.WithDocs
 
   StreamingResponse:
-    union:
+    union: 
       json: JsonStreamChunk
       text: TextStreamChunk
       sse: SseStreamChunk
-
-  TextStreamChunk:
+    
+  TextStreamChunk: 
     extends: commons.WithDocs
     properties: {}
-
+    
   JsonStreamChunk:
     extends: commons.WithDocs
     properties:
       payload: types.TypeReference
       terminator: optional<string>
-
+  
   SseStreamChunk:
     extends: commons.WithDocs
     properties:

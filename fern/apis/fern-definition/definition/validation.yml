@@ -1,21 +1,22 @@
-types:
-  ValidationSchema:
+types: 
+  ValidationSchema: 
     discriminated: false
-    union:
+    union: 
       - StringValidationSchema
       - NumberValidationSchema
-
-  StringValidationSchema:
-    properties:
+  
+  StringValidationSchema: 
+    properties: 
       minLength: optional<integer>
       maxLength: optional<integer>
       pattern: optional<string>
       format: optional<string>
-
-  NumberValidationSchema:
-    properties:
+  
+  NumberValidationSchema: 
+    properties: 
       min: optional<double>
       max: optional<double>
       exclusiveMin: optional<boolean>
       exclusiveMax: optional<boolean>
       multipleOf: optional<double>
+    

@@ -11,7 +11,7 @@ service:
     createUser:
       path: /user
       method: POST
-      request:
+      request: 
         name: CreateUserRequest
         body:
           extra-properties: true

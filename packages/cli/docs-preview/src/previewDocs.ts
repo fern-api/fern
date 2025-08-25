@@ -91,7 +91,8 @@ export async function getPreviewDocsDefinition({
 
             previousDocsDefinition.pages[FdrAPI.PageId(relativePath)] = {
                 markdown: finalMarkdown,
-                editThisPageUrl: previousValue.editThisPageUrl
+                editThisPageUrl: previousValue.editThisPageUrl,
+                rawMarkdown: markdown
             };
         }
 

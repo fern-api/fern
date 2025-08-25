@@ -3,13 +3,13 @@ post:
     - name: Accepts
       description: |
         Pass text/event-stream to receive the streamed response as server-sent events. The default is `\n` delimited events.
-      x-fern-audiences: ["public"]
+      x-fern-audiences: ['public']
       schema:
         type: string
-        enum: ["text/event-stream"]
+        enum: ['text/event-stream']
       in: header
       required: false
-      example: "text/event-stream"
+      example: 'text/event-stream'
   x-fern-audiences: [public]
   summary: Chat
   operationId: chat
@@ -21,25 +21,25 @@ post:
       application/json:
         schema:
           type: object
-          x-fern-audiences: ["public"]
+          x-fern-audiences: ['public']
           required:
             - message
           properties:
             message:
               type: string
-              x-fern-audiences: ["public"]
+              x-fern-audiences: ['public']
               description: |
                 Text input for the model to respond to.
-
+                
                 Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
             model:
               type: string
-              x-fern-audiences: ["public"]
+              x-fern-audiences: ['public']
               description: |
                 Defaults to `command-r-plus-08-2024`.
 
                 The name of a compatible [Cohere model](https://docs.cohere.com/docs/models) or the ID of a [fine-tuned](https://docs.cohere.com/docs/chat-fine-tuning) model.
-
+                
                 Compatible Deployments: Cohere Platform, Private Deployments
             stream:
               description: |
@@ -48,46 +48,46 @@ post:
                 When `true`, the response will be a JSON stream of events. The final event will contain the complete response, and will have an `event_type` of `"stream-end"`.
 
                 Streaming is beneficial for user interfaces that render the contents of the response piece by piece, as it gets generated.
-
+                
                 Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
               type: boolean
-              x-fern-audiences: ["public"]
+              x-fern-audiences: ['public']
             preamble:
               description: |
                 When specified, the default Cohere preamble will be replaced with the provided one. Preambles are a part of the prompt used to adjust the model's overall behavior and conversation style, and use the `SYSTEM` role.
 
                 The `SYSTEM` role is also used for the contents of the optional `chat_history=` parameter. When used with the `chat_history=` parameter it adds content throughout a conversation. Conversely, when used with the `preamble=` parameter it adds content at the start of the conversation only.
-
+                
                 Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
               type: string
-              x-fern-audiences: ["public"]
+              x-fern-audiences: ['public']
             chat_history:
               type: array
-              x-fern-audiences: ["public"]
+              x-fern-audiences: ['public']
               minItems: 0
               items:
-                $ref: "./types/Message.yaml"
+                $ref: './types/Message.yaml'
               description: |
                 A list of previous messages between the user and the model, giving the model conversational context for responding to the user's `message`.
 
                 Each item represents a single message in the chat history, excluding the current user turn. It has two properties: `role` and `message`. The `role` identifies the sender (`CHATBOT`, `SYSTEM`, or `USER`), while the `message` contains the text content.
 
                 The chat_history parameter should not be used for `SYSTEM` messages in most cases. Instead, to add a `SYSTEM` role message at the beginning of a conversation, the `preamble` parameter should be used.
-
+                
                 Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
             conversation_id:
               type: string
-              x-fern-audiences: ["public"]
+              x-fern-audiences: ['public']
               description: |
                 An alternative to `chat_history`.
 
                 Providing a `conversation_id` creates or resumes a persisted conversation with the specified ID. The ID can be any non empty string.
-
+                
                 Compatible Deployments: Cohere Platform
             prompt_truncation:
               type: string
-              x-fern-audiences: ["public"]
-              enum: ["OFF", "AUTO", "AUTO_PRESERVE_ORDER"]
+              x-fern-audiences: ['public']
+              enum: ['OFF', 'AUTO', 'AUTO_PRESERVE_ORDER']
               description: |
                 Defaults to `AUTO` when `connectors` are specified and `OFF` in all other cases.
 
@@ -98,18 +98,18 @@ post:
                 With `prompt_truncation` set to "AUTO_PRESERVE_ORDER", some elements from `chat_history` and `documents` will be dropped in an attempt to construct a prompt that fits within the model's context length limit. During this process the order of the documents and chat history will be preserved as they are inputted into the API.
 
                 With `prompt_truncation` set to "OFF", no elements will be dropped. If the sum of the inputs exceeds the model's context length limit, a `TooManyTokens` error will be returned.
-
+                
                 Compatible Deployments: 
                  - AUTO: Cohere Platform Only
                  - AUTO_PRESERVE_ORDER: Azure, AWS Sagemaker/Bedrock, Private Deployments
             force_single_step:
-              x-fern-audiences: ["public"]
+              x-fern-audiences: ['public']
               type: boolean
-              description: "Forces the chat to be single step. Defaults to `false`."
+              description: 'Forces the chat to be single step. Defaults to `false`.'
             safety_mode:
-              x-fern-audiences: ["public"]
+              x-fern-audiences: ['public']
               x-fern-availability: beta
-              enum: ["CONTEXTUAL", "STRICT", "NONE"]
+              enum: ['CONTEXTUAL', 'STRICT', 'NONE']
               description: |
                 Used to select the [safety instruction](/docs/safety-modes) inserted into the prompt. Defaults to `CONTEXTUAL`.
                 When `NONE` is specified, the safety instruction will be omitted.
@@ -120,32 +120,32 @@ post:
 
                 Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
   responses:
-    "400":
-      $ref: "./errors/BadRequest.yaml"
-    "401":
-      $ref: "./errors/Unauthorized.yaml"
-    "403":
-      $ref: "./errors/Forbidden.yaml"
-    "404":
-      $ref: "./errors/NotFound.yaml"
-    "422":
-      $ref: "./errors/UnprocessableEntity.yaml"
-    "429":
-      $ref: "./errors/RateLimit.yaml"
-    "498":
-      $ref: "./errors/InvalidToken.yaml"
-    "499":
-      $ref: "./errors/RequestCancelled.yaml"
-    "500":
-      $ref: "./errors/InternalServerError.yaml"
-    "501":
-      $ref: "./errors/NotImplemented.yaml"
-    "503":
-      $ref: "./errors/ServiceUnavailable.yaml"
-    "504":
-      $ref: "./errors/GatewayTimeout.yaml"
-    "200":
-      description: "OK"
+    '400':
+      $ref: './errors/BadRequest.yaml'
+    '401':
+      $ref: './errors/Unauthorized.yaml'
+    '403':
+      $ref: './errors/Forbidden.yaml'
+    '404':
+      $ref: './errors/NotFound.yaml'
+    '422':
+      $ref: './errors/UnprocessableEntity.yaml'
+    '429':
+      $ref: './errors/RateLimit.yaml'
+    '498':
+      $ref: './errors/InvalidToken.yaml'
+    '499':
+      $ref: './errors/RequestCancelled.yaml'
+    '500':
+      $ref: './errors/InternalServerError.yaml'
+    '501':
+      $ref: './errors/NotImplemented.yaml'
+    '503':
+      $ref: './errors/ServiceUnavailable.yaml'
+    '504':
+      $ref: './errors/GatewayTimeout.yaml'
+    '200':
+      description: 'OK'
       content:
         application/json:
           schema:

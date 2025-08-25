@@ -20,7 +20,7 @@ docs: |
   and local timezone.
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   display-name: Stations
   endpoints:
     get-stations:

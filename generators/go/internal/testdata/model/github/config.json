@@ -1,16 +1,16 @@
 {
-  "irFilepath": "ir.json",
-  "output": {
-    "path": "tmp",
-    "mode": {
-      "type": "github",
-      "repoUrl": "https://github.com/example/repository"
-    }
-  },
-  "workspaceName": "test",
-  "organization": "fernbot",
-  "environment": {
-    "_type": "local"
-  },
-  "dryRun": false
+    "irFilepath": "ir.json",
+    "output": {
+        "path": "tmp",
+        "mode": {
+            "type": "github",
+            "repoUrl": "https://github.com/example/repository"
+        }
+    },
+    "workspaceName": "test",
+    "organization": "fernbot",
+    "environment": {
+        "_type": "local"
+    },
+    "dryRun": false
 }

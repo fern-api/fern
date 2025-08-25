@@ -36,7 +36,7 @@ types:
        - AUTO: Cohere Platform Only
        - AUTO_PRESERVE_ORDER: Azure, AWS Sagemaker/Bedrock, Private Deployments
     enum:
-      - "OFF"
+      - 'OFF'
       - AUTO
       - AUTO_PRESERVE_ORDER
     inline: true
@@ -231,7 +231,7 @@ errors:
     type: unknown
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   endpoints:
     chat:
       audiences:

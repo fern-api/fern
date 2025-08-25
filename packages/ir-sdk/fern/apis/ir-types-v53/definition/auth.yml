@@ -31,7 +31,7 @@ types:
       tokenEnvVar:
         type: optional<EnvironmentVariable>
         docs: The environment variable the SDK should use to read the token.
-
+  
   OAuthScheme:
     extends: commons.WithDocs
     docs: |

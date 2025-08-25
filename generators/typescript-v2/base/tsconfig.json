@@ -2,5 +2,7 @@
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src/**/*"],
-  "references": [{ "path": "../browser-compatible-base" }]
+  "references": [
+    { "path": "../browser-compatible-base" },
+  ]
 }

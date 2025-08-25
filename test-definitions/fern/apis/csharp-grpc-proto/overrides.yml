@@ -3,18 +3,18 @@ components:
     UserModel:
       properties:
         metadata:
-          $ref: "#/components/schemas/Metadata"
+          $ref: '#/components/schemas/Metadata'
 
     CreateRequest:
       properties:
         metadata:
-          $ref: "#/components/schemas/Metadata"
+          $ref: '#/components/schemas/Metadata'
 
     Metadata:
       oneOf:
         - type: object
           additionalProperties:
-            $ref: "#/components/schemas/MetadataValue"
+            $ref: '#/components/schemas/MetadataValue'
         - type: object
       x-fern-encoding:
         proto:

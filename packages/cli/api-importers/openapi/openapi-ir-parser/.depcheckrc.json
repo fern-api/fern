@@ -1,4 +1,7 @@
 {
-  "ignores": [],
-  "ignore-patterns": ["lib"]
+  "ignores": [
+  ],
+  "ignore-patterns": [
+    "lib"
+  ]
 }

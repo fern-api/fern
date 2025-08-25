@@ -19,7 +19,7 @@ features:
   - id: PAGINATION
     description: |
       Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
-
+  
   - id: ACCESS_RAW_RESPONSE_DATA
     advanced: true
     description: |

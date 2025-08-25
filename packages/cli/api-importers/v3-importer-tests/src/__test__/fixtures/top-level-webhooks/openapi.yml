@@ -48,12 +48,12 @@ components:
       type: http
       scheme: bearer
   schemas:
-    Update:
+    Update: 
       type: object
       properties:
-        stream:
+        stream: 
           type: boolean
-        message:
+        message: 
           type: string
-      required:
+      required: 
         - message

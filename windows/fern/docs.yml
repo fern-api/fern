@@ -3,8 +3,8 @@ instances:
 
 title: Windows | Documentation
 
-tabs:
-  api:
+tabs: 
+  api: 
     display-name: API Reference
     icon: puzzle
   help:
@@ -16,27 +16,27 @@ tabs:
     href: https://github.com/navipartner/npcore
 
 navigation:
-  - page: Introduction
-    icon: fa-solid house
-    path: ./docs/pages/intro.mdx
-  - page: URL Structure
-    icon: fa-solid fa-link
-    path: ./docs/pages/paths.mdx
-  - page: API Key
-    icon: fa-solid fa-key
-    path: ./docs/pages/auth.mdx
-  - page: Errors
-    icon: fa-solid fa-exclamation-circle
-    path: ./docs/pages/errors.mdx
-  - page: Versioning
-    icon: fa-solid fa-code-branch
-    path: ./docs/pages/versioning.mdx
+    - page: Introduction
+      icon: fa-solid house
+      path: ./docs/pages/intro.mdx
+    - page: URL Structure
+      icon: fa-solid fa-link
+      path: ./docs/pages/paths.mdx
+    - page: API Key
+      icon: fa-solid fa-key
+      path: ./docs/pages/auth.mdx
+    - page: Errors
+      icon: fa-solid fa-exclamation-circle
+      path: ./docs/pages/errors.mdx
+    - page: Versioning
+      icon: fa-solid fa-code-branch
+      path: ./docs/pages/versioning.mdx
 
 colors:
-  accentPrimary:
+  accentPrimary: 
     light: "#4A90E2"
     dark: "#4A90E2"
-  background:
+  background: 
     light: "#FFFFFF"
     dark: "#14171D"
 
@@ -46,5 +46,5 @@ logo:
   height: 20
   href: https://api.navipartner.com
 
-css:
+css: 
   - styles.css

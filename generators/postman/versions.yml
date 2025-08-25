@@ -1,71 +1,71 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
 - changelogEntry:
-    - summary: |
-        Introduces a `collection-name` configuration that allows you to control 
-        the name of the collection in the generated Postman collection. 
+  - summary: |
+      Introduces a `collection-name` configuration that allows you to control 
+      the name of the collection in the generated Postman collection. 
 
-        ```yml
-        groups: 
-          generators: 
-            postman: 
-              - name: fernapi/fern-postman
-                version: 0.4.0
-                config: 
-                  collection-name: My collection name
-        ```
-      type: feat
-  createdAt: "2024-08-30"
+      ```yml
+      groups: 
+        generators: 
+          postman: 
+            - name: fernapi/fern-postman
+              version: 0.4.0
+              config: 
+                collection-name: My collection name
+      ```
+    type: feat
+  createdAt: '2024-08-30'
   version: 0.4.0
   irVersion: 53
 - changelogEntry:
-    - summary: Increase timeout to 180 seconds when pubishing to postman.
-      type: fix
-  createdAt: "2024-08-30"
+  - summary: Increase timeout to 180 seconds when pubishing to postman. 
+    type: fix
+  createdAt: '2024-08-30'
   version: 0.3.2
   irVersion: 53
 - changelogEntry:
-    - summary: Improve the error messages thrown by the postman generator.
-      type: fix
-  createdAt: "2024-08-30"
+  - summary: Improve the error messages thrown by the postman generator.
+    type: fix
+  createdAt: '2024-08-30'
   version: 0.3.1
   irVersion: 53
 - changelogEntry:
-    - summary: Support updating a postman collection by collection ID.
-      type: feat
-  createdAt: "2024-08-29"
+  - summary: Support updating a postman collection by collection ID.
+    type: feat
+  createdAt: '2024-08-29'
   version: 0.3.0
   irVersion: 53
 - changelogEntry:
-    - summary: The Postman generator now respects an API wide base-path. The base path will be prefixed on all endpoints in the collection.
-      type: feat
-  createdAt: "2024-08-21"
+  - summary: The Postman generator now respects an API wide base-path. The base path will be prefixed on all endpoints in the collection.
+    type: feat
+  createdAt: '2024-08-21'
   version: 0.2.1
   irVersion: 53
 - changelogEntry:
-    - summary: Upgrade the Postman generator to use IR version 53.
-      type: internal
-  createdAt: "2024-08-21"
+  - summary: Upgrade the Postman generator to use IR version 53.
+    type: internal
+  createdAt: '2024-08-21'
   version: 0.2.0
   irVersion: 53
 - changelogEntry:
-    - summary: Shared generator notification and config parsing logic.
-      type: internal
-  createdAt: "2024-03-22"
+  - summary: Shared generator notification and config parsing logic.
+    type: internal
+  createdAt: '2024-03-22'
   version: 0.1.1
   irVersion: 23
 - changelogEntry:
-    - summary: |
-        The Postman generator no longer times out on the latest CLI version. 
-
-        The generator would previously throw on additional fields being present in the IR, which would prevent
-        Fern from adding new fields. Now, the generator does not throw if additional fields are present.
-      type: fix
-  createdAt: "2024-02-11"
+  - summary: |
+      The Postman generator no longer times out on the latest CLI version. 
+  
+      The generator would previously throw on additional fields being present in the IR, which would prevent
+      Fern from adding new fields. Now, the generator does not throw if additional fields are present.
+    type: fix
+  createdAt: '2024-02-11'
   version: 0.1.0
   irVersion: 23
 - changelogEntry:
-    - summary: Release 0.0.46
-      type: internal
-  createdAt: "2024-02-09"
+  - summary: Release 0.0.46
+    type: internal
+  createdAt: '2024-02-09'
   version: 0.0.46
   irVersion: 23

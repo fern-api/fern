@@ -63,19 +63,20 @@ paths:
                   type: string
                   format: binary
                   description: An optional file to upload
-                metadata:
+                metadata: 
                   type: object
                   description: This is a metadata field
-                data:
+                data: 
                   type: object
-                  properties:
+                  properties: 
                     datum:
                       type: string
-              required: [file]
-            encoding:
-              file:
+              required: [file]                                
+            encoding: 
+              file:   
                 contentType: "application/octet-stream"
-              metadata:
+              metadata: 
                 contentType: "application/json"
-              data:
+              data: 
                 explode: true
+              

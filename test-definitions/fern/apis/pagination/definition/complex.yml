@@ -33,9 +33,9 @@ types:
   SingleFilterSearchRequestOperator:
     enum:
       - name: Equals
-        value: "="
+        value: '='
       - name: NotEquals
-        value: "!="
+        value: '!='
       - name: In
         value: IN
       - name: NotIn
@@ -43,11 +43,11 @@ types:
       - name: LessThan
         value: <
       - name: GreaterThan
-        value: ">"
+        value: '>'
       - name: Contains
-        value: "~"
+        value: '~'
       - name: DoesNotContain
-        value: "!~"
+        value: '!~'
       - name: StartsWith
         value: ^
       - name: EndsWith
@@ -91,7 +91,7 @@ types:
       foo: string
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   display-name: Conversations
   endpoints:
     search:
@@ -103,7 +103,7 @@ service:
         next_cursor: $response.pages.next.starting_after
         results: $response.conversations
       path: /{index}/conversations/search
-      path-parameters:
+      path-parameters: 
         index: string
       request:
         body:
@@ -111,3 +111,4 @@ service:
         content-type: application/json
       response:
         type: PaginatedConversationResponse
+

@@ -3,7 +3,11 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "noImplicitAny": true,
@@ -23,5 +27,12 @@
     "declarationMap": true,
     "sourceMap": true
   },
-  "exclude": ["node_modules", "dist", ".turbo", ".github", ".husky", "__snapshots__"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".turbo",
+    ".github",
+    ".husky",
+    "__snapshots__"
+  ]
 }

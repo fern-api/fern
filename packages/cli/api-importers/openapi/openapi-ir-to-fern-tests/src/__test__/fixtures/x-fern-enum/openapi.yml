@@ -3,8 +3,8 @@ info:
   title: Test extension `x-fern-enum` for enums
   version: 1.0.0
 paths: {}
-components:
-  schemas:
+components: 
+  schemas: 
     SpeechModel:
       type: string
       description: The speech model to use for the transcription.

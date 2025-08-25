@@ -9,7 +9,7 @@ service:
       path-parameters:
         parameter: string
       method: POST
-
+    
     inlined:
       path: /path/{parameter}/to/endpoint
       request:

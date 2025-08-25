@@ -18,30 +18,30 @@ groups:
         output:
           location: npm
           url: npm.buildwithfern.com
-          package-name: "@fern-fern/ir-v34-sdk"
+          package-name: '@fern-fern/ir-v34-sdk'
         config:
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
       #- name: fernapi/java-model
-      #version: 0.5.20
-      #output:
-      #location: maven
-      #url: maven.buildwithfern.com
-      #coordinate: com.fern.fern:irV34
-      #config:
-      #wrapped-aliases: true
-      #enable-forward-compatible-enums: true
+        #version: 0.5.20
+        #output:
+          #location: maven
+          #url: maven.buildwithfern.com
+          #coordinate: com.fern.fern:irV34
+        #config:
+          #wrapped-aliases: true
+          #enable-forward-compatible-enums: true
       #- name: fernapi/fern-pydantic-model
-      #version: 0.8.1-rc0
-      #output:
-      #location: pypi
-      #url: pypi.buildwithfern.com
-      #package-name: fern_fern_ir_v34
-      #config:
-      #wrapped_aliases: true
-      #include_union_utils: true
-      #frozen: true
+        #version: 0.8.1-rc0
+        #output:
+          #location: pypi
+          #url: pypi.buildwithfern.com
+          #package-name: fern_fern_ir_v34
+        #config:
+          #wrapped_aliases: true
+          #include_union_utils: true
+          #frozen: true
       #- name: fernapi/fern-go-model
-      #version: 0.9.3
-      #github:
-      #repository: fern-api/ir-go
+        #version: 0.9.3
+        #github:
+          #repository: fern-api/ir-go

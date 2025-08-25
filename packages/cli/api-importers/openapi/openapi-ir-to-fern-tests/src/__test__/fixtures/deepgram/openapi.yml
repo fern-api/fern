@@ -49,69 +49,69 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ListenRequest"
+              $ref: '#/components/schemas/ListenRequest'
           audio/*:
             schema:
-              $ref: "#/components/schemas/ListenRequestFile"
+              $ref: '#/components/schemas/ListenRequestFile'
         required: true
       parameters:
-        - $ref: "#/components/parameters/callback"
-        - $ref: "#/components/parameters/callback_method"
-        - $ref: "#/components/parameters/custom_topic"
-        - $ref: "#/components/parameters/custom_topic_mode"
-        - $ref: "#/components/parameters/custom_intent"
-        - $ref: "#/components/parameters/custom_intent_mode"
-        - $ref: "#/components/parameters/detect_entities"
-        - $ref: "#/components/parameters/detect_language"
-        - $ref: "#/components/parameters/diarize_version"
-        - $ref: "#/components/parameters/diarize"
-        - $ref: "#/components/parameters/dictation"
-        - $ref: "#/components/parameters/encoding"
-        - $ref: "#/components/parameters/extra"
-        - $ref: "#/components/parameters/filler_words"
-        - $ref: "#/components/parameters/intents"
-        - $ref: "#/components/parameters/keyterm"
-        - $ref: "#/components/parameters/keywords"
-        - $ref: "#/components/parameters/language"
-        - $ref: "#/components/parameters/measurements"
-        - $ref: "#/components/parameters/model"
-        - $ref: "#/components/parameters/multichannel"
-        - $ref: "#/components/parameters/numerals"
-        - $ref: "#/components/parameters/paragraphs"
-        - $ref: "#/components/parameters/profanity_filter"
-        - $ref: "#/components/parameters/punctuate"
-        - $ref: "#/components/parameters/redact"
-        - $ref: "#/components/parameters/replace"
-        - $ref: "#/components/parameters/search"
-        - $ref: "#/components/parameters/sentiment"
-        - $ref: "#/components/parameters/smart_format"
-        - $ref: "#/components/parameters/summarize"
-        - $ref: "#/components/parameters/tag"
-        - $ref: "#/components/parameters/topics"
-        - $ref: "#/components/parameters/utterances"
-        - $ref: "#/components/parameters/utt_split"
-        - $ref: "#/components/parameters/version"
+        - $ref: '#/components/parameters/callback'
+        - $ref: '#/components/parameters/callback_method'
+        - $ref: '#/components/parameters/custom_topic'
+        - $ref: '#/components/parameters/custom_topic_mode'
+        - $ref: '#/components/parameters/custom_intent'
+        - $ref: '#/components/parameters/custom_intent_mode'
+        - $ref: '#/components/parameters/detect_entities'
+        - $ref: '#/components/parameters/detect_language'
+        - $ref: '#/components/parameters/diarize_version'
+        - $ref: '#/components/parameters/diarize'
+        - $ref: '#/components/parameters/dictation'
+        - $ref: '#/components/parameters/encoding'
+        - $ref: '#/components/parameters/extra'
+        - $ref: '#/components/parameters/filler_words'
+        - $ref: '#/components/parameters/intents'
+        - $ref: '#/components/parameters/keyterm'
+        - $ref: '#/components/parameters/keywords'
+        - $ref: '#/components/parameters/language'
+        - $ref: '#/components/parameters/measurements'
+        - $ref: '#/components/parameters/model'
+        - $ref: '#/components/parameters/multichannel'
+        - $ref: '#/components/parameters/numerals'
+        - $ref: '#/components/parameters/paragraphs'
+        - $ref: '#/components/parameters/profanity_filter'
+        - $ref: '#/components/parameters/punctuate'
+        - $ref: '#/components/parameters/redact'
+        - $ref: '#/components/parameters/replace'
+        - $ref: '#/components/parameters/search'
+        - $ref: '#/components/parameters/sentiment'
+        - $ref: '#/components/parameters/smart_format'
+        - $ref: '#/components/parameters/summarize'
+        - $ref: '#/components/parameters/tag'
+        - $ref: '#/components/parameters/topics'
+        - $ref: '#/components/parameters/utterances'
+        - $ref: '#/components/parameters/utt_split'
+        - $ref: '#/components/parameters/version'
       responses:
-        "200":
+        '200':
           description: Successful transcription
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/response"
-        "400":
-          $ref: "#/components/responses/bad_request"
+                $ref: '#/components/schemas/response'
+        '400':
+          $ref: '#/components/responses/bad_request'
       callbacks:
         transcriptionCallback:
-          "{$request.query.callback}":
+          '{$request.query.callback}':
             post:
               requestBody:
                 required: true
                 content:
                   application/json:
                     schema:
-                      $ref: "#/components/schemas/response"
+                      $ref: '#/components/schemas/response'
               responses:
-                "200":
+                '200':
                   description: We expect a 200 to determine whether the callback was successfully received
   /v1/read:
     description: Use Deepgram's speech-to-text API to analyze the content of text sources
@@ -128,29 +128,29 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/text_request"
+              $ref: '#/components/schemas/text_request'
       parameters:
-        - $ref: "#/components/parameters/callback"
-        - $ref: "#/components/parameters/callback_method"
-        - $ref: "#/components/parameters/custom_topic"
-        - $ref: "#/components/parameters/custom_topic_mode"
-        - $ref: "#/components/parameters/intents"
-        - $ref: "#/components/parameters/read_language"
-        - $ref: "#/components/parameters/sentiment"
-        - $ref: "#/components/parameters/read_summarize"
-        - $ref: "#/components/parameters/topics"
+        - $ref: '#/components/parameters/callback'
+        - $ref: '#/components/parameters/callback_method'
+        - $ref: '#/components/parameters/custom_topic'
+        - $ref: '#/components/parameters/custom_topic_mode'
+        - $ref: '#/components/parameters/intents'
+        - $ref: '#/components/parameters/read_language'
+        - $ref: '#/components/parameters/sentiment'
+        - $ref: '#/components/parameters/read_summarize'
+        - $ref: '#/components/parameters/topics'
       responses:
-        "200":
+        '200':
           description: Successful text analysis
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/text_response"
-        "400":
-          $ref: "#/components/responses/bad_request"
+                $ref: '#/components/schemas/text_response'
+        '400':
+          $ref: '#/components/responses/bad_request'
       callbacks:
         transcriptionCallback:
-          "{$request.query.callback}":
+          '{$request.query.callback}':
             post:
               description: Callback endpoint for text analysis results
               requestBody:
@@ -159,9 +159,9 @@ paths:
                 content:
                   application/json:
                     schema:
-                      $ref: "#/components/schemas/text_response"
+                      $ref: '#/components/schemas/text_response'
               responses:
-                "200":
+                '200':
                   description: We expect a 200 to determine whether the callback was successfully received
   /v1/speak:
     description: Use Deepgram's Aura text-to-speech API to transform text to speech
@@ -179,16 +179,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/speak_request"
+              $ref: '#/components/schemas/speak_request'
       parameters:
-        - $ref: "#/components/parameters/bit_rate"
-        - $ref: "#/components/parameters/callback"
-        - $ref: "#/components/parameters/container"
-        - $ref: "#/components/parameters/speak_encoding"
-        - $ref: "#/components/parameters/speak_model"
-        - $ref: "#/components/parameters/speak_sample_rate"
+        - $ref: '#/components/parameters/bit_rate'
+        - $ref: '#/components/parameters/callback'
+        - $ref: '#/components/parameters/container'
+        - $ref: '#/components/parameters/speak_encoding'
+        - $ref: '#/components/parameters/speak_model'
+        - $ref: '#/components/parameters/speak_sample_rate'
       responses:
-        "200":
+        '200':
           description: Successful text to speech
           content:
             audio/mpeg:
@@ -223,17 +223,17 @@ paths:
               schema:
                 type: string
                 format: binary
-        "400":
-          $ref: "#/components/responses/bad_request"
-        "403":
-          $ref: "#/components/responses/insufficient_permissions"
-        "413":
-          $ref: "#/components/responses/payload_too_large"
-        "415":
-          $ref: "#/components/responses/unsupported_media_type"
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '403':
+          $ref: '#/components/responses/insufficient_permissions'
+        '413':
+          $ref: '#/components/responses/payload_too_large'
+        '415':
+          $ref: '#/components/responses/unsupported_media_type'
       callbacks:
         transcriptionCallback:
-          "{$request.query.callback}":
+          '{$request.query.callback}':
             post:
               description: Callback endpoint for text-to-speech results
               requestBody:
@@ -242,9 +242,9 @@ paths:
                 content:
                   application/json:
                     schema:
-                      $ref: "#/components/schemas/speak_response"
+                      $ref: '#/components/schemas/speak_response'
               responses:
-                "200":
+                '200':
                   description: We expect a 200 to determine whether the callback was successfully received
   /v1/projects:
     description: Manage your projects
@@ -257,7 +257,7 @@ paths:
       operationId: listProjects
       description: Retrieves basic information about the projects associated with the API key
       responses:
-        "200":
+        '200':
           description: A list of projects
           content:
             application/json:
@@ -275,12 +275,12 @@ paths:
                         name:
                           type: string
                           description: The name of the project
-        "403":
-          $ref: "#/components/responses/authentication_failed"
+        '403':
+          $ref: '#/components/responses/authentication_failed'
   /v1/projects/{project_id}:
     description: Manage individual project details and settings
     parameters:
-      - $ref: "#/components/parameters/project_id"
+      - $ref: '#/components/parameters/project_id'
     get:
       summary: Get a Project
       tags:
@@ -290,12 +290,12 @@ paths:
       operationId: getProject
       description: Retrieves information about the specified project
       parameters:
-        - $ref: "#/components/parameters/limit"
-        - $ref: "#/components/parameters/start"
-        - $ref: "#/components/parameters/end"
-        - $ref: "#/components/parameters/page"
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/end'
+        - $ref: '#/components/parameters/page'
       responses:
-        "200":
+        '200':
           description: A project
           content:
             application/json:
@@ -308,12 +308,12 @@ paths:
                   name:
                     type: string
                     description: The name of the project
-        "400":
-          $ref: "#/components/responses/projects_bad_request"
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+        '400':
+          $ref: '#/components/responses/projects_bad_request'
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
     patch:
       summary: Update a Project
       tags:
@@ -323,15 +323,15 @@ paths:
       operationId: updateProject
       description: Updates the name or other properties of an existing project
       parameters:
-        - $ref: "#/components/parameters/project_id"
+        - $ref: '#/components/parameters/project_id'
       requestBody:
         description: The name of the project
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/update_projects"
+              $ref: '#/components/schemas/update_projects'
       responses:
-        "200":
+        '200':
           description: A project
           content:
             application/json:
@@ -343,12 +343,12 @@ paths:
                     description: confirmation message
                 example:
                   message: Successfully updated project info.
-        "400":
-          $ref: "#/components/responses/projects_bad_request"
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+        '400':
+          $ref: '#/components/responses/projects_bad_request'
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
     delete:
       summary: Delete a Project
       tags:
@@ -358,9 +358,9 @@ paths:
       operationId: deleteProject
       description: Deletes the specified project
       parameters:
-        - $ref: "#/components/parameters/project_id"
+        - $ref: '#/components/parameters/project_id'
       responses:
-        "200":
+        '200':
           description: A project
           content:
             application/json:
@@ -372,12 +372,12 @@ paths:
                     description: confirmation message
                 example:
                   message: Successfully deleted a project.
-        "400":
-          $ref: "#/components/responses/projects_bad_request"
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+        '400':
+          $ref: '#/components/responses/projects_bad_request'
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
   /v1/projects/{project_id}/balances:
     description: Manage your project balances
     get:
@@ -389,9 +389,9 @@ paths:
       operationId: getProjectBalances
       description: Generates a list of outstanding balances for the specified project
       parameters:
-        - $ref: "#/components/parameters/project_id"
+        - $ref: '#/components/parameters/project_id'
       responses:
-        "200":
+        '200':
           description: A list of outstanding balances
           content:
             application/json:
@@ -422,12 +422,12 @@ paths:
                     amount: 250
                     units: usd
                     purchase_order_id: b123456-7890-1234-5678-901234
-        "400":
-          $ref: "#/components/responses/projects_bad_request"
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+        '400':
+          $ref: '#/components/responses/projects_bad_request'
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
   /v1/projects/{project_id}/balances/{balance_id}:
     description: Manage your project balances
     get:
@@ -439,10 +439,10 @@ paths:
       operationId: getProjectBalance
       description: Retrieves details about the specified balance
       parameters:
-        - $ref: "#/components/parameters/project_id"
-        - $ref: "#/components/parameters/balance_id"
+        - $ref: '#/components/parameters/project_id'
+        - $ref: '#/components/parameters/balance_id'
       responses:
-        "200":
+        '200':
           description: A specific balance
           content:
             application/json:
@@ -467,12 +467,12 @@ paths:
                 amount: 250
                 units: usd
                 purchase_order_id: b123456-7890-1234-5678-901234
-        "400":
-          $ref: "#/components/responses/projects_bad_request"
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+        '400':
+          $ref: '#/components/responses/projects_bad_request'
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
   /v1/projects/{project_id}/models:
     description: Manage your project models
     get:
@@ -484,10 +484,10 @@ paths:
       operationId: listProjectModels
       description: Returns metadata on all the latest models that a specific project has access to, including non-public models
       parameters:
-        - $ref: "#/components/parameters/project_id"
-        - $ref: "#/components/parameters/include_outdated"
+        - $ref: '#/components/parameters/project_id'
+        - $ref: '#/components/parameters/include_outdated'
       responses:
-        "200":
+        '200':
           description: A list of models
           content:
             application/json:
@@ -497,18 +497,18 @@ paths:
                   stt:
                     type: array
                     items:
-                      $ref: "#/components/schemas/stt_models"
+                      $ref: '#/components/schemas/stt_models'
                   tts:
                     type: array
                     items:
-                      $ref: "#/components/schemas/tts_models"
-        "400":
-          $ref: "#/components/responses/projects_bad_request"
+                      $ref: '#/components/schemas/tts_models'
+        '400':
+          $ref: '#/components/responses/projects_bad_request'
   /v1/projects/{project_id}/models/{model_id}:
     description: Manage your project models
     parameters:
-      - $ref: "#/components/parameters/project_id"
-      - $ref: "#/components/parameters/model_id"
+      - $ref: '#/components/parameters/project_id'
+      - $ref: '#/components/parameters/model_id'
     get:
       summary: Get a Project Model
       tags:
@@ -518,20 +518,20 @@ paths:
       operationId: getProjectModel
       description: Returns metadata for a specific model
       responses:
-        "200":
+        '200':
           description: A specific model
           content:
             application/json:
               schema:
                 oneOf:
-                  - $ref: "#/components/schemas/stt_models"
-                  - $ref: "#/components/schemas/tts_models"
-        "400":
-          $ref: "#/components/responses/projects_bad_request"
+                  - $ref: '#/components/schemas/stt_models'
+                  - $ref: '#/components/schemas/tts_models'
+        '400':
+          $ref: '#/components/responses/projects_bad_request'
   /v1/projects/{project_id}/keys:
     description: Manage your project keys
     parameters:
-      - $ref: "#/components/parameters/project_id"
+      - $ref: '#/components/parameters/project_id'
     get:
       summary: List Project Keys
       tags:
@@ -541,9 +541,9 @@ paths:
       operationId: listProjectKeys
       description: Retrieves all API keys associated with the specified project
       parameters:
-        - $ref: "#/components/parameters/project_id"
+        - $ref: '#/components/parameters/project_id'
       responses:
-        "200":
+        '200':
           description: A list of API keys
           content:
             application/json:
@@ -553,11 +553,11 @@ paths:
                   api_keys:
                     type: array
                     items:
-                      $ref: "#/components/schemas/keys"
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+                      $ref: '#/components/schemas/keys'
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
     post:
       summary: Create a Project Key
       tags:
@@ -567,25 +567,25 @@ paths:
       operationId: createProjectKey
       description: Creates a new API key with specified settings for the project
       parameters:
-        - $ref: "#/components/parameters/project_id"
+        - $ref: '#/components/parameters/project_id'
       requestBody:
         description: The API key settings
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/keys"
+              $ref: '#/components/schemas/keys'
       responses:
-        "200":
+        '200':
           description: API key created successfully
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/key_created"
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+                $ref: '#/components/schemas/key_created'
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
   /v1/projects/{project_id}/keys/{key_id}:
     description: Manage your project keys
     get:
@@ -597,10 +597,10 @@ paths:
       operationId: getProjectKey
       description: Retrieves information about a specified API key
       parameters:
-        - $ref: "#/components/parameters/project_id"
-        - $ref: "#/components/parameters/key_id"
+        - $ref: '#/components/parameters/project_id'
+        - $ref: '#/components/parameters/key_id'
       responses:
-        "200":
+        '200':
           description: A specific API key
           content:
             application/json:
@@ -608,11 +608,11 @@ paths:
                 type: object
                 properties:
                   item:
-                    $ref: "#/components/schemas/key"
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+                    $ref: '#/components/schemas/key'
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
     delete:
       tags:
         - Management API
@@ -622,10 +622,10 @@ paths:
       summary: Deletes an API key for a specific project
       description: Deletes an API key for a specific project
       parameters:
-        - $ref: "#/components/parameters/project_id"
-        - $ref: "#/components/parameters/key_id"
+        - $ref: '#/components/parameters/project_id'
+        - $ref: '#/components/parameters/key_id'
       responses:
-        "200":
+        '200':
           description: API key deleted
           content:
             application/json:
@@ -637,10 +637,10 @@ paths:
                     description: A message indicating that the API key was deleted
               example:
                 message: Successfully deleted the API key!
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
   /v1/projects/{project_id}/members:
     description: Manage your project members
     get:
@@ -652,9 +652,9 @@ paths:
       operationId: listProjectMembers
       description: Retrieves a list of account objects for a specific project
       parameters:
-        - $ref: "#/components/parameters/project_id"
+        - $ref: '#/components/parameters/project_id'
       responses:
-        "200":
+        '200':
           description: A list of account objects
           content:
             application/json:
@@ -680,10 +680,10 @@ paths:
                               type: string
                             last_name:
                               type: string
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
   /v1/projects/{project_id}/members/{member_id}:
     description: Manage your project members
     delete:
@@ -695,10 +695,10 @@ paths:
       operationId: deleteProjectMember
       description: Removes a member from the project using their unique member ID
       parameters:
-        - $ref: "#/components/parameters/project_id"
-        - $ref: "#/components/parameters/member_id"
+        - $ref: '#/components/parameters/project_id'
+        - $ref: '#/components/parameters/member_id'
       responses:
-        "200":
+        '200':
           description: Delete the specific member from the project
           content:
             application/json:
@@ -710,10 +710,10 @@ paths:
                     description: confirmation message
                 example:
                   message: Successfully removed account from project.
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
   /v1/projects/{project_id}/members/{member_id}/scopes:
     description: Manage your project members
     get:
@@ -725,10 +725,10 @@ paths:
       operationId: listProjectMemberScopes
       description: Retrieves a list of scopes for a specific member
       parameters:
-        - $ref: "#/components/parameters/project_id"
-        - $ref: "#/components/parameters/member_id"
+        - $ref: '#/components/parameters/project_id'
+        - $ref: '#/components/parameters/member_id'
       responses:
-        "200":
+        '200':
           description: A list of scopes for a specific member
           content:
             application/json:
@@ -740,10 +740,10 @@ paths:
                     items:
                       type: string
                     description: The API scopes of the member
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
     put:
       summary: Update Project Member Scopes
       tags:
@@ -753,16 +753,16 @@ paths:
       operationId: updateProjectMemberScopes
       description: Updates the scopes for a specific member
       parameters:
-        - $ref: "#/components/parameters/project_id"
-        - $ref: "#/components/parameters/member_id"
+        - $ref: '#/components/parameters/project_id'
+        - $ref: '#/components/parameters/member_id'
       requestBody:
         description: A scope to update
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/update_member_scope"
+              $ref: '#/components/schemas/update_member_scope'
       responses:
-        "200":
+        '200':
           description: Updated the scopes for a specific member
           content:
             application/json:
@@ -774,10 +774,10 @@ paths:
                     description: confirmation message
                 example:
                   message: Successfully updated the account scopes.
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
   /v1/projects/{project_id}/invites:
     description: Manage your project invites
     get:
@@ -789,9 +789,9 @@ paths:
       operationId: listProjectInvites
       description: Generates a list of invites for a specific project
       parameters:
-        - $ref: "#/components/parameters/project_id"
+        - $ref: '#/components/parameters/project_id'
       responses:
-        "200":
+        '200':
           description: A list of invites for a specific project
           content:
             application/json:
@@ -818,15 +818,15 @@ paths:
       operationId: createProjectInvite
       description: Generates an invite for a specific project
       parameters:
-        - $ref: "#/components/parameters/project_id"
+        - $ref: '#/components/parameters/project_id'
       requestBody:
         description: email to invite to the project
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/create_project_invite"
+              $ref: '#/components/schemas/create_project_invite'
       responses:
-        "200":
+        '200':
           description: The invite was successfully generated
           content:
             application/json:
@@ -836,14 +836,14 @@ paths:
                   message:
                     type: string
                     description: confirmation message
-        "400":
-          $ref: "#/components/responses/invalid_request"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+        '400':
+          $ref: '#/components/responses/invalid_request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
   /v1/projects/{project_id}/invites/{email}:
     description: Manage your project invites
     delete:
@@ -855,10 +855,10 @@ paths:
       operationId: deleteProjectInvite
       description: Deletes an invite for a specific project
       parameters:
-        - $ref: "#/components/parameters/project_id"
-        - $ref: "#/components/parameters/email"
+        - $ref: '#/components/parameters/project_id'
+        - $ref: '#/components/parameters/email'
       responses:
-        "200":
+        '200':
           description: The invite was successfully deleted
           content:
             application/json:
@@ -868,14 +868,14 @@ paths:
                   message:
                     type: string
                     description: confirmation message
-        "400":
-          $ref: "#/components/responses/invalid_request"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+        '400':
+          $ref: '#/components/responses/invalid_request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
   /v1/projects/{project_id}/leave:
     description: Manage your project accounts
     delete:
@@ -887,9 +887,9 @@ paths:
       operationId: deleteProjectLeave
       description: Removes the authenticated account from the specific project
       parameters:
-        - $ref: "#/components/parameters/project_id"
+        - $ref: '#/components/parameters/project_id'
       responses:
-        "200":
+        '200':
           description: Successfully removed account from project
           content:
             application/json:
@@ -899,14 +899,14 @@ paths:
                   message:
                     type: string
                     description: confirmation message
-        "400":
-          $ref: "#/components/responses/invalid_request"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+        '400':
+          $ref: '#/components/responses/invalid_request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
   /v1/projects/{project_id}/requests:
     description: Manage your project requests
     get:
@@ -918,13 +918,13 @@ paths:
       operationId: listProjectRequests
       description: Generates a list of requests for a specific project
       parameters:
-        - $ref: "#/components/parameters/project_id"
-        - $ref: "#/components/parameters/start"
-        - $ref: "#/components/parameters/end"
-        - $ref: "#/components/parameters/limit"
-        - $ref: "#/components/parameters/page"
+        - $ref: '#/components/parameters/project_id'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/end'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/page'
       responses:
-        "200":
+        '200':
           description: A list of requests for a specific project
           content:
             application/json:
@@ -940,13 +940,13 @@ paths:
                   requests:
                     type: array
                     items:
-                      $ref: "#/components/schemas/request"
-        "400":
-          $ref: "#/components/responses/projects_bad_request"
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+                      $ref: '#/components/schemas/request'
+        '400':
+          $ref: '#/components/responses/projects_bad_request'
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
   /v1/projects/{project_id}/requests/{request_id}:
     description: Manage your project requests
     get:
@@ -958,10 +958,10 @@ paths:
       operationId: getProjectRequest
       description: Retrieves a specific request for a specific project
       parameters:
-        - $ref: "#/components/parameters/project_id"
-        - $ref: "#/components/parameters/request_id"
+        - $ref: '#/components/parameters/project_id'
+        - $ref: '#/components/parameters/request_id'
       responses:
-        "200":
+        '200':
           description: A specific request for a specific project
           content:
             application/json:
@@ -970,7 +970,7 @@ paths:
                 properties:
                   request:
                     type: object
-                    $ref: "#/components/schemas/request"
+                    $ref: '#/components/schemas/request'
   /v1/projects/{project_id}/usage:
     description: Manage your project usage
     get:
@@ -982,21 +982,21 @@ paths:
       operationId: getProjectUsage
       description: Retrieves the usage for a specific project
       parameters:
-        - $ref: "#/components/parameters/project_id"
-        - $ref: "#/components/parameters/start"
-        - $ref: "#/components/parameters/end"
-        - $ref: "#/components/parameters/project_filters"
+        - $ref: '#/components/parameters/project_id'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/end'
+        - $ref: '#/components/parameters/project_filters'
       responses:
-        "200":
-          $ref: "#/components/responses/usage"
-        "400":
-          $ref: "#/components/responses/invalid_request"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+        '200':
+          $ref: '#/components/responses/usage'
+        '400':
+          $ref: '#/components/responses/invalid_request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
   /v1/projects/{project_id}/usage/fields:
     description: Manage your project usage
     get:
@@ -1008,20 +1008,20 @@ paths:
       operationId: listProjectUsageFields
       description: Lists the features, models, tags, languages, and processing method used for requests in the specified project
       parameters:
-        - $ref: "#/components/parameters/project_id"
-        - $ref: "#/components/parameters/start"
-        - $ref: "#/components/parameters/end"
+        - $ref: '#/components/parameters/project_id'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/end'
       responses:
-        "200":
-          $ref: "#/components/responses/fields"
-        "400":
-          $ref: "#/components/responses/invalid_request"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+        '200':
+          $ref: '#/components/responses/fields'
+        '400':
+          $ref: '#/components/responses/invalid_request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
   /v1/projects/{project_id}/usage/breakdown:
     description: Manage your project usage breakdown with various filter options
     get:
@@ -1041,20 +1041,20 @@ paths:
         - &method={method} - The processing method used
         - &tags={tag} - Any tags used
       parameters:
-        - $ref: "#/components/parameters/project_id"
-        - $ref: "#/components/parameters/start"
-        - $ref: "#/components/parameters/end"
-        - $ref: "#/components/parameters/project_filters"
-        - $ref: "#/components/parameters/usage_breakdown_filters"
+        - $ref: '#/components/parameters/project_id'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/end'
+        - $ref: '#/components/parameters/project_filters'
+        - $ref: '#/components/parameters/usage_breakdown_filters'
       responses:
-        "200":
-          $ref: "#/components/responses/usage_breakdown"
-        "400":
-          $ref: "#/components/responses/projects_bad_request"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+        '200':
+          $ref: '#/components/responses/usage_breakdown'
+        '400':
+          $ref: '#/components/responses/projects_bad_request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/project_not_found'
   /v1/projects/{project_id}/purchases:
     description: Manage your project purchases
     get:
@@ -1066,14 +1066,14 @@ paths:
       operationId: listProjectPurchases
       description: Returns the original purchased amount on an order transaction
       parameters:
-        - $ref: "#/components/parameters/project_id"
-        - $ref: "#/components/parameters/start"
-        - $ref: "#/components/parameters/limit"
+        - $ref: '#/components/parameters/project_id'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/limit'
       responses:
-        "200":
-          $ref: "#/components/responses/purchases"
-        "400":
-          $ref: "#/components/responses/projects_bad_request"
+        '200':
+          $ref: '#/components/responses/purchases'
+        '400':
+          $ref: '#/components/responses/projects_bad_request'
   /v1/models:
     description: Manage your project models
     get:
@@ -1085,12 +1085,12 @@ paths:
       operationId: listModels
       description: Returns metadata on all the latest public models
       parameters:
-        - $ref: "#/components/parameters/include_outdated"
+        - $ref: '#/components/parameters/include_outdated'
       responses:
-        "200":
-          $ref: "#/components/responses/all_models"
-        "400":
-          $ref: "#/components/responses/projects_bad_request"
+        '200':
+          $ref: '#/components/responses/all_models'
+        '400':
+          $ref: '#/components/responses/projects_bad_request'
   /v1/models/{model_id}:
     description: Manage your project models
     get:
@@ -1102,12 +1102,12 @@ paths:
       summary: Returns metadata for a specific model
       description: Returns metadata for a specific model
       parameters:
-        - $ref: "#/components/parameters/model_id"
+        - $ref: '#/components/parameters/model_id'
       responses:
-        "200":
-          $ref: "#/components/responses/model"
-        "400":
-          $ref: "#/components/responses/projects_bad_request"
+        '200':
+          $ref: '#/components/responses/model'
+        '400':
+          $ref: '#/components/responses/projects_bad_request'
   /v1/projects/{project_id}/self-hosted/distribution/credentials:
     description: Returns sets of distribution credentials for the specified project
     get:
@@ -1119,14 +1119,14 @@ paths:
       operationId: listSelfHostedDistCreds
       description: Lists sets of distribution credentials for the specified project
       parameters:
-        - $ref: "#/components/parameters/project_id"
+        - $ref: '#/components/parameters/project_id'
       responses:
-        "200":
-          $ref: "#/components/responses/credentials"
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+        '200':
+          $ref: '#/components/responses/credentials'
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
     post:
       summary: Create a Project Self-Hosted Distribution Credential
       tags:
@@ -1136,16 +1136,16 @@ paths:
       operationId: createSelfHostedDistCreds
       description: Creates a set of distribution credentials for the specified project
       parameters:
-        - $ref: "#/components/parameters/project_id"
-        - $ref: "#/components/parameters/distribution_comment"
-        - $ref: "#/components/parameters/distribution_scopes"
-        - $ref: "#/components/parameters/distribution_provider"
+        - $ref: '#/components/parameters/project_id'
+        - $ref: '#/components/parameters/distribution_comment'
+        - $ref: '#/components/parameters/distribution_scopes'
+        - $ref: '#/components/parameters/distribution_provider'
       requestBody:
         description: The set of distribution credentials to create
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/create_distribution_creds"
+              $ref: '#/components/schemas/create_distribution_creds'
   /v1/projects/{project_id}/self-hosted/distribution/credentials/{distribution_credentials_id}:
     description: Returns a single set of distribution credentials for the specified project
     get:
@@ -1157,15 +1157,15 @@ paths:
       operationId: getSelfHostedCredentials
       description: Returns a set of distribution credentials for the specified project
       parameters:
-        - $ref: "#/components/parameters/project_id"
-        - $ref: "#/components/parameters/distribution_credentials_id"
+        - $ref: '#/components/parameters/project_id'
+        - $ref: '#/components/parameters/distribution_credentials_id'
       responses:
-        "200":
-          $ref: "#/components/responses/credential"
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+        '200':
+          $ref: '#/components/responses/credential'
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
     delete:
       summary: Delete a Project Self-Hosted Distribution Credential
       tags:
@@ -1175,15 +1175,15 @@ paths:
       operationId: deleteSelfHostedDistCreds
       description: Deletes a set of distribution credentials for the specified project
       parameters:
-        - $ref: "#/components/parameters/project_id"
-        - $ref: "#/components/parameters/distribution_credentials_id"
+        - $ref: '#/components/parameters/project_id'
+        - $ref: '#/components/parameters/distribution_credentials_id'
       responses:
-        "200":
-          $ref: "#/components/responses/credential"
-        "403":
-          $ref: "#/components/responses/authentication_failed"
-        "404":
-          $ref: "#/components/responses/project_not_found"
+        '200':
+          $ref: '#/components/responses/credential'
+        '403':
+          $ref: '#/components/responses/authentication_failed'
+        '404':
+          $ref: '#/components/responses/project_not_found'
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -1448,7 +1448,7 @@ components:
           - lv
           - lt
           - ms
-          - "no"
+          - 'no'
           - pl
           - pt
           - pt-BR
@@ -1919,7 +1919,7 @@ components:
       schema:
         type: string
         format: date-time
-      example: "2024-07-01T00:00:00"
+      example: '2024-07-01T00:00:00'
     end:
       name: end
       in: query
@@ -1928,7 +1928,7 @@ components:
       schema:
         type: string
         format: date-time
-      example: "2024-07-31T00:00:00"
+      example: '2024-07-31T00:00:00'
     page:
       name: page
       in: query
@@ -1968,7 +1968,7 @@ components:
       description: The unique identifier of the API key
       schema:
         type: string
-      example: "123456789012345678901234"
+      example: '123456789012345678901234'
     member_id:
       name: member_id
       in: path
@@ -1976,7 +1976,7 @@ components:
       description: The unique identifier of the Member
       schema:
         type: string
-      example: "123456789012345678901234"
+      example: '123456789012345678901234'
     email:
       name: email
       in: path
@@ -2163,7 +2163,7 @@ components:
         created:
           type: string
           format: date-time
-          example: "2024-05-12T18:57:13.426Z"
+          example: '2024-05-12T18:57:13.426Z'
         duration:
           type: number
           example: 25.933313
@@ -2538,17 +2538,17 @@ components:
       type: object
       properties:
         channels:
-          $ref: "#/components/schemas/channels"
+          $ref: '#/components/schemas/channels'
         utterances:
-          $ref: "#/components/schemas/utterances"
+          $ref: '#/components/schemas/utterances'
         summary:
-          $ref: "#/components/schemas/summary"
+          $ref: '#/components/schemas/summary'
         topics:
-          $ref: "#/components/schemas/topics"
+          $ref: '#/components/schemas/topics'
         intents:
-          $ref: "#/components/schemas/intents"
+          $ref: '#/components/schemas/intents'
         sentiments:
-          $ref: "#/components/schemas/sentiments"
+          $ref: '#/components/schemas/sentiments'
     response:
       description: The standard transcription response
       required:
@@ -2557,10 +2557,10 @@ components:
       type: object
       properties:
         metadata:
-          $ref: "#/components/schemas/metadata"
+          $ref: '#/components/schemas/metadata'
           x-collapse: true
         results:
-          $ref: "#/components/schemas/results"
+          $ref: '#/components/schemas/results'
     text_request_url:
       type: object
       properties:
@@ -2587,8 +2587,8 @@ components:
         - text
     text_request:
       oneOf:
-        - $ref: "#/components/schemas/text_request_url"
-        - $ref: "#/components/schemas/text_request_text"
+        - $ref: '#/components/schemas/text_request_url'
+        - $ref: '#/components/schemas/text_request_text'
     text_metadata:
       required:
         - request_id
@@ -2610,7 +2610,7 @@ components:
             created:
               type: string
               format: date-time
-              example: "2024-11-18T23:47:44.674Z"
+              example: '2024-11-18T23:47:44.674Z'
             language:
               type: string
               example: en
@@ -2671,13 +2671,13 @@ components:
       type: object
       properties:
         summary:
-          $ref: "#/components/schemas/text_summary"
+          $ref: '#/components/schemas/text_summary'
         topics:
-          $ref: "#/components/schemas/topics"
+          $ref: '#/components/schemas/topics'
         intents:
-          $ref: "#/components/schemas/intents"
+          $ref: '#/components/schemas/intents'
         sentiments:
-          $ref: "#/components/schemas/sentiments"
+          $ref: '#/components/schemas/sentiments'
     text_response:
       description: The standard text response
       required:
@@ -2686,10 +2686,10 @@ components:
       type: object
       properties:
         metadata:
-          $ref: "#/components/schemas/text_metadata"
+          $ref: '#/components/schemas/text_metadata'
           x-collapse: true
         results:
-          $ref: "#/components/schemas/text_results"
+          $ref: '#/components/schemas/text_results'
     speak_request:
       type: object
       description: Request body for text-to-speech conversion
@@ -2786,7 +2786,7 @@ components:
                 example: American
               color:
                 type: string
-                example: "#949498"
+                example: '#949498'
               image:
                 type: string
                 example: https://static.deepgram.com/examples/avatars/zeus.jpg
@@ -2831,7 +2831,7 @@ components:
               created:
                 type: string
                 format: date-time
-                example: "2021-01-01T00:00:00Z"
+                example: '2021-01-01T00:00:00Z'
     key_created:
       type: object
       description: API key created
@@ -2863,7 +2863,7 @@ components:
           - member
         tags:
           - tag-1
-        expiration_date: "2024-05-01T00:00:00.000000Z"
+        expiration_date: '2024-05-01T00:00:00.000000Z'
     key:
       type: object
       properties:
@@ -2900,7 +2900,7 @@ components:
                 created:
                   type: string
                   format: date-time
-                  example: "2021-01-01T00:00:00Z"
+                  example: '2021-01-01T00:00:00Z'
     update_member_scope:
       type: object
       required:
@@ -3089,7 +3089,7 @@ components:
             example:
               category: INVALID_JSON
               message: Invalid JSON submitted.
-              details: "Json deserialize error: EOF while parsing a value at line 1 column 0"
+              details: 'Json deserialize error: EOF while parsing a value at line 1 column 0'
               request_id: 123456-7890-1234-5678-901234
     project_not_found:
       description: Project not found
@@ -3121,7 +3121,7 @@ components:
         text/plain:
           schema:
             type: string
-          example: "Invalid request: scope must be either 'member', 'admin' or 'owner'."
+          example: 'Invalid request: scope must be either ''member'', ''admin'' or ''owner''.'
     unauthorized:
       description: Unauthorized
       content:
@@ -3139,11 +3139,11 @@ components:
               start:
                 type: string
                 format: date
-                example: "2024-10-16"
+                example: '2024-10-16'
               end:
                 type: string
                 format: date
-                example: "2024-10-23"
+                example: '2024-10-23'
               resolution:
                 type: object
                 properties:
@@ -3161,11 +3161,11 @@ components:
                       start:
                         type: string
                         format: date
-                        example: "2024-10-16"
+                        example: '2024-10-16'
                       end:
                         type: string
                         format: date
-                        example: "2024-10-16"
+                        example: '2024-10-16'
                       hours:
                         type: number
                         format: float
@@ -3265,12 +3265,12 @@ components:
                 type: string
                 format: date
                 description: Start date of the usage period
-                example: "2025-01-16"
+                example: '2025-01-16'
               end:
                 type: string
                 format: date
                 description: End date of the usage period
-                example: "2025-01-23"
+                example: '2025-01-23'
               resolution:
                 type: object
                 required:
@@ -3337,17 +3337,17 @@ components:
                           type: string
                           format: date
                           description: Start date for this group
-                          example: "2025-01-16"
+                          example: '2025-01-16'
                         end:
                           type: string
                           format: date
                           description: End date for this group
-                          example: "2025-01-16"
+                          example: '2025-01-16'
                         accessor:
                           type: string
                           nullable: true
                           description: Optional accessor identifier
-                          example: "123456789012345678901234"
+                          example: '123456789012345678901234'
                         endpoint:
                           type: string
                           nullable: true
@@ -3397,11 +3397,11 @@ components:
                     expiration:
                       type: string
                       format: date-time
-                      example: "2026-03-04T00:00:00Z"
+                      example: '2026-03-04T00:00:00Z'
                     created:
                       type: string
                       format: date-time
-                      example: "2023-02-21T21:13:40.014373Z"
+                      example: '2023-02-21T21:13:40.014373Z'
                     amount:
                       type: number
                       format: float
@@ -3492,7 +3492,7 @@ components:
                           example: Irish
                         color:
                           type: string
-                          example: "#BA80F5"
+                          example: '#BA80F5'
                         image:
                           type: string
                           format: uri
@@ -3580,7 +3580,7 @@ components:
                         example: Irish
                       color:
                         type: string
-                        example: "#BA80F5"
+                        example: '#BA80F5'
                       image:
                         type: string
                         format: uri
@@ -3660,7 +3660,7 @@ components:
                           type: string
                           format: date-time
                           description: Timestamp when the credentials were created
-                          example: "2023-06-28T15:36:59.609841Z"
+                          example: '2023-06-28T15:36:59.609841Z'
     credential:
       description: Single distribution credential
       content:
@@ -3720,4 +3720,4 @@ components:
                     type: string
                     format: date-time
                     description: Timestamp when the credentials were created
-                    example: "2023-06-28T15:36:59.609841Z"
+                    example: '2023-06-28T15:36:59.609841Z'

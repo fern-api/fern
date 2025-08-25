@@ -1,43 +1,43 @@
-imports:
+imports: 
   commons: commons.yml
   types: types.yml
   versioning: versioning.yml
 
-types:
-  ProductDeclarationSchema:
-    properties:
+types: 
+  ProductDeclarationSchema: 
+    properties: 
       default: optional<string>
       values: list<ProductValue>
       header: ProductDeclarationHeaderSchema
-
-  ProductValue:
+  
+  ProductValue: 
     discriminated: false
-    union:
+    union: 
       - string
       - ProductValueDetailed
-
-  ProductValueDetailed:
-    extends:
+  
+  ProductValueDetailed: 
+    extends: 
       - commons.WithDocsSchema
       - commons.WithName
-    properties:
+    properties: 
       value: string
       versions: optional<versioning.VersionDeclarationSchema>
-
-  ProductDeclarationHeaderSchema:
+  
+  ProductDeclarationHeaderSchema: 
     discriminated: false
-    union:
+    union: 
       - string
       - ProductDeclarationHeaderObjectSchema
-
-  ProductDeclarationHeaderObjectSchema:
-    properties:
-      name:
-        type: optional<string>
+  
+  ProductDeclarationHeaderObjectSchema: 
+    properties: 
+      name: 
+        type: optional<string> 
         docs: The name of the parameter used to represent the header
-      env:
-        type: optional<string>
-        docs: The environment variable to read the header value from (if any)
+      env: 
+        type: optional<string> 
+        docs: The environment variable to read the header value from (if any) 
       value:
         type: string
         docs: The wire representation of the header (e.g. X-API-Product)

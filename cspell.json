@@ -10,7 +10,9 @@
   ],
   "caseSensitive": true,
   "allowCompoundWords": true,
-  "dictionaries": ["project-words"],
+  "dictionaries": [
+    "project-words"
+  ],
   "ignorePaths": [
     "./seed/*/*/*",
     ".git",

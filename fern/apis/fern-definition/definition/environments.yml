@@ -1,30 +1,30 @@
-imports:
+imports: 
   commons: commons.yml
 
-types:
-  WithEnvironmentsSchema:
-    properties:
+types: 
+  WithEnvironmentsSchema: 
+    properties: 
       default-url: optional<string>
       default-environment: optional<string>
       environments: optional<map<string, EnvironmentSchema>>
 
-  EnvironmentSchema:
+  EnvironmentSchema: 
     discriminated: false
-    union:
+    union: 
       - string
       - SingleBaseUrlEnvironmentSchema
       - MultipleBaseUrlsEnvironmentSchema
-
-  SingleBaseUrlEnvironmentSchema:
-    extends:
+  
+  SingleBaseUrlEnvironmentSchema: 
+    extends: 
       - commons.WithAudiences
       - commons.WithDocsSchema
-    properties:
+    properties: 
       url: string
-
-  MultipleBaseUrlsEnvironmentSchema:
-    extends:
+  
+  MultipleBaseUrlsEnvironmentSchema: 
+    extends: 
       - commons.WithAudiences
       - commons.WithDocsSchema
-    properties:
+    properties: 
       urls: map<string, string>

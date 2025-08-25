@@ -9,7 +9,7 @@ groups:
         config:
           use-nullable-annotation: true
           package-prefix: com.nullable.optional
-
+  
   java-sdk-legacy:
     generators:
       - name: fernapi/fern-java-sdk
@@ -18,9 +18,9 @@ groups:
           location: local-file-system
           path: ../../../seed/java-sdk/nullable-optional-legacy
         config:
-          use-nullable-annotation: false # Current behavior
+          use-nullable-annotation: false  # Current behavior
           package-prefix: com.nullable.optional.legacy
-
+  
   java-spring:
     generators:
       - name: fernapi/fern-java-spring
@@ -31,7 +31,7 @@ groups:
         config:
           use-nullable-annotation: true
           package-prefix: com.nullable.optional.spring
-
+  
   java-spring-legacy:
     generators:
       - name: fernapi/fern-java-spring
@@ -40,5 +40,5 @@ groups:
           location: local-file-system
           path: ../../../seed/java-spring/nullable-optional-legacy
         config:
-          use-nullable-annotation: false # Current behavior
+          use-nullable-annotation: false  # Current behavior
           package-prefix: com.nullable.optional.spring.legacy

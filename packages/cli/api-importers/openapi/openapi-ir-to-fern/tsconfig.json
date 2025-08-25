@@ -5,8 +5,12 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"],
-  "exclude": ["./src/**/__test__/**/generated"],
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "./src/**/__test__/**/generated"
+  ],
   "references": [
     {
       "path": "../../../../commons/core-utils"
@@ -31,6 +35,6 @@
     },
     {
       "path": "../../../fern-definition/schema"
-    }
+    },
   ]
 }

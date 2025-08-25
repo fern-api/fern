@@ -6,6 +6,6 @@
   "references": [
     { "path": "../../../../commons/fs-utils" },
     { "path": "../../../task-context" },
-    { "path": "../../../workspace/loader" }
+    { "path": "../../../workspace/loader" },
   ]
 }

@@ -130,7 +130,7 @@ types:
       bytes: BytesRequest
 
   InlinedRequestBody:
-    extends:
+    extends: 
       - commons.WithDocs
       - examples.WithV2Examples
       - commons.WithContentType
@@ -153,7 +153,7 @@ types:
       v2Examples: optional<examples.V2SchemaExamples>
 
   FileUploadRequest:
-    extends:
+    extends: 
       - commons.WithDocs
       - examples.WithV2Examples
       - commons.WithContentType
@@ -162,7 +162,7 @@ types:
       properties: list<FileUploadRequestProperty>
 
   BytesRequest:
-    extends:
+    extends: 
       - commons.WithDocs
       - examples.WithV2Examples
       - commons.WithContentType
@@ -175,7 +175,7 @@ types:
       bodyProperty: FileUploadBodyProperty
 
   FileUploadBodyProperty:
-    extends:
+    extends: 
       - InlinedRequestBodyProperty
       - commons.WithContentType
     properties:
@@ -207,7 +207,7 @@ types:
       contentType: optional<string>
 
   HttpRequestBodyReference:
-    extends:
+    extends: 
       - commons.WithDocs
       - commons.WithContentType
       - examples.WithV2Examples
@@ -271,14 +271,14 @@ types:
       nestedPropertyAsResponse: JsonResponseBodyWithProperty
 
   JsonResponseBody:
-    extends:
+    extends: 
       - commons.WithDocs
       - examples.WithV2Examples
     properties:
       responseBodyType: types.TypeReference
 
   JsonResponseBodyWithProperty:
-    extends:
+    extends: 
       - commons.WithDocs
       - examples.WithV2Examples
     properties:
@@ -293,17 +293,17 @@ types:
         type: optional<types.ObjectProperty>
 
   FileDownloadResponse:
-    extends:
+    extends: 
       - commons.WithDocs
       - examples.WithV2Examples
 
   TextResponse:
-    extends:
+    extends: 
       - commons.WithDocs
       - examples.WithV2Examples
 
   BytesResponse:
-    extends:
+    extends: 
       - commons.WithDocs
       - examples.WithV2Examples
 
@@ -319,13 +319,13 @@ types:
       sse: SseStreamChunk
 
   TextStreamChunk:
-    extends:
+    extends: 
       - commons.WithDocs
       - examples.WithV2Examples
     properties: {}
 
   JsonStreamChunk:
-    extends:
+    extends: 
       - commons.WithDocs
       - examples.WithV2Examples
     properties:
@@ -333,7 +333,7 @@ types:
       terminator: optional<string>
 
   SseStreamChunk:
-    extends:
+    extends: 
       - commons.WithDocs
       - examples.WithV2Examples
     properties:

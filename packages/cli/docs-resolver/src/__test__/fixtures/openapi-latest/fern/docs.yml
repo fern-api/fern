@@ -5,5 +5,5 @@ title: SmokeTest | Documentation
 navigation:
   - api: API Reference
 colors:
-  accentPrimary: "#ffffff"
-  background: "#000000"
+  accentPrimary: '#ffffff'
+  background: '#000000'

@@ -5,6 +5,7 @@ service:
   auth: false
   base-path: /users
   endpoints:
+
     listUsernamesCustom:
       pagination:
         type: custom

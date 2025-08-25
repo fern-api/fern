@@ -27,22 +27,22 @@ paths:
                 type: string
 components:
   schemas:
-    CreateCompletionRequest:
+    CreateCompletionRequest: 
       type: object
       properties:
-        stream:
+        stream: 
           type: boolean
-        prompt:
+        prompt: 
           type: string
-      required:
+      required: 
         - prompt
     Completion:
       type: object
       properties:
-        text:
-          type: string
+        text: 
+          type: string 
     CompletionChunk:
       type: object
       properties:
-        text:
+        text: 
           type: string

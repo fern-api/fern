@@ -213,12 +213,12 @@ types:
     properties:
       discriminant: commons.NameAndWireValue
       singleUnionType: ExampleSingleUnionType
-
-  ExampleUndiscriminatedUnionType:
-    properties:
+  
+  ExampleUndiscriminatedUnionType: 
+    properties: 
       index:
         type: integer
-        docs: |
+        docs: | 
           The zero-based index of the undiscriminated union variant.  
           For the following undiscriminated union 
           ```
@@ -229,7 +229,7 @@ types:
               - integer
           ```
           a string example would have an index 0 and an integer example
-          would have an index 1.
+          would have an index 1. 
       singleUnionType: ExampleTypeReference
 
   ExampleSingleUnionType:

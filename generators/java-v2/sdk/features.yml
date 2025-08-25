@@ -50,3 +50,4 @@ features:
     advanced: true
     description: |
       The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
+

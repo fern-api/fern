@@ -12,14 +12,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "common/common.yml#/components/schemas/UserCreate"
+              $ref: 'common/common.yml#/components/schemas/UserCreate'
       responses:
-        "200":
+        '200':
           description: User created successfully
           content:
             application/json:
               schema:
-                $ref: "common/common.yml#/components/schemas/User"
+                $ref: 'common/common.yml#/components/schemas/User'
 
     put:
       summary: Update a user
@@ -29,14 +29,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UserUpdate"
+              $ref: '#/components/schemas/UserUpdate'
       responses:
-        "200":
+        '200':
           description: User updated successfully
           content:
             application/json:
               schema:
-                $ref: "common/common.yml#/components/schemas/User"
+                $ref: 'common/common.yml#/components/schemas/User'
 
 components:
   schemas:
@@ -49,5 +49,5 @@ components:
           type: string
           nullable: true
         settings:
-          $ref: "common/common.yml#/components/schemas/UserSettings"
+          $ref: 'common/common.yml#/components/schemas/UserSettings'
           nullable: true

@@ -19,7 +19,7 @@ groups:
         output:
           location: npm
           url: npm.buildwithfern.com
-          package-name: "@fern-fern/ir-v41-sdk"
+          package-name: '@fern-fern/ir-v41-sdk'
         config:
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true

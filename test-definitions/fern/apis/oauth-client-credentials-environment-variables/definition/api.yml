@@ -11,6 +11,6 @@ auth-schemes:
     client-secret-env: CLIENT_SECRET
     get-token:
       endpoint: auth.getTokenWithClientCredentials
-      response-properties:
+      response-properties: 
         access-token: $response.access_token
         expires-in: $response.expires_in

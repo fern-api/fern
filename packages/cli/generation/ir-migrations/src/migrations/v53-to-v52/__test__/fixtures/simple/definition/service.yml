@@ -32,4 +32,4 @@ service:
           userType:
             type: UserType
             default: UNAUTHENTICATED
-      response: ListUsersResponse
+      response: ListUsersResponse 

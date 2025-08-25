@@ -5,13 +5,15 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"],
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
     {
       "path": "../../../commons/path-utils"
     },
     {
       "path": "../../fern-definition/schema"
-    }
+    },
   ]
 }

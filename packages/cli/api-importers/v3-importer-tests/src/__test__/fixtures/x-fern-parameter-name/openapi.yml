@@ -24,7 +24,7 @@ paths:
           x-fern-parameter-name: id
           schema:
             type: string
-          required: true
+          required: true          
       responses:
         "200":
           description: "Success!"

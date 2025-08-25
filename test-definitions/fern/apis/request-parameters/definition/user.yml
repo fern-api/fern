@@ -13,7 +13,7 @@ types:
       password: string
       name:
         type: string
-        default: "test"
+        default: 'test'
 
 service:
   base-path: /user
@@ -30,7 +30,7 @@ service:
             password: string
             name:
               type: string
-              default: "test"
+              default: 'test'
         query-parameters:
           tags:
             type: list<string>
@@ -44,7 +44,7 @@ service:
           tags:
             type: list<string>
     getUsername:
-      path: ""
+      path: ''
       method: GET
       request:
         name: GetUsersRequest
@@ -74,5 +74,5 @@ service:
             default: 9223372036854775807
           bigIntParam:
             type: bigint
-            default: "18446744073709551615"
+            default: '18446744073709551615'
       response: User

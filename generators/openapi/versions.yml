@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
 - version: 0.1.7
-  createdAt: "2025-01-24"
+  createdAt: '2025-01-24'
   changelogEntry:
     - type: fix
       summary: |
@@ -8,7 +8,7 @@
   irVersion: 53
 
 - version: 0.1.6
-  createdAt: "2024-12-20"
+  createdAt: '2024-12-20'
   changelogEntry:
     - type: fix
       summary: |
@@ -16,7 +16,7 @@
   irVersion: 53
 
 - version: 0.1.5
-  createdAt: "2024-10-06"
+  createdAt: '2024-10-06'
   changelogEntry:
     - type: fix
       summary: |
@@ -24,7 +24,7 @@
   irVersion: 53
 
 - version: 0.1.4
-  createdAt: "2024-09-25"
+  createdAt: '2024-09-25'
   changelogEntry:
     - type: fix
       summary: |
@@ -33,7 +33,7 @@
   irVersion: 53
 
 - version: 0.1.3
-  createdAt: "2024-09-25"
+  createdAt: '2024-09-25'
   changelogEntry:
     - type: fix
       summary: |
@@ -41,7 +41,7 @@
   irVersion: 53
 
 - version: 0.1.2
-  createdAt: "2024-09-25"
+  createdAt: '2024-09-25'
   changelogEntry:
     - type: feat
       summary: |
@@ -57,7 +57,7 @@
   irVersion: 53
 
 - version: 0.1.1
-  createdAt: "2024-09-25"
+  createdAt: '2024-09-25'
   changelogEntry:
     - type: fix
       summary: |
@@ -76,7 +76,7 @@
   irVersion: 53
 
 - version: 0.1.0
-  createdAt: "2024-09-25"
+  createdAt: '2024-09-25'
   changelogEntry:
     - type: chore
       summary: |
@@ -86,7 +86,7 @@
   irVersion: 53
 
 - version: 0.0.32
-  createdAt: "2024-03-24"
+  createdAt: '2024-03-24'
   changelogEntry:
     - type: fix
       summary: |
@@ -94,7 +94,7 @@
   irVersion: 23
 
 - version: 0.0.31
-  createdAt: "2024-03-22"
+  createdAt: '2024-03-22'
   changelogEntry:
     - type: fix
       summary: >-
@@ -105,7 +105,7 @@
   irVersion: 23
 
 - version: 0.0.31-rc0
-  createdAt: "2024-03-20"
+  createdAt: '2024-03-20'
   changelogEntry:
     - type: fix
       summary: >-
@@ -113,7 +113,7 @@
   irVersion: 23
 
 - version: 0.0.30
-  createdAt: "2024-01-21"
+  createdAt: '2024-01-21'
   changelogEntry:
     - type: internal
       summary: Release 0.0.30

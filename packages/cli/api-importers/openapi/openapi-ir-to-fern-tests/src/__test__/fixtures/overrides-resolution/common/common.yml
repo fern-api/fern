@@ -8,7 +8,7 @@ components:
         email:
           type: string
         settings:
-          $ref: "#/components/schemas/UserSettings"
+          $ref: '#/components/schemas/UserSettings'
           nullable: true
 
     User:
@@ -25,10 +25,10 @@ components:
           format: date-time
           nullable: true
         settings:
-          $ref: "#/components/schemas/UserSettings"
+          $ref: '#/components/schemas/UserSettings'
           nullable: true
         stats:
-          $ref: "#/components/schemas/UserStats"
+          $ref: '#/components/schemas/UserStats'
           nullable: true
     UserSettings:
       type: object
@@ -56,3 +56,4 @@ components:
           type: string
           enum: [active, suspended, deleted]
           nullable: true
+

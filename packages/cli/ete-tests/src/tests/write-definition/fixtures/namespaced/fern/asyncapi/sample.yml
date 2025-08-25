@@ -17,19 +17,19 @@ info:
     ```
   contact:
     name: Gemini
-    url: "https://www.gemini.com/"
+    url: 'https://www.gemini.com/'
   externalDocs:
-    url: "https://docs.sandbox.gemini.com/websocket-api/#market-data"
+    url: 'https://docs.sandbox.gemini.com/websocket-api/#market-data'
 servers:
   public:
     host: api.gemini.com
     protocol: wss
 channels:
   marketDataV1:
-    address: "/v1/marketdata/{symbol}"
+    address: '/v1/marketdata/{symbol}'
     messages:
       marketData:
-        $ref: "#/components/messages/marketData"
+        $ref: '#/components/messages/marketData'
     parameters:
       symbol:
         enum:
@@ -153,10 +153,10 @@ operations:
   sendMarketData:
     action: send
     channel:
-      $ref: "#/channels/marketDataV1"
+      $ref: '#/channels/marketDataV1'
     summary: Receive market updates on a given symbol
     messages:
-      - $ref: "#/channels/marketDataV1/messages/marketData"
+      - $ref: '#/channels/marketDataV1/messages/marketData'
 components:
   messages:
     marketData:
@@ -166,7 +166,7 @@ components:
         book. Subsequent messages will show all executed trades, as well as all
         other changes to the order book from orders placed or canceled.
       payload:
-        $ref: "#/components/schemas/market"
+        $ref: '#/components/schemas/market'
       examples:
         - name: updateMessage
           summary: >-
@@ -194,8 +194,8 @@ components:
     market:
       type: object
       oneOf:
-        - $ref: "#/components/schemas/heartbeat"
-        - $ref: "#/components/schemas/update"
+        - $ref: '#/components/schemas/heartbeat'
+        - $ref: '#/components/schemas/update'
     heartbeat:
       allOf:
         - properties:
@@ -204,7 +204,7 @@ components:
               const: heartbeat
           required:
             - type
-        - $ref: "#/components/schemas/default"
+        - $ref: '#/components/schemas/default'
     update:
       allOf:
         - properties:
@@ -218,7 +218,7 @@ components:
                 change occurred. These numbers are persistent and consistent
                 between market data connections.
             events:
-              $ref: "#/components/schemas/events"
+              $ref: '#/components/schemas/events'
             timestamp:
               type: number
               description: >-
@@ -234,7 +234,7 @@ components:
             - events
             - timestamp
             - timestamps
-        - $ref: "#/components/schemas/default"
+        - $ref: '#/components/schemas/default'
     default:
       type: object
       description: >-
@@ -268,7 +268,7 @@ components:
             enum:
               - trade
               - change
-              - "auction, block_trade"
+              - 'auction, block_trade'
           price:
             type: number
             multipleOf: 0.01

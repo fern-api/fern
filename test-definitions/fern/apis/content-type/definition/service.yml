@@ -75,13 +75,13 @@ service:
         name: OptionalMergePatchRequest
         body:
           properties:
-            requiredField: string # Required field
-            optionalString: optional<string> # Should be Optional<String> with initialization
-            optionalInteger: optional<integer> # Should be Optional<Integer> with initialization
-            optionalBoolean: optional<boolean> # Should be Optional<Boolean> with initialization
-            nullableString: nullable<string> # Should be OptionalNullable<String> (for comparison)
+            requiredField: string                    # Required field
+            optionalString: optional<string>         # Should be Optional<String> with initialization
+            optionalInteger: optional<integer>       # Should be Optional<Integer> with initialization
+            optionalBoolean: optional<boolean>       # Should be Optional<Boolean> with initialization
+            nullableString: nullable<string>         # Should be OptionalNullable<String> (for comparison)
         content-type: application/merge-patch+json
-
+    
     # Regular PATCH without merge-patch content type (should use Optional)
     regularPatch:
       docs: Regular PATCH endpoint without merge-patch semantics

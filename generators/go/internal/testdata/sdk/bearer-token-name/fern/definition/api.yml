@@ -5,3 +5,4 @@ auth-schemes:
     scheme: bearer
     token:
       name: api_key
+

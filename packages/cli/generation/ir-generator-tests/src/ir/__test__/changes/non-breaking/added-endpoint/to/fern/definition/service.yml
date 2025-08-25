@@ -30,4 +30,4 @@ service:
       method: POST
       path: /create
       request: CreateMovieRequest
-      response: MovieId
+      response: MovieId 

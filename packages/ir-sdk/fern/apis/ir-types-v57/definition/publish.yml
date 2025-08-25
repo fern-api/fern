@@ -1,43 +1,43 @@
-types:
-  PublishingConfig:
-    union:
-      github:
+types: 
+  PublishingConfig: 
+    union: 
+      github: 
         type: GithubPublish
         docs: Publish via syncing to a GitHub repo and triggering GitHub workflows
-      direct:
+      direct: 
         type: DirectPublish
         docs: Publish directly from the generator
-
-  GithubPublish:
-    properties:
+  
+  GithubPublish: 
+    properties: 
       owner: string
       repo: string
       uri: optional<string>
       token: optional<string>
       target: PublishTarget
-
-  DirectPublish:
-    properties:
+  
+  DirectPublish: 
+    properties: 
       target: PublishTarget
-
-  PublishTarget:
-    union:
+  
+  PublishTarget: 
+    union: 
       postman: PostmanPublishTarget
       npm: NpmPublishTarget
       maven: MavenPublishTarget
-
-  PostmanPublishTarget:
-    properties:
+  
+  PostmanPublishTarget: 
+    properties: 
       apiKey: string
       workspaceId: string
       collectionId: optional<string>
-
+  
   NpmPublishTarget:
     properties:
       version: optional<string>
       packageName: optional<string>
       tokenEnvironmentVariable: string
-
+  
   MavenPublishTarget:
     properties:
       coordinate: optional<string>

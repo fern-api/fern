@@ -29,7 +29,7 @@ types:
       username: string
       password: string
 
-  InferredAuth:
+  InferredAuth: 
     properties: {}
 
   InferredAuthValues:

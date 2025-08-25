@@ -1,11 +1,11 @@
-service:
+service: 
   auth: false
   base-path: ""
-  endpoints:
-    sendOptionalBody:
+  endpoints: 
+    sendOptionalBody: 
       method: POST
       path: /send-optional-body
       request: optional<map<string, unknown>>
-      response:
+      response: 
         type: string
         docs: Id of the created resource

@@ -1,6 +1,6 @@
 name: literal
-docs: |
-  Test definition for literal schemas.
+docs: | 
+  Test definition for literal schemas. 
 headers:
   X-API-Version:
     name: version

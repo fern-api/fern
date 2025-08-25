@@ -15,7 +15,7 @@ paths:
             schema:
               $ref: "#/components/schemas/RequestWithAdditionalPropertiesExplicit"
       responses:
-        "200":
+        '200':
           description: A simple API response.
           content:
             application/json:
@@ -32,7 +32,7 @@ paths:
             schema:
               $ref: "#/components/schemas/RequestWithoutAdditionalPropertiesExplicit"
       responses:
-        "200":
+        '200':
           description: A simple API response.
           content:
             application/json:
@@ -49,7 +49,7 @@ paths:
             schema:
               $ref: "#/components/schemas/Request"
       responses:
-        "200":
+        '200':
           description: A simple API response.
           content:
             application/json:

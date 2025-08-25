@@ -3,8 +3,8 @@ error-discrimination:
   strategy: status-code
 
 auth: BearerAuthScheme
-auth-schemes:
-  BearerAuthScheme:
+auth-schemes: 
+  BearerAuthScheme: 
     scheme: bearer
-    token:
+    token: 
       name: api_key

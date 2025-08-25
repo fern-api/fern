@@ -1,8 +1,9 @@
 types:
-  Item:
+  Item: 
     extra-properties: true
     properties:
       id: string
+
 
 service:
   auth: false
@@ -28,3 +29,4 @@ service:
             body:
               id: "123"
               foo: "bar"
+

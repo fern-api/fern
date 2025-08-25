@@ -5,7 +5,7 @@ types:
     properties:
       foo: GenericUsedType<string>
 
-  GenericApplicationDiscriminatedUnion:
+  GenericApplicationDiscriminatedUnion: 
     union:
       foo: GenericUsedType<string>
       bar: string
@@ -33,7 +33,7 @@ types:
     enum:
       - T
       - bar
-
+  
   GenericUsedTypeUndiscriminatedUnion<T>:
     union:
       - T
@@ -53,7 +53,7 @@ types:
       qux: W
       quux: X
       corge: Y
-
+  
   GenericWrongNumberOfArgumentsApplied:
     type: GenericWrongNumberOfArguments<string, string>
 

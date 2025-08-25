@@ -1,3 +1,4 @@
+
 paths:
   /data/fetch:
     get:
@@ -9,12 +10,12 @@ paths:
     post:
       requestBody:
         application/json:
-          schema:
-            properties:
-              indexType:
-                $ref: "#/components/schemas/IndexType"
+          schema: 
+            properties: 
+              indexType: 
+                $ref: '#/components/schemas/IndexType'
               details:
-                $ref: "#/components/schemas/Any"
+                $ref: '#/components/schemas/Any'
 components:
   schemas:
     Any:
@@ -28,7 +29,7 @@ components:
       oneOf:
         - type: object
           additionalProperties:
-            $ref: "#/components/schemas/MetadataValue"
+            $ref: '#/components/schemas/MetadataValue'
         - type: object
       x-fern-encoding:
         proto:
@@ -45,49 +46,49 @@ components:
     DeleteRequest:
       properties:
         filter:
-          $ref: "#/components/schemas/Metadata"
+          $ref: '#/components/schemas/Metadata'
     DescribeRequest:
       properties:
         filter:
-          $ref: "#/components/schemas/Metadata"
+          $ref: '#/components/schemas/Metadata'
     QueryRequest:
       properties:
         filter:
-          $ref: "#/components/schemas/Metadata"
+          $ref: '#/components/schemas/Metadata'
     QueryColumn:
       properties:
         filter:
-          $ref: "#/components/schemas/Metadata"
+          $ref: '#/components/schemas/Metadata'
     ScoredColumn:
       properties:
         metadata:
-          $ref: "#/components/schemas/Metadata"
+          $ref: '#/components/schemas/Metadata'
     UpdateRequest:
       properties:
         setMetadata:
-          $ref: "#/components/schemas/Metadata"
+          $ref: '#/components/schemas/Metadata'
         indexType:
-          $ref: "#/components/schemas/IndexType"
+          $ref: '#/components/schemas/IndexType'
         indexTypes:
           type: array
           items:
-            $ref: "#/components/schemas/IndexType"
+            $ref: '#/components/schemas/IndexType'
         details:
-          $ref: "#/components/schemas/Any"
+          $ref: '#/components/schemas/Any'
     UpdateResponse:
       properties:
         indexType:
-          $ref: "#/components/schemas/IndexType"
+          $ref: '#/components/schemas/IndexType'
         details:
-          $ref: "#/components/schemas/Any"
+          $ref: '#/components/schemas/Any'
         indexTypes:
           type: array
           items:
-            $ref: "#/components/schemas/IndexType"
+            $ref: '#/components/schemas/IndexType'
     Column:
       properties:
         metadata:
-          $ref: "#/components/schemas/Metadata"
+          $ref: '#/components/schemas/Metadata'
     IndexType:
       x-fern-sdk-group-name:
         - dataservice

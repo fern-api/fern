@@ -21,7 +21,7 @@ groups:
         config:
           wrapped-aliases: true
           enable-forward-compatible-enums: true
-  python:
+  python: 
     generators:
       - name: fernapi/fern-pydantic-model
         version: 0.8.1-rc0
@@ -34,7 +34,7 @@ groups:
           include_union_utils: true
           frozen: true
           version: v1
-  go:
+  go: 
     generators:
       - name: fernapi/fern-go-model
         version: 0.9.3

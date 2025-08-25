@@ -18,11 +18,11 @@ types:
       circle: Circle
       square: Square
 
-  Circle:
+  Circle: 
     properties:
       radiusMeasurement: double
 
-  Square:
+  Square: 
     properties:
       lengthMeasurement: double
 
@@ -46,7 +46,7 @@ types:
       second_union: optional<Shape>
       undiscriminated_union: optional<UndiscriminatedShape>
       any: unknown
-
+  
   ObjectWithDefaults:
     docs: |
       Defines properties with default values and validation rules.

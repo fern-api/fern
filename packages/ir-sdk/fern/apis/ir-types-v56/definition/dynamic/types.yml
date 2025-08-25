@@ -29,7 +29,7 @@ types:
       primitive: root.PrimitiveTypeV1
       set: TypeReference
       unknown: {}
-
+  
   AliasType:
     properties:
       declaration: declaration.Declaration

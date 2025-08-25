@@ -4416,7 +4416,10 @@
         "variants": [
           {
             "fontFile": "assets/GT-Planar-Bold.woff2",
-            "weight": ["600", "700"]
+            "weight": [
+              "600",
+              "700"
+            ]
           }
         ]
       },
@@ -4426,15 +4429,22 @@
         "variants": [
           {
             "fontFile": "assets/GT-Planar.woff2",
-            "weight": ["400"]
+            "weight": [
+              "400"
+            ]
           },
           {
             "fontFile": "assets/GT-Planar-Medium.woff2",
-            "weight": ["500"]
+            "weight": [
+              "500"
+            ]
           },
           {
             "fontFile": "assets/GT-Planar-Bold.woff2",
-            "weight": ["600", "700"]
+            "weight": [
+              "600",
+              "700"
+            ]
           }
         ]
       }

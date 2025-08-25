@@ -13,3 +13,4 @@ service:
         - NotFoundError
       method: DELETE
       path: /
+

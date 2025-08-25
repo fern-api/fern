@@ -14,7 +14,7 @@ components:
           nullable: true
         settings:
           # We resolve the reference based on the _this_ filepath.
-          $ref: "../common/common.yml#/components/schemas/UserSettings"
+          $ref: '../common/common.yml#/components/schemas/UserSettings'
           nullable: true
 
     User:
@@ -33,10 +33,10 @@ components:
         settings:
           # We can still resolve the reference based on the OpenAPI source
           # filepath, too.
-          $ref: "common/common.yml#/components/schemas/UserSettings"
+          $ref: 'common/common.yml#/components/schemas/UserSettings'
           nullable: true
         stats:
-          $ref: "#/components/schemas/UserStats"
+          $ref: '#/components/schemas/UserStats'
           nullable: true
 
     UserStats:

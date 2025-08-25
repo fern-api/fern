@@ -5,7 +5,7 @@ service:
   base-path: /movies
   endpoints:
     createMovie:
-      audiences:
+      audiences: 
         - external
       docs: Add a movie to the database
       method: POST

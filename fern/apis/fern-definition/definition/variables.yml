@@ -1,22 +1,22 @@
-imports:
+imports: 
   commons: commons.yml
 
-types:
-  VariableDeclarationSchema:
+types: 
+  VariableDeclarationSchema: 
     discriminated: false
-    union:
+    union: 
       - string
       - VariableDeclarationDetailed
-
-  VariableDeclarationDetailed:
-    extends:
+  
+  VariableDeclarationDetailed: 
+    extends: 
       - commons.WithDocsSchema
-    properties:
+    properties: 
       type: string
-
-  VariableReferenceSchema:
-    extends:
+  
+  VariableReferenceSchema: 
+    extends: 
       - commons.WithAvailability
       - commons.WithDocsSchema
-    properties:
+    properties: 
       variable: string

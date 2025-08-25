@@ -40,7 +40,7 @@ types:
       b: optional<InlineB>
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   display-name: Long Path
   endpoints:
     do-thing:

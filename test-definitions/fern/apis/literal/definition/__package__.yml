@@ -1,9 +1,10 @@
-types:
-  SendResponse:
-    properties:
-      message:
+types: 
+  SendResponse: 
+    properties: 
+      message: 
         type: string
-      status:
+      status: 
         type: integer
-      success:
+      success: 
         type: literal<true>
+      

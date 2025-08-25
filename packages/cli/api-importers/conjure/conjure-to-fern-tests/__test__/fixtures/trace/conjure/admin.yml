@@ -20,6 +20,7 @@ services:
     package: com.birch.trace.admin
     base-path: /admin
     endpoints:
+
       updateTestSubmissionStatus:
         http: POST /store-test-submission-status/{submissionId}
         args:
