@@ -3,6 +3,7 @@ readme:
   apiName: "Readme Test"
   disabledSections:
     - "contributing"
+  whiteLabel: true
   bannerLink: https://www.fernapi.com
   apiReferenceLink: https://www.docs.fernapi.com
   defaultEndpoint: POST /movies/create-movie

@@ -3435,6 +3435,7 @@
         "disabledFeatures": [
             "contributing"
         ],
+        "whiteLabel": true,
         "apiReferenceLink": "https://www.docs.fernapi.com",
         "bannerLink": "https://www.fernapi.com",
         "introduction": null,

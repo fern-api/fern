@@ -13,6 +13,7 @@ export function convertReadmeConfig({
     return {
         apiName: readme.apiName,
         disabledFeatures: readme.disabledSections,
+        whiteLabel: readme.whiteLabel,
         apiReferenceLink: readme.apiReferenceLink,
         bannerLink: readme.bannerLink,
         introduction: readme.introduction,
