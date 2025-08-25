@@ -37,7 +37,7 @@
   "editor.defaultFormatter": "biomejs.biome",
   "[yaml]": {
     // Biome doesn't support yaml formatting, so we use prettier instead
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "python.analysis.typeCheckingMode": "basic",
   "dotnet.automaticallyCreateSolutionInWorkspace": false,
