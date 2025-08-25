@@ -14,6 +14,7 @@ dist/
 lib/
 build/
 generated/
+seed/
 .git/
 .husky/
 .github/
