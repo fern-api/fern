@@ -271,7 +271,13 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitNullable(TypeReference typeReference) {
-            return visitOptional(typeReference);
+            if (customConfig.useNullableAnnotation()) {
+                // New behavior when flag is true: nullable<T> → T (with @Nullable annotation)
+                return typeReference.visit(primitiveDisAllowedTypeReferenceConverter);
+            } else {
+                // Current/default behavior when flag is false: nullable<T> → Optional<T>
+                return visitOptional(typeReference);
+            }
         }
 
         @Override

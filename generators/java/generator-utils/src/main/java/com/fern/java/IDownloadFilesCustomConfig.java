@@ -29,6 +29,12 @@ public interface IDownloadFilesCustomConfig {
         return false;
     }
 
+    @Value.Default
+    @JsonProperty("use-nullable-annotation")
+    default Boolean useNullableAnnotation() {
+        return false;  // Default false keeps current behavior (nullable generates Optional)
+    }
+
     @JsonProperty("package-prefix")
     Optional<String> packagePrefix();
 

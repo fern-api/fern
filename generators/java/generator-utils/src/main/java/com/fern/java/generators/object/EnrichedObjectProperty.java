@@ -13,6 +13,7 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.utils.JavaDocUtils;
 import com.fern.java.utils.KeyWordUtils;
+import com.fern.java.utils.NullableAnnotationUtils;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -53,6 +54,8 @@ public interface EnrichedObjectProperty {
     AbstractGeneratorContext.GeneratorType generator();
 
     boolean allowMultiple();
+    
+    boolean useNullableAnnotation();
 
     @Value.Lazy
     default Optional<FieldSpec> fieldSpec() {
@@ -73,6 +76,12 @@ public interface EnrichedObjectProperty {
                         KeyWordUtils.getKeyWordCompatibleMethodName("get" + pascalCaseKey()))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(poetTypeName());
+        
+        // Add @Nullable annotation if using nullable annotations and this is a nullable type
+        if (useNullableAnnotation() && isNullable(objectProperty().getValueType())) {
+            getterBuilder.addAnnotation(NullableAnnotationUtils.getNullableAnnotation());
+        }
+        
         if (nullable()) {
             getterBuilder
                     .beginControlFlow("if ($L == null)", fieldSpec().get().name)
@@ -206,7 +215,8 @@ public interface EnrichedObjectProperty {
             boolean inline,
             boolean wrappedAliases,
             TypeName poetTypeName,
-            boolean allowMultiple) {
+            boolean allowMultiple,
+            boolean useNullableAnnotation) {
         Name name = objectProperty.getName().getName();
         Optional<Literal> maybeLiteral =
                 objectProperty.getValueType().getContainer().flatMap(ContainerType::getLiteral);
@@ -221,6 +231,7 @@ public interface EnrichedObjectProperty {
                 .nullableNonemptyFilterClassName(nullableNonemptyFilterClassName)
                 .generator(generator)
                 .allowMultiple(allowMultiple)
+                .useNullableAnnotation(useNullableAnnotation)
                 .wireKey(objectProperty.getName().getWireValue())
                 .docs(objectProperty.getDocs())
                 .literal(maybeLiteral)

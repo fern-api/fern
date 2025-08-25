@@ -329,7 +329,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
                             @Override
                             public Boolean visitFilesystem(Filesystem value) {
-                                return value.getGenerateFullProject();
+                                // Always generate full project with Gradle files for local filesystem
+                                return true;
                             }
 
                             @Override
