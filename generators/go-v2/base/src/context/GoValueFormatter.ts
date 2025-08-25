@@ -37,31 +37,32 @@ export class GoValueFormatter {
 
         let prefix: go.AstNode | undefined;
         let suffix: go.AstNode | undefined;
+        let unwrapPrefix: go.AstNode | undefined;
         let isOptional = false;
         let isPrimitive = false;
 
         const optionalOrNullableType = this.context.maybeUnwrapOptionalOrNullable(reference);
         const enumType = this.context.maybeEnum(reference);
 
+        // define unwrapPrefix (either "*", "string(*", or "string(")
         if (optionalOrNullableType != null) {
             if (this.context.needsOptionalDereference(reference)) {
-                prefix = go.codeblock("*");
                 if (enumType != null) {
-                    prefix = go.codeblock("string(*");
+                    unwrapPrefix = go.codeblock("string(*");
                     suffix = go.codeblock(")");
+                } else {
+                    unwrapPrefix = go.codeblock("*");
                 }
             }
             isOptional = true;
         } else if (enumType != null) {
-            prefix = go.codeblock("string(");
+            unwrapPrefix = go.codeblock("string(");
             suffix = go.codeblock(")");
         }
 
+        // define prefix
         const primitive = this.context.maybePrimitive(reference);
         if (primitive != null) {
-            if (isOptional) {
-                prefix = go.codeblock("*");
-            }
             switch (primitive) {
                 case PrimitiveTypeV1.DateTime:
                     prefix = undefined;
@@ -118,6 +119,19 @@ export class GoValueFormatter {
                     assertNever(primitive);
             }
             isPrimitive = true;
+        }
+
+        // merge the two
+        if (unwrapPrefix) {
+            if (prefix) {
+                const origPrefix = prefix
+                prefix = go.codeblock((writer) => {
+                    writer.writeNode(origPrefix);
+                    writer.writeNode(unwrapPrefix);
+                });
+            } else {
+                prefix = unwrapPrefix;
+            }
         }
 
         return {
