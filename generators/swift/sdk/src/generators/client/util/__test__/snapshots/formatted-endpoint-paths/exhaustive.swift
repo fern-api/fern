@@ -28,7 +28,6 @@
 "/object/get-and-return-nested-with-optional-field"
 "/object/get-and-return-nested-with-required-field/\(string)"
 "/object/get-and-return-nested-with-required-field-list"
-"/object/test-integer-overflow-edge-cases"
 
 // service_endpoints/params
 "/params/path/\(param)"
