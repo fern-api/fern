@@ -105,11 +105,16 @@ export class EndpointMethodGenerator {
                     })
                 );
             } else if (endpoint.requestBody.type === "inlinedRequestBody") {
+                const fullyQualifiedRequestTypeSymbolName =
+                    this.sdkGeneratorContext.project.symbolRegistry.getFullyQualifiedRequestTypeSymbolOrThrow(
+                        endpoint.id,
+                        endpoint.requestBody.name.pascalCase.unsafeName
+                    );
                 params.push(
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: swift.Type.custom(endpoint.requestBody.name.pascalCase.unsafeName),
+                        type: swift.Type.custom(fullyQualifiedRequestTypeSymbolName),
                         docsContent: endpoint.requestBody.docs
                     })
                 );

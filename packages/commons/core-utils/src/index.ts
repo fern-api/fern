@@ -22,6 +22,7 @@ export { parseEndpointLocator } from "./parseEndpointLocator";
 export { PLATFORM, type Platform } from "./platform";
 export { removeSuffix } from "./removeSuffix";
 export { replaceEnvVariables } from "./replaceEnvVars";
+export { SymbolRegistry, type SymbolRegistryOptions } from "./SymbolRegistry";
 export { type SetRequired } from "./setRequired";
 export { stripLeadingSlash } from "./stripLeadingSlash";
 export { titleCase } from "./titleCase";

@@ -47,7 +47,7 @@ public final class ProblemClient: Sendable {
     /// Returns default starter files for problem
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func getDefaultStarterFiles(request: GetDefaultStarterFilesRequest, requestOptions: RequestOptions? = nil) async throws -> GetDefaultStarterFilesResponse {
+    public func getDefaultStarterFiles(request: Requests.GetDefaultStarterFilesRequest, requestOptions: RequestOptions? = nil) async throws -> GetDefaultStarterFilesResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/problem-crud/default-starter-files",
