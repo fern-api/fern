@@ -112,6 +112,7 @@ export class DocsDefinitionResolver {
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
     private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean> = new Map();
+    private rawMarkdownFiles: Record<RelativeFilePath, string> = {};
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
         this._parsedDocsConfig = await parseDocsConfiguration({
             rawDocsConfiguration: this.docsWorkspace.config,
@@ -119,6 +120,11 @@ export class DocsDefinitionResolver {
             absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
             absoluteFilepathToDocsConfig: this.docsWorkspace.absoluteFilepathToDocsConfig
         });
+
+        // Store raw markdown content before any processing
+        for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
+            this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = markdown;
+        }
 
         // track all changelog markdown files in parsedDocsConfig.pages
         const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
@@ -142,6 +148,8 @@ export class DocsDefinitionResolver {
                         fernWorkspace.changelog?.files.forEach((file) => {
                             const relativePath = relative(this.docsWorkspace.absoluteFilePath, file.absoluteFilepath);
                             this.parsedDocsConfig.pages[relativePath] = file.contents;
+                            // Also store the raw content for changelog files
+                            this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = file.contents;
                         });
                     }
                 },
@@ -243,9 +251,11 @@ export class DocsDefinitionResolver {
 
         Object.entries(this.parsedDocsConfig.pages).forEach(([relativePageFilepath, markdown]) => {
             const url = createEditThisPageUrl(this.editThisPage, relativePageFilepath);
+            const rawMarkdown = this.rawMarkdownFiles[RelativeFilePath.of(relativePageFilepath)];
             pages[DocsV1Write.PageId(relativePageFilepath)] = {
                 markdown,
-                editThisPageUrl: url ? DocsV1Write.Url(url) : undefined
+                editThisPageUrl: url ? DocsV1Write.Url(url) : undefined,
+                rawMarkdown: rawMarkdown
             };
         });
 
