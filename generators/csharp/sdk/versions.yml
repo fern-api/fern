@@ -1,4 +1,10 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.1.15
+  changelogEntry:
+    - type: fix
+      summary: Ensure dynamic snippet method calls can use literal values
+  createdAt: '2025-08-25'
+  irVersion: 58
 - version: 2.1.14
   changelogEntry:
     - type: fix

@@ -14,6 +14,7 @@ public class Example1
 
         await client.Dummy.GenerateAsync(
             new Generateequest{
+                Stream = false,
                 NumEvents = 5
             }
         );
