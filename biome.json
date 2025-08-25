@@ -162,7 +162,9 @@
 			"!packages/docs-config/**",
 			"!packages/ir-sdk/**",
 			"!packages/seed/**",
-			"!seed/**"
+			"!seed/**",
+			"!**/*.yml",
+			"!**/*.yaml"
 		]
 	},
 	"javascript": {
