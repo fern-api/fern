@@ -3,13 +3,13 @@
   changelogEntry:
     - type: fix
       summary: Ensure dynamic snippet method calls can use literal values
-  createdAt: '2025-08-25'
+  createdAt: "2025-08-25"
   irVersion: 58
 - version: 2.1.14
   changelogEntry:
     - type: fix
       summary: Create link in README.MD file to the REFERENCE.MD file
-  createdAt: '2025-08-25'
+  createdAt: "2025-08-25"
   irVersion: 58
 - version: 2.1.13
   changelogEntry:

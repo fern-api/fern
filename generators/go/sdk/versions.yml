@@ -4,7 +4,7 @@
     - summary: |
         Fix certain instances of fmt.Sprintf'd values failing to be dereferenced.
       type: fix
-  createdAt: '2025-08-25'
+  createdAt: "2025-08-25"
   irVersion: 58
 
 - version: 1.6.4-rc0
