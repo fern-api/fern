@@ -87,10 +87,10 @@ public final class ListUsersRequest {
     }
 
     private boolean equalTo(ListUsersRequest other) {
-        return java.util.Objects.equals(limit, other.limit)
-                && java.util.Objects.equals(offset, other.offset)
-                && java.util.Objects.equals(includeDeleted, other.includeDeleted)
-                && java.util.Objects.equals(sortBy, other.sortBy);
+        return limit.equals(other.limit)
+                && offset.equals(other.offset)
+                && includeDeleted.equals(other.includeDeleted)
+                && sortBy.equals(other.sortBy);
     }
 
     @java.lang.Override
