@@ -301,9 +301,83 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             }
         });
 
+        const mergeHeaders: ts.Expression[] = [];
+        const authProviderStatements = [];
+        const mergeOnlyDefinedHeaders: ts.PropertyAssignment[] = [];
+        if (this.generatedSdkClientClass.hasAuthProvider()) {
+            authProviderStatements.push(
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                "_authRequest",
+                                undefined,
+                                context.coreUtilities.auth.AuthRequest._getReferenceToType(),
+                                context.coreUtilities.auth.AuthProvider.getAuthRequest.invoke(
+                                    this.generatedSdkClientClass.getReferenceToAuthProviderOrThrow()
+                                )
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    )
+                )
+            );
+            mergeHeaders.push(ts.factory.createIdentifier("_authRequest.headers"));
+        } else {
+            const getAuthHeaderValue = this.generatedSdkClientClass.getAuthorizationHeaderValue();
+            mergeOnlyDefinedHeaders.push(
+                ...(getAuthHeaderValue
+                    ? [ts.factory.createPropertyAssignment("Authorization", getAuthHeaderValue)]
+                    : this.generatedSdkClientClass.shouldGenerateCustomAuthorizationHeaderHelperMethod()
+                      ? [
+                            ts.factory.createPropertyAssignment(
+                                "Authorization",
+                                ts.factory.createAwaitExpression(
+                                    ts.factory.createCallExpression(
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createThis(),
+                                            GeneratedSdkClientClassImpl.CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME
+                                        ),
+                                        undefined,
+                                        []
+                                    )
+                                )
+                            )
+                        ]
+                      : [])
+            );
+        }
+        mergeOnlyDefinedHeaders.push(
+            ...this.channel.headers.map((header) => {
+                return ts.factory.createPropertyAssignment(
+                    header.name.wireValue,
+                    this.getReferenceToArg(header.name.wireValue)
+                );
+            })
+        );
+        if (mergeOnlyDefinedHeaders.length > 0) {
+            context.importsManager.addImportFromRoot("core/headers", {
+                namedImports: ["mergeOnlyDefinedHeaders"]
+            });
+            mergeHeaders.push(
+                ts.factory.createCallExpression(ts.factory.createIdentifier("mergeOnlyDefinedHeaders"), undefined, [
+                    ts.factory.createObjectLiteralExpression(mergeOnlyDefinedHeaders)
+                ])
+            );
+        }
+        mergeHeaders.push(ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_PROPERTY_NAME));
+
+        if (mergeHeaders.length > 1) {
+            context.importsManager.addImportFromRoot("core/headers", {
+                namedImports: ["mergeHeaders"]
+            });
+        }
+
         return [
             destructuringStatement,
             ...queryParameters.getBuildStatements(context),
+            ...authProviderStatements,
             ts.factory.createVariableStatement(
                 undefined,
                 ts.factory.createVariableDeclarationList(
@@ -313,80 +387,23 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                             undefined,
                             ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
                                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                                ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("unknown"))
                             ]),
-                            ts.factory.createObjectLiteralExpression(
-                                [
-                                    ts.factory.createSpreadAssignment(
-                                        ts.factory.createIdentifier(
-                                            GeneratedDefaultWebsocketImplementation.HEADERS_PROPERTY_NAME
-                                        )
-                                    )
-                                ],
-                                true
-                            )
+                            mergeHeaders.length > 1
+                                ? ts.factory.createCallExpression(
+                                      ts.factory.createIdentifier("mergeHeaders"),
+                                      undefined,
+                                      [...mergeHeaders]
+                                  )
+                                : ts.factory.createObjectLiteralExpression(
+                                      [ts.factory.createSpreadAssignment(mergeHeaders[0] as ts.Expression)],
+                                      false
+                                  )
                         )
                     ],
                     ts.NodeFlags.Let
                 )
             ),
-            ...(this.generatedSdkClientClass.shouldGenerateCustomAuthorizationHeaderHelperMethod()
-                ? [
-                      ts.factory.createExpressionStatement(
-                          ts.factory.createBinaryExpression(
-                              ts.factory.createIdentifier(
-                                  GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME
-                              ),
-                              ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                              ts.factory.createObjectLiteralExpression(
-                                  [
-                                      ts.factory.createSpreadAssignment(
-                                          ts.factory.createIdentifier(
-                                              GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME
-                                          )
-                                      ),
-                                      ts.factory.createSpreadAssignment(
-                                          ts.factory.createAwaitExpression(
-                                              ts.factory.createCallExpression(
-                                                  ts.factory.createPropertyAccessExpression(
-                                                      ts.factory.createThis(),
-                                                      GeneratedSdkClientClassImpl.CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME
-                                                  ),
-                                                  undefined,
-                                                  []
-                                              )
-                                          )
-                                      )
-                                  ],
-                                  true
-                              )
-                          )
-                      )
-                  ]
-                : []),
-            ...(this.channel.headers ?? []).map((header) => {
-                return ts.factory.createIfStatement(
-                    ts.factory.createBinaryExpression(
-                        this.getReferenceToArg(header.name.wireValue),
-                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                        ts.factory.createNull()
-                    ),
-                    ts.factory.createBlock([
-                        ts.factory.createExpressionStatement(
-                            ts.factory.createBinaryExpression(
-                                ts.factory.createElementAccessExpression(
-                                    ts.factory.createIdentifier(
-                                        GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME
-                                    ),
-                                    ts.factory.createStringLiteral(header.name.wireValue)
-                                ),
-                                ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                                this.getReferenceToArg(header.name.wireValue)
-                            )
-                        )
-                    ])
-                );
-            }),
             ts.factory.createVariableStatement(
                 undefined,
                 ts.factory.createVariableDeclarationList(
@@ -560,11 +577,17 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         return ts.factory.createIdentifier(this.getPropertyNameOfQueryParameter(queryParameter).propertyName);
     }
 
-    public getPropertyNameOfQueryParameter(queryParameter: QueryParameter): { safeName: string; propertyName: string } {
+    public getPropertyNameOfQueryParameter(queryParameter: QueryParameter): {
+        safeName: string;
+        propertyName: string;
+    } {
         return this.getPropertyNameOfQueryParameterFromName(queryParameter.name);
     }
 
-    public getPropertyNameOfQueryParameterFromName(name: NameAndWireValue): { safeName: string; propertyName: string } {
+    public getPropertyNameOfQueryParameterFromName(name: NameAndWireValue): {
+        safeName: string;
+        propertyName: string;
+    } {
         return {
             safeName: name.name.camelCase.safeName,
             propertyName:

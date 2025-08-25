@@ -1,0 +1,31 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "9c40742a",
+            "id": {
+                "method": "POST",
+                "path": "/token",
+                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.websocketAuth.SeedWebsocketAuthClient;\nimport com.seed.websocketAuth.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedWebsocketAuthClient client = SeedWebsocketAuthClient\n            .builder()\n            .build();\n\n        client.auth().getTokenWithClientCredentials(\n            GetTokenRequest\n                .builder()\n                .xApiKey(\"X-Api-Key\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .audience(\"https://api.example.com\")\n                .grantType(\"client_credentials\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.websocketAuth.SeedWebsocketAuthClient;\nimport com.seed.websocketAuth.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedWebsocketAuthClient client = SeedWebsocketAuthClient\n            .builder()\n            .build();\n\n        client.auth().getTokenWithClientCredentials(\n            GetTokenRequest\n                .builder()\n                .xApiKey(\"X-Api-Key\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .audience(\"https://api.example.com\")\n                .grantType(\"client_credentials\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "86886c27",
+            "id": {
+                "method": "POST",
+                "path": "/token/refresh",
+                "identifier_override": "endpoint_auth.refreshToken"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.websocketAuth.SeedWebsocketAuthClient;\nimport com.seed.websocketAuth.resources.auth.requests.RefreshTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedWebsocketAuthClient client = SeedWebsocketAuthClient\n            .builder()\n            .build();\n\n        client.auth().refreshToken(\n            RefreshTokenRequest\n                .builder()\n                .xApiKey(\"X-Api-Key\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .refreshToken(\"refresh_token\")\n                .audience(\"https://api.example.com\")\n                .grantType(\"refresh_token\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.websocketAuth.SeedWebsocketAuthClient;\nimport com.seed.websocketAuth.resources.auth.requests.RefreshTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedWebsocketAuthClient client = SeedWebsocketAuthClient\n            .builder()\n            .build();\n\n        client.auth().refreshToken(\n            RefreshTokenRequest\n                .builder()\n                .xApiKey(\"X-Api-Key\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .refreshToken(\"refresh_token\")\n                .audience(\"https://api.example.com\")\n                .grantType(\"refresh_token\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "access_token": {
+      "type": "string"
+    },
+    "refresh_token": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "access_token"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

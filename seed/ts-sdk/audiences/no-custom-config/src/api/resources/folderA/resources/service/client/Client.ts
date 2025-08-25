@@ -53,7 +53,7 @@ export class Service {
     private async __getDirectThread(
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedAudiences.folderA.Response>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??

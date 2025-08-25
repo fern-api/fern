@@ -146,6 +146,7 @@
 			"!**/fixtures/**/fernconfig.json",
 			"!docker/seed/**",
 			"!generators/typescript-mcp/base/src/asIs/**",
+			"!generators/typescript-mcp/server/dist/asIs/**",
 			"!generators/typescript/**/*.tempate.*",
 			"!generators/typescript/asIs/**",
 			"!generators/typescript/utils/**",

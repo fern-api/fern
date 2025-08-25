@@ -59,7 +59,7 @@ export class Organization {
         request: SeedMixedFileDirectory.CreateOrganizationRequest,
         requestOptions?: Organization.RequestOptions,
     ): Promise<core.WithRawResponse<SeedMixedFileDirectory.Organization>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??

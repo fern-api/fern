@@ -1,6 +1,7 @@
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { HttpService, Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
 import { RawClient } from "../endpoint/http/RawClient";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
@@ -30,21 +31,12 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
     }
 
     public doGenerate(): RubyFile {
+        const rootModule = this.context.getRootModule();
         const clientClass = ruby.class_({
             name: CLIENT_CLASS_NAME
         });
 
-        const rootModule = this.context.getRootModule();
-
-        let nestedModule = rootModule;
-        for (const filepath of this.subpackage.fernFilepath.allParts) {
-            const module = ruby.module({
-                name: filepath.pascalCase.safeName
-            });
-            nestedModule.addStatement(module);
-            nestedModule = module;
-        }
-        nestedModule.addStatement(clientClass);
+        const modules = this.getClientModuleNames().map((name) => ruby.module({ name }));
 
         clientClass.addStatement(
             ruby.method({
@@ -62,6 +54,14 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
             })
         );
 
+        for (const subpackage of this.getSubpackages()) {
+            // skip subpackages that have no endpoints (recursively)
+            if (!this.context.subPackageHasEndpoints(subpackage)) {
+                continue;
+            }
+            clientClass.addMethod(this.getSubpackageClientGetter(subpackage, rootModule));
+        }
+
         if (this.subpackage.service != null) {
             const service = this.context.getHttpServiceOrThrow(this.subpackage.service);
             const methods = this.generateEndpoints(service);
@@ -72,12 +72,19 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
             node: ruby.codeblock((writer) => {
                 ruby.comment({ docs: "frozen_string_literal: true" });
                 writer.newLine();
-                rootModule.write(writer);
+                ruby.wrapInModules(clientClass, modules).write(writer);
             }),
             directory: this.getFilepath(),
             filename: `client.rb`,
             customConfig: this.context.customConfig
         });
+    }
+
+    private getClientModuleNames(): string[] {
+        return [
+            this.context.getRootModule().name,
+            ...this.subpackage.fernFilepath.allParts.map((path) => path.pascalCase.safeName)
+        ];
     }
 
     protected getFilepath(): RelativeFilePath {
@@ -109,5 +116,35 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
             }
         }
         return methods;
+    }
+
+    private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
+        return new ruby.Method({
+            name: subpackage.name.snakeCase.safeName,
+            kind: ruby.MethodKind.Instance,
+            returnType: ruby.Type.class_(
+                ruby.classReference({
+                    name: "Client",
+                    modules: [rootModule.name, subpackage.name.pascalCase.safeName],
+                    fullyQualified: true
+                })
+            ),
+            statements: [
+                ruby.codeblock((writer) => {
+                    writer.writeLine(
+                        `@${subpackage.name.snakeCase.safeName} ||= ` +
+                            `${this.getClientModuleNames().join("::")}::` +
+                            `${subpackage.name.pascalCase.safeName}::` +
+                            `Client.new(client: @client)`
+                    );
+                })
+            ]
+        });
+    }
+
+    private getSubpackages(): Subpackage[] {
+        return this.subpackage.subpackages.map((subpackageId) => {
+            return this.context.getSubpackageOrThrow(subpackageId);
+        });
     }
 }

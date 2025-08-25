@@ -145,6 +145,15 @@ fixtures:
         inline-path-parameters: true
       outputFolder: inline-file-properties
     - outputFolder: no-custom-config
+  examples:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
+    - customConfig:
+        inline-file-properties: true
+        inline-path-parameters: true
+      outputFolder: inline-file-properties
+    - outputFolder: no-custom-config
   nullable:
     - customConfig:
         wrapped-aliases: true
@@ -168,6 +177,13 @@ fixtures:
         client-class-name: BaseClient
         enable-extensible-builders: true
       outputFolder: extensible-builders
+  nullable-optional:
+    - customConfig:
+        use-nullable-annotation: true
+      outputFolder: with-nullable-annotation
+    - customConfig:
+        use-nullable-annotation: false
+      outputFolder: legacy
 scripts:
   - docker: fernapi/java-seed
     commands:

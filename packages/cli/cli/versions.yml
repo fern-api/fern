@@ -1,5 +1,47 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Add support for `const` JSON schema keyword, which parses to a single-valued enum.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-22"
+  version: 0.66.23
+
+- changelogEntry:
+    - summary: Nested protobuf types have correct type ids in converted ir.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-22"
+  version: 0.66.22
+
+- changelogEntry:
+    - summary: |
+        Introduce an OpenAPI setting called `inline-all-of-schemas` which recursively
+        visits the scheme definitions of allOf schemas and inlines them into the child.
+
+        The benefit of doing this is that a child schema can modify whether or not a parent
+        property is required. Without this setting, Fern would ignore the child schema's
+        declaration of optional and prefer the parent schema's instead.
+
+        Add the following to your `generators.yml`:
+
+        ```yml generators.yml
+        api:
+          settings:
+            inline-all-of-schemas: true
+        ```
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-18"
+  version: 0.66.21
+
+- changelogEntry:
+    - summary: Add `kwargs` as a reserved word in python so that generated SDKs continue to compile.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-18"
+  version: 0.66.20
+
+- changelogEntry:
     - summary: Handle multipart/mixed content types in endpoint responses.
       type: chore
   irVersion: 59
@@ -188,7 +230,7 @@
 
 - changelogEntry:
     - summary: |
-        Escape $ signs when converting from OpenAPI -> Fern Definition (for enums), because the Fern Definition treats 
+        Escape $ signs when converting from OpenAPI -> Fern Definition (for enums), because the Fern Definition treats
         $ sign examples as references.
       type: feat
   irVersion: 58
@@ -229,8 +271,8 @@
 
 - changelogEntry:
     - summary: |
-        Fix snippet generation for local file system output mode. Snippets configured with `snippets.path` 
-        in generators.yml were not being generated when using `--local` flag due to missing Docker volume 
+        Fix snippet generation for local file system output mode. Snippets configured with `snippets.path`
+        in generators.yml were not being generated when using `--local` flag due to missing Docker volume
         mounting for the downloadFiles output mode.
       type: fix
   irVersion: 58
@@ -247,13 +289,13 @@
 
 - changelogEntry:
     - summary: |
-        Add support for snippet.json output as part of self hosted SDK generation. The following config in 
-        `generators.yml` will generate a `snippet.json` file in the relevant director: 
+        Add support for snippet.json output as part of self hosted SDK generation. The following config in
+        `generators.yml` will generate a `snippet.json` file in the relevant director:
         ```
-        groups: 
-          ts-sdk: 
+        groups:
+          ts-sdk:
             - name: fernapi/fern-typescript-sdk
-              snippets: 
+              snippets:
                 path: ../snippets.json
         ```
       type: feat
@@ -479,8 +521,8 @@
 
 - changelogEntry:
     - summary: |
-        The extension `x-fern-global-headers` now supports a type field that can point to 
-        arbitrary schemas. For example you can do the following to describe a header 
+        The extension `x-fern-global-headers` now supports a type field that can point to
+        arbitrary schemas. For example you can do the following to describe a header
         that is an enum.
 
         ```yml
@@ -545,7 +587,7 @@
 - changelogEntry:
     - summary: |
         Previously if the OpenAPI parser v3 was enabled where the CLI would skip parsing any additional Fern Definitions
-        along the OpenAPI spec. With the fix, you can use whatever combination of OpenAPI Spec(s) and Fern Definitions that 
+        along the OpenAPI spec. With the fix, you can use whatever combination of OpenAPI Spec(s) and Fern Definitions that
         you would like.
       type: fix
   irVersion: 58
@@ -682,8 +724,8 @@
 
 - changelogEntry:
     - summary: |
-        Added Server-Sent Events (SSE) support to Java stream implementation. The Java SDK generator now 
-        supports SSE streaming alongside existing JSON streaming, enabling real-time incremental responses 
+        Added Server-Sent Events (SSE) support to Java stream implementation. The Java SDK generator now
+        supports SSE streaming alongside existing JSON streaming, enabling real-time incremental responses
         for chat applications and live data feeds.
       type: feat
   irVersion: 58
@@ -700,8 +742,8 @@
 
 - changelogEntry:
     - summary: |
-        Global headers are now used to create endpoint examples. When building endpoint examples, global headers 
-        are automatically included in the headers section of each example. This ensures that all endpoints have consistent 
+        Global headers are now used to create endpoint examples. When building endpoint examples, global headers
+        are automatically included in the headers section of each example. This ensures that all endpoints have consistent
         header examples that match the global header configuration.
       type: fix
   irVersion: 58
@@ -790,7 +832,7 @@
 
 - changelogEntry:
     - summary: |
-        Respect additional properties in docs example generation by preserving them in generated examples instead of 
+        Respect additional properties in docs example generation by preserving them in generated examples instead of
         stripping unknown properties.
       type: fix
   irVersion: 58
@@ -847,8 +889,8 @@
 
 - changelogEntry:
     - summary: |
-        The Readme importer now downloads MDX files from the source documentation. 
-        This allows for better handling of React components and dynamic content in the imported documentation. 
+        The Readme importer now downloads MDX files from the source documentation.
+        This allows for better handling of React components and dynamic content in the imported documentation.
         The importer will preserve the MDX syntax and structure while converting the content to a format compatible with Fern's documentation system.
       type: fix
   irVersion: 58
@@ -873,9 +915,9 @@
 
 - changelogEntry:
     - summary: |
-        The OpenAPI v3 Parser now uniquely stores schemas across endpoint parameters to prevent overwriting. Previously, 
-        schemas with the same name across different parameters would overwrite each other, leading to potential data loss 
-        and incorrect type definitions. This fix ensures that each parameter's schema is properly preserved and referenced 
+        The OpenAPI v3 Parser now uniquely stores schemas across endpoint parameters to prevent overwriting. Previously,
+        schemas with the same name across different parameters would overwrite each other, leading to potential data loss
+        and incorrect type definitions. This fix ensures that each parameter's schema is properly preserved and referenced
         throughout the API specification.
       type: fix
   irVersion: 58
@@ -884,9 +926,9 @@
 
 - changelogEntry:
     - summary: |
-        The AsyncAPI v3 importer now properly detects query parameters by analyzing the channel address specification. 
-        When a channel address contains a parameter reference in the format `={paramName}`, the importer will automatically 
-        identify it as a query parameter. This allows for more accurate parameter type detection and better handling of 
+        The AsyncAPI v3 importer now properly detects query parameters by analyzing the channel address specification.
+        When a channel address contains a parameter reference in the format `={paramName}`, the importer will automatically
+        identify it as a query parameter. This allows for more accurate parameter type detection and better handling of
         WebSocket channel parameters in AsyncAPI v3 specifications.
       type: fix
   irVersion: 58
@@ -895,8 +937,8 @@
 
 - changelogEntry:
     - summary: |
-        The AsyncAPI importer now supports parameter references and computing location of the parameter based on the address. 
-        This allows for more flexible parameter definitions in AsyncAPI specifications, where parameters can be referenced from other 
+        The AsyncAPI importer now supports parameter references and computing location of the parameter based on the address.
+        This allows for more flexible parameter definitions in AsyncAPI specifications, where parameters can be referenced from other
         parts of the specification and their location can be dynamically determined based on the channel address.
       type: fix
   irVersion: 58
@@ -1012,7 +1054,7 @@
 
 - changelogEntry:
     - summary: |
-        The v3 OpenAPI parser now appropriately creates inlined types for references to 
+        The v3 OpenAPI parser now appropriately creates inlined types for references to
         inlined schemas like `$ref: /components/schemas/MySchema/properties/foo`
       type: fix
     - summary: Bump all generators to IR v58.
@@ -1298,7 +1340,7 @@
         ```yaml
         - name: fernapi/fern-typescript-sdk
           version: 0.48.5
-          api: 
+          api:
             auth: bearer
         ```
 
@@ -1326,7 +1368,7 @@
 
 - changelogEntry:
     - summary: |
-        Remove `respect-readonly-schemas` for the legacy OpenAPI parser since it can block docs 
+        Remove `respect-readonly-schemas` for the legacy OpenAPI parser since it can block docs
         generation. Anyone who wants to enable this can turn it on in `generators.yml` or upgrade
         to the latest OpenAPI parser.
       type: fix
@@ -1433,8 +1475,8 @@
 
 - changelogEntry:
     - summary: |
-        Add logging of filepaths when markdown parsing fails to help with debugging. This includes logging the 
-        absolute filepath of the markdown file being parsed and any associated image paths that were 
+        Add logging of filepaths when markdown parsing fails to help with debugging. This includes logging the
+        absolute filepath of the markdown file being parsed and any associated image paths that were
         being processed when the error occurred.
       type: fix
   irVersion: 57
@@ -1450,8 +1492,8 @@
 
 - changelogEntry:
     - summary: |
-        Fix OpenRPC converter to use proper breadcrumbs when generating request and response schemas. 
-        This ensures that schemas with the same name but different contexts (such as parameters and results) 
+        Fix OpenRPC converter to use proper breadcrumbs when generating request and response schemas.
+        This ensures that schemas with the same name but different contexts (such as parameters and results)
         don't overwrite each other during conversion, maintaining the integrity of the API definition.
       type: fix
   irVersion: 57
@@ -1459,8 +1501,8 @@
 
 - changelogEntry:
     - summary: |
-        Add support for preserving `maxLines` and `focus` attributes when using `<Code>` components in docs. 
-        These attributes are now properly carried over to the generated code blocks, allowing you to control 
+        Add support for preserving `maxLines` and `focus` attributes when using `<Code>` components in docs.
+        These attributes are now properly carried over to the generated code blocks, allowing you to control
         the display of referenced code snippets with features like line limits and syntax highlighting focus.
       type: fix
   irVersion: 57
@@ -1468,7 +1510,7 @@
 
 - changelogEntry:
     - summary: |
-        Fix docs preview server by properly killing the Next.js process on exit and setting 
+        Fix docs preview server by properly killing the Next.js process on exit and setting
         a memory limit (--max-old-space-size=2048) to prevent out-of-memory errors during development.
       type: fix
   irVersion: 57
@@ -1527,7 +1569,7 @@
 
 - changelogEntry:
     - summary: |
-        Fix a bug where the broken link checker would incorrectly flag links to llms.txt and llms-full.txt files as broken. 
+        Fix a bug where the broken link checker would incorrectly flag links to llms.txt and llms-full.txt files as broken.
         The checker now properly recognizes these file paths as valid.
       type: fix
   irVersion: 57
@@ -1615,7 +1657,7 @@
 
 - changelogEntry:
     - summary: |
-        Fixed an issue where local generation could produce invalid build files (like pyproject.toml) when 
+        Fixed an issue where local generation could produce invalid build files (like pyproject.toml) when
         GitHub configuration was missing a repository URL. The CLI now ensures a repository URL is always set when possible.
       type: fix
   irVersion: 57
@@ -1623,7 +1665,7 @@
 
 - changelogEntry:
     - summary: |
-        Added support for using Podman as a container runner with `fern generate --runner podman`. 
+        Added support for using Podman as a container runner with `fern generate --runner podman`.
         This allows users to run generators locally using Podman instead of Docker.
       type: fix
   irVersion: 57
@@ -1771,10 +1813,10 @@
 
 - changelogEntry:
     - summary: |
-        Add support for environment and auth overrides from generators.yml in the OpenAPI parser. When importing OpenAPI specifications, 
-        the parser now checks for environment and auth configurations in the generators.yml file and uses these settings to override 
-        the environments and authentication schemes defined in the OpenAPI document. This enhancement provides more flexibility in 
-        customizing imported APIs without modifying the original OpenAPI specification, allowing for environment-specific configurations 
+        Add support for environment and auth overrides from generators.yml in the OpenAPI parser. When importing OpenAPI specifications,
+        the parser now checks for environment and auth configurations in the generators.yml file and uses these settings to override
+        the environments and authentication schemes defined in the OpenAPI document. This enhancement provides more flexibility in
+        customizing imported APIs without modifying the original OpenAPI specification, allowing for environment-specific configurations
         and standardized authentication schemes across different API versions.
       type: feat
   irVersion: 57
@@ -1782,8 +1824,8 @@
 
 - changelogEntry:
     - summary: |
-        Add support for auth descriptions in generated documentation. Auth schemes can now include descriptive text that explains authentication requirements, 
-        which is properly displayed in the generated documentation. This enhancement improves API usability by providing clearer guidance on authentication 
+        Add support for auth descriptions in generated documentation. Auth schemes can now include descriptive text that explains authentication requirements,
+        which is properly displayed in the generated documentation. This enhancement improves API usability by providing clearer guidance on authentication
         methods directly within the documentation.
       type: feat
   irVersion: 57
@@ -1805,9 +1847,9 @@
 
 - changelogEntry:
     - summary: |
-        Add support for custom parameters in OpenRPC through the `x-fern-parameters` extension. This extension allows OpenRPC 
-        definitions to specify path parameters, query parameters, and headers that aren't natively supported in the OpenRPC 
-        specification. Parameters defined with this extension are properly converted to the Fern IR format and included in 
+        Add support for custom parameters in OpenRPC through the `x-fern-parameters` extension. This extension allows OpenRPC
+        definitions to specify path parameters, query parameters, and headers that aren't natively supported in the OpenRPC
+        specification. Parameters defined with this extension are properly converted to the Fern IR format and included in
         endpoint definitions, enabling more complete API representations when importing from OpenRPC sources.
       type: feat
   irVersion: 57
@@ -1823,9 +1865,9 @@
 
 - changelogEntry:
     - summary: |
-        Fix OpenAPI parser to avoid recreating endpoint headers that clash with auth headers. Previously, the parser would 
-        generate duplicate header definitions when an endpoint used the same header that was already defined as an auth header. 
-        This could lead to conflicts in the generated SDKs. The parser now properly checks for existing auth headers and 
+        Fix OpenAPI parser to avoid recreating endpoint headers that clash with auth headers. Previously, the parser would
+        generate duplicate header definitions when an endpoint used the same header that was already defined as an auth header.
+        This could lead to conflicts in the generated SDKs. The parser now properly checks for existing auth headers and
         avoids creating duplicates, resulting in cleaner and more consistent API definitions.
       type: feat
   irVersion: 57
@@ -1854,9 +1896,9 @@
 
 - changelogEntry:
     - summary: |
-        Add support for local SDK generation with a Fern token. When a valid Fern token is provided, 
-        users can now generate complete SDKs locally using Docker, without requiring remote generation. 
-        This enhancement improves the development workflow by allowing for faster iteration and testing 
+        Add support for local SDK generation with a Fern token. When a valid Fern token is provided,
+        users can now generate complete SDKs locally using Docker, without requiring remote generation.
+        This enhancement improves the development workflow by allowing for faster iteration and testing
         of SDK changes in local environments.
       type: fix
   irVersion: 57
@@ -1864,8 +1906,8 @@
 
 - changelogEntry:
     - summary: |
-        Enhance OpenAPI -> IR conversion to properly handle default values in schemas. The converter now correctly extracts 
-        and preserves default values from OpenAPI schemas, ensuring they are properly represented in the generated SDKs. 
+        Enhance OpenAPI -> IR conversion to properly handle default values in schemas. The converter now correctly extracts
+        and preserves default values from OpenAPI schemas, ensuring they are properly represented in the generated SDKs.
         This improvement allows API providers to specify meaningful defaults that will be respected in client implementations.
       type: fix
   irVersion: 57
@@ -1873,8 +1915,8 @@
 
 - changelogEntry:
     - summary: |
-        Improve OpenRPC importer to generate more unique schema IDs for request parameters by combining method name, 
-        "Param" keyword, and parameter name. This prevents naming conflicts when different methods have parameters 
+        Improve OpenRPC importer to generate more unique schema IDs for request parameters by combining method name,
+        "Param" keyword, and parameter name. This prevents naming conflicts when different methods have parameters
         with the same name, resulting in more reliable and consistent type generation in the SDKs.
       type: fix
   irVersion: 57
@@ -1889,7 +1931,7 @@
 
 - changelogEntry:
     - summary: |
-        Enhance OpenAPI -> IR parser to better handle inlined oneOf schemas. The parser now uses the schema ID when 
+        Enhance OpenAPI -> IR parser to better handle inlined oneOf schemas. The parser now uses the schema ID when
         generating names for oneOf variants, resulting in more predictable and consistent type names in the generated SDKs.
       type: feat
   irVersion: 57
@@ -1905,8 +1947,8 @@
 
 - changelogEntry:
     - summary: |
-        Add support for schema conversion in OpenRPC importer. The importer now properly converts schemas defined in the 
-        OpenRPC document's components section into Fern types, enabling full type definitions for request and response 
+        Add support for schema conversion in OpenRPC importer. The importer now properly converts schemas defined in the
+        OpenRPC document's components section into Fern types, enabling full type definitions for request and response
         objects. This enhancement allows for more complete and accurate SDK generation from OpenRPC specifications.
       type: feat
   irVersion: 57
@@ -1929,10 +1971,10 @@
 
 - changelogEntry:
     - summary: |
-        Enhance OpenAPI security scheme handling in the parser to support both global and endpoint-level security requirements. 
-        The parser now properly converts security schemes from OpenAPI's `securitySchemes` component into appropriate authentication 
-        headers, supporting bearer tokens, basic auth, and custom API key headers. Global security requirements defined at the 
-        document level are applied to all endpoints, while endpoint-specific security requirements override or supplement the 
+        Enhance OpenAPI security scheme handling in the parser to support both global and endpoint-level security requirements.
+        The parser now properly converts security schemes from OpenAPI's `securitySchemes` component into appropriate authentication
+        headers, supporting bearer tokens, basic auth, and custom API key headers. Global security requirements defined at the
+        document level are applied to all endpoints, while endpoint-specific security requirements override or supplement the
         global configuration, ensuring accurate authentication representation in generated SDKs.
       type: feat
   irVersion: 57
@@ -1940,9 +1982,9 @@
 
 - changelogEntry:
     - summary: |
-        Enhance example generation to consider default values when generating examples for primitive types. 
-        When a string primitive type has a default value specified, the example generator now uses this 
-        default value instead of a generic example. This produces more realistic and contextually 
+        Enhance example generation to consider default values when generating examples for primitive types.
+        When a string primitive type has a default value specified, the example generator now uses this
+        default value instead of a generic example. This produces more realistic and contextually
         appropriate examples in generated SDKs and documentation.
       type: feat
   irVersion: 57
@@ -1983,8 +2025,8 @@
 
 - changelogEntry:
     - summary: |
-        Improve OpenRPC request example generation by not wrapping request payloads in JSON-RPC 2.0 format. 
-        This ensures generated request examples match the expected format for the API's method parameters 
+        Improve OpenRPC request example generation by not wrapping request payloads in JSON-RPC 2.0 format.
+        This ensures generated request examples match the expected format for the API's method parameters
         without the additional JSON-RPC envelope.
       type: feat
   irVersion: 57
@@ -1992,9 +2034,9 @@
 
 - changelogEntry:
     - summary: |
-        Improve OpenAPI response handling for 204 status codes by respecting schema definitions. 
-        When a 204 (No Content) response includes a schema, the importer now properly processes 
-        and preserves this schema information, ensuring accurate API documentation and SDK generation 
+        Improve OpenAPI response handling for 204 status codes by respecting schema definitions.
+        When a 204 (No Content) response includes a schema, the importer now properly processes
+        and preserves this schema information, ensuring accurate API documentation and SDK generation
         even for endpoints that don't return content in successful responses.
       type: feat
   irVersion: 57
@@ -2012,7 +2054,7 @@
 
 - changelogEntry:
     - summary: |
-        Improve OpenRPC response example generation by wrapping example payloads in JSON-RPC 2.0 format with metadata 
+        Improve OpenRPC response example generation by wrapping example payloads in JSON-RPC 2.0 format with metadata
         (jsonrpc version and request id). This ensures generated examples match the actual JSON-RPC response format.
       type: feat
   irVersion: 57
@@ -2020,8 +2062,8 @@
 
 - changelogEntry:
     - summary: |
-        Improve server handling in OpenAPI imports by exploding servers with enum variables into multiple servers, 
-        one for each enum value. For example, a server with URL "https://{region}.example.com" where region 
+        Improve server handling in OpenAPI imports by exploding servers with enum variables into multiple servers,
+        one for each enum value. For example, a server with URL "https://{region}.example.com" where region
         is an enum ["us", "eu"] will be exploded into two servers: "https://us.example.com" and "https://eu.example.com".
       type: feat
   irVersion: 57
@@ -2092,7 +2134,7 @@
 
 - changelogEntry:
     - summary: |
-        Fix an issue in the OpenAPI importer where discriminated unions with literal discriminant values in the variants would render the discriminant property twice. 
+        Fix an issue in the OpenAPI importer where discriminated unions with literal discriminant values in the variants would render the discriminant property twice.
         The importer now correctly checks if union variants contain the discriminant property as a literal value and handles them appropriately.
       type: fix
   irVersion: 57
@@ -2128,7 +2170,7 @@
 
 - changelogEntry:
     - summary: |
-        Fix an issue in the OpenAPI parser where array references were not being properly resolved. The parser now correctly resolves references 
+        Fix an issue in the OpenAPI parser where array references were not being properly resolved. The parser now correctly resolves references
         within array schemas, ensuring that arrays of referenced types are properly handled throughout the API definition.
       type: fix
   irVersion: 57
@@ -2136,7 +2178,7 @@
 
 - changelogEntry:
     - summary: |
-        Improve the ReadMe migrator to respect the original navigation structure when creating the file hierarchy. Previously, nested navigation groups were 
+        Improve the ReadMe migrator to respect the original navigation structure when creating the file hierarchy. Previously, nested navigation groups were
         flattened, but now the file structure will mirror the navigation hierarchy, preserving the original organization of documentation.
       type: fix
   irVersion: 57

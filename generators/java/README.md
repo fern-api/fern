@@ -66,6 +66,18 @@ When enabled, unknown types are defined as `Optional<Object>` rather than plain 
 
 When enabled, generates wrapper types for each alias to increase type-safety. For example if you have an alias `ResourceId: string` then if this is true, the generator will generate a ResourceId.java file. If false, it will just treat it as `java.util.String`.
 
+#### ✨ `use-nullable-annotation`
+
+**Type:** boolean
+
+**Default:** `false`
+
+When enabled, distinguishes between `nullable<T>` and `optional<T>` types:
+- `nullable<T>` generates as raw type `T` with `@Nullable` annotation
+- `optional<T>` continues to generate as `Optional<T>`
+
+When disabled (default), both `nullable<T>` and `optional<T>` generate as `Optional<T>` for backward compatibility.
+
 ### Spring Configuration
 
 The Java Spring generator supports the following options:
@@ -77,6 +89,18 @@ The Java Spring generator supports the following options:
 **Default:** `false`
 
 When enabled, generates wrapper types for each alias to increase type-safety. For example, if true and you have an alias `ResourceId: string` the generator will generate a ResourceId.java file. If false, it will just treat it as `java.util.String`.
+
+#### ✨ `use-nullable-annotation`
+
+**Type:** boolean
+
+**Default:** `false`
+
+When enabled, distinguishes between `nullable<T>` and `optional<T>` types:
+- `nullable<T>` generates as raw type `T` with `@Nullable` annotation
+- `optional<T>` continues to generate as `Optional<T>`
+
+When disabled (default), both `nullable<T>` and `optional<T>` generate as `Optional<T>` for backward compatibility.
 
 #### ✨ `enable-public-constructors`
 

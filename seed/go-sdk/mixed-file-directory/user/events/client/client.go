@@ -9,23 +9,22 @@ import (
 	option "github.com/mixed-file-directory/fern/option"
 	user "github.com/mixed-file-directory/fern/user"
 	metadata "github.com/mixed-file-directory/fern/user/events/metadata"
-	http "net/http"
 )
 
 type Client struct {
 	WithRawResponse *RawClient
 	Metadata        *metadata.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
-func NewClient(opts ...option.RequestOption) *Client {
-	options := core.NewRequestOptions(opts...)
+func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
-		Metadata:        metadata.NewClient(opts...),
+		Metadata:        metadata.NewClient(options),
 		WithRawResponse: NewRawClient(options),
+		options:         options,
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -33,7 +32,6 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 

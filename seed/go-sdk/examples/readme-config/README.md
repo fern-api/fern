@@ -10,6 +10,10 @@ The Seed Go library provides convenient access to the Seed API from Go.
 
 API reference documentation is available [here](https://www.docs.fernapi.com).
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:

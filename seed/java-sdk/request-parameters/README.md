@@ -42,6 +42,8 @@ package com.example.usage;
 
 import com.seed.requestParameters.SeedRequestParametersClient;
 import com.seed.requestParameters.resources.user.requests.CreateUsernameRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Example {
     public static void main(String[] args) {
@@ -52,6 +54,11 @@ public class Example {
         client.user().createUsername(
             CreateUsernameRequest
                 .builder()
+                .tags(
+                    new ArrayList<String>(
+                        Arrays.asList("tags", "tags")
+                    )
+                )
                 .username("username")
                 .password("password")
                 .name("test")

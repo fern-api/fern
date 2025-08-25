@@ -67,7 +67,7 @@ export class Service {
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExamples.File_>> {
         const { "X-File-API-Version": xFileApiVersion } = request;
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),

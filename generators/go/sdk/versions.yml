@@ -1,4 +1,61 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.6.5-rc0
+  changelogEntry:
+    - summary: |
+        Fix certain instances of fmt.Sprintf'd values failing to be dereferenced.
+      type: fix
+  createdAt: '2025-08-25'
+  irVersion: 58
+
+- version: 1.6.4-rc0
+  changelogEntry:
+    - summary: |
+        Redesign the client to share RequestOptions across all subclients.
+      type: fix
+  createdAt: '2025-08-22'
+  irVersion: 58
+
+- version: 1.6.3
+  changelogEntry:
+    - summary: |
+        Update the dyanmic snippet generator to handle list values in the request body.
+        Previously, it would throw an error.
+      type: fix
+  createdAt: '2025-08-21'
+  irVersion: 58
+
+- version: 1.6.2
+  changelogEntry:
+    - summary: |
+        Add support for handling `default`s for query parameters.
+      type: feat
+  createdAt: '2025-08-21'
+  irVersion: 58
+
+- version: 1.6.1
+  changelogEntry:
+    - summary: |
+        Add reference.md doc generation
+      type: feat
+  createdAt: '2025-08-20'
+  irVersion: 58
+
+- version: 1.6.0
+  changelogEntry:
+    - summary: |
+        Add support for specifying a custom subdirectory to generate into.
+      type: feat
+  createdAt: '2025-08-20'
+  irVersion: 58
+
+- version: 1.5.8
+  changelogEntry:
+    - summary: |
+        Fix named string literals in undiscriminated unions.
+      type: fix
+  createdAt: '2025-08-20'
+  irVersion: 58
+
 - version: 1.5.7-rc0
   changelogEntry:
     - summary: |
@@ -18,7 +75,7 @@
 - version: 1.5.4
   changelogEntry:
     - summary: |
-        If enum values contain a slash, the go generator now effectively escapes these and makes sure that the 
+        If enum values contain a slash, the go generator now effectively escapes these and makes sure that the
         Go SDK will still compile.
       type: fix
   createdAt: '2025-08-01'
@@ -142,7 +199,7 @@
 - version: 0.37.3
   changelogEntry:
     - summary: |
-        Install the generator-cli at build time as a fallback if runtime installation fails. 
+        Install the generator-cli at build time as a fallback if runtime installation fails.
       type: fix
   createdAt: '2025-05-01'
   irVersion: 57
