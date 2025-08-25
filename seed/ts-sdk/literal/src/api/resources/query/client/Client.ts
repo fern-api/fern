@@ -106,7 +106,7 @@ export class Query {
             _queryParams["alias_optional_stream"] = aliasOptionalStream.toString();
         }
 
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 "X-API-Version": requestOptions?.version ?? "02-02-2024",

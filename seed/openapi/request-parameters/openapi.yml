@@ -8,7 +8,14 @@ paths:
       operationId: user_createUsername
       tags:
         - User
-      parameters: []
+      parameters:
+        - name: tags
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '204':
           description: ''
@@ -29,6 +36,28 @@ paths:
                 - username
                 - password
                 - name
+  /user/username-referenced:
+    post:
+      operationId: user_createUsernameWithReferencedType
+      tags:
+        - User
+      parameters:
+        - name: tags
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUsernameBody'
   /user:
     get:
       operationId: user_getUsername
@@ -166,4 +195,18 @@ components:
       required:
         - name
         - user
+    CreateUsernameBody:
+      title: CreateUsernameBody
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        name:
+          type: string
+      required:
+        - username
+        - password
+        - name
   securitySchemes: {}

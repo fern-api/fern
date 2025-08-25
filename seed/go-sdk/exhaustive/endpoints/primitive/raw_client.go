@@ -15,11 +15,12 @@ import (
 type RawClient struct {
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
+	options *core.RequestOptions
 }
 
 func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -27,7 +28,6 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
@@ -44,7 +44,7 @@ func (r *RawClient) GetAndReturnString(
 	)
 	endpointURL := baseURL + "/primitive/string"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response string
@@ -85,7 +85,7 @@ func (r *RawClient) GetAndReturnInt(
 	)
 	endpointURL := baseURL + "/primitive/integer"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response int
@@ -126,7 +126,7 @@ func (r *RawClient) GetAndReturnLong(
 	)
 	endpointURL := baseURL + "/primitive/long"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response int64
@@ -167,7 +167,7 @@ func (r *RawClient) GetAndReturnDouble(
 	)
 	endpointURL := baseURL + "/primitive/double"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response float64
@@ -208,7 +208,7 @@ func (r *RawClient) GetAndReturnBool(
 	)
 	endpointURL := baseURL + "/primitive/boolean"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response bool
@@ -249,7 +249,7 @@ func (r *RawClient) GetAndReturnDatetime(
 	)
 	endpointURL := baseURL + "/primitive/datetime"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response time.Time
@@ -290,7 +290,7 @@ func (r *RawClient) GetAndReturnDate(
 	)
 	endpointURL := baseURL + "/primitive/date"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response time.Time
@@ -331,7 +331,7 @@ func (r *RawClient) GetAndReturnUuid(
 	)
 	endpointURL := baseURL + "/primitive/uuid"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response uuid.UUID
@@ -372,7 +372,7 @@ func (r *RawClient) GetAndReturnBase64(
 	)
 	endpointURL := baseURL + "/primitive/base64"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response []byte

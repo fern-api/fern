@@ -2,6 +2,6 @@
 
 # isort: skip_file
 
-from .types import NestedUser, User
+from .types import CreateUsernameBody, NestedUser, User
 
-__all__ = ["NestedUser", "User"]
+__all__ = ["CreateUsernameBody", "NestedUser", "User"]

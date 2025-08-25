@@ -95,19 +95,23 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         });
 
         if (this.endpoint.requestBody != null) {
-            bindingElements.push(
-                generatedRequestWrapper.areBodyPropertiesInlined()
-                    ? ts.factory.createBindingElement(
-                          ts.factory.createToken(ts.SyntaxKind.DotDotDotToken),
-                          undefined,
-                          RequestWrapperParameter.BODY_VARIABLE_NAME
-                      )
-                    : ts.factory.createBindingElement(
-                          undefined,
-                          generatedRequestWrapper.getReferencedBodyPropertyName(),
-                          RequestWrapperParameter.BODY_VARIABLE_NAME
-                      )
-            );
+            if (generatedRequestWrapper.areBodyPropertiesInlined()) {
+                bindingElements.push(
+                    ts.factory.createBindingElement(
+                        ts.factory.createToken(ts.SyntaxKind.DotDotDotToken),
+                        undefined,
+                        RequestWrapperParameter.BODY_VARIABLE_NAME
+                    )
+                );
+            } else {
+                bindingElements.push(
+                    ts.factory.createBindingElement(
+                        undefined,
+                        generatedRequestWrapper.getReferencedBodyPropertyName(),
+                        RequestWrapperParameter.BODY_VARIABLE_NAME
+                    )
+                );
+            }
         }
 
         return [

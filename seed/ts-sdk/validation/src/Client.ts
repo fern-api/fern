@@ -73,7 +73,7 @@ export class SeedValidationClient {
         request: SeedValidation.CreateRequest,
         requestOptions?: SeedValidationClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedValidation.Type>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -146,7 +146,7 @@ export class SeedValidationClient {
         _queryParams["decimal"] = decimal.toString();
         _queryParams["even"] = even.toString();
         _queryParams["name"] = name;
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??

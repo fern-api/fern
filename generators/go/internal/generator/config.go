@@ -1,6 +1,9 @@
 package generator
 
-import "fmt"
+import (
+	"fmt"
+	"path"
+)
 
 // PackageLayout represents the different package layouts supported by the generator.
 type PackageLayout uint
@@ -39,8 +42,9 @@ type Config struct {
 	SnippetFilepath              string
 	ClientName                   string
 	ClientConstructorName        string
-	ImportPath                   string
+	FullImportPath               string
 	PackageName                  string
+	PackagePath                  string
 	ExportedClientName           string
 	PackageLayout                PackageLayout
 	UnionVersion                 UnionVersion
@@ -84,6 +88,7 @@ func NewConfig(
 	clientConstructorName string,
 	importPath string,
 	packageName string,
+	packagePath string,
 	exportedClientName string,
 	packageLayout string,
 	unionVersion string,
@@ -113,8 +118,9 @@ func NewConfig(
 		SnippetFilepath:              snippetFilepath,
 		ClientName:                   clientName,
 		ClientConstructorName:        clientConstructorName,
-		ImportPath:                   importPath,
+		FullImportPath:               path.Join(importPath, packagePath),
 		PackageName:                  packageName,
+		PackagePath:                  packagePath,
 		ExportedClientName:           exportedClientName,
 		PackageLayout:                pl,
 		UnionVersion:                 uv,

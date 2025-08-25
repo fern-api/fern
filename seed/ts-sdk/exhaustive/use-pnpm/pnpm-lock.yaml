@@ -1041,10 +1041,10 @@ packages:
             }
         engines: { node: ">=10" }
 
-    caniuse-lite@1.0.30001735:
+    caniuse-lite@1.0.30001737:
         resolution:
             {
-                integrity: sha512-EV/laoX7Wq2J9TQlyIXRxTJqIw4sxfXS4OYgudGxBYRuTv0q7AM6yMEpU/Vo1I94thg9U6EZ2NfZx9GJq83u7w==,
+                integrity: sha512-BiloLiXtQNrY5UyF0+1nSJLXUENuhka2pzy2Fx5pGxqavdrxSCW4U6Pn/PoG3Efspi2frRbHpBV2XsrPE6EDlw==,
             }
 
     chalk@4.1.2:
@@ -1266,10 +1266,10 @@ packages:
             }
         engines: { node: ">= 0.4" }
 
-    electron-to-chromium@1.5.207:
+    electron-to-chromium@1.5.208:
         resolution:
             {
-                integrity: sha512-mryFrrL/GXDTmAtIVMVf+eIXM09BBPlO5IQ7lUyKmK8d+A4VpRGG+M3ofoVef6qyF8s60rJei8ymlJxjUA8Faw==,
+                integrity: sha512-ozZyibehoe7tOhNaf16lKmljVf+3npZcJIEbJRVftVsmAg5TeA1mGS9dVCZzOwr2xT7xK15V0p7+GZqSPgkuPg==,
             }
 
     emittery@0.13.1:
@@ -2687,10 +2687,10 @@ packages:
                 integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==,
             }
 
-    tapable@2.2.2:
+    tapable@2.2.3:
         resolution:
             {
-                integrity: sha512-Re10+NauLTMCudc7T5WLFLAwDhQ0JWdrMK+9B2M8zR5hRExKmsRDCBA7/aV/pNJFltmBFO5BAMlQFi/vq3nKOg==,
+                integrity: sha512-ZL6DDuAlRlLGghwcfmSn9sK3Hr6ArtyudlSAiCqQ6IfE+b+HHbydbYDIG15IfS5do+7XQQBdBiubF/cV2dnDzg==,
             }
         engines: { node: ">=6" }
 
@@ -3038,10 +3038,10 @@ packages:
             }
         engines: { node: ">=10" }
 
-    yoctocolors-cjs@2.1.2:
+    yoctocolors-cjs@2.1.3:
         resolution:
             {
-                integrity: sha512-cYVsTjKl8b+FrnidjibDWskAv7UKOfcwaVZdp/it9n1s9fU3IkgDbhdIRKCW4JDsAlECJY0ytoVPT3sK6kideA==,
+                integrity: sha512-U/PBtDf35ff0D8X8D0jfdzHYEPFxAI7jJlxZXwCSez5M3190m+QobIfh+sWDWSHMCWWJN2AWamkegn6vr6YBTw==,
             }
         engines: { node: ">=18" }
 
@@ -3269,7 +3269,7 @@ snapshots:
             mute-stream: 2.0.0
             signal-exit: 4.1.0
             wrap-ansi: 6.2.0
-            yoctocolors-cjs: 2.1.2
+            yoctocolors-cjs: 2.1.3
         optionalDependencies:
             "@types/node": 18.19.123
 
@@ -3788,8 +3788,8 @@ snapshots:
 
     browserslist@4.25.3:
         dependencies:
-            caniuse-lite: 1.0.30001735
-            electron-to-chromium: 1.5.207
+            caniuse-lite: 1.0.30001737
+            electron-to-chromium: 1.5.208
             node-releases: 2.0.19
             update-browserslist-db: 1.1.3(browserslist@4.25.3)
 
@@ -3814,7 +3814,7 @@ snapshots:
 
     camelcase@6.3.0: {}
 
-    caniuse-lite@1.0.30001735: {}
+    caniuse-lite@1.0.30001737: {}
 
     chalk@4.1.2:
         dependencies:
@@ -3920,7 +3920,7 @@ snapshots:
             es-errors: 1.3.0
             gopd: 1.2.0
 
-    electron-to-chromium@1.5.207: {}
+    electron-to-chromium@1.5.208: {}
 
     emittery@0.13.1: {}
 
@@ -3929,7 +3929,7 @@ snapshots:
     enhanced-resolve@5.18.3:
         dependencies:
             graceful-fs: 4.2.11
-            tapable: 2.2.2
+            tapable: 2.2.3
 
     entities@6.0.1: {}
 
@@ -4880,7 +4880,7 @@ snapshots:
 
     symbol-tree@3.2.4: {}
 
-    tapable@2.2.2: {}
+    tapable@2.2.3: {}
 
     terser-webpack-plugin@5.3.14(webpack@5.101.3):
         dependencies:
@@ -5023,7 +5023,7 @@ snapshots:
             mime-types: 2.1.35
             neo-async: 2.6.2
             schema-utils: 4.3.2
-            tapable: 2.2.2
+            tapable: 2.2.3
             terser-webpack-plugin: 5.3.14(webpack@5.101.3)
             watchpack: 2.4.4
             webpack-sources: 3.3.3
@@ -5092,4 +5092,4 @@ snapshots:
 
     yocto-queue@0.1.0: {}
 
-    yoctocolors-cjs@2.1.2: {}
+    yoctocolors-cjs@2.1.3: {}

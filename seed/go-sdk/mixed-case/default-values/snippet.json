@@ -1,0 +1,26 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/resource",
+                "method": "GET",
+                "identifier_override": "endpoint_service.listResources"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/mixed-case/fern\"\n\tfernclient \"github.com/mixed-case/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.ListResources(\n\tcontext.TODO(),\n\t\u0026fern.ListResourcesRequest{\n\t\tPageLimit: 10,\n\t\tBeforeDate: fern.MustParseDate(\n\t\t\t\"2023-01-01\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/resource/{ResourceID}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getResource"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/mixed-case/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.GetResource(\n\tcontext.TODO(),\n\t\"rsc-xyz\",\n)\n"
+            }
+        }
+    ]
+}

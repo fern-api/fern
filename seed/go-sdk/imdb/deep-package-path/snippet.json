@@ -1,0 +1,26 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/movies/create-movie",
+                "method": "POST",
+                "identifier_override": "endpoint_imdb.createMovie"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/imdb/fern/all/the/way/in/here/please/option\"\n\tplease \"github.com/imdb/fern/all/the/way/in/here/please\"\n\tpleaseclient \"github.com/imdb/fern/all/the/way/in/here/please/client\"\n)\n\nclient := pleaseclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Imdb.CreateMovie(\n\tcontext.TODO(),\n\t\u0026please.CreateMovieRequest{\n\t\tTitle:  \"title\",\n\t\tRating: 1.1,\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/movies/{movieId}",
+                "method": "GET",
+                "identifier_override": "endpoint_imdb.getMovie"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/imdb/fern/all/the/way/in/here/please/option\"\n\tpleaseclient \"github.com/imdb/fern/all/the/way/in/here/please/client\"\n)\n\nclient := pleaseclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Imdb.GetMovie(\n\tcontext.TODO(),\n\t\"movieId\",\n)\n"
+            }
+        }
+    ]
+}

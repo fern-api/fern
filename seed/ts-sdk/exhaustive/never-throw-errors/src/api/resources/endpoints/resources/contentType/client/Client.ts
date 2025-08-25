@@ -77,7 +77,7 @@ export class ContentType {
             core.APIResponse<void, SeedExhaustive.endpoints.contentType.postJsonPatchContentType.Error>
         >
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -162,7 +162,7 @@ export class ContentType {
             core.APIResponse<void, SeedExhaustive.endpoints.contentType.postJsonPatchContentWithCharsetType.Error>
         >
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,

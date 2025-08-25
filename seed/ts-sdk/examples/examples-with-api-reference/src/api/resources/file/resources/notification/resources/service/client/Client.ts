@@ -57,7 +57,7 @@ export class Service {
         notificationId: string,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExamples.Exception>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,

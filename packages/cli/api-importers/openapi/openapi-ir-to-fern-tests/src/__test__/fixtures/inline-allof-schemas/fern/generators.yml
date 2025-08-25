@@ -1,0 +1,5 @@
+api:
+  specs:
+    - openapi: ../openapi.yml
+      settings: 
+        inline-all-of-schemas: true

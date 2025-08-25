@@ -15,8 +15,6 @@ import (
 	union "github.com/exhaustive/fern/endpoints/union"
 	urls "github.com/exhaustive/fern/endpoints/urls"
 	internal "github.com/exhaustive/fern/internal"
-	option "github.com/exhaustive/fern/option"
-	http "net/http"
 )
 
 type Client struct {
@@ -31,24 +29,24 @@ type Client struct {
 	Union       *union.Client
 	Urls        *urls.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
-func NewClient(opts ...option.RequestOption) *Client {
-	options := core.NewRequestOptions(opts...)
+func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
-		Container:   container.NewClient(opts...),
-		ContentType: contenttype.NewClient(opts...),
-		Enum:        enum.NewClient(opts...),
-		HttpMethods: httpmethods.NewClient(opts...),
-		Object:      object.NewClient(opts...),
-		Params:      params.NewClient(opts...),
-		Primitive:   primitive.NewClient(opts...),
-		Put:         put.NewClient(opts...),
-		Union:       union.NewClient(opts...),
-		Urls:        urls.NewClient(opts...),
+		Container:   container.NewClient(options),
+		ContentType: contenttype.NewClient(options),
+		Enum:        enum.NewClient(options),
+		HttpMethods: httpmethods.NewClient(options),
+		Object:      object.NewClient(options),
+		Params:      params.NewClient(options),
+		Primitive:   primitive.NewClient(options),
+		Put:         put.NewClient(options),
+		Union:       union.NewClient(options),
+		Urls:        urls.NewClient(options),
+		options:     options,
 		baseURL:     options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -56,6 +54,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

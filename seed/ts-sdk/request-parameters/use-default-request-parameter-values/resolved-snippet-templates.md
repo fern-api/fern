@@ -5,6 +5,23 @@ const client = new SeedRequestParametersClient({
   environment: "YOUR_BASE_URL",
 });
 await client.user.createUsername({
+  tags: ["tags", "tags"],
+  username: "username",
+  password: "password",
+  name: "test",
+});
+
+```
+
+
+```typescript
+import { SeedRequestParametersClient } from "@fern/request-parameters";
+
+const client = new SeedRequestParametersClient({
+  environment: "YOUR_BASE_URL",
+});
+await client.user.createUsernameWithReferencedType({
+  tags: ["tags", "tags"],
   username: "username",
   password: "password",
   name: "test",

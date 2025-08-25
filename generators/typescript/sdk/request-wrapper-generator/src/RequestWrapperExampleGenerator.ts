@@ -10,20 +10,23 @@ export class RequestWrapperExampleGenerator {
         example,
         packageId,
         endpointName,
-        requestBody
+        requestBody,
+        flattenRequestParameters
     }: {
         bodyPropertyName: string;
         example: ExampleEndpointCall;
         packageId: PackageId;
         endpointName: Name;
         requestBody: HttpRequestBody | undefined;
+        flattenRequestParameters: boolean;
     }): GeneratedRequestWrapperExample {
         return new GeneratedRequestWrapperExampleImpl({
             bodyPropertyName,
             example,
             packageId,
             endpointName,
-            requestBody
+            requestBody,
+            flattenRequestParameters
         });
     }
 }

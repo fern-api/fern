@@ -65,7 +65,7 @@ export class Union {
             core.APIResponse<SeedExhaustive.types.Animal, SeedExhaustive.endpoints.union.getAndReturnUnion.Error>
         >
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,

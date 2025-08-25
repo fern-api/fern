@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Optional, Set, Tuple, Union
+from typing import Dict, List, Optional, Set, Tuple, Union
 
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
 from fern_python.codegen import AST
@@ -59,13 +59,13 @@ class WebsocketConnectMethodGenerator:
 
         self._named_parameters_raw = self._get_websocket_named_parameters(websocket=self._websocket)
 
-        self._path_parameter_names = dict()
+        self._path_parameter_names: Dict[str, str] = dict()
         _named_parameter_names: List[str] = [param.name for param in self._named_parameters_raw]
         for path_parameter in self._websocket.path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
                 name = self.deconflict_parameter_name(get_parameter_name(path_parameter.name), _named_parameter_names)
                 _named_parameter_names.append(name)
-                self._path_parameter_names[path_parameter.name] = name
+                self._path_parameter_names[get_parameter_name(path_parameter.name)] = name
 
     def generate(self) -> GeneratedConnectMethod:
         unnamed_parameters = self._get_websocket_path_parameters()
@@ -126,7 +126,7 @@ class WebsocketConnectMethodGenerator:
         parameters: List[AST.FunctionParameter] = []
         for path_parameter in self._websocket.path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
-                name = self._path_parameter_names[path_parameter.name]
+                name = self._path_parameter_names[get_parameter_name(path_parameter.name)]
                 parameters.append(
                     AST.FunctionParameter(
                         name=name,
@@ -217,7 +217,7 @@ class WebsocketConnectMethodGenerator:
 
         for path_parameter in self._websocket.path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
-                name = self._path_parameter_names[path_parameter.name]
+                name = self._path_parameter_names[get_parameter_name(path_parameter.name)]
                 parameters.append(
                     AST.NamedFunctionParameter(
                         name=name,
@@ -349,9 +349,7 @@ class WebsocketConnectMethodGenerator:
                     handlers=[
                         AST.ExceptHandler(
                             exception_type=AST.Expression(
-                                AST.ReferenceNode(
-                                    reference=Websockets.get_invalid_status_code_exception()
-                                ),
+                                AST.ReferenceNode(reference=Websockets.get_invalid_status_code_exception()),
                             ),
                             name="exc",
                             body=[
@@ -461,7 +459,7 @@ class WebsocketConnectMethodGenerator:
         named_parameters: List[AST.NamedFunctionParameter] = []
         for path_parameter in path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
-                name = self._path_parameter_names[path_parameter.name]
+                name = self._path_parameter_names[get_parameter_name(path_parameter.name)]
                 named_parameters.append(
                     AST.NamedFunctionParameter(
                         name=name,
@@ -524,9 +522,10 @@ class WebsocketConnectMethodGenerator:
         websocket: ir_types.WebSocketChannel,
         path_parameter_name: str,
     ) -> str:
-        for path_parameter in websocket.path_parameters:
-            if path_parameter.name == path_parameter_name:
-                return self._path_parameter_names[path_parameter.name]
+        for websocket_path_parameter in websocket.path_parameters:
+            websocket_path_parameter_name = get_parameter_name(websocket_path_parameter.name)
+            if websocket_path_parameter_name == path_parameter_name:
+                return self._path_parameter_names[websocket_path_parameter_name]
         raise RuntimeError("Path parameter does not exist: " + path_parameter_name)
 
     def _unwrap_container_types(self, type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeReference]:

@@ -11,7 +11,6 @@ import (
 	internal "github.com/examples/fern/internal"
 	option "github.com/examples/fern/option"
 	service "github.com/examples/fern/service"
-	http "net/http"
 )
 
 type Acme struct {
@@ -20,18 +19,19 @@ type Acme struct {
 	Health          *healthclient.Client
 	Service         *service.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func New(opts ...option.RequestOption) *Acme {
 	options := core.NewRequestOptions(opts...)
 	return &Acme{
-		File:            client.NewClient(opts...),
-		Health:          healthclient.NewClient(opts...),
-		Service:         service.NewClient(opts...),
+		File:            client.NewClient(options),
+		Health:          healthclient.NewClient(options),
+		Service:         service.NewClient(options),
 		WithRawResponse: NewRawAcme(options),
+		options:         options,
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -39,7 +39,6 @@ func New(opts ...option.RequestOption) *Acme {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
