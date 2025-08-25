@@ -177,7 +177,6 @@ fixtures:
       outputFolder: system-client
 allowedFailures:
   - imdb:exported-client-class-name
-  - literal
   - oauth-client-credentials-custom
   - pagination:no-custom-config
   - pagination:custom-pager

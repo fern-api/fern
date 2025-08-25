@@ -43,7 +43,7 @@ public final class AdminClient: Sendable {
         )
     }
 
-    public func storeTracedTestCase(submissionId: String, testCaseId: String, request: StoreTracedTestCaseRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func storeTracedTestCase(submissionId: String, testCaseId: String, request: Requests.StoreTracedTestCaseRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/admin/store-test-trace/submission/\(submissionId)/testCase/\(testCaseId)",
@@ -61,7 +61,7 @@ public final class AdminClient: Sendable {
         )
     }
 
-    public func storeTracedWorkspace(submissionId: String, request: StoreTracedWorkspaceRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func storeTracedWorkspace(submissionId: String, request: Requests.StoreTracedWorkspaceRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/admin/store-workspace-trace/submission/\(submissionId)",

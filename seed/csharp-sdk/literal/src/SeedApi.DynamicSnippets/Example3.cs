@@ -14,10 +14,17 @@ public class Example3
 
         await client.Inlined.SendAsync(
             new SendLiteralsInlinedRequest{
+                Prompt = "You are a helpful assistant",
+                Context = "You're super wise",
                 Query = "query",
                 Temperature = 1.1,
+                Stream = false,
+                AliasedContext = "You're super wise",
+                MaybeContext = "You're super wise",
                 ObjectWithLiteral = new ATopLevelLiteral{
-                    NestedLiteral = new ANestedLiteral()
+                    NestedLiteral = new ANestedLiteral{
+                        MyLiteral = "How super cool"
+                    }
                 }
             }
         );

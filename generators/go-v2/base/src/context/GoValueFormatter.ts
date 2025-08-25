@@ -37,31 +37,33 @@ export class GoValueFormatter {
 
         let prefix: go.AstNode | undefined;
         let suffix: go.AstNode | undefined;
+        let unwrapPrefix: go.AstNode | undefined;
+        let unwrapSuffix: go.AstNode | undefined;
         let isOptional = false;
         let isPrimitive = false;
 
         const optionalOrNullableType = this.context.maybeUnwrapOptionalOrNullable(reference);
         const enumType = this.context.maybeEnum(reference);
 
+        // define unwrapPrefix (either "*", "string(*", or "string(")
         if (optionalOrNullableType != null) {
             if (this.context.needsOptionalDereference(reference)) {
-                prefix = go.codeblock("*");
                 if (enumType != null) {
-                    prefix = go.codeblock("string(*");
-                    suffix = go.codeblock(")");
+                    unwrapPrefix = go.codeblock("string(*");
+                    unwrapSuffix = go.codeblock(")");
+                } else {
+                    unwrapPrefix = go.codeblock("*");
                 }
             }
             isOptional = true;
         } else if (enumType != null) {
-            prefix = go.codeblock("string(");
-            suffix = go.codeblock(")");
+            unwrapPrefix = go.codeblock("string(");
+            unwrapSuffix = go.codeblock(")");
         }
 
+        // define prefix
         const primitive = this.context.maybePrimitive(reference);
         if (primitive != null) {
-            if (isOptional) {
-                prefix = go.codeblock("*");
-            }
             switch (primitive) {
                 case PrimitiveTypeV1.DateTime:
                     prefix = undefined;
@@ -120,8 +122,28 @@ export class GoValueFormatter {
             isPrimitive = true;
         }
 
+        // merge prefix and suffix with unwrap logic
+        const mergedPrefix =
+            unwrapPrefix != undefined
+                ? prefix != undefined
+                    ? go.codeblock((writer) => {
+                          writer.writeNode(prefix);
+                          writer.writeNode(unwrapPrefix);
+                      })
+                    : unwrapPrefix
+                : prefix;
+        const mergedSuffix =
+            unwrapSuffix != undefined
+                ? suffix != undefined
+                    ? go.codeblock((writer) => {
+                          writer.writeNode(unwrapSuffix);
+                          writer.writeNode(suffix);
+                      })
+                    : unwrapSuffix
+                : suffix;
+
         return {
-            formatted: this.format({ prefix, suffix, value }),
+            formatted: this.format({ prefix: mergedPrefix, suffix: mergedSuffix, value }),
             zeroValue: this.context.goZeroValueMapper.convert({ reference }),
             isIterable: false,
             isOptional,
