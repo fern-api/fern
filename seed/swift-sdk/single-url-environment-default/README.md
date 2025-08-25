@@ -1,7 +1,8 @@
 # Seed Swift Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FSwift)
-[![SwiftPM compatible](https://img.shields.io/badge/SwiftPM-compatible-orange.svg)]
+![SwiftPM compatible](https://img.shields.io/badge/SwiftPM-compatible-orange.svg)
+
 The Seed Swift library provides convenient access to the Seed API from Swift.
 
 ## Requirements
