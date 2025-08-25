@@ -123,22 +123,24 @@ export class GoValueFormatter {
         }
 
         // merge prefix and suffix with unwrap logic
-        const mergedPrefix = unwrapPrefix != undefined
-            ? (prefix != undefined
-                ? go.codeblock((writer) => {
-                    writer.writeNode(prefix);
-                    writer.writeNode(unwrapPrefix);
-                })
-                : unwrapPrefix)
-            : prefix;
-        const mergedSuffix = unwrapSuffix != undefined
-            ? (suffix != undefined
-                ? go.codeblock((writer) => {
-                    writer.writeNode(unwrapSuffix);
-                    writer.writeNode(suffix);
-                })
-                : unwrapSuffix)
-            : suffix;
+        const mergedPrefix =
+            unwrapPrefix != undefined
+                ? prefix != undefined
+                    ? go.codeblock((writer) => {
+                          writer.writeNode(prefix);
+                          writer.writeNode(unwrapPrefix);
+                      })
+                    : unwrapPrefix
+                : prefix;
+        const mergedSuffix =
+            unwrapSuffix != undefined
+                ? suffix != undefined
+                    ? go.codeblock((writer) => {
+                          writer.writeNode(unwrapSuffix);
+                          writer.writeNode(suffix);
+                      })
+                    : unwrapSuffix
+                : suffix;
 
         return {
             formatted: this.format({ prefix: mergedPrefix, suffix: mergedSuffix, value }),
