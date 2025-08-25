@@ -1,22 +1,21 @@
 name: Lint PR Title
 
 on:
-  pull_request_target:
-    types:
-      - opened
-      - edited
-      - synchronize
-      - reopened
+  workflow_call:
 
 permissions:
   pull-requests: read
 
 jobs:
-  run:
-    name: Lint PR title
+  check-pr-title:
     runs-on: ubuntu-latest
     steps:
-      - uses: amannn/action-semantic-pull-request@v5
+      - name: Skip if not PR
+        if: github.event_name != 'pull_request'
+        run: echo "Not a PR, skipping title check"
+      - name: Lint PR title
+        if: github.event_name == 'pull_request'
+        uses: amannn/action-semantic-pull-request@v5
         with:
           types: |
             fix
