@@ -1,6 +1,7 @@
 use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
+use crate::core::{File};
 
 pub struct ServiceClient {
     pub http_client: HttpClient,
@@ -12,17 +13,19 @@ impl ServiceClient {
         Ok(Self { http_client })
     }
 
-    pub async fn get_movie(&self, movie_id: &MovieId, options: Option<RequestOptions>) -> Result<Movie, ClientError> {
+    pub async fn get_exception(&self, notification_id: &String, options: Option<RequestOptions>) -> Result<Exception, ClientError> {
         self.http_client.execute_request(
             Method::GET,
-            &format!("/movie/{}", movie_id.0),
+            &format!("/file/notification/{}", notification_id),
             None,
             None,
             options,
         ).await
     }
 
-    pub async fn create_movie(&self, request: &Movie, options: Option<RequestOptions>) -> Result<MovieId, ClientError> {
+}
+
+f, request: &Movie, options: Option<RequestOptions>) -> Result<MovieId, ClientError> {
         self.http_client.execute_request(
             Method::POST,
             "/movie",
@@ -40,10 +43,10 @@ impl ServiceClient {
             {
             let mut query_params = Vec::new();
             if let Some(Some(value)) = shallow {
-                query_params.push(("shallow".to_string(), value.to_string()));
+                query_params.push(("shallow".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             if let Some(Some(value)) = tag {
-                query_params.push(("tag".to_string(), value.to_string()));
+                query_params.push(("tag".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             Some(query_params)
         },

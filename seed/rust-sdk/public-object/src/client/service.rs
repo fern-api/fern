@@ -1,5 +1,6 @@
 use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
 use reqwest::{Method};
+use crate::core::{File};
 
 pub struct ServiceClient {
     pub http_client: HttpClient,
@@ -12,7 +13,7 @@ impl ServiceClient {
     }
 
     pub async fn get(&self, options: Option<RequestOptions>) -> Result<Vec<u8>, ClientError> {
-        self.http_client.execute_request(
+        self.http_client.execute_bytes_download_request(
             Method::GET,
             "/helloworld.txt",
             None,

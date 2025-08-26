@@ -1,6 +1,7 @@
 use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
+use crate::core::{File};
 
 pub struct ObjectClient {
     pub http_client: HttpClient,
@@ -66,6 +67,16 @@ impl ObjectClient {
         self.http_client.execute_request(
             Method::POST,
             "/object/get-and-return-nested-with-required-field-list",
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
+    }
+
+    pub async fn test_integer_overflow_edge_cases(&self, request: &ObjectWithOptionalField, options: Option<RequestOptions>) -> Result<ObjectWithOptionalField, ClientError> {
+        self.http_client.execute_request(
+            Method::POST,
+            "/object/test-integer-overflow-edge-cases",
             Some(serde_json::to_value(request).unwrap_or_default()),
             None,
             options,
