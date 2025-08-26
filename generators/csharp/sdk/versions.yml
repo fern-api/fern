@@ -1,11 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.1.15
+  changelogEntry:
+    - type: fix
+      summary: Ensure dynamic snippet method calls can use literal values
+  createdAt: "2025-08-25"
+  irVersion: 58
+- version: 2.1.14
+  changelogEntry:
+    - type: fix
+      summary: Create link in README.MD file to the REFERENCE.MD file
+  createdAt: "2025-08-25"
+  irVersion: 58
 - version: 2.1.13
   changelogEntry:
     - type: fix
       summary: |
         Ensure `experimental-fully-qualified-namespaces` to have 
         'global::' prefix.
-  createdAt: '2025-08-19'
+  createdAt: "2025-08-19"
   irVersion: 58
 - version: 2.1.12
   changelogEntry:
@@ -18,21 +30,21 @@
         This creates code that is much cleaner, and can easily support
         multiple endpoints with identical names in the generated code without
         name or namespace collisions.
-  createdAt: '2025-08-18'
+  createdAt: "2025-08-18"
   irVersion: 58
 
 - version: 2.1.10
   changelogEntry:
     - type: fix
       summary: Generate reference.md file as long as there are some endpoints.
-  createdAt: '2025-08-11'
+  createdAt: "2025-08-11"
   irVersion: 58
 
 - version: 2.1.8
   changelogEntry:
     - type: fix
       summary: Idempotent headers are added to the headers in the request
-  createdAt: '2025-08-11'
+  createdAt: "2025-08-11"
   irVersion: 58
 
 - version: 2.1.7
@@ -40,8 +52,8 @@
     - type: fix
       summary: |
         Improve generation so that all expected tests/samples correctly
-        generate and compile. 
-       
+        generate and compile.
+
     - type: fix
       summary: |
         In `RawClient.cs` namespace references are prefixed with `global::`
@@ -51,43 +63,43 @@
     - type: fix
       summary: |
         Set csharpier version to `1.1.*` to avoid inadvertently picking up 
-        `1.0.3` which has an inconsistency in formatting. 
-       
-  createdAt: '2025-08-04'
+        `1.0.3` which has an inconsistency in formatting.
+
+  createdAt: "2025-08-04"
   irVersion: 58
 
 - version: 2.1.6
   changelogEntry:
     - type: feat
       summary: Trigger release to use new version of CSharpier formatter
-  createdAt: '2025-08-04'
+  createdAt: "2025-08-04"
   irVersion: 58
 
 - version: 2.1.5
   changelogEntry:
     - type: fix
-      summary: Add test for RawClient.ts to test Query Parameter Escaping 
-  createdAt: '2025-07-31'
+      summary: Add test for RawClient.ts to test Query Parameter Escaping
+  createdAt: "2025-07-31"
   irVersion: 58
 - version: 2.1.4
   changelogEntry:
     - type: fix
       summary: ensure that query parameters are Uri encoded in RawClient.cs
-  createdAt: '2025-07-31'
+  createdAt: "2025-07-31"
   irVersion: 58
 - version: 2.1.3
   changelogEntry:
     - type: fix
       summary: uses fully qualified class name `System.IO.Stream` for downloads
-  createdAt: '2025-07-29'
+  createdAt: "2025-07-29"
   irVersion: 58
 - version: 2.1.2
   changelogEntry:
     - type: feat
-      summary: | 
+      summary: |
         Generate methods to support FileDownload (returns a `Task<Stream>`).
         Example:
-        
+
         ```csharp
           var request = new FooAudioRequest {
             Format = Format.Wav,
@@ -100,7 +112,7 @@
             await stream.CopyToAsync(fileStream);
           }
         ```
-      
+
     - type: feat
       summary: |
         Generate streaming/SSE JSON responses (returns an `IAsyncEnumerable<...>`).
@@ -117,15 +129,15 @@
           Console.WriteLine($"Text for {item.Name} : {item.Text}");
         }
         ```
-      
-  createdAt: '2025-07-29'
+
+  createdAt: "2025-07-29"
   irVersion: 58
 - version: 2.1.1
   changelogEntry:
     - summary: |
         Ensures that clients that have no endpoints are not generated.
       type: fix
-  createdAt: '2025-07-23'
+  createdAt: "2025-07-23"
   irVersion: 58
 - version: 2.1.0
   changelogEntry:
@@ -133,7 +145,7 @@
         Pass in custom pager context to the custom pager factory. The context contains the send request method, initial HTTP request, client options, and request options.
         SDK authors can improve their custom pagination implementation with this context available to them.
       type: feat
-  createdAt: '2025-07-09'
+  createdAt: "2025-07-09"
   irVersion: 58
 - version: 2.0.3
   changelogEntry:
@@ -145,19 +157,19 @@
     - summary: |
         Update the type referencing logic to take into account the current namespace, other namespaces, and more scenarios where it could conflicts.
       type: fix
-  createdAt: '2025-07-09'
+  createdAt: "2025-07-09"
   irVersion: 58
 - version: 2.0.2
   changelogEntry:
     - summary: Improve auto-pagination logic to consider empty strings in response as null cursors and stop paging.
       type: fix
-  createdAt: '2025-06-27'
+  createdAt: "2025-06-27"
   irVersion: 58
 - version: 2.0.1
   changelogEntry:
     - summary: Fix a bug where strings with special characters would not be properly escaped when converted to C# strings.
       type: fix
-  createdAt: '2025-06-24'
+  createdAt: "2025-06-24"
   irVersion: 58
 - version: 2.0.0
   changelogEntry:
@@ -181,7 +193,7 @@
         To avoid breaking changes, explicitly set the options above with the `Before` values in the `config` of your generator
         in _generators.yml_.
       type: feat
-  createdAt: '2025-06-23'
+  createdAt: "2025-06-23"
   irVersion: 58
 - version: 1.18.1
   changelogEntry:
@@ -189,45 +201,45 @@
         Add `[Serializable]` attribute to generated schema, request, and error classes.
         This will make it easier for instances of these classes to be stored in places like `Exception.Data`.
       type: fix
-  createdAt: '2025-06-17'
+  createdAt: "2025-06-17"
   irVersion: 58
 - version: 1.18.0
   changelogEntry:
     - summary: Add support for HTTP HEAD method
       type: feat
-  createdAt: '2025-06-05'
+  createdAt: "2025-06-05"
   irVersion: 58
 - version: 1.17.6
   changelogEntry:
     - summary: Fix generated pagination endpoints that include path parameters.
       type: fix
-  createdAt: '2025-06-05'
+  createdAt: "2025-06-05"
   irVersion: 58
 - version: 1.17.5
   changelogEntry:
     - summary: Update the IR to v58.
       type: internal
-  createdAt: '2025-06-03'
+  createdAt: "2025-06-03"
   irVersion: 58
 - version: 1.17.4
   changelogEntry:
     - summary: Mock the OAuth endpoint for the wire tests.
       type: fix
-  createdAt: '2025-05-16'
+  createdAt: "2025-05-16"
   irVersion: 57
 - version: 1.17.3
   changelogEntry:
     - summary: |
         Add support for the custom introduction setting in the generated README.md.
       type: fix
-  createdAt: '2025-05-13'
+  createdAt: "2025-05-13"
   irVersion: 57
 - version: 1.17.2
   changelogEntry:
     - summary: |
-        Install the generator-cli at build time as a fallback if runtime installation fails. 
+        Install the generator-cli at build time as a fallback if runtime installation fails.
       type: fix
-  createdAt: '2025-05-01'
+  createdAt: "2025-05-01"
   irVersion: 57
 - version: 1.17.1
   createdAt: "2025-05-04"

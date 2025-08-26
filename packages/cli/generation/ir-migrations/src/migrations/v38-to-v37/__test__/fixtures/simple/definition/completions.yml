@@ -1,6 +1,6 @@
 types:
-  StreamedCompletion: 
-    properties: 
+  StreamedCompletion:
+    properties:
       delta: string
       tokens: optional<integer>
 
@@ -11,10 +11,10 @@ service:
     stream:
       method: POST
       path: /stream
-      request: 
+      request:
         name: StreamCompletionRequest
-        body: 
-          properties: 
+        body:
+          properties:
             query: string
       response-stream:
         type: StreamedCompletion

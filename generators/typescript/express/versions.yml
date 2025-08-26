@@ -1,265 +1,265 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
-  - summary: |
-      Invert condition for running `next` in the generated service.
-    type: fix
+    - summary: |
+        Invert condition for running `next` in the generated service.
+      type: fix
   irVersion: 58
-  createdAt: '2025-06-06'
+  createdAt: "2025-06-06"
   version: 0.18.4
 
 - changelogEntry:
-  - summary: Update the IR to v58.
-    type: internal
+    - summary: Update the IR to v58.
+      type: internal
   irVersion: 58
-  createdAt: '2025-06-03'
+  createdAt: "2025-06-03"
   version: 0.18.1
 
 - changelogEntry:
-  - summary: | 
-      Re-release `0.18.0-rc1`
-    type: fix
+    - summary: |
+        Re-release `0.18.0-rc1`
+      type: fix
   irVersion: 55
-  createdAt: '2025-05-22'
+  createdAt: "2025-05-22"
   version: 0.18.0-rc2
 
 - changelogEntry:
-  - summary: | 
-      Re-release `0.18.0-rc1`
-    type: fix
+    - summary: |
+        Re-release `0.18.0-rc1`
+      type: fix
   irVersion: 55
-  createdAt: '2025-05-22'
+  createdAt: "2025-05-22"
   version: 0.18.0-rc1
 
 - changelogEntry:
-  - summary: | 
-      Remove extraneous `next` in the generated service.
-    type: fix
+    - summary: |
+        Remove extraneous `next` in the generated service.
+      type: fix
   irVersion: 55
   version: 0.18.0-rc0
 
 - changelogEntry:
-  - summary: Upgrade to IRv55.
-    type: internal
+    - summary: Upgrade to IRv55.
+      type: internal
   irVersion: 55
   version: 0.17.7
 
 - changelogEntry:
-  - summary: Re-release the `0.17.5` version.
-    type: feat
+    - summary: Re-release the `0.17.5` version.
+      type: feat
   irVersion: 53
   version: 0.17.6
 
 - changelogEntry:
-  - summary: | 
-      Introduces a configuration `noOptionalProperties` which forces consumers to explicitly pass 
-      in `undefined` instead of excluding the key. To turn this setting on, do the following: 
+    - summary: |
+        Introduces a configuration `noOptionalProperties` which forces consumers to explicitly pass 
+        in `undefined` instead of excluding the key. To turn this setting on, do the following: 
 
-      ```yml generators.yml
-      groups: 
-        server: 
-          generators: 
-            - name: fernapi/fern-typescript-express
-              version: 0.17.5
-              config: 
-                noOptionalProperties: true
-      ```
-    type: feat
+        ```yml generators.yml
+        groups: 
+          server: 
+            generators: 
+              - name: fernapi/fern-typescript-express
+                version: 0.17.5
+                config: 
+                  noOptionalProperties: true
+        ```
+      type: feat
   irVersion: 53
   version: 0.17.5
 
 - changelogEntry:
-  - summary: Update inlined request objects to respect `noSerdeLayer`
-    type: fix
+    - summary: Update inlined request objects to respect `noSerdeLayer`
+      type: fix
   irVersion: 53
   version: 0.17.4
 
 - changelogEntry:
-  - summary: Upgrade to IRv53.
-    type: internal
+    - summary: Upgrade to IRv53.
+      type: internal
   irVersion: 53
   version: 0.17.3
 
 - changelogEntry:
-  - summary: Upgrade to IRv50.
-    type: internal
+    - summary: Upgrade to IRv50.
+      type: internal
   irVersion: 50
   version: 0.17.2
 
 - changelogEntry:
-  - summary: This fixes a bug introduced in `0.17.0-rc0` that prevented the SDK from serializing types with circular references.
-    type: fix
+    - summary: This fixes a bug introduced in `0.17.0-rc0` that prevented the SDK from serializing types with circular references.
+      type: fix
   irVersion: 48
   version: 0.17.1
 
 - changelogEntry:
-  - summary: Upgrade to IRv48.
-    type: internal
+    - summary: Upgrade to IRv48.
+      type: internal
   irVersion: 48
   version: 0.17.0
 
 - changelogEntry:
-  - summary: All serializers in the generated express server are now synchronous. This makes the serializers easier to use and improves the performance as well.
-    type: fix
+    - summary: All serializers in the generated express server are now synchronous. This makes the serializers easier to use and improves the performance as well.
+      type: fix
   irVersion: 46
   version: 0.17.0-rc0
 
 - changelogEntry:
-  - summary: |
-      The Express generator now supports a `requestValidationStatusCode` configuration
-      where a user can specify the status code that should be thrown when the request doesn't
-      match schema validation.
+    - summary: |
+        The Express generator now supports a `requestValidationStatusCode` configuration
+        where a user can specify the status code that should be thrown when the request doesn't
+        match schema validation.
 
-      ```yaml
-      - name: fernapi/fern-typescript-express
-        version: 0.16.3
-        config:
-          requestValidationStatusCode: 400 # Defaults to 422
-      ```
-    type: feat
+        ```yaml
+        - name: fernapi/fern-typescript-express
+          version: 0.16.3
+          config:
+            requestValidationStatusCode: 400 # Defaults to 422
+        ```
+      type: feat
   irVersion: 46
   version: 0.16.3
 
 - changelogEntry:
-  - summary: The generator is now upgraded to `v46.2.0` of the IR.
-    type: fix
+    - summary: The generator is now upgraded to `v46.2.0` of the IR.
+      type: fix
   irVersion: 46
   version: 0.16.2
 
 - changelogEntry:
-  - summary: Undiscriminated unions used as map keys examples no longer return an error.
-    type: fix
+    - summary: Undiscriminated unions used as map keys examples no longer return an error.
+      type: fix
   irVersion: 46
   version: 0.16.1
 
 - changelogEntry:
-  - summary: The generator now supports `bigint` types.
-    type: feat
-  - summary: Bump to IRv46.
-    type: internal
+    - summary: The generator now supports `bigint` types.
+      type: feat
+    - summary: Bump to IRv46.
+      type: internal
   irVersion: 46
   version: 0.16.0
 
 - changelogEntry:
-  - summary: |
-      Every endpoint method now accepts a third parameter called `next`. This gives
-      express authors access to the express internals if they are useful
+    - summary: |
+        Every endpoint method now accepts a third parameter called `next`. This gives
+        express authors access to the express internals if they are useful
 
-      ```ts
-      getUsers: (req, res, next: NextFunction) => {
-        // implementation
-      };
-      ```
-    type: feat
+        ```ts
+        getUsers: (req, res, next: NextFunction) => {
+          // implementation
+        };
+        ```
+      type: feat
   irVersion: 38
   version: 0.15.0
 
 - changelogEntry:
-  - summary: |
-      Support a `skipResponseValidation` configuration so that users can disable
-      response validation. Note that this will still keep the serialization layer. To enable
-      this configuration, add the following option to your `generators.yml`:
+    - summary: |
+        Support a `skipResponseValidation` configuration so that users can disable
+        response validation. Note that this will still keep the serialization layer. To enable
+        this configuration, add the following option to your `generators.yml`:
 
-      ```yaml
-      config:
-        skipResponseValidation: true
-      ```
-    type: feat
+        ```yaml
+        config:
+          skipResponseValidation: true
+        ```
+      type: feat
   irVersion: 38
   version: 0.14.0
 
 - changelogEntry:
-  - summary: |
-      Bump to v43 of IR which means that you will need `0.26.1` of the Fern CLI version. To bump your
-      CLI version, please run `fern upgrade`.
+    - summary: |
+        Bump to v43 of IR which means that you will need `0.26.1` of the Fern CLI version. To bump your
+        CLI version, please run `fern upgrade`.
 
-      If you specify custom response status codes, the underlying express implementation will send that back
-      to the user.
-    type: feat
+        If you specify custom response status codes, the underlying express implementation will send that back
+        to the user.
+      type: feat
   irVersion: 38
   version: 0.13.0
 
 - changelogEntry:
-  - summary: Remove unnecessary `console.error` statements whenever the server implementation throws an error.
-    type: fix
-  - summary: |
-      Support a `skipRequestValidation` configuration so that users can disable
-      request validation if they want to. To do so, add the following option to your
-      `generators.yml`
+    - summary: Remove unnecessary `console.error` statements whenever the server implementation throws an error.
+      type: fix
+    - summary: |
+        Support a `skipRequestValidation` configuration so that users can disable
+        request validation if they want to. To do so, add the following option to your
+        `generators.yml`
 
-      ```yaml
-      config:
-        skipRequestValidation: true
-      ```
-    type: feat
-  - summary: Support V38 of the IR
-    type: internal
+        ```yaml
+        config:
+          skipRequestValidation: true
+        ```
+      type: feat
+    - summary: Support V38 of the IR
+      type: internal
   irVersion: 38
   version: 0.12.0
 
 - changelogEntry:
-  - summary: |
-      Add `allowExtraFields` option to permit extra fields in the returned response.
+    - summary: |
+        Add `allowExtraFields` option to permit extra fields in the returned response.
 
-      ```yaml
-      - name: fernapi/fern-typscript-express
-        version: 0.11.0-rc0
-        ...
-        config:
-          allowExtraFields: true
-      ```
-    type: feat
+        ```yaml
+        - name: fernapi/fern-typscript-express
+          version: 0.11.0-rc0
+          ...
+          config:
+            allowExtraFields: true
+        ```
+      type: feat
   irVersion: 37
   version: 0.11.0-rc0
 
 - changelogEntry:
-  - summary: Support V37 of the IR.
-    type: internal
+    - summary: Support V37 of the IR.
+      type: internal
   irVersion: 37
   version: 0.10.0
 
 - changelogEntry:
-  - summary: |
-      Add `retainOriginalCasing` option to preserve the naming convention expressed in the API.
-      For example, the following Fern definition will generate a type like so:
+    - summary: |
+        Add `retainOriginalCasing` option to preserve the naming convention expressed in the API.
+        For example, the following Fern definition will generate a type like so:
 
-      ```yaml
-      types:
-        GetUsersRequest
-          properties:
-            group_id: string
-      ```
-    type: feat
+        ```yaml
+        types:
+          GetUsersRequest
+            properties:
+              group_id: string
+        ```
+      type: feat
   irVersion: 31
   version: 0.10.0-rc0
 
 - changelogEntry:
-  - summary: |
-      Compile started failing for express generators with the following error:
+    - summary: |
+        Compile started failing for express generators with the following error:
 
-      ```
-      error TS2688: Cannot find type definition file for 'mime'.
+        ```
+        error TS2688: Cannot find type definition file for 'mime'.
 
-      The file is in the program because:
-        Entry point for implicit type library 'mime'
-      ```
+        The file is in the program because:
+          Entry point for implicit type library 'mime'
+        ```
 
-      The root cause is because a breaking change was released in v4 of the mime library.
-      This is now fixed because the generator resolves to v3 of the library as
-      specified in this GitHub [issue](https://github.com/firebase/firebase-admin-node/issues/2512).
-    type: fix
+        The root cause is because a breaking change was released in v4 of the mime library.
+        This is now fixed because the generator resolves to v3 of the library as
+        specified in this GitHub [issue](https://github.com/firebase/firebase-admin-node/issues/2512).
+      type: fix
   irVersion: 31
   version: 0.9.9
 
 - changelogEntry:
-  - summary: Enhance serde performance by reducing reliance on async behavior and lazy async dynamic imports
-    type: feat
-  - summary: Shared generator notification and config parsing logic.
-    type: internal
+    - summary: Enhance serde performance by reducing reliance on async behavior and lazy async dynamic imports
+      type: feat
+    - summary: Shared generator notification and config parsing logic.
+      type: internal
   irVersion: 31
   version: 0.9.8
 
 - changelogEntry:
-  - summary: Release 0.9.7
-    type: internal
+    - summary: Release 0.9.7
+      type: internal
   irVersion: 31
   version: 0.9.7

@@ -33,7 +33,7 @@ importers:
                 version: 29.4.1(@babel/core@7.28.3)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.28.3))(jest-util@29.7.0)(jest@29.7.0(@types/node@18.19.123))(typescript@5.7.3)
             ts-loader:
                 specifier: ^9.5.1
-                version: 9.5.2(typescript@5.7.3)(webpack@5.101.3)
+                version: 9.5.4(typescript@5.7.3)(webpack@5.101.3)
             typescript:
                 specifier: ~5.7.2
                 version: 5.7.3
@@ -337,10 +337,10 @@ packages:
                 integrity: sha512-dvMHbL464C0zI+Yqxbz6kZ5TOEp7GLW+pry/RWndAR8MJQAXZ2rPmIs8tziTZjeIyhSNZgZbCePtfSbdWqStJw==,
             }
 
-    "@inquirer/confirm@5.1.15":
+    "@inquirer/confirm@5.1.16":
         resolution:
             {
-                integrity: sha512-SwHMGa8Z47LawQN0rog0sT+6JpiL0B7eW9p1Bb7iCeKDGTI5Ez25TSc2l8kw52VV7hA4sX/C78CGkMrKXfuspA==,
+                integrity: sha512-j1a5VstaK5KQy8Mu8cHmuQvN1Zc62TbLhjJxwHvKPPKEoowSF6h/0UdOpA9DNdWZ+9Inq73+puRq1df6OJ8Sag==,
             }
         engines: { node: ">=18" }
         peerDependencies:
@@ -349,10 +349,10 @@ packages:
             "@types/node":
                 optional: true
 
-    "@inquirer/core@10.1.15":
+    "@inquirer/core@10.2.0":
         resolution:
             {
-                integrity: sha512-8xrp836RZvKkpNbVvgWUlxjT4CraKk2q+I3Ksy+seI2zkcE+y6wNs1BVhgcv8VyImFecUhdQrYLdW32pAjwBdA==,
+                integrity: sha512-NyDSjPqhSvpZEMZrLCYUquWNl+XC/moEcVFqS55IEYIYsY0a1cUCevSqk7ctOlnm/RaSBU5psFryNlxcmGrjaA==,
             }
         engines: { node: ">=18" }
         peerDependencies:
@@ -1266,10 +1266,10 @@ packages:
             }
         engines: { node: ">= 0.4" }
 
-    electron-to-chromium@1.5.208:
+    electron-to-chromium@1.5.209:
         resolution:
             {
-                integrity: sha512-ozZyibehoe7tOhNaf16lKmljVf+3npZcJIEbJRVftVsmAg5TeA1mGS9dVCZzOwr2xT7xK15V0p7+GZqSPgkuPg==,
+                integrity: sha512-Xoz0uMrim9ZETCQt8UgM5FxQF9+imA7PBpokoGcZloA1uw2LeHzTlip5cb5KOAsXZLjh/moN2vReN3ZjJmjI9A==,
             }
 
     emittery@0.13.1:
@@ -1444,10 +1444,10 @@ packages:
                 integrity: sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==,
             }
 
-    fast-uri@3.0.6:
+    fast-uri@3.1.0:
         resolution:
             {
-                integrity: sha512-Atfo14OibSv5wAp4VWNsFYE1AchQRTv9cBGWET4pZWHzYshFSS9NQI6I57rdKn9croWVMbYFbLhJ+yJvmZIIHw==,
+                integrity: sha512-iPeeDKJSWf4IEOasVVrknXpaBV0IApz/gp7S2bb7Z4Lljbl2MGJRqInZiUrQwV16cpzw/D3S5j5Julj/gT52AA==,
             }
 
     fb-watchman@2.0.2:
@@ -2785,10 +2785,10 @@ packages:
             jest-util:
                 optional: true
 
-    ts-loader@9.5.2:
+    ts-loader@9.5.4:
         resolution:
             {
-                integrity: sha512-Qo4piXvOTWcMGIgRiuFa6nHNm+54HbYaZCKqc9eeZCLRy3XqafQgwX2F7mofrbJG3g7EEb+lkiR+z2Lic2s3Zw==,
+                integrity: sha512-nCz0rEwunlTZiy6rXFByQU1kVVpCIgUpc/psFiKVrUwrizdnIbRFu8w7bxhUF0X613DYwT4XzrZHpVyMe758hQ==,
             }
         engines: { node: ">=12.0.0" }
         peerDependencies:
@@ -3253,14 +3253,14 @@ snapshots:
             "@types/tough-cookie": 4.0.5
             tough-cookie: 4.1.4
 
-    "@inquirer/confirm@5.1.15(@types/node@18.19.123)":
+    "@inquirer/confirm@5.1.16(@types/node@18.19.123)":
         dependencies:
-            "@inquirer/core": 10.1.15(@types/node@18.19.123)
+            "@inquirer/core": 10.2.0(@types/node@18.19.123)
             "@inquirer/type": 3.0.8(@types/node@18.19.123)
         optionalDependencies:
             "@types/node": 18.19.123
 
-    "@inquirer/core@10.1.15(@types/node@18.19.123)":
+    "@inquirer/core@10.2.0(@types/node@18.19.123)":
         dependencies:
             "@inquirer/figures": 1.0.13
             "@inquirer/type": 3.0.8(@types/node@18.19.123)
@@ -3693,7 +3693,7 @@ snapshots:
     ajv@8.17.1:
         dependencies:
             fast-deep-equal: 3.1.3
-            fast-uri: 3.0.6
+            fast-uri: 3.1.0
             json-schema-traverse: 1.0.0
             require-from-string: 2.0.2
 
@@ -3789,7 +3789,7 @@ snapshots:
     browserslist@4.25.3:
         dependencies:
             caniuse-lite: 1.0.30001737
-            electron-to-chromium: 1.5.208
+            electron-to-chromium: 1.5.209
             node-releases: 2.0.19
             update-browserslist-db: 1.1.3(browserslist@4.25.3)
 
@@ -3920,7 +3920,7 @@ snapshots:
             es-errors: 1.3.0
             gopd: 1.2.0
 
-    electron-to-chromium@1.5.208: {}
+    electron-to-chromium@1.5.209: {}
 
     emittery@0.13.1: {}
 
@@ -4011,7 +4011,7 @@ snapshots:
 
     fast-json-stable-stringify@2.1.0: {}
 
-    fast-uri@3.0.6: {}
+    fast-uri@3.1.0: {}
 
     fb-watchman@2.0.2:
         dependencies:
@@ -4644,7 +4644,7 @@ snapshots:
             "@bundled-es-modules/cookie": 2.0.1
             "@bundled-es-modules/statuses": 1.0.1
             "@bundled-es-modules/tough-cookie": 0.1.6
-            "@inquirer/confirm": 5.1.15(@types/node@18.19.123)
+            "@inquirer/confirm": 5.1.16(@types/node@18.19.123)
             "@mswjs/interceptors": 0.39.6
             "@open-draft/deferred-promise": 2.2.0
             "@open-draft/until": 2.1.0
@@ -4941,7 +4941,7 @@ snapshots:
             babel-jest: 29.7.0(@babel/core@7.28.3)
             jest-util: 29.7.0
 
-    ts-loader@9.5.2(typescript@5.7.3)(webpack@5.101.3):
+    ts-loader@9.5.4(typescript@5.7.3)(webpack@5.101.3):
         dependencies:
             chalk: 4.1.2
             enhanced-resolve: 5.18.3

@@ -303,7 +303,6 @@ service:
               the next page of results.
       response: root.UsernameCursor
 
-
     listUsernamesCustom:
       pagination:
         type: custom

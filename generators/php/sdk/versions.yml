@@ -4,7 +4,7 @@
     - summary: |
         Support for apiVersion header. Default accept header to */*.
       type: fix
-  createdAt: '2025-08-08'
+  createdAt: "2025-08-08"
   irVersion: 58
 - version: 1.16.5
   changelogEntry:
@@ -14,7 +14,7 @@
         generate duplicate array annotations in PHP union types (array|array|null). The fix implements 
         recursive union flattening with proper deduplication during type generation.
       type: fix
-  createdAt: '2025-07-10'
+  createdAt: "2025-07-10"
   irVersion: 58
 - version: 1.16.4
   changelogEntry:
@@ -22,7 +22,7 @@
         Add documentation for using a custom client in the README. This makes it easier
         for our customers to visualize how they can override the default client.
       type: feat
-  createdAt: '2025-07-02'
+  createdAt: "2025-07-02"
   irVersion: 58
 
 - version: 1.16.3
@@ -31,7 +31,7 @@
         Add documentation for pagination in the README, this uses the AST to build some human readable
         example of how to use the pagination on the client results.
       type: feat
-  createdAt: '2025-07-01'
+  createdAt: "2025-07-01"
   irVersion: 58
 
 - version: 1.16.2
@@ -40,28 +40,28 @@
         Add documentation for retries and timeout parameters in the README, including examples of how
         to configure maxRetries and timeout options at the request level
       type: feat
-  createdAt: '2025-06-03'
+  createdAt: "2025-06-03"
   irVersion: 58
 
 - version: 1.16.1
   changelogEntry:
     - summary: Add exception handling documentation to README with examples of catching and handling API exceptions
       type: feat
-  createdAt: '2025-06-03'
+  createdAt: "2025-06-03"
   irVersion: 58
 
 - version: 1.16.0
   changelogEntry:
     - summary: Introduce initial version of README generation for the PHP SDK with Installation, Usage, and Contributing sections.
       type: feat
-  createdAt: '2025-06-03'
+  createdAt: "2025-06-03"
   irVersion: 58
 
 - version: 1.15.1
   changelogEntry:
     - summary: Update the IR to v58.
       type: internal
-  createdAt: '2025-06-03'
+  createdAt: "2025-06-03"
   irVersion: 58
 
 - version: 0.15.0

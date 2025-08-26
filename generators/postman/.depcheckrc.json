@@ -1,9 +1,4 @@
 {
-  "ignores": [
-  ],
-  "ignore-patterns": [
-    "lib",
-    "dist",
-    "docker/bundle.js"
-  ]
+  "ignores": [],
+  "ignore-patterns": ["lib", "dist", "docker/bundle.js"]
 }

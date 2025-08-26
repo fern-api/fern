@@ -271,7 +271,11 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitNullable(TypeReference typeReference) {
-            return visitOptional(typeReference);
+            if (customConfig.useNullableAnnotation()) {
+                return typeReference.visit(primitiveDisAllowedTypeReferenceConverter);
+            } else {
+                return visitOptional(typeReference);
+            }
         }
 
         @Override

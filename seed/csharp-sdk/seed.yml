@@ -60,6 +60,9 @@ fixtures:
       outputFolder: no-custom-config
     - customConfig: null
       readmeConfig:
+        apiName: "CustomName"
+        disabledSections:
+          - "contributing"
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie
@@ -177,7 +180,6 @@ fixtures:
       outputFolder: system-client
 allowedFailures:
   - imdb:exported-client-class-name
-  - literal
   - oauth-client-credentials-custom
   - pagination:no-custom-config
   - pagination:custom-pager

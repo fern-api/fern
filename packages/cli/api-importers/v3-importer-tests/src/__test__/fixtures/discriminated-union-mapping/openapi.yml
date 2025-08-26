@@ -15,7 +15,7 @@ paths:
             schema:
               $ref: "#/components/schemas/RequestOne"
       responses:
-        '200':
+        "200":
           description: A simple API response.
           content:
             application/json:
@@ -31,7 +31,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SampleUnion"
       responses:
-        '200':
+        "200":
           description: A simple API response.
           content:
             application/json:
@@ -61,7 +61,7 @@ components:
           const: response
         bar:
           type: integer
-    
+
     SampleUnion:
       oneOf:
         - $ref: "#/components/schemas/RequestOne"

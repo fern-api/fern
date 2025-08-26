@@ -5,179 +5,179 @@ info:
     name: API Support
     url: https://ntropy.com/developers
     email: api@ntropy.com
-  version: '3.0'
+  version: "3.0"
 servers:
-- url: https://api.ntropy.com
-  description: Production server (uses live data).
+  - url: https://api.ntropy.com
+    description: Production server (uses live data).
 paths:
   /v3/transactions/{id}:
     get:
       tags:
-      - Transactions
+        - Transactions
       summary: Retrieve a transaction
       operationId: get_transaction_v3_transactions__id__get
       parameters:
-      - required: true
-        schema:
-          type: string
-          title: Id
-        name: id
-        in: path
+        - required: true
+          schema:
+            type: string
+            title: Id
+          name: id
+          in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Transaction'
-        '404':
+                $ref: "#/components/schemas/Transaction"
+        "404":
           description: Transaction with the provided id not found.
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/transactions/xbx8YP14g565Xk\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: 'from ntropy_sdk import SDK
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/transactions/xbx8YP14g565Xk\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: 'from ntropy_sdk import SDK
 
 
-          sdk = SDK("cd1H...Wmhl")
+            sdk = SDK("cd1H...Wmhl")
 
-          tx = sdk.transactions.get("xbx8YP14g565Xk") '
+            tx = sdk.transactions.get("xbx8YP14g565Xk") '
     delete:
       tags:
-      - Transactions
+        - Transactions
       summary: Deletes a transaction
       description: Deleting a transaction will also delete it from our systems. This
         operation is permanent.
       operationId: delete_transaction_v3_transactions__id__delete
       parameters:
-      - required: true
-        schema:
-          type: string
-          title: Id
-        name: id
-        in: path
+        - required: true
+          schema:
+            type: string
+            title: Id
+          name: id
+          in: path
       responses:
-        '204':
+        "204":
           description: Deletion successful
-        '404':
+        "404":
           description: Transaction with the provided id not found.
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"DELETE\" \\\n    \"https://api.ntropy.com/v3/transactions/xbx8YP14g565Xk\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: 'from ntropy_sdk import SDK
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"DELETE\" \\\n    \"https://api.ntropy.com/v3/transactions/xbx8YP14g565Xk\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: 'from ntropy_sdk import SDK
 
 
-          sdk = SDK("cd1H...Wmhl")
+            sdk = SDK("cd1H...Wmhl")
 
-          tx = sdk.transactions.delete("xbx8YP14g565Xk") '
+            tx = sdk.transactions.delete("xbx8YP14g565Xk") '
   /v3/transactions:
     get:
       tags:
-      - Transactions
+        - Transactions
       summary: List all transactions
       description: Return a list of enriched transactions starting with the most recent
         one.
       operationId: list_transactions_v3_transactions_get
       parameters:
-      - description: Only return transactions older or equal than this date
-        required: false
-        schema:
-          type: string
-          format: date-time
-          title: Created After
-          description: Only return transactions older or equal than this date
-        name: created_after
-        in: query
-      - description: Only return transactions newer than this date
-        required: false
-        schema:
-          type: string
-          format: date-time
-          title: Created Before
-          description: Only return transactions newer than this date
-        name: created_before
-        in: query
-      - description: Starting point for the set of transactions
-        required: false
-        schema:
-          type: string
-          title: Cursor
-          description: Starting point for the set of transactions
-        name: cursor
-        in: query
-      - description: The limit of transactions to be returned
-        required: false
-        schema:
-          type: integer
-          maximum: 500.0
-          minimum: 1.0
-          title: Limit
-          description: The limit of transactions to be returned
-          default: 25
-        name: limit
-        in: query
-      - description: If specified, only return the transactions of this account holder
-        required: false
-        schema:
-          type: string
-          title: Account Holder Id
-          description: If specified, only return the transactions of this account
-            holder
-        name: account_holder_id
-        in: query
+        - description: Only return transactions older or equal than this date
+          required: false
+          schema:
+            type: string
+            format: date-time
+            title: Created After
+            description: Only return transactions older or equal than this date
+          name: created_after
+          in: query
+        - description: Only return transactions newer than this date
+          required: false
+          schema:
+            type: string
+            format: date-time
+            title: Created Before
+            description: Only return transactions newer than this date
+          name: created_before
+          in: query
+        - description: Starting point for the set of transactions
+          required: false
+          schema:
+            type: string
+            title: Cursor
+            description: Starting point for the set of transactions
+          name: cursor
+          in: query
+        - description: The limit of transactions to be returned
+          required: false
+          schema:
+            type: integer
+            maximum: 500.0
+            minimum: 1.0
+            title: Limit
+            description: The limit of transactions to be returned
+            default: 25
+          name: limit
+          in: query
+        - description: If specified, only return the transactions of this account holder
+          required: false
+          schema:
+            type: string
+            title: Account Holder Id
+            description: If specified, only return the transactions of this account
+              holder
+          name: account_holder_id
+          in: query
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PagedResponse_Transaction'
-        '422':
+                $ref: "#/components/schemas/PagedResponse_Transaction"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/transactions\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nfor tx\
-          \ in sdk.transactions.list().auto_paginate():\n    ... "
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/transactions\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nfor tx\
+            \ in sdk.transactions.list().auto_paginate():\n    ... "
     post:
       tags:
-      - Transactions
+        - Transactions
       summary: Synchronously enrich transactions
       description: "Enriches a list of transactions in synchronous fashion. The enriched\
         \ transactions returned in\nthe order that they were submitted. Webhook events\
@@ -189,177 +189,177 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SyncEnrichmentInput'
+              $ref: "#/components/schemas/SyncEnrichmentInput"
         required: true
       responses:
-        '200':
+        "200":
           description: Enriched transactions.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SyncEnrichmentOutput'
-        '422':
+                $ref: "#/components/schemas/SyncEnrichmentOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/transactions\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  \\\n    -H \"Content-Type: application/json\" \\\n    -d '[{\n      \
-          \  \"id\": \"xbx8YP14g565Xk\",\n        \"description\": \"SQ* STARBUCKS\
-          \ NW 43RD\",\n        \"date\": \"2024-03-30\",\n        \"amount\": 10.0,\n\
-          \        \"entry_type\": \"outgoing\",\n        \"currency\": \"USD\",\n\
-          \        \"account_holder_id\": \"35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\
-          ,\n        \"location\": {\n            \"country\": \"US\"\n        }\n\
-          \    }]'\n "
-      - lang: python
-        label: Python SDK
-        source: "from ntropy_sdk import SDK, TransactionInput, LocationInput\n\nsdk\
-          \ = SDK(\"cd1H...Wmhl\")\nenriched = sdk.transactions.create([\n    TransactionInput(\n\
-          \        id=\"xbx8YP14g565Xk\",\n        description=\"SQ* STARBUCKS NW\
-          \ 43RD\",\n        account_holder_id=\"35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\
-          ,\n        amount=10.0,\n        entry_type=\"outgoing\",\n        date=\"\
-          2024-03-30\",\n        currency=\"USD\",\n        location=LocationInput(\n\
-          \          country=\"US\",\n        )\n    )\n]) "
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/transactions\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  \\\n    -H \"Content-Type: application/json\" \\\n    -d '[{\n      \
+            \  \"id\": \"xbx8YP14g565Xk\",\n        \"description\": \"SQ* STARBUCKS\
+            \ NW 43RD\",\n        \"date\": \"2024-03-30\",\n        \"amount\": 10.0,\n\
+            \        \"entry_type\": \"outgoing\",\n        \"currency\": \"USD\",\n\
+            \        \"account_holder_id\": \"35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\
+            ,\n        \"location\": {\n            \"country\": \"US\"\n        }\n\
+            \    }]'\n "
+        - lang: python
+          label: Python SDK
+          source: "from ntropy_sdk import SDK, TransactionInput, LocationInput\n\nsdk\
+            \ = SDK(\"cd1H...Wmhl\")\nenriched = sdk.transactions.create([\n    TransactionInput(\n\
+            \        id=\"xbx8YP14g565Xk\",\n        description=\"SQ* STARBUCKS NW\
+            \ 43RD\",\n        account_holder_id=\"35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\
+            ,\n        amount=10.0,\n        entry_type=\"outgoing\",\n        date=\"\
+            2024-03-30\",\n        currency=\"USD\",\n        location=LocationInput(\n\
+            \          country=\"US\",\n        )\n    )\n]) "
   /v3/transactions/{id}/assign:
     post:
       tags:
-      - Transactions
+        - Transactions
       summary: Assign a transaction to an account holder
       description: Changes the account holder associated with the transaction. The
         old and new account holder must share the same categories
       operationId: set_transaction_ah_v3_transactions__id__assign_post
       parameters:
-      - required: true
-        schema:
-          type: string
-          title: Id
-        name: id
-        in: path
+        - required: true
+          schema:
+            type: string
+            title: Id
+          name: id
+          in: path
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Body_set_transaction_ah_v3_transactions__id__assign_post'
+              $ref: "#/components/schemas/Body_set_transaction_ah_v3_transactions__id__assign_post"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Transaction'
-        '404':
+                $ref: "#/components/schemas/Transaction"
+        "404":
           description: Transaction or account holder with the provided id not found.
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/transactions/xbx8YP14g565Xk\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n       \
-          \ \"account_holder_id\": \"35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\n    }]'\n\
-          \ "
-      - lang: python
-        label: Python SDK
-        source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nsdk.transactions.assign(\n\
-          \    transaction_id=\"xbx8YP14g565Xk\", \n    account_holder_id=\"35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\
-          \n) "
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/transactions/xbx8YP14g565Xk\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n       \
+            \ \"account_holder_id\": \"35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\n    }]'\n\
+            \ "
+        - lang: python
+          label: Python SDK
+          source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nsdk.transactions.assign(\n\
+            \    transaction_id=\"xbx8YP14g565Xk\", \n    account_holder_id=\"35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\
+            \n) "
   /v3/batches:
     get:
       tags:
-      - Batches
+        - Batches
       summary: List all batches
       description: Returns a list of submitted batches starting with the most recent
         one.
       operationId: get_batches_v3_batches_get
       parameters:
-      - description: Only return batches older or equal than this date
-        required: false
-        schema:
-          type: string
-          format: date-time
-          title: Created After
-          description: Only return batches older or equal than this date
-        name: created_after
-        in: query
-      - description: Only return batches newer than this date
-        required: false
-        schema:
-          type: string
-          format: date-time
-          title: Created Before
-          description: Only return batches newer than this date
-        name: created_before
-        in: query
-      - description: Starting point for the set of batches
-        required: false
-        schema:
-          type: string
-          title: Cursor
-          description: Starting point for the set of batches
-        name: cursor
-        in: query
-      - description: The limit of batches to be returned
-        required: false
-        schema:
-          type: integer
-          maximum: 50.0
-          minimum: 1.0
-          title: Limit
-          description: The limit of batches to be returned
-          default: 10
-        name: limit
-        in: query
-      - description: If specified, only return batches with this status
-        required: false
-        schema:
-          allOf:
-          - $ref: '#/components/schemas/BatchStatus'
-          description: If specified, only return batches with this status
-        name: status
-        in: query
+        - description: Only return batches older or equal than this date
+          required: false
+          schema:
+            type: string
+            format: date-time
+            title: Created After
+            description: Only return batches older or equal than this date
+          name: created_after
+          in: query
+        - description: Only return batches newer than this date
+          required: false
+          schema:
+            type: string
+            format: date-time
+            title: Created Before
+            description: Only return batches newer than this date
+          name: created_before
+          in: query
+        - description: Starting point for the set of batches
+          required: false
+          schema:
+            type: string
+            title: Cursor
+            description: Starting point for the set of batches
+          name: cursor
+          in: query
+        - description: The limit of batches to be returned
+          required: false
+          schema:
+            type: integer
+            maximum: 50.0
+            minimum: 1.0
+            title: Limit
+            description: The limit of batches to be returned
+            default: 10
+          name: limit
+          in: query
+        - description: If specified, only return batches with this status
+          required: false
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/BatchStatus"
+            description: If specified, only return batches with this status
+          name: status
+          in: query
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PagedResponse_Batch'
-        '422':
+                $ref: "#/components/schemas/PagedResponse_Batch"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/batches\" \\\n\
-          \    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: "from ntropy_sdk import SDK\n\nfor batch in sdk.batches.list().auto_paginate():\n\
-          \    ... "
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/batches\" \\\n\
+            \    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: "from ntropy_sdk import SDK\n\nfor batch in sdk.batches.list().auto_paginate():\n\
+            \    ... "
     post:
       tags:
-      - Batches
+        - Batches
       summary: Submit a batch of transactions
       description: "Creates a batch of transactions and enriches it in an asynchronous\
         \ fashion. A batch, representing the status of the \nenrichment progress is\
@@ -373,219 +373,220 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AsyncEnrichmentInput'
+              $ref: "#/components/schemas/AsyncEnrichmentInput"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Batch'
-        '422':
+                $ref: "#/components/schemas/Batch"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/batches/\" \\\
-          \n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  \\\n    -H \"Content-Type: application/json\" \\\n    -d '[{\n      \
-          \  \"id\": \"xbx8YP14g565Xk\",\n        \"description\": \"SQ* STARBUCKS\
-          \ NW 43RD\",\n        \"date\": \"2024-03-30\",\n        \"amount\": 10.0,\n\
-          \        \"entry_type\": \"outgoing\",\n        \"currency\": \"USD\",\n\
-          \        \"account_holder_id\": \"35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\
-          ,\n        \"location\": {\n            \"country\": \"US\"\n        }\n\
-          \    }]'\n "
-      - lang: python
-        label: Python SDK
-        source: "from ntropy_sdk import SDK, TransactionInput, LocationInput\n\nsdk\
-          \ = SDK(\"cd1H...Wmhl\")\nbatch = sdk.batches.create([\n    TransactionInput(\n\
-          \        id=\"xbx8YP14g565Xk\",\n        description=\"SQ* STARBUCKS NW\
-          \ 43RD\",\n        account_holder_id=\"35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\
-          ,\n        amount=10.0,\n        entry_type=\"outgoing\",\n        date=\"\
-          2024-03-30\",\n        currency=\"USD\",\n        location=LocationInput(\n\
-          \          country=\"US\",\n        )\n    )\n]) "
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/batches/\" \\\
+            \n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  \\\n    -H \"Content-Type: application/json\" \\\n    -d '[{\n      \
+            \  \"id\": \"xbx8YP14g565Xk\",\n        \"description\": \"SQ* STARBUCKS\
+            \ NW 43RD\",\n        \"date\": \"2024-03-30\",\n        \"amount\": 10.0,\n\
+            \        \"entry_type\": \"outgoing\",\n        \"currency\": \"USD\",\n\
+            \        \"account_holder_id\": \"35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\
+            ,\n        \"location\": {\n            \"country\": \"US\"\n        }\n\
+            \    }]'\n "
+        - lang: python
+          label: Python SDK
+          source: "from ntropy_sdk import SDK, TransactionInput, LocationInput\n\nsdk\
+            \ = SDK(\"cd1H...Wmhl\")\nbatch = sdk.batches.create([\n    TransactionInput(\n\
+            \        id=\"xbx8YP14g565Xk\",\n        description=\"SQ* STARBUCKS NW\
+            \ 43RD\",\n        account_holder_id=\"35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\
+            ,\n        amount=10.0,\n        entry_type=\"outgoing\",\n        date=\"\
+            2024-03-30\",\n        currency=\"USD\",\n        location=LocationInput(\n\
+            \          country=\"US\",\n        )\n    )\n]) "
   /v3/batches/{id}:
     get:
       tags:
-      - Batches
+        - Batches
       summary: Retrieve a batch
       operationId: get_single_batch_v3_batches__id__get
       parameters:
-      - required: true
-        schema:
-          type: string
-          title: Id
-        name: id
-        in: path
+        - required: true
+          schema:
+            type: string
+            title: Id
+          name: id
+          in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Batch'
-        '404':
+                $ref: "#/components/schemas/Batch"
+        "404":
           description: Batch with the provided id not found.
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/batches/203613d2-83c8-4130-8809-d14206eeec20\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: 'from ntropy_sdk import SDK
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/batches/203613d2-83c8-4130-8809-d14206eeec20\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: 'from ntropy_sdk import SDK
 
 
-          sdk = SDK("cd1H...Wmhl")
+            sdk = SDK("cd1H...Wmhl")
 
-          batch = sdk.batches.get("f203613d2-83c8-4130-8809-d14206eeec20") '
+            batch = sdk.batches.get("f203613d2-83c8-4130-8809-d14206eeec20") '
   /v3/batches/{id}/results:
     get:
       tags:
-      - Batches
+        - Batches
       summary: Retrieve the results of a batch
       description: Returns the results of the enrichment request. The resulting enriched
         transactions are returned in the same order they were submitted. Results are
         available after the batch has finished processing.
       operationId: get_batch_results_v3_batches__id__results_get
       parameters:
-      - required: true
-        schema:
-          type: string
-          title: Id
-        name: id
-        in: path
+        - required: true
+          schema:
+            type: string
+            title: Id
+          name: id
+          in: path
       responses:
-        '200':
+        "200":
           description: Returned batch of transaction enrichment results.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BatchResult'
-        '404':
+                $ref: "#/components/schemas/BatchResult"
+        "404":
           description: Batch with the provided id not found.
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/batches/203613d2-83c8-4130-8809-d14206eeec20/results\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: 'from ntropy_sdk import SDK
+        - lang: cURL
+          label: cURL
+          source:
+            "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/batches/203613d2-83c8-4130-8809-d14206eeec20/results\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: 'from ntropy_sdk import SDK
 
 
-          sdk = SDK("cd1H...Wmhl")
+            sdk = SDK("cd1H...Wmhl")
 
-          results = sdk.batches.wait_for_results("f203613d2-83c8-4130-8809-d14206eeec20")
+            results = sdk.batches.wait_for_results("f203613d2-83c8-4130-8809-d14206eeec20")
 
-          '
+            '
   /v3/bank_statements:
     get:
       tags:
-      - Bank statements
+        - Bank statements
       summary: List all bank statements
       description: Return a list of submitted bank statements starting with the most
         recent one.
       operationId: get_bank_statements_v3_bank_statements_get
       parameters:
-      - description: Only return bank statements older or equal than this date
-        required: false
-        schema:
-          type: string
-          format: date-time
-          title: Created After
-          description: Only return bank statements older or equal than this date
-        name: created_after
-        in: query
-      - description: Only return bank statements newer than this date
-        required: false
-        schema:
-          type: string
-          format: date-time
-          title: Created Before
-          description: Only return bank statements newer than this date
-        name: created_before
-        in: query
-      - description: Starting point for the set of bank statements
-        required: false
-        schema:
-          type: string
-          title: Cursor
-          description: Starting point for the set of bank statements
-        name: cursor
-        in: query
-      - description: The limit of bank statements to be returned
-        required: false
-        schema:
-          type: integer
-          maximum: 50.0
-          minimum: 1.0
-          title: Limit
-          description: The limit of bank statements to be returned
-          default: 10
-        name: limit
-        in: query
-      - description: If specified, only return bank statements with this status
-        required: false
-        schema:
-          allOf:
-          - $ref: '#/components/schemas/DocumentStatus'
-          description: If specified, only return bank statements with this status
-        name: status
-        in: query
+        - description: Only return bank statements older or equal than this date
+          required: false
+          schema:
+            type: string
+            format: date-time
+            title: Created After
+            description: Only return bank statements older or equal than this date
+          name: created_after
+          in: query
+        - description: Only return bank statements newer than this date
+          required: false
+          schema:
+            type: string
+            format: date-time
+            title: Created Before
+            description: Only return bank statements newer than this date
+          name: created_before
+          in: query
+        - description: Starting point for the set of bank statements
+          required: false
+          schema:
+            type: string
+            title: Cursor
+            description: Starting point for the set of bank statements
+          name: cursor
+          in: query
+        - description: The limit of bank statements to be returned
+          required: false
+          schema:
+            type: integer
+            maximum: 50.0
+            minimum: 1.0
+            title: Limit
+            description: The limit of bank statements to be returned
+            default: 10
+          name: limit
+          in: query
+        - description: If specified, only return bank statements with this status
+          required: false
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/DocumentStatus"
+            description: If specified, only return bank statements with this status
+          name: status
+          in: query
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PagedResponse_BankStatement'
-        '422':
+                $ref: "#/components/schemas/PagedResponse_BankStatement"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/bank_statements\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nfor bs\
-          \ in sdk.bank_statements.list().auto_paginate():\n    ... "
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/bank_statements\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nfor bs\
+            \ in sdk.bank_statements.list().auto_paginate():\n    ... "
     post:
       tags:
-      - Bank statements
+        - Bank statements
       summary: Submit a bank statement PDF
       description: Upload a PDF file and queue it for extraction.
       operationId: post_bank_statement_v3_bank_statements_post
@@ -593,476 +594,483 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Body_post_bank_statement_v3_bank_statements_post'
+              $ref: "#/components/schemas/Body_post_bank_statement_v3_bank_statements_post"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BankStatement'
-        '422':
+                $ref: "#/components/schemas/BankStatement"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"POST\" \\\n        \"https://api.ntropy.com/v3/bank_statements\"\
-          \ \\\n        -H \"Accept: application/json\" \\\n        -H \"X-API-KEY:\
-          \ cd1H...Wmhl\" \\\n        --form file=@bank_statement.pdf\n    "
-      - lang: python
-        label: Python SDK
-        source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nwith open('bank_statement.pdf',\
-          \ 'rb') as fh:\n    bank_statement = sdk.bank_statements.create(fh)\n  \
-          \  results = sdk.bank_statement.wait_for_results(bank_statement.id) "
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"POST\" \\\n        \"https://api.ntropy.com/v3/bank_statements\"\
+            \ \\\n        -H \"Accept: application/json\" \\\n        -H \"X-API-KEY:\
+            \ cd1H...Wmhl\" \\\n        --form file=@bank_statement.pdf\n    "
+        - lang: python
+          label: Python SDK
+          source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nwith open('bank_statement.pdf',\
+            \ 'rb') as fh:\n    bank_statement = sdk.bank_statements.create(fh)\n  \
+            \  results = sdk.bank_statement.wait_for_results(bank_statement.id) "
   /v3/bank_statements/{id}:
     get:
       tags:
-      - Bank statements
+        - Bank statements
       summary: Retrieve a bank statement
       operationId: get_bank_statement_v3_bank_statements__id__get
       parameters:
-      - required: true
-        schema:
-          type: string
-          title: Id
-        name: id
-        in: path
+        - required: true
+          schema:
+            type: string
+            title: Id
+          name: id
+          in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BankStatement'
-        '404':
+                $ref: "#/components/schemas/BankStatement"
+        "404":
           description: Bank statement with the provided id not found.
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/bank_statements/7f8dceac-2848-472d-b5c3-55cdbaf35a9b\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: 'from ntropy_sdk import SDK
+        - lang: cURL
+          label: cURL
+          source:
+            "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/bank_statements/7f8dceac-2848-472d-b5c3-55cdbaf35a9b\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: 'from ntropy_sdk import SDK
 
 
-          sdk = SDK("cd1H...Wmhl")
+            sdk = SDK("cd1H...Wmhl")
 
-          bs = sdk.bank_statements.get("7f8dceac-2848-472d-b5c3-55cdbaf35a9b") '
+            bs = sdk.bank_statements.get("7f8dceac-2848-472d-b5c3-55cdbaf35a9b") '
     delete:
       tags:
-      - Bank statements
+        - Bank statements
       summary: Deletes a bank statement
       operationId: delete_bank_statement_v3_bank_statements__id__delete
       parameters:
-      - required: true
-        schema:
-          type: string
-          title: Id
-        name: id
-        in: path
+        - required: true
+          schema:
+            type: string
+            title: Id
+          name: id
+          in: path
       responses:
-        '204':
+        "204":
           description: Deletion successful
-        '404':
+        "404":
           description: Bank statement with the provided id not found.
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
   /v3/bank_statements/{id}/overview:
     post:
       tags:
-      - Bank statements
+        - Bank statements
       summary: Quickly extract account holder, institution and first account
-      description: 'Extracts account holder, bank and account information extracted
+      description: "Extracts account holder, bank and account information extracted
         from the first page of the bank statement, which is typically available before
         the full results. This is a synchronous call.
 
 
-        Complete guide: [Overview](../../../bank-statements)'
+        Complete guide: [Overview](../../../bank-statements)"
       operationId: get_bank_statement_statement_info_v3_bank_statements__id__overview_post
       parameters:
-      - required: true
-        schema:
-          type: string
-          title: Id
-        name: id
-        in: path
+        - required: true
+          schema:
+            type: string
+            title: Id
+          name: id
+          in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatementInfo'
-        '404':
+                $ref: "#/components/schemas/StatementInfo"
+        "404":
           description: Bank statement with the provided id not found.
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/bank_statements/7f8dceac-2848-472d-b5c3-55cdbaf35a9b/overview\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\noverview\
-          \ = sdk.bank_statements.overview(\n    \"7f8dceac-2848-472d-b5c3-55cdbaf35a9b\"\
-          \n) "
+        - lang: cURL
+          label: cURL
+          source:
+            "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/bank_statements/7f8dceac-2848-472d-b5c3-55cdbaf35a9b/overview\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\noverview\
+            \ = sdk.bank_statements.overview(\n    \"7f8dceac-2848-472d-b5c3-55cdbaf35a9b\"\
+            \n) "
   /v3/bank_statements/{id}/results:
     get:
       tags:
-      - Bank statements
+        - Bank statements
       summary: Retrieve the extraction results
       description: Return the extracted account information and associated transactions
         from a bank statement PDF. The results are accessible once the statement's
         status is `completed`.
       operationId: get_bank_statement_result_v3_bank_statements__id__results_get
       parameters:
-      - required: true
-        schema:
-          type: string
-          title: Id
-        name: id
-        in: path
+        - required: true
+          schema:
+            type: string
+            title: Id
+          name: id
+          in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BankStatementResults'
-        '404':
+                $ref: "#/components/schemas/BankStatementResults"
+        "404":
           description: Bank statement with the provided id not found.
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/bank_statements/7f8dceac-2848-472d-b5c3-55cdbaf35a9b/results\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nbs = sdk.bank_statements.get(\"\
-          7f8dceac-2848-472d-b5c3-55cdbaf35a9b\")\nresults = sdk.bank_statements.wait_for_results(\n\
-          \    \"7f8dceac-2848-472d-b5c3-55cdbaf35a9b\"\n) "
+        - lang: cURL
+          label: cURL
+          source:
+            "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/bank_statements/7f8dceac-2848-472d-b5c3-55cdbaf35a9b/results\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nbs = sdk.bank_statements.get(\"\
+            7f8dceac-2848-472d-b5c3-55cdbaf35a9b\")\nresults = sdk.bank_statements.wait_for_results(\n\
+            \    \"7f8dceac-2848-472d-b5c3-55cdbaf35a9b\"\n) "
   /v3/account_holders/{id}:
     get:
       tags:
-      - Account Holders
+        - Account Holders
       summary: Retrieve an account holder.
       operationId: get_account_holder_v3_account_holders__id__get
       parameters:
-      - required: true
-        schema:
-          type: string
-          title: Id
-        name: id
-        in: path
+        - required: true
+          schema:
+            type: string
+            title: Id
+          name: id
+          in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountHolderExternal'
-        '404':
+                $ref: "#/components/schemas/AccountHolderExternal"
+        "404":
           description: Account holder with the provided id not found.
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/account_holders/35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: 'from ntropy_sdk import SDK
+        - lang: cURL
+          label: cURL
+          source:
+            "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/account_holders/35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: 'from ntropy_sdk import SDK
 
 
-          sdk = SDK("cd1H...Wmhl")
+            sdk = SDK("cd1H...Wmhl")
 
-          ah = sdk.account_holders.get("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") '
+            ah = sdk.account_holders.get("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") '
     delete:
       tags:
-      - Account Holders
+        - Account Holders
       summary: Deletes an account holder and their transactions
       description: Deletes all of the transactions in the account holder's history.
         This operation is permanent and irreversible
       operationId: delete_account_holder_v3_account_holders__id__delete
       parameters:
-      - required: true
-        schema:
-          type: string
-          title: Id
-        name: id
-        in: path
+        - required: true
+          schema:
+            type: string
+            title: Id
+          name: id
+          in: path
       responses:
-        '204':
+        "204":
           description: Deletion successful
-        '404':
+        "404":
           description: Account holder with the provided id not found.
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"DELETE\" \\\n    \"https://api.ntropy.com/v3/account_holders/35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: 'from ntropy_sdk import SDK
+        - lang: cURL
+          label: cURL
+          source:
+            "curl -X \"DELETE\" \\\n    \"https://api.ntropy.com/v3/account_holders/35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: 'from ntropy_sdk import SDK
 
 
-          sdk = SDK("cd1H...Wmhl")
+            sdk = SDK("cd1H...Wmhl")
 
-          ah = sdk.account_holders.delete("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") '
+            ah = sdk.account_holders.delete("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") '
   /v3/account_holders:
     get:
       tags:
-      - Account Holders
+        - Account Holders
       summary: List all account holders.
       operationId: get_account_holders_v3_account_holders_get
       parameters:
-      - description: Only return account holders older or equal than this date
-        required: false
-        schema:
-          type: string
-          format: date-time
-          title: Created After
-          description: Only return account holders older or equal than this date
-        name: created_after
-        in: query
-      - description: Only return account holders newer than this date
-        required: false
-        schema:
-          type: string
-          format: date-time
-          title: Created Before
-          description: Only return account holders newer than this date
-        name: created_before
-        in: query
-      - description: Starting point for the set of account holders
-        required: false
-        schema:
-          type: string
-          title: Cursor
-          description: Starting point for the set of account holders
-        name: cursor
-        in: query
-      - description: The limit of account holders to be returned
-        required: false
-        schema:
-          type: integer
-          maximum: 50.0
-          minimum: 1.0
-          title: Limit
-          description: The limit of account holders to be returned
-          default: 10
-        name: limit
-        in: query
+        - description: Only return account holders older or equal than this date
+          required: false
+          schema:
+            type: string
+            format: date-time
+            title: Created After
+            description: Only return account holders older or equal than this date
+          name: created_after
+          in: query
+        - description: Only return account holders newer than this date
+          required: false
+          schema:
+            type: string
+            format: date-time
+            title: Created Before
+            description: Only return account holders newer than this date
+          name: created_before
+          in: query
+        - description: Starting point for the set of account holders
+          required: false
+          schema:
+            type: string
+            title: Cursor
+            description: Starting point for the set of account holders
+          name: cursor
+          in: query
+        - description: The limit of account holders to be returned
+          required: false
+          schema:
+            type: integer
+            maximum: 50.0
+            minimum: 1.0
+            title: Limit
+            description: The limit of account holders to be returned
+            default: 10
+          name: limit
+          in: query
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PagedResponse_AccountHolderExternal'
-        '422':
+                $ref: "#/components/schemas/PagedResponse_AccountHolderExternal"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/account_holders/35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: 'from ntropy_sdk import SDK
+        - lang: cURL
+          label: cURL
+          source:
+            "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/account_holders/35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: 'from ntropy_sdk import SDK
 
 
-          sdk = SDK("cd1H...Wmhl")
+            sdk = SDK("cd1H...Wmhl")
 
-          ah = sdk.account_holders.get("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") '
+            ah = sdk.account_holders.get("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") '
     post:
       tags:
-      - Account Holders
+        - Account Holders
       summary: Create an account holder.
       operationId: create_account_holder_v3_account_holders_post
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AccountHolderCreate'
+              $ref: "#/components/schemas/AccountHolderCreate"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountHolderExternal'
-        '400':
+                $ref: "#/components/schemas/AccountHolderExternal"
+        "400":
           description: Account holder with the provided id already exists.
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/account_holders\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n       \
-          \ \"id\": \"35b927b6-6fda-40aa-93b8-95b47c2b2cad\",\n        \"type\": \"\
-          consumer\",\n        \"name\": \"John Doe\"\n    }]'\n "
-      - lang: python
-        label: Python SDK
-        source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nah = sdk.account_holders.create(\n\
-          \    id=\"35b927b6-6fda-40aa-93b8-95b47c2b2cad\",\n    type=\"consumer\"\
-          ,\n    name=\"John Doe\",\n) "
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/account_holders\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n       \
+            \ \"id\": \"35b927b6-6fda-40aa-93b8-95b47c2b2cad\",\n        \"type\": \"\
+            consumer\",\n        \"name\": \"John Doe\"\n    }]'\n "
+        - lang: python
+          label: Python SDK
+          source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nah = sdk.account_holders.create(\n\
+            \    id=\"35b927b6-6fda-40aa-93b8-95b47c2b2cad\",\n    type=\"consumer\"\
+            ,\n    name=\"John Doe\",\n) "
   /v3/account_holders/{id}/recurring_groups:
     post:
       tags:
-      - Recurrence
+        - Recurrence
       summary: Find recurring groups in a transaction history
       description: Identifies and categorizes recurring patterns found in the transaction
         history of the account holder, such as periodic payments or subscriptions.
         These patterns are called recurrence groups.
       operationId: get_account_holder_recurring_payments_v3_account_holders__id__recurring_groups_post
       parameters:
-      - required: true
-        schema:
-          type: string
-          title: Id
-        name: id
-        in: path
+        - required: true
+          schema:
+            type: string
+            title: Id
+          name: id
+          in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/RecurrenceGroup'
+                  $ref: "#/components/schemas/RecurrenceGroup"
                 type: array
                 title: Response Get Account Holder Recurring Payments V3 Account Holders  Id  Recurring
                   Groups Post
-        '404':
+        "404":
           description: Account holder with the provided id not found.
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/account_holders/35b927b6-6fda-40aa-93b8-95b47c2b2cad/recurring_groups\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nrecurring_groups\
-          \ = sdk.account_holders.recurring_groups(\n    \"35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\
-          \n) "
+        - lang: cURL
+          label: cURL
+          source:
+            "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/account_holders/35b927b6-6fda-40aa-93b8-95b47c2b2cad/recurring_groups\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nrecurring_groups\
+            \ = sdk.account_holders.recurring_groups(\n    \"35b927b6-6fda-40aa-93b8-95b47c2b2cad\"\
+            \n) "
   /v3/webhooks:
     get:
       tags:
-      - Webhooks
+        - Webhooks
       summary: List all webhooks
       description: List all webhooks
       operationId: get_webhooks_v3_webhooks_get
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PagedResponse_Webhook'
-        '422':
+                $ref: "#/components/schemas/PagedResponse_Webhook"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/webhooks\" \\\
-          \n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nfor webhook\
-          \ in sdk.webhooks.list().auto_paginate():\n    ... "
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/webhooks\" \\\
+            \n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nfor webhook\
+            \ in sdk.webhooks.list().auto_paginate():\n    ... "
     post:
       tags:
-      - Webhooks
+        - Webhooks
       summary: Create a webhook
       description: Create a webhook to be called when certain events occur.
       operationId: post_webhook_v3_webhooks_post
@@ -1070,213 +1078,214 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WebhookBase'
+              $ref: "#/components/schemas/WebhookBase"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Webhook'
-        '422':
+                $ref: "#/components/schemas/Webhook"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/webhooks\" \\\
-          \n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n       \
-          \ \"url\": \"https://example.com:5689\",\n        \"events\": [\n      \
-          \      \"batches.completed\",\n            \"batches.error\"\n        ],\n\
-          \        \"token\": \"hunter2\"\n    }]'\n "
-      - lang: python
-        label: Python SDK
-        source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nsdk.webhooks.create(\n\
-          \    url=\"https://example.com:5689\",\n    events=\"['batches.completed',\
-          \ 'batches.error']\",\n    token=\"hunter2\",\n) "
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/webhooks\" \\\
+            \n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n       \
+            \ \"url\": \"https://example.com:5689\",\n        \"events\": [\n      \
+            \      \"batches.completed\",\n            \"batches.error\"\n        ],\n\
+            \        \"token\": \"hunter2\"\n    }]'\n "
+        - lang: python
+          label: Python SDK
+          source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nsdk.webhooks.create(\n\
+            \    url=\"https://example.com:5689\",\n    events=\"['batches.completed',\
+            \ 'batches.error']\",\n    token=\"hunter2\",\n) "
   /v3/webhooks/{id}:
     get:
       tags:
-      - Webhooks
+        - Webhooks
       summary: Retrieve a webhook
       description: Retrieve a webhook
       operationId: get_webhook_v3_webhooks__id__get
       parameters:
-      - required: true
-        schema:
-          type: string
-          title: Id
-        name: id
-        in: path
+        - required: true
+          schema:
+            type: string
+            title: Id
+          name: id
+          in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Webhook'
-        '422':
+                $ref: "#/components/schemas/Webhook"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/webhooks/e94a150d-40af-4e96-8aa7-2948a6b4d8d3\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: 'from ntropy_sdk import SDK
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/webhooks/e94a150d-40af-4e96-8aa7-2948a6b4d8d3\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: 'from ntropy_sdk import SDK
 
 
-          sdk = SDK("cd1H...Wmhl")
+            sdk = SDK("cd1H...Wmhl")
 
-          webhook = sdk.webhooks.get("e94a150d-40af-4e96-8aa7-2948a6b4d8d3")
+            webhook = sdk.webhooks.get("e94a150d-40af-4e96-8aa7-2948a6b4d8d3")
 
-          '
+            '
     delete:
       tags:
-      - Webhooks
+        - Webhooks
       summary: Delete a webhook
       description: Delete a webhook
       operationId: delete_webhook_v3_webhooks__id__delete
       parameters:
-      - required: true
-        schema:
-          type: string
-          title: Id
-        name: id
-        in: path
+        - required: true
+          schema:
+            type: string
+            title: Id
+          name: id
+          in: path
       responses:
-        '204':
+        "204":
           description: Deletion successful
-        '404':
+        "404":
           description: Webhook with the provided id not found.
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"DELETE\" \\\n    \"https://api.ntropy.com/v3/webhooks/e94a150d-40af-4e96-8aa7-2948a6b4d8d3\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: 'from ntropy_sdk import SDK
+        - lang: cURL
+          label: cURL
+          source:
+            "curl -X \"DELETE\" \\\n    \"https://api.ntropy.com/v3/webhooks/e94a150d-40af-4e96-8aa7-2948a6b4d8d3\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: 'from ntropy_sdk import SDK
 
 
-          sdk = SDK("cd1H...Wmhl")
+            sdk = SDK("cd1H...Wmhl")
 
-          sdk.webhooks.delete("e94a150d-40af-4e96-8aa7-2948a6b4d8d3") '
+            sdk.webhooks.delete("e94a150d-40af-4e96-8aa7-2948a6b4d8d3") '
     patch:
       tags:
-      - Webhooks
+        - Webhooks
       summary: Update a webhook
       description: Update a webhook. Fields that aren't specified in the body will
         remain unchanged
       operationId: patch_webhook_v3_webhooks__id__patch
       parameters:
-      - required: true
-        schema:
-          type: string
-          title: Id
-        name: id
-        in: path
+        - required: true
+          schema:
+            type: string
+            title: Id
+          name: id
+          in: path
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WebhookPatch'
+              $ref: "#/components/schemas/WebhookPatch"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Webhook'
-        '422':
+                $ref: "#/components/schemas/Webhook"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/webhooks/e94a150d-40af-4e96-8aa7-2948a6b4d8d3\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n       \
-          \ \"events\": [\n            \"batches.completed\",\n            \"batches.error\"\
-          \n        ],\n        \"enabled\": false\n    }]'\n "
-      - lang: python
-        label: Python SDK
-        source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nwh = sdk.webhooks.patch(\n\
-          \    \"e94a150d-40af-4e96-8aa7-2948a6b4d8d3\",\n    events=['batches.completed',\
-          \ 'batches.error'],\n    enabled=False,\n)\n"
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/webhooks/e94a150d-40af-4e96-8aa7-2948a6b4d8d3\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n       \
+            \ \"events\": [\n            \"batches.completed\",\n            \"batches.error\"\
+            \n        ],\n        \"enabled\": false\n    }]'\n "
+        - lang: python
+          label: Python SDK
+          source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nwh = sdk.webhooks.patch(\n\
+            \    \"e94a150d-40af-4e96-8aa7-2948a6b4d8d3\",\n    events=['batches.completed',\
+            \ 'batches.error'],\n    enabled=False,\n)\n"
   /v3/rules:
     get:
       tags:
-      - Personalization
-      - Personalization
+        - Personalization
+        - Personalization
       summary: Get the current personalization ruleset.
       description: Get the current personalization ruleset.
       operationId: filter_get_v3_rules_get
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FilterModel'
-        '422':
+                $ref: "#/components/schemas/FilterModel"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/rules\" \\\n\
-          \    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: 'from ntropy_sdk import SDK
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/rules\" \\\n\
+            \    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: 'from ntropy_sdk import SDK
 
 
-          sdk = SDK("cd1H...Wmhl")
+            sdk = SDK("cd1H...Wmhl")
 
-          rules = sdk.rules.get()
+            rules = sdk.rules.get()
 
-          '
+            '
     post:
       tags:
-      - Personalization
-      - Personalization
+        - Personalization
+        - Personalization
       summary: Set the personalization ruleset.
       description: Set the personalization ruleset.
       operationId: filter_post_v3_rules_post
@@ -1284,50 +1293,50 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FilterModel'
+              $ref: "#/components/schemas/FilterModel"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema: {}
-        '400':
+        "400":
           description: Provided ruleset has invalid structure
-        '413':
+        "413":
           description: Ruleset was larger than 50KiB
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/rules\" \\\n\
-          \    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \ \\\n    -H \"Content-Type: application/json\" \\\n    -d '[{\n       \
-          \ \"if\": {\n            \"is_substring\": [\n                {\"get\":\
-          \ \"website\"},\n                \"ntropy\"\n            ]\n        },\n\
-          \        \"then\": [\n            {\"set\": \"logo\", \"to\": \"http://example.com/favicon.ico\"\
-          }\n        ],\n        \"else\": [\n            {\"remove_label\": \"example\
-          \ label\"}\n        ]\n    }]'\n"
-      - lang: python
-        label: Python SDK
-        source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nsdk.rules.set([{\n\
-          \    \"if\": {\n        \"is_substring\": [\n            {\"get\": \"website\"\
-          },\n            \"ntropy\"\n        ]\n    },\n    \"then\": [\n       \
-          \ {\"set\": \"logo\", \"to\": \"http://example.com/favicon.ico\"}\n    ],\n\
-          \    \"else\": [\n        {\"remove_label\": \"example label\"}\n    ]\n\
-          }])\n"
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/rules\" \\\n\
+            \    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \ \\\n    -H \"Content-Type: application/json\" \\\n    -d '[{\n       \
+            \ \"if\": {\n            \"is_substring\": [\n                {\"get\":\
+            \ \"website\"},\n                \"ntropy\"\n            ]\n        },\n\
+            \        \"then\": [\n            {\"set\": \"logo\", \"to\": \"http://example.com/favicon.ico\"\
+            }\n        ],\n        \"else\": [\n            {\"remove_label\": \"example\
+            \ label\"}\n        ]\n    }]'\n"
+        - lang: python
+          label: Python SDK
+          source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nsdk.rules.set([{\n\
+            \    \"if\": {\n        \"is_substring\": [\n            {\"get\": \"website\"\
+            },\n            \"ntropy\"\n        ]\n    },\n    \"then\": [\n       \
+            \ {\"set\": \"logo\", \"to\": \"http://example.com/favicon.ico\"}\n    ],\n\
+            \    \"else\": [\n        {\"remove_label\": \"example label\"}\n    ]\n\
+            }])\n"
   /v3/rules/append:
     post:
       tags:
-      - Personalization
-      - Personalization
+        - Personalization
+        - Personalization
       summary: Append a rule.
       description: Append a rule to the personalization ruleset.
       operationId: filter_append_v3_rules_append_post
@@ -1335,225 +1344,225 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ActionModel'
+              $ref: "#/components/schemas/ActionModel"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema: {}
-        '400':
+        "400":
           description: Provided rule has invalid structure
-        '413':
+        "413":
           description: Ruleset after append was larger than 50KiB
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/rules/append\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \ \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\"set\": \"\
-          logo\", \"to\": \"http://example.com/favicon.ico\"}'\n"
-      - lang: python
-        label: Python SDK
-        source: 'from ntropy_sdk import SDK
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/rules/append\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \ \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\"set\": \"\
+            logo\", \"to\": \"http://example.com/favicon.ico\"}'\n"
+        - lang: python
+          label: Python SDK
+          source: 'from ntropy_sdk import SDK
 
 
-          sdk = SDK("cd1H...Wmhl")
+            sdk = SDK("cd1H...Wmhl")
 
-          sdk.rules.append({"set": "logo", "to": "http://example.com/favicon.ico"})
+            sdk.rules.append({"set": "logo", "to": "http://example.com/favicon.ico"})
 
-          '
+            '
   /v3/rules/{index}:
     delete:
       tags:
-      - Personalization
-      - Personalization
+        - Personalization
+        - Personalization
       summary: Delete a rule.
       description: Delete the rule at the specified index from the personalization
         ruleset.
       operationId: filter_delete_v3_rules__index__delete
       parameters:
-      - required: true
-        schema:
-          type: integer
-          title: Index
-        name: index
-        in: path
+        - required: true
+          schema:
+            type: integer
+            title: Index
+          name: index
+          in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema: {}
-        '400':
+        "400":
           description: Provided index does not exist in ruleset
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"DELETE\" \\\n    \"https://api.ntropy.com/v3/rules/0\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: 'from ntropy_sdk import SDK
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"DELETE\" \\\n    \"https://api.ntropy.com/v3/rules/0\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: 'from ntropy_sdk import SDK
 
 
-          sdk = SDK("cd1H...Wmhl")
+            sdk = SDK("cd1H...Wmhl")
 
-          sdk.rules.delete(0)
+            sdk.rules.delete(0)
 
-          '
+            '
     patch:
       tags:
-      - Personalization
-      - Personalization
+        - Personalization
+        - Personalization
       summary: Modify an existing rule.
       description: Modify an existing rule at the specified index on the ruleset.
       operationId: filter_patch_v3_rules__index__patch
       parameters:
-      - required: true
-        schema:
-          type: integer
-          title: Index
-        name: index
-        in: path
+        - required: true
+          schema:
+            type: integer
+            title: Index
+          name: index
+          in: path
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ActionModel'
+              $ref: "#/components/schemas/ActionModel"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema: {}
-        '400':
+        "400":
           description: Provided index does not exist in ruleset
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"PATCH\" \\\n    \"https://api.ntropy.com/v3/rules/0\" \\\
-          \n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \ \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\"set\": \"\
-          logo\", \"to\": \"http://example.com/favicon.ico\"}'\n"
-      - lang: python
-        label: Python SDK
-        source: 'from ntropy_sdk import SDK
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"PATCH\" \\\n    \"https://api.ntropy.com/v3/rules/0\" \\\
+            \n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \ \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\"set\": \"\
+            logo\", \"to\": \"http://example.com/favicon.ico\"}'\n"
+        - lang: python
+          label: Python SDK
+          source: 'from ntropy_sdk import SDK
 
 
-          sdk = SDK("cd1H...Wmhl")
+            sdk = SDK("cd1H...Wmhl")
 
-          sdk.rules.patch(0, {"set": "logo", "to": "http://example.com/favicon.ico"})
+            sdk.rules.patch(0, {"set": "logo", "to": "http://example.com/favicon.ico"})
 
-          '
+            '
   /v3/reports:
     get:
       tags:
-      - Reports
+        - Reports
       summary: List all reports
       description: List all reports
       operationId: get_reports_v3_reports_get
       parameters:
-      - description: Only return report older or equal than this date
-        required: false
-        schema:
-          type: string
-          format: date-time
-          title: Created After
-          description: Only return report older or equal than this date
-        name: created_after
-        in: query
-      - description: Only return report newer than this date
-        required: false
-        schema:
-          type: string
-          format: date-time
-          title: Created Before
-          description: Only return report newer than this date
-        name: created_before
-        in: query
-      - description: Starting point for the set of report
-        required: false
-        schema:
-          type: string
-          title: Cursor
-          description: Starting point for the set of report
-        name: cursor
-        in: query
-      - description: The limit of report to be returned
-        required: false
-        schema:
-          type: integer
-          maximum: 50.0
-          minimum: 1.0
-          title: Limit
-          description: The limit of report to be returned
-          default: 10
-        name: limit
-        in: query
-      - description: If specified, only return reports with this status
-        required: false
-        schema:
-          allOf:
-          - $ref: '#/components/schemas/ReportStatus'
-          description: If specified, only return reports with this status
-        name: status
-        in: query
+        - description: Only return report older or equal than this date
+          required: false
+          schema:
+            type: string
+            format: date-time
+            title: Created After
+            description: Only return report older or equal than this date
+          name: created_after
+          in: query
+        - description: Only return report newer than this date
+          required: false
+          schema:
+            type: string
+            format: date-time
+            title: Created Before
+            description: Only return report newer than this date
+          name: created_before
+          in: query
+        - description: Starting point for the set of report
+          required: false
+          schema:
+            type: string
+            title: Cursor
+            description: Starting point for the set of report
+          name: cursor
+          in: query
+        - description: The limit of report to be returned
+          required: false
+          schema:
+            type: integer
+            maximum: 50.0
+            minimum: 1.0
+            title: Limit
+            description: The limit of report to be returned
+            default: 10
+          name: limit
+          in: query
+        - description: If specified, only return reports with this status
+          required: false
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ReportStatus"
+            description: If specified, only return reports with this status
+          name: status
+          in: query
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PagedResponse_Report_'
-        '422':
+                $ref: "#/components/schemas/PagedResponse_Report_"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/reports\" \\\n\
-          \    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nreports\
-          \ = sdk.reports.list()\n    "
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/reports\" \\\n\
+            \    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nreports\
+            \ = sdk.reports.list()\n    "
     post:
       tags:
-      - Reports
+        - Reports
       summary: Create a report
       description: Report a transaction with incorrect fields.
       operationId: post_report_v3_reports_post
@@ -1561,258 +1570,258 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ReportBase'
+              $ref: "#/components/schemas/ReportBase"
         required: true
       responses:
-        '200':
+        "200":
           description: The newly created report
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Report'
-        '422':
+                $ref: "#/components/schemas/Report"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/reports\" \\\
-          \n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n       \
-          \ \"transaction_id\": \"xbx8YP14g565Xk\",\n        \"description\": \"lorem\
-          \ ipsum\",\n        \"fields\": [\n            \".entities.counterparty\"\
-          \n        ]\n    }]'\n "
-      - lang: python
-        label: Python SDK
-        source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nreport\
-          \ = sdk.reports.create(\n    transaction_id=\"xbx8YP14g565Xk\",\n    description=\"\
-          lorem ipsum\",\n    fields=['.entities.counterparty'],\n)\n"
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/reports\" \\\
+            \n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n       \
+            \ \"transaction_id\": \"xbx8YP14g565Xk\",\n        \"description\": \"lorem\
+            \ ipsum\",\n        \"fields\": [\n            \".entities.counterparty\"\
+            \n        ]\n    }]'\n "
+        - lang: python
+          label: Python SDK
+          source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nreport\
+            \ = sdk.reports.create(\n    transaction_id=\"xbx8YP14g565Xk\",\n    description=\"\
+            lorem ipsum\",\n    fields=['.entities.counterparty'],\n)\n"
   /v3/reports/{id}:
     get:
       tags:
-      - Reports
+        - Reports
       summary: Retrieve a report
       description: Retrieve a report
       operationId: get_report_v3_reports__id__get
       parameters:
-      - required: true
-        schema:
-          type: string
-          title: Id
-        name: id
-        in: path
+        - required: true
+          schema:
+            type: string
+            title: Id
+          name: id
+          in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Report'
-        '404':
+                $ref: "#/components/schemas/Report"
+        "404":
           description: Report with the provided id not found.
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/reports/a652285d-de1b-4a6f-b6ce-45efa9be7952\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nreport\
-          \ = sdk.reports.get(\"a652285d-de1b-4a6f-b6ce-45efa9be7952\")\n    "
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/reports/a652285d-de1b-4a6f-b6ce-45efa9be7952\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nreport\
+            \ = sdk.reports.get(\"a652285d-de1b-4a6f-b6ce-45efa9be7952\")\n    "
     delete:
       tags:
-      - Reports
+        - Reports
       summary: Delete a report
       description: Delete a report
       operationId: delete_report_v3_reports__id__delete
       parameters:
-      - required: true
-        schema:
-          type: string
-          title: Id
-        name: id
-        in: path
+        - required: true
+          schema:
+            type: string
+            title: Id
+          name: id
+          in: path
       responses:
-        '204':
+        "204":
           description: Deletion successful
-        '404':
+        "404":
           description: Report with the provided id not found.
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
   /v3/categories/{account_holder_type}:
     get:
       tags:
-      - Categories
+        - Categories
       summary: Retrieve category set
       description: Retrieves the set of categories. Category sets are different per
         account holder type.
       operationId: get_category_set_v3_categories__account_holder_type__get
       parameters:
-      - required: true
-        schema:
-          $ref: '#/components/schemas/AccountHolderType'
-        name: account_holder_type
-        in: path
+        - required: true
+          schema:
+            $ref: "#/components/schemas/AccountHolderType"
+          name: account_holder_type
+          in: path
       responses:
-        '200':
+        "200":
           description: Category set for the selected type of account holder
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CategorySet'
-        '422':
+                $ref: "#/components/schemas/CategorySet"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/categories/consumer\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: 'from ntropy_sdk import SDK
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/categories/consumer\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: 'from ntropy_sdk import SDK
 
 
-          sdk = SDK("cd1H...Wmhl")
+            sdk = SDK("cd1H...Wmhl")
 
-          sdk.categories.get("consumer")
+            sdk.categories.get("consumer")
 
-          '
+            '
     post:
       tags:
-      - Categories
+        - Categories
       summary: Set a custom set of categories
       description: Sets a custom set of categories. Transactions that don't match
         a category will be categorized `not enough information` regardless of whether
         it is present in the set.
       operationId: custom_categories_post_v3_categories__account_holder_type__post
       parameters:
-      - required: true
-        schema:
-          $ref: '#/components/schemas/AccountHolderType'
-        name: account_holder_type
-        in: path
+        - required: true
+          schema:
+            $ref: "#/components/schemas/AccountHolderType"
+          name: account_holder_type
+          in: path
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CustomCategorySet'
+              $ref: "#/components/schemas/CustomCategorySet"
         required: true
       responses:
-        '200':
+        "200":
           description: Custom categories successfully set.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomCategorySet'
-        '422':
+                $ref: "#/components/schemas/CustomCategorySet"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/categories/consumer\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n       \
-          \ \"incoming\": [\n            \"salary\",\n            \"investment income\"\
-          ,\n            \"other income\"\n        ],\n        \"outgoing\": [\n \
-          \           \"rent\",\n            \"utilities\",\n            \"groceries\"\
-          ,\n            \"entertainment\"\n        ]\n    }]'\n "
-      - lang: python
-        label: Python SDK
-        source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nsdk.categories.set(\"\
-          consumer\", {\n    \"incoming\": [\n        \"transfer from investment app\"\
-          ,\n        \"transfer from stock broker\",\n        \"transfer from crypto\
-          \ broker\",\n        \"chargeback\",\n        \"freelance income\",\n  \
-          \      \"rideshare or delivery income\",\n        \"paycheck\",\n      \
-          \  \"benefits\",\n        \"interest earned\",\n        \"stock dividend\"\
-          \n    ],\n    \"outgoing\": [\n        \"digital content and streaming\"\
-          ,\n        \"vending machine\",\n        \"reversal\",\n        \"transfer\
-          \ to investment app\",\n        \"transfer to stock broker\",\n        \"\
-          transfer to crypto broker\",\n        \"adjustment\",\n        \"intra account\
-          \ transfer\",\n        \"inter account transfer\",\n        \"peer to peer\
-          \ transfer\",\n        \"funeral service\",\n        \"ATM withdrawal\"\
-          ,\n        \"teller withdrawal\"\n    ]\n})\n"
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/categories/consumer\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n       \
+            \ \"incoming\": [\n            \"salary\",\n            \"investment income\"\
+            ,\n            \"other income\"\n        ],\n        \"outgoing\": [\n \
+            \           \"rent\",\n            \"utilities\",\n            \"groceries\"\
+            ,\n            \"entertainment\"\n        ]\n    }]'\n "
+        - lang: python
+          label: Python SDK
+          source: "from ntropy_sdk import SDK\n\nsdk = SDK(\"cd1H...Wmhl\")\nsdk.categories.set(\"\
+            consumer\", {\n    \"incoming\": [\n        \"transfer from investment app\"\
+            ,\n        \"transfer from stock broker\",\n        \"transfer from crypto\
+            \ broker\",\n        \"chargeback\",\n        \"freelance income\",\n  \
+            \      \"rideshare or delivery income\",\n        \"paycheck\",\n      \
+            \  \"benefits\",\n        \"interest earned\",\n        \"stock dividend\"\
+            \n    ],\n    \"outgoing\": [\n        \"digital content and streaming\"\
+            ,\n        \"vending machine\",\n        \"reversal\",\n        \"transfer\
+            \ to investment app\",\n        \"transfer to stock broker\",\n        \"\
+            transfer to crypto broker\",\n        \"adjustment\",\n        \"intra account\
+            \ transfer\",\n        \"inter account transfer\",\n        \"peer to peer\
+            \ transfer\",\n        \"funeral service\",\n        \"ATM withdrawal\"\
+            ,\n        \"teller withdrawal\"\n    ]\n})\n"
   /v3/categories/{account_holder_type}/reset:
     post:
       tags:
-      - Categories
+        - Categories
       summary: Reset category set to original values
       description: Resets the set of categories of the specified account holder type
         to the original values.
       operationId: delete_custom_category_set_v3_categories__account_holder_type__reset_post
       parameters:
-      - required: true
-        schema:
-          $ref: '#/components/schemas/AccountHolderType'
-        name: account_holder_type
-        in: path
+        - required: true
+          schema:
+            $ref: "#/components/schemas/AccountHolderType"
+          name: account_holder_type
+          in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CategorySet'
-        '422':
+                $ref: "#/components/schemas/CategorySet"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/categories/consumer/reset\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: 'from ntropy_sdk import SDK
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"POST\" \\\n    \"https://api.ntropy.com/v3/categories/consumer/reset\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: 'from ntropy_sdk import SDK
 
 
-          sdk = SDK("cd1H...Wmhl")
+            sdk = SDK("cd1H...Wmhl")
 
-          sdk.categories.reset("consumer")
+            sdk.categories.reset("consumer")
 
-          '
+            '
   /v3/entities/lookup:
     get:
       tags:
-      - Entities
+        - Entities
       summary: Searches for an entity
       description: "Resolves a query into an entity by querying our entity resolution\
         \ system. \n    The parameters `name` and `website` are mutually exclusive.\
@@ -1820,112 +1829,112 @@ paths:
         \ way transactions are."
       operationId: search_entity_v3_entities_lookup_get
       parameters:
-      - description: The name of the entity to resolve
-        required: false
-        schema:
-          type: string
-          title: Name
-          description: The name of the entity to resolve
-        name: name
-        in: query
-      - description: The website of the entity to resolve
-        required: false
-        schema:
-          type: string
-          title: Website
-          description: The website of the entity to resolve
-        name: website
-        in: query
-      - description: An unstructured location string of the entity to resolve
-        required: false
-        schema:
-          type: string
-          title: Location
-          description: An unstructured location string of the entity to resolve
-        name: location
-        in: query
+        - description: The name of the entity to resolve
+          required: false
+          schema:
+            type: string
+            title: Name
+            description: The name of the entity to resolve
+          name: name
+          in: query
+        - description: The website of the entity to resolve
+          required: false
+          schema:
+            type: string
+            title: Website
+            description: The website of the entity to resolve
+          name: website
+          in: query
+        - description: An unstructured location string of the entity to resolve
+          required: false
+          schema:
+            type: string
+            title: Location
+            description: An unstructured location string of the entity to resolve
+          name: location
+          in: query
       responses:
-        '200':
+        "200":
           description: Entity
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Entity'
-        '400':
+                $ref: "#/components/schemas/Entity"
+        "400":
           description: Bad request.
-        '423':
+        "423":
           description: Not enough credits.
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/entities?name=Starbucks\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: 'from ntropy_sdk import SDK
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/entities?name=Starbucks\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: 'from ntropy_sdk import SDK
 
 
-          sdk = SDK("cd1H...Wmhl")
+            sdk = SDK("cd1H...Wmhl")
 
-          sdk.entities.lookup(name="Starbucks") '
+            sdk.entities.lookup(name="Starbucks") '
   /v3/entities/{id}:
     get:
       tags:
-      - Entities
+        - Entities
       summary: Retrieve an entity
       description: Retrieve more information about an entity by using its unique ID.
       operationId: get_entity_by_id_v3_entities__id__get
       parameters:
-      - description: The unique ID of the entity
-        required: true
-        schema:
-          type: string
-          title: Id
-          description: The unique ID of the entity
-        name: id
-        in: path
+        - description: The unique ID of the entity
+          required: true
+          schema:
+            type: string
+            title: Id
+            description: The unique ID of the entity
+          name: id
+          in: path
       responses:
-        '200':
+        "200":
           description: Entity
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Entity'
-        '400':
+                $ref: "#/components/schemas/Entity"
+        "400":
           description: Bad request.
-        '404':
+        "404":
           description: Entity does not exist for ID
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
-      - APIKeyHeader: []
+        - APIKeyHeader: []
       x-codeSamples:
-      - lang: cURL
-        label: cURL
-        source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/entities/d4bc3c80-ec1a-3da2-836e-2a4ca4758be5\"\
-          \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
-          \  "
-      - lang: python
-        label: Python SDK
-        source: 'from ntropy_sdk import SDK
+        - lang: cURL
+          label: cURL
+          source: "curl -X \"GET\" \\\n    \"https://api.ntropy.com/v3/entities/d4bc3c80-ec1a-3da2-836e-2a4ca4758be5\"\
+            \ \\\n    -H \"Accept: application/json\" \\\n    -H \"X-API-KEY: cd1H...Wmhl\"\
+            \  "
+        - lang: python
+          label: Python SDK
+          source: 'from ntropy_sdk import SDK
 
 
-          sdk = SDK("cd1H...Wmhl")
+            sdk = SDK("cd1H...Wmhl")
 
-          sdk.entities.lookup("d4bc3c80-ec1a-3da2-836e-2a4ca4758be5") '
+            sdk.entities.lookup("d4bc3c80-ec1a-3da2-836e-2a4ca4758be5") '
 components:
   schemas:
     Account:
@@ -1950,12 +1959,12 @@ components:
     AccountHolder:
       properties:
         type:
-          $ref: '#/components/schemas/AccountType'
+          $ref: "#/components/schemas/AccountType"
         name:
           type: string
           title: Name
         address:
-          $ref: '#/components/schemas/Address'
+          $ref: "#/components/schemas/Address"
       type: object
       title: AccountHolder
     AccountHolderCreate:
@@ -1967,16 +1976,16 @@ components:
           description: The unique ID of the account holder of the transaction
         type:
           allOf:
-          - $ref: '#/components/schemas/AccountHolderType'
-          description: 'The type of the account holder. '
+            - $ref: "#/components/schemas/AccountHolderType"
+          description: "The type of the account holder. "
         name:
           type: string
           title: Name
           description: The name of the account holder
       type: object
       required:
-      - id
-      - type
+        - id
+        - type
       title: AccountHolderCreate
     AccountHolderExternal:
       properties:
@@ -1987,8 +1996,8 @@ components:
           description: The unique ID of the account holder of the transaction
         type:
           allOf:
-          - $ref: '#/components/schemas/AccountHolderType'
-          description: 'The type of the account holder. '
+            - $ref: "#/components/schemas/AccountHolderType"
+          description: "The type of the account holder. "
         name:
           type: string
           title: Name
@@ -2001,37 +2010,37 @@ components:
       additionalProperties: false
       type: object
       required:
-      - id
-      - type
-      - created_at
+        - id
+        - type
+        - created_at
       title: AccountHolderExternal
       example:
         id: 35b927b6-6fda-40aa-93b8-95b47c2b2cad
         type: consumer
         name: John Doe
-        created_at: '2024-03-30T00:00:00'
+        created_at: "2024-03-30T00:00:00"
     AccountHolderType:
       type: string
       enum:
-      - consumer
-      - business
+        - consumer
+        - business
       title: AccountHolderType
       description: An enumeration.
     AccountType:
       type: string
       enum:
-      - consumer
-      - business
+        - consumer
+        - business
       title: AccountType
       description: An enumeration.
     AccountingCategory:
       type: string
       enum:
-      - operational expenses
-      - cost of goods sold
-      - revenue
-      - financing
-      - taxes
+        - operational expenses
+        - cost of goods sold
+        - revenue
+        - financing
+        - taxes
       title: AccountingCategory
       description: An enumeration.
     ActionModel:
@@ -2059,7 +2068,7 @@ components:
       properties:
         transactions:
           items:
-            $ref: '#/components/schemas/TransactionInput'
+            $ref: "#/components/schemas/TransactionInput"
           type: array
           maxItems: 24960
           minItems: 1
@@ -2067,7 +2076,7 @@ components:
       additionalProperties: false
       type: object
       required:
-      - transactions
+        - transactions
       title: AsyncEnrichmentInput
     BankStatement:
       properties:
@@ -2081,7 +2090,7 @@ components:
           description: The name of the bank statement file, if available.
         status:
           allOf:
-          - $ref: '#/components/schemas/BankStatementStatus'
+            - $ref: "#/components/schemas/BankStatementStatus"
           description: The current status of the document.
         created_at:
           type: string
@@ -2090,18 +2099,18 @@ components:
           description: The date and time when the job was created.
         file:
           allOf:
-          - $ref: '#/components/schemas/BankStatementFile'
+            - $ref: "#/components/schemas/BankStatementFile"
           title: File
           description: Information about the bank statement file being processed.
         error:
-          $ref: '#/components/schemas/BankStatementError'
+          $ref: "#/components/schemas/BankStatementError"
       additionalProperties: false
       type: object
       required:
-      - id
-      - status
-      - created_at
-      - file
+        - id
+        - status
+        - created_at
+        - file
       title: BankStatement
       description: Represents a bank statement with details about the file and its
         status.
@@ -2109,7 +2118,7 @@ components:
         id: 7f8dceac-2848-472d-b5c3-55cdbaf35a9b
         name: 2014-01-01_2014-02-01_statement.pdf
         status: processing
-        created_at: '2024-01-01T00:00:00'
+        created_at: "2024-01-01T00:00:00"
         file:
           no_pages: 1
           size: 4096
@@ -2151,49 +2160,49 @@ components:
           description: The sum of amounts of all outgoing transactions.
         transactions:
           items:
-            $ref: '#/components/schemas/BankStatementTransaction'
+            $ref: "#/components/schemas/BankStatementTransaction"
           type: array
           title: Transactions
           description: List of transactions for this account.
       additionalProperties: false
       type: object
       required:
-      - transactions
+        - transactions
       title: BankStatementAccount
       example:
-        number: '972913289'
+        number: "972913289"
         opening_balance: 400.0
         closing_balance: 200.0
-        start_date: '2024-01-01'
-        end_date: '2024-02-01'
+        start_date: "2024-01-01"
+        end_date: "2024-02-01"
         is_balance_reconciled: true
         total_incoming: 0.0
         total_outgoing: 200.0
         transactions:
-        - id: xbx8YP14g565Xk
-          description: SQ* STARBUCKS NW 43RD
-          date: '2024-03-30'
-          amount: 200
-          entry_type: outgoing
-          currency: USD
-          running_balance: 400.0
+          - id: xbx8YP14g565Xk
+            description: SQ* STARBUCKS NW 43RD
+            date: "2024-03-30"
+            amount: 200
+            entry_type: outgoing
+            currency: USD
+            running_balance: 400.0
     BankStatementError:
       properties:
         code:
-          $ref: '#/components/schemas/BankStatementErrorCode'
+          $ref: "#/components/schemas/BankStatementErrorCode"
         message:
           type: string
           title: Message
       type: object
       required:
-      - code
-      - message
+        - code
+        - message
       title: BankStatementError
     BankStatementErrorCode:
       type: string
       enum:
-      - invalid_bank_statement
-      - internal_error
+        - invalid_bank_statement
+        - internal_error
       title: BankStatementErrorCode
       description: An enumeration.
     BankStatementFile:
@@ -2209,7 +2218,7 @@ components:
       additionalProperties: false
       type: object
       required:
-      - no_pages
+        - no_pages
       title: BankStatementFile
       example:
         no_pages: 1
@@ -2218,20 +2227,20 @@ components:
       properties:
         accounts:
           items:
-            $ref: '#/components/schemas/BankStatementAccount'
+            $ref: "#/components/schemas/BankStatementAccount"
           type: array
           title: Accounts
           description: List of accounts in the bank statement.
       type: object
       required:
-      - accounts
+        - accounts
       title: BankStatementResults
     BankStatementStatus:
       type: string
       enum:
-      - processing
-      - completed
-      - error
+        - processing
+        - completed
+        - error
       title: BankStatementStatus
       description: An enumeration.
     BankStatementTransaction:
@@ -2262,14 +2271,14 @@ components:
             in dollars.
         entry_type:
           allOf:
-          - $ref: '#/components/schemas/EntryType'
+            - $ref: "#/components/schemas/EntryType"
           description: The direction of the flow of the money from the perspective
             of the account holder. `outgoing` to represent money leaving the account,
             such as purchases or fees, while `incoming` represents money entering
             the account, such as income or refunds.
         currency:
           allOf:
-          - $ref: '#/components/schemas/Currency'
+            - $ref: "#/components/schemas/Currency"
           description: The currency of the transaction in ISO 4217 format
         running_balance:
           type: number
@@ -2278,17 +2287,17 @@ components:
       additionalProperties: false
       type: object
       required:
-      - id
-      - description
-      - date
-      - amount
-      - entry_type
-      - currency
+        - id
+        - description
+        - date
+        - amount
+        - entry_type
+        - currency
       title: BankStatementTransaction
       example:
         id: xbx8YP14g565Xk
         description: SQ* STARBUCKS NW 43RD
-        date: '2024-03-30'
+        date: "2024-03-30"
         amount: 10.0
         entry_type: outgoing
         currency: USD
@@ -2301,7 +2310,7 @@ components:
           description: A unique identifier for the batch.
         status:
           allOf:
-          - $ref: '#/components/schemas/BatchStatus'
+            - $ref: "#/components/schemas/BatchStatus"
           description: The current status of the batch. A batch will error if at least
             one of the transactions contains an error.
         created_at:
@@ -2325,20 +2334,20 @@ components:
       additionalProperties: false
       type: object
       required:
-      - id
-      - status
-      - created_at
-      - updated_at
-      - progress
-      - total
+        - id
+        - status
+        - created_at
+        - updated_at
+        - progress
+        - total
       title: Batch
       description: The `Batch` object represents the status and progress of an asynchronous
         batch enrichment job.
       example:
         id: 203613d2-83c8-4130-8809-d14206eeec20
         status: processing
-        created_at: '2024-01-01T00:00:00'
-        updated_at: '2024-01-01T00:00:30'
+        created_at: "2024-01-01T00:00:00"
+        updated_at: "2024-01-01T00:00:30"
         progress: 0
         total: 4000
     BatchResult:
@@ -2353,28 +2362,28 @@ components:
           description: The total number of transactions in the batch result.
         status:
           allOf:
-          - $ref: '#/components/schemas/BatchStatus'
+            - $ref: "#/components/schemas/BatchStatus"
           description: The current status of the batch job.
         results:
-          $ref: '#/components/schemas/EnrichmentResult'
+          $ref: "#/components/schemas/EnrichmentResult"
       additionalProperties: false
       type: object
       required:
-      - id
-      - total
-      - status
-      - results
+        - id
+        - total
+        - status
+        - results
       title: BatchResult
-      description: 'The `BatchResult` object represents the result of a batch enrichment
+      description: "The `BatchResult` object represents the result of a batch enrichment
         job, including its status and
 
-        enriched transactions.'
+        enriched transactions."
     BatchStatus:
       type: string
       enum:
-      - processing
-      - completed
-      - error
+        - processing
+        - completed
+        - error
       title: BatchStatus
       description: An enumeration.
     Body_post_bank_statement_v3_bank_statements_post:
@@ -2385,7 +2394,7 @@ components:
           title: File
       type: object
       required:
-      - file
+        - file
       title: Body_post_bank_statement_v3_bank_statements_post
     Body_set_transaction_ah_v3_transactions__id__assign_post:
       properties:
@@ -2394,7 +2403,7 @@ components:
           title: Account Holder Id
       type: object
       required:
-      - account_holder_id
+        - account_holder_id
       title: Body_set_transaction_ah_v3_transactions__id__assign_post
     Categories:
       properties:
@@ -2405,7 +2414,7 @@ components:
             for your key [here](./docs/v3/enrichment/entities).
         accounting:
           allOf:
-          - $ref: '#/components/schemas/AccountingCategory'
+            - $ref: "#/components/schemas/AccountingCategory"
           description: The corresponding accounting category. Only available for `business`
             transactions.
       additionalProperties: false
@@ -2414,10 +2423,10 @@ components:
     CategoryConfidence:
       type: string
       enum:
-      - high
-      - medium
-      - low
-      - unknown
+        - high
+        - medium
+        - low
+        - unknown
       title: CategoryConfidence
       description: An enumeration.
     CategorySet:
@@ -2434,35 +2443,35 @@ components:
           title: Outgoing
       type: object
       required:
-      - incoming
-      - outgoing
+        - incoming
+        - outgoing
       title: CategorySet
       example:
         incoming:
-        - transfer from investment app
-        - transfer from stock broker
-        - transfer from crypto broker
-        - chargeback
-        - freelance income
-        - rideshare or delivery income
-        - paycheck
-        - benefits
-        - interest earned
-        - stock dividend
+          - transfer from investment app
+          - transfer from stock broker
+          - transfer from crypto broker
+          - chargeback
+          - freelance income
+          - rideshare or delivery income
+          - paycheck
+          - benefits
+          - interest earned
+          - stock dividend
         outgoing:
-        - digital content and streaming
-        - vending machine
-        - reversal
-        - transfer to investment app
-        - transfer to stock broker
-        - transfer to crypto broker
-        - adjustment
-        - intra account transfer
-        - inter account transfer
-        - peer to peer transfer
-        - funeral service
-        - ATM withdrawal
-        - teller withdrawal
+          - digital content and streaming
+          - vending machine
+          - reversal
+          - transfer to investment app
+          - transfer to stock broker
+          - transfer to crypto broker
+          - adjustment
+          - intra account transfer
+          - inter account transfer
+          - peer to peer transfer
+          - funeral service
+          - ATM withdrawal
+          - teller withdrawal
     Counterparty:
       properties:
         id:
@@ -2489,11 +2498,11 @@ components:
           description: A list of [Merchant Category Codes](https://en.wikipedia.org/wiki/Merchant_category_code)
           default: []
         type:
-          $ref: '#/components/schemas/CounterpartyType'
+          $ref: "#/components/schemas/CounterpartyType"
       additionalProperties: false
       type: object
       required:
-      - type
+        - type
       title: Counterparty
       example:
         id: d4bc3c80-ec1a-3da2-836e-2a4ca4758be5
@@ -2501,417 +2510,417 @@ components:
         website: starbucks.com
         logo: https://logos.ntropy.com/starbucks.com
         mccs:
-        - 5814
+          - 5814
         type: organization
     CounterpartyType:
       type: string
       enum:
-      - person
-      - organization
+        - person
+        - organization
       title: CounterpartyType
       description: An enumeration.
     Country:
       type: string
       enum:
-      - AD
-      - AE
-      - AF
-      - AG
-      - AI
-      - AL
-      - AM
-      - AO
-      - AR
-      - AS
-      - AT
-      - AU
-      - AW
-      - AZ
-      - BA
-      - BB
-      - BD
-      - BE
-      - BF
-      - BG
-      - BH
-      - BI
-      - BJ
-      - BL
-      - BM
-      - BN
-      - BO
-      - BQ
-      - BR
-      - BS
-      - BT
-      - BV
-      - BW
-      - BY
-      - BZ
-      - CA
-      - CC
-      - CD
-      - CF
-      - CG
-      - CH
-      - CI
-      - CK
-      - CL
-      - CM
-      - CN
-      - CO
-      - CR
-      - CU
-      - CV
-      - CW
-      - CX
-      - CY
-      - CZ
-      - DE
-      - DJ
-      - DK
-      - DM
-      - DO
-      - DZ
-      - EC
-      - EE
-      - EG
-      - EH
-      - ER
-      - ES
-      - ET
-      - FI
-      - FJ
-      - FK
-      - FM
-      - FR
-      - GA
-      - GB
-      - GD
-      - GE
-      - GF
-      - GG
-      - GH
-      - GI
-      - GL
-      - GM
-      - GN
-      - GP
-      - GQ
-      - GR
-      - GS
-      - GT
-      - GU
-      - GW
-      - GY
-      - HK
-      - HM
-      - HN
-      - HR
-      - HT
-      - HU
-      - ID
-      - IE
-      - IL
-      - IM
-      - IN
-      - IO
-      - IQ
-      - IR
-      - IS
-      - IT
-      - JE
-      - JM
-      - JO
-      - JP
-      - KE
-      - KG
-      - KH
-      - KI
-      - KM
-      - KN
-      - KP
-      - KR
-      - KW
-      - KY
-      - KZ
-      - LA
-      - LB
-      - LC
-      - LI
-      - LK
-      - LR
-      - LS
-      - LT
-      - LU
-      - LV
-      - LY
-      - MA
-      - MC
-      - MD
-      - ME
-      - MF
-      - MG
-      - MH
-      - MK
-      - ML
-      - MM
-      - MN
-      - MO
-      - MP
-      - MQ
-      - MR
-      - MS
-      - MT
-      - MU
-      - MV
-      - MW
-      - MX
-      - MY
-      - MZ
-      - NA
-      - NC
-      - NE
-      - NF
-      - NG
-      - NI
-      - NL
-      - 'NO'
-      - NP
-      - NR
-      - NU
-      - NZ
-      - OM
-      - PA
-      - PE
-      - PF
-      - PG
-      - PH
-      - PK
-      - PL
-      - PM
-      - PN
-      - PR
-      - PS
-      - PT
-      - PW
-      - PY
-      - QA
-      - RE
-      - RO
-      - RS
-      - RU
-      - RW
-      - SA
-      - SB
-      - SC
-      - SD
-      - SE
-      - SG
-      - SH
-      - SI
-      - SJ
-      - SK
-      - SL
-      - SM
-      - SN
-      - SO
-      - SR
-      - SS
-      - ST
-      - SV
-      - SX
-      - SY
-      - SZ
-      - TC
-      - TD
-      - TG
-      - TH
-      - TJ
-      - TK
-      - TL
-      - TM
-      - TN
-      - TO
-      - TR
-      - TT
-      - TV
-      - TW
-      - TZ
-      - UA
-      - UG
-      - UM
-      - US
-      - UY
-      - UZ
-      - VC
-      - VE
-      - VG
-      - VI
-      - VN
-      - VU
-      - WF
-      - WS
-      - YE
-      - YT
-      - ZA
-      - ZM
-      - ZW
+        - AD
+        - AE
+        - AF
+        - AG
+        - AI
+        - AL
+        - AM
+        - AO
+        - AR
+        - AS
+        - AT
+        - AU
+        - AW
+        - AZ
+        - BA
+        - BB
+        - BD
+        - BE
+        - BF
+        - BG
+        - BH
+        - BI
+        - BJ
+        - BL
+        - BM
+        - BN
+        - BO
+        - BQ
+        - BR
+        - BS
+        - BT
+        - BV
+        - BW
+        - BY
+        - BZ
+        - CA
+        - CC
+        - CD
+        - CF
+        - CG
+        - CH
+        - CI
+        - CK
+        - CL
+        - CM
+        - CN
+        - CO
+        - CR
+        - CU
+        - CV
+        - CW
+        - CX
+        - CY
+        - CZ
+        - DE
+        - DJ
+        - DK
+        - DM
+        - DO
+        - DZ
+        - EC
+        - EE
+        - EG
+        - EH
+        - ER
+        - ES
+        - ET
+        - FI
+        - FJ
+        - FK
+        - FM
+        - FR
+        - GA
+        - GB
+        - GD
+        - GE
+        - GF
+        - GG
+        - GH
+        - GI
+        - GL
+        - GM
+        - GN
+        - GP
+        - GQ
+        - GR
+        - GS
+        - GT
+        - GU
+        - GW
+        - GY
+        - HK
+        - HM
+        - HN
+        - HR
+        - HT
+        - HU
+        - ID
+        - IE
+        - IL
+        - IM
+        - IN
+        - IO
+        - IQ
+        - IR
+        - IS
+        - IT
+        - JE
+        - JM
+        - JO
+        - JP
+        - KE
+        - KG
+        - KH
+        - KI
+        - KM
+        - KN
+        - KP
+        - KR
+        - KW
+        - KY
+        - KZ
+        - LA
+        - LB
+        - LC
+        - LI
+        - LK
+        - LR
+        - LS
+        - LT
+        - LU
+        - LV
+        - LY
+        - MA
+        - MC
+        - MD
+        - ME
+        - MF
+        - MG
+        - MH
+        - MK
+        - ML
+        - MM
+        - MN
+        - MO
+        - MP
+        - MQ
+        - MR
+        - MS
+        - MT
+        - MU
+        - MV
+        - MW
+        - MX
+        - MY
+        - MZ
+        - NA
+        - NC
+        - NE
+        - NF
+        - NG
+        - NI
+        - NL
+        - "NO"
+        - NP
+        - NR
+        - NU
+        - NZ
+        - OM
+        - PA
+        - PE
+        - PF
+        - PG
+        - PH
+        - PK
+        - PL
+        - PM
+        - PN
+        - PR
+        - PS
+        - PT
+        - PW
+        - PY
+        - QA
+        - RE
+        - RO
+        - RS
+        - RU
+        - RW
+        - SA
+        - SB
+        - SC
+        - SD
+        - SE
+        - SG
+        - SH
+        - SI
+        - SJ
+        - SK
+        - SL
+        - SM
+        - SN
+        - SO
+        - SR
+        - SS
+        - ST
+        - SV
+        - SX
+        - SY
+        - SZ
+        - TC
+        - TD
+        - TG
+        - TH
+        - TJ
+        - TK
+        - TL
+        - TM
+        - TN
+        - TO
+        - TR
+        - TT
+        - TV
+        - TW
+        - TZ
+        - UA
+        - UG
+        - UM
+        - US
+        - UY
+        - UZ
+        - VC
+        - VE
+        - VG
+        - VI
+        - VN
+        - VU
+        - WF
+        - WS
+        - YE
+        - YT
+        - ZA
+        - ZM
+        - ZW
       title: Country
       description: An enumeration.
     Currency:
       type: string
       enum:
-      - EUR
-      - AED
-      - AFN
-      - XCD
-      - ALL
-      - AMD
-      - AOA
-      - ARS
-      - USD
-      - AUD
-      - AWG
-      - AZN
-      - BAM
-      - BBD
-      - BDT
-      - XOF
-      - BGN
-      - BHD
-      - BIF
-      - BMD
-      - BND
-      - BOB
-      - BRL
-      - BSD
-      - INR
-      - NOK
-      - BWP
-      - BYR
-      - BZD
-      - CAD
-      - CDF
-      - XAF
-      - CHF
-      - NZD
-      - CLP
-      - CNY
-      - COP
-      - CRC
-      - CUP
-      - CVE
-      - ANG
-      - CZK
-      - DJF
-      - DKK
-      - DOP
-      - DZD
-      - EGP
-      - MAD
-      - ERN
-      - ETB
-      - FJD
-      - FKP
-      - GBP
-      - GEL
-      - GHS
-      - GIP
-      - GMD
-      - GNF
-      - GTQ
-      - GYD
-      - HKD
-      - HNL
-      - HUF
-      - IDR
-      - ILS
-      - IQD
-      - IRR
-      - ISK
-      - JMD
-      - JOD
-      - JPY
-      - KES
-      - KGS
-      - KHR
-      - KMF
-      - KPW
-      - KRW
-      - KWD
-      - KYD
-      - KZT
-      - LAK
-      - LBP
-      - LKR
-      - LRD
-      - ZAR
-      - LYD
-      - MDL
-      - MGA
-      - MKD
-      - MMK
-      - MNT
-      - MOP
-      - MRO
-      - MUR
-      - MVR
-      - MWK
-      - MXN
-      - MYR
-      - MZN
-      - XPF
-      - NGN
-      - NIO
-      - NPR
-      - OMR
-      - PEN
-      - PGK
-      - PHP
-      - PKR
-      - PLN
-      - PYG
-      - QAR
-      - RON
-      - RSD
-      - RUB
-      - RWF
-      - SAR
-      - SBD
-      - SCR
-      - SDG
-      - SEK
-      - SGD
-      - SHP
-      - SLL
-      - SOS
-      - SRD
-      - SSP
-      - STD
-      - SYP
-      - SZL
-      - THB
-      - TJS
-      - TMT
-      - TND
-      - TOP
-      - TRY
-      - TTD
-      - TWD
-      - TZS
-      - UAH
-      - UGX
-      - UYU
-      - UZS
-      - VEF
-      - VND
-      - VUV
-      - WST
-      - YER
-      - ZMW
-      - ZWL
-      - HRK
+        - EUR
+        - AED
+        - AFN
+        - XCD
+        - ALL
+        - AMD
+        - AOA
+        - ARS
+        - USD
+        - AUD
+        - AWG
+        - AZN
+        - BAM
+        - BBD
+        - BDT
+        - XOF
+        - BGN
+        - BHD
+        - BIF
+        - BMD
+        - BND
+        - BOB
+        - BRL
+        - BSD
+        - INR
+        - NOK
+        - BWP
+        - BYR
+        - BZD
+        - CAD
+        - CDF
+        - XAF
+        - CHF
+        - NZD
+        - CLP
+        - CNY
+        - COP
+        - CRC
+        - CUP
+        - CVE
+        - ANG
+        - CZK
+        - DJF
+        - DKK
+        - DOP
+        - DZD
+        - EGP
+        - MAD
+        - ERN
+        - ETB
+        - FJD
+        - FKP
+        - GBP
+        - GEL
+        - GHS
+        - GIP
+        - GMD
+        - GNF
+        - GTQ
+        - GYD
+        - HKD
+        - HNL
+        - HUF
+        - IDR
+        - ILS
+        - IQD
+        - IRR
+        - ISK
+        - JMD
+        - JOD
+        - JPY
+        - KES
+        - KGS
+        - KHR
+        - KMF
+        - KPW
+        - KRW
+        - KWD
+        - KYD
+        - KZT
+        - LAK
+        - LBP
+        - LKR
+        - LRD
+        - ZAR
+        - LYD
+        - MDL
+        - MGA
+        - MKD
+        - MMK
+        - MNT
+        - MOP
+        - MRO
+        - MUR
+        - MVR
+        - MWK
+        - MXN
+        - MYR
+        - MZN
+        - XPF
+        - NGN
+        - NIO
+        - NPR
+        - OMR
+        - PEN
+        - PGK
+        - PHP
+        - PKR
+        - PLN
+        - PYG
+        - QAR
+        - RON
+        - RSD
+        - RUB
+        - RWF
+        - SAR
+        - SBD
+        - SCR
+        - SDG
+        - SEK
+        - SGD
+        - SHP
+        - SLL
+        - SOS
+        - SRD
+        - SSP
+        - STD
+        - SYP
+        - SZL
+        - THB
+        - TJS
+        - TMT
+        - TND
+        - TOP
+        - TRY
+        - TTD
+        - TWD
+        - TZS
+        - UAH
+        - UGX
+        - UYU
+        - UZS
+        - VEF
+        - VND
+        - VUV
+        - WST
+        - YER
+        - ZMW
+        - ZWL
+        - HRK
       title: Currency
       description: An enumeration.
     CustomCategorySet:
@@ -2928,38 +2937,38 @@ components:
           title: Outgoing
       type: object
       required:
-      - incoming
-      - outgoing
+        - incoming
+        - outgoing
       title: CustomCategorySet
       example:
         incoming:
-        - salary
-        - investment income
-        - other income
+          - salary
+          - investment income
+          - other income
         outgoing:
-        - rent
-        - utilities
-        - groceries
-        - entertainment
+          - rent
+          - utilities
+          - groceries
+          - entertainment
     DocumentStatus:
       type: string
       enum:
-      - queued
-      - processing
-      - processed
-      - failed
+        - queued
+        - processing
+        - processed
+        - failed
       title: DocumentStatus
       description: An enumeration.
     EnrichedTransaction:
       properties:
         entities:
-          $ref: '#/components/schemas/Entities'
+          $ref: "#/components/schemas/Entities"
         categories:
-          $ref: '#/components/schemas/Categories'
+          $ref: "#/components/schemas/Categories"
         location:
-          $ref: '#/components/schemas/Location'
+          $ref: "#/components/schemas/Location"
         error:
-          $ref: '#/components/schemas/TransactionError'
+          $ref: "#/components/schemas/TransactionError"
         created_at:
           type: string
           format: date-time
@@ -2975,8 +2984,8 @@ components:
       additionalProperties: false
       type: object
       required:
-      - created_at
-      - id
+        - created_at
+        - id
       title: EnrichedTransaction
       example:
         error: null
@@ -2987,15 +2996,15 @@ components:
             website: starbucks.com
             logo: https://logos.ntropy.com/starbucks.com
             mccs:
-            - 5814
+              - 5814
             type: organization
           intermediaries:
-          - id: 916bc837-55ef-3106-88f6-5a8269ca9f2a
-            name: Square
-            website: squareup.com
-            logo: https://logos.ntropy.com/squareup.com
-            mccs: []
-            type: payment_processor
+            - id: 916bc837-55ef-3106-88f6-5a8269ca9f2a
+              name: Square
+              website: squareup.com
+              logo: https://logos.ntropy.com/squareup.com
+              mccs: []
+              type: payment_processor
         categories:
           general: outgoing - coffee shops
         location:
@@ -3004,20 +3013,20 @@ components:
             street: Nw 43rd Street 5480
             city: Gainesville
             state: Florida
-            postcode: '32653'
+            postcode: "32653"
             country_code: US
             country: United States
             latitude: 29.704558
             longitude: -82.389277
             google_maps_url: https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277
             apple_maps_url: https://maps.apple.com/?q=29.704558,-82.389277
-        created_at: '2024-03-30T00:00:00'
+        created_at: "2024-03-30T00:00:00"
         id: xbx8YP14g565Xk
     EnrichmentResult:
       properties:
         transactions:
           items:
-            $ref: '#/components/schemas/EnrichedTransaction'
+            $ref: "#/components/schemas/EnrichedTransaction"
           type: array
           title: Transactions
           description: A list of enriched transactions resulting from the enrichment
@@ -3025,15 +3034,15 @@ components:
       additionalProperties: false
       type: object
       required:
-      - transactions
+        - transactions
       title: EnrichmentResult
     Entities:
       properties:
         counterparty:
-          $ref: '#/components/schemas/Counterparty'
+          $ref: "#/components/schemas/Counterparty"
         intermediaries:
           items:
-            $ref: '#/components/schemas/Intermediary'
+            $ref: "#/components/schemas/Intermediary"
           type: array
           title: Intermediaries
           default: []
@@ -3074,12 +3083,12 @@ components:
         website: starbucks.com
         logo: https://logos.ntropy.com/starbucks.com
         mccs:
-        - 5814
+          - 5814
     EntryType:
       type: string
       enum:
-      - incoming
-      - outgoing
+        - incoming
+        - outgoing
       title: EntryType
       description: An enumeration.
     FilterModel:
@@ -3088,7 +3097,7 @@ components:
       properties:
         detail:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: "#/components/schemas/ValidationError"
           type: array
           title: Detail
       type: object
@@ -3119,11 +3128,11 @@ components:
           description: A list of [Merchant Category Codes](https://en.wikipedia.org/wiki/Merchant_category_code)
           default: []
         type:
-          $ref: '#/components/schemas/IntermediaryType'
+          $ref: "#/components/schemas/IntermediaryType"
       additionalProperties: false
       type: object
       required:
-      - type
+        - type
       title: Intermediary
       example:
         id: 916bc837-55ef-3106-88f6-5a8269ca9f2a
@@ -3135,8 +3144,8 @@ components:
     IntermediaryType:
       type: string
       enum:
-      - delivery_service
-      - payment_processor
+        - delivery_service
+        - payment_processor
       title: IntermediaryType
       description: An enumeration.
     Location:
@@ -3147,7 +3156,7 @@ components:
           description: An unstructured string containing the address
         structured:
           allOf:
-          - $ref: '#/components/schemas/LocationStructured'
+            - $ref: "#/components/schemas/LocationStructured"
           title: Structured
           description: When raw is set, a structured representation of it.
       additionalProperties: false
@@ -3161,17 +3170,17 @@ components:
           description: An unstructured string containing the address
         country:
           allOf:
-          - $ref: '#/components/schemas/Country'
+            - $ref: "#/components/schemas/Country"
           description: The country where the transaction was made in ISO 3166-2 format
       additionalProperties: false
       type: object
       required:
-      - country
+        - country
       title: LocationInput
-      description: 'Location of where the transaction has taken place. This can greatly
+      description: "Location of where the transaction has taken place. This can greatly
         improve entity identification, especially
 
-        under ambiguity.'
+        under ambiguity."
     LocationStructured:
       properties:
         street:
@@ -3227,21 +3236,21 @@ components:
           title: Next Cursor
         data:
           items:
-            $ref: '#/components/schemas/AccountHolderExternal'
+            $ref: "#/components/schemas/AccountHolderExternal"
           type: array
           title: Data
       type: object
       required:
-      - next_cursor
-      - data
+        - next_cursor
+        - data
       title: PagedResponse_AccountHolderExternal
       example:
         next_cursor: XjdHaksD
         data:
-        - id: 35b927b6-6fda-40aa-93b8-95b47c2b2cad
-          type: consumer
-          name: John Doe
-          created_at: '2024-03-30T00:00:00'
+          - id: 35b927b6-6fda-40aa-93b8-95b47c2b2cad
+            type: consumer
+            name: John Doe
+            created_at: "2024-03-30T00:00:00"
     PagedResponse_BankStatement:
       properties:
         next_cursor:
@@ -3249,24 +3258,24 @@ components:
           title: Next Cursor
         data:
           items:
-            $ref: '#/components/schemas/BankStatement'
+            $ref: "#/components/schemas/BankStatement"
           type: array
           title: Data
       type: object
       required:
-      - next_cursor
-      - data
+        - next_cursor
+        - data
       title: PagedResponse_BankStatement
       example:
         next_cursor: XjdHaksD
         data:
-        - id: 7f8dceac-2848-472d-b5c3-55cdbaf35a9b
-          name: 2014-01-01_2014-02-01_statement.pdf
-          status: processing
-          created_at: '2024-01-01T00:00:00'
-          file:
-            no_pages: 1
-            size: 4096
+          - id: 7f8dceac-2848-472d-b5c3-55cdbaf35a9b
+            name: 2014-01-01_2014-02-01_statement.pdf
+            status: processing
+            created_at: "2024-01-01T00:00:00"
+            file:
+              no_pages: 1
+              size: 4096
     PagedResponse_Batch:
       properties:
         next_cursor:
@@ -3274,23 +3283,23 @@ components:
           title: Next Cursor
         data:
           items:
-            $ref: '#/components/schemas/Batch'
+            $ref: "#/components/schemas/Batch"
           type: array
           title: Data
       type: object
       required:
-      - next_cursor
-      - data
+        - next_cursor
+        - data
       title: PagedResponse_Batch
       example:
         next_cursor: XjdHaksD
         data:
-        - id: 203613d2-83c8-4130-8809-d14206eeec20
-          status: processing
-          created_at: '2024-01-01T00:00:00'
-          updated_at: '2024-01-01T00:00:30'
-          progress: 0
-          total: 4000
+          - id: 203613d2-83c8-4130-8809-d14206eeec20
+            status: processing
+            created_at: "2024-01-01T00:00:00"
+            updated_at: "2024-01-01T00:00:30"
+            progress: 0
+            total: 4000
     PagedResponse_Report_:
       properties:
         next_cursor:
@@ -3298,12 +3307,12 @@ components:
           title: Next Cursor
         data:
           items:
-            $ref: '#/components/schemas/Report'
+            $ref: "#/components/schemas/Report"
           type: array
           title: Data
       type: object
       required:
-      - data
+        - data
       title: PagedResponse[Report]
     PagedResponse_Transaction:
       properties:
@@ -3312,58 +3321,58 @@ components:
           title: Next Cursor
         data:
           items:
-            $ref: '#/components/schemas/Transaction'
+            $ref: "#/components/schemas/Transaction"
           type: array
           title: Data
       type: object
       required:
-      - next_cursor
-      - data
+        - next_cursor
+        - data
       title: PagedResponse_Transaction
       example:
         next_cursor: XjdHaksD
         data:
-        - id: xbx8YP14g565Xk
-          description: SQ* STARBUCKS NW 43RD
-          date: '2024-03-30'
-          amount: 10.0
-          entry_type: outgoing
-          currency: USD
-          entities:
-            counterparty:
-              id: d4bc3c80-ec1a-3da2-836e-2a4ca4758be5
-              name: Starbucks
-              website: starbucks.com
-              logo: https://logos.ntropy.com/starbucks.com
-              mccs:
-              - 5814
-              type: organization
-            intermediaries:
-            - id: 916bc837-55ef-3106-88f6-5a8269ca9f2a
-              name: Square
-              website: squareup.com
-              logo: https://logos.ntropy.com/squareup.com
-              mccs: []
-              type: payment_processor
-          categories:
-            general: outgoing - coffee shops
-          location:
-            raw_address: Nw 43rd Street 5480, Gainesville, Florida 32653, US
-            structured:
-              street: Nw 43rd Street 5480
-              city: Gainesville
-              state: Florida
-              postcode: '32653'
-              country_code: US
-              country: United States
-              latitude: 29.704558
-              longitude: -82.389277
-              google_maps_url: https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277
-              apple_maps_url: https://maps.apple.com/?q=29.704558,-82.389277
-          created_at: '2024-03-30T00:00:00'
-          account_holder_id: 35b927b6-6fda-40aa-93b8-95b47c2b2cad
-          recurrence:
-            type: recurring
+          - id: xbx8YP14g565Xk
+            description: SQ* STARBUCKS NW 43RD
+            date: "2024-03-30"
+            amount: 10.0
+            entry_type: outgoing
+            currency: USD
+            entities:
+              counterparty:
+                id: d4bc3c80-ec1a-3da2-836e-2a4ca4758be5
+                name: Starbucks
+                website: starbucks.com
+                logo: https://logos.ntropy.com/starbucks.com
+                mccs:
+                  - 5814
+                type: organization
+              intermediaries:
+                - id: 916bc837-55ef-3106-88f6-5a8269ca9f2a
+                  name: Square
+                  website: squareup.com
+                  logo: https://logos.ntropy.com/squareup.com
+                  mccs: []
+                  type: payment_processor
+            categories:
+              general: outgoing - coffee shops
+            location:
+              raw_address: Nw 43rd Street 5480, Gainesville, Florida 32653, US
+              structured:
+                street: Nw 43rd Street 5480
+                city: Gainesville
+                state: Florida
+                postcode: "32653"
+                country_code: US
+                country: United States
+                latitude: 29.704558
+                longitude: -82.389277
+                google_maps_url: https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277
+                apple_maps_url: https://maps.apple.com/?q=29.704558,-82.389277
+            created_at: "2024-03-30T00:00:00"
+            account_holder_id: 35b927b6-6fda-40aa-93b8-95b47c2b2cad
+            recurrence:
+              type: recurring
     PagedResponse_Webhook:
       properties:
         next_cursor:
@@ -3371,41 +3380,41 @@ components:
           title: Next Cursor
         data:
           items:
-            $ref: '#/components/schemas/Webhook'
+            $ref: "#/components/schemas/Webhook"
           type: array
           title: Data
       type: object
       required:
-      - next_cursor
-      - data
+        - next_cursor
+        - data
       title: PagedResponse_Webhook
       example:
         next_cursor: XjdHaksD
         data:
-        - url: https://example.com:5689
-          events:
-          - batches.completed
-          - batches.error
-          token: hunter2
-          id: e94a150d-40af-4e96-8aa7-2948a6b4d8d3
-          created_at: '2024-10-03T02:53:30.167953'
-          enabled: true
+          - url: https://example.com:5689
+            events:
+              - batches.completed
+              - batches.error
+            token: hunter2
+            id: e94a150d-40af-4e96-8aa7-2948a6b4d8d3
+            created_at: "2024-10-03T02:53:30.167953"
+            enabled: true
     Recurrence:
       properties:
         type:
           allOf:
-          - $ref: '#/components/schemas/RecurrenceType'
+            - $ref: "#/components/schemas/RecurrenceType"
           description: Whether the transaction is a one-time transfer `one-off`, regularly
             with varying pricing `recurring` or with fixed pricing `subscription`
       additionalProperties: false
       type: object
       required:
-      - type
+        - type
       title: Recurrence
-      description: 'The `Recurrence` object represents the recurrence pattern of a
+      description: "The `Recurrence` object represents the recurrence pattern of a
         transaction. It provides information about
 
-        whether a transaction is a one-time event or a part of a recurring series.'
+        whether a transaction is a one-time event or a part of a recurring series."
     RecurrenceGroup:
       properties:
         id:
@@ -3436,16 +3445,16 @@ components:
           description: The estimated number of days between transactions in this group
         periodicity:
           allOf:
-          - $ref: '#/components/schemas/RecurrencePeriodicity'
+            - $ref: "#/components/schemas/RecurrencePeriodicity"
           description: A human-readable description of the transaction frequency
         counterparty:
           allOf:
-          - $ref: '#/components/schemas/Counterparty'
+            - $ref: "#/components/schemas/Counterparty"
           title: Counterparty
           description: Counterparty of the transactions
         categories:
           allOf:
-          - $ref: '#/components/schemas/Categories'
+            - $ref: "#/components/schemas/Categories"
           title: Categories
           description: Categories of the transactions in the recurrence group
         transaction_ids:
@@ -3457,21 +3466,21 @@ components:
       additionalProperties: false
       type: object
       required:
-      - id
-      - start_date
-      - end_date
-      - total_amount
-      - average_amount
-      - periodicity_in_days
-      - periodicity
-      - counterparty
-      - categories
-      - transaction_ids
+        - id
+        - start_date
+        - end_date
+        - total_amount
+        - average_amount
+        - periodicity_in_days
+        - periodicity
+        - counterparty
+        - categories
+        - transaction_ids
       title: RecurrenceGroup
       example:
         id: 8efbac45-9bd5-4b67-be29-334106198c40
-        start_date: '2024-03-01'
-        end_date: '2024-03-30'
+        start_date: "2024-03-01"
+        end_date: "2024-03-30"
         total_amount: 300.0
         average_amount: 10.0
         periodicity_in_days: 1.0
@@ -3482,34 +3491,34 @@ components:
           website: starbucks.com
           logo: https://logos.ntropy.com/starbucks.com
           mccs:
-          - 5814
+            - 5814
           type: organization
         categories:
           general: outgoing - coffee shops
         transaction_ids:
-        - 2dc6SE8A7cTQ2jUdUadCg
-        - tQYAhhl0XNkl1wasacpVQ
-        - NNJTqvockIdKnYxBqPlJw
+          - 2dc6SE8A7cTQ2jUdUadCg
+          - tQYAhhl0XNkl1wasacpVQ
+          - NNJTqvockIdKnYxBqPlJw
     RecurrencePeriodicity:
       type: string
       enum:
-      - daily
-      - weekly
-      - bi_weekly
-      - monthly
-      - bi_monthly
-      - quarterly
-      - semi_yearly
-      - yearly
-      - other
+        - daily
+        - weekly
+        - bi_weekly
+        - monthly
+        - bi_monthly
+        - quarterly
+        - semi_yearly
+        - yearly
+        - other
       title: RecurrencePeriodicity
       description: An enumeration.
     RecurrenceType:
       type: string
       enum:
-      - recurring
-      - subscription
-      - one off
+        - recurring
+        - subscription
+        - one off
       title: RecurrenceType
       description: An enumeration.
     Report:
@@ -3540,8 +3549,8 @@ components:
           description: The date and time when the report was created.
         status:
           allOf:
-          - $ref: '#/components/schemas/ReportStatus'
-          description: 'The status of the report.
+            - $ref: "#/components/schemas/ReportStatus"
+          description: "The status of the report.
 
 
             * `open`: a newly created report
@@ -3549,9 +3558,9 @@ components:
             * `pending`: the report is being investigated
 
             * `rejected`: the original enrichment output was deemed correct or we
-            couldn''t resolve it, check `rejection_reason`
+            couldn't resolve it, check `rejection_reason`
 
-            * `resolved`: the issue has been resolved'
+            * `resolved`: the issue has been resolved"
         rejection_reason:
           type: string
           title: Rejection Reason
@@ -3559,21 +3568,21 @@ components:
       additionalProperties: false
       type: object
       required:
-      - transaction_id
-      - description
-      - fields
-      - id
-      - created_at
-      - status
+        - transaction_id
+        - description
+        - fields
+        - id
+        - created_at
+        - status
       title: Report
       examples:
-      - transaction_id: xbx8YP14g565Xk
-        description: lorem ipsum
-        fields:
-        - .entities.counterparty
-        id: a652285d-de1b-4a6f-b6ce-45efa9be7952
-        created_at: '2024-10-03T02:53:30.167953+00:00'
-        status: open
+        - transaction_id: xbx8YP14g565Xk
+          description: lorem ipsum
+          fields:
+            - .entities.counterparty
+          id: a652285d-de1b-4a6f-b6ce-45efa9be7952
+          created_at: "2024-10-03T02:53:30.167953+00:00"
+          status: open
     ReportBase:
       properties:
         transaction_id:
@@ -3594,22 +3603,22 @@ components:
       additionalProperties: false
       type: object
       required:
-      - transaction_id
-      - description
-      - fields
+        - transaction_id
+        - description
+        - fields
       title: ReportBase
       examples:
-      - transaction_id: xbx8YP14g565Xk
-        description: lorem ipsum
-        fields:
-        - .entities.counterparty
+        - transaction_id: xbx8YP14g565Xk
+          description: lorem ipsum
+          fields:
+            - .entities.counterparty
     ReportStatus:
       type: string
       enum:
-      - open
-      - pending
-      - resolved
-      - rejected
+        - open
+        - pending
+        - resolved
+        - rejected
       title: ReportStatus
       description: An enumeration.
     StatementInfo:
@@ -3626,38 +3635,38 @@ components:
           format: date
           title: End Date
         account_holder:
-          $ref: '#/components/schemas/AccountHolder'
+          $ref: "#/components/schemas/AccountHolder"
         accounts:
           items:
-            $ref: '#/components/schemas/Account'
+            $ref: "#/components/schemas/Account"
           type: array
           title: Accounts
       type: object
       title: StatementInfo
       example:
         institution: Well's Fargo
-        start_date: '2024-01-01'
-        end_date: '2024-02-01'
+        start_date: "2024-01-01"
+        end_date: "2024-02-01"
         account_holder:
           type: consumer
           name: John Doe
           address:
             street: 601 Rosebud Avenue
-            postcode: '77901'
+            postcode: "77901"
             city: Victoria
             state: Texas
             country: United States
         accounts:
-        - type: checking
-          number: '83721'
-          opening_balance: 1000.0
-          closing_balance: 1500.0
-          iso_currency_code: USD
+          - type: checking
+            number: "83721"
+            opening_balance: 1000.0
+            closing_balance: 1500.0
+            iso_currency_code: USD
     SyncEnrichmentInput:
       properties:
         transactions:
           items:
-            $ref: '#/components/schemas/TransactionInput'
+            $ref: "#/components/schemas/TransactionInput"
           type: array
           maxItems: 1000
           minItems: 1
@@ -3665,13 +3674,13 @@ components:
       additionalProperties: false
       type: object
       required:
-      - transactions
+        - transactions
       title: SyncEnrichmentInput
     SyncEnrichmentOutput:
       properties:
         transactions:
           items:
-            $ref: '#/components/schemas/EnrichedTransaction'
+            $ref: "#/components/schemas/EnrichedTransaction"
           type: array
           title: Transactions
           description: A list of enriched transactions resulting from the enrichment
@@ -3679,7 +3688,7 @@ components:
       additionalProperties: false
       type: object
       required:
-      - transactions
+        - transactions
       title: SyncEnrichmentOutput
     Transaction:
       properties:
@@ -3709,23 +3718,23 @@ components:
             in dollars.
         entry_type:
           allOf:
-          - $ref: '#/components/schemas/EntryType'
+            - $ref: "#/components/schemas/EntryType"
           description: The direction of the flow of the money from the perspective
             of the account holder. `outgoing` to represent money leaving the account,
             such as purchases or fees, while `incoming` represents money entering
             the account, such as income or refunds.
         currency:
           allOf:
-          - $ref: '#/components/schemas/Currency'
+            - $ref: "#/components/schemas/Currency"
           description: The currency of the transaction in ISO 4217 format
         entities:
-          $ref: '#/components/schemas/Entities'
+          $ref: "#/components/schemas/Entities"
         categories:
-          $ref: '#/components/schemas/Categories'
+          $ref: "#/components/schemas/Categories"
         location:
-          $ref: '#/components/schemas/Location'
+          $ref: "#/components/schemas/Location"
         error:
-          $ref: '#/components/schemas/TransactionError'
+          $ref: "#/components/schemas/TransactionError"
         created_at:
           type: string
           format: date-time
@@ -3737,22 +3746,22 @@ components:
           title: Account Holder Id
           description: The unique ID of the account holder of the transaction
         recurrence:
-          $ref: '#/components/schemas/Recurrence'
+          $ref: "#/components/schemas/Recurrence"
       additionalProperties: false
       type: object
       required:
-      - id
-      - description
-      - date
-      - amount
-      - entry_type
-      - currency
-      - created_at
+        - id
+        - description
+        - date
+        - amount
+        - entry_type
+        - currency
+        - created_at
       title: Transaction
       example:
         id: xbx8YP14g565Xk
         description: SQ* STARBUCKS NW 43RD
-        date: '2024-03-30'
+        date: "2024-03-30"
         amount: 10.0
         entry_type: outgoing
         currency: USD
@@ -3763,15 +3772,15 @@ components:
             website: starbucks.com
             logo: https://logos.ntropy.com/starbucks.com
             mccs:
-            - 5814
+              - 5814
             type: organization
           intermediaries:
-          - id: 916bc837-55ef-3106-88f6-5a8269ca9f2a
-            name: Square
-            website: squareup.com
-            logo: https://logos.ntropy.com/squareup.com
-            mccs: []
-            type: payment_processor
+            - id: 916bc837-55ef-3106-88f6-5a8269ca9f2a
+              name: Square
+              website: squareup.com
+              logo: https://logos.ntropy.com/squareup.com
+              mccs: []
+              type: payment_processor
         categories:
           general: outgoing - coffee shops
         location:
@@ -3780,34 +3789,34 @@ components:
             street: Nw 43rd Street 5480
             city: Gainesville
             state: Florida
-            postcode: '32653'
+            postcode: "32653"
             country_code: US
             country: United States
             latitude: 29.704558
             longitude: -82.389277
             google_maps_url: https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277
             apple_maps_url: https://maps.apple.com/?q=29.704558,-82.389277
-        created_at: '2024-03-30T00:00:00'
+        created_at: "2024-03-30T00:00:00"
         account_holder_id: 35b927b6-6fda-40aa-93b8-95b47c2b2cad
         recurrence:
           type: recurring
     TransactionError:
       properties:
         code:
-          $ref: '#/components/schemas/TransactionErrorCode'
+          $ref: "#/components/schemas/TransactionErrorCode"
         message:
           type: string
           title: Message
       type: object
       required:
-      - code
-      - message
+        - code
+        - message
       title: TransactionError
     TransactionErrorCode:
       type: string
       enum:
-      - account_holder_not_found
-      - internal_error
+        - account_holder_not_found
+        - internal_error
       title: TransactionErrorCode
       description: An enumeration.
     TransactionInput:
@@ -3838,14 +3847,14 @@ components:
             in dollars.
         entry_type:
           allOf:
-          - $ref: '#/components/schemas/EntryType'
+            - $ref: "#/components/schemas/EntryType"
           description: The direction of the flow of the money from the perspective
             of the account holder. `outgoing` to represent money leaving the account,
             such as purchases or fees, while `incoming` represents money entering
             the account, such as income or refunds.
         currency:
           allOf:
-          - $ref: '#/components/schemas/Currency'
+            - $ref: "#/components/schemas/Currency"
           description: The currency of the transaction in ISO 4217 format
         account_holder_id:
           type: string
@@ -3853,22 +3862,22 @@ components:
           description: The unique ID of the account holder. Unsetting it will disable
             [categorization](./docs/v3/enrichment/entities).
         location:
-          $ref: '#/components/schemas/LocationInput'
+          $ref: "#/components/schemas/LocationInput"
       additionalProperties: false
       type: object
       required:
-      - id
-      - description
-      - date
-      - amount
-      - entry_type
-      - currency
-      - account_holder_id
+        - id
+        - description
+        - date
+        - amount
+        - entry_type
+        - currency
+        - account_holder_id
       title: TransactionInput
       example:
         id: xbx8YP14g565Xk
         description: SQ* STARBUCKS NW 43RD
-        date: '2024-03-30'
+        date: "2024-03-30"
         amount: 10.0
         entry_type: outgoing
         currency: USD
@@ -3880,8 +3889,8 @@ components:
         loc:
           items:
             anyOf:
-            - type: string
-            - type: integer
+              - type: string
+              - type: integer
           type: array
           title: Location
         msg:
@@ -3892,9 +3901,9 @@ components:
           title: Error Type
       type: object
       required:
-      - loc
-      - msg
-      - type
+        - loc
+        - msg
+        - type
       title: ValidationError
     Webhook:
       properties:
@@ -3909,13 +3918,13 @@ components:
           items:
             type: string
             enum:
-            - reports.resolved
-            - reports.rejected
-            - reports.pending
-            - bank_statements.completed
-            - bank_statements.error
-            - batches.completed
-            - batches.error
+              - reports.resolved
+              - reports.rejected
+              - reports.pending
+              - bank_statements.completed
+              - bank_statements.error
+              - batches.completed
+              - batches.error
           type: array
           title: Events
           description: A list of events that this webhook subscribes to
@@ -3941,20 +3950,20 @@ components:
           description: Whether the webhook is enabled or not.
       type: object
       required:
-      - url
-      - events
-      - id
-      - created_at
-      - enabled
+        - url
+        - events
+        - id
+        - created_at
+        - enabled
       title: Webhook
       example:
         url: https://example.com:5689
         events:
-        - batches.completed
-        - batches.error
+          - batches.completed
+          - batches.error
         token: hunter2
         id: e94a150d-40af-4e96-8aa7-2948a6b4d8d3
-        created_at: '2024-10-03T02:53:30.167953'
+        created_at: "2024-10-03T02:53:30.167953"
         enabled: true
     WebhookBase:
       properties:
@@ -3969,13 +3978,13 @@ components:
           items:
             type: string
             enum:
-            - reports.resolved
-            - reports.rejected
-            - reports.pending
-            - bank_statements.completed
-            - bank_statements.error
-            - batches.completed
-            - batches.error
+              - reports.resolved
+              - reports.rejected
+              - reports.pending
+              - bank_statements.completed
+              - bank_statements.error
+              - batches.completed
+              - batches.error
           type: array
           title: Events
           description: A list of events that this webhook subscribes to
@@ -3988,8 +3997,8 @@ components:
             to the webhook
       type: object
       required:
-      - url
-      - events
+        - url
+        - events
       title: WebhookBase
     WebhookPatch:
       properties:
@@ -4004,13 +4013,13 @@ components:
           items:
             type: string
             enum:
-            - reports.resolved
-            - reports.rejected
-            - reports.pending
-            - bank_statements.completed
-            - bank_statements.error
-            - batches.completed
-            - batches.error
+              - reports.resolved
+              - reports.rejected
+              - reports.pending
+              - bank_statements.completed
+              - bank_statements.error
+              - batches.completed
+              - batches.error
           type: array
           title: Events
           description: A list of events that this webhook subscribes to
@@ -4033,113 +4042,113 @@ components:
       in: header
       name: X-Api-Key
 tags:
-- name: Enrichment
-  description: "\nThe Enrichment API allows you to submit multiple transactions for\
-    \ enrichment in a single request. It supports both \nsynchronous and asynchronous\
-    \ submission of transactions.\n\nTransactions enriched by these endpoints are\
-    \ accessible via the [Transactions API](#tag/Transactions) \nand only accessible\
-    \ by the API key that has submitted them. Each transaction is identified by an\
-    \ id, if you submit two\ntransactions the same id, the most recent will replace\
-    \ the previous one. Transactions also accept an account holder.\nNot supplying\
-    \ one will disable both categorization and recurrence.\n\nFor more information\
-    \ on account holder attributes, please refer to \n[this](../../../account-holders/#optional-account-holder-fields)\
-    \ guide.\n\nComplete guide: [Transaction Enrichment](../../../enrichment/introduction).\n"
-  section_url: '#tag/Enrichment'
-  docs_url: ../../../enrichment/introduction
-- name: Transactions
-  description: "\nThe Transaction API allows you to manage, retrieve and search through\
-    \ enriched transactions. A transaction contains\nboth the enrichment fields and\
-    \ the original input fields. They are made available after being \n[enriched](#tag/Enrichment).\n"
-  section_url: '#tag/Transactions'
-- name: Account Holders
-  description: "\nThe Account Holder API allows you to retrieve, create and modify\
-    \ account holders. An account holder represents an\nentity that holds an account\
-    \ associated with transactions. An account holder can either be a business or\
-    \ an individual\nperson - consumer.\n\nThe fields chosen for an account holder\
-    \ are used by our enrichment process and can dramatically improve the accuracy\n\
-    of the results. \n\nComplete guide: [Account Holders](../../../account-holders).\n"
-  section_url: '#tag/Account-Holders'
-  docs_url: ../../../account-holders
-- name: Recurrence
-  description: "\nThe Recurrence API allows you to identify and categorize recurring\
-    \ patterns found in the transactions of an \n[account holder](#tag/Account-Holders),\
-    \ such as periodic payments or subscriptions and group them \ninto recurrence\
-    \ groups. Each recurrence group contains detailed information about the pattern,\
-    \ \nsuch as periodicity, amount and counterparty.\n\nTransactions can be added\
-    \ to an account holder via the [Enrichment API](#tag/Enrichment). \nIt is crucial\
-    \ that transactions are submitted with the [correct](../../../account-holders)\
-    \ \naccount holder information as the recurrence calculation relies heavily on\
-    \ it.\n\nComplete guide: [Recurrence](../../../enrichment/recurrence).\n"
-  section_url: '#tag/Recurrence'
-  docs_url: ../../../enrichment/recurrence
-- name: Bank statements
-  description: '
+  - name: Enrichment
+    description: "\nThe Enrichment API allows you to submit multiple transactions for\
+      \ enrichment in a single request. It supports both \nsynchronous and asynchronous\
+      \ submission of transactions.\n\nTransactions enriched by these endpoints are\
+      \ accessible via the [Transactions API](#tag/Transactions) \nand only accessible\
+      \ by the API key that has submitted them. Each transaction is identified by an\
+      \ id, if you submit two\ntransactions the same id, the most recent will replace\
+      \ the previous one. Transactions also accept an account holder.\nNot supplying\
+      \ one will disable both categorization and recurrence.\n\nFor more information\
+      \ on account holder attributes, please refer to \n[this](../../../account-holders/#optional-account-holder-fields)\
+      \ guide.\n\nComplete guide: [Transaction Enrichment](../../../enrichment/introduction).\n"
+    section_url: "#tag/Enrichment"
+    docs_url: ../../../enrichment/introduction
+  - name: Transactions
+    description: "\nThe Transaction API allows you to manage, retrieve and search through\
+      \ enriched transactions. A transaction contains\nboth the enrichment fields and\
+      \ the original input fields. They are made available after being \n[enriched](#tag/Enrichment).\n"
+    section_url: "#tag/Transactions"
+  - name: Account Holders
+    description: "\nThe Account Holder API allows you to retrieve, create and modify\
+      \ account holders. An account holder represents an\nentity that holds an account\
+      \ associated with transactions. An account holder can either be a business or\
+      \ an individual\nperson - consumer.\n\nThe fields chosen for an account holder\
+      \ are used by our enrichment process and can dramatically improve the accuracy\n\
+      of the results. \n\nComplete guide: [Account Holders](../../../account-holders).\n"
+    section_url: "#tag/Account-Holders"
+    docs_url: ../../../account-holders
+  - name: Recurrence
+    description: "\nThe Recurrence API allows you to identify and categorize recurring\
+      \ patterns found in the transactions of an \n[account holder](#tag/Account-Holders),\
+      \ such as periodic payments or subscriptions and group them \ninto recurrence\
+      \ groups. Each recurrence group contains detailed information about the pattern,\
+      \ \nsuch as periodicity, amount and counterparty.\n\nTransactions can be added\
+      \ to an account holder via the [Enrichment API](#tag/Enrichment). \nIt is crucial\
+      \ that transactions are submitted with the [correct](../../../account-holders)\
+      \ \naccount holder information as the recurrence calculation relies heavily on\
+      \ it.\n\nComplete guide: [Recurrence](../../../enrichment/recurrence).\n"
+    section_url: "#tag/Recurrence"
+    docs_url: ../../../enrichment/recurrence
+  - name: Bank statements
+    description: "
 
-    The Bank Statements API allows you to manage and extract information from bank
-    statements. We support extraction of
+      The Bank Statements API allows you to manage and extract information from bank
+      statements. We support extraction of
 
-    account holder information, account information and transaction records. Files
-    should be uploaded in PDF format.
-
-
-    During the extraction process, the bank statements undergo several status changes:
-
-    |  Status  |                              Description                               |
-
-    |----------|------------------------------------------------------------------------|
-
-    |processing|The upload was successful. Extraction is in progress.                   |
-
-    |completed |The extraction was successful. Results are available.                   |
-
-    |error     |An error occurred during extraction. Check `error` for more information.|
+      account holder information, account information and transaction records. Files
+      should be uploaded in PDF format.
 
 
+      During the extraction process, the bank statements undergo several status changes:
 
-    A list of error codes for the `error` status can be found below:
+      |  Status  |                              Description                               |
 
-    |         Code         |                Description                |
+      |----------|------------------------------------------------------------------------|
 
-    |----------------------|-------------------------------------------|
+      |processing|The upload was successful. Extraction is in progress.                   |
 
-    |invalid_bank_statement|Failed to process file as a bank statement.|
+      |completed |The extraction was successful. Results are available.                   |
 
-    |internal_error        |Internal error. Please contact support.    |
+      |error     |An error occurred during extraction. Check `error` for more information.|
 
 
 
-    Complete guide: [Bank Statements](../../../bank-statements).
+      A list of error codes for the `error` status can be found below:
 
-    '
-  section_url: '#tag/Bank-statements'
-  docs_url: ../../../bank-statements
-- name: Webhooks
-  description: "\nThe Webhooks API allows you to receive notifications when certain\
-    \ events occur,\nsuch as when a batch or bank statement finishes processing. \n\
-    \nWhen an event occurs, Ntropy will make a POST request to the `url` of the\n\
-    webhook. If you specified a `token` when creating the webhook, this string will\n\
-    be included in the `X-Ntropy-Token` header. The webhook call has a timeout limit\
-    \ of 10 \nseconds, so any processing of the event \n"
-  section_url: '#tag/Webhooks'
-  docs_url: ../../../webhooks
-- name: Personalization
-  description: '
+      |         Code         |                Description                |
 
-    The Personalization API allows you to customize the output of enrichment by
+      |----------------------|-------------------------------------------|
 
-    uploading a set of rules. For more information, see our documentation on
+      |invalid_bank_statement|Failed to process file as a bank statement.|
 
-    [Personalization](None).
+      |internal_error        |Internal error. Please contact support.    |
 
-    '
-  section_url: '#tag/Personalization'
-- name: Reports
-  description: '
 
-    The Reports API allows you to flag transactions with incorrect fields. You can
-    also track the progress of each
 
-    report either through the API or using [webhooks](#tag/Webhooks).
+      Complete guide: [Bank Statements](../../../bank-statements).
 
-    '
-  section_url: '#tag/Reports'
+      "
+    section_url: "#tag/Bank-statements"
+    docs_url: ../../../bank-statements
+  - name: Webhooks
+    description: "\nThe Webhooks API allows you to receive notifications when certain\
+      \ events occur,\nsuch as when a batch or bank statement finishes processing. \n\
+      \nWhen an event occurs, Ntropy will make a POST request to the `url` of the\n\
+      webhook. If you specified a `token` when creating the webhook, this string will\n\
+      be included in the `X-Ntropy-Token` header. The webhook call has a timeout limit\
+      \ of 10 \nseconds, so any processing of the event \n"
+    section_url: "#tag/Webhooks"
+    docs_url: ../../../webhooks
+  - name: Personalization
+    description: "
+
+      The Personalization API allows you to customize the output of enrichment by
+
+      uploading a set of rules. For more information, see our documentation on
+
+      [Personalization](None).
+
+      "
+    section_url: "#tag/Personalization"
+  - name: Reports
+    description: "
+
+      The Reports API allows you to flag transactions with incorrect fields. You can
+      also track the progress of each
+
+      report either through the API or using [webhooks](#tag/Webhooks).
+
+      "
+    section_url: "#tag/Reports"

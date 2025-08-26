@@ -8,7 +8,7 @@
   },
   "private": true,
   "main": "lib/index.js",
-  "module": "lib/index.js", 
+  "module": "lib/index.js",
   "types": "lib/index.d.ts",
   "exports": {
     ".": {
@@ -17,9 +17,7 @@
       "default": "./lib/index.js"
     }
   },
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "source": "src/index.ts",
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",

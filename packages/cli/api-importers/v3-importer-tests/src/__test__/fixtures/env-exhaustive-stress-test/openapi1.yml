@@ -3,8 +3,8 @@ info:
   version: 1.0.0
   title: Test API
 servers:
-- url: https://alpha.testapi.com
-  description: prod
+  - url: https://alpha.testapi.com
+    description: prod
 paths:
   /alpha:
     get:

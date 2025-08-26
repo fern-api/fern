@@ -14,10 +14,15 @@ public class Example8
 
         await client.Reference.SendAsync(
             new SendRequest{
+                Prompt = "You are a helpful assistant",
+                Stream = false,
+                Context = "You're super wise",
                 Query = "What is the weather today",
                 ContainerObject = new ContainerObject{
                     NestedObjects = new List<NestedObjectWithLiterals>(){
                         new NestedObjectWithLiterals{
+                            Literal1 = "literal1",
+                            Literal2 = "literal2",
                             StrProp = "strProp"
                         },
                     }

@@ -39,6 +39,13 @@ fixtures:
     - customConfig:
         package-prefix: com.random.api.generated
       outputFolder: package-prefix
+  nullable-optional:
+    - customConfig:
+        use-nullable-annotation: true
+      outputFolder: with-nullable-annotation
+    - customConfig:
+        use-nullable-annotation: false
+      outputFolder: legacy
 language: java
 generatorType: Server
 defaultOutputMode: local_files

@@ -1,18 +1,17 @@
-types: 
-  
+types:
   AvailabilityUnionSchema:
-    discriminated: false 
-    union: 
+    discriminated: false
+    union:
       - AvailabilityStatusSchema
       - AvailabilitySchema
-  
-  AvailabilitySchema: 
-    properties: 
+
+  AvailabilitySchema:
+    properties:
       status: AvailabilityStatusSchema
       message: optional<string>
-  
-  AvailabilityStatusSchema: 
-    enum: 
+
+  AvailabilityStatusSchema:
+    enum:
       - value: in-development
         name: InDevelopment
       - value: pre-release

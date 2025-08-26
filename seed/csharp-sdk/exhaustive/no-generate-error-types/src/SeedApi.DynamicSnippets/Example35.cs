@@ -13,8 +13,8 @@ public class Example35
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnStringAsync(
-            "string"
+        await client.Endpoints.Primitive.GetAndReturnDateAsync(
+            DateOnly.Parse("2023-01-15")
         );
     }
 

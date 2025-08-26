@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v59.1.0] - 2025-08-25
+
+- Feature: Add support for readme config for API Name and disabled features list.
+
 ## [v59.0.0] - 2025-08-07
 
 - Feature: Add support for inferred auth
@@ -68,7 +72,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v57.4.0] - 2025-04-04
 
 - Feature: Support property–, schema–, and parameter-level examples.
-
 
 ## [v57.3.0] - 2025-04-04
 

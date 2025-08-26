@@ -12,14 +12,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserCreate'
+              $ref: "#/components/schemas/UserCreate"
       responses:
-        '200':
+        "200":
           description: User created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
 
   /users/{userId}:
     get:
@@ -31,12 +31,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: User retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
 
 components:
   schemas:
@@ -48,7 +48,7 @@ components:
         email:
           type: string
         settings:
-          $ref: '#/components/schemas/UserSettings'
+          $ref: "#/components/schemas/UserSettings"
 
     User:
       type: object
@@ -65,9 +65,9 @@ components:
           format: date-time
           readOnly: true
         settings:
-          $ref: '#/components/schemas/UserSettings'
+          $ref: "#/components/schemas/UserSettings"
         stats:
-          $ref: '#/components/schemas/UserStats'
+          $ref: "#/components/schemas/UserStats"
 
     UserSettings:
       type: object
@@ -94,4 +94,3 @@ components:
         accountStatus:
           type: string
           enum: [active, suspended, deleted]
-

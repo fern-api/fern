@@ -1,10 +1,10 @@
 name: fern
 auth: bearer
-environments: 
+environments:
   Production: https://api.buildwithfern.com
 default-environment: Production
 error-discrimination:
   strategy: property
   property-name: error
-audiences: 
+audiences:
   - external

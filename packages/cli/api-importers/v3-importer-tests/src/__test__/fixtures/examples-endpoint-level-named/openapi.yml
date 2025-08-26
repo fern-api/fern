@@ -14,40 +14,40 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TreeCreate'
+              $ref: "#/components/schemas/TreeCreate"
             examples:
               maple:
-                $ref: '#/components/examples/mapleTreeRequest'
+                $ref: "#/components/examples/mapleTreeRequest"
               oak:
-                $ref: '#/components/examples/oakTreeRequest'
+                $ref: "#/components/examples/oakTreeRequest"
       responses:
-        '201':
+        "201":
           description: Tree created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tree'
+                $ref: "#/components/schemas/Tree"
               examples:
                 oak:
-                  $ref: '#/components/examples/oakTreeResponse'
+                  $ref: "#/components/examples/oakTreeResponse"
                 maple:
-                  $ref: '#/components/examples/mapleTreeResponse'
-    
+                  $ref: "#/components/examples/mapleTreeResponse"
+
     get:
       summary: List all trees
       operationId: listTrees
       responses:
-        '200':
+        "200":
           description: List of trees
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Tree'
+                  $ref: "#/components/schemas/Tree"
               examples:
                 treeList:
-                  $ref: '#/components/examples/treeList'
+                  $ref: "#/components/examples/treeList"
 
   /trees/{treeId}:
     get:
@@ -61,15 +61,15 @@ paths:
             type: string
             format: uuid
       responses:
-        '200':
+        "200":
           description: Tree details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tree'
+                $ref: "#/components/schemas/Tree"
               examples:
                 oak:
-                  $ref: '#/components/examples/oakTreeResponse'
+                  $ref: "#/components/examples/oakTreeResponse"
 
   /ferns:
     post:
@@ -95,10 +95,10 @@ paths:
                   name: "RedFern"
               fernRequestExample2:
                 value:
-                  color: "green" 
+                  color: "green"
                   name: "GreenFern"
       responses:
-        '201':
+        "201":
           description: Fern created successfully
           content:
             application/json:
@@ -131,7 +131,7 @@ paths:
             type: string
             format: uuid
       responses:
-        '200':
+        "200":
           description: Fern details
           content:
             application/json:
@@ -197,7 +197,7 @@ paths:
                     - name: "Sedum"
                     - name: "Crassula"
       responses:
-        '201':
+        "201":
           description: Succulents created successfully
           content:
             application/json:
@@ -235,13 +235,13 @@ components:
             latitude:
               type: number
               format: float
-            longitude: 
+            longitude:
               type: number
               format: float
 
     Tree:
       allOf:
-        - $ref: '#/components/schemas/TreeCreate'
+        - $ref: "#/components/schemas/TreeCreate"
         - type: object
           required:
             - id
@@ -253,7 +253,6 @@ components:
               type: string
               format: date-time
 
-
   examples:
     oakTreeRequest:
       value:
@@ -261,7 +260,7 @@ components:
         height: 25.4
         age: 50
         location:
-          latitude: 40.7128 
+          latitude: 40.7128
           longitude: -74.0060
       summary: Example oak tree request
 
@@ -286,7 +285,7 @@ components:
           latitude: 40.7128
           longitude: -74.0060
       summary: Example oak tree
-      
+
     mapleTreeResponse:
       value:
         id: "987fcdeb-51a2-43d7-9012-345678901234"
@@ -297,7 +296,7 @@ components:
         location:
           latitude: 42.3601
           longitude: -71.0589
-      summary: Example maple tree 
+      summary: Example maple tree
 
     treeList:
       value:
