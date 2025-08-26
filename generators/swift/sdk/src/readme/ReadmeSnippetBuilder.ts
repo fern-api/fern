@@ -66,7 +66,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             endpoint = allEndpoints.find((endpoint) => endpoint.method === "POST");
         }
         if (!endpoint) {
-            // Fallback to the first endpoint
+            // Fall back to the first endpoint
             endpoint = allEndpoints[0];
         }
         if (!endpoint) {
@@ -106,12 +106,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getPackageOrSubpackageForEndpoint(endpoint: HttpEndpoint) {
         const rootPackageServiceId = this.context.ir.rootPackage.service;
-        if (!rootPackageServiceId) {
-            return null;
-        }
-        const rootPackageService = this.context.getHttpServiceOrThrow(rootPackageServiceId);
-        if (rootPackageService.endpoints.some((e) => e.id === endpoint.id)) {
-            return this.context.ir.rootPackage;
+        if (rootPackageServiceId) {
+            const rootPackageService = this.context.getHttpServiceOrThrow(rootPackageServiceId);
+            if (rootPackageService.endpoints.some((e) => e.id === endpoint.id)) {
+                return this.context.ir.rootPackage;
+            }
         }
         for (const subpackage of Object.values(this.context.ir.subpackages)) {
             if (typeof subpackage.service === "string") {

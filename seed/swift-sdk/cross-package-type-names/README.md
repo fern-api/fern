@@ -24,6 +24,21 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import CrossPackageTypeNames
+
+let client = CrossPackageTypeNamesClient()
+
+try await client.find(
+    optionalString: OptionalString(),
+    request: Requests.FindRequest()
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

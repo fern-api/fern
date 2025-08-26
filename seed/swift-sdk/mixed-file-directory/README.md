@@ -24,6 +24,20 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import MixedFileDirectory
+
+let client = MixedFileDirectoryClient()
+
+try await client.create(
+    request: CreateOrganizationRequest()
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

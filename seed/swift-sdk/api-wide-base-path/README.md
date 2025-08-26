@@ -24,6 +24,23 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import ApiWideBasePath
+
+let client = ApiWideBasePathClient()
+
+try await client.post(
+    pathParam: "string",
+    serviceParam: "string",
+    endpointParam: "string",
+    resourceParam: "string"
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

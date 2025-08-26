@@ -24,6 +24,20 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import MultiUrlEnvironmentNoDefault
+
+let client = MultiUrlEnvironmentNoDefaultClient(token: "YOUR_TOKEN")
+
+try await client.bootInstance(
+    request: Requests.BootInstanceRequest()
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

@@ -24,6 +24,23 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import AnyAuth
+
+let client = AnyAuthClient(
+    apiKey: "YOUR_TOKEN",
+    token: "YOUR_TOKEN"
+)
+
+try await client.getToken(
+    request: Requests.GetTokenRequest()
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

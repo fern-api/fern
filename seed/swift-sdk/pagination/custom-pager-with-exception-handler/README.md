@@ -24,6 +24,21 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import Pagination
+
+let client = PaginationClient(token: "YOUR_TOKEN")
+
+try await client.search(
+    index: "string",
+    request: SearchRequest()
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

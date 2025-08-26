@@ -24,6 +24,21 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import PathParameters
+
+let client = PathParametersClient()
+
+try await client.createUser(
+    tenantId: "string",
+    request: User()
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

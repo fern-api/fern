@@ -24,6 +24,20 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import IdempotencyHeaders
+
+let client = IdempotencyHeadersClient(token: "YOUR_TOKEN")
+
+try await client.create(
+    request: Requests.CreatePaymentRequest()
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

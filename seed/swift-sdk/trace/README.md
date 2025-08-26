@@ -24,6 +24,21 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import Trace
+
+let client = TraceClient(token: "YOUR_TOKEN")
+
+try await client.updateTestSubmissionStatus(
+    submissionId: "string",
+    request: TestSubmissionStatus()
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

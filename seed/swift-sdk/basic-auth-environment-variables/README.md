@@ -24,6 +24,23 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import BasicAuthEnvironmentVariables
+
+let client = BasicAuthEnvironmentVariablesClient(
+    username: "YOUR_USERNAME",
+    accessToken: "YOUR_PASSWORD"
+)
+
+try await client.postWithBasicAuth(
+    request: JSONValue.string("string")
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

@@ -24,6 +24,20 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import UndiscriminatedUnions
+
+let client = UndiscriminatedUnionsClient()
+
+try await client.get(
+    request: MyUnion()
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

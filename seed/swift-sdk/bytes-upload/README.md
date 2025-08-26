@@ -24,6 +24,20 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import BytesUpload
+
+let client = BytesUploadClient()
+
+try await client.upload(
+    request: Data([1, 2, 3])
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.
