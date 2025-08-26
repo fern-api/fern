@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module seed
+module Seed
   module Internal
     module Multipart
       # @api private
-      class Request seed::Internal::Http::BaseRequest
+      class Request < Seed::Internal::Http::BaseRequest
         attr_reader :body
 
         # @param base_url [String] The base URL for the request
@@ -13,7 +13,7 @@ module seed
         # @param headers [Hash] Additional headers for the request (optional)
         # @param query [Hash] Query parameters for the request (optional)
         # @param body [MultipartFormData, nil] The multipart form data for the request (optional)
-        # @param request_options [seed::RequestOptions, Hash{Symbol=>Object}, nil]
+        # @param request_options [Seed::RequestOptions, Hash{Symbol=>Object}, nil]
         def initialize(base_url:, path:, method:, headers: {}, query: {}, body: nil, request_options: {})
           super(base_url:, path:, method:, headers:, query:, request_options:)
 
@@ -34,4 +34,4 @@ module seed
       end
     end
   end
-end 
+end

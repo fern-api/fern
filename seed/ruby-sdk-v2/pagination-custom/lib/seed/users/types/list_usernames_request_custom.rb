@@ -1,8 +1,11 @@
+# frozen_string_literal: true
 
 module Seed
-    module Users
-        class ListUsernamesRequestCustom
-            field :starting_after, String, optional: true, nullable: false
-
+  module Users
+    module Types
+      class ListUsernamesRequestCustom < Internal::Types::Model
+        field :starting_after, -> { String }, optional: true, nullable: false
+      end
     end
+  end
 end
