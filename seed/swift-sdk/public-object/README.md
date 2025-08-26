@@ -33,7 +33,7 @@ import PublicObject
 
 let client = PublicObjectClient()
 
-try await client.get(
+try await client.service.get(
 
 )
 ```

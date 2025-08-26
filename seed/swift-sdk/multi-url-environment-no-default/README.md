@@ -33,7 +33,7 @@ import MultiUrlEnvironmentNoDefault
 
 let client = MultiUrlEnvironmentNoDefaultClient(token: "YOUR_TOKEN")
 
-try await client.bootInstance(
+try await client.ec2.bootInstance(
     request: Requests.BootInstanceRequest()
 )
 ```

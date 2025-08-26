@@ -42,7 +42,9 @@ try await client.search(
     user: User(),
     userList: User(),
     optionalDeadline: Date.now,
-    keyValue: ["string": "string"],
+    keyValue: [
+        "string": "string"
+    ],
     optionalString: "string",
     nestedUser: NestedUser(),
     optionalUser: User(),

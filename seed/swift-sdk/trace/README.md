@@ -33,7 +33,7 @@ import Trace
 
 let client = TraceClient(token: "YOUR_TOKEN")
 
-try await client.updateTestSubmissionStatus(
+try await client.admin.updateTestSubmissionStatus(
     submissionId: "string",
     request: TestSubmissionStatus()
 )

@@ -39,7 +39,9 @@ try await client.create(
         even: 123,
         name: "string",
         shape: Shape(),
-        additionalProperties: ["string": JSONValue.string("string")]
+        additionalProperties: [
+            "string": JSONValue.string("string")
+        ]
     )
 )
 ```

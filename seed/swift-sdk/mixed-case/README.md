@@ -33,7 +33,7 @@ import MixedCase
 
 let client = MixedCaseClient()
 
-try await client.getResource(
+try await client.service.getResource(
     resourceId: "string"
 )
 ```

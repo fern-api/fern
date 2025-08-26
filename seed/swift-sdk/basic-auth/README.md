@@ -36,7 +36,7 @@ let client = BasicAuthClient(
     password: "YOUR_PASSWORD"
 )
 
-try await client.postWithBasicAuth(
+try await client.basicAuth.postWithBasicAuth(
     request: JSONValue.string("string")
 )
 ```

@@ -33,7 +33,7 @@ import Pagination
 
 let client = PaginationClient(token: "YOUR_TOKEN")
 
-try await client.search(
+try await client.complex.search(
     index: "string",
     request: SearchRequest()
 )

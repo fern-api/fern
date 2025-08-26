@@ -33,7 +33,7 @@ import Variables
 
 let client = VariablesClient()
 
-try await client.post(
+try await client.service.post(
     endpointParam: "string"
 )
 ```

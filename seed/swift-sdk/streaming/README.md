@@ -33,11 +33,13 @@ import Streaming
 
 let client = StreamingClient()
 
-try await client.generateStream(
+try await client.dummy.generateStream(
     request: GenerateStreamRequest(
         stream: JSONValue.string("string"),
         numEvents: 123,
-        additionalProperties: ["string": JSONValue.string("string")]
+        additionalProperties: [
+            "string": JSONValue.string("string")
+        ]
     )
 )
 ```

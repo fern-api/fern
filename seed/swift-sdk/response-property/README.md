@@ -33,7 +33,7 @@ import ResponseProperty
 
 let client = ResponsePropertyClient()
 
-try await client.getMovie(
+try await client.service.getMovie(
     request: "string"
 )
 ```

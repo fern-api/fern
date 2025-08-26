@@ -33,7 +33,7 @@ import FileUpload
 
 let client = FileUploadClient()
 
-try await client.post(
+try await client.service.post(
     request: "string"
 )
 ```

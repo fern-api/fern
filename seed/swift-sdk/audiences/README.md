@@ -33,12 +33,14 @@ import Audiences
 
 let client = AudiencesClient()
 
-try await client.find(
+try await client.foo.find(
     optionalString: OptionalString(),
     request: FindRequest(
         publicProperty: "string",
         privateProperty: 123,
-        additionalProperties: ["string": JSONValue.string("string")]
+        additionalProperties: [
+            "string": JSONValue.string("string")
+        ]
     )
 )
 ```

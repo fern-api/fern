@@ -33,7 +33,7 @@ import NurseryApi
 
 let client = NurseryApiClient()
 
-try await client.test(
+try await client.package.test(
     for: "string"
 )
 ```

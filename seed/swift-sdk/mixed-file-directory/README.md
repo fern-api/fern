@@ -33,7 +33,7 @@ import MixedFileDirectory
 
 let client = MixedFileDirectoryClient()
 
-try await client.create(
+try await client.organization.create(
     request: CreateOrganizationRequest()
 )
 ```

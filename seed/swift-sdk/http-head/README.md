@@ -33,7 +33,7 @@ import HttpHead
 
 let client = HttpHeadClient()
 
-try await client.head(
+try await client.user.head(
 
 )
 ```

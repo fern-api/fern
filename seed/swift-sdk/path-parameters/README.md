@@ -33,7 +33,7 @@ import PathParameters
 
 let client = PathParametersClient()
 
-try await client.createUser(
+try await client.user.createUser(
     tenantId: "string",
     request: User()
 )

@@ -33,7 +33,7 @@ import OauthClientCredentials
 
 let client = OauthClientCredentialsClient()
 
-try await client.getTokenWithClientCredentials(
+try await client.auth.getTokenWithClientCredentials(
     request: Requests.GetTokenRequest()
 )
 ```

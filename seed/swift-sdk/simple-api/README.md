@@ -33,7 +33,7 @@ import SimpleApi
 
 let client = SimpleApiClient(token: "YOUR_TOKEN")
 
-try await client.get(
+try await client.user.get(
     id: "string"
 )
 ```

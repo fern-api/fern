@@ -33,7 +33,7 @@ import UnknownAsAny
 
 let client = UnknownAsAnyClient()
 
-try await client.post(
+try await client.unknown.post(
     request: JSONValue.string("string")
 )
 ```

@@ -33,7 +33,7 @@ import Pagination
 
 let client = PaginationClient(token: "YOUR_TOKEN")
 
-try await client.listUsernamesCustom(
+try await client.users.listUsernamesCustom(
     startingAfter: "string"
 )
 ```

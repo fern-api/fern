@@ -94,7 +94,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 swift.Expression.try(
                     swift.Expression.await(
                         swift.Expression.methodCall({
-                            target: swift.Expression.rawValue(clientConstantName),
+                            target: swift.Expression.rawValue(
+                                [
+                                    clientConstantName,
+                                    ...packageOrSubpackage.fernFilepath.allParts.map((p) => p.camelCase.unsafeName)
+                                ].join(".")
+                            ),
                             methodName: method.unsafeName,
                             arguments_: this.getMethodArguments(method),
                             multiline: true

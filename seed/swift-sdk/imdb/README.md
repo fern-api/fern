@@ -33,7 +33,7 @@ import Api
 
 let client = ApiClient(token: "YOUR_TOKEN")
 
-try await client.createMovie(
+try await client.imdb.createMovie(
     request: CreateMovieRequest()
 )
 ```

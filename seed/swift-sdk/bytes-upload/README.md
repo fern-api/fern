@@ -33,7 +33,7 @@ import BytesUpload
 
 let client = BytesUploadClient()
 
-try await client.upload(
+try await client.service.upload(
     request: Data([1, 2, 3])
 )
 ```
