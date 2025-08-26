@@ -1,5 +1,5 @@
 import { mkdir } from "node:fs/promises";
-import { AbstractProject } from "@fern-api/base-generator";
+import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
 
@@ -9,10 +9,16 @@ import { SwiftFile } from "./SwiftFile";
 
 export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>> {
     /** Files stored in the the project root. */
-    private readonly rootFiles: SwiftFile[] = [];
+    private readonly rootFiles: File[] = [];
     /** Files stored in the `Sources` directory. */
     private readonly srcFiles: SwiftFile[] = [];
     private readonly srcFileNamesWithoutExtension = new Set<string>();
+
+    private readonly schemaTypesById: Map<
+        string,
+        swift.Struct | swift.EnumWithAssociatedValues | swift.EnumWithRawValues | swift.Statement
+    >;
+    private readonly requestStructsByEndpointIdAndRequestName: Map<string, swift.Struct>;
 
     public readonly symbolRegistry: ProjectSymbolRegistry;
 
@@ -23,6 +29,8 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     }) {
         super(context);
         this.symbolRegistry = ProjectSymbolRegistry.create();
+        this.schemaTypesById = new Map();
+        this.requestStructsByEndpointIdAndRequestName = new Map();
     }
 
     private get srcDirectory(): RelativeFilePath {
@@ -33,7 +41,7 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         return join(this.absolutePathToOutputDirectory, this.srcDirectory);
     }
 
-    public addRootFiles(...files: SwiftFile[]): void {
+    public addRootFiles(...files: File[]): void {
         this.rootFiles.push(...files);
     }
 
@@ -84,6 +92,27 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         });
         this.srcFiles.push(file);
         return file;
+    }
+
+    public addSchemaType(
+        fullyQualifiedName: string,
+        symbol: swift.Struct | swift.EnumWithAssociatedValues | swift.EnumWithRawValues | swift.Statement
+    ): void {
+        this.schemaTypesById.set(fullyQualifiedName, symbol);
+    }
+
+    public addRequestStruct(fullyQualifiedName: string, struct: swift.Struct): void {
+        this.requestStructsByEndpointIdAndRequestName.set(fullyQualifiedName, struct);
+    }
+
+    public getSchemaType(
+        fullyQualifiedName: string
+    ): swift.Struct | swift.EnumWithAssociatedValues | swift.EnumWithRawValues | swift.Statement | undefined {
+        return this.schemaTypesById.get(fullyQualifiedName);
+    }
+
+    public getRequestType(fullyQualifiedName: string): swift.Struct | undefined {
+        return this.requestStructsByEndpointIdAndRequestName.get(fullyQualifiedName);
     }
 
     public async persist(): Promise<void> {

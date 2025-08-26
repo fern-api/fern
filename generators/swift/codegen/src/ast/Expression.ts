@@ -60,6 +60,12 @@ type ArrayLiteral = {
     multiline?: true;
 };
 
+type TupleLiteral = {
+    type: "tuple-literal";
+    elements?: Expression[];
+    multiline?: true;
+};
+
 type MethodCall = {
     type: "method-call";
     target: Expression;
@@ -117,6 +123,7 @@ type InternalExpression =
     | ClassInitialization
     | DictionaryLiteral
     | ArrayLiteral
+    | TupleLiteral
     | MethodCall
     | MethodCallWithTrailingClosure
     | ContextualMethodCall
@@ -184,6 +191,9 @@ export class Expression extends AstNode {
                 break;
             case "array-literal":
                 this.writeArrayLiteral(writer, this.internalExpression);
+                break;
+            case "tuple-literal":
+                this.writeTupleLiteral(writer, this.internalExpression);
                 break;
             case "method-call":
                 this.internalExpression.target.write(writer);
@@ -331,6 +341,35 @@ export class Expression extends AstNode {
         writer.write("]");
     }
 
+    private writeTupleLiteral(writer: Writer, tupleLiteral: TupleLiteral): void {
+        if (!tupleLiteral.elements || tupleLiteral.elements.length === 0) {
+            writer.write("()");
+            return;
+        }
+        writer.write("(");
+        const multiline = !!tupleLiteral.multiline;
+        if (multiline) {
+            writer.newLine();
+            writer.indent();
+        }
+        tupleLiteral.elements?.forEach((element, elementIdx) => {
+            if (elementIdx > 0) {
+                writer.write(",");
+                if (multiline) {
+                    writer.newLine();
+                } else {
+                    writer.write(" ");
+                }
+            }
+            element.write(writer);
+        });
+        if (multiline) {
+            writer.newLine();
+            writer.dedent();
+        }
+        writer.write(")");
+    }
+
     public static reference(unsafeName: string): Expression {
         return new this({ type: "reference", unsafeName });
     }
@@ -361,6 +400,10 @@ export class Expression extends AstNode {
 
     public static arrayLiteral(params: Omit<ArrayLiteral, "type">): Expression {
         return new this({ type: "array-literal", ...params });
+    }
+
+    public static tupleLiteral(params: Omit<TupleLiteral, "type">): Expression {
+        return new this({ type: "tuple-literal", ...params });
     }
 
     public static methodCall(params: Omit<MethodCall, "type">): Expression {
