@@ -34,7 +34,10 @@ import ServerSentEvents
 let client = ServerSentEventsClient()
 
 try await client.stream(
-    request: Requests.StreamCompletionRequest()
+    request: StreamCompletionRequest(
+        query: "string",
+        additionalProperties: ["string": JSONValue.string("string")]
+    )
 )
 ```
 

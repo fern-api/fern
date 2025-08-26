@@ -37,7 +37,14 @@ let client = AnyAuthClient(
 )
 
 try await client.getToken(
-    request: Requests.GetTokenRequest()
+    request: GetTokenRequest(
+        clientId: "string",
+        clientSecret: "string",
+        audience: HttpsApiExampleCom(),
+        grantType: ClientCredentials(),
+        scope: "string",
+        additionalProperties: ["string": JSONValue.string("string")]
+    )
 )
 ```
 

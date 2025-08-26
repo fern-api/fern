@@ -34,7 +34,12 @@ import Extends
 let client = ExtendsClient()
 
 try await client.extendedInlineRequestBody(
-    request: Requests.Inlined()
+    request: Inlined(
+        name: "string",
+        docs: "string",
+        unique: "string",
+        additionalProperties: ["string": JSONValue.string("string")]
+    )
 )
 ```
 
