@@ -1,20 +1,17 @@
 # frozen_string_literal: true
 
 require_relative "lib/seed/version"
+require_relative "custom.gemspec"
 
+# NOTE: A handful of these fields are required as part of the Ruby specification.
+#       You can change them here or overwrite them in the custom gemspec file.
 Gem::Specification.new do |spec|
   spec.name = "seed"
+  spec.authors = ["Seed"]
   spec.version = Seed::VERSION
-  spec.authors = ["Fern"]
-  spec.email = ["support@buildwithfern.com"]
   spec.summary = "Ruby client library for the Seed API"
   spec.description = "The Seed Ruby library provides convenient access to the Seed API from Ruby."
-  spec.homepage = ""
-  spec.license = "undefined"
   spec.required_ruby_version = ">= 3.1.0"
-  spec.metadata["homepage_uri"] = ""
-  spec.metadata["source_code_uri"] = ""
-  spec.metadata["changelog_uri"] = ""
   spec.metadata["rubygems_mfa_required"] = "true"
 
   # Specify which files should be added to the gem when it is released.
@@ -35,4 +32,8 @@ Gem::Specification.new do |spec|
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
+
+  # Load custom gemspec configuration if it exists
+  custom_gemspec_file = File.join(__dir__, "custom.gemspec.rb")
+  add_custom_gemspec_data(spec) if File.exist?(custom_gemspec_file)
 end
