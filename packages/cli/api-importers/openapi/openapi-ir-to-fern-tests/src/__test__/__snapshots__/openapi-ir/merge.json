@@ -701,6 +701,7 @@
             "generatedName": "BankInfoListRequestCursor",
             "value": {
               "schema": {
+                "example": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "type": "string"
               },
               "generatedName": "BankInfoListRequestCursor",
@@ -1012,7 +1013,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -1652,6 +1664,7 @@
             "generatedName": "BenefitsListRequestCursor",
             "value": {
               "schema": {
+                "example": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "type": "string"
               },
               "generatedName": "BenefitsListRequestCursor",
@@ -1883,7 +1896,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -2499,6 +2523,7 @@
             "generatedName": "CompaniesListRequestCursor",
             "value": {
               "schema": {
+                "example": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "type": "string"
               },
               "generatedName": "CompaniesListRequestCursor",
@@ -2687,7 +2712,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -3321,6 +3357,7 @@
             "generatedName": "EmployeePayrollRunsListRequestCursor",
             "value": {
               "schema": {
+                "example": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "type": "string"
               },
               "generatedName": "EmployeePayrollRunsListRequestCursor",
@@ -3674,7 +3711,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -5075,6 +5123,7 @@
             "generatedName": "EmployeesListRequestCursor",
             "value": {
               "schema": {
+                "example": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "type": "string"
               },
               "generatedName": "EmployeesListRequestCursor",
@@ -7116,7 +7165,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -10429,6 +10489,7 @@
             "generatedName": "EmploymentsListRequestCursor",
             "value": {
               "schema": {
+                "example": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "type": "string"
               },
               "generatedName": "EmploymentsListRequestCursor",
@@ -10911,7 +10972,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -11856,6 +11928,7 @@
             "generatedName": "GroupsListRequestCursor",
             "value": {
               "schema": {
+                "example": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "type": "string"
               },
               "generatedName": "GroupsListRequestCursor",
@@ -12109,7 +12182,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -12663,6 +12747,7 @@
             "generatedName": "IssuesListRequestCursor",
             "value": {
               "schema": {
+                "example": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "type": "string"
               },
               "generatedName": "IssuesListRequestCursor",
@@ -12950,7 +13035,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -13442,6 +13538,7 @@
             "generatedName": "LinkedAccountsListRequestCursor",
             "value": {
               "schema": {
+                "example": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "type": "string"
               },
               "generatedName": "LinkedAccountsListRequestCursor",
@@ -13718,7 +13815,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -13998,6 +14106,7 @@
             "generatedName": "LocationsListRequestCursor",
             "value": {
               "schema": {
+                "example": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "type": "string"
               },
               "generatedName": "LocationsListRequestCursor",
@@ -14230,7 +14339,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -15105,6 +15225,7 @@
             "generatedName": "PayGroupsListRequestCursor",
             "value": {
               "schema": {
+                "example": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "type": "string"
               },
               "generatedName": "PayGroupsListRequestCursor",
@@ -15293,7 +15414,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -15803,6 +15935,7 @@
             "generatedName": "PayrollRunsListRequestCursor",
             "value": {
               "schema": {
+                "example": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "type": "string"
               },
               "generatedName": "PayrollRunsListRequestCursor",
@@ -16202,7 +16335,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -17303,6 +17447,7 @@
             "generatedName": "SelectiveSyncMetaListRequestCursor",
             "value": {
               "schema": {
+                "example": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "type": "string"
               },
               "generatedName": "SelectiveSyncMetaListRequestCursor",
@@ -17415,7 +17560,18 @@
         {
           "name": "Employees that started on or after January 1st, 2022",
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -17566,6 +17722,7 @@
             "generatedName": "SyncStatusListRequestCursor",
             "value": {
               "schema": {
+                "example": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "type": "string"
               },
               "generatedName": "SyncStatusListRequestCursor",
@@ -17649,7 +17806,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -17941,6 +18109,7 @@
             "generatedName": "TeamsListRequestCursor",
             "value": {
               "schema": {
+                "example": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "type": "string"
               },
               "generatedName": "TeamsListRequestCursor",
@@ -18172,7 +18341,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -18739,6 +18919,7 @@
             "generatedName": "TimeOffListRequestCursor",
             "value": {
               "schema": {
+                "example": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "type": "string"
               },
               "generatedName": "TimeOffListRequestCursor",
@@ -19208,7 +19389,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -19974,6 +20166,7 @@
             "generatedName": "TimeOffBalancesListRequestCursor",
             "value": {
               "schema": {
+                "example": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "type": "string"
               },
               "generatedName": "TimeOffBalancesListRequestCursor",
@@ -20303,7 +20496,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
