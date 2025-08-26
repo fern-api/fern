@@ -40,6 +40,7 @@
                             "headerName": "Authorization",
                             "responseProperty": {
                                 "propertyPath": [],
+                                "propertyPathWithTypes": [],
                                 "property": {
                                     "name": {
                                         "name": {

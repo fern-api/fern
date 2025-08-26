@@ -14,5 +14,6 @@ export interface ResponseProperty {
      * by the path.
      */
     propertyPath: FernIr.Name[] | undefined;
+    propertyPathWithTypes: FernIr.PropertyPathItem[] | undefined;
     property: FernIr.ObjectProperty;
 }
