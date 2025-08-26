@@ -140,14 +140,9 @@ class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
     ) -> AST.ClassInstantiation:
         kwargs = [
             (
-                param.constructor_parameter_name,
-                AST.Expression(
-                    f"self._{param.constructor_parameter_name}"
-                    if self._context.custom_config.lazy_imports
-                    else param.constructor_parameter_name
-                ),
+                "client_wrapper",
+                AST.Expression(f"self.{self._get_client_wrapper_member_name()}"),
             )
-            for param in self._get_constructor_parameters(is_async=is_async)
         ]
         return AST.ClassInstantiation(
             class_=(

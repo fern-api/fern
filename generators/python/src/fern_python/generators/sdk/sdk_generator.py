@@ -454,6 +454,7 @@ class SdkGenerator(AbstractGenerator):
             context=context,
             package=ir.root_package,
             generated_environment=generated_environment,
+            imports_manager=source_file.get_imports_manager(),
             class_name=context.get_class_name_for_generated_root_client(),
             async_class_name="Async" + context.get_class_name_for_generated_root_client(),
             snippet_registry=snippet_registry,
