@@ -28,14 +28,3 @@ export interface ReadmeConfig {
      */
     features: Record<FernIr.FeatureId, FernIr.EndpointId[]> | undefined;
 }
-
-export const EmptyReadmeConfig: ReadmeConfig = {
-    defaultEndpoint: undefined,
-    bannerLink: undefined,
-    introduction: undefined,
-    apiReferenceLink: undefined,
-    apiName: undefined,
-    disabledFeatures: undefined,
-    whiteLabel: undefined,
-    features: undefined
-}

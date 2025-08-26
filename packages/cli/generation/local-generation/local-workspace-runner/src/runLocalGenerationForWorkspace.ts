@@ -99,7 +99,7 @@ export async function runLocalGenerationForWorkspace({
                     }
                     if (organization.body.isWhitelabled) {
                         if (intermediateRepresentation.readmeConfig == null) {
-                            intermediateRepresentation.readmeConfig = FernIr.EmptyReadmeConfig;
+                            intermediateRepresentation.readmeConfig = emptyReadmeConfig;
                         }
                         intermediateRepresentation.readmeConfig.whiteLabel = true;
                     }
@@ -252,4 +252,15 @@ function isGithubSelfhosted(
         return false;
     }
     return "uri" in github && "token" in github;
+}
+
+const emptyReadmeConfig: FernIr.ReadmeConfig = {
+    defaultEndpoint: undefined,
+    bannerLink: undefined,
+    introduction: undefined,
+    apiReferenceLink: undefined,
+    apiName: undefined,
+    disabledFeatures: undefined,
+    whiteLabel: undefined,
+    features: undefined
 }
