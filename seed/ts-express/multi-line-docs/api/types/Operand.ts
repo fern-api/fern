@@ -17,7 +17,7 @@ export type Operand =
     | "="
     /**
      * The name and value should be similar
-     * are similar for less than.  */
+     * are similar for less than. */
     | "less_than";
 export const Operand = {
     GreaterThan: ">",
