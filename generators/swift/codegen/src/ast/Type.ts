@@ -123,7 +123,7 @@ type InternalType =
     | JsonValue;
 
 export class Type extends AstNode {
-    public internalType: InternalType;
+    private internalType: InternalType;
 
     private constructor(internalType: InternalType) {
         super();
