@@ -454,7 +454,6 @@ class SdkGenerator(AbstractGenerator):
             context=context,
             package=ir.root_package,
             generated_environment=generated_environment,
-            imports_manager=source_file.get_imports_manager(),
             class_name=context.get_class_name_for_generated_root_client(),
             async_class_name="Async" + context.get_class_name_for_generated_root_client(),
             snippet_registry=snippet_registry,
@@ -462,6 +461,7 @@ class SdkGenerator(AbstractGenerator):
             oauth_scheme=oauth_scheme,
             endpoint_metadata_collector=endpoint_metadata_collector,
             websocket=None,
+            imports_manager=source_file.get_imports_manager(),
         )
         root_client_generator.generate(source_file=source_file)
         generated_root_client = root_client_generator.get_generated_root_client()
@@ -483,6 +483,7 @@ class SdkGenerator(AbstractGenerator):
                 snippet_writer=snippet_writer,
                 endpoint_metadata_collector=endpoint_metadata_collector,
                 websocket=None,
+                imports_manager=raw_client_source_file.get_imports_manager(),
             ).generate(source_file=raw_client_source_file)
             project.write_source_file(source_file=raw_client_source_file, filepath=raw_client_filepath)
         return generated_root_client
@@ -526,11 +527,11 @@ class SdkGenerator(AbstractGenerator):
             class_name=context.get_client_class_name_for_subpackage_service(subpackage_id),
             async_class_name=context.get_class_name_of_async_subpackage_service(subpackage_id),
             generated_root_client=generated_root_client,
-            imports_manager=client_source_file.get_imports_manager(),
             snippet_registry=snippet_registry,
             snippet_writer=snippet_writer,
             endpoint_metadata_collector=endpoint_metadata_collector,
             websocket=websocket,
+            imports_manager=client_source_file.get_imports_manager(),
         ).generate(source_file=client_source_file)
         project.write_source_file(source_file=client_source_file, filepath=client_filepath)
 
@@ -549,6 +550,7 @@ class SdkGenerator(AbstractGenerator):
             snippet_writer=snippet_writer,
             endpoint_metadata_collector=endpoint_metadata_collector,
             websocket=websocket,
+            imports_manager=raw_client_source_file.get_imports_manager(),
         ).generate(source_file=raw_client_source_file)
         project.write_source_file(source_file=raw_client_source_file, filepath=raw_client_filepath)
 

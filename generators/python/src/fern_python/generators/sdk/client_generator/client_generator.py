@@ -5,7 +5,6 @@ from .base_wrapped_client_generator import BaseWrappedClientGenerator
 from .websocket_connect_method_generator import WebsocketConnectMethodGenerator
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
-from fern_python.codegen.imports_manager import ImportsManager
 from fern_python.generators.sdk.client_generator.generated_root_client import GeneratedRootClient
 from typing_extensions import Unpack
 
@@ -17,7 +16,6 @@ class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
         self,
         subpackage_id: ir_types.SubpackageId,
         generated_root_client: GeneratedRootClient,
-        imports_manager: ImportsManager,
         **kwargs: Unpack[BaseClientGeneratorKwargs],
     ):
         super().__init__(
@@ -25,7 +23,6 @@ class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
         )
         self._subpackage_id = subpackage_id
         self._generated_root_client = generated_root_client
-        self._imports_manager = imports_manager
 
     def generate(self, source_file: SourceFile) -> None:
         class_declaration = self._create_class_declaration(is_async=False)
@@ -71,43 +68,7 @@ class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
             generated_connect_method = websocket_connect_method_generator.generate()
             class_declaration.add_method(generated_connect_method.function)
 
-        if self._context.custom_config.lazy_imports:
-            for subpackage_id in self._package.subpackages:
-                subpackage = self._context.ir.subpackages[subpackage_id]
-                if subpackage.has_endpoints_in_tree:
-
-                    def make_lazy_import_property(
-                        current_subpackage: ir_types.Subpackage, current_subpackage_id: ir_types.SubpackageId
-                    ) -> AST.CodeWriterFunction:
-                        # This creates a NEW local scope with NEW local variables
-                        def _write_lazy_import_property(writer: AST.NodeWriter) -> None:
-                            # These reference the LOCAL variables, not the outer ones
-                            self._write_lazy_import_property(
-                                writer=writer,
-                                subpackage=current_subpackage,
-                                subpackage_id=current_subpackage_id,
-                                is_async=is_async,
-                            )
-
-                        return _write_lazy_import_property
-
-                    class_declaration.add_method(
-                        declaration=AST.FunctionDeclaration(
-                            name=subpackage.name.snake_case.safe_name,
-                            is_async=False,
-                            signature=AST.FunctionSignature(parameters=[]),
-                            decorators=[
-                                AST.Expression(
-                                    AST.Reference(qualified_name_excluding_import=("property",), import_=None)
-                                )
-                            ],
-                            body=AST.CodeWriter(
-                                make_lazy_import_property(
-                                    current_subpackage=subpackage, current_subpackage_id=subpackage_id
-                                )
-                            ),
-                        )
-                    )
+        self._generate_lazy_import_properties(class_declaration=class_declaration, is_async=is_async)
 
         return class_declaration
 
@@ -134,68 +95,6 @@ class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
                 type_hint=AST.TypeHint(self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async)),
             )
         ]
-
-    def _get_subpackage_service_instantiation(
-        self, *, subpackage_id: ir_types.SubpackageId, is_async: bool
-    ) -> AST.ClassInstantiation:
-        kwargs = [
-            (
-                "client_wrapper",
-                AST.Expression(f"self.{self._get_client_wrapper_member_name()}"),
-            )
-        ]
-        return AST.ClassInstantiation(
-            class_=(
-                self._context.get_reference_to_async_subpackage_service(
-                    subpackage_id, lazy_import=self._context.custom_config.lazy_imports
-                )
-                if is_async
-                else self._context.get_reference_to_subpackage_service(
-                    subpackage_id, lazy_import=self._context.custom_config.lazy_imports
-                )
-            ),
-            kwargs=kwargs,
-        )
-
-    def _write_lazy_import_property(
-        self,
-        *,
-        writer: AST.NodeWriter,
-        subpackage: ir_types.Subpackage,
-        subpackage_id: ir_types.SubpackageId,
-        is_async: bool,
-    ) -> None:
-        attr_name = f"self._{subpackage.name.snake_case.safe_name}"
-        service_instantiation = self._get_subpackage_service_instantiation(
-            subpackage_id=subpackage_id, is_async=is_async
-        )
-        service_import = service_instantiation.get_class_reference().import_
-        if service_import is None:
-            raise ValueError(f"Could not evaluate import for {subpackage.name.snake_case.safe_name}")
-
-        writer.write_node(
-            AST.ConditionalTree(
-                conditions=[
-                    AST.IfConditionLeaf(
-                        condition=AST.Expression(f"{attr_name} is None"),
-                        code=[
-                            AST.Expression(
-                                self._imports_manager.get_import_as_string(
-                                    import_=service_import,
-                                    noqas=["E402"],
-                                )
-                            ),
-                            AST.VariableDeclaration(
-                                name=attr_name,
-                                initializer=AST.Expression(service_instantiation),
-                            ),
-                        ],
-                    )
-                ],
-                else_code=None,
-            )
-        )
-        writer.write_node(AST.ReturnStatement(AST.Expression(attr_name)))
 
     def _get_write_constructor_body(self, *, is_async: bool) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
@@ -228,34 +127,6 @@ class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
             if self._context.custom_config.lazy_imports:
                 writer.write_line("self._client_wrapper = client_wrapper")
 
-            # Initialize nested clients
-            for subpackage_id in self._package.subpackages:
-                subpackage = self._context.ir.subpackages[subpackage_id]
-                if subpackage.has_endpoints_in_tree:
-                    if self._context.custom_config.lazy_imports:
-                        service_reference = (
-                            self._context.get_reference_to_async_subpackage_service(subpackage_id, lazy_import=True)
-                            if is_async
-                            else self._context.get_reference_to_subpackage_service(subpackage_id, lazy_import=True)
-                        )
-                        writer.write_node(
-                            AST.VariableDeclaration(
-                                name=f"self._{subpackage.name.snake_case.safe_name}",
-                                type_hint=AST.TypeHint.optional(AST.TypeHint(type=service_reference)),
-                                initializer=AST.Expression("None"),
-                            )
-                        )
-                    else:
-                        writer.write_node(
-                            AST.VariableDeclaration(
-                                name=f"self.{subpackage.name.snake_case.safe_name}",
-                                initializer=AST.Expression(
-                                    self._get_subpackage_service_instantiation(
-                                        subpackage_id=subpackage_id, is_async=is_async
-                                    )
-                                ),
-                            )
-                        )
-                        writer.write_line()
+            self._initialize_nested_clients(writer=writer, is_async=is_async)
 
         return _write_constructor_body
