@@ -11,7 +11,7 @@ export function getExamples(schema: OpenAPIV3.SchemaObject | OpenAPIV3.Parameter
         }
         // Handle object-style examples (OpenAPI 3.1 style)
         if (typeof examples === "object" && examples !== null) {
-            return Object.values(examples).map(example => {
+            return Object.values(examples).map((example) => {
                 // If the example has a 'value' property, extract it
                 if (typeof example === "object" && example !== null && "value" in example) {
                     return (example as { value: unknown }).value;
