@@ -34,7 +34,14 @@ import OauthClientCredentialsDefault
 let client = OauthClientCredentialsDefaultClient()
 
 try await client.auth.getToken(
-    request: Requests.GetTokenRequest()
+    request: Requests.GetTokenRequest(
+        clientId: "string",
+        clientSecret: "string",
+        grantType: ClientCredentials(),
+        additionalProperties: [
+            "string": JSONValue.string("string")
+        ]
+    )
 )
 ```
 

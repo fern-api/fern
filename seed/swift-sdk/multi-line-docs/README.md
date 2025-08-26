@@ -34,7 +34,13 @@ import MultiLineDocs
 let client = MultiLineDocsClient()
 
 try await client.user.createUser(
-    request: Requests.CreateUserRequest()
+    request: Requests.CreateUserRequest(
+        name: "string",
+        age: 123,
+        additionalProperties: [
+            "string": JSONValue.string("string")
+        ]
+    )
 )
 ```
 
