@@ -34,7 +34,7 @@ import Api
 let client = ApiClient()
 
 try await client.getAccount(
-
+    accountId: "string"
 )
 ```
 

@@ -34,7 +34,8 @@ import PackageYml
 let client = PackageYmlClient()
 
 try await client.echo(
-
+    id: "string",
+    request: EchoRequest()
 )
 ```
 

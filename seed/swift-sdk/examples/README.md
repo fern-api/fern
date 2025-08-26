@@ -34,7 +34,7 @@ import Examples
 let client = ExamplesClient(token: "YOUR_TOKEN")
 
 try await client.echo(
-
+    request: "string"
 )
 ```
 
