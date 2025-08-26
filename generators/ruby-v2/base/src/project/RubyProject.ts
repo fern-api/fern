@@ -8,8 +8,8 @@ import { template } from "lodash-es";
 import { join as pathJoin } from "path";
 import { topologicalCompareAsIsFiles } from "../AsIs";
 import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
-import { RubocopFile } from "./RubocopFile";
 import { ReadmeFile } from "./ReadMeFile";
+import { RubocopFile } from "./RubocopFile";
 
 const GEMFILE_FILENAME = "Gemfile";
 const RAKEFILE_FILENAME = "Rakefile";
