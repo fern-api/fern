@@ -2,7 +2,7 @@ imports:
   root: __package__.yml
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   endpoints:
     createPets:
       auth: false

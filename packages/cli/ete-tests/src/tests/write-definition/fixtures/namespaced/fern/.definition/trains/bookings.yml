@@ -34,7 +34,7 @@ docs: |
   and optional extras.
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   display-name: Bookings
   endpoints:
     create-booking:
