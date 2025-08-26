@@ -1,41 +1,42 @@
+# frozen_string_literal: true
 
 module Seed
-    module Service
-        class Client
-            # @option client [Seed::Internal::Http::RawClient]
-            #
-            # @return [Seed::Service::Client]
-            def initialize(client)
-                @client = client
-            end
+  module Service
+    class Client
+      # @return [Seed::Service::Client]
+      def initialize(client:)
+        @client = client
+      end
 
-            # GET request with custom api key
-            #
-            # @return [String]
-            def get_with_api_key(request_options: {}, **params)
-                _request = params
+      # GET request with custom api key
+      #
+      # @return [String]
+      def get_with_api_key(request_options: {}, **_params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          method: "GET",
+          path: "apiKey"
+        )
+        _response = @client.send(_request)
+        return if _response.code >= "200" && _response.code < "300"
 
-                _response = @client.send(_request)
-                if if _response.code >= "200" && _response.code < "300"
-                    return 
-                else
-                    raise _response.body
-                end
-            end
+        raise _response.body
+      end
 
-            # GET request with custom api key
-            #
-            # @return [String]
-            def get_with_header(request_options: {}, **params)
-                _request = params
+      # GET request with custom api key
+      #
+      # @return [String]
+      def get_with_header(request_options: {}, **_params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          method: "GET",
+          path: "apiKeyInHeader"
+        )
+        _response = @client.send(_request)
+        return if _response.code >= "200" && _response.code < "300"
 
-                _response = @client.send(_request)
-                if if _response.code >= "200" && _response.code < "300"
-                    return 
-                else
-                    raise _response.body
-                end
-            end
-        end
+        raise _response.body
+      end
     end
+  end
 end
