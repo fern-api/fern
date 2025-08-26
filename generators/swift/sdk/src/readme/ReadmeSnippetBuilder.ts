@@ -251,7 +251,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 });
             case "optional":
                 return this.getSampleValue(swift.Type.required(type.internalType.valueType));
-            case "arbitrary": {
+            case "custom": {
                 const symbol =
                     this.context.project.getSchemaType(type.internalType.name) ??
                     this.context.project.getRequestType(type.internalType.name);

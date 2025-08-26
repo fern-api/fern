@@ -87,11 +87,11 @@ type Optional = {
 };
 
 /**
- * A reference to a custom arbitrary type.
+ * A reference to a custom type.
  */
-type Arbitrary = {
-    type: "arbitrary";
-    /** The name of the custom arbitrary type. */
+type Custom = {
+    type: "custom";
+    /** The name of the custom type. */
     name: string;
 };
 
@@ -118,7 +118,7 @@ type InternalType =
     | Array_
     | Dictionary
     | Optional
-    | Arbitrary
+    | Custom
     | ExistentialAny
     | JsonValue;
 
@@ -196,8 +196,8 @@ export class Type extends AstNode {
                     that.internalType.type == "optional" &&
                     this.internalType.valueType.equals(that.internalType.valueType)
                 );
-            case "arbitrary":
-                return that.internalType.type === "arbitrary" && this.internalType.name === that.internalType.name;
+            case "custom":
+                return that.internalType.type === "custom" && this.internalType.name === that.internalType.name;
             case "existential-any":
                 return (
                     that.internalType.type === "existential-any" &&
@@ -269,7 +269,7 @@ export class Type extends AstNode {
             }
             case "optional":
                 return `optional${upperFirst(Type.toCaseName(type.internalType.valueType))}`;
-            case "arbitrary":
+            case "custom":
                 return camelCase(type.internalType.name);
             case "existential-any":
                 return `any${upperFirst(type.internalType.protocolName)}`;
@@ -347,7 +347,7 @@ export class Type extends AstNode {
                 this.internalType.valueType.write(writer);
                 writer.write("?");
                 break;
-            case "arbitrary":
+            case "custom":
                 writer.write(this.internalType.name);
                 break;
             case "existential-any":
@@ -442,8 +442,8 @@ export class Type extends AstNode {
         return valueType.internalType.type === "optional" ? Type.required(valueType.internalType.valueType) : valueType;
     }
 
-    public static arbitrary(name: string): Type {
-        return new this({ type: "arbitrary", name });
+    public static custom(name: string): Type {
+        return new this({ type: "custom", name });
     }
 
     public static existentialAny(protocolName: string): Type {

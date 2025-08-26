@@ -237,7 +237,7 @@ export class StructGenerator {
                 swift.functionParameter({
                     argumentLabel: "from",
                     unsafeName: "decoder",
-                    type: swift.Type.arbitrary("Decoder")
+                    type: swift.Type.custom("Decoder")
                 })
             ],
             body: swift.CodeBlock.withStatements(bodyStatements)
@@ -326,7 +326,7 @@ export class StructGenerator {
                 swift.functionParameter({
                     argumentLabel: "to",
                     unsafeName: "encoder",
-                    type: swift.Type.arbitrary("Encoder")
+                    type: swift.Type.custom("Encoder")
                 })
             ],
             throws: true,
