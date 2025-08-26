@@ -91,23 +91,28 @@ export class RootClientGenerator {
         });
     }
 
-    public generate(): swift.Class {
-        return swift.class_({
-            name: this.clientName,
-            final: true,
-            accessLevel: swift.AccessLevel.Public,
-            conformances: [swift.Protocol.Sendable],
-            properties: [
-                ...this.clientGeneratorContext.subClients.map(({ property }) => property),
-                this.clientGeneratorContext.httpClient.property
-            ],
-            initializers: this.generateInitializers(),
-            methods: this.generateMethods(),
-            docs: swift.docComment({
-                summary:
-                    "Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions."
+    public generate() {
+        const authSchemes = this.getAuthSchemeParameters();
+
+        return {
+            authSchemes,
+            class: swift.class_({
+                name: this.clientName,
+                final: true,
+                accessLevel: swift.AccessLevel.Public,
+                conformances: [swift.Protocol.Sendable],
+                properties: [
+                    ...this.clientGeneratorContext.subClients.map(({ property }) => property),
+                    this.clientGeneratorContext.httpClient.property
+                ],
+                initializers: this.generateInitializers(),
+                methods: this.generateMethods(),
+                docs: swift.docComment({
+                    summary:
+                        "Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions."
+                })
             })
-        });
+        };
     }
 
     private generateInitializers(): swift.Initializer[] {
