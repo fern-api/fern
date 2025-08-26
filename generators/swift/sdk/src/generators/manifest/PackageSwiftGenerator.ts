@@ -2,7 +2,6 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 
-import { SDKRequirements } from "../../requirements";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
 export declare namespace PackageSwiftGenerator {
@@ -23,7 +22,7 @@ export class PackageSwiftGenerator {
             filename: "Package.swift",
             directory: RelativeFilePath.of(""),
             contents: [
-                swift.comment({ content: `swift-tools-version: ${SDKRequirements.minSwiftVersion}` }),
+                swift.comment({ content: "swift-tools-version: 5.7" }),
                 swift.LineBreak.single(),
                 swift.Statement.import("PackageDescription"),
                 swift.LineBreak.single(),
@@ -44,9 +43,7 @@ export class PackageSwiftGenerator {
                                             methodName: "iOS",
                                             arguments_: [
                                                 swift.functionArgument({
-                                                    value: swift.Expression.enumCaseShorthand(
-                                                        `v${SDKRequirements.minIOSVersion}`
-                                                    )
+                                                    value: swift.Expression.enumCaseShorthand("v15")
                                                 })
                                             ]
                                         }),
@@ -54,9 +51,7 @@ export class PackageSwiftGenerator {
                                             methodName: "macOS",
                                             arguments_: [
                                                 swift.functionArgument({
-                                                    value: swift.Expression.enumCaseShorthand(
-                                                        `v${SDKRequirements.minMacOSVersion}`
-                                                    )
+                                                    value: swift.Expression.enumCaseShorthand("v12")
                                                 })
                                             ]
                                         }),
@@ -64,9 +59,7 @@ export class PackageSwiftGenerator {
                                             methodName: "tvOS",
                                             arguments_: [
                                                 swift.functionArgument({
-                                                    value: swift.Expression.enumCaseShorthand(
-                                                        `v${SDKRequirements.minTVOSVersion}`
-                                                    )
+                                                    value: swift.Expression.enumCaseShorthand("v15")
                                                 })
                                             ]
                                         }),
@@ -74,9 +67,7 @@ export class PackageSwiftGenerator {
                                             methodName: "watchOS",
                                             arguments_: [
                                                 swift.functionArgument({
-                                                    value: swift.Expression.enumCaseShorthand(
-                                                        `v${SDKRequirements.minWatchOSVersion}`
-                                                    )
+                                                    value: swift.Expression.enumCaseShorthand("v8")
                                                 })
                                             ]
                                         })

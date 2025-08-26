@@ -1,7 +1,7 @@
-import { File, GeneratorNotificationService } from "@fern-api/base-generator";
-import { assertNever, extractErrorMessage, noop } from "@fern-api/core-utils";
+import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { assertNever, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractSwiftGeneratorCli } from "@fern-api/swift-base";
+import { AbstractSwiftGeneratorCli, SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import {
     AliasGenerator,
@@ -18,7 +18,6 @@ import {
     PackageSwiftGenerator,
     RootClientGenerator,
     SingleUrlEnvironmentGenerator,
-    SnippetJsonGenerator,
     SubClientGenerator
 } from "./generators";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
@@ -67,36 +66,18 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        this.generateRootFiles(context);
         await this.generateSourceFiles(context);
-        // Generate root files including README.md last because they depend on the registered schema and request types
-        await this.generateRootFiles(context);
         await context.project.persist();
     }
 
-    private async generateRootFiles(context: SdkGeneratorContext): Promise<void> {
-        this.generatePackageSwiftFile(context);
-        await this.generateReadme(context);
-    }
-
-    private generatePackageSwiftFile(context: SdkGeneratorContext): void {
-        const generator = new PackageSwiftGenerator({
+    private generateRootFiles(context: SdkGeneratorContext): void {
+        const files: SwiftFile[] = [];
+        const packageSwiftGenerator = new PackageSwiftGenerator({
             sdkGeneratorContext: context
         });
-        const file = generator.generate();
-        context.project.addRootFiles(file);
-    }
-
-    private async generateReadme(context: SdkGeneratorContext): Promise<void> {
-        try {
-            const snippets = await new SnippetJsonGenerator({ context }).generate();
-            const content = await context.generatorAgent.generateReadme({
-                context,
-                endpointSnippets: snippets.endpoints
-            });
-            context.project.addRootFiles(new File("README.md", RelativeFilePath.of(""), content));
-        } catch (e) {
-            context.logger.warn("Failed to generate README.md, this is OK", extractErrorMessage(e));
-        }
+        files.push(packageSwiftGenerator.generate());
+        context.project.addRootFiles(...files);
     }
 
     private async generateSourceFiles(context: SdkGeneratorContext): Promise<void> {
@@ -178,7 +159,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         directory: context.requestsDirectory,
                         contents: [extension]
                     });
-                    context.project.addRequestStruct(`${requestsContainerSymbolName}.${struct.name}`, struct);
                 }
             });
         });
@@ -204,7 +184,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                 directory: context.schemasDirectory,
                                 contents: [enum_]
                             });
-                            context.project.addSchemaType(typeId, enum_);
                         } else if (literalType.type === "boolean") {
                             // TODO(kafkas): Implement boolean literals
                             const generator = new AliasGenerator({
@@ -219,7 +198,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                 directory: context.schemasDirectory,
                                 contents: [declaration]
                             });
-                            context.project.addSchemaType(typeId, declaration);
                         } else {
                             assertNever(literalType);
                         }
@@ -236,7 +214,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                             directory: context.schemasDirectory,
                             contents: [declaration]
                         });
-                        context.project.addSchemaType(typeId, declaration);
                     }
                 },
                 enum: (etd) => {
@@ -251,7 +228,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         directory: context.schemasDirectory,
                         contents: [enum_]
                     });
-                    context.project.addSchemaType(typeId, enum_);
                 },
                 object: (otd) => {
                     const generator = new ObjectGenerator({
@@ -267,7 +243,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         directory: context.schemasDirectory,
                         contents: [struct]
                     });
-                    context.project.addSchemaType(typeId, struct);
                 },
                 undiscriminatedUnion: (uutd) => {
                     const generator = new UndiscriminatedUnionGenerator({
@@ -282,7 +257,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         directory: context.schemasDirectory,
                         contents: [enum_]
                     });
-                    context.project.addSchemaType(typeId, enum_);
                 },
                 union: (utd) => {
                     const generator = new DiscriminatedUnionGenerator({
@@ -297,7 +271,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         directory: context.schemasDirectory,
                         contents: [enum_]
                     });
-                    context.project.addSchemaType(typeId, enum_);
                 },
                 _other: noop
             });
@@ -310,7 +283,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             package_: context.ir.rootPackage,
             sdkGeneratorContext: context
         });
-        const { class: rootClientClass } = rootClientGenerator.generate();
+        const rootClientClass = rootClientGenerator.generate();
         context.project.addSourceFile({
             nameCandidateWithoutExtension: rootClientClass.name,
             directory: RelativeFilePath.of(""),
