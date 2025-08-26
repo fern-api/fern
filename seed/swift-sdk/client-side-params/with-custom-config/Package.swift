@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "ClientSideParams",
+    name: "MyCustomModule",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,14 +12,14 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "ClientSideParams",
-            targets: ["ClientSideParams"]
+            name: "MyCustomModule",
+            targets: ["MyCustomModule"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "ClientSideParams",
+            name: "MyCustomModule",
             path: "Sources"
         )
     ]
