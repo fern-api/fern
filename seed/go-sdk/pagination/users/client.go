@@ -11,6 +11,7 @@ import (
 	internal "github.com/pagination/fern/internal"
 	option "github.com/pagination/fern/option"
 	http "net/http"
+	strconv "strconv"
 )
 
 type Client struct {
@@ -205,8 +206,11 @@ func (c *Client) ListWithOffsetPagination(
 		}
 	}
 	next := 1
-	if request.Page != nil {
-		next = *request.Page
+	if queryParams.Has("page") {
+		var err error
+		if next, err = strconv.Atoi(queryParams.Get("page")); err != nil {
+			return nil, err
+		}
 	}
 
 	readPageResponse := func(response *fern.ListUsersPaginationResponse) *internal.PageResponse[*int, *fern.User] {
@@ -265,8 +269,11 @@ func (c *Client) ListWithDoubleOffsetPagination(
 		}
 	}
 	var next float64 = 1
-	if request.Page != nil {
-		next = *request.Page
+	if queryParams.Has("page") {
+		var err error
+		if next, err = strconv.Atoi(queryParams.Get("page")); err != nil {
+			return nil, err
+		}
 	}
 
 	readPageResponse := func(response *fern.ListUsersPaginationResponse) *internal.PageResponse[*float64, *fern.User] {
@@ -341,8 +348,11 @@ func (c *Client) ListWithOffsetStepPagination(
 		}
 	}
 	next := 1
-	if request.Page != nil {
-		next = *request.Page
+	if queryParams.Has("page") {
+		var err error
+		if next, err = strconv.Atoi(queryParams.Get("page")); err != nil {
+			return nil, err
+		}
 	}
 
 	readPageResponse := func(response *fern.ListUsersPaginationResponse) *internal.PageResponse[*int, *fern.User] {
@@ -401,8 +411,11 @@ func (c *Client) ListWithOffsetPaginationHasNextPage(
 		}
 	}
 	next := 1
-	if request.Page != nil {
-		next = *request.Page
+	if queryParams.Has("page") {
+		var err error
+		if next, err = strconv.Atoi(queryParams.Get("page")); err != nil {
+			return nil, err
+		}
 	}
 
 	readPageResponse := func(response *fern.ListUsersPaginationResponse) *internal.PageResponse[*int, *fern.User] {
@@ -635,8 +648,11 @@ func (c *Client) ListWithGlobalConfig(
 		}
 	}
 	next := 1
-	if request.Offset != nil {
-		next = *request.Offset
+	if queryParams.Has("offset") {
+		var err error
+		if next, err = strconv.Atoi(queryParams.Get("offset")); err != nil {
+			return nil, err
+		}
 	}
 
 	readPageResponse := func(response *fern.UsernameContainer) *internal.PageResponse[*int, string] {
