@@ -74,6 +74,12 @@ async function runCli() {
         );
     }
 
+    if (process.env.HTTP_PROXY != null) {
+        const { setGlobalDispatcher, ProxyAgent } = await import("undici");
+        const proxyAgent = new ProxyAgent(process.env.HTTP_PROXY);
+        setGlobalDispatcher(proxyAgent);
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     process.on("SIGINT", async () => {
         cliContext.suppressUpgradeMessage();
