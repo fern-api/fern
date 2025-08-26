@@ -35,7 +35,7 @@ describe("Method", () => {
             const method = swift.method({
                 unsafeName: "create",
                 static_: true,
-                returnType: Type.custom("User")
+                returnType: Type.arbitrary("User")
             });
 
             expect(method.toString()).toMatchInlineSnapshot(`
@@ -119,7 +119,7 @@ describe("Method", () => {
                         type: Type.string()
                     })
                 ],
-                returnType: Type.custom("User")
+                returnType: Type.arbitrary("User")
             });
 
             expect(method.toString()).toMatchInlineSnapshot(
@@ -144,7 +144,7 @@ describe("Method", () => {
                         type: Type.optional(Type.bool())
                     })
                 ],
-                returnType: Type.optional(Type.custom("User"))
+                returnType: Type.optional(Type.arbitrary("User"))
             });
 
             expect(method.toString()).toMatchInlineSnapshot(
@@ -209,7 +209,7 @@ describe("Method", () => {
                     swift.functionParameter({
                         argumentLabel: "for",
                         unsafeName: "struct",
-                        type: Type.custom("Config")
+                        type: Type.arbitrary("Config")
                     })
                 ],
                 returnType: Type.string()
@@ -263,7 +263,7 @@ describe("Method", () => {
                     swift.functionParameter({
                         argumentLabel: "from",
                         unsafeName: "data",
-                        type: Type.custom("Data")
+                        type: Type.arbitrary("Data")
                     }),
                     swift.functionParameter({
                         argumentLabel: "with",
@@ -305,7 +305,7 @@ describe("Method", () => {
                         defaultValue: swift.Expression.rawValue("true")
                     })
                 ],
-                returnType: Type.custom("User")
+                returnType: Type.arbitrary("User")
             });
 
             expect(method.toString()).toMatchInlineSnapshot(

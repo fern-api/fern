@@ -114,7 +114,7 @@ export class EndpointMethodGenerator {
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: swift.Type.custom(fullyQualifiedRequestTypeSymbolName),
+                        type: swift.Type.arbitrary(fullyQualifiedRequestTypeSymbolName),
                         docsContent: endpoint.requestBody.docs
                     })
                 );
@@ -144,7 +144,7 @@ export class EndpointMethodGenerator {
             swift.functionParameter({
                 argumentLabel: "requestOptions",
                 unsafeName: "requestOptions",
-                type: swift.Type.optional(swift.Type.custom("RequestOptions")),
+                type: swift.Type.optional(swift.Type.arbitrary("RequestOptions")),
                 defaultValue: swift.Expression.rawValue("nil"),
                 docsContent:
                     "Additional options for configuring the request, such as custom headers or timeout settings."
@@ -229,7 +229,7 @@ export class EndpointMethodGenerator {
                                             arguments_: [
                                                 swift.functionArgument({
                                                     value:
-                                                        swiftType.unwrappedType === "custom"
+                                                        swiftType.unwrappedType === "arbitrary"
                                                             ? swift.Expression.memberAccess({
                                                                   target: swift.Expression.reference("$0"),
                                                                   memberName: "rawValue"
@@ -248,7 +248,7 @@ export class EndpointMethodGenerator {
                                         arguments_: [
                                             swift.functionArgument({
                                                 value:
-                                                    swiftType.unwrappedType === "custom"
+                                                    swiftType.unwrappedType === "arbitrary"
                                                         ? swift.Expression.memberAccess({
                                                               target: swift.Expression.reference(
                                                                   queryParam.name.name.camelCase.unsafeName

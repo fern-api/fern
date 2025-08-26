@@ -64,7 +64,7 @@ export class UndiscriminatedUnionGenerator {
                 swift.functionParameter({
                     argumentLabel: "from",
                     unsafeName: "decoder",
-                    type: swift.Type.custom("Decoder")
+                    type: swift.Type.arbitrary("Decoder")
                 })
             ],
             body: swift.CodeBlock.withStatements([
@@ -162,7 +162,7 @@ export class UndiscriminatedUnionGenerator {
                 swift.functionParameter({
                     argumentLabel: "to",
                     unsafeName: "encoder",
-                    type: swift.Type.custom("Encoder")
+                    type: swift.Type.arbitrary("Encoder")
                 })
             ],
             throws: true,

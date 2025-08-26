@@ -175,8 +175,8 @@ describe("EnumWithAssociatedValues", () => {
                 accessLevel: AccessLevel.Public,
                 conformances: [swift.Protocol.Codable],
                 cases: [
-                    { unsafeName: "success", associatedValue: [swift.Type.custom("Data")] },
-                    { unsafeName: "error", associatedValue: [swift.Type.custom("ErrorInfo")] }
+                    { unsafeName: "success", associatedValue: [swift.Type.arbitrary("Data")] },
+                    { unsafeName: "error", associatedValue: [swift.Type.arbitrary("ErrorInfo")] }
                 ],
                 nestedTypes: [
                     swift.struct({
@@ -225,9 +225,9 @@ describe("EnumWithAssociatedValues", () => {
                 accessLevel: AccessLevel.Public,
                 conformances: [swift.Protocol.Codable, swift.Protocol.Equatable],
                 cases: [
-                    { unsafeName: "loading", associatedValue: [swift.Type.custom("Progress")] },
-                    { unsafeName: "loaded", associatedValue: [swift.Type.custom("Content")] },
-                    { unsafeName: "failed", associatedValue: [swift.Type.custom("ErrorDetails")] }
+                    { unsafeName: "loading", associatedValue: [swift.Type.arbitrary("Progress")] },
+                    { unsafeName: "loaded", associatedValue: [swift.Type.arbitrary("Content")] },
+                    { unsafeName: "failed", associatedValue: [swift.Type.arbitrary("ErrorDetails")] }
                 ],
                 initializers: [
                     swift.initializer({
@@ -236,7 +236,7 @@ describe("EnumWithAssociatedValues", () => {
                             swift.functionParameter({
                                 argumentLabel: "content",
                                 unsafeName: "content",
-                                type: swift.Type.custom("Content")
+                                type: swift.Type.arbitrary("Content")
                             })
                         ],
                         body: swift.codeBlock((writer) => {

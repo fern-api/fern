@@ -84,7 +84,7 @@ export class RootClientGenerator {
         return swift.functionParameter({
             argumentLabel: "urlSession",
             unsafeName: "urlSession",
-            type: swift.Type.optional(swift.Type.custom("URLSession")),
+            type: swift.Type.optional(swift.Type.arbitrary("URLSession")),
             defaultValue: swift.Expression.rawValue("nil"),
             docsContent:
                 "Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout."
@@ -337,19 +337,19 @@ export class RootClientGenerator {
             swift.functionParameter({
                 argumentLabel: "headerAuth",
                 unsafeName: "headerAuth",
-                type: swift.Type.optional(swift.Type.custom("ClientConfig.HeaderAuth")),
+                type: swift.Type.optional(swift.Type.arbitrary("ClientConfig.HeaderAuth")),
                 defaultValue: swift.Expression.nil()
             }),
             swift.functionParameter({
                 argumentLabel: "bearerAuth",
                 unsafeName: "bearerAuth",
-                type: swift.Type.optional(swift.Type.custom("ClientConfig.BearerAuth")),
+                type: swift.Type.optional(swift.Type.arbitrary("ClientConfig.BearerAuth")),
                 defaultValue: swift.Expression.nil()
             }),
             swift.functionParameter({
                 argumentLabel: "basicAuth",
                 unsafeName: "basicAuth",
-                type: swift.Type.optional(swift.Type.custom("ClientConfig.BasicAuth")),
+                type: swift.Type.optional(swift.Type.arbitrary("ClientConfig.BasicAuth")),
                 defaultValue: swift.Expression.nil()
             }),
             swift.functionParameter({
@@ -373,7 +373,7 @@ export class RootClientGenerator {
             swift.functionParameter({
                 argumentLabel: "urlSession",
                 unsafeName: "urlSession",
-                type: swift.Type.optional(swift.Type.custom("URLSession")),
+                type: swift.Type.optional(swift.Type.arbitrary("URLSession")),
                 defaultValue: swift.Expression.nil()
             })
         ];
@@ -505,8 +505,8 @@ export class RootClientGenerator {
                         argumentLabel: scheme.token.camelCase.unsafeName,
                         unsafeName: scheme.token.camelCase.unsafeName,
                         type: isAuthMandatory
-                            ? swift.Type.custom("ClientConfig.CredentialProvider")
-                            : swift.Type.optional(swift.Type.custom("ClientConfig.CredentialProvider")),
+                            ? swift.Type.arbitrary("ClientConfig.CredentialProvider")
+                            : swift.Type.optional(swift.Type.arbitrary("ClientConfig.CredentialProvider")),
                         defaultValue: isAuthMandatory ? undefined : swift.Expression.nil(),
                         docsContent: `An async function that returns the bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.`
                     })
