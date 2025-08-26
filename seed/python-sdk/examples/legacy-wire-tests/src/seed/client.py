@@ -80,7 +80,9 @@ class SeedExamples:
         )
         self._raw_client = RawSeedExamples(client_wrapper=self._client_wrapper)
         self.file = FileClient(client_wrapper=self._client_wrapper)
+
         self.health = HealthClient(client_wrapper=self._client_wrapper)
+
         self.service = ServiceClient(client_wrapper=self._client_wrapper)
 
     @property
@@ -216,7 +218,9 @@ class AsyncSeedExamples:
         )
         self._raw_client = AsyncRawSeedExamples(client_wrapper=self._client_wrapper)
         self.file = AsyncFileClient(client_wrapper=self._client_wrapper)
+
         self.health = AsyncHealthClient(client_wrapper=self._client_wrapper)
+
         self.service = AsyncServiceClient(client_wrapper=self._client_wrapper)
 
     @property

@@ -8,7 +8,7 @@ from .service.client import AsyncServiceClient, ServiceClient
 class HealthClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawHealthClient(client_wrapper=client_wrapper)
-        self.service = ServiceClient(client_wrapper=client_wrapper)
+        self.service = ServiceClient(client_wrapper=self._client_wrapper)
 
     @property
     def with_raw_response(self) -> RawHealthClient:
@@ -25,7 +25,7 @@ class HealthClient:
 class AsyncHealthClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawHealthClient(client_wrapper=client_wrapper)
-        self.service = AsyncServiceClient(client_wrapper=client_wrapper)
+        self.service = AsyncServiceClient(client_wrapper=self._client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawHealthClient:

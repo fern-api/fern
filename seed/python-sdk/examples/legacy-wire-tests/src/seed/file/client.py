@@ -9,9 +9,9 @@ from .service.client import AsyncServiceClient, ServiceClient
 class FileClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawFileClient(client_wrapper=client_wrapper)
-        self.notification = NotificationClient(client_wrapper=client_wrapper)
+        self.notification = NotificationClient(client_wrapper=self._client_wrapper)
 
-        self.service = ServiceClient(client_wrapper=client_wrapper)
+        self.service = ServiceClient(client_wrapper=self._client_wrapper)
 
     @property
     def with_raw_response(self) -> RawFileClient:
@@ -28,9 +28,9 @@ class FileClient:
 class AsyncFileClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawFileClient(client_wrapper=client_wrapper)
-        self.notification = AsyncNotificationClient(client_wrapper=client_wrapper)
+        self.notification = AsyncNotificationClient(client_wrapper=self._client_wrapper)
 
-        self.service = AsyncServiceClient(client_wrapper=client_wrapper)
+        self.service = AsyncServiceClient(client_wrapper=self._client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawFileClient:

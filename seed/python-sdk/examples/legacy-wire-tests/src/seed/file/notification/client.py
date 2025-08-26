@@ -8,7 +8,7 @@ from .service.client import AsyncServiceClient, ServiceClient
 class NotificationClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawNotificationClient(client_wrapper=client_wrapper)
-        self.service = ServiceClient(client_wrapper=client_wrapper)
+        self.service = ServiceClient(client_wrapper=self._client_wrapper)
 
     @property
     def with_raw_response(self) -> RawNotificationClient:
@@ -25,7 +25,7 @@ class NotificationClient:
 class AsyncNotificationClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawNotificationClient(client_wrapper=client_wrapper)
-        self.service = AsyncServiceClient(client_wrapper=client_wrapper)
+        self.service = AsyncServiceClient(client_wrapper=self._client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawNotificationClient:
