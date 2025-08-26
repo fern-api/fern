@@ -2,6 +2,7 @@ import { assertNever, values } from "@fern-api/core-utils";
 import { camelCase, lowerFirst, upperFirst } from "lodash-es";
 
 import { AstNode, Writer } from "./core";
+import { Expression } from "./Expression";
 
 const BuiltinType = {
     String: {
@@ -277,6 +278,61 @@ export class Type extends AstNode {
                 return "json";
             default:
                 assertNever(type.internalType);
+        }
+    }
+
+    public getSampleValue(): Expression {
+        switch (this.internalType.type) {
+            case "string":
+                return Expression.rawStringValue("string");
+            case "bool":
+                return Expression.rawValue("True");
+            case "int":
+                return Expression.rawValue("123");
+            case "int64":
+                return Expression.rawValue("123456");
+            case "uint":
+                return Expression.rawValue("123");
+            case "uint64":
+                return Expression.rawValue("123456");
+            case "float":
+                return Expression.rawValue("123.456");
+            case "double":
+                return Expression.rawValue("123.456");
+            case "void":
+                return Expression.rawValue("Void");
+            case "any":
+                return Expression.rawStringValue("abc");
+            case "data":
+                return Expression.rawValue("Data([1, 2, 3])");
+            case "date":
+                return Expression.rawValue("Date.now");
+            case "uuid":
+                return Expression.rawValue("UUID()");
+            case "tuple":
+                return Expression.tupleLiteral({
+                    elements: this.internalType.elements.map((element) => element.getSampleValue())
+                });
+            case "array":
+                return Expression.arrayLiteral({
+                    elements: [this.internalType.elementType.getSampleValue()]
+                });
+            case "dictionary":
+                return Expression.dictionaryLiteral({
+                    entries: [
+                        [this.internalType.keyType.getSampleValue(), this.internalType.valueType.getSampleValue()]
+                    ]
+                });
+            case "optional":
+                return Type.required(this.internalType.valueType).getSampleValue();
+            case "custom":
+                return Expression.rawValue(`${this.internalType.name}()`); // TODO(kafkas): Implement arguments
+            case "existential-any":
+                return Expression.rawStringValue("string");
+            case "json-value":
+                return Expression.rawValue('JSONValue.string("string")');
+            default:
+                assertNever(this.internalType);
         }
     }
 

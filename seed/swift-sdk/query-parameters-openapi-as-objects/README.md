@@ -34,7 +34,22 @@ import Api
 let client = ApiClient()
 
 try await client.search(
-
+    limit: 123,
+    id: "string",
+    date: "string",
+    deadline: Date.now,
+    bytes: "string",
+    user: User(),
+    userList: User(),
+    optionalDeadline: Date.now,
+    keyValue: ["string": "string"],
+    optionalString: "string",
+    nestedUser: NestedUser(),
+    optionalUser: User(),
+    excludeUser: User(),
+    filter: "string",
+    neighbor: SearchRequestNeighbor(),
+    neighborRequired: SearchRequestNeighborRequired()
 )
 ```
 

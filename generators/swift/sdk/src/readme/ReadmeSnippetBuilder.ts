@@ -95,7 +95,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                         swift.Expression.methodCall({
                             target: swift.Expression.rawValue(clientConstantName),
                             methodName: method.unsafeName,
-                            arguments_: [], // TODO(kafkas): Implement
+                            arguments_: this.getMethodArguments(method),
                             multiline: true
                         })
                     )
@@ -180,5 +180,21 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
 
         return rootClientGenerator.generate();
+    }
+
+    private getMethodArguments(method: swift.Method) {
+        const arguments_: swift.FunctionArgument[] = [];
+        for (const param of method.parameters) {
+            if (param.argumentLabel === "requestOptions") {
+                continue;
+            }
+            arguments_.push(
+                swift.functionArgument({
+                    label: param.argumentLabel,
+                    value: param.type.getSampleValue()
+                })
+            );
+        }
+        return arguments_;
     }
 }

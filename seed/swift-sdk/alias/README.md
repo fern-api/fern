@@ -34,7 +34,7 @@ import Alias
 let client = AliasClient()
 
 try await client.get(
-
+    typeId: "string"
 )
 ```
 

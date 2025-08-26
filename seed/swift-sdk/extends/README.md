@@ -34,7 +34,7 @@ import Extends
 let client = ExtendsClient()
 
 try await client.extendedInlineRequestBody(
-
+    request: Requests.Inlined()
 )
 ```
 
