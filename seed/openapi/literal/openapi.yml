@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: literal
   version: ''
-  description: 'Test definition for literal schemas. '
+  description: Test definition for literal schemas.
 paths:
   /headers:
     post:
