@@ -1,11 +1,11 @@
 package example
 
 import (
-    client "github.com/examples/fern/pleaseinhere/client"
-    option "github.com/examples/fern/pleaseinhere/option"
+    client "github.com/examples/fern/client"
+    option "github.com/examples/fern/option"
     context "context"
-    pleaseinhere "github.com/examples/fern/pleaseinhere"
-    commons "github.com/examples/fern/pleaseinhere/commons"
+    fern "github.com/examples/fern"
+    commons "github.com/examples/fern/commons"
     uuid "github.com/google/uuid"
 )
 
@@ -20,27 +20,27 @@ func do() {
     )
     client.Service.CreateBigEntity(
         context.TODO(),
-        &pleaseinhere.BigEntity{
-            CastMember: &pleaseinhere.CastMember{
-                Actor: &pleaseinhere.Actor{
+        &fern.BigEntity{
+            CastMember: &fern.CastMember{
+                Actor: &fern.Actor{
                     Name: "name",
                     Id: "id",
                 },
             },
-            ExtendedMovie: &pleaseinhere.ExtendedMovie{
+            ExtendedMovie: &fern.ExtendedMovie{
                 Cast: []string{
                     "cast",
                     "cast",
                 },
                 Id: "id",
-                Prequel: pleaseinhere.String(
+                Prequel: fern.String(
                     "prequel",
                 ),
                 Title: "title",
                 From: "from",
                 Rating: 1.1,
                 Tag: "tag",
-                Book: pleaseinhere.String(
+                Book: fern.String(
                     "book",
                 ),
                 Metadata: map[string]any{
@@ -50,13 +50,13 @@ func do() {
                 },
                 Revenue: 1000000,
             },
-            Entity: &pleaseinhere.Entity{
-                Type: &pleaseinhere.Type{
-                    BasicType: pleaseinhere.BasicTypePrimitive,
+            Entity: &fern.Entity{
+                Type: &fern.Type{
+                    BasicType: fern.BasicTypePrimitive,
                 },
                 Name: "name",
             },
-            Metadata: &pleaseinhere.Metadata{
+            Metadata: &fern.Metadata{
                 Extra: map[string]string{
                     "extra": "extra",
                 },
@@ -69,7 +69,7 @@ func do() {
                 Data: map[string]string{
                     "data": "data",
                 },
-                JsonString: pleaseinhere.String(
+                JsonString: fern.String(
                     "jsonString",
                 ),
             },
@@ -79,178 +79,178 @@ func do() {
                     Data: map[string]string{
                         "data": "data",
                     },
-                    JsonString: pleaseinhere.String(
+                    JsonString: fern.String(
                         "jsonString",
                     ),
                 },
             },
             Data: &commons.Data{},
-            Migration: &pleaseinhere.Migration{
+            Migration: &fern.Migration{
                 Name: "name",
-                Status: pleaseinhere.MigrationStatusRunning,
+                Status: fern.MigrationStatusRunning,
             },
-            Exception: &pleaseinhere.Exception{
-                Generic: &pleaseinhere.ExceptionInfo{
+            Exception: &fern.Exception{
+                Generic: &fern.ExceptionInfo{
                     ExceptionType: "exceptionType",
                     ExceptionMessage: "exceptionMessage",
                     ExceptionStacktrace: "exceptionStacktrace",
                 },
             },
-            Test: &pleaseinhere.Test{},
-            Node: &pleaseinhere.Node{
+            Test: &fern.Test{},
+            Node: &fern.Node{
                 Name: "name",
-                Nodes: []*pleaseinhere.Node{
-                    &pleaseinhere.Node{
+                Nodes: []*fern.Node{
+                    &fern.Node{
                         Name: "name",
-                        Nodes: []*pleaseinhere.Node{
-                            &pleaseinhere.Node{
+                        Nodes: []*fern.Node{
+                            &fern.Node{
                                 Name: "name",
-                                Nodes: []*pleaseinhere.Node{},
-                                Trees: []*pleaseinhere.Tree{},
+                                Nodes: []*fern.Node{},
+                                Trees: []*fern.Tree{},
                             },
-                            &pleaseinhere.Node{
+                            &fern.Node{
                                 Name: "name",
-                                Nodes: []*pleaseinhere.Node{},
-                                Trees: []*pleaseinhere.Tree{},
+                                Nodes: []*fern.Node{},
+                                Trees: []*fern.Tree{},
                             },
                         },
-                        Trees: []*pleaseinhere.Tree{
-                            &pleaseinhere.Tree{
-                                Nodes: []*pleaseinhere.Node{},
+                        Trees: []*fern.Tree{
+                            &fern.Tree{
+                                Nodes: []*fern.Node{},
                             },
-                            &pleaseinhere.Tree{
-                                Nodes: []*pleaseinhere.Node{},
+                            &fern.Tree{
+                                Nodes: []*fern.Node{},
                             },
                         },
                     },
-                    &pleaseinhere.Node{
+                    &fern.Node{
                         Name: "name",
-                        Nodes: []*pleaseinhere.Node{
-                            &pleaseinhere.Node{
+                        Nodes: []*fern.Node{
+                            &fern.Node{
                                 Name: "name",
-                                Nodes: []*pleaseinhere.Node{},
-                                Trees: []*pleaseinhere.Tree{},
+                                Nodes: []*fern.Node{},
+                                Trees: []*fern.Tree{},
                             },
-                            &pleaseinhere.Node{
+                            &fern.Node{
                                 Name: "name",
-                                Nodes: []*pleaseinhere.Node{},
-                                Trees: []*pleaseinhere.Tree{},
+                                Nodes: []*fern.Node{},
+                                Trees: []*fern.Tree{},
                             },
                         },
-                        Trees: []*pleaseinhere.Tree{
-                            &pleaseinhere.Tree{
-                                Nodes: []*pleaseinhere.Node{},
+                        Trees: []*fern.Tree{
+                            &fern.Tree{
+                                Nodes: []*fern.Node{},
                             },
-                            &pleaseinhere.Tree{
-                                Nodes: []*pleaseinhere.Node{},
+                            &fern.Tree{
+                                Nodes: []*fern.Node{},
                             },
                         },
                     },
                 },
-                Trees: []*pleaseinhere.Tree{
-                    &pleaseinhere.Tree{
-                        Nodes: []*pleaseinhere.Node{
-                            &pleaseinhere.Node{
+                Trees: []*fern.Tree{
+                    &fern.Tree{
+                        Nodes: []*fern.Node{
+                            &fern.Node{
                                 Name: "name",
-                                Nodes: []*pleaseinhere.Node{},
-                                Trees: []*pleaseinhere.Tree{},
+                                Nodes: []*fern.Node{},
+                                Trees: []*fern.Tree{},
                             },
-                            &pleaseinhere.Node{
+                            &fern.Node{
                                 Name: "name",
-                                Nodes: []*pleaseinhere.Node{},
-                                Trees: []*pleaseinhere.Tree{},
+                                Nodes: []*fern.Node{},
+                                Trees: []*fern.Tree{},
                             },
                         },
                     },
-                    &pleaseinhere.Tree{
-                        Nodes: []*pleaseinhere.Node{
-                            &pleaseinhere.Node{
+                    &fern.Tree{
+                        Nodes: []*fern.Node{
+                            &fern.Node{
                                 Name: "name",
-                                Nodes: []*pleaseinhere.Node{},
-                                Trees: []*pleaseinhere.Tree{},
+                                Nodes: []*fern.Node{},
+                                Trees: []*fern.Tree{},
                             },
-                            &pleaseinhere.Node{
+                            &fern.Node{
                                 Name: "name",
-                                Nodes: []*pleaseinhere.Node{},
-                                Trees: []*pleaseinhere.Tree{},
+                                Nodes: []*fern.Node{},
+                                Trees: []*fern.Tree{},
                             },
                         },
                     },
                 },
             },
-            Directory: &pleaseinhere.Directory{
+            Directory: &fern.Directory{
                 Name: "name",
-                Files: []*pleaseinhere.File{
-                    &pleaseinhere.File{
+                Files: []*fern.File{
+                    &fern.File{
                         Name: "name",
                         Contents: "contents",
                     },
-                    &pleaseinhere.File{
+                    &fern.File{
                         Name: "name",
                         Contents: "contents",
                     },
                 },
-                Directories: []*pleaseinhere.Directory{
-                    &pleaseinhere.Directory{
+                Directories: []*fern.Directory{
+                    &fern.Directory{
                         Name: "name",
-                        Files: []*pleaseinhere.File{
-                            &pleaseinhere.File{
+                        Files: []*fern.File{
+                            &fern.File{
                                 Name: "name",
                                 Contents: "contents",
                             },
-                            &pleaseinhere.File{
+                            &fern.File{
                                 Name: "name",
                                 Contents: "contents",
                             },
                         },
-                        Directories: []*pleaseinhere.Directory{
-                            &pleaseinhere.Directory{
+                        Directories: []*fern.Directory{
+                            &fern.Directory{
                                 Name: "name",
-                                Files: []*pleaseinhere.File{},
-                                Directories: []*pleaseinhere.Directory{},
+                                Files: []*fern.File{},
+                                Directories: []*fern.Directory{},
                             },
-                            &pleaseinhere.Directory{
+                            &fern.Directory{
                                 Name: "name",
-                                Files: []*pleaseinhere.File{},
-                                Directories: []*pleaseinhere.Directory{},
+                                Files: []*fern.File{},
+                                Directories: []*fern.Directory{},
                             },
                         },
                     },
-                    &pleaseinhere.Directory{
+                    &fern.Directory{
                         Name: "name",
-                        Files: []*pleaseinhere.File{
-                            &pleaseinhere.File{
+                        Files: []*fern.File{
+                            &fern.File{
                                 Name: "name",
                                 Contents: "contents",
                             },
-                            &pleaseinhere.File{
+                            &fern.File{
                                 Name: "name",
                                 Contents: "contents",
                             },
                         },
-                        Directories: []*pleaseinhere.Directory{
-                            &pleaseinhere.Directory{
+                        Directories: []*fern.Directory{
+                            &fern.Directory{
                                 Name: "name",
-                                Files: []*pleaseinhere.File{},
-                                Directories: []*pleaseinhere.Directory{},
+                                Files: []*fern.File{},
+                                Directories: []*fern.Directory{},
                             },
-                            &pleaseinhere.Directory{
+                            &fern.Directory{
                                 Name: "name",
-                                Files: []*pleaseinhere.File{},
-                                Directories: []*pleaseinhere.Directory{},
+                                Files: []*fern.File{},
+                                Directories: []*fern.Directory{},
                             },
                         },
                     },
                 },
             },
-            Moment: &pleaseinhere.Moment{
+            Moment: &fern.Moment{
                 Id: uuid.MustParse(
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
-                Date: pleaseinhere.MustParseDateTime(
+                Date: fern.MustParseDateTime(
                     "2023-01-15",
                 ),
-                Datetime: pleaseinhere.MustParseDateTime(
+                Datetime: fern.MustParseDateTime(
                     "2024-01-15T09:30:00Z",
                 ),
             },

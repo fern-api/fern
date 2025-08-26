@@ -15,13 +15,12 @@ import (
 type ImdbClient struct {
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
+	options *core.RequestOptions
 
 	WithRawResponse *RawImdbClient
 }
 
-func NewImdbClient(opts ...option.RequestOption) *ImdbClient {
-	options := core.NewRequestOptions(opts...)
+func NewImdbClient(options *core.RequestOptions) *ImdbClient {
 	return &ImdbClient{
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
@@ -30,7 +29,7 @@ func NewImdbClient(opts ...option.RequestOption) *ImdbClient {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:          options.ToHeader(),
+		options:         options,
 		WithRawResponse: NewRawImdbClient(options),
 	}
 }
@@ -49,7 +48,7 @@ func (i *ImdbClient) CreateMovie(
 	)
 	endpointURL := baseURL + "/movies/create-movie"
 	headers := internal.MergeHeaders(
-		i.header.Clone(),
+		i.options.ToHeader(),
 		options.ToHeader(),
 	)
 
@@ -89,7 +88,7 @@ func (i *ImdbClient) GetMovie(
 		movieId,
 	)
 	headers := internal.MergeHeaders(
-		i.header.Clone(),
+		i.options.ToHeader(),
 		options.ToHeader(),
 	)
 	errorCodes := internal.ErrorCodes{

@@ -1,8 +1,8 @@
 package example
 
 import (
-    client "github.com/examples/fern/pleaseinhere/client"
-    option "github.com/examples/fern/pleaseinhere/option"
+    client "github.com/examples/fern/client"
+    option "github.com/examples/fern/option"
     context "context"
 )
 

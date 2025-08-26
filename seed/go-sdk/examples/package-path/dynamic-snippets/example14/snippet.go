@@ -1,10 +1,10 @@
 package example
 
 import (
-    client "github.com/examples/fern/pleaseinhere/client"
-    option "github.com/examples/fern/pleaseinhere/option"
+    client "github.com/examples/fern/client"
+    option "github.com/examples/fern/option"
     context "context"
-    pleaseinhere "github.com/examples/fern/pleaseinhere"
+    fern "github.com/examples/fern"
 )
 
 func do() {
@@ -18,9 +18,9 @@ func do() {
     )
     client.Service.CreateMovie(
         context.TODO(),
-        &pleaseinhere.Movie{
+        &fern.Movie{
             Id: "movie-c06a4ad7",
-            Prequel: pleaseinhere.String(
+            Prequel: fern.String(
                 "movie-cv9b914f",
             ),
             Title: "The Boy and the Heron",

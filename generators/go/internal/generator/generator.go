@@ -134,15 +134,15 @@ func (g *Generator) Generate(mode Mode) ([]*File, error) {
 	if err != nil {
 		return nil, err
 	}
-    if g.config.PackagePath == "" {
-        return files, nil
-    }
+	if g.config.PackagePath == "" {
+		return files, nil
+	}
 
 	// Somewhat hacky fix; prefix packagePath to all .go file paths after the fact
 	for i := range files {
-	    if strings.HasSuffix(files[i].Path, ".go") {
-	        files[i].Path = path.Join(g.config.PackagePath, files[i].Path)
-	    }
+		if strings.HasSuffix(files[i].Path, ".go") {
+			files[i].Path = path.Join(g.config.PackagePath, files[i].Path)
+		}
 	}
 
 	return files, nil

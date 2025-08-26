@@ -971,7 +971,7 @@ func (f *fileWriter) WriteClient(
 	f.P("type ", clientName, " struct {")
 	f.P("baseURL string")
 	f.P("caller *internal.Caller")
-	f.P("header http.Header")
+	f.P("options *core.RequestOptions")
 	f.P()
 	if len(endpoints) > 0 {
 		f.P("WithRawResponse *", rawClientName)
@@ -991,8 +991,8 @@ func (f *fileWriter) WriteClient(
 	f.P()
 
 	// Generate the client constructor.
-	f.P("func ", clientConstructorName, "(opts ...option.RequestOption) *", clientName, " {")
-	f.P("options := core.NewRequestOptions(opts...)")
+	f.P("func ", clientConstructorName, "(options *core.RequestOptions) *", clientName, " {")
+	// TODO(williammcadams) are there any code paths where this creates the root client? And therefore needs to include "options := core.NewRequestOptions(opts...)"
 	for _, authScheme := range irAuth.Schemes {
 		if authScheme.Bearer != nil && authScheme.Bearer.TokenEnvVar != nil {
 			f.P("if options.", authScheme.Bearer.Token.PascalCase.UnsafeName, ` == "" {`)
@@ -1032,7 +1032,7 @@ func (f *fileWriter) WriteClient(
 	f.P("MaxAttempts: options.MaxAttempts,")
 	f.P("},")
 	f.P("),")
-	f.P("header: options.ToHeader(),")
+	f.P("options: options,")
 	if len(endpoints) > 0 {
 		f.P(" WithRawResponse: ", rawClientConstructorName, "(options),")
 	}
@@ -1099,7 +1099,7 @@ func (f *fileWriter) WriteClient(
 
 		headersParameter := "headers"
 		f.P(headersParameter, " := internal.MergeHeaders(")
-		f.P(receiver, ".header.Clone(),")
+		f.P(receiver, ".options.ToHeader(),")
 		f.P("options.ToHeader(),")
 		f.P(")")
 		if len(endpoint.Headers) > 0 {
