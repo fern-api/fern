@@ -1,4 +1,5 @@
 import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { assertDefined, assertNever } from "@fern-api/core-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -190,10 +191,101 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             arguments_.push(
                 swift.functionArgument({
                     label: param.argumentLabel,
-                    value: param.type.getSampleValue()
+                    value: this.getSampleValue(param.type)
                 })
             );
         }
         return arguments_;
+    }
+
+    public getSampleValue(type: swift.Type): swift.Expression {
+        switch (type.internalType.type) {
+            case "string":
+                return swift.Expression.rawStringValue("string");
+            case "bool":
+                return swift.Expression.rawValue("True");
+            case "int":
+                return swift.Expression.rawValue("123");
+            case "int64":
+                return swift.Expression.rawValue("123456");
+            case "uint":
+                return swift.Expression.rawValue("123");
+            case "uint64":
+                return swift.Expression.rawValue("123456");
+            case "float":
+                return swift.Expression.rawValue("123.456");
+            case "double":
+                return swift.Expression.rawValue("123.456");
+            case "void":
+                return swift.Expression.rawValue("Void");
+            case "any":
+                return swift.Expression.rawStringValue("abc");
+            case "data":
+                return swift.Expression.rawValue("Data([1, 2, 3])");
+            case "date":
+                return swift.Expression.rawValue("Date.now");
+            case "uuid":
+                return swift.Expression.rawValue("UUID()");
+            case "tuple":
+                return swift.Expression.tupleLiteral({
+                    elements: type.internalType.elements.map((element) => this.getSampleValue(element))
+                });
+            case "array":
+                return swift.Expression.arrayLiteral({
+                    elements: [this.getSampleValue(type)]
+                });
+            case "dictionary":
+                return swift.Expression.dictionaryLiteral({
+                    entries: [
+                        [
+                            this.getSampleValue(type.internalType.keyType),
+                            this.getSampleValue(type.internalType.valueType)
+                        ]
+                    ],
+                    multiline: true
+                });
+            case "optional":
+                return this.getSampleValue(swift.Type.required(type.internalType.valueType));
+            case "arbitrary": {
+                const symbol =
+                    this.context.project.getSchemaType(type.internalType.name) ??
+                    this.context.project.getRequestStruct(type.internalType.name);
+                if (symbol) {
+                    if (symbol instanceof swift.Struct) {
+                        return swift.Expression.structInitialization({
+                            unsafeName: symbol.name,
+                            arguments_: symbol.properties.map((property) =>
+                                swift.functionArgument({
+                                    label: property.unsafeName,
+                                    value: this.getSampleValue(property.type)
+                                })
+                            ),
+                            multiline: true
+                        });
+                    } else if (symbol instanceof swift.EnumWithRawValues) {
+                        return swift.Expression.enumCaseShorthand(symbol.cases[0]?.unsafeName ?? "unknown");
+                    } else if (symbol instanceof swift.EnumWithAssociatedValues) {
+                        const firstCase = symbol.cases[0];
+                        assertDefined(firstCase);
+                        return swift.Expression.contextualMethodCall({
+                            methodName: firstCase.unsafeName,
+                            arguments_: firstCase.associatedValue.map((c) =>
+                                swift.functionArgument({
+                                    value: this.getSampleValue(c)
+                                })
+                            ),
+                            multiline: true
+                        });
+                    }
+                }
+                return swift.Expression.rawValue(`${type.internalType.name}()`);
+            }
+            case "existential-any":
+                return swift.Expression.rawStringValue("string");
+            case "json-value":
+                return swift.Expression.rawValue('JSONValue.string("string")');
+            default:
+                assertNever(type.internalType);
+        }
     }
 }
