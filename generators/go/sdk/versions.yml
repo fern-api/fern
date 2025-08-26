@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.6.6-rc0
+  changelogEntry:
+    - summary: |
+        Fixes the ignoring of a default for `page` in pagination requests.
+      type: fix
+  createdAt: "2025-08-26"
+  irVersion: 58
+
 - version: 1.6.5-rc0
   changelogEntry:
     - summary: |
@@ -18,7 +26,7 @@
 - version: 1.6.3
   changelogEntry:
     - summary: |
-        Update the dyanmic snippet generator to handle list values in the request body.
+        Update the dynamic snippet generator to handle list values in the request body.
         Previously, it would throw an error.
       type: fix
   createdAt: "2025-08-21"
