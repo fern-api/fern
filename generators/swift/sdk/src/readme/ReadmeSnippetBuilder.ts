@@ -3,9 +3,9 @@ import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId } from "@fern-fern/ir-sdk/api";
+import { EndpointId, FeatureId, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
-import { RootClientGenerator } from "../generators";
+import { ClientGeneratorContext, EndpointMethodGenerator, RootClientGenerator } from "../generators";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
@@ -33,11 +33,22 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private buildUsageSnippets(): string[] {
+        const snippets: string[] = [];
         const usageEndpointIds = this.getEndpointIdsForFeature(FernGeneratorCli.StructuredFeatureId.Usage);
         if (usageEndpointIds != null) {
-            return usageEndpointIds.map((endpointId) => this.getUsageSnippetForEndpoint(endpointId));
+            usageEndpointIds.forEach((endpointId) => {
+                const snippet = this.getUsageSnippetForEndpoint(endpointId);
+                if (snippet) {
+                    snippets.push(snippet);
+                }
+            });
+        } else {
+            const snippet = this.getUsageSnippetForEndpoint(this.getDefaultEndpointId());
+            if (snippet) {
+                snippets.push(snippet);
+            }
         }
-        return [this.getUsageSnippetForEndpoint(this.getDefaultEndpointId())];
+        return snippets;
     }
 
     private getEndpointIdsForFeature(featureId: FeatureId): EndpointId[] | undefined {
@@ -46,7 +57,33 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getUsageSnippetForEndpoint(endpointId: string) {
         const clientConstantName = "client";
-
+        const allEndpoints = Object.values(this.context.ir.services)
+            .map((service) => service.endpoints)
+            .flat(1);
+        let endpoint = allEndpoints.find((endpoint) => endpoint.id === endpointId);
+        if (!endpoint) {
+            // Find an endpoint with "POST" method
+            endpoint = allEndpoints.find((endpoint) => endpoint.method === "POST");
+        }
+        if (!endpoint) {
+            // Fallback to the first endpoint
+            endpoint = allEndpoints[0];
+        }
+        if (!endpoint) {
+            return null;
+        }
+        const packageOrSubpackage = this.getPackageOrSubpackageForEndpoint(endpoint);
+        if (!packageOrSubpackage) {
+            return null;
+        }
+        const endpointMethodGenerator = new EndpointMethodGenerator({
+            clientGeneratorContext: new ClientGeneratorContext({
+                packageOrSubpackage,
+                sdkGeneratorContext: this.context
+            }),
+            sdkGeneratorContext: this.context
+        });
+        const method = endpointMethodGenerator.generateMethod(endpoint);
         return SwiftFile.getRawContents([
             swift.Statement.import(this.context.targetName),
             swift.LineBreak.single(),
@@ -57,7 +94,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                     swift.Expression.await(
                         swift.Expression.methodCall({
                             target: swift.Expression.rawValue(clientConstantName),
-                            methodName: "doSomething", // TODO(kafkas): Implement
+                            methodName: method.unsafeName,
                             arguments_: [], // TODO(kafkas): Implement
                             multiline: true
                         })
@@ -65,6 +102,26 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 )
             )
         ]);
+    }
+
+    private getPackageOrSubpackageForEndpoint(endpoint: HttpEndpoint) {
+        const rootPackageServiceId = this.context.ir.rootPackage.service;
+        if (!rootPackageServiceId) {
+            return null;
+        }
+        const rootPackageService = this.context.getHttpServiceOrThrow(rootPackageServiceId);
+        if (rootPackageService.endpoints.some((e) => e.id === endpoint.id)) {
+            return this.context.ir.rootPackage;
+        }
+        for (const subpackage of Object.values(this.context.ir.subpackages)) {
+            if (typeof subpackage.service === "string") {
+                const service = this.context.getHttpServiceOrThrow(subpackage.service);
+                if (service.endpoints.some((e) => e.id === endpoint.id)) {
+                    return subpackage;
+                }
+            }
+        }
+        return null;
     }
 
     private getRootClientInitializationSnippet(constantName: string) {
