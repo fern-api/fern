@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: API for retrieving user information and authentication tokens
 
-servers: 
+servers:
   - url: https://a.com
 
 paths:
@@ -13,15 +13,15 @@ paths:
       summary: List Users
       description: List information about all users
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-        '404':
+                $ref: "#/components/schemas/User"
+        "404":
           description: User not found
-        '401':
+        "401":
           description: Unauthorized
 
   /users/{userId}:
@@ -36,15 +36,15 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-        '404':
+                $ref: "#/components/schemas/User"
+        "404":
           description: User not found
-        '401':
+        "401":
           description: Unauthorized
 
   /token:
@@ -53,13 +53,13 @@ paths:
       summary: Get authentication token
       description: Retrieve an authentication token for the API
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Token'
-        '401':
+                $ref: "#/components/schemas/Token"
+        "401":
           description: Unauthorized
 
 components:

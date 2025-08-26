@@ -21,9 +21,7 @@
   "main": "src/index.ts",
   "module": "src/index.ts",
   "source": "src/index.ts",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "scripts": {
     "build": "pnpm compile && vite build",
     "clean": "rm -rf ./lib && tsc --build --clean",

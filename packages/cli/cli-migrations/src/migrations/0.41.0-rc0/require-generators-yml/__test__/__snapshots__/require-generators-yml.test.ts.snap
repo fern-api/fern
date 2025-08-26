@@ -151,7 +151,7 @@ paths:
             maximum: 100
             format: int32
       responses:
-        '200':
+        "200":
           description: A paged array of pets
           headers:
             x-next:
@@ -159,7 +159,7 @@ paths:
               schema:
                 type: string
           content:
-            application/json:    
+            application/json:
               schema:
                 $ref: "#/components/schemas/Pets"
         default:
@@ -177,10 +177,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Pet'
+              $ref: "#/components/schemas/Pet"
         required: true
       responses:
-        '201':
+        "201":
           description: Null response
         default:
           description: unexpected error
@@ -202,7 +202,7 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Expected response to a valid request
           content:
             application/json:
@@ -244,7 +244,8 @@ components:
           type: integer
           format: int32
         message:
-          type: string",
+          type: string
+",
                     "name": "openapi.yml",
                     "type": "file",
                   },
@@ -293,7 +294,7 @@ paths:
             maximum: 100
             format: int32
       responses:
-        '200':
+        "200":
           description: A paged array of pets
           headers:
             x-next:
@@ -301,7 +302,7 @@ paths:
               schema:
                 type: string
           content:
-            application/json:    
+            application/json:
               schema:
                 $ref: "#/components/schemas/Pets"
         default:
@@ -319,10 +320,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Pet'
+              $ref: "#/components/schemas/Pet"
         required: true
       responses:
-        '201':
+        "201":
           description: Null response
         default:
           description: unexpected error
@@ -344,7 +345,7 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Expected response to a valid request
           content:
             application/json:
@@ -386,7 +387,8 @@ components:
           type: integer
           format: int32
         message:
-          type: string",
+          type: string
+",
                     "name": "openapi.yml",
                     "type": "file",
                   },

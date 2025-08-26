@@ -13,6 +13,6 @@ auth-schemes:
         client-id: $request.cid
         client-secret: $request.csr
         scopes: $request.scp
-      response-properties: 
+      response-properties:
         access-token: $response.access_token
         expires-in: $response.expires_in

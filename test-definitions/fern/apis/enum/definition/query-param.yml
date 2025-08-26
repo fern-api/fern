@@ -1,4 +1,4 @@
-imports: 
+imports:
   root: __package__.yml
 
 service:
@@ -15,11 +15,11 @@ service:
           maybeOperand: optional<root.Operand>
           operandOrColor: root.ColorOrOperand
           maybeOperandOrColor: optional<root.ColorOrOperand>
-      examples: 
+      examples:
         - query-parameters:
             operand: $root.Operand.GreaterThan
             operandOrColor: $root.ColorOrOperand.Red
-    
+
     sendList:
       path: /query-list
       method: POST

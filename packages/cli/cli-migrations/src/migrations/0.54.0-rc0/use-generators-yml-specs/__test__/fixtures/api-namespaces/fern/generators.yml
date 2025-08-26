@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 api:
   namespaces:
-    namespace1: 
+    namespace1:
       - "./openapi.yml"
       - path: "./openapi2.yml"
         overrides: "./openapi2.overrides.yml"

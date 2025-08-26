@@ -18,6 +18,6 @@ service:
         name: ListRequest
         query-parameters:
           pageNum: integer
-      response: 
+      response:
         status-code: 201
         type: User

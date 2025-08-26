@@ -29,7 +29,7 @@ get:
         - read:users
     - api_key: []
   responses:
-    '200':
+    "200":
       description: Success
       content:
         application/json:
@@ -38,10 +38,10 @@ get:
           example:
             username: user1
             email: user@example.com
-    '403':
+    "403":
       description: Forbidden
       $ref: ../components/responses/Problem.yaml
-    '404':
+    "404":
       description: User not found
       $ref: ../components/responses/Problem.yaml
 put:
@@ -71,11 +71,11 @@ put:
     description: Updated user object
     required: true
   responses:
-    '200':
+    "200":
       description: OK
-    '400':
+    "400":
       description: Invalid user supplied
       $ref: ../components/responses/Problem.yaml
-    '404':
+    "404":
       description: User not found
       $ref: ../components/responses/Problem.yaml

@@ -13,7 +13,7 @@
             "value": "="
           },
           {
-            "description": "The name and value should be similar\nare similar for less than. ",
+            "description": "The name and value should be similar\nare similar for less than.",
             "value": "less_than"
           }
         ]

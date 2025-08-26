@@ -20,7 +20,7 @@ service:
         query-parameters:
           page: integer
         body:
-          properties: 
+          properties:
             stream: optional<boolean>
       response: ListUsersResponse
       response-stream: User

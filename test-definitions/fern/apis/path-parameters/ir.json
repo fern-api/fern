@@ -993,10 +993,7 @@
                                     }
                                   }
                                 },
-                                "jsonExample": [
-                                  "tags",
-                                  "tags"
-                                ]
+                                "jsonExample": ["tags", "tags"]
                               }
                             }
                           ]
@@ -1069,10 +1066,7 @@
                       },
                       "jsonExample": {
                         "name": "name",
-                        "tags": [
-                          "tags",
-                          "tags"
-                        ]
+                        "tags": ["tags", "tags"]
                       }
                     }
                   }
@@ -1789,10 +1783,7 @@
                                     }
                                   }
                                 },
-                                "jsonExample": [
-                                  "tags",
-                                  "tags"
-                                ]
+                                "jsonExample": ["tags", "tags"]
                               }
                             }
                           ]
@@ -1865,10 +1856,7 @@
                       },
                       "jsonExample": {
                         "name": "name",
-                        "tags": [
-                          "tags",
-                          "tags"
-                        ]
+                        "tags": ["tags", "tags"]
                       }
                     }
                   }
@@ -2528,10 +2516,7 @@
                                             }
                                           }
                                         },
-                                        "jsonExample": [
-                                          "tags",
-                                          "tags"
-                                        ]
+                                        "jsonExample": ["tags", "tags"]
                                       }
                                     }
                                   ]
@@ -2604,10 +2589,7 @@
                               },
                               "jsonExample": {
                                 "name": "name",
-                                "tags": [
-                                  "tags",
-                                  "tags"
-                                ]
+                                "tags": ["tags", "tags"]
                               }
                             },
                             {
@@ -2849,10 +2831,7 @@
                                             }
                                           }
                                         },
-                                        "jsonExample": [
-                                          "tags",
-                                          "tags"
-                                        ]
+                                        "jsonExample": ["tags", "tags"]
                                       }
                                     }
                                   ]
@@ -2925,10 +2904,7 @@
                               },
                               "jsonExample": {
                                 "name": "name",
-                                "tags": [
-                                  "tags",
-                                  "tags"
-                                ]
+                                "tags": ["tags", "tags"]
                               }
                             }
                           ],
@@ -3005,17 +2981,11 @@
                       "jsonExample": [
                         {
                           "name": "name",
-                          "tags": [
-                            "tags",
-                            "tags"
-                          ]
+                          "tags": ["tags", "tags"]
                         },
                         {
                           "name": "name",
-                          "tags": [
-                            "tags",
-                            "tags"
-                          ]
+                          "tags": ["tags", "tags"]
                         }
                       ]
                     }
@@ -3724,10 +3694,7 @@
                                     }
                                   }
                                 },
-                                "jsonExample": [
-                                  "tags",
-                                  "tags"
-                                ]
+                                "jsonExample": ["tags", "tags"]
                               }
                             }
                           ]
@@ -3800,10 +3767,7 @@
                       },
                       "jsonExample": {
                         "name": "name",
-                        "tags": [
-                          "tags",
-                          "tags"
-                        ]
+                        "tags": ["tags", "tags"]
                       }
                     }
                   }
@@ -4504,10 +4468,7 @@
                                             }
                                           }
                                         },
-                                        "jsonExample": [
-                                          "tags",
-                                          "tags"
-                                        ]
+                                        "jsonExample": ["tags", "tags"]
                                       }
                                     }
                                   ]
@@ -4580,10 +4541,7 @@
                               },
                               "jsonExample": {
                                 "name": "name",
-                                "tags": [
-                                  "tags",
-                                  "tags"
-                                ]
+                                "tags": ["tags", "tags"]
                               }
                             },
                             {
@@ -4825,10 +4783,7 @@
                                             }
                                           }
                                         },
-                                        "jsonExample": [
-                                          "tags",
-                                          "tags"
-                                        ]
+                                        "jsonExample": ["tags", "tags"]
                                       }
                                     }
                                   ]
@@ -4901,10 +4856,7 @@
                               },
                               "jsonExample": {
                                 "name": "name",
-                                "tags": [
-                                  "tags",
-                                  "tags"
-                                ]
+                                "tags": ["tags", "tags"]
                               }
                             }
                           ],
@@ -4981,17 +4933,11 @@
                       "jsonExample": [
                         {
                           "name": "name",
-                          "tags": [
-                            "tags",
-                            "tags"
-                          ]
+                          "tags": ["tags", "tags"]
                         },
                         {
                           "name": "name",
-                          "tags": [
-                            "tags",
-                            "tags"
-                          ]
+                          "tags": ["tags", "tags"]
                         }
                       ]
                     }
@@ -5086,13 +5032,9 @@
   "variables": [],
   "serviceTypeReferenceInfo": {
     "typesReferencedOnlyByService": {
-      "service_organizations": [
-        "type_organizations:Organization"
-      ]
+      "service_organizations": ["type_organizations:Organization"]
     },
-    "sharedTypes": [
-      "type_user:User"
-    ]
+    "sharedTypes": ["type_user:User"]
   },
   "webhookGroups": {},
   "websocketChannels": {},
@@ -6481,9 +6423,7 @@
         }
       },
       "service": "service_organizations",
-      "types": [
-        "type_organizations:Organization"
-      ],
+      "types": ["type_organizations:Organization"],
       "errors": [],
       "subpackages": [],
       "navigationConfig": null,
@@ -6556,9 +6496,7 @@
         }
       },
       "service": "service_user",
-      "types": [
-        "type_user:User"
-      ],
+      "types": ["type_user:User"],
       "errors": [],
       "subpackages": [],
       "navigationConfig": null,
@@ -6578,10 +6516,7 @@
     "service": null,
     "types": [],
     "errors": [],
-    "subpackages": [
-      "subpackage_organizations",
-      "subpackage_user"
-    ],
+    "subpackages": ["subpackage_organizations", "subpackage_user"],
     "webhooks": null,
     "navigationConfig": null,
     "hasEndpointsInTree": true,

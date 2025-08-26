@@ -11,16 +11,14 @@ service:
       path-parameters:
         id: literal<"123">
       response: root.SendResponse
-      examples: 
+      examples:
         - headers:
             X-API-Version: "02-02-2024"
             X-API-Enable-Audit-Logging: true
           path-parameters:
             id: "123"
-          response:  
-            body: 
+          response:
+            body:
               message: "The weather is sunny"
               status: 200
               success: true
-      
-      

@@ -377,7 +377,7 @@ methods:
     servers:
       [
         { "url": "https://solana-mainnet.g.alchemy.com/v2", "name": "Mainnet" },
-        { "url": "https://solana-devnet.g.alchemy.com/v2", "name": "Solana Devnet" },
+        { "url": "https://solana-devnet.g.alchemy.com/v2", "name": "Solana Devnet" }
       ]
     examples:
       - name: "alchemy_requestFeePayer example"

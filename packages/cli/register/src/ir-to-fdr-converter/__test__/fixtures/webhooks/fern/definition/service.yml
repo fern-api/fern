@@ -13,9 +13,7 @@ webhooks:
       - payload: $WebhookWithLegacyExamplesPayload.JohnExample
       - payload: $WebhookWithLegacyExamplesPayload.JaneExample
 
-
 types:
-
   Person:
     properties:
       firstName: string
@@ -27,21 +25,6 @@ types:
       person: Person
     examples:
       - name: JohnExample
-        value:
-          {
-            person: {
-              firstName: "John",
-              middleInitial: "Q",
-              lastName: "Sample"
-            }
-          }
+        value: { person: { firstName: "John", middleInitial: "Q", lastName: "Sample" } }
       - name: JaneExample
-        value:
-          {
-            person: {
-              firstName: "Jane",
-              middleInitial: "Q",
-              lastName: "Sample"
-            }
-          }
-
+        value: { person: { firstName: "Jane", middleInitial: "Q", lastName: "Sample" } }

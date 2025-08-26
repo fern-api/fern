@@ -10,28 +10,28 @@ servers:
     host: api2.async.com
     protocol: wss
 channels:
-    testChannel:
-        address: '/test'
-        servers:
-            - $ref: '#/servers/websocket'
-        messages:
-            sendMessage:
-                $ref: 'https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/asyncapi-3.0.0/spec.json#/components/messages/sendMessage'
-            sendMessage2:
-                $ref: '#/components/messages/sendMessage2'
+  testChannel:
+    address: "/test"
+    servers:
+      - $ref: "#/servers/websocket"
+    messages:
+      sendMessage:
+        $ref: "https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/asyncapi-3.0.0/spec.json#/components/messages/sendMessage"
+      sendMessage2:
+        $ref: "#/components/messages/sendMessage2"
 
 operations:
-    send:
-        action: send
-        channel:
-            $ref: '#/channels/testChannel'
-        messages:
-        - $ref: '#/channels/testChannel/messages/sendMessage'
-        - $ref: '#/channels/testChannel/messages/sendMessage2'
+  send:
+    action: send
+    channel:
+      $ref: "#/channels/testChannel"
+    messages:
+      - $ref: "#/channels/testChannel/messages/sendMessage"
+      - $ref: "#/channels/testChannel/messages/sendMessage2"
 
 components:
-    messages:
-        sendMessage2:
-            summary: Message with marked data information.
-            payload:
-                $ref: 'https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/asyncapi-3.0.0/spec.json#/components/schemas/MessageData'
+  messages:
+    sendMessage2:
+      summary: Message with marked data information.
+      payload:
+        $ref: "https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/asyncapi-3.0.0/spec.json#/components/schemas/MessageData"

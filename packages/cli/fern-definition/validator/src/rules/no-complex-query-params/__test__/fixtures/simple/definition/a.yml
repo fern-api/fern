@@ -39,7 +39,7 @@ types:
     union:
       - string
       - boolean
-  
+
   UndiscriminatedUnion:
     discriminated: false
     union:
