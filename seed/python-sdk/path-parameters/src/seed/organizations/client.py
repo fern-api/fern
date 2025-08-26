@@ -12,6 +12,7 @@ from .types.organization import Organization
 class OrganizationsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawOrganizationsClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawOrganizationsClient:
@@ -141,6 +142,7 @@ class OrganizationsClient:
 class AsyncOrganizationsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawOrganizationsClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawOrganizationsClient:

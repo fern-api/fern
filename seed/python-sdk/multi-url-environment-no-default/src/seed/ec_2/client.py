@@ -13,6 +13,7 @@ OMIT = typing.cast(typing.Any, ...)
 class Ec2Client:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawEc2Client(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawEc2Client:
@@ -58,6 +59,7 @@ class Ec2Client:
 class AsyncEc2Client:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawEc2Client(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawEc2Client:

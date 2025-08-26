@@ -14,6 +14,7 @@ OMIT = typing.cast(typing.Any, ...)
 class HomepageClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawHomepageClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawHomepageClient:
@@ -86,6 +87,7 @@ class HomepageClient:
 class AsyncHomepageClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawHomepageClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawHomepageClient:

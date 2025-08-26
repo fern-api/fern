@@ -14,6 +14,7 @@ OMIT = typing.cast(typing.Any, ...)
 class UnionClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawUnionClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawUnionClient:
@@ -64,6 +65,7 @@ class UnionClient:
 class AsyncUnionClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawUnionClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawUnionClient:

@@ -13,6 +13,7 @@ OMIT = typing.cast(typing.Any, ...)
 class OptionalClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawOptionalClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawOptionalClient:
@@ -62,6 +63,7 @@ class OptionalClient:
 class AsyncOptionalClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawOptionalClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawOptionalClient:

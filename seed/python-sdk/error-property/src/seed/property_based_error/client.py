@@ -10,6 +10,7 @@ from .raw_client import AsyncRawPropertyBasedErrorClient, RawPropertyBasedErrorC
 class PropertyBasedErrorClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawPropertyBasedErrorClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawPropertyBasedErrorClient:
@@ -51,6 +52,7 @@ class PropertyBasedErrorClient:
 class AsyncPropertyBasedErrorClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawPropertyBasedErrorClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawPropertyBasedErrorClient:

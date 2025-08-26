@@ -15,6 +15,7 @@ OMIT = typing.cast(typing.Any, ...)
 class PaymentClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawPaymentClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawPaymentClient:
@@ -108,6 +109,7 @@ class PaymentClient:
 class AsyncPaymentClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawPaymentClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawPaymentClient:

@@ -10,6 +10,7 @@ from .raw_client import AsyncRawBClient, RawBClient
 class BClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawBClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawBClient:
@@ -49,6 +50,7 @@ class BClient:
 class AsyncBClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawBClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawBClient:

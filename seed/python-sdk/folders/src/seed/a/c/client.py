@@ -10,6 +10,7 @@ from .raw_client import AsyncRawCClient, RawCClient
 class CClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawCClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawCClient:
@@ -49,6 +50,7 @@ class CClient:
 class AsyncCClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawCClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawCClient:

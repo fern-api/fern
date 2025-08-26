@@ -11,6 +11,7 @@ from .raw_client import AsyncRawSyspropClient, RawSyspropClient
 class SyspropClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawSyspropClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawSyspropClient:
@@ -88,6 +89,7 @@ class SyspropClient:
 class AsyncSyspropClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawSyspropClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawSyspropClient:

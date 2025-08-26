@@ -18,6 +18,7 @@ OMIT = typing.cast(typing.Any, ...)
 class PlaylistClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawPlaylistClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawPlaylistClient:
@@ -283,6 +284,7 @@ class PlaylistClient:
 class AsyncPlaylistClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawPlaylistClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawPlaylistClient:

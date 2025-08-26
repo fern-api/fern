@@ -14,6 +14,7 @@ OMIT = typing.cast(typing.Any, ...)
 class InlinedRequestsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawInlinedRequestsClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawInlinedRequestsClient:
@@ -99,6 +100,7 @@ class InlinedRequestsClient:
 class AsyncInlinedRequestsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawInlinedRequestsClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawInlinedRequestsClient:

@@ -13,6 +13,7 @@ from .types.alias_to_stream import AliasToStream
 class QueryClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawQueryClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawQueryClient:
@@ -80,6 +81,7 @@ class QueryClient:
 class AsyncQueryClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawQueryClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawQueryClient:

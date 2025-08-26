@@ -107,7 +107,7 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Whether to lazy import the generated classes based on usage.
     # This is useful for large SDKs where the majority of the classes are not used.
     # It also improves the performance of an initial import of the SDK, at the cost of some latency during first use.
-    lazy_imports: bool = False
+    lazy_imports: bool = True
 
     class Config:
         extra = pydantic.Extra.forbid

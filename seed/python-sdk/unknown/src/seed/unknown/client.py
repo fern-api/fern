@@ -13,6 +13,7 @@ OMIT = typing.cast(typing.Any, ...)
 class UnknownClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawUnknownClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawUnknownClient:
@@ -87,6 +88,7 @@ class UnknownClient:
 class AsyncUnknownClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawUnknownClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawUnknownClient:

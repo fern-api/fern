@@ -230,8 +230,8 @@ fixtures:
           use_pydantic_field_aliases: true
       outputFolder: aliases_with_validation
     - customConfig:
-        lazy_imports: true
-      outputFolder: lazy-imports
+        lazy_imports: false
+      outputFolder: eager-imports
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -336,7 +336,7 @@ scripts:
       - poetry run mypy ./src ./tests
       - poetry run pytest -rP .
 allowedFailures:
-  - any-auth 
+  - any-auth
   - enum:real-enum # NOTE(tjb9dc): Failing due to format due to unescaped strings in the enum values
   - enum:real-enum-forward-compat # Same^
   - examples:client-filename

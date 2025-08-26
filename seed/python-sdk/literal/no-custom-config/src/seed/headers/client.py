@@ -14,6 +14,7 @@ OMIT = typing.cast(typing.Any, ...)
 class HeadersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawHeadersClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawHeadersClient:
@@ -57,6 +58,7 @@ class HeadersClient:
 class AsyncHeadersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawHeadersClient(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawHeadersClient:
