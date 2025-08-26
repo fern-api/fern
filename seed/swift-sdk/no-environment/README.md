@@ -33,7 +33,7 @@ import NoEnvironment
 
 let client = NoEnvironmentClient(token: "YOUR_TOKEN")
 
-try await client.getDummy(
+try await client.dummy.getDummy(
 
 )
 ```

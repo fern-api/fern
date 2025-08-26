@@ -33,7 +33,7 @@ import BytesDownload
 
 let client = BytesDownloadClient()
 
-try await client.download(
+try await client.service.download(
     id: "string"
 )
 ```

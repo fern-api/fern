@@ -33,7 +33,7 @@ import ServerSentEvents
 
 let client = ServerSentEventsClient()
 
-try await client.stream(
+try await client.completions.stream(
     request: Requests.StreamCompletionRequest()
 )
 ```

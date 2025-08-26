@@ -33,13 +33,9 @@ import CrossPackageTypeNames
 
 let client = CrossPackageTypeNamesClient()
 
-try await client.find(
+try await client.foo.find(
     optionalString: OptionalString(),
-    request: FindRequest(
-        publicProperty: "string",
-        privateProperty: 123,
-        additionalProperties: ["string": JSONValue.string("string")]
-    )
+    request: Requests.FindRequest()
 )
 ```
 

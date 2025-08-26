@@ -33,7 +33,7 @@ import ApiWideBasePath
 
 let client = ApiWideBasePathClient()
 
-try await client.post(
+try await client.service.post(
     pathParam: "string",
     serviceParam: "string",
     endpointParam: "string",

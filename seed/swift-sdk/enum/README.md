@@ -33,7 +33,7 @@ import Enum
 
 let client = EnumClient()
 
-try await client.send(
+try await client.headers.send(
     operand: Operand(),
     maybeOperand: Operand(),
     operandOrColor: ColorOrOperand(),

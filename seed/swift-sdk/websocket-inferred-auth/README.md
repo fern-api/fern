@@ -33,7 +33,7 @@ import WebsocketAuth
 
 let client = WebsocketAuthClient()
 
-try await client.getTokenWithClientCredentials(
+try await client.auth.getTokenWithClientCredentials(
     xApiKey: "string",
     request: GetTokenRequest(
         clientId: "string",
@@ -41,7 +41,9 @@ try await client.getTokenWithClientCredentials(
         audience: HttpsApiExampleCom(),
         grantType: ClientCredentials(),
         scope: "string",
-        additionalProperties: ["string": JSONValue.string("string")]
+        additionalProperties: [
+            "string": JSONValue.string("string")
+        ]
     )
 )
 ```

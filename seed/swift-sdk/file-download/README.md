@@ -33,7 +33,7 @@ import FileDownload
 
 let client = FileDownloadClient()
 
-try await client.simple(
+try await client.service.simple(
 
 )
 ```

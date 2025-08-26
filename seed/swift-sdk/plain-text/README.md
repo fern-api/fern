@@ -33,7 +33,7 @@ import PlainText
 
 let client = PlainTextClient()
 
-try await client.getText(
+try await client.service.getText(
 
 )
 ```

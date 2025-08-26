@@ -33,7 +33,7 @@ import CustomAuth
 
 let client = CustomAuthClient(customAuthScheme: "YOUR_TOKEN")
 
-try await client.postWithCustomAuth(
+try await client.customAuth.postWithCustomAuth(
     request: JSONValue.string("string")
 )
 ```

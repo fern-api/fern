@@ -33,7 +33,7 @@ import SingleUrlEnvironmentDefault
 
 let client = SingleUrlEnvironmentDefaultClient(token: "YOUR_TOKEN")
 
-try await client.getDummy(
+try await client.dummy.getDummy(
 
 )
 ```

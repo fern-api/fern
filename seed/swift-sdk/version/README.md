@@ -33,7 +33,7 @@ import Version
 
 let client = VersionClient()
 
-try await client.getUser(
+try await client.user.getUser(
     userId: "string"
 )
 ```

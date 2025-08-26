@@ -33,7 +33,7 @@ import ErrorProperty
 
 let client = ErrorPropertyClient()
 
-try await client.throwError(
+try await client.propertyBasedError.throwError(
 
 )
 ```

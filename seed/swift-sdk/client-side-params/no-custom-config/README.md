@@ -33,14 +33,10 @@ import ClientSideParams
 
 let client = ClientSideParamsClient(token: "YOUR_TOKEN")
 
-try await client.searchResources(
+try await client.service.searchResources(
     limit: 123,
     offset: 123,
-    request: SearchResourcesRequest(
-        query: "string",
-        filters: ["string": JSONValue.string("string")],
-        additionalProperties: ["string": JSONValue.string("string")]
-    )
+    request: Requests.SearchResourcesRequest()
 )
 ```
 

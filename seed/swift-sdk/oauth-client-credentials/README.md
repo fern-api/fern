@@ -33,8 +33,17 @@ import OauthClientCredentials
 
 let client = OauthClientCredentialsClient()
 
-try await client.getTokenWithClientCredentials(
-    request: Requests.GetTokenRequest()
+try await client.auth.getTokenWithClientCredentials(
+    request: GetTokenRequest(
+        clientId: "string",
+        clientSecret: "string",
+        audience: HttpsApiExampleCom(),
+        grantType: ClientCredentials(),
+        scope: "string",
+        additionalProperties: [
+            "string": JSONValue.string("string")
+        ]
+    )
 )
 ```
 

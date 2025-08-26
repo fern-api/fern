@@ -33,10 +33,12 @@ import MultiUrlEnvironment
 
 let client = MultiUrlEnvironmentClient(token: "YOUR_TOKEN")
 
-try await client.bootInstance(
+try await client.ec2.bootInstance(
     request: BootInstanceRequest(
         size: "string",
-        additionalProperties: ["string": JSONValue.string("string")]
+        additionalProperties: [
+            "string": JSONValue.string("string")
+        ]
     )
 )
 ```

@@ -38,7 +38,9 @@ try await client.extendedInlineRequestBody(
         name: "string",
         docs: "string",
         unique: "string",
-        additionalProperties: ["string": JSONValue.string("string")]
+        additionalProperties: [
+            "string": JSONValue.string("string")
+        ]
     )
 )
 ```

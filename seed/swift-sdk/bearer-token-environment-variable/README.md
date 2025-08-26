@@ -33,7 +33,7 @@ import BearerTokenEnvironmentVariable
 
 let client = BearerTokenEnvironmentVariableClient(apiKey: "YOUR_TOKEN")
 
-try await client.getWithBearerToken(
+try await client.service.getWithBearerToken(
 
 )
 ```

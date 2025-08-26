@@ -33,7 +33,7 @@ import Accept
 
 let client = AcceptClient(token: "YOUR_TOKEN")
 
-try await client.endpoint(
+try await client.service.endpoint(
 
 )
 ```

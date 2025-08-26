@@ -33,7 +33,7 @@ import UndiscriminatedUnions
 
 let client = UndiscriminatedUnionsClient()
 
-try await client.get(
+try await client.union.get(
     request: MyUnion()
 )
 ```

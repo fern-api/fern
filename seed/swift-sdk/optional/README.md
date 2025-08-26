@@ -33,8 +33,10 @@ import ObjectsWithImports
 
 let client = ObjectsWithImportsClient()
 
-try await client.sendOptionalBody(
-    request: ["string": JSONValue.string("string")]
+try await client.optional.sendOptionalBody(
+    request: [
+        "string": JSONValue.string("string")
+    ]
 )
 ```
 

@@ -33,7 +33,7 @@ import AuthEnvironmentVariables
 
 let client = AuthEnvironmentVariablesClient(apiKey: "YOUR_TOKEN")
 
-try await client.getWithApiKey(
+try await client.service.getWithApiKey(
 
 )
 ```

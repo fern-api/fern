@@ -33,16 +33,9 @@ import InferredAuthImplicitNoExpiry
 
 let client = InferredAuthImplicitNoExpiryClient()
 
-try await client.getTokenWithClientCredentials(
+try await client.auth.getTokenWithClientCredentials(
     xApiKey: "string",
-    request: GetTokenRequest(
-        clientId: "string",
-        clientSecret: "string",
-        audience: HttpsApiExampleCom(),
-        grantType: ClientCredentials(),
-        scope: "string",
-        additionalProperties: ["string": JSONValue.string("string")]
-    )
+    request: Requests.GetTokenRequest()
 )
 ```
 

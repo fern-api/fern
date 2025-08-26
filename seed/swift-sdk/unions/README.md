@@ -33,7 +33,7 @@ import Unions
 
 let client = UnionsClient()
 
-try await client.get(
+try await client.bigunion.get(
     id: "string"
 )
 ```
