@@ -36,7 +36,7 @@ let client = LiteralClient()
 try await client.headers.send(
     endpointVersion: JSONValue.string("string"),
     async: JSONValue.string("string"),
-    request: SendLiteralsInHeadersRequest(
+    request: Requests.SendLiteralsInHeadersRequest(
         query: "string",
         additionalProperties: [
             "string": JSONValue.string("string")

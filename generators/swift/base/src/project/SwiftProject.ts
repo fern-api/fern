@@ -111,7 +111,7 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         return this.schemaTypesById.get(fullyQualifiedName);
     }
 
-    public getRequestStruct(fullyQualifiedName: string): swift.Struct | undefined {
+    public getRequestType(fullyQualifiedName: string): swift.Struct | undefined {
         return this.requestStructsByEndpointIdAndRequestName.get(fullyQualifiedName);
     }
 
