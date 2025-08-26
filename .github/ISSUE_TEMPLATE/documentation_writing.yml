@@ -3,7 +3,6 @@ description: "Something missing or incorrect in our docs (buildwithfern.com/lear
 labels: ["documentation"]
 type: "task"
 body:
-
   - type: dropdown
     id: issue-type
     attributes:

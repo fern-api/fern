@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths:
-      - 'docker/seed/*'
-      - '.github/workflows/seed-dockers.yml'
+      - "docker/seed/*"
+      - ".github/workflows/seed-dockers.yml"
   workflow_dispatch:
 
 # Cancel previous workflows on previous push
@@ -103,7 +103,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
     outputs:
-      image_sha: ${{ steps.meta.outputs.version }}  # This gets the SHA tag
+      image_sha: ${{ steps.meta.outputs.version }} # This gets the SHA tag
 
   merge-manifests:
     if: ${{ needs.changes.outputs.packages != '' && toJSON(fromJSON(needs.changes.outputs.packages)) != '[]' }}

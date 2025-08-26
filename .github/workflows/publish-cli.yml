@@ -106,16 +106,16 @@ jobs:
         run: |
           previous_commit=$(git log -n 2 --pretty=format:"%h" -- packages/cli/cli/versions.yml | tail -n 1)
           current_commit=$(git log -n 1 --pretty=format:"%h" -- packages/cli/cli/versions.yml)
-          
+
           # Get the previous version of the file using the specific commit that last changed it
           git show ${previous_commit}:packages/cli/cli/versions.yml > tmp_cli_previous_versions.yml
-          
+
           echo "Preview of the previous file (${previous_commit})"
           head tmp_cli_previous_versions.yml
-          
+
           echo "Preview of the current file (${current_commit})"
           head packages/cli/cli/versions.yml
-          
+
           # Proceed with publishing
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           pnpm seed publish cli --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml --log-level debug

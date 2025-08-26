@@ -31,4 +31,3 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           fern generate --api fern-definition --group docs-parsers --version ${{ steps.version.outputs.next_version }}
-

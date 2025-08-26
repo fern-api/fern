@@ -11,11 +11,11 @@ inputs:
   enforce-checks:
     description: Require checks to pass before approving PR
     required: false
-    default: 'false'
+    default: "false"
   enforced-checks:
     description: List of checks to enforce (provided as a comma separated list)
     type: string
-    default: ''
+    default: ""
 
 runs:
   using: "composite"

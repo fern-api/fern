@@ -64,6 +64,6 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}      
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           enforced-checks: lint
-          enforce-checks: 'true'
+          enforce-checks: "true"

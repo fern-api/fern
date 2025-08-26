@@ -127,4 +127,3 @@ jobs:
         with:
           schema-path: "fern-versions-yml.schema.json"
           file-path: "generators/rust/model/versions.yml"
-
