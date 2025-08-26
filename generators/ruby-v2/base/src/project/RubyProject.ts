@@ -13,6 +13,8 @@ import { RubocopFile } from "./RubocopFile";
 const GEMFILE_FILENAME = "Gemfile";
 const RAKEFILE_FILENAME = "Rakefile";
 const RUBOCOP_FILENAME = ".rubocop.yml";
+const CUSTOM_TEST_FILENAME = "custom.test.rb";
+const CUSTOM_GEMSPEC_FILENAME = "custom.gemspec.rb";
 
 /**
  * In memory representation of a Ruby project.
@@ -50,10 +52,9 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
     }
 
     private async createCustomGemspecFile(): Promise<void> {
-        const customGemspecFilename = "custom." + this.context.getRootFolderName() + ".gemspec";
         const customGemspecFile = new CustomGemspecFile({ context: this.context, project: this });
         await writeFile(
-            join(this.absolutePathToOutputDirectory, RelativeFilePath.of(customGemspecFilename)),
+            join(this.absolutePathToOutputDirectory, RelativeFilePath.of(CUSTOM_GEMSPEC_FILENAME)),
             await customGemspecFile.toString()
         );
     }
@@ -210,13 +211,18 @@ class GemspecFile {
             # frozen_string_literal: true
 
             require_relative "lib/${moduleFolderName}/version"
+            require_relative "${CUSTOM_GEMSPEC_FILENAME}"
 
+            # Note: A handful of these fields are required as part of the Ruby specification. 
+            #       You can change them here or overwrite them in the custom gemspec file.
             Gem::Specification.new do |spec|
             spec.name = "${moduleFolderName}"
+            spec.authors = ["${moduleName}"] 
             spec.version = ${moduleName}::VERSION
             spec.summary = "Ruby client library for the ${moduleName} API"
             spec.description = "The ${moduleName} Ruby library provides convenient access to the ${moduleName} API from Ruby."
             spec.required_ruby_version = ">= 3.1.0"
+            spec.metadata["rubygems_mfa_required"] = "true"
             
             # Specify which files should be added to the gem when it is released.
             # The \`git ls-files -z\` loads the files in the RubyGem that have been added into git.
@@ -238,10 +244,8 @@ class GemspecFile {
             # guide at: https://bundler.io/guides/creating_gem.html
             
             # Load custom gemspec configuration if it exists
-            custom_gemspec_file = File.join(__dir__, "custom.${moduleFolderName}.gemspec")
-            if File.exist?(custom_gemspec_file)
-                load custom_gemspec_file
-            end
+            custom_gemspec_file = File.join(__dir__, "${CUSTOM_GEMSPEC_FILENAME}")
+            add_custom_gemspec_data(spec) if File.exist?(custom_gemspec_file)
             end
         `;
     }
@@ -272,40 +276,42 @@ class CustomGemspecFile {
             # You can modify this file to add custom metadata, dependencies, or other gemspec configurations
             # The 'spec' variable is available in this context from the main gemspec file
 
-            # Example custom configurations (uncomment and modify as needed):
+            def add_custom_gemspec_data(spec)
+                # Example custom configurations (uncomment and modify as needed)
 
-            # spec.authors = ["Your Name"]
-            # spec.email = ["your.email@example.com"]
-            # spec.homepage = "https://github.com/your-org/${moduleName.toLowerCase()}-ruby"
-            # spec.license = "Your license"
-            
-            # Add custom dependencies
-            # spec.add_dependency "your dependency", "~> your version"
-            
-            # Add development dependencies
-            # spec.add_development_dependency "your development dependency", "~> your version"
-            
-            # Add custom metadata
-            # spec.metadata = {
-            #     "changelog_uri" => "https://github.com/your-org/${moduleName.toLowerCase()}-ruby/blob/main/CHANGELOG.md",
-            #     "documentation_uri" => "https://rubydoc.info/gems/${moduleName.toLowerCase()}",
-            #     "homepage_uri" => "https://github.com/your-org/${moduleName.toLowerCase()}-ruby",
-            #     "source_code_uri" => "https://github.com/your-org/${moduleName.toLowerCase()}-ruby"
-            # }
+                # spec.authors = ["Your name"]
+                # spec.email = ["your.email@example.com"]
+                # spec.homepage = "https://github.com/your-org/${moduleName.toLowerCase()}-ruby"
+                # spec.license = "Your license"
+                
+                # Add custom dependencies
+                # spec.add_dependency "your dependency", "~> your version"
+                
+                # Add development dependencies
+                # spec.add_development_dependency "your development dependency", "~> your version"
+                
+                # Add custom metadata
+                # spec.metadata = {
+                #     "changelog_uri" => "https://github.com/your-org/${moduleName.toLowerCase()}-ruby/blob/main/CHANGELOG.md",
+                #     "documentation_uri" => "https://rubydoc.info/gems/${moduleName.toLowerCase()}",
+                #     "homepage_uri" => "https://github.com/your-org/${moduleName.toLowerCase()}-ruby",
+                #     "source_code_uri" => "https://github.com/your-org/${moduleName.toLowerCase()}-ruby"
+                # }
 
-            # Add custom files or directories
-            # spec.files += Dir["your path"]
+                # Add custom files or directories
+                # spec.files += Dir["your path"]
 
-            # Add custom executables
-            # spec.executables << "your-custom-command"
+                # Add custom executables
+                # spec.executables << "your-custom-command"
 
-            # Add custom require paths
-            # spec.require_paths << "your path"
+                # Add custom require paths
+                # spec.require_paths << "your path"
 
-            # You can also add conditional logic based on environment
-            # if ENV["Your environment variable"]
-            #     spec.add_development_dependency "your development dependency", "~> 1.6"
-            # end
+                # You can also add conditional logic based on environment
+                # if ENV["Your environment variable"]
+                #     spec.add_development_dependency "your development dependency", "~> 1.6"
+                # end
+            end
         `;
     }
 }
@@ -383,7 +389,7 @@ class Rakefile {
             # Run only the custom test file
             Minitest::TestTask.create(:customtest) do |t|
             t.libs << "test"
-            t.test_globs = ["test/custom.test.rb"]
+            t.test_globs = ["test/${CUSTOM_TEST_FILENAME}"]
             end
         `;
     }
@@ -406,7 +412,7 @@ class CustomTestFile {
         this.context = context;
         this.project = project;
         this.filePath = join(project.absolutePathToOutputDirectory, RelativeFilePath.of("test"));
-        this.fileName = "custom.test.rb";
+        this.fileName = CUSTOM_TEST_FILENAME;
     }
 
     public toString(): string {
