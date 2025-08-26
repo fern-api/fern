@@ -34,7 +34,10 @@ import MultiUrlEnvironment
 let client = MultiUrlEnvironmentClient(token: "YOUR_TOKEN")
 
 try await client.bootInstance(
-    request: Requests.BootInstanceRequest()
+    request: BootInstanceRequest(
+        size: "string",
+        additionalProperties: ["string": JSONValue.string("string")]
+    )
 )
 ```
 

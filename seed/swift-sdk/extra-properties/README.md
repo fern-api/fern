@@ -34,7 +34,12 @@ import ExtraProperties
 let client = ExtraPropertiesClient()
 
 try await client.createUser(
-    request: Requests.CreateUserRequest()
+    request: CreateUserRequest(
+        type: CreateUserRequest(),
+        version: V1(),
+        name: "string",
+        additionalProperties: ["string": JSONValue.string("string")]
+    )
 )
 ```
 

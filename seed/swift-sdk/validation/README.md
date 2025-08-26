@@ -34,7 +34,13 @@ import Validation
 let client = ValidationClient()
 
 try await client.create(
-    request: Requests.CreateRequest()
+    request: CreateRequest(
+        decimal: 123.456,
+        even: 123,
+        name: "string",
+        shape: Shape(),
+        additionalProperties: ["string": JSONValue.string("string")]
+    )
 )
 ```
 

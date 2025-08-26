@@ -35,7 +35,11 @@ let client = AudiencesClient()
 
 try await client.find(
     optionalString: OptionalString(),
-    request: Requests.FindRequest()
+    request: FindRequest(
+        publicProperty: "string",
+        privateProperty: 123,
+        additionalProperties: ["string": JSONValue.string("string")]
+    )
 )
 ```
 
