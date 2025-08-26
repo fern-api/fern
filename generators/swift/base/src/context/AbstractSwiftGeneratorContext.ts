@@ -188,7 +188,7 @@ export abstract class AbstractSwiftGeneratorContext<
             case "named": {
                 const symbolName = this.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeReference.typeId);
                 const hasNestedTypeWithSameName = localTypeRegistry?.hasNestedTypeWithName?.(symbolName);
-                return swift.Type.arbitrary(
+                return swift.Type.custom(
                     hasNestedTypeWithSameName ? this.getFullyQualifiedNameForSchemaType(symbolName) : symbolName
                 );
             }
