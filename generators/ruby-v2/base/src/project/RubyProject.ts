@@ -28,6 +28,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
 
     public async persist(): Promise<void> {
         await this.createGemspecfile();
+        await this.createCustomGemspecFile();
         await this.createGemfile();
         await this.createRakefile();
         await this.writeRawFiles();
@@ -45,6 +46,15 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await writeFile(
             join(this.absolutePathToOutputDirectory, RelativeFilePath.of(gemspecFilename)),
             await gemspecFile.toString()
+        );
+    }
+
+    private async createCustomGemspecFile(): Promise<void> {
+        const customGemspecFilename = "custom." + this.context.getRootFolderName() + ".gemspec";
+        const customGemspecFile = new CustomGemspecFile({ context: this.context, project: this });
+        await writeFile(
+            join(this.absolutePathToOutputDirectory, RelativeFilePath.of(customGemspecFilename)),
+            await customGemspecFile.toString()
         );
     }
 
@@ -195,7 +205,6 @@ class GemspecFile {
     public async toString(): Promise<string> {
         const moduleFolderName = this.context.getRootFolderName();
         const moduleName = this.context.getRootModule().name;
-        const license = this.context.getLicenseFromConfig();
 
         return dedent`
             # frozen_string_literal: true
@@ -205,16 +214,9 @@ class GemspecFile {
             Gem::Specification.new do |spec|
             spec.name = "${moduleFolderName}"
             spec.version = ${moduleName}::VERSION
-            spec.authors = ["Fern"]
-            spec.email = ["support@buildwithfern.com"]
             spec.summary = "Ruby client library for the ${moduleName} API"
             spec.description = "The ${moduleName} Ruby library provides convenient access to the ${moduleName} API from Ruby."
-            spec.homepage = ""
-            spec.license = "${license}"
             spec.required_ruby_version = ">= 3.1.0"
-            spec.metadata["homepage_uri"] = ""
-            spec.metadata["source_code_uri"] = ""
-            spec.metadata["changelog_uri"] = ""
             
             # Specify which files should be added to the gem when it is released.
             # The \`git ls-files -z\` loads the files in the RubyGem that have been added into git.
@@ -234,10 +236,80 @@ class GemspecFile {
 
             # For more information and examples about making a new gem, check out our
             # guide at: https://bundler.io/guides/creating_gem.html
+            
+            # Load custom gemspec configuration if it exists
+            custom_gemspec_file = File.join(__dir__, "custom.${moduleFolderName}.gemspec")
+            if File.exist?(custom_gemspec_file)
+                load custom_gemspec_file
+            end
             end
         `;
     }
 }
+
+declare namespace CustomGemspecFile {
+    interface Args {
+        context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+        project: RubyProject;
+    }
+}
+
+class CustomGemspecFile {
+    private context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+
+    public constructor({ context, project }: CustomGemspecFile.Args) {
+        this.context = context;
+    }
+
+    public async toString(): Promise<string> {
+        const moduleName = this.context.getRootModule().name;
+        
+        return dedent`
+            # frozen_string_literal: true
+
+            # Custom gemspec configuration file
+            # This file is automatically loaded by the main gemspec file
+            # You can modify this file to add custom metadata, dependencies, or other gemspec configurations
+            # The 'spec' variable is available in this context from the main gemspec file
+
+            # Example custom configurations (uncomment and modify as needed):
+
+            # spec.authors = ["Your Name"]
+            # spec.email = ["your.email@example.com"]
+            # spec.homepage = "https://github.com/your-org/${moduleName.toLowerCase()}-ruby"
+            # spec.license = "Your license"
+            
+            # Add custom dependencies
+            # spec.add_dependency "your dependency", "~> your version"
+            
+            # Add development dependencies
+            # spec.add_development_dependency "your development dependency", "~> your version"
+            
+            # Add custom metadata
+            # spec.metadata = {
+            #     "changelog_uri" => "https://github.com/your-org/${moduleName.toLowerCase()}-ruby/blob/main/CHANGELOG.md",
+            #     "documentation_uri" => "https://rubydoc.info/gems/${moduleName.toLowerCase()}",
+            #     "homepage_uri" => "https://github.com/your-org/${moduleName.toLowerCase()}-ruby",
+            #     "source_code_uri" => "https://github.com/your-org/${moduleName.toLowerCase()}-ruby"
+            # }
+
+            # Add custom files or directories
+            # spec.files += Dir["your path"]
+
+            # Add custom executables
+            # spec.executables << "your-custom-command"
+
+            # Add custom require paths
+            # spec.require_paths << "your path"
+
+            # You can also add conditional logic based on environment
+            # if ENV["Your environment variable"]
+            #     spec.add_development_dependency "your development dependency", "~> 1.6"
+            # end
+        `;
+    }
+}
+
 
 declare namespace Gemfile {
     interface Args {

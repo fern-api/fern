@@ -48,17 +48,9 @@ export abstract class AbstractRubyGeneratorContext<
 
     public getVersionFromConfig(): string | undefined {
         return this.config.output.mode._visit<string | undefined>({
-            publish: (gpc) => gpc.version || undefined,
+            publish: (generatorPublishConfig) => generatorPublishConfig.version || undefined,
             downloadFiles: () => undefined,
-            github: (gom) => gom.version || undefined,
-            _other: () => undefined
-        });
-    }
-
-    public getLicenseFromConfig(): string | undefined {
-        return this.config.license?._visit<string | undefined>({
-            basic: (l) => l.id,
-            custom: (l) => l.filename,
+            github: (githubOutputMode) => githubOutputMode.version || undefined,
             _other: () => undefined
         });
     }
