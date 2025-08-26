@@ -93,8 +93,16 @@ export async function runLocalGenerationForWorkspace({
                     return;
                 }
 
-                if (organization.ok && organization.body.selfHostedSdKs) {
-                    intermediateRepresentation.selfHosted = true;
+                if (organization.ok) {
+                    if (organization.body.selfHostedSdKs) {
+                        intermediateRepresentation.selfHosted = true;
+                    }
+                    if (organization.body.isWhitelabled) {
+                        if (intermediateRepresentation.readmeConfig == null) {
+                            intermediateRepresentation.readmeConfig = emptyReadmeConfig;
+                        }
+                        intermediateRepresentation.readmeConfig.whiteLabel = true;
+                    }
                 }
 
                 // Set the publish config on the intermediateRepresentation if available
@@ -245,3 +253,14 @@ function isGithubSelfhosted(
     }
     return "uri" in github && "token" in github;
 }
+
+const emptyReadmeConfig: FernIr.ReadmeConfig = {
+    defaultEndpoint: undefined,
+    bannerLink: undefined,
+    introduction: undefined,
+    apiReferenceLink: undefined,
+    apiName: undefined,
+    disabledFeatures: undefined,
+    whiteLabel: undefined,
+    features: undefined
+};

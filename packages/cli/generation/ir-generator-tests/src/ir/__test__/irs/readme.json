@@ -3438,6 +3438,7 @@
         "apiReferenceLink": "https://www.docs.fernapi.com",
         "bannerLink": "https://www.fernapi.com",
         "introduction": null,
+        "whiteLabel": false,
         "defaultEndpoint": "endpoint_imdb.createMovie",
         "features": {
             "timeouts": [
