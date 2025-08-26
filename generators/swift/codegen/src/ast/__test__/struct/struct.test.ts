@@ -308,7 +308,7 @@ describe("Struct", () => {
                                 type: Type.string()
                             })
                         ],
-                        returnType: Type.custom("User"),
+                        returnType: Type.arbitrary("User"),
                         body: swift.codeBlock((writer) => {
                             writer.writeLine("return User(id: id, name: name)");
                         })

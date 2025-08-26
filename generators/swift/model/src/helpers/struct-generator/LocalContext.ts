@@ -127,7 +127,7 @@ export class LocalContext implements LocalTypeRegistry {
 
     public getSwiftTypeForStringLiteral(literalValue: string): swift.Type {
         const enumName = this.symbolRegistry.getStringLiteralSymbolOrThrow(literalValue);
-        return swift.Type.custom(enumName);
+        return swift.Type.arbitrary(enumName);
     }
 
     public hasNestedTypeWithName(symbolName: string): boolean {
