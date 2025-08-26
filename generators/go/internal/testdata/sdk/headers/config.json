@@ -1,19 +1,19 @@
 {
-    "irFilepath": "ir.json",
-    "output": {
-        "mode": {
-            "type": "downloadFiles"
-        },
-        "path": "tmp"
+  "irFilepath": "ir.json",
+  "output": {
+    "mode": {
+      "type": "downloadFiles"
     },
-    "customConfig": {
-      "importPath": "github.com/fern-api/fern-go/internal/testdata/sdk/headers/fixtures",
-      "includeLegacyClientOptions": true 
-    },
-    "workspaceName": "test",
-    "organization": "fernbot",
-    "environment": {
-        "_type": "local"
-    },
-    "dryRun": false
+    "path": "tmp"
+  },
+  "customConfig": {
+    "importPath": "github.com/fern-api/fern-go/internal/testdata/sdk/headers/fixtures",
+    "includeLegacyClientOptions": true
+  },
+  "workspaceName": "test",
+  "organization": "fernbot",
+  "environment": {
+    "_type": "local"
+  },
+  "dryRun": false
 }

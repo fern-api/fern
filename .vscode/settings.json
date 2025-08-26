@@ -33,19 +33,14 @@
     "source.organizeImports.biome": "explicit",
     "source.fixAll.biome": "explicit"
   },
-  "editor.defaultFormatter": null,
-  "[typescript]": {
-    "editor.defaultFormatter": "biomejs.biome"
+  "editor.defaultFormatter": "biomejs.biome",
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "python.analysis.typeCheckingMode": "basic",
   "dotnet.automaticallyCreateSolutionInWorkspace": false,
   "dotnet.testWindow.disableAutoDiscovery": true,
   "dotnet.defaultSolution": "disable",
   "dotnet.projects.enableAutomaticRestore": false,
-  "cSpell.import": [
-    "cspell.json"
-  ],
-  "[yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  "cSpell.import": ["cspell.json"]
 }

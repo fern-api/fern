@@ -1,0 +1,61 @@
+# Ignore specific YAML files
+pnpm-lock.yaml
+yarn.lock
+package-lock.yaml
+*.lock.yaml
+*.lock.yml
+
+# Ignore template files used in generators
+**/asIs/**/*.yml
+
+# Ignore specific directories and files
+node_modules/
+dist/
+lib/
+build/
+generated/
+seed/
+.git/
+.husky/
+.github/
+.turbo/
+.vscode/
+__snapshots__/
+*.tempate.*
+*.template.*
+
+# Ignore .definition directories for snapshot tests
+.definition/
+**/__test__/outputs/**
+
+# Ignore all other file types (but allow YAML)
+*.js
+*.jsx
+*.ts
+*.tsx
+*.json
+*.md
+*.css
+*.scss
+*.html
+*.xml
+*.txt
+*.log
+*.sh
+*.bat
+*.ps1
+*.py
+*.rb
+*.java
+*.go
+*.rs
+*.cpp
+*.c
+*.h
+*.cs
+*.php
+*.sql
+*.graphql
+*.vue
+*.svelte
+*.astro

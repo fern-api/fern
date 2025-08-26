@@ -61,6 +61,9 @@ importers:
       nx:
         specifier: ^21.3.8
         version: 21.3.8
+      prettier:
+        specifier: ^3.4.2
+        version: 3.5.3
       sort-package-json:
         specifier: 3.3.1
         version: 3.3.1

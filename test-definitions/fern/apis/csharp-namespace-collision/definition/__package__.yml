@@ -1,7 +1,7 @@
 types:
   User:
     properties:
-      id: 
+      id:
         type: string
         access: read-only
       name: string
@@ -11,7 +11,7 @@ types:
         access: write-only
   Task:
     properties:
-      id: 
+      id:
         type: string
         access: read-only
       name: string

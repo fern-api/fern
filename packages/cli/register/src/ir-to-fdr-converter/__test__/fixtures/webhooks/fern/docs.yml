@@ -6,5 +6,5 @@ navigation:
     playground:
       oauth: true
 colors:
-  accentPrimary: '#ffffff'
-  background: '#000000'
+  accentPrimary: "#ffffff"
+  background: "#000000"
