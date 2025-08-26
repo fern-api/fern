@@ -12,7 +12,6 @@ from .raw_client import AsyncRawPathParamClient, RawPathParamClient
 class PathParamClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawPathParamClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawPathParamClient:
@@ -65,7 +64,6 @@ class PathParamClient:
 class AsyncPathParamClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawPathParamClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawPathParamClient:

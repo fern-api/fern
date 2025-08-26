@@ -21,7 +21,6 @@ except ImportError:
 class RealtimeClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawRealtimeClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawRealtimeClient:
@@ -90,7 +89,6 @@ class RealtimeClient:
 class AsyncRealtimeClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawRealtimeClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawRealtimeClient:

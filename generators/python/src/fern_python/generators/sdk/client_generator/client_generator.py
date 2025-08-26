@@ -124,9 +124,6 @@ class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
                 )
             )
 
-            if self._context.custom_config.lazy_imports:
-                writer.write_line("self._client_wrapper = client_wrapper")
-
-            self._initialize_nested_clients(writer=writer, is_async=is_async)
+            self._initialize_nested_clients(writer=writer, is_async=is_async, declare_client_wrapper=True)
 
         return _write_constructor_body

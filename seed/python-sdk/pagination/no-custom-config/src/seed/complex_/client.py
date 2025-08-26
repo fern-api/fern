@@ -17,7 +17,6 @@ OMIT = typing.cast(typing.Any, ...)
 class ComplexClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawComplexClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawComplexClient:
@@ -87,7 +86,6 @@ class ComplexClient:
 class AsyncComplexClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawComplexClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawComplexClient:

@@ -12,7 +12,6 @@ from .raw_client import AsyncRawQueryParamClient, RawQueryParamClient
 class QueryParamClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawQueryParamClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawQueryParamClient:
@@ -127,7 +126,6 @@ class QueryParamClient:
 class AsyncQueryParamClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawQueryParamClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawQueryParamClient:

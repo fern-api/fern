@@ -12,7 +12,6 @@ from .types.metadata import Metadata
 class MetadataClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawMetadataClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawMetadataClient:
@@ -58,7 +57,6 @@ class MetadataClient:
 class AsyncMetadataClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawMetadataClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawMetadataClient:

@@ -20,7 +20,6 @@ OMIT = typing.cast(typing.Any, ...)
 class ObjectClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawObjectClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawObjectClient:
@@ -512,7 +511,6 @@ class ObjectClient:
 class AsyncObjectClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawObjectClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawObjectClient:

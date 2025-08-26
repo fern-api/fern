@@ -10,7 +10,6 @@ from .raw_client import AsyncRawSimpleClient, RawSimpleClient
 class SimpleClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawSimpleClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawSimpleClient:
@@ -53,7 +52,6 @@ class SimpleClient:
 class AsyncSimpleClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawSimpleClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawSimpleClient:

@@ -16,7 +16,6 @@ OMIT = typing.cast(typing.Any, ...)
 class ReferenceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawReferenceClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawReferenceClient:
@@ -81,7 +80,6 @@ class ReferenceClient:
 class AsyncReferenceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawReferenceClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawReferenceClient:

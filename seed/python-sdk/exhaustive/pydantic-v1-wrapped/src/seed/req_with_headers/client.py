@@ -13,7 +13,6 @@ OMIT = typing.cast(typing.Any, ...)
 class ReqWithHeadersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawReqWithHeadersClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawReqWithHeadersClient:
@@ -76,7 +75,6 @@ class ReqWithHeadersClient:
 class AsyncReqWithHeadersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawReqWithHeadersClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawReqWithHeadersClient:

@@ -14,7 +14,6 @@ OMIT = typing.cast(typing.Any, ...)
 class AuthClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawAuthClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawAuthClient:
@@ -135,7 +134,6 @@ class AuthClient:
 class AsyncAuthClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawAuthClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawAuthClient:

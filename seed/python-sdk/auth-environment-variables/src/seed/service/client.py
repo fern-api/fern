@@ -11,7 +11,6 @@ from .raw_client import AsyncRawServiceClient, RawServiceClient
 class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawServiceClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawServiceClient:
@@ -94,7 +93,6 @@ class ServiceClient:
 class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawServiceClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawServiceClient:

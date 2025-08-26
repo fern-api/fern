@@ -11,7 +11,6 @@ from .types.migration import Migration
 class MigrationClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawMigrationClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawMigrationClient:
@@ -60,7 +59,6 @@ class MigrationClient:
 class AsyncMigrationClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawMigrationClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawMigrationClient:

@@ -13,7 +13,6 @@ OMIT = typing.cast(typing.Any, ...)
 class NoAuthClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawNoAuthClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawNoAuthClient:
@@ -62,7 +61,6 @@ class NoAuthClient:
 class AsyncNoAuthClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawNoAuthClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawNoAuthClient:

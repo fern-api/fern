@@ -12,7 +12,6 @@ from .types.user_id import UserId
 class UserClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawUserClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawUserClient:
@@ -56,7 +55,6 @@ class UserClient:
 class AsyncUserClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawUserClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawUserClient:

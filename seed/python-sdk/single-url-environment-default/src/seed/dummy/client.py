@@ -10,7 +10,6 @@ from .raw_client import AsyncRawDummyClient, RawDummyClient
 class DummyClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawDummyClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawDummyClient:
@@ -50,7 +49,6 @@ class DummyClient:
 class AsyncDummyClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawDummyClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawDummyClient:

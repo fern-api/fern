@@ -24,7 +24,6 @@ OMIT = typing.cast(typing.Any, ...)
 class AdminClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawAdminClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawAdminClient:
@@ -788,7 +787,6 @@ class AdminClient:
 class AsyncAdminClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawAdminClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawAdminClient:

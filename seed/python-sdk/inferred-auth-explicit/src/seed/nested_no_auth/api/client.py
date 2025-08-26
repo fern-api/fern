@@ -10,7 +10,6 @@ from .raw_client import AsyncRawApiClient, RawApiClient
 class ApiClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawApiClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawApiClient:
@@ -50,7 +49,6 @@ class ApiClient:
 class AsyncApiClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawApiClient(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawApiClient:

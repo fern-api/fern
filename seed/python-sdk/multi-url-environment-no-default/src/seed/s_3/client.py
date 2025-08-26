@@ -13,7 +13,6 @@ OMIT = typing.cast(typing.Any, ...)
 class S3Client:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawS3Client(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> RawS3Client:
@@ -59,7 +58,6 @@ class S3Client:
 class AsyncS3Client:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawS3Client(client_wrapper=client_wrapper)
-        self._client_wrapper = client_wrapper
 
     @property
     def with_raw_response(self) -> AsyncRawS3Client:
