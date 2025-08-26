@@ -24,6 +24,20 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import PublicObject
+
+let client = PublicObjectClient()
+
+try await client.get(
+
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

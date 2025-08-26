@@ -24,6 +24,20 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import ObjectsWithImports
+
+let client = ObjectsWithImportsClient()
+
+try await client.sendOptionalBody(
+    request: ["string": JSONValue.string("string")]
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

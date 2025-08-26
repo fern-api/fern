@@ -24,6 +24,33 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import QueryParameters
+
+let client = QueryParametersClient()
+
+try await client.getUsername(
+    limit: 123,
+    id: UUID(),
+    date: Date.now,
+    deadline: Date.now,
+    bytes: "string",
+    user: User(),
+    userList: [User()],
+    optionalDeadline: Date.now,
+    keyValue: ["string": "string"],
+    optionalString: "string",
+    nestedUser: NestedUser(),
+    optionalUser: User(),
+    excludeUser: User(),
+    filter: "string"
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

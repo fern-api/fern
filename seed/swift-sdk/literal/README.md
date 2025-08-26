@@ -24,6 +24,22 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import Literal
+
+let client = LiteralClient()
+
+try await client.send(
+    endpointVersion: JSONValue.string("string"),
+    async: JSONValue.string("string"),
+    request: Requests.SendLiteralsInHeadersRequest()
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

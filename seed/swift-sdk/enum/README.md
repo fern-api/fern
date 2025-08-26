@@ -24,6 +24,23 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import Enum
+
+let client = EnumClient()
+
+try await client.send(
+    operand: Operand(),
+    maybeOperand: Operand(),
+    operandOrColor: ColorOrOperand(),
+    maybeOperandOrColor: ColorOrOperand()
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

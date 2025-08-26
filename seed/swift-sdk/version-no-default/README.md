@@ -24,6 +24,20 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import Version
+
+let client = VersionClient()
+
+try await client.getUser(
+    userId: "string"
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

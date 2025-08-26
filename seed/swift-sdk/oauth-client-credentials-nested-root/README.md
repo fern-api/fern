@@ -24,6 +24,20 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import OauthClientCredentials
+
+let client = OauthClientCredentialsClient()
+
+try await client.getToken(
+    request: Requests.GetTokenRequest()
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

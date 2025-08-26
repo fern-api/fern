@@ -24,6 +24,20 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import Api
+
+let client = ApiClient(token: "YOUR_TOKEN")
+
+try await client.createMovie(
+    request: CreateMovieRequest()
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

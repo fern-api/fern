@@ -24,6 +24,21 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import InferredAuthExplicit
+
+let client = InferredAuthExplicitClient()
+
+try await client.getTokenWithClientCredentials(
+    xApiKey: "string",
+    request: Requests.GetTokenRequest()
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.
