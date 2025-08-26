@@ -6,6 +6,7 @@ export { delay } from "./delay/delay";
 export { withMinimumTime } from "./delay/withMinimumTime";
 export { EMPTY_ARRAY, EMPTY_OBJECT } from "./empty";
 export * as Examples from "./examples";
+export { extractErrorMessage } from "./extractErrorMessage";
 export { getDuplicates } from "./getDuplicates";
 export { identity } from "./identity";
 export { isNonNullish } from "./isNonNullish";
