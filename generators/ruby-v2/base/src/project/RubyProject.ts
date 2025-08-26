@@ -267,7 +267,7 @@ class CustomGemspecFile {
 
     public async toString(): Promise<string> {
         const moduleName = this.context.getRootModule().name;
-        
+
         return dedent`
             # frozen_string_literal: true
 
@@ -315,7 +315,6 @@ class CustomGemspecFile {
         `;
     }
 }
-
 
 declare namespace Gemfile {
     interface Args {
