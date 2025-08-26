@@ -9,12 +9,14 @@ import { join as pathJoin } from "path";
 import { topologicalCompareAsIsFiles } from "../AsIs";
 import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
 import { RubocopFile } from "./RubocopFile";
+import { ReadmeFile } from "./ReadMeFile";
 
 const GEMFILE_FILENAME = "Gemfile";
 const RAKEFILE_FILENAME = "Rakefile";
 const RUBOCOP_FILENAME = ".rubocop.yml";
 const CUSTOM_TEST_FILENAME = "custom.test.rb";
 const CUSTOM_GEMSPEC_FILENAME = "custom.gemspec.rb";
+const README_FILENAME = "README.md";
 
 /**
  * In memory representation of a Ruby project.
@@ -40,6 +42,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await this.createVersionFile();
         await this.createModuleFile();
         await this.createRubocoopFile();
+        await this.createReadmeFile();
     }
 
     private async createGemspecfile(): Promise<void> {
@@ -80,6 +83,14 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await writeFile(
             join(this.absolutePathToOutputDirectory, RelativeFilePath.of(RUBOCOP_FILENAME)),
             await rubocoopFile.toString()
+        );
+    }
+
+    private async createReadmeFile(): Promise<void> {
+        const readmeFile = new ReadmeFile({ context: this.context });
+        await writeFile(
+            join(this.absolutePathToOutputDirectory, RelativeFilePath.of(README_FILENAME)),
+            await readmeFile.toString()
         );
     }
 
