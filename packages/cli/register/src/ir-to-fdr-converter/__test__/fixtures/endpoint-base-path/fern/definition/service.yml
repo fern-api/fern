@@ -13,7 +13,7 @@ service:
       method: POST
       request:
         name: RequestObject
-        body: 
+        body:
           properties:
             random:
               type: string

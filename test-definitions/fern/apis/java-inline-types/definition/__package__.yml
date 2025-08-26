@@ -368,7 +368,7 @@ types:
     union:
       aliasVariant: AliasVariant
       nonAliasVariant: NonAliasVariant
-  
+
   UnionTypeWithAliasMapVariant:
     base-properties:
       prop: AliasProperty
@@ -386,7 +386,7 @@ types:
       prop: AliasProperty
     union:
       aliasVariant: set<AliasVariant>
-  
+
   UndiscriminatedUnionTypeWithAliasVariant:
     discriminated: false
     union:
@@ -407,11 +407,11 @@ types:
     discriminated: false
     union:
       - set<AliasVariant>
-  
+
   ObjectTypeWithAliasType:
     properties:
       prop: AliasProperty
-  
+
   ObjectTypeWithMapAliasTypeValue:
     properties:
       prop: map<string, AliasProperty>
@@ -419,31 +419,31 @@ types:
   ObjectTypeWithMapAliasTypeKey:
     properties:
       prop: map<AliasProperty, string>
-  
+
   ObjectTypeWithMapAliasTypeBoth:
     properties:
       prop: map<AliasProperty, OtherAliasProperty>
-  
+
   ObjectTypeWithListAliasType:
     properties:
       prop: list<AliasProperty>
-  
+
   ObjectTypeWithSetAliasType:
     properties:
       prop: set<AliasProperty>
-  
+
   AliasVariant:
     type: AliasVariantType
 
   OtherAliasVariant:
     type: OtherAliasVariantType
-  
+
   AliasProperty:
     type: AliasPropertyType
-  
+
   OtherAliasProperty:
     type: OtherAliasPropertyType
-  
+
   AliasVariantType:
     inline: true
     properties:
@@ -453,17 +453,17 @@ types:
     inline: true
     properties:
       prop: string
-    
+
   AliasPropertyType:
     inline: true
     properties:
       prop: string
-  
+
   OtherAliasPropertyType:
     inline: true
     properties:
       prop: string
-  
+
   NonAliasVariant:
     inline: true
     properties:

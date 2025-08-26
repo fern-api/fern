@@ -10,15 +10,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OuterOneOf'
+              $ref: "#/components/schemas/OuterOneOf"
       responses:
-        '200':
+        "200":
           description: OK
 components:
   schemas:
     OuterOneOf:
       oneOf:
-        - $ref: '#/components/schemas/InnerOneOf'
+        - $ref: "#/components/schemas/InnerOneOf"
     InnerOneOf:
       oneOf:
         - type: object
@@ -26,4 +26,4 @@ components:
             value:
               type: string
           required:
-            - value 
+            - value

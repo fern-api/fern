@@ -2,7 +2,7 @@ name: simple-api
 
 auth: OAuthScheme
 
-imports: 
+imports:
   auth: auth.yml
 
 auth-schemes:

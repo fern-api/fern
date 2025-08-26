@@ -14,7 +14,7 @@ docs: |
 
   > warn
   > Bookings usually expire within 1 hour so you'll need to make your payment
-  > before the expiry date 
+  > before the expiry date
 service:
   auth: false
   base-path: ''

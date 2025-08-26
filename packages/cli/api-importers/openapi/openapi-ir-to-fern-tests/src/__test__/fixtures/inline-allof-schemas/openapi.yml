@@ -20,7 +20,7 @@ components:
 
     ChildMakesDescriptionRequired:
       allOf:
-        - $ref: '#/components/schemas/Base'
+        - $ref: "#/components/schemas/Base"
         - type: object
           required:
             - id

@@ -10,7 +10,7 @@ service:
         body:
           properties:
             foo: integer
-            baz: 
+            baz:
               type: string
               content-type: "application/json"
 
@@ -22,6 +22,6 @@ service:
         body:
           properties:
             foo: file
-            baz: 
+            baz:
               type: string
               content-type: "application/json"

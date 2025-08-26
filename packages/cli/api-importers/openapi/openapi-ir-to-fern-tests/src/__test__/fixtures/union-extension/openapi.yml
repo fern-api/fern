@@ -11,7 +11,7 @@ components:
       oneOf:
         - $ref: "#/components/schemas/IbanField"
         - $ref: "#/components/schemas/OtherField"
-    
+
     IbanField:
       type: object
       properties:
@@ -19,7 +19,7 @@ components:
           nullable: true
           type: string
           example: DE2310010010123456788
-    
+
     OtherField:
       type: object
       properties:

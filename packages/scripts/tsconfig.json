@@ -4,13 +4,9 @@
     "composite": true,
     "outDir": "lib",
     "rootDir": "src",
-    "types": [
-      "node"
-    ]
+    "types": ["node"]
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
       "path": "../cli/generation/ir-migrations"

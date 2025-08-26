@@ -7,7 +7,6 @@ types:
       name:
         type: string
 
-
 service:
   auth: false
   base-path: /api

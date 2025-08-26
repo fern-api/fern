@@ -13,7 +13,7 @@ paths:
           schema:
             type: number
       responses:
-        '200':
+        "200":
           description: User retrieved successfully
           content:
             application/json:
@@ -23,12 +23,12 @@ paths:
                   users:
                     type: array
                     items:
-                      $ref: '#/components/schemas/User'
+                      $ref: "#/components/schemas/User"
 
     head:
       summary: HEAD methods should not define a response body.
       responses:
-        '200':
+        "200":
           description: User retrieved successfully
 
 components:

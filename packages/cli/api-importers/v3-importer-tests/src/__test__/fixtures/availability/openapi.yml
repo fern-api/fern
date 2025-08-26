@@ -20,13 +20,13 @@ paths:
         - in: query
           name: deprecated_ref_lang
           schema:
-            $ref: '#/components/schemas/DeprecatedParam'
+            $ref: "#/components/schemas/DeprecatedParam"
         - in: query
           name: x-fern-availability_query_param
           schema:
             type: string
           description: active beta query param
-          x-fern-availability: 'beta'
+          x-fern-availability: "beta"
         - in: path
           required: true
           name: id
@@ -44,14 +44,14 @@ paths:
           required: true
           name: deprecated_ref_id
           schema:
-            $ref: '#/components/schemas/DeprecatedParam'
+            $ref: "#/components/schemas/DeprecatedParam"
         - in: path
           required: true
           name: x-fern-availability_path_param
           schema:
             type: string
           description: active beta header
-          x-fern-availability: 'beta'
+          x-fern-availability: "beta"
         - in: header
           name: X-Deprecated-Header
           schema:
@@ -66,34 +66,34 @@ paths:
         - in: header
           name: X-Deprecated-Ref-Header
           schema:
-            $ref: '#/components/schemas/DeprecatedParam'
+            $ref: "#/components/schemas/DeprecatedParam"
         - in: header
           name: x-fern-availability_header
           schema:
             type: string
           description: active beta header
-          x-fern-availability: 'beta'
+          x-fern-availability: "beta"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WholeDeprecatedSettings'
+                $ref: "#/components/schemas/WholeDeprecatedSettings"
   /success-ref:
     post:
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Settings'
+              $ref: "#/components/schemas/Settings"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NotDeprecatedSettings'
+                $ref: "#/components/schemas/NotDeprecatedSettings"
   /success-inline-property-deprecation:
     post:
       requestBody:
@@ -108,12 +108,12 @@ paths:
                 new_setting:
                   type: boolean
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NotDeprecatedSettings'
+                $ref: "#/components/schemas/NotDeprecatedSettings"
   /success-inline-object-deprecation:
     post:
       requestBody:
@@ -126,12 +126,12 @@ paths:
                   type: boolean
               deprecated: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NotDeprecatedSettings'
+                $ref: "#/components/schemas/NotDeprecatedSettings"
       deprecated: true
   /success-inline-beta-body:
     post:
@@ -143,15 +143,15 @@ paths:
               properties:
                 fine_setting:
                   type: boolean
-              x-fern-availability: 'beta'
+              x-fern-availability: "beta"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NotDeprecatedSettings'
-      x-fern-availability: 'beta'
+                $ref: "#/components/schemas/NotDeprecatedSettings"
+      x-fern-availability: "beta"
 components:
   schemas:
     DeprecatedParam:
