@@ -33,7 +33,7 @@ import Alias
 
 let client = AliasClient()
 
-try await client.doSomething(
+try await client.get(
 
 )
 ```

@@ -33,7 +33,7 @@ import Validation
 
 let client = ValidationClient()
 
-try await client.doSomething(
+try await client.create(
 
 )
 ```

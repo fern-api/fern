@@ -33,7 +33,7 @@ import Api
 
 let client = ApiClient()
 
-try await client.doSomething(
+try await client.getAccount(
 
 )
 ```

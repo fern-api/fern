@@ -24,20 +24,6 @@ dependencies: [
 ]
 ```
 
-## Usage
-
-Instantiate and use the client with the following:
-
-```swift
-import Unions
-
-let client = UnionsClient()
-
-try await client.doSomething(
-
-)
-```
-
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

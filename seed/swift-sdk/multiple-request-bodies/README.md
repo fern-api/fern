@@ -33,7 +33,7 @@ import Api
 
 let client = ApiClient(token: "YOUR_TOKEN")
 
-try await client.doSomething(
+try await client.uploadJsonDocument(
 
 )
 ```

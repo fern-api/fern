@@ -24,20 +24,6 @@ dependencies: [
 ]
 ```
 
-## Usage
-
-Instantiate and use the client with the following:
-
-```swift
-import ClientSideParams
-
-let client = MyCustomClient(token: "YOUR_TOKEN")
-
-try await client.doSomething(
-
-)
-```
-
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

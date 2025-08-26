@@ -24,23 +24,6 @@ dependencies: [
 ]
 ```
 
-## Usage
-
-Instantiate and use the client with the following:
-
-```swift
-import BasicAuth
-
-let client = BasicAuthClient(
-    username: "YOUR_USERNAME",
-    password: "YOUR_PASSWORD"
-)
-
-try await client.doSomething(
-
-)
-```
-
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

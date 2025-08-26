@@ -33,7 +33,7 @@ import Examples
 
 let client = ExamplesClient(token: "YOUR_TOKEN")
 
-try await client.doSomething(
+try await client.echo(
 
 )
 ```

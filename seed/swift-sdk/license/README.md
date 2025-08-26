@@ -33,7 +33,7 @@ import License
 
 let client = LicenseClient()
 
-try await client.doSomething(
+try await client.get(
 
 )
 ```

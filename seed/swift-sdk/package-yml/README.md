@@ -33,7 +33,7 @@ import PackageYml
 
 let client = PackageYmlClient()
 
-try await client.doSomething(
+try await client.echo(
 
 )
 ```
