@@ -29,9 +29,11 @@ require_relative "seed/internal/types/unknown"
 # API Types
 require_relative "seed/user/types/user"
 require_relative "seed/user/types/nested_user"
+require_relative "seed/user/types/create_username_body"
 
 # Client Types
 require_relative "seed/client"
 require_relative "seed/user/client"
 require_relative "seed/user/types/create_username_request"
+require_relative "seed/user/types/create_username_referenced_request"
 require_relative "seed/user/types/get_users_request"
