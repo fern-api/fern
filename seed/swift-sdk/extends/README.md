@@ -33,7 +33,7 @@ import Extends
 
 let client = ExtendsClient()
 
-try await client.doSomething(
+try await client.extendedInlineRequestBody(
 
 )
 ```

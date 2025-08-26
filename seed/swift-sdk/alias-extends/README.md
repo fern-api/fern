@@ -33,7 +33,7 @@ import AliasExtends
 
 let client = AliasExtendsClient()
 
-try await client.doSomething(
+try await client.extendedInlineRequestBody(
 
 )
 ```
