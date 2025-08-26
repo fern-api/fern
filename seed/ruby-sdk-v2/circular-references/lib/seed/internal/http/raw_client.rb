@@ -51,7 +51,7 @@ module Seed
         def build_url(request)
           path = request.path.start_with?("/") ? request.path[1..] : request.path
           url = "#{@base_url.chomp("/")}/#{path}"
-          url = "#{url}?#{encode_query(request.query)}" if request.query
+          url = "#{url}?#{encode_query(request.query)}" if request.query&.any?
           URI.parse(url)
         end
 
@@ -102,4 +102,4 @@ module Seed
       end
     end
   end
-end 
+end

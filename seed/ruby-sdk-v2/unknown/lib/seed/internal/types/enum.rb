@@ -4,8 +4,8 @@ module Seed
   module Internal
     module Types
       # Module for defining enums
-      class Enum
-        extends Seed::Internal::Types::Type
+      module Enum
+        include Type
 
         # @api private
         #
@@ -45,4 +45,4 @@ module Seed
       end
     end
   end
-end 
+end

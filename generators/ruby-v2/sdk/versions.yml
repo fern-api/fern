@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc18
+  createdAt: "2025-08-26"
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Updating Ruby build and configuration files, and adding custom test files.
+  irVersion: 58
+
 - version: 1.0.0-rc17
   createdAt: "2025-08-20"
   changelogEntry:
