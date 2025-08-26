@@ -34,7 +34,13 @@ import IdempotencyHeaders
 let client = IdempotencyHeadersClient(token: "YOUR_TOKEN")
 
 try await client.payment.create(
-    request: Requests.CreatePaymentRequest()
+    request: Requests.CreatePaymentRequest(
+        amount: 123,
+        currency: Currency(),
+        additionalProperties: [
+            "string": JSONValue.string("string")
+        ]
+    )
 )
 ```
 

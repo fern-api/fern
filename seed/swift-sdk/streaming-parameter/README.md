@@ -34,7 +34,13 @@ import Streaming
 let client = StreamingClient()
 
 try await client.dummy.generate(
-    request: Requests.GenerateRequest()
+    request: Requests.GenerateRequest(
+        stream: True,
+        numEvents: 123,
+        additionalProperties: [
+            "string": JSONValue.string("string")
+        ]
+    )
 )
 ```
 
