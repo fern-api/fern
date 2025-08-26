@@ -15,7 +15,7 @@ export const ReadmeConfig: core.serialization.ObjectSchema<serializers.ReadmeCon
         introduction: core.serialization.string().optional(),
         apiReferenceLink: core.serialization.string().optional(),
         apiName: core.serialization.string().optional(),
-        disabledFeatures: core.serialization.set(FeatureId).optional(),
+        disabledFeatures: core.serialization.list(FeatureId).optional(),
         whiteLabel: core.serialization.boolean().optional(),
         features: core.serialization.record(FeatureId, core.serialization.list(EndpointId)).optional(),
     });
