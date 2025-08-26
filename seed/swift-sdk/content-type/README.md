@@ -34,7 +34,13 @@ import ContentTypes
 let client = ContentTypesClient()
 
 try await client.service.patch(
-    request: Requests.PatchProxyRequest()
+    request: Requests.PatchProxyRequest(
+        application: JSONValue.string("string"),
+        requireAuth: JSONValue.string("string"),
+        additionalProperties: [
+            "string": JSONValue.string("string")
+        ]
+    )
 )
 ```
 

@@ -254,11 +254,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             case "arbitrary": {
                 const symbol =
                     this.context.project.getSchemaType(type.internalType.name) ??
-                    this.context.project.getRequestStruct(type.internalType.name);
+                    this.context.project.getRequestType(type.internalType.name);
                 if (symbol) {
                     if (symbol instanceof swift.Struct) {
                         return swift.Expression.structInitialization({
-                            unsafeName: symbol.name,
+                            unsafeName: type.internalType.name,
                             arguments_: symbol.properties.map((property) =>
                                 swift.functionArgument({
                                     label: property.unsafeName,

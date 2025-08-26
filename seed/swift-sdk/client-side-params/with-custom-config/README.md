@@ -36,7 +36,15 @@ let client = MyCustomClient(token: "YOUR_TOKEN")
 try await client.service.searchResources(
     limit: 123,
     offset: 123,
-    request: Requests.SearchResourcesRequest()
+    request: Requests.SearchResourcesRequest(
+        query: "string",
+        filters: [
+            "string": JSONValue.string("string")
+        ],
+        additionalProperties: [
+            "string": JSONValue.string("string")
+        ]
+    )
 )
 ```
 

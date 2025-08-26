@@ -34,7 +34,13 @@ import AliasExtends
 let client = AliasExtendsClient()
 
 try await client.extendedInlineRequestBody(
-    request: Requests.InlinedChildRequest()
+    request: Requests.InlinedChildRequest(
+        parent: "string",
+        child: "string",
+        additionalProperties: [
+            "string": JSONValue.string("string")
+        ]
+    )
 )
 ```
 

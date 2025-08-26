@@ -34,7 +34,7 @@ import Extends
 let client = ExtendsClient()
 
 try await client.extendedInlineRequestBody(
-    request: Inlined(
+    request: Requests.Inlined(
         name: "string",
         docs: "string",
         unique: "string",
