@@ -19,7 +19,7 @@ export interface ReadmeConfig {
     introduction: string | undefined;
     apiReferenceLink: string | undefined;
     apiName: string | undefined;
-    disabledFeatures: Set<FernIr.FeatureId> | undefined;
+    disabledFeatures: FernIr.FeatureId[] | undefined;
     /** If true, removes fern branding from the generated SDK files. Defaults to false. */
     whiteLabel: boolean | undefined;
     /**

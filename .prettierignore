@@ -17,9 +17,7 @@ generated/
 seed/
 .git/
 .husky/
-.github/
 .turbo/
-.vscode/
 __snapshots__/
 *.tempate.*
 *.template.*

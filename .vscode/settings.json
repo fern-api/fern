@@ -1,6 +1,5 @@
 {
   "search.exclude": {
-    ".vscode": true,
     "**/.next": true,
     "**/.pnp.*": true,
     "**/.turbo": true,
