@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
-    - summary: Fix downloadFiles mode to respect organization's selfHostedSdKs flag for Java SDK generation
+    - summary: Update docs workspace validator to skip file type validation when running in selfhosted mode
       type: fix
   irVersion: 59
   createdAt: "2025-08-27"
