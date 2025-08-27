@@ -53,6 +53,10 @@ export class EnumWithRawValues extends AstNode {
             }
             writer.write(conformance);
         });
+        if (this.cases.length === 0) {
+            writer.write(" {}");
+            return;
+        }
         writer.write(" {");
         writer.newLine();
         writer.indent();

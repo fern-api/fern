@@ -8,21 +8,20 @@ import (
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
 	types "github.com/exhaustive/fern/types"
-	http "net/http"
 )
 
 type Client struct {
 	WithRawResponse *RawClient
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
-func NewClient(opts ...option.RequestOption) *Client {
-	options := core.NewRequestOptions(opts...)
+func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
 		WithRawResponse: NewRawClient(options),
+		options:         options,
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -30,7 +29,6 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
@@ -122,22 +120,6 @@ func (c *Client) GetAndReturnNestedWithRequiredFieldAsList(
 	opts ...option.RequestOption,
 ) (*types.NestedObjectWithRequiredField, error) {
 	response, err := c.WithRawResponse.GetAndReturnNestedWithRequiredFieldAsList(
-		ctx,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
-}
-
-func (c *Client) TestIntegerOverflowEdgeCases(
-	ctx context.Context,
-	request *types.ObjectWithOptionalField,
-	opts ...option.RequestOption,
-) (*types.ObjectWithOptionalField, error) {
-	response, err := c.WithRawResponse.TestIntegerOverflowEdgeCases(
 		ctx,
 		request,
 		opts...,

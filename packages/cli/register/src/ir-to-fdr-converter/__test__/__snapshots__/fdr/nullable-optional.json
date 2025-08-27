@@ -1,0 +1,1190 @@
+{
+  "types": {
+    "type_nullable-optional:UserProfile": {
+      "description": "Test object with nullable and optional fields",
+      "name": "UserProfile",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "username",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "nullableString",
+            "valueType": {
+              "type": "nullable",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "nullableInteger",
+            "valueType": {
+              "type": "nullable",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "nullableBoolean",
+            "valueType": {
+              "type": "nullable",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "nullableDate",
+            "valueType": {
+              "type": "nullable",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime"
+                }
+              }
+            }
+          },
+          {
+            "key": "nullableObject",
+            "valueType": {
+              "type": "nullable",
+              "itemType": {
+                "type": "id",
+                "value": "type_nullable-optional:Address"
+              }
+            }
+          },
+          {
+            "key": "nullableList",
+            "valueType": {
+              "type": "nullable",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "nullableMap",
+            "valueType": {
+              "type": "nullable",
+              "itemType": {
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "optionalString",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "optionalInteger",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "optionalBoolean",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "optionalDate",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime"
+                }
+              }
+            }
+          },
+          {
+            "key": "optionalObject",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_nullable-optional:Address"
+              }
+            }
+          },
+          {
+            "key": "optionalList",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "optionalMap",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "optionalNullableString",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "nullable",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "optionalNullableObject",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "nullable",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_nullable-optional:Address"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_nullable-optional:Address": {
+      "description": "Nested object for testing",
+      "name": "Address",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "street",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "city",
+            "valueType": {
+              "type": "nullable",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "state",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "zipCode",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "country",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "nullable",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_nullable-optional:CreateUserRequest": {
+      "name": "CreateUserRequest",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "username",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "email",
+            "valueType": {
+              "type": "nullable",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "phone",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "nullable",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_nullable-optional:Address"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_nullable-optional:UpdateUserRequest": {
+      "description": "For testing PATCH operations",
+      "name": "UpdateUserRequest",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "username",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "email",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "nullable",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "phone",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "nullable",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_nullable-optional:Address"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_nullable-optional:UserResponse": {
+      "name": "UserResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "username",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "email",
+            "valueType": {
+              "type": "nullable",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "phone",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "createdAt",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "datetime"
+              }
+            }
+          },
+          {
+            "key": "updatedAt",
+            "valueType": {
+              "type": "nullable",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime"
+                }
+              }
+            }
+          },
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_nullable-optional:Address"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {
+    "subpackage_nullable-optional": {
+      "subpackageId": "subpackage_nullable-optional",
+      "name": "nullable-optional",
+      "endpoints": [
+        {
+          "auth": false,
+          "description": "Get a user by ID",
+          "method": "GET",
+          "id": "getUser",
+          "originalEndpointId": "endpoint_nullable-optional.getUser",
+          "name": "Get User",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "userId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/api"
+              },
+              {
+                "type": "literal",
+                "value": "/users/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "userId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_nullable-optional:UserResponse"
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/api/users/userId",
+              "pathParameters": {
+                "userId": "userId"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "id": "id",
+                "username": "username",
+                "email": "email",
+                "phone": "phone",
+                "createdAt": "2024-01-15T09:30:00Z",
+                "updatedAt": "2024-01-15T09:30:00Z",
+                "address": {
+                  "street": "street",
+                  "city": "city",
+                  "state": "state",
+                  "zipCode": "zipCode",
+                  "country": "country"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": "id",
+                  "username": "username",
+                  "email": "email",
+                  "phone": "phone",
+                  "createdAt": "2024-01-15T09:30:00Z",
+                  "updatedAt": "2024-01-15T09:30:00Z",
+                  "address": {
+                    "street": "street",
+                    "city": "city",
+                    "state": "state",
+                    "zipCode": "zipCode",
+                    "country": "country"
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "description": "Create a new user",
+          "method": "POST",
+          "id": "createUser",
+          "originalEndpointId": "endpoint_nullable-optional.createUser",
+          "name": "Create User",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/api"
+              },
+              {
+                "type": "literal",
+                "value": "/users"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_nullable-optional:CreateUserRequest"
+                }
+              }
+            }
+          },
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_nullable-optional:UserResponse"
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/api/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "username": "username"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "username": "username"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "id": "id",
+                "username": "username",
+                "email": "email",
+                "phone": "phone",
+                "createdAt": "2024-01-15T09:30:00Z",
+                "updatedAt": "2024-01-15T09:30:00Z",
+                "address": {
+                  "street": "street",
+                  "city": "city",
+                  "state": "state",
+                  "zipCode": "zipCode",
+                  "country": "country"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": "id",
+                  "username": "username",
+                  "email": "email",
+                  "phone": "phone",
+                  "createdAt": "2024-01-15T09:30:00Z",
+                  "updatedAt": "2024-01-15T09:30:00Z",
+                  "address": {
+                    "street": "street",
+                    "city": "city",
+                    "state": "state",
+                    "zipCode": "zipCode",
+                    "country": "country"
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "description": "Update a user (partial update)",
+          "method": "PATCH",
+          "id": "updateUser",
+          "originalEndpointId": "endpoint_nullable-optional.updateUser",
+          "name": "Update User",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "userId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/api"
+              },
+              {
+                "type": "literal",
+                "value": "/users/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "userId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_nullable-optional:UpdateUserRequest"
+                }
+              }
+            }
+          },
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_nullable-optional:UserResponse"
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/api/users/userId",
+              "pathParameters": {
+                "userId": "userId"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "id": "id",
+                "username": "username",
+                "email": "email",
+                "phone": "phone",
+                "createdAt": "2024-01-15T09:30:00Z",
+                "updatedAt": "2024-01-15T09:30:00Z",
+                "address": {
+                  "street": "street",
+                  "city": "city",
+                  "state": "state",
+                  "zipCode": "zipCode",
+                  "country": "country"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": "id",
+                  "username": "username",
+                  "email": "email",
+                  "phone": "phone",
+                  "createdAt": "2024-01-15T09:30:00Z",
+                  "updatedAt": "2024-01-15T09:30:00Z",
+                  "address": {
+                    "street": "street",
+                    "city": "city",
+                    "state": "state",
+                    "zipCode": "zipCode",
+                    "country": "country"
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "description": "List all users",
+          "method": "GET",
+          "id": "listUsers",
+          "originalEndpointId": "endpoint_nullable-optional.listUsers",
+          "name": "List Users",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/api"
+              },
+              {
+                "type": "literal",
+                "value": "/users"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "key": "limit",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "key": "offset",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "key": "includeDeleted",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            },
+            {
+              "key": "sortBy",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "nullable",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_nullable-optional:UserResponse"
+                }
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/api/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": [
+                {
+                  "id": "id",
+                  "username": "username",
+                  "email": "email",
+                  "phone": "phone",
+                  "createdAt": "2024-01-15T09:30:00Z",
+                  "updatedAt": "2024-01-15T09:30:00Z",
+                  "address": {
+                    "street": "street",
+                    "city": "city",
+                    "state": "state",
+                    "zipCode": "zipCode",
+                    "country": "country"
+                  }
+                },
+                {
+                  "id": "id",
+                  "username": "username",
+                  "email": "email",
+                  "phone": "phone",
+                  "createdAt": "2024-01-15T09:30:00Z",
+                  "updatedAt": "2024-01-15T09:30:00Z",
+                  "address": {
+                    "street": "street",
+                    "city": "city",
+                    "state": "state",
+                    "zipCode": "zipCode",
+                    "country": "country"
+                  }
+                }
+              ],
+              "responseBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "id": "id",
+                    "username": "username",
+                    "email": "email",
+                    "phone": "phone",
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "updatedAt": "2024-01-15T09:30:00Z",
+                    "address": {
+                      "street": "street",
+                      "city": "city",
+                      "state": "state",
+                      "zipCode": "zipCode",
+                      "country": "country"
+                    }
+                  },
+                  {
+                    "id": "id",
+                    "username": "username",
+                    "email": "email",
+                    "phone": "phone",
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "updatedAt": "2024-01-15T09:30:00Z",
+                    "address": {
+                      "street": "street",
+                      "city": "city",
+                      "state": "state",
+                      "zipCode": "zipCode",
+                      "country": "country"
+                    }
+                  }
+                ]
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "description": "Search users",
+          "method": "GET",
+          "id": "searchUsers",
+          "originalEndpointId": "endpoint_nullable-optional.searchUsers",
+          "name": "Search Users",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/api"
+              },
+              {
+                "type": "literal",
+                "value": "/users/search"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "key": "query",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "key": "department",
+              "type": {
+                "type": "nullable",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "key": "role",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "key": "isActive",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "nullable",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_nullable-optional:UserResponse"
+                }
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/api/users/search",
+              "pathParameters": {},
+              "queryParameters": {
+                "query": "query"
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": [
+                {
+                  "id": "id",
+                  "username": "username",
+                  "email": "email",
+                  "phone": "phone",
+                  "createdAt": "2024-01-15T09:30:00Z",
+                  "updatedAt": "2024-01-15T09:30:00Z",
+                  "address": {
+                    "street": "street",
+                    "city": "city",
+                    "state": "state",
+                    "zipCode": "zipCode",
+                    "country": "country"
+                  }
+                },
+                {
+                  "id": "id",
+                  "username": "username",
+                  "email": "email",
+                  "phone": "phone",
+                  "createdAt": "2024-01-15T09:30:00Z",
+                  "updatedAt": "2024-01-15T09:30:00Z",
+                  "address": {
+                    "street": "street",
+                    "city": "city",
+                    "state": "state",
+                    "zipCode": "zipCode",
+                    "country": "country"
+                  }
+                }
+              ],
+              "responseBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "id": "id",
+                    "username": "username",
+                    "email": "email",
+                    "phone": "phone",
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "updatedAt": "2024-01-15T09:30:00Z",
+                    "address": {
+                      "street": "street",
+                      "city": "city",
+                      "state": "state",
+                      "zipCode": "zipCode",
+                      "country": "country"
+                    }
+                  },
+                  {
+                    "id": "id",
+                    "username": "username",
+                    "email": "email",
+                    "phone": "phone",
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "updatedAt": "2024-01-15T09:30:00Z",
+                    "address": {
+                      "street": "street",
+                      "city": "city",
+                      "state": "state",
+                      "zipCode": "zipCode",
+                      "country": "country"
+                    }
+                  }
+                ]
+              },
+              "codeSamples": []
+            }
+          ]
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [
+        "type_nullable-optional:UserProfile",
+        "type_nullable-optional:Address",
+        "type_nullable-optional:CreateUserRequest",
+        "type_nullable-optional:UpdateUserRequest",
+        "type_nullable-optional:UserResponse"
+      ],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": [
+      "subpackage_nullable-optional"
+    ]
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

@@ -66,6 +66,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
                 // TODO: Update this to '.every' once AsyncAPI sources are correctly recognized.
                 .some((spec) => spec.settings?.respectForwardCompatibleEnums),
+            inlineAllOfSchemas: specs.every((spec) => spec.settings?.inlineAllOfSchemas),
             exampleGeneration: specs[0]?.settings?.exampleGeneration
         });
         this.specs = specs;
@@ -100,7 +101,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 inlinePathParameters: settings?.inlinePathParameters ?? this.inlinePathParameters,
                 objectQueryParameters: settings?.objectQueryParameters ?? this.objectQueryParameters,
                 exampleGeneration: settings?.exampleGeneration ?? this.exampleGeneration,
-                useBytesForBinaryResponse: settings?.useBytesForBinaryResponse ?? this.useBytesForBinaryResponse
+                useBytesForBinaryResponse: settings?.useBytesForBinaryResponse ?? this.useBytesForBinaryResponse,
+                inlineAllOfSchemas: settings?.inlineAllOfSchemas ?? this.inlineAllOfSchemas
             }
         });
     }

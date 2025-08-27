@@ -8,9 +8,13 @@ import { template } from "lodash-es";
 import { join as pathJoin } from "path";
 import { topologicalCompareAsIsFiles } from "../AsIs";
 import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
+import { RubocopFile } from "./RubocopFile";
 
 const GEMFILE_FILENAME = "Gemfile";
 const RAKEFILE_FILENAME = "Rakefile";
+const RUBOCOP_FILENAME = ".rubocop.yml";
+const CUSTOM_TEST_FILENAME = "custom.test.rb";
+const CUSTOM_GEMSPEC_FILENAME = "custom.gemspec.rb";
 
 /**
  * In memory representation of a Ruby project.
@@ -25,19 +29,38 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
     }
 
     public async persist(): Promise<void> {
+        await this.createGemspecfile();
+        await this.createCustomGemspecFile();
         await this.createGemfile();
         await this.createRakefile();
         await this.writeRawFiles();
         await this.createAsIsFiles();
         await this.writeAsIsFiles();
+        await this.createTestFiles();
+        await this.createVersionFile();
         await this.createModuleFile();
+        await this.createRubocoopFile();
+    }
+
+    private async createGemspecfile(): Promise<void> {
+        const gemspecFilename = this.context.getRootFolderName() + ".gemspec";
+        const gemspecFile = new GemspecFile({ context: this.context, project: this });
+        await writeFile(
+            join(this.absolutePathToOutputDirectory, RelativeFilePath.of(gemspecFilename)),
+            await gemspecFile.toString()
+        );
+    }
+
+    private async createCustomGemspecFile(): Promise<void> {
+        const customGemspecFile = new CustomGemspecFile({ context: this.context, project: this });
+        await writeFile(
+            join(this.absolutePathToOutputDirectory, RelativeFilePath.of(CUSTOM_GEMSPEC_FILENAME)),
+            await customGemspecFile.toString()
+        );
     }
 
     private async createGemfile(): Promise<void> {
         const gemfile = new Gemfile({ context: this.context });
-        this.context.logger.debug(`Gemfile base path ${this.absolutePathToOutputDirectory}`);
-        this.context.logger.debug(`Gemfile filename ${GEMFILE_FILENAME}`);
-        this.context.logger.debug(`Gemfile filename relative ${RelativeFilePath.of(GEMFILE_FILENAME)}`);
         await writeFile(
             join(this.absolutePathToOutputDirectory, RelativeFilePath.of(GEMFILE_FILENAME)),
             await gemfile.toString()
@@ -52,9 +75,29 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         );
     }
 
+    private async createRubocoopFile(): Promise<void> {
+        const rubocoopFile = new RubocopFile({ context: this.context });
+        await writeFile(
+            join(this.absolutePathToOutputDirectory, RelativeFilePath.of(RUBOCOP_FILENAME)),
+            await rubocoopFile.toString()
+        );
+    }
+
     private async createModuleFile(): Promise<void> {
         const moduleFile = new ModuleFile({ context: this.context, project: this });
         moduleFile.writeFile();
+    }
+
+    private async createTestFiles(): Promise<void> {
+        // Create custom test file for quick testing per fixture
+        const customTestFile = new CustomTestFile({ context: this.context, project: this });
+        await customTestFile.writeFile();
+    }
+
+    private async createVersionFile(): Promise<void> {
+        // Create version.rb file per fixture
+        const versionFile = new VersionFile({ context: this.context, project: this });
+        await versionFile.writeFile();
     }
 
     private async createAsIsFiles(): Promise<void> {
@@ -146,6 +189,106 @@ function getAsIsFilepath(filename: string): AbsoluteFilePath {
     return AbsoluteFilePath.of(pathJoin(__dirname, "asIs", filename));
 }
 
+declare namespace GemspecFile {
+    interface Args {
+        context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+        project: RubyProject;
+    }
+}
+
+class GemspecFile {
+    private context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+
+    public constructor({ context, project }: GemspecFile.Args) {
+        this.context = context;
+    }
+
+    public async toString(): Promise<string> {
+        const moduleFolderName = this.context.getRootFolderName();
+        const moduleName = this.context.getRootModule().name;
+
+        return dedent`
+            # frozen_string_literal: true
+
+            require_relative "lib/${moduleFolderName}/version"
+            require_relative "${CUSTOM_GEMSPEC_FILENAME}"
+
+            # Note: A handful of these fields are required as part of the Ruby specification. 
+            #       You can change them here or overwrite them in the custom gemspec file.
+            Gem::Specification.new do |spec|
+            spec.name = "${moduleFolderName}"
+            spec.authors = ["${moduleName}"] 
+            spec.version = ${moduleName}::VERSION
+            spec.summary = "Ruby client library for the ${moduleName} API"
+            spec.description = "The ${moduleName} Ruby library provides convenient access to the ${moduleName} API from Ruby."
+            spec.required_ruby_version = ">= 3.1.0"
+            spec.metadata["rubygems_mfa_required"] = "true"
+            
+            # Specify which files should be added to the gem when it is released.
+            # The \`git ls-files -z\` loads the files in the RubyGem that have been added into git.
+            gemspec = File.basename(__FILE__)
+            spec.files = IO.popen(%w[git ls-files -z], chdir: __dir__, err: IO::NULL) do |ls|
+                ls.readlines("\x0", chomp: true).reject do |f|
+                (f == gemspec) ||
+                    f.start_with?(*%w[bin/ test/ spec/ features/ .git appveyor Gemfile])
+                end
+            end
+            spec.bindir = "exe"
+            spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
+            spec.require_paths = ["lib"]
+
+            # Uncomment to register a new dependency of your gem
+            # spec.add_dependency "example-gem", "~> 1.0"
+
+            # For more information and examples about making a new gem, check out our
+            # guide at: https://bundler.io/guides/creating_gem.html
+            
+            # Load custom gemspec configuration if it exists
+            custom_gemspec_file = File.join(__dir__, "${CUSTOM_GEMSPEC_FILENAME}")
+            add_custom_gemspec_data(spec) if File.exist?(custom_gemspec_file)
+            end
+        `;
+    }
+}
+
+declare namespace CustomGemspecFile {
+    interface Args {
+        context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+        project: RubyProject;
+    }
+}
+
+class CustomGemspecFile {
+    private context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+
+    public constructor({ context, project }: CustomGemspecFile.Args) {
+        this.context = context;
+    }
+
+    public async toString(): Promise<string> {
+        const moduleName = this.context.getRootModule().name;
+
+        return dedent`
+            # frozen_string_literal: true
+
+            # Custom gemspec configuration file
+            # This file is automatically loaded by the main gemspec file. The 'spec' variable is available 
+            # in this context from the main gemspec file. You can modify this file to add custom metadata, 
+            # dependencies, or other gemspec configurations. If you do make changes to this file, you will
+            # need to add it to the .fernignore file to prevent your changes from being overwritten.
+
+            def add_custom_gemspec_data(spec)
+                # Example custom configurations (uncomment and modify as needed)
+
+                # spec.authors = ["Your name"]
+                # spec.email = ["your.email@example.com"]
+                # spec.homepage = "https://github.com/your-org/${moduleName.toLowerCase()}-ruby"
+                # spec.license = "Your license"
+            end
+        `;
+    }
+}
+
 declare namespace Gemfile {
     interface Args {
         context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
@@ -161,8 +304,26 @@ class Gemfile {
 
     public async toString(): Promise<string> {
         return dedent`
-            source 'https://rubygems.org'
-            gem 'rake'
+            # frozen_string_literal: true
+
+            source "https://rubygems.org"
+
+                gemspec
+
+                group :test, :development do
+                gem "rake", "~> 13.0"
+
+                gem "minitest", "~> 5.16"
+                gem "minitest-rg"
+
+                gem "rubocop", "~> 1.21"
+                gem "rubocop-minitest"
+
+                gem "pry"
+
+                gem "webmock"
+            end
+
         `;
     }
 }
@@ -182,10 +343,119 @@ class Rakefile {
 
     public async toString(): Promise<string> {
         return dedent`
-            task :test do
-              puts "No tests for now"
+            # frozen_string_literal: true
+
+            require "bundler/gem_tasks"
+            require "minitest/test_task"
+
+            Minitest::TestTask.create
+
+            require "rubocop/rake_task"
+
+            RuboCop::RakeTask.new
+
+            task default: %i[test]
+
+            task lint: %i[rubocop]
+
+            # Run only the custom test file
+            Minitest::TestTask.create(:customtest) do |t|
+            t.libs << "test"
+            t.test_globs = ["test/${CUSTOM_TEST_FILENAME}"]
             end
         `;
+    }
+}
+
+declare namespace CustomTestFile {
+    interface Args {
+        context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+        project: RubyProject;
+    }
+}
+
+class CustomTestFile {
+    private context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+    private project: RubyProject;
+    public readonly filePath: AbsoluteFilePath;
+    public readonly fileName: string;
+
+    public constructor({ context, project }: CustomTestFile.Args) {
+        this.context = context;
+        this.project = project;
+        this.filePath = join(project.absolutePathToOutputDirectory, RelativeFilePath.of("test"));
+        this.fileName = CUSTOM_TEST_FILENAME;
+    }
+
+    public toString(): string {
+        return dedent`
+            # frozen_string_literal: true
+
+            =begin
+            This is a custom test file, if you wish to add more tests
+            to your SDK.
+            Be sure to mark this file in \`.fernignore\`.
+            
+            If you include example requests/responses in your fern definition,
+            you will have tests automatically generated for you.
+            =end
+
+            # This test is run via command line: rake customtest
+            describe "Custom Test" do
+                it "Defalt" do
+                    refute false
+                end
+            end
+        `;
+    }
+
+    public async writeFile(): Promise<void> {
+        // Ensure the test directory exists before writing the file
+        await mkdir(this.filePath, { recursive: true });
+        await writeFile(join(this.filePath, RelativeFilePath.of(this.fileName)), this.toString());
+    }
+}
+
+declare namespace VersionFile {
+    interface Args {
+        context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+        project: RubyProject;
+    }
+}
+
+class VersionFile {
+    private context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+    private project: RubyProject;
+    public readonly filePath: AbsoluteFilePath;
+    public readonly fileName: string;
+
+    public constructor({ context, project }: VersionFile.Args) {
+        this.context = context;
+        this.project = project;
+        this.filePath = join(
+            project.absolutePathToOutputDirectory,
+            RelativeFilePath.of(`lib/${context.getRootFolderName()}`)
+        );
+        this.fileName = "version.rb";
+    }
+
+    public toString(): string {
+        const seedName = this.context.getRootModule().name;
+        const version = this.context.getVersionFromConfig();
+
+        return dedent`
+            # frozen_string_literal: true
+
+            module ${seedName}
+                VERSION = "${version}"
+            end
+        `;
+    }
+
+    public async writeFile(): Promise<void> {
+        // Ensure the lib directory exists before writing the file
+        await mkdir(this.filePath, { recursive: true });
+        await writeFile(join(this.filePath, RelativeFilePath.of(this.fileName)), this.toString());
     }
 }
 
@@ -236,14 +506,14 @@ class ModuleFile {
                 this.project.getAsIsOutputDirectory(),
                 RelativeFilePath.of(this.project.getAsIsOutputFilename(filename).replaceAll(".rb", ""))
             );
-            contents += `require_relative '${relative(this.filePath, absoluteFilePath)}'\n`;
+            contents += `require_relative "${relative(this.filePath, absoluteFilePath)}"\n`;
             visitedPaths.add(absoluteFilePath.toString());
         });
 
         const coreFilePaths = this.project.getCoreAbsoluteFilePaths();
         coreFilePaths.forEach((filePath) => {
             if (!visitedPaths.has(filePath.toString())) {
-                contents += `require_relative '${relative(this.filePath, filePath)}'\n`;
+                contents += `require_relative "${relative(this.filePath, filePath)}"\n`;
                 visitedPaths.add(filePath.toString());
             }
         });

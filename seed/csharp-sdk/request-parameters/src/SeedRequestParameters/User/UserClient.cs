@@ -19,6 +19,7 @@ public partial class UserClient
     /// await client.User.CreateUsernameAsync(
     ///     new CreateUsernameRequest
     ///     {
+    ///         Tags = new List&lt;string&gt;() { "tags", "tags" },
     ///         Username = "username",
     ///         Password = "password",
     ///         Name = "test",
@@ -31,6 +32,8 @@ public partial class UserClient
         CancellationToken cancellationToken = default
     )
     {
+        var _query = new Dictionary<string, object>();
+        _query["tags"] = JsonUtils.Serialize(request.Tags);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -39,6 +42,57 @@ public partial class UserClient
                     Method = HttpMethod.Post,
                     Path = "/user/username",
                     Body = request,
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedRequestParametersApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <example><code>
+    /// await client.User.CreateUsernameWithReferencedTypeAsync(
+    ///     new CreateUsernameReferencedRequest
+    ///     {
+    ///         Tags = new List&lt;string&gt;() { "tags", "tags" },
+    ///         Body = new CreateUsernameBody
+    ///         {
+    ///             Username = "username",
+    ///             Password = "password",
+    ///             Name = "test",
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public async global::System.Threading.Tasks.Task CreateUsernameWithReferencedTypeAsync(
+        CreateUsernameReferencedRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        _query["tags"] = JsonUtils.Serialize(request.Tags);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/user/username-referenced",
+                    Body = request.Body,
+                    Query = _query,
                     Options = options,
                 },
                 cancellationToken

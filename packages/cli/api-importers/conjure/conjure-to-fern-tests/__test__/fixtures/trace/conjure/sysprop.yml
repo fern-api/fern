@@ -10,7 +10,6 @@ services:
     package: com.birch.trace.sysprop
     base-path: /sysprop
     endpoints:
-
       setNumWarmInstances:
         http: PUT /num-warm-instances/{language}/{numWarmInstances}
         args:
@@ -20,4 +19,3 @@ services:
       getNumWarmInstances:
         http: GET /num-warm-instances
         returns: map<commons.Language, integer>
-

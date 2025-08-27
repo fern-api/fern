@@ -3,8 +3,8 @@ name: Dependabot
 on:
   pull_request:
     paths-ignore:
-      - 'fern/docs/**'
-      - 'fern/docs.yml'
+      - "fern/docs/**"
+      - "fern/docs.yml"
 
 permissions:
   contents: write
@@ -32,5 +32,5 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.GITHUB_TOKEN }}
-          pull-request-number: ${{github.event.pull_request.number}}    
-          enforce-checks: 'true'
+          pull-request-number: ${{github.event.pull_request.number}}
+          enforce-checks: "true"

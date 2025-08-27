@@ -1,6 +1,5 @@
 using global::System.Threading.Tasks;
 using SeedExhaustive;
-using SeedExhaustive.Types.Union;
 
 namespace Usage;
 
@@ -14,13 +13,10 @@ public class Example45
             }
         );
 
-        await client.Endpoints.Union.GetAndReturnUnionAsync(
-            new Animal(
-                new Dog{
-                    Name = "name",
-                    LikesToWoof = true
-                }
-            )
+        await client.NoAuth.PostWithNoAuthAsync(
+            new Dictionary<string, object>() {
+                ["key"] = "value",
+            }
         );
     }
 

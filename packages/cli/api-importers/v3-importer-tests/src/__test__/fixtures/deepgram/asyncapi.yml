@@ -42,7 +42,7 @@ channels:
     address: /v1/speak
     description: Deepgram Text to Speech WebSocket
     servers:
-      - $ref: '#/servers/public'
+      - $ref: "#/servers/public"
     parameters:
       ApiKey:
         description: API key for authentication. Format should be token <DEEPGRAM_API_KEY>
@@ -90,26 +90,26 @@ channels:
           encoding 8000 or 24000 are possible defaults. For some encodings
           sample rate is not configurable.
         location: $message.payload#/sample_rate
-        default: '24000'
+        default: "24000"
         enum:
-          - '8000'
-          - '16000'
-          - '24000'
-          - '44100'
-          - '48000'
+          - "8000"
+          - "16000"
+          - "24000"
+          - "44100"
+          - "48000"
         x-fern-enum:
-          '8000':
+          "8000":
             name: EightThousand
-          '16000':
+          "16000":
             name: SixteenThousand
-          '24000':
+          "24000":
             name: TwentyFourThousand
-          '44100':
+          "44100":
             name: FortyFourThousandOneHundred
-          '48000':
+          "48000":
             name: FortyEightThousand
         examples:
-          - '24000'
+          - "24000"
     messages:
       textToSpeechRequest:
         description: Request to convert text to speech
@@ -223,17 +223,17 @@ channels:
                 - 503
               description: HTTP status code equivalent
               x-fern-enum:
-                '400':
+                "400":
                   name: BadRequest
-                '401':
+                "401":
                   name: Unauthorized
-                '402':
+                "402":
                   name: PaymentRequired
-                '403':
+                "403":
                   name: Forbidden
-                '429':
+                "429":
                   name: TooManyRequests
-                '503':
+                "503":
                   name: ServiceUnavailable
             error_message:
               type: string
@@ -258,7 +258,7 @@ channels:
                 - 200
               description: HTTP status code equivalent
               x-fern-enum:
-                '200':
+                "200":
                   name: OK
             success_message:
               type: string
@@ -288,15 +288,15 @@ channels:
                 - 1011
               description: WebSocket close status code
               x-fern-enum:
-                '1000':
+                "1000":
                   name: NormalClosure
-                '1003':
+                "1003":
                   name: ProtocolError
-                '1008':
+                "1008":
                   name: PolicyViolation
-                '1009':
+                "1009":
                   name: MessageTooBig
-                '1011':
+                "1011":
                   name: InternalServerError
             payload:
               type: string
@@ -342,7 +342,7 @@ channels:
   listen:
     address: /v1/listen
     servers:
-      - $ref: '#/servers/public'
+      - $ref: "#/servers/public"
     description: Deepgram Speech to Text WebSocket
     parameters:
       ApiKey:
@@ -372,20 +372,20 @@ channels:
       channels:
         description: The number of channels in the submitted audio
         location: $message.payload#/channels
-        default: '1'
+        default: "1"
         examples:
-          - '1'
+          - "1"
       diarize:
         description: >-
           Recognize speaker changes. Each word in the transcript will be
           assigned a speaker number starting at 0
         location: $message.payload#/diarize
-        default: 'false'
+        default: "false"
         enum:
-          - 'true'
-          - 'false'
+          - "true"
+          - "false"
         examples:
-          - 'true'
+          - "true"
       diarize_version:
         description: >-
           Version of the diarization feature to use. Only used when the
@@ -398,12 +398,12 @@ channels:
       dictation:
         description: Identify and extract key entities from content in submitted audio
         location: $message.payload#/dictation
-        default: 'false'
+        default: "false"
         enum:
-          - 'true'
-          - 'false'
+          - "true"
+          - "false"
         examples:
-          - 'true'
+          - "true"
       encoding:
         description: Specify the expected encoding of your submitted audio
         location: $message.payload#/encoding
@@ -427,9 +427,9 @@ channels:
           with a speech_final parameter set to true. Can also be set to false to
           disable endpointing
         location: $message.payload#/endpointing
-        default: '10'
+        default: "10"
         examples:
-          - '300'
+          - "300"
           - false"
       extra:
         description: >-
@@ -443,12 +443,12 @@ channels:
           Filler Words can help transcribe interruptions in your audio, like
           "uh" and "um"
         location: $message.payload#/filler_words
-        default: 'false'
+        default: "false"
         enum:
-          - 'true'
-          - 'false'
+          - "true"
+          - "false"
         examples:
-          - 'true'
+          - "true"
       interim_results:
         description: >-
           Specifies whether the streaming endpoint should provide ongoing
@@ -456,12 +456,12 @@ channels:
           endpoint sends continuous updates, meaning transcription results may
           evolve over time
         location: $message.payload#/interim_results
-        default: 'false'
+        default: "false"
         enum:
-          - 'true'
-          - 'false'
+          - "true"
+          - "false"
         examples:
-          - 'true'
+          - "true"
       keyterm:
         description: >-
           Key term prompting can boost or suppress specialized terminology and
@@ -516,7 +516,7 @@ channels:
           - ms
           - nl
           - nl-BE
-          - 'no'
+          - "no"
           - pl
           - pt
           - pt-BR
@@ -580,55 +580,55 @@ channels:
       multichannel:
         description: Transcribe each audio channel independently
         location: $message.payload#/multichannel
-        default: 'false'
+        default: "false"
         enum:
-          - 'true'
-          - 'false'
+          - "true"
+          - "false"
         examples:
-          - 'true'
+          - "true"
       numerals:
         description: Convert numbers from written format to numerical format
         location: $message.payload#/numerals
-        default: 'false'
+        default: "false"
         enum:
-          - 'true'
-          - 'false'
+          - "true"
+          - "false"
         examples:
-          - 'true'
+          - "true"
       profanity_filter:
         description: >-
           Profanity Filter looks for recognized profanity and converts it to the
           nearest recognized non-profane word or removes it from the transcript
           completely
         location: $message.payload#/profanity_filter
-        default: 'false'
+        default: "false"
         enum:
-          - 'true'
-          - 'false'
+          - "true"
+          - "false"
         examples:
-          - 'true'
+          - "true"
       punctuate:
         description: Add punctuation and capitalization to the transcript
         location: $message.payload#/punctuate
-        default: 'false'
+        default: "false"
         enum:
-          - 'true'
-          - 'false'
+          - "true"
+          - "false"
         examples:
-          - 'true'
+          - "true"
       redact:
         description: Redaction removes sensitive information from your transcripts
         location: $message.payload#/redact
-        default: 'false'
+        default: "false"
         enum:
-          - 'true'
-          - 'false'
+          - "true"
+          - "false"
           - pci
           - numbers
           - aggressive_numbers
           - ssn
         examples:
-          - 'true'
+          - "true"
       replace:
         description: Search for terms or phrases in submitted audio and replaces them
         location: $message.payload#/replace
@@ -640,7 +640,7 @@ channels:
           is provided for encoding
         location: $message.payload#/sample_rate
         examples:
-          - '8000'
+          - "8000"
       search:
         description: Search for terms or phrases in submitted audio
         location: $message.payload#/search
@@ -652,12 +652,12 @@ channels:
           Apply formatting to transcript output. When set to true, additional
           formatting will be applied to transcripts to improve readability
         location: $message.payload#/smart_format
-        default: 'false'
+        default: "false"
         enum:
-          - 'true'
-          - 'false'
+          - "true"
+          - "false"
         examples:
-          - 'true'
+          - "true"
       tag:
         description: >-
           Label your requests for the purpose of identification during usage
@@ -672,18 +672,18 @@ channels:
           after a word has been transcribed. Use with interim_results
         location: $message.payload#/utterance_end
         examples:
-          - '1000'
+          - "1000"
       vad_events:
         description: >-
           Indicates that speech has started. You'll begin receiving Speech
           Started messages upon speech starting
         location: $message.payload#/vad_events
-        default: 'false'
+        default: "false"
         enum:
-          - 'true'
-          - 'false'
+          - "true"
+          - "false"
         examples:
-          - 'true'
+          - "true"
       version:
         description: Version of an AI model to use
         location: $message.payload#/version
@@ -936,7 +936,7 @@ channels:
               transaction_key: deprecated
               request_id: 8c8ebea9-dbec-45fa-a035-e4632cb05b5f
               sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-              created: '2024-08-29T22:37:55.202Z'
+              created: "2024-08-29T22:37:55.202Z"
               duration: 0
               channels: 0
           - payload:
@@ -944,7 +944,7 @@ channels:
               transaction_key: deprecated
               request_id: 8c8ebea9-dbec-45fa-a035-e4632cb05b5f
               sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-              created: '2024-08-29T22:37:55.202Z'
+              created: "2024-08-29T22:37:55.202Z"
               duration: 0
               channels: 0
       metadataResponse:
@@ -991,17 +991,17 @@ channels:
                 - 503
               description: HTTP status code equivalent
               x-fern-enum:
-                '400':
+                "400":
                   name: BadRequest
-                '401':
+                "401":
                   name: Unauthorized
-                '402':
+                "402":
                   name: PaymentRequired
-                '403':
+                "403":
                   name: Forbidden
-                '429':
+                "429":
                   name: TooManyRequests
-                '503':
+                "503":
                   name: ServiceUnavailable
             error_message:
               type: string
@@ -1026,7 +1026,7 @@ channels:
                 - 200
               description: HTTP status code equivalent
               x-fern-enum:
-                '200':
+                "200":
                   name: OK
             success_message:
               type: string
@@ -1054,11 +1054,11 @@ channels:
                 - 1011
               description: WebSocket close status code
               x-fern-enum:
-                '1000':
+                "1000":
                   name: NormalClosure
-                '1008':
+                "1008":
                   name: PolicyViolation
-                '1011':
+                "1011":
                   name: InternalServerError
             payload:
               type: string
@@ -1084,7 +1084,7 @@ channels:
   agent:
     address: /agent
     servers:
-      - $ref: '#/servers/agent'
+      - $ref: "#/servers/agent"
     description: Deepgram Voice Agent WebSocket
     parameters:
       ApiKey:
@@ -1672,197 +1672,197 @@ channels:
         examples:
           - payload:
               type: Error
-              message: 'Failed to process audio input: Invalid audio format'
+              message: "Failed to process audio input: Invalid audio format"
 operations:
   sendText:
     description: Send text to Deepgram's Text to Speech API
     action: send
     channel:
-      $ref: '#/channels/speak'
+      $ref: "#/channels/speak"
     messages:
-      - $ref: '#/channels/speak/messages/textToSpeechRequest'
+      - $ref: "#/channels/speak/messages/textToSpeechRequest"
   sendSpeakControlMessage:
     action: send
     description: Send control messages to Deepgram's Text to Speech API
     channel:
-      $ref: '#/channels/speak'
+      $ref: "#/channels/speak"
     messages:
-      - $ref: '#/channels/speak/messages/controlMessagesRequest'
+      - $ref: "#/channels/speak/messages/controlMessagesRequest"
   receiveAudio:
     description: Receive audio from Deepgram's Text to Speech API
     action: receive
     channel:
-      $ref: '#/channels/speak'
+      $ref: "#/channels/speak"
     messages:
-      - $ref: '#/channels/speak/messages/textToSpeechResponse'
+      - $ref: "#/channels/speak/messages/textToSpeechResponse"
   receiveSpeakControlResponse:
     description: Receive control messages from Deepgram's Text to Speech API
     action: receive
     channel:
-      $ref: '#/channels/speak'
+      $ref: "#/channels/speak"
     messages:
-      - $ref: '#/channels/speak/messages/controlMessagesResponse'
+      - $ref: "#/channels/speak/messages/controlMessagesResponse"
   receiveSpeakCloseFrame:
     description: Receive close frame from Deepgram's Text to Speech API
     action: receive
     channel:
-      $ref: '#/channels/speak'
+      $ref: "#/channels/speak"
     messages:
-      - $ref: '#/channels/speak/messages/closeFrame'
+      - $ref: "#/channels/speak/messages/closeFrame"
   sendAudio:
     description: Send audio to Deepgram's Speech to Text API
     action: send
     channel:
-      $ref: '#/channels/listen'
+      $ref: "#/channels/listen"
     messages:
-      - $ref: '#/channels/listen/messages/transcriptionRequest'
+      - $ref: "#/channels/listen/messages/transcriptionRequest"
   sendListenControlMessage:
     description: Send control messages to Deepgram's Speech to Text API
     action: send
     channel:
-      $ref: '#/channels/listen'
+      $ref: "#/channels/listen"
     messages:
-      - $ref: '#/channels/listen/messages/controlMessagesRequest'
+      - $ref: "#/channels/listen/messages/controlMessagesRequest"
   receiveTranscription:
     description: Receive transcription from Deepgram's Speech to Text API
     action: receive
     channel:
-      $ref: '#/channels/listen'
+      $ref: "#/channels/listen"
     messages:
-      - $ref: '#/channels/listen/messages/transcriptionResponse'
+      - $ref: "#/channels/listen/messages/transcriptionResponse"
   receiveListenControlResponse:
     description: Receive control messages from Deepgram's Speech to Text API
     action: receive
     channel:
-      $ref: '#/channels/listen'
+      $ref: "#/channels/listen"
     messages:
-      - $ref: '#/channels/listen/messages/controlMessageResponse'
+      - $ref: "#/channels/listen/messages/controlMessageResponse"
   receiveListenCloseFrame:
     description: Receive close frame from Deepgram's Speech to Text API
     action: receive
     channel:
-      $ref: '#/channels/listen'
+      $ref: "#/channels/listen"
     messages:
-      - $ref: '#/channels/listen/messages/closeFrame'
+      - $ref: "#/channels/listen/messages/closeFrame"
   sendSettingsConfiguration:
     description: Send settings configuration to Deepgram's Voice Agent API
     action: send
     channel:
-      $ref: '#/channels/agent'
+      $ref: "#/channels/agent"
     messages:
-      - $ref: '#/channels/agent/messages/settingsConfiguration'
+      - $ref: "#/channels/agent/messages/settingsConfiguration"
   sendUpdateInstructions:
     description: Send update instructions to Deepgram's Voice Agent API
     action: send
     channel:
-      $ref: '#/channels/agent'
+      $ref: "#/channels/agent"
     messages:
-      - $ref: '#/channels/agent/messages/updateInstructions'
+      - $ref: "#/channels/agent/messages/updateInstructions"
   sendUpdateSpeak:
     description: Send update speak to Deepgram's Voice Agent API
     action: send
     channel:
-      $ref: '#/channels/agent'
+      $ref: "#/channels/agent"
     messages:
-      - $ref: '#/channels/agent/messages/updateSpeak'
+      - $ref: "#/channels/agent/messages/updateSpeak"
   sendInjectAgentMessage:
     action: send
     description: Send inject agent message to Deepgram's Voice Agent API
     channel:
-      $ref: '#/channels/agent'
+      $ref: "#/channels/agent"
     messages:
-      - $ref: '#/channels/agent/messages/injectAgentMessage'
+      - $ref: "#/channels/agent/messages/injectAgentMessage"
   receiveInjectionRefused:
     description: Receive injection refused message from Deepgram's Voice Agent API
     action: receive
     channel:
-      $ref: '#/channels/agent'
+      $ref: "#/channels/agent"
     messages:
-      - $ref: '#/channels/agent/messages/injectionRefused'
+      - $ref: "#/channels/agent/messages/injectionRefused"
   sendFunctionCallResponse:
     description: Send function call response to Deepgram's Voice Agent API
     action: send
     channel:
-      $ref: '#/channels/agent'
+      $ref: "#/channels/agent"
     messages:
-      - $ref: '#/channels/agent/messages/functionCallResponse'
+      - $ref: "#/channels/agent/messages/functionCallResponse"
   sendKeepAlive:
     description: Send keep alive to Deepgram's Voice Agent API
     action: send
     channel:
-      $ref: '#/channels/agent'
+      $ref: "#/channels/agent"
     messages:
-      - $ref: '#/channels/agent/messages/agentKeepAlive'
+      - $ref: "#/channels/agent/messages/agentKeepAlive"
   receiveWelcome:
     description: Receive welcome message from Deepgram's Voice Agent API
     action: receive
     channel:
-      $ref: '#/channels/agent'
+      $ref: "#/channels/agent"
     messages:
-      - $ref: '#/channels/agent/messages/welcomeMessage'
+      - $ref: "#/channels/agent/messages/welcomeMessage"
   receiveSettingsApplied:
     description: Receive settings applied message from Deepgram's Voice Agent API
     action: receive
     channel:
-      $ref: '#/channels/agent'
+      $ref: "#/channels/agent"
     messages:
-      - $ref: '#/channels/agent/messages/settingsApplied'
+      - $ref: "#/channels/agent/messages/settingsApplied"
   receiveConversationText:
     description: Receive conversation text from Deepgram's Voice Agent API
     action: receive
     channel:
-      $ref: '#/channels/agent'
+      $ref: "#/channels/agent"
     messages:
-      - $ref: '#/channels/agent/messages/ConversationText'
+      - $ref: "#/channels/agent/messages/ConversationText"
   receiveUserStartedSpeaking:
     description: Receive user started speaking message from Deepgram's Voice Agent API
     action: receive
     channel:
-      $ref: '#/channels/agent'
+      $ref: "#/channels/agent"
     messages:
-      - $ref: '#/channels/agent/messages/userStartedSpeaking'
+      - $ref: "#/channels/agent/messages/userStartedSpeaking"
   receiveAgentThinking:
     description: Receive agent thinking message from Deepgram's Voice Agent API
     action: receive
     channel:
-      $ref: '#/channels/agent'
+      $ref: "#/channels/agent"
     messages:
-      - $ref: '#/channels/agent/messages/agentThinking'
+      - $ref: "#/channels/agent/messages/agentThinking"
   receiveFunctionCallRequest:
     description: Receive function call request from Deepgram's Voice Agent API
     action: receive
     channel:
-      $ref: '#/channels/agent'
+      $ref: "#/channels/agent"
     messages:
-      - $ref: '#/channels/agent/messages/functionCallRequest'
+      - $ref: "#/channels/agent/messages/functionCallRequest"
   receiveFunctionCalling:
     description: Receive function calling message from Deepgram's Voice Agent API
     action: receive
     channel:
-      $ref: '#/channels/agent'
+      $ref: "#/channels/agent"
     messages:
-      - $ref: '#/channels/agent/messages/functionCalling'
+      - $ref: "#/channels/agent/messages/functionCalling"
   receiveAgentStartedSpeaking:
     description: Receive agent started speaking message from Deepgram's Voice Agent API
     action: receive
     channel:
-      $ref: '#/channels/agent'
+      $ref: "#/channels/agent"
     messages:
-      - $ref: '#/channels/agent/messages/agentStartedSpeaking'
+      - $ref: "#/channels/agent/messages/agentStartedSpeaking"
   receiveAgentAudioDone:
     description: Receive agent audio done message from Deepgram's Voice Agent API
     action: receive
     channel:
-      $ref: '#/channels/agent'
+      $ref: "#/channels/agent"
     messages:
-      - $ref: '#/channels/agent/messages/agentAudioDone'
+      - $ref: "#/channels/agent/messages/agentAudioDone"
   receiveError:
     description: Receive error response from Deepgram's Voice Agent API
     action: receive
     channel:
-      $ref: '#/channels/agent'
+      $ref: "#/channels/agent"
     messages:
-      - $ref: '#/channels/agent/messages/agentErrorResponse'
+      - $ref: "#/channels/agent/messages/agentErrorResponse"
 components:
   parameters:
     ApiKey:

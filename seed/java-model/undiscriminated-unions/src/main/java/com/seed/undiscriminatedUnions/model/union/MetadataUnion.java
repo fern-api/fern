@@ -87,11 +87,11 @@ public final class MetadataUnion {
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(
                         value, new TypeReference<Optional<Map<String, Object>>>() {}));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, NamedMetadata.class));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

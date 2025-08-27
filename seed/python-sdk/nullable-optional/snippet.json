@@ -1,0 +1,70 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.getUser"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedNullableOptional\n\nclient = SeedNullableOptional(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.nullable_optional.get_user(\n    user_id=\"userId\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedNullableOptional\n\nclient = AsyncSeedNullableOptional(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.nullable_optional.get_user(\n        user_id=\"userId\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/api/users",
+                "method": "POST",
+                "identifier_override": "endpoint_nullable-optional.createUser"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedNullableOptional\nfrom seed.nullable_optional import Address\n\nclient = SeedNullableOptional(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.nullable_optional.create_user(\n    username=\"username\",\n    email=\"email\",\n    phone=\"phone\",\n    address=Address(\n        street=\"street\",\n        city=\"city\",\n        state=\"state\",\n        zip_code=\"zipCode\",\n        country=\"country\",\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedNullableOptional\nfrom seed.nullable_optional import Address\n\nclient = AsyncSeedNullableOptional(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.nullable_optional.create_user(\n        username=\"username\",\n        email=\"email\",\n        phone=\"phone\",\n        address=Address(\n            street=\"street\",\n            city=\"city\",\n            state=\"state\",\n            zip_code=\"zipCode\",\n            country=\"country\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_nullable-optional.updateUser"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedNullableOptional\nfrom seed.nullable_optional import Address\n\nclient = SeedNullableOptional(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.nullable_optional.update_user(\n    user_id=\"userId\",\n    username=\"username\",\n    email=\"email\",\n    phone=\"phone\",\n    address=Address(\n        street=\"street\",\n        city=\"city\",\n        state=\"state\",\n        zip_code=\"zipCode\",\n        country=\"country\",\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedNullableOptional\nfrom seed.nullable_optional import Address\n\nclient = AsyncSeedNullableOptional(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.nullable_optional.update_user(\n        user_id=\"userId\",\n        username=\"username\",\n        email=\"email\",\n        phone=\"phone\",\n        address=Address(\n            street=\"street\",\n            city=\"city\",\n            state=\"state\",\n            zip_code=\"zipCode\",\n            country=\"country\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/api/users",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.listUsers"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedNullableOptional\n\nclient = SeedNullableOptional(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.nullable_optional.list_users(\n    limit=1,\n    offset=1,\n    include_deleted=True,\n    sort_by=\"sortBy\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedNullableOptional\n\nclient = AsyncSeedNullableOptional(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.nullable_optional.list_users(\n        limit=1,\n        offset=1,\n        include_deleted=True,\n        sort_by=\"sortBy\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/api/users/search",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.searchUsers"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedNullableOptional\n\nclient = SeedNullableOptional(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.nullable_optional.search_users(\n    query=\"query\",\n    department=\"department\",\n    role=\"role\",\n    is_active=True,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedNullableOptional\n\nclient = AsyncSeedNullableOptional(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.nullable_optional.search_users(\n        query=\"query\",\n        department=\"department\",\n        role=\"role\",\n        is_active=True,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

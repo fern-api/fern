@@ -52,7 +52,7 @@ export class Api {
     private async __getSomething(
         requestOptions?: Api.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedOauthClientCredentials.nested.api.getSomething.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,

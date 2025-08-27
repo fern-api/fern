@@ -204,7 +204,7 @@ public final class User {
     }
 
     public interface EmailStage {
-        FavoriteNumberStage email(@NotNull Email email);
+        FavoriteNumberStage email(Email email);
 
         FavoriteNumberStage email(Nullable<Email> email);
     }
@@ -304,7 +304,7 @@ public final class User {
 
         @java.lang.Override
         @JsonSetter("email")
-        public FavoriteNumberStage email(@NotNull Email email) {
+        public FavoriteNumberStage email(Email email) {
             this.email = Objects.requireNonNull(email, "email must not be null");
             return this;
         }

@@ -149,7 +149,7 @@ class EndpointResponseCodeWriter:
                 ]
             )
         else:
-            body = []
+            body: list[AST.AstNode] = []
             if stream_response_union.type == "json" and stream_response_union.terminator is not None:
                 body.append(
                     AST.ConditionalTree(

@@ -7,21 +7,21 @@ import (
 	core "github.com/basic-auth/fern/core"
 	internal "github.com/basic-auth/fern/internal"
 	option "github.com/basic-auth/fern/option"
-	http "net/http"
 )
 
 type Client struct {
 	BasicAuth *basicauth.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		BasicAuth: basicauth.NewClient(opts...),
+		BasicAuth: basicauth.NewClient(options),
+		options:   options,
 		baseURL:   options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -29,6 +29,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

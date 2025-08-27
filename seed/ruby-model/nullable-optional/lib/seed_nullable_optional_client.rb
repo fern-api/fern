@@ -1,0 +1,7 @@
+# frozen_string_literal: true
+
+require_relative "seed_nullable_optional_client/nullable_optional/types/user_profile"
+require_relative "seed_nullable_optional_client/nullable_optional/types/address"
+require_relative "seed_nullable_optional_client/nullable_optional/types/create_user_request"
+require_relative "seed_nullable_optional_client/nullable_optional/types/update_user_request"
+require_relative "seed_nullable_optional_client/nullable_optional/types/user_response"

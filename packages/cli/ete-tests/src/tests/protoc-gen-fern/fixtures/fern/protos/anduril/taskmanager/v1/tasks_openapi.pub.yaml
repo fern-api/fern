@@ -6,13 +6,13 @@ info:
     handling the state associated with tasks in an environment, as well as the correct routing of these tasks to taskable 
     agents. For integrators building taskable agents and integrating with Lattice, the focus is on interacting with Task 
     Manager to receive tasks and report status updates.
-  version: '1.0.0'
+  version: "1.0.0"
 servers:
-- url: "{server}/api/v1"
-  variables:
-    server:
-      default: "developer.anduril.com"
-      description: The Lattice server instance to connect to.
+  - url: "{server}/api/v1"
+    variables:
+      server:
+        default: "developer.anduril.com"
+        description: The Lattice server instance to connect to.
 paths:
   /tasks:
     post:
@@ -21,25 +21,25 @@ paths:
       summary: Create a new task and schedule it for delivery
       description: |-
         Submit a request to create a task and schedule it for delivery. Tasks, once delivered, will 
-        be asynchronously updated by their destined agent. 
+        be asynchronously updated by their destined agent.
       operationId: createTask
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TaskCreation'
+              $ref: "#/components/schemas/TaskCreation"
         required: true
       responses:
-        '201':
+        "201":
           description: Task creation was successful
           content:
             application/json:
               schema:
-                $ref: 'tasks_openapi_model.gen.yaml#/components/schemas/Task'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
+                $ref: "tasks_openapi_model.gen.yaml#/components/schemas/Task"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
   /tasks/{taskId}:
     get:
       tags:
@@ -54,18 +54,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Task retrieval was successful.
           content:
             application/json:
               schema:
-                $ref: 'tasks_openapi_model.gen.yaml#/components/schemas/Task'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
+                $ref: "tasks_openapi_model.gen.yaml#/components/schemas/Task"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
   /tasks/{taskId}/status:
     put:
       tags:
@@ -83,21 +83,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TaskStatusUpdate'
+              $ref: "#/components/schemas/TaskStatusUpdate"
         required: true
       responses:
-        '200':
+        "200":
           description: Task status update was successful
           content:
             application/json:
               schema:
-                $ref: 'tasks_openapi_model.gen.yaml#/components/schemas/Task'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
+                $ref: "tasks_openapi_model.gen.yaml#/components/schemas/Task"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
   /tasks/query:
     post:
       tags:
@@ -108,21 +108,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TaskQuery'
+              $ref: "#/components/schemas/TaskQuery"
         required: true
       responses:
-        '200':
+        "200":
           description: Task query was successful
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TaskQueryResults'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
+                $ref: "#/components/schemas/TaskQueryResults"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
   /agent/listen:
     post:
       tags:
@@ -137,19 +137,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AgentListener'
+              $ref: "#/components/schemas/AgentListener"
         required: true
       responses:
-        '200':
+        "200":
           description: Requests for the agent to comply with.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AgentRequest'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
+                $ref: "#/components/schemas/AgentRequest"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
 components:
   # shared response types
   responses:
@@ -158,19 +158,19 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
     Unauthorized:
       description: Unauthorized to access resource
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
     NotFound:
       description: The specified resource was not found
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
   # manual data schemas
   schemas:
     Error:
@@ -203,15 +203,15 @@ components:
         specification:
           description: Full set of task parameters.
           allOf:
-            - $ref: 'tasks_openapi_model.gen.yaml#/components/schemas/GoogleProtobufAny'
+            - $ref: "tasks_openapi_model.gen.yaml#/components/schemas/GoogleProtobufAny"
         author:
-            $ref: 'tasks_openapi_model.gen.yaml#/components/schemas/Principal'
+          $ref: "tasks_openapi_model.gen.yaml#/components/schemas/Principal"
         relations:
           description: |-
             Any relationships associated with this Task, such as a parent Task or an assignee
             this Task is designated to for execution.
           allOf:
-            - $ref: 'tasks_openapi_model.gen.yaml#/components/schemas/Relations'
+            - $ref: "tasks_openapi_model.gen.yaml#/components/schemas/Relations"
         isExecutedElsewhere:
           description: |-
             If set, then the service will not trigger execution of this task on an agent. Useful
@@ -224,7 +224,7 @@ components:
             task. For example, an entity Objective, an entity Keep In Zone, etc.
           type: array
           items:
-            $ref: 'tasks_openapi_model.gen.yaml#/components/schemas/TaskEntity'
+            $ref: "tasks_openapi_model.gen.yaml#/components/schemas/TaskEntity"
     TaskQuery:
       description: Query for Tasks. Returns the each latest Task by Status ID and Version ID by default with no filters.
       type: object
@@ -269,12 +269,12 @@ components:
               type: string
               description: If provided, returns Tasks only updated after this time.
               allOf:
-                - $ref: '#/components/schemas/Timestamp'
+                - $ref: "#/components/schemas/Timestamp"
             endTime:
               type: string
               description: If provided, returns Tasks only updated before this time.
               allOf:
-                - $ref: '#/components/schemas/Timestamp'
+                - $ref: "#/components/schemas/Timestamp"
     TaskQueryResults:
       type: object
       properties:
@@ -283,7 +283,7 @@ components:
           items:
             type: object
             allOf:
-              - $ref: 'tasks_openapi_model.gen.yaml#/components/schemas/Task'
+              - $ref: "tasks_openapi_model.gen.yaml#/components/schemas/Task"
         nextPageToken:
           type: string
           description: |-
@@ -304,16 +304,16 @@ components:
         newStatus:
           description: The new status of the task.
           allOf:
-            - $ref: 'tasks_openapi_model.gen.yaml#/components/schemas/TaskStatus'
+            - $ref: "tasks_openapi_model.gen.yaml#/components/schemas/TaskStatus"
         author:
-          $ref: 'tasks_openapi_model.gen.yaml#/components/schemas/Principal'
+          $ref: "tasks_openapi_model.gen.yaml#/components/schemas/Principal"
     AgentListener:
       type: object
       properties:
         agentSelector:
           description: Selector criteria to determine which Agent Tasks the agent receives
           allOf:
-            - $ref: '#/components/schemas/EntityIdsSelector'
+            - $ref: "#/components/schemas/EntityIdsSelector"
     EntityIdsSelector:
       type: object
       properties:
@@ -326,11 +326,11 @@ components:
       type: object
       properties:
         executeRequest:
-          $ref: 'tasks_openapi_model.gen.yaml#/components/schemas/ExecuteRequest'
+          $ref: "tasks_openapi_model.gen.yaml#/components/schemas/ExecuteRequest"
         cancelRequest:
-          $ref: 'tasks_openapi_model.gen.yaml#/components/schemas/CancelRequest'
+          $ref: "tasks_openapi_model.gen.yaml#/components/schemas/CancelRequest"
         completeRequest:
-          $ref: 'tasks_openapi_model.gen.yaml#/components/schemas/CompleteRequest'
+          $ref: "tasks_openapi_model.gen.yaml#/components/schemas/CompleteRequest"
 tags:
   - name: task
     description: The Tasks API

@@ -184,6 +184,7 @@ class SdkGenerator(AbstractGenerator):
                 basic=lambda _: None,
                 header=lambda _: None,
                 oauth=lambda oauth: oauth,
+                inferred=lambda _: None,
             )
             if maybe_oauth_scheme is not None and generator_config.generate_oauth_clients
             else None
@@ -291,8 +292,7 @@ class SdkGenerator(AbstractGenerator):
 
         snippets = snippet_registry.snippets()
         if snippets is not None and (
-            generator_config.output.mode.get_as_union().type != "downloadFiles" or
-            ir.self_hosted
+            generator_config.output.mode.get_as_union().type != "downloadFiles" or ir.self_hosted
         ):
             self._maybe_write_snippets(
                 context=context,
@@ -340,7 +340,6 @@ class SdkGenerator(AbstractGenerator):
 
         if not (generator_config.output.mode.get_as_union().type == "downloadFiles"):
             as_is_copier.copy_to_project(project=project)
-
 
         test_fac = SnippetTestFactory(
             project=project,
@@ -451,7 +450,7 @@ class SdkGenerator(AbstractGenerator):
         source_file = context.source_file_factory.create(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         )
-        generated_root_client = RootClientGenerator(
+        root_client_generator = RootClientGenerator(
             context=context,
             package=ir.root_package,
             generated_environment=generated_environment,
@@ -462,7 +461,9 @@ class SdkGenerator(AbstractGenerator):
             oauth_scheme=oauth_scheme,
             endpoint_metadata_collector=endpoint_metadata_collector,
             websocket=None,
-        ).generate(source_file=source_file)
+        )
+        root_client_generator.generate(source_file=source_file)
+        generated_root_client = root_client_generator.get_generated_root_client()
         project.write_source_file(source_file=source_file, filepath=filepath)
 
         if ir.root_package.service is not None:

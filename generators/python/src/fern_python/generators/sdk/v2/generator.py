@@ -38,7 +38,12 @@ class PythonV2Generator:
         )
 
         try:
-            subprocess.run(["node", "--enable-source-maps", V2_BIN_PATH, config_filepath], capture_output=True, text=True, check=True)
+            subprocess.run(
+                ["node", "--enable-source-maps", V2_BIN_PATH, config_filepath],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
             self.coordinator.send_update(
                 generator_exec.logging.GeneratorUpdate.factory.log(
                     generator_exec.logging.LogUpdate(

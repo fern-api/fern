@@ -1,0 +1,161 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_literals:LiteralString": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "LiteralString",
+                    "camelCase": {
+                        "unsafeName": "literalString",
+                        "safeName": "literalString"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "literal_string",
+                        "safeName": "literal_string"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LITERAL_STRING",
+                        "safeName": "LITERAL_STRING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "LiteralString",
+                        "safeName": "LiteralString"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "literals",
+                            "camelCase": {
+                                "unsafeName": "literals",
+                                "safeName": "literals"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "literals",
+                                "safeName": "literals"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LITERALS",
+                                "safeName": "LITERALS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Literals",
+                                "safeName": "Literals"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "literals",
+                        "camelCase": {
+                            "unsafeName": "literals",
+                            "safeName": "literals"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "literals",
+                            "safeName": "literals"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LITERALS",
+                            "safeName": "LITERALS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Literals",
+                            "safeName": "Literals"
+                        }
+                    }
+                }
+            },
+            "typeReference": {
+                "type": "literal",
+                "value": {
+                    "type": "string",
+                    "value": "literally"
+                }
+            }
+        },
+        "type_literals:UnionOverLiteral": {
+            "type": "undiscriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "UnionOverLiteral",
+                    "camelCase": {
+                        "unsafeName": "unionOverLiteral",
+                        "safeName": "unionOverLiteral"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "union_over_literal",
+                        "safeName": "union_over_literal"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNION_OVER_LITERAL",
+                        "safeName": "UNION_OVER_LITERAL"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UnionOverLiteral",
+                        "safeName": "UnionOverLiteral"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "literals",
+                            "camelCase": {
+                                "unsafeName": "literals",
+                                "safeName": "literals"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "literals",
+                                "safeName": "literals"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LITERALS",
+                                "safeName": "LITERALS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Literals",
+                                "safeName": "Literals"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "literals",
+                        "camelCase": {
+                            "unsafeName": "literals",
+                            "safeName": "literals"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "literals",
+                            "safeName": "literals"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LITERALS",
+                            "safeName": "LITERALS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Literals",
+                            "safeName": "Literals"
+                        }
+                    }
+                }
+            },
+            "types": [
+                {
+                    "type": "primitive",
+                    "value": "STRING"
+                },
+                {
+                    "type": "named",
+                    "value": "type_literals:LiteralString"
+                }
+            ]
+        }
+    },
+    "headers": [],
+    "endpoints": {},
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
+}

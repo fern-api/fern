@@ -1,7 +1,8 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever, noop } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, SwiftFile } from "@fern-api/swift-base";
+import { swift } from "@fern-api/swift-codegen";
 import {
     AliasGenerator,
     DiscriminatedUnionGenerator,
@@ -112,18 +113,34 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             const fernFilepathDir = context.getDirectoryForFernFilepath(subpackage.fernFilepath);
             context.project.addSourceFile({
                 nameCandidateWithoutExtension: class_.name,
-                directory: RelativeFilePath.of(`Resources/${fernFilepathDir}`),
+                directory: join(context.resourcesDirectory, RelativeFilePath.of(fernFilepathDir)),
                 contents: [class_]
             });
         });
     }
 
     private generateSourceRequestFiles(context: SdkGeneratorContext): void {
+        const requestsContainerSymbolName = context.project.symbolRegistry.getRequestsContainerSymbolOrThrow();
+        const requestsContainerEnum = swift.enumWithRawValues({
+            accessLevel: "public",
+            name: requestsContainerSymbolName,
+            cases: [],
+            docs: swift.docComment({
+                summary: "Container for all inline request types used throughout the SDK.",
+                description:
+                    "This enum serves as a namespace to organize request types that are defined inline within endpoint specifications."
+            })
+        });
+        context.project.addSourceFile({
+            nameCandidateWithoutExtension: requestsContainerEnum.name,
+            directory: context.requestsDirectory,
+            contents: [requestsContainerEnum]
+        });
         Object.entries(context.ir.services).forEach(([_, service]) => {
             service.endpoints.forEach((endpoint) => {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     const generator = new ObjectGenerator({
-                        name: context.project.symbolRegistry.getInlineRequestTypeSymbolOrThrow(
+                        name: context.project.symbolRegistry.getRequestTypeSymbolOrThrow(
                             endpoint.id,
                             endpoint.requestBody.name.pascalCase.unsafeName
                         ),
@@ -133,10 +150,14 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         context
                     });
                     const struct = generator.generate();
+                    const extension = swift.extension({
+                        name: requestsContainerSymbolName,
+                        nestedTypes: [struct]
+                    });
                     context.project.addSourceFile({
-                        nameCandidateWithoutExtension: struct.name,
+                        nameCandidateWithoutExtension: `${requestsContainerSymbolName}+${struct.name}`,
                         directory: context.requestsDirectory,
-                        contents: [struct]
+                        contents: [extension]
                     });
                 }
             });

@@ -2,7 +2,8 @@
 
 # isort: skip_file
 
+from .create_username_body import CreateUsernameBody
 from .nested_user import NestedUser
 from .user import User
 
-__all__ = ["NestedUser", "User"]
+__all__ = ["CreateUsernameBody", "NestedUser", "User"]

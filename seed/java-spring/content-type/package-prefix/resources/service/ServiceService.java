@@ -22,28 +22,28 @@ public interface ServiceService {
   @PatchMapping(
       value = "/",
       produces = "application/json",
-      consumes = "application/json"
+      consumes = {"application/json", "application/merge-patch+json"}
   )
   void patch(@RequestBody PatchProxyRequest body);
 
   @PatchMapping(
       value = "/complex/{id}",
       produces = "application/json",
-      consumes = "application/json"
+      consumes = {"application/json", "application/merge-patch+json"}
   )
   void patchComplex(@PathVariable("id") String id, @RequestBody PatchComplexRequest body);
 
   @PatchMapping(
       value = "/named-mixed/{id}",
       produces = "application/json",
-      consumes = "application/json"
+      consumes = {"application/json", "application/merge-patch+json"}
   )
   void namedPatchWithMixed(@PathVariable("id") String id, @RequestBody NamedMixedPatchRequest body);
 
   @PatchMapping(
       value = "/optional-merge-patch-test",
       produces = "application/json",
-      consumes = "application/json"
+      consumes = {"application/json", "application/merge-patch+json"}
   )
   void optionalMergePatchTest(@RequestBody OptionalMergePatchRequest body);
 

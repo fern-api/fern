@@ -5,8 +5,9 @@ module Seed
     module Put
       module Types
         class PutResponse < Internal::Types::Model
-          field :errors, -> { Internal::Types::Array[Seed::Endpoints::Put::Types::Error] }, optional: true, nullable: false
-
+          field :errors, lambda {
+            Internal::Types::Array[Seed::Endpoints::Put::Types::Error]
+          }, optional: true, nullable: false
         end
       end
     end

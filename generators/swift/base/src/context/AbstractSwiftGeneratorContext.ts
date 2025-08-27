@@ -56,48 +56,65 @@ export abstract class AbstractSwiftGeneratorContext<
      * finally subclient symbols last since they're unlikely to be used directly by end users.
      */
     private registerSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
-        project.symbolRegistry.registerRootClientSymbol(ir.apiName.pascalCase.unsafeName);
-        project.symbolRegistry.registerEnvironmentSymbol(ir.apiName.pascalCase.unsafeName);
+        project.symbolRegistry.registerModuleSymbol({
+            configModuleName: this.customConfig.moduleName,
+            apiNamePascalCase: ir.apiName.pascalCase.unsafeName
+        });
+        project.symbolRegistry.registerRootClientSymbol({
+            configClientClassName: this.customConfig.clientClassName,
+            apiNamePascalCase: ir.apiName.pascalCase.unsafeName
+        });
+        project.symbolRegistry.registerEnvironmentSymbol({
+            configEnvironmentEnumName: this.customConfig.environmentEnumName,
+            apiNamePascalCase: ir.apiName.pascalCase.unsafeName
+        });
         Object.entries(ir.types).forEach(([typeId, typeDeclaration]) => {
             project.symbolRegistry.registerSchemaTypeSymbol(typeId, typeDeclaration.name.name.pascalCase.unsafeName);
         });
+        project.symbolRegistry.registerRequestsContainerSymbol();
         Object.entries(ir.services).forEach(([_, service]) => {
             service.endpoints.forEach((endpoint) => {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
-                    project.symbolRegistry.registerInlineRequestTypeSymbol(
-                        endpoint.id,
-                        endpoint.requestBody.name.pascalCase.unsafeName
-                    );
+                    project.symbolRegistry.registerRequestTypeSymbol({
+                        endpointId: endpoint.id,
+                        requestNamePascalCase: endpoint.requestBody.name.pascalCase.unsafeName
+                    });
                 }
             });
         });
         Object.entries(ir.subpackages).forEach(([subpackageId, subpackage]) => {
-            project.symbolRegistry.registerSubClientSymbol(
+            project.symbolRegistry.registerSubClientSymbol({
                 subpackageId,
-                subpackage.fernFilepath.allParts.map((name) => name.pascalCase.unsafeName),
-                subpackage.name.pascalCase.unsafeName
-            );
+                fernFilepathPartNamesPascalCase: subpackage.fernFilepath.allParts.map(
+                    (name) => name.pascalCase.unsafeName
+                ),
+                subpackageNamePascalCase: subpackage.name.pascalCase.unsafeName
+            });
         });
     }
 
     public get packageName(): string {
-        return this.ir.apiName.pascalCase.unsafeName;
+        return this.project.symbolRegistry.getModuleSymbolOrThrow();
     }
 
     public get libraryName(): string {
-        return this.ir.apiName.pascalCase.unsafeName;
+        return this.project.symbolRegistry.getModuleSymbolOrThrow();
     }
 
     public get targetName(): string {
-        return this.ir.apiName.pascalCase.unsafeName;
-    }
-
-    public get schemasDirectory(): RelativeFilePath {
-        return RelativeFilePath.of("Schemas");
+        return this.project.symbolRegistry.getModuleSymbolOrThrow();
     }
 
     public get requestsDirectory(): RelativeFilePath {
         return RelativeFilePath.of("Requests");
+    }
+
+    public get resourcesDirectory(): RelativeFilePath {
+        return RelativeFilePath.of("Resources");
+    }
+
+    public get schemasDirectory(): RelativeFilePath {
+        return RelativeFilePath.of("Schemas");
     }
 
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {

@@ -72,7 +72,7 @@ export class Users {
                 if (startingAfter != null) {
                     _queryParams["starting_after"] = startingAfter;
                 }
-                var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
@@ -160,7 +160,7 @@ export class Users {
                 if (cursor != null) {
                     _queryParams["cursor"] = cursor;
                 }
-                var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
@@ -241,7 +241,7 @@ export class Users {
             async (
                 request: SeedPagination.ListUsersBodyCursorPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
-                var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
@@ -344,7 +344,7 @@ export class Users {
                 if (startingAfter != null) {
                     _queryParams["starting_after"] = startingAfter;
                 }
-                var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
@@ -441,7 +441,7 @@ export class Users {
                 if (startingAfter != null) {
                     _queryParams["starting_after"] = startingAfter;
                 }
-                var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
@@ -523,7 +523,7 @@ export class Users {
             async (
                 request: SeedPagination.ListUsersBodyOffsetPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
-                var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
@@ -619,7 +619,7 @@ export class Users {
                 if (order != null) {
                     _queryParams["order"] = order;
                 }
-                var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
@@ -712,7 +712,7 @@ export class Users {
                 if (order != null) {
                     _queryParams["order"] = order;
                 }
-                var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
@@ -797,7 +797,7 @@ export class Users {
                 if (cursor != null) {
                     _queryParams["cursor"] = cursor;
                 }
-                var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
@@ -881,7 +881,7 @@ export class Users {
                 if (cursor != null) {
                     _queryParams["cursor"] = cursor;
                 }
-                var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
@@ -965,7 +965,7 @@ export class Users {
                 if (startingAfter != null) {
                     _queryParams["starting_after"] = startingAfter;
                 }
-                var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
@@ -1050,7 +1050,7 @@ export class Users {
                 if (offset != null) {
                     _queryParams["offset"] = offset.toString();
                 }
-                var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,

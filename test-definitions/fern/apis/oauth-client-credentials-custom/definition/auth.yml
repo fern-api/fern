@@ -30,7 +30,7 @@ service:
     refreshToken:
       path: /token
       method: POST
-      request: 
+      request:
         name: RefreshTokenRequest
         body:
           properties:

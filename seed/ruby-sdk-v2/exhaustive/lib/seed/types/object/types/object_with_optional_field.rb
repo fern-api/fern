@@ -18,7 +18,6 @@ module Seed
           field :set, -> { Internal::Types::Array[String] }, optional: true, nullable: false
           field :map, -> { Internal::Types::Hash[Integer, String] }, optional: true, nullable: false
           field :bigint, -> { String }, optional: true, nullable: false
-
         end
       end
     end

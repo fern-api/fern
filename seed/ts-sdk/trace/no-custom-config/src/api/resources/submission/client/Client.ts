@@ -66,7 +66,7 @@ export class Submission {
         language: SeedTrace.Language,
         requestOptions?: Submission.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.ExecutionSessionResponse>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -139,7 +139,7 @@ export class Submission {
         sessionId: string,
         requestOptions?: Submission.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.ExecutionSessionResponse | undefined>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -213,7 +213,7 @@ export class Submission {
         sessionId: string,
         requestOptions?: Submission.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -281,7 +281,7 @@ export class Submission {
     private async __getExecutionSessionsState(
         requestOptions?: Submission.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.GetExecutionSessionStateResponse>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),

@@ -61,7 +61,7 @@ export class Problem {
     private async __getLightweightProblems(
         requestOptions?: Problem.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.v2.v3.LightweightProblemInfoV2[]>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -140,7 +140,7 @@ export class Problem {
     private async __getProblems(
         requestOptions?: Problem.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.v2.v3.ProblemInfoV2[]>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -220,7 +220,7 @@ export class Problem {
         problemId: SeedTrace.ProblemId,
         requestOptions?: Problem.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.v2.v3.ProblemInfoV2>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
@@ -307,7 +307,7 @@ export class Problem {
         problemVersion: number,
         requestOptions?: Problem.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.v2.v3.ProblemInfoV2>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),

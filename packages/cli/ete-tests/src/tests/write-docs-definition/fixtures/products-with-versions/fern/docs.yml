@@ -26,5 +26,5 @@ products:
       - display-name: V1
         path: ./products/product-b/v1.yml
 colors:
-  accentPrimary: '#ffffff'
-  background: '#000000'
+  accentPrimary: "#ffffff"
+  background: "#000000"

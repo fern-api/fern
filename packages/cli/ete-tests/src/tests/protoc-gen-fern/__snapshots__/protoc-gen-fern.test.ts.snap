@@ -991,7 +991,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": "Spherical angular coordinates"
     },
-    "LLA.AltitudeReference": {
+    "anduril.type.LLA.AltitudeReference": {
       "name": {
         "typeId": "LLA.AltitudeReference",
         "fernFilepath": {
@@ -14050,7 +14050,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "DescriptorProto.ExtensionRange": {
+    "google.protobuf.DescriptorProto.ExtensionRange": {
       "name": {
         "typeId": "DescriptorProto.ExtensionRange",
         "fernFilepath": {
@@ -14255,7 +14255,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "DescriptorProto.ReservedRange": {
+    "google.protobuf.DescriptorProto.ReservedRange": {
       "name": {
         "typeId": "DescriptorProto.ReservedRange",
         "fernFilepath": {
@@ -15151,7 +15151,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "ExtensionRangeOptions.Declaration": {
+    "google.protobuf.ExtensionRangeOptions.Declaration": {
       "name": {
         "typeId": "ExtensionRangeOptions.Declaration",
         "fernFilepath": {
@@ -15424,7 +15424,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "ExtensionRangeOptions.VerificationState": {
+    "google.protobuf.ExtensionRangeOptions.VerificationState": {
       "name": {
         "typeId": "ExtensionRangeOptions.VerificationState",
         "fernFilepath": {
@@ -15855,7 +15855,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "FieldDescriptorProto.Type": {
+    "google.protobuf.FieldDescriptorProto.Type": {
       "name": {
         "typeId": "FieldDescriptorProto.Type",
         "fernFilepath": {
@@ -16368,7 +16368,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "FieldDescriptorProto.Label": {
+    "google.protobuf.FieldDescriptorProto.Label": {
       "name": {
         "typeId": "FieldDescriptorProto.Label",
         "fernFilepath": {
@@ -17255,7 +17255,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "EnumDescriptorProto.EnumReservedRange": {
+    "google.protobuf.EnumDescriptorProto.EnumReservedRange": {
       "name": {
         "typeId": "EnumDescriptorProto.EnumReservedRange",
         "fernFilepath": {
@@ -18546,7 +18546,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "FileOptions.OptimizeMode": {
+    "google.protobuf.FileOptions.OptimizeMode": {
       "name": {
         "typeId": "FileOptions.OptimizeMode",
         "fernFilepath": {
@@ -20140,7 +20140,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "FieldOptions.EditionDefault": {
+    "google.protobuf.FieldOptions.EditionDefault": {
       "name": {
         "typeId": "FieldOptions.EditionDefault",
         "fernFilepath": {
@@ -20300,7 +20300,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "FieldOptions.FeatureSupport": {
+    "google.protobuf.FieldOptions.FeatureSupport": {
       "name": {
         "typeId": "FieldOptions.FeatureSupport",
         "fernFilepath": {
@@ -20590,7 +20590,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "FieldOptions.CType": {
+    "google.protobuf.FieldOptions.CType": {
       "name": {
         "typeId": "FieldOptions.CType",
         "fernFilepath": {
@@ -20713,7 +20713,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "FieldOptions.JSType": {
+    "google.protobuf.FieldOptions.JSType": {
       "name": {
         "typeId": "FieldOptions.JSType",
         "fernFilepath": {
@@ -20836,7 +20836,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "FieldOptions.OptionRetention": {
+    "google.protobuf.FieldOptions.OptionRetention": {
       "name": {
         "typeId": "FieldOptions.OptionRetention",
         "fernFilepath": {
@@ -20959,7 +20959,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "FieldOptions.OptionTargetType": {
+    "google.protobuf.FieldOptions.OptionTargetType": {
       "name": {
         "typeId": "FieldOptions.OptionTargetType",
         "fernFilepath": {
@@ -23231,7 +23231,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "MethodOptions.IdempotencyLevel": {
+    "google.protobuf.MethodOptions.IdempotencyLevel": {
       "name": {
         "typeId": "MethodOptions.IdempotencyLevel",
         "fernFilepath": {
@@ -23655,7 +23655,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "UninterpretedOption.NamePart": {
+    "google.protobuf.UninterpretedOption.NamePart": {
       "name": {
         "typeId": "UninterpretedOption.NamePart",
         "fernFilepath": {
@@ -24180,7 +24180,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "FeatureSet.FieldPresence": {
+    "google.protobuf.FeatureSet.FieldPresence": {
       "name": {
         "typeId": "FeatureSet.FieldPresence",
         "fernFilepath": {
@@ -24329,7 +24329,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "FeatureSet.EnumType": {
+    "google.protobuf.FeatureSet.EnumType": {
       "name": {
         "typeId": "FeatureSet.EnumType",
         "fernFilepath": {
@@ -24452,7 +24452,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "FeatureSet.RepeatedFieldEncoding": {
+    "google.protobuf.FeatureSet.RepeatedFieldEncoding": {
       "name": {
         "typeId": "FeatureSet.RepeatedFieldEncoding",
         "fernFilepath": {
@@ -24575,7 +24575,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "FeatureSet.Utf8Validation": {
+    "google.protobuf.FeatureSet.Utf8Validation": {
       "name": {
         "typeId": "FeatureSet.Utf8Validation",
         "fernFilepath": {
@@ -24698,7 +24698,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "FeatureSet.MessageEncoding": {
+    "google.protobuf.FeatureSet.MessageEncoding": {
       "name": {
         "typeId": "FeatureSet.MessageEncoding",
         "fernFilepath": {
@@ -24821,7 +24821,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "FeatureSet.JsonFormat": {
+    "google.protobuf.FeatureSet.JsonFormat": {
       "name": {
         "typeId": "FeatureSet.JsonFormat",
         "fernFilepath": {
@@ -25384,7 +25384,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "FeatureSetDefaults.FeatureSetEditionDefault": {
+    "google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault": {
       "name": {
         "typeId": "FeatureSetDefaults.FeatureSetEditionDefault",
         "fernFilepath": {
@@ -25886,7 +25886,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "SourceCodeInfo.Location": {
+    "google.protobuf.SourceCodeInfo.Location": {
       "name": {
         "typeId": "SourceCodeInfo.Location",
         "fernFilepath": {
@@ -26324,7 +26324,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "GeneratedCodeInfo.Annotation.Semantic": {
+    "google.protobuf.GeneratedCodeInfo.Annotation.Semantic": {
       "name": {
         "typeId": "GeneratedCodeInfo.Annotation.Semantic",
         "fernFilepath": {
@@ -26447,7 +26447,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "GeneratedCodeInfo.Annotation": {
+    "google.protobuf.GeneratedCodeInfo.Annotation": {
       "name": {
         "typeId": "GeneratedCodeInfo.Annotation",
         "fernFilepath": {
@@ -35593,7 +35593,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": null
     },
-    "PowerState.SourceIdToStateEntry": {
+    "anduril.entitymanager.v1.PowerState.SourceIdToStateEntry": {
       "name": {
         "typeId": "PowerState.SourceIdToStateEntry",
         "fernFilepath": {
@@ -66632,7 +66632,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": "Response to a Get Task request."
     },
-    "QueryTasksRequest.TimeRange": {
+    "anduril.taskmanager.v1.QueryTasksRequest.TimeRange": {
       "name": {
         "typeId": "QueryTasksRequest.TimeRange",
         "fernFilepath": {
@@ -66812,7 +66812,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": "A time range query for Tasks."
     },
-    "QueryTasksRequest.StatusFilter": {
+    "anduril.taskmanager.v1.QueryTasksRequest.StatusFilter": {
       "name": {
         "typeId": "QueryTasksRequest.StatusFilter",
         "fernFilepath": {
@@ -67004,7 +67004,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "availability": null,
       "docs": "A filter for statuses."
     },
-    "QueryTasksRequest.FilterType": {
+    "anduril.taskmanager.v1.QueryTasksRequest.FilterType": {
       "name": {
         "typeId": "QueryTasksRequest.FilterType",
         "fernFilepath": {

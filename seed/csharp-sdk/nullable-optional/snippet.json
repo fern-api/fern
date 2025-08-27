@@ -1,0 +1,65 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.getUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNullableOptional;\n\nvar client = new SeedNullableOptionalClient();\nawait client.NullableOptional.GetUserAsync(\"userId\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/users",
+                "method": "POST",
+                "identifier_override": "endpoint_nullable-optional.createUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNullableOptional;\n\nvar client = new SeedNullableOptionalClient();\nawait client.NullableOptional.CreateUserAsync(\n    new CreateUserRequest\n    {\n        Username = \"username\",\n        Email = \"email\",\n        Phone = \"phone\",\n        Address = new Address\n        {\n            Street = \"street\",\n            City = \"city\",\n            State = \"state\",\n            ZipCode = \"zipCode\",\n            Country = \"country\",\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_nullable-optional.updateUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNullableOptional;\n\nvar client = new SeedNullableOptionalClient();\nawait client.NullableOptional.UpdateUserAsync(\n    \"userId\",\n    new UpdateUserRequest\n    {\n        Username = \"username\",\n        Email = \"email\",\n        Phone = \"phone\",\n        Address = new Address\n        {\n            Street = \"street\",\n            City = \"city\",\n            State = \"state\",\n            ZipCode = \"zipCode\",\n            Country = \"country\",\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/users",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.listUsers"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNullableOptional;\n\nvar client = new SeedNullableOptionalClient();\nawait client.NullableOptional.ListUsersAsync(\n    new ListUsersRequest\n    {\n        Limit = 1,\n        Offset = 1,\n        IncludeDeleted = true,\n        SortBy = \"sortBy\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/users/search",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.searchUsers"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNullableOptional;\n\nvar client = new SeedNullableOptionalClient();\nawait client.NullableOptional.SearchUsersAsync(\n    new SearchUsersRequest\n    {\n        Query = \"query\",\n        Department = \"department\",\n        Role = \"role\",\n        IsActive = true,\n    }\n);\n"
+            }
+        }
+    ]
+}

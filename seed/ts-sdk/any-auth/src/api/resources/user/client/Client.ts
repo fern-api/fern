@@ -50,7 +50,7 @@ export class User {
     }
 
     private async __get(requestOptions?: User.RequestOptions): Promise<core.WithRawResponse<SeedAnyAuth.User[]>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),

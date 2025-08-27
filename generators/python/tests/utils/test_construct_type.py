@@ -2,7 +2,7 @@
 
 
 from datetime import datetime, date
-from typing import cast, List, Union
+from typing import Any, cast, List, Union
 import uuid
 
 from tests.utils.example_models.types.resources.types.shape import Shape_Circle, Shape_Square
@@ -332,10 +332,8 @@ def test_construct_list_with_invalid_objects() -> None:
 def test_construct_empty_list() -> None:
     """Test handling of empty lists in undiscriminated unions."""
     from .example_models.types.resources.types import UndiscriminatedShape
-    
-    empty_list_data = []
-    
-    result = construct_type(type_=List[UndiscriminatedShape], object_=empty_list_data)
+        
+    result = construct_type(type_=List[UndiscriminatedShape], object_=[])
     
     assert isinstance(result, list)
     assert len(result) == 0
@@ -404,7 +402,7 @@ def test_undiscriminated_union_with_list_types() -> None:
     from .example_models.types.resources.types import Circle, Square
 
     # Create a union type that includes list types as options
-    TestUnion = Union[str, List[Circle], List[Square], int]
+    TestUnion = cast(type[Any], Union[str, List[Circle], List[Square], int])
 
     # Test with list of Circle data - should match List[Circle]
     circle_list_data = [
@@ -454,7 +452,8 @@ def test_undiscriminated_union_with_mixed_list_types() -> None:
     from .example_models.types.resources.types import Circle, Square
 
     # Union that includes both individual objects and lists
-    TestUnion = Union[Circle, Square, List[Circle], List[Square], str]
+    # TODO(thomas): Consider altering the construct_type function to accept Type[Any] | Any
+    TestUnion = cast(type[Any], Union[Circle, Square, List[Circle], List[Square], str])
 
     # Test with single Circle object - should match Circle
     single_circle_data = {"radius": 1.0}
@@ -490,7 +489,7 @@ def test_undiscriminated_union_with_primitive_lists() -> None:
     from .example_models.types.resources.types import Circle
 
     # Union that includes lists of primitives and objects
-    TestUnion = Union[List[str], List[int], List[Circle], str]
+    TestUnion = cast(type[Any], Union[List[str], List[int], List[Circle], str])
 
     # Test with list of strings - should match List[str]
     string_list_data = ["hello", "world", "test"]
@@ -518,11 +517,10 @@ def test_undiscriminated_union_list_parsing_failures() -> None:
     from .example_models.types.resources.types import Circle, Square
 
     # Union with list types
-    TestUnion = Union[List[Circle], List[Square], str]
+    TestUnion = cast(type[Any], Union[List[Circle], List[Square], str])
 
     # Test with empty list - should work with either list type
-    empty_list_data = []
-    result = construct_type(type_=TestUnion, object_=empty_list_data)
+    result = construct_type(type_=TestUnion, object_=[])
     assert isinstance(result, list)
     assert len(result) == 0
 
@@ -546,7 +544,7 @@ def test_nested_undiscriminated_union_with_lists() -> None:
     from .example_models.types.resources.types import Circle, Square
 
     # Complex nested union type
-    TestUnion = Union[List[List[Circle]], List[Square], str]
+    TestUnion = cast(type[Any], Union[List[List[Circle]], List[Square], str])
 
     # Test with nested list of Circles
     nested_circle_data = [
@@ -577,7 +575,7 @@ def test_undiscriminated_union_list_type_precedence() -> None:
     from .example_models.types.resources.types import Circle, Square
 
     # Union where both individual objects and lists could potentially match
-    TestUnion = Union[Circle, List[Circle], Square, List[Square]]
+    TestUnion = cast(type[Any], Union[Circle, List[Circle], Square, List[Square]])
 
     # Test with data that could be parsed as either a single Circle or a list with one Circle
     # The new list parsing logic should take precedence for list data
@@ -803,10 +801,8 @@ def test_construct_dict_with_invalid_objects() -> None:
 def test_construct_empty_set() -> None:
     """Test handling of empty sets in undiscriminated unions."""
     from .example_models.types.resources.types import Circle
-
-    empty_set_data = []
     
-    result = construct_type(type_=set[Circle], object_=empty_set_data)
+    result = construct_type(type_=set[Circle], object_=set())
     
     assert isinstance(result, set)
     assert len(result) == 0
@@ -815,10 +811,8 @@ def test_construct_empty_set() -> None:
 def test_construct_empty_dict() -> None:
     """Test handling of empty dictionaries in undiscriminated unions."""
     from .example_models.types.resources.types import Circle
-
-    empty_dict_data = {}
     
-    result = construct_type(type_=dict[str, Circle], object_=empty_dict_data)
+    result = construct_type(type_=dict[str, Circle], object_={})
     
     assert isinstance(result, dict)
     assert len(result) == 0

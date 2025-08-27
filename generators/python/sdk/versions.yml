@@ -1,11 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.26.1
+  changelogEntry:
+    - summary: Additional handling of inferred auth
+      type: chore
+  createdAt: "2025-08-20"
+  irVersion: 59
+
+- version: 4.26.0
+  changelogEntry:
+    - summary: Bumped IR version to 59.
+      type: chore
+  createdAt: "2025-08-20"
+  irVersion: 59
+
 - version: 4.25.9
   changelogEntry:
     - summary: |
         Fix: allow setting of package name and version in local docker generation
       type: feat
-  createdAt: '2025-08-05'
+  createdAt: "2025-08-05"
   irVersion: 58
 
 - version: 4.25.7-rc2
@@ -13,7 +27,7 @@
     - summary: |
         Minor bug fix: accessing version from publish config
       type: feat
-  createdAt: '2025-08-05'
+  createdAt: "2025-08-05"
   irVersion: 58
 
 - version: 4.25.7-rc1
@@ -21,16 +35,15 @@
     - summary: |
         Attempt to plumb version in Abstract Generator
       type: feat
-  createdAt: '2025-08-05'
+  createdAt: "2025-08-05"
   irVersion: 58
-
 
 - version: 4.25.8
   changelogEntry:
     - summary: |
         Websocket patch: json load messages on dunder iter method
       type: feat
-  createdAt: '2025-08-05'
+  createdAt: "2025-08-05"
   irVersion: 58
 
 - version: 4.25.7-rc0
@@ -38,7 +51,7 @@
     - summary: |
         Enforce nested folders for package names with a "." in them.
       type: feat
-  createdAt: '2025-08-04'
+  createdAt: "2025-08-04"
   irVersion: 58
 
 - version: 4.25.6
@@ -46,7 +59,7 @@
     - summary: |
         Removed snippet generation
       type: feat
-  createdAt: '2025-07-22'
+  createdAt: "2025-07-22"
   irVersion: 58
 
 - version: 4.25.5
@@ -54,7 +67,7 @@
     - summary: |
         Enabled "ignore" as an option for extra fields
       type: feat
-  createdAt: '2025-07-17'
+  createdAt: "2025-07-17"
   irVersion: 58
 
 - version: 4.25.4
@@ -62,7 +75,7 @@
     - summary: |
         Updated construct_type function to handles undiscriminated unions with lists, sets, and dictionaries of objects.
       type: fix
-  createdAt: '2025-07-15'
+  createdAt: "2025-07-15"
   irVersion: 58
 
 - version: 4.25.3
@@ -70,7 +83,7 @@
     - summary: |
         Fix websocket connect method generation for single base URL environments.
       type: fix
-  createdAt: '2025-07-14'
+  createdAt: "2025-07-14"
   irVersion: 58
 
 - version: 4.25.2
@@ -78,7 +91,7 @@
     - summary: |
         Generator fix: automatically switch tabs to spaces, following PEP8 standards.
       type: fix
-  createdAt: '2025-07-11'
+  createdAt: "2025-07-11"
   irVersion: 58
 
 - version: 4.25.1
@@ -86,7 +99,7 @@
     - summary: |
         Correctly import websockets exceptions.
       type: fix
-  createdAt: '2025-07-10'
+  createdAt: "2025-07-10"
   irVersion: 58
 
 - version: 4.25.0
@@ -94,7 +107,7 @@
     - summary: |
         Support async functions as websocket callback handlers.
       type: feat
-  createdAt: '2025-07-09'
+  createdAt: "2025-07-09"
   irVersion: 58
 
 - version: 4.24.3
@@ -102,7 +115,7 @@
     - summary: |
         Support websockets>=14 by using legacy client.
       type: fix
-  createdAt: '2025-07-09'
+  createdAt: "2025-07-09"
   irVersion: 58
 
 - version: 4.24.2
@@ -110,7 +123,7 @@
     - summary: |
         Emit ERROR events for JSON parsing errors in websocket connections.
       type: fix
-  createdAt: '2025-07-09'
+  createdAt: "2025-07-09"
   irVersion: 58
 
 - version: 4.24.1
@@ -118,7 +131,7 @@
     - summary: |
         Parse websocket messages as JSON before Pydantic parsing.
       type: fix
-  createdAt: '2025-07-07'
+  createdAt: "2025-07-07"
   irVersion: 58
 
 - version: 4.24.0
@@ -126,7 +139,7 @@
     - summary: |
         Add support for path parameters backed by variables supplied to the client constructor.
       type: feat
-  createdAt: '2025-07-03'
+  createdAt: "2025-07-03"
   irVersion: 58
 
 - version: 4.23.2
@@ -134,7 +147,7 @@
     - summary: |
         Bump websockets dependency to >=12.0.0 to ensure compatibility with newer websocket implementations and improve stability.
       type: chore
-  createdAt: '2025-06-25'
+  createdAt: "2025-06-25"
   irVersion: 58
 
 - version: 4.23.1
@@ -142,7 +155,7 @@
     - summary: |
         Bump pydantic-core dependency to >=2.18.2 to ensure compatibility with newer pydantic versions and improve performance.
       type: chore
-  createdAt: '2025-06-24'
+  createdAt: "2025-06-24"
   irVersion: 58
 
 - version: 4.23.0
@@ -156,7 +169,7 @@
         )
         ```
       type: feat
-  createdAt: '2025-06-24'
+  createdAt: "2025-06-24"
   irVersion: 58
 
 - version: 4.22.1-rc0
@@ -169,7 +182,7 @@
         structure of datetime fields. The difference is that we manually wrap, so we're able to defer model validation until runtime, drastically
         reducing our memory consumption.
       type: feat
-  createdAt: '2025-06-20'
+  createdAt: "2025-06-20"
   irVersion: 58
 
 - version: 4.22.0
@@ -177,7 +190,7 @@
     - summary: |
         Support wrapped aliases in python for pydantic v2.
       type: feat
-  createdAt: '2025-06-11'
+  createdAt: "2025-06-11"
   irVersion: 58
 
 - version: 4.21.5
@@ -185,7 +198,7 @@
     - summary: |
         Generate README for github output mode.
       type: fix
-  createdAt: '2025-06-11'
+  createdAt: "2025-06-11"
   irVersion: 58
 
 - version: 4.21.4
@@ -193,7 +206,7 @@
     - summary: |
         Add support for HEAD HTTP method in the generated client.
       type: feat
-  createdAt: '2025-06-05'
+  createdAt: "2025-06-05"
   irVersion: 58
 
 - version: 4.21.3
@@ -201,7 +214,7 @@
     - summary: |
         Fix an issue where the websocket connect method did not correctly yield the websocket client.
       type: fix
-  createdAt: '2025-06-04'
+  createdAt: "2025-06-04"
   irVersion: 58
 
 - version: 4.21.2
@@ -209,7 +222,7 @@
     - summary: |
         Handle HEAD HTTP method gracefully by treating it as a POST method when constructing the snippet registry, rather than failing.
       type: chore
-  createdAt: '2025-05-27'
+  createdAt: "2025-05-27"
   irVersion: 58
 
 - version: 4.21.1
@@ -217,7 +230,7 @@
     - summary: |
         Make sure to generate README and Reference even when generating in local mode (if self hosting is enabled).
       type: chore
-  createdAt: '2025-05-27'
+  createdAt: "2025-05-27"
   irVersion: 58
 
 - version: 4.21.0
@@ -225,7 +238,7 @@
     - summary: |
         Bump to v58 of IR.
       type: chore
-  createdAt: '2025-05-27'
+  createdAt: "2025-05-27"
   irVersion: 58
 
 - version: 4.20.3
@@ -233,7 +246,7 @@
     - summary: |
         Fix handling of optional and unknown response types by not throwing errors when the response is empty.
       type: fix
-  createdAt: '2025-05-20'
+  createdAt: "2025-05-20"
   irVersion: 57
 
 - version: 4.20.2
@@ -241,7 +254,7 @@
     - summary: |
         Support formatting the generated README.md and python code snippets.
       type: fix
-  createdAt: '2025-05-13'
+  createdAt: "2025-05-13"
   irVersion: 57
 
 - version: 4.20.1
@@ -249,7 +262,7 @@
     - summary: |
         Add support for the custom introduction setting in the generated README.md.
       type: fix
-  createdAt: '2025-05-13'
+  createdAt: "2025-05-13"
   irVersion: 57
 
 - version: 4.20.0
@@ -258,7 +271,7 @@
         Generate standalone Pydantic models for each class definition for models that utilize the Fern `extends` keyword,
         as opposed to generating Pydantic models that implement inheritance.
       type: feat
-  createdAt: '2025-05-13'
+  createdAt: "2025-05-13"
   irVersion: 57
 
 - version: 4.19.7
@@ -266,7 +279,7 @@
     - summary: |
         Fix mypy errors related to type-shadowing `data` variables in generated streaming endpoints.
       type: fix
-  createdAt: '2025-05-13'
+  createdAt: "2025-05-13"
   irVersion: 57
 
 - version: 4.19.6
@@ -274,7 +287,7 @@
     - summary: |
         Fix mypy errors related to automatic pagination in the python client.
       type: fix
-  createdAt: '2025-05-11'
+  createdAt: "2025-05-11"
   irVersion: 57
 
 - version: 4.19.5
@@ -284,7 +297,7 @@
         preventing collisions with endpoint parameters that might also be named "stream", 
         while maintaining proper functionality for streaming responses.
       type: fix
-  createdAt: '2025-05-11'
+  createdAt: "2025-05-11"
   irVersion: 57
 
 - version: 4.19.4
@@ -293,7 +306,7 @@
         Fix handling of optional file parameters in multipart form data requests with httpx by properly checking 
         for None values before attempting to include them in the request, preventing errors when optional file parameters are not provided.
       type: feat
-  createdAt: '2025-05-11'
+  createdAt: "2025-05-11"
   irVersion: 57
 
 - version: 4.19.3
@@ -301,7 +314,7 @@
     - summary: |
         Fix pagination support in raw clients by properly indexing into response data, ensuring that raw client endpoints with pagination correctly iterate through paginated results.
       type: fix
-  createdAt: '2025-05-09'
+  createdAt: "2025-05-09"
   irVersion: 57
 
 - version: 4.19.2
@@ -309,7 +322,7 @@
     - summary: |
         Fix SSE streaming response handling by adding proper type casting to sse.data, ensuring correct data type conversion during stream processing.
       type: fix
-  createdAt: '2025-05-09'
+  createdAt: "2025-05-09"
   irVersion: 57
 
 - version: 4.19.1
@@ -317,7 +330,7 @@
     - summary: |
         Fix a mypy error in pydantic_utilities.py by properly handling type annotations for Pydantic v1 and v2 compatibility, ensuring type checking passes correctly across different Pydantic versions.
       type: fix
-  createdAt: '2025-05-09'
+  createdAt: "2025-05-09"
   irVersion: 57
 
 - version: 4.19.0
@@ -325,7 +338,7 @@
     - summary: |
         Add support for generating proper Pydantic models that contain forward references wrapped in containers (e.g. list, optional, etc.)
       type: feat
-  createdAt: '2025-05-09'
+  createdAt: "2025-05-09"
   irVersion: 57
 
 - version: 4.18.6
@@ -334,7 +347,7 @@
         Fix string enum generation to properly handle enum values containing quotes by automatically escaping them, 
         ensuring valid Python syntax for both single and double quoted string literals.
       type: fix
-  createdAt: '2025-05-08'
+  createdAt: "2025-05-08"
   irVersion: 57
 
 - version: 4.18.5
@@ -342,7 +355,7 @@
     - summary: |
         Support application/x-www-form-urlencoded content type for requests, allowing proper encoding of form data in API calls.
       type: fix
-  createdAt: '2025-05-08'
+  createdAt: "2025-05-08"
   irVersion: 57
 
 - version: 4.18.4
@@ -350,15 +363,15 @@
     - summary: |
         Fix requirements.txt generation to properly handle dependency version constraints, ensuring compatibility markers are correctly formatted.
       type: fix
-  createdAt: '2025-05-08'
+  createdAt: "2025-05-08"
   irVersion: 57
 
 - version: 4.18.3
   changelogEntry:
     - summary: |
-        Install the generator-cli at build time as a fallback if runtime installation fails. 
+        Install the generator-cli at build time as a fallback if runtime installation fails.
       type: fix
-  createdAt: '2025-05-01'
+  createdAt: "2025-05-01"
   irVersion: 57
 
 - version: 4.18.2
@@ -425,7 +438,7 @@
   changelogEntry:
     - type: feat
       summary: |
-         Add support for retrieving response headers from the generated `ApiError` class.
+        Add support for retrieving response headers from the generated `ApiError` class.
 
 - version: 4.15.0
   irVersion: 57
@@ -593,7 +606,7 @@
   changelogEntry:
     - type: feat
       summary: |
-        Add support for websocket code generation. 
+        Add support for websocket code generation.
 
 - version: 4.4.0
   irVersion: 57

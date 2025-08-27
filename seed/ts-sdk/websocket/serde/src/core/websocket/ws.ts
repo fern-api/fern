@@ -28,7 +28,7 @@ export declare namespace ReconnectingWebSocket {
         url: string;
         protocols?: string | string[];
         options?: ReconnectingWebSocket.Options;
-        headers?: Record<string, string>;
+        headers?: Record<string, unknown>;
         queryParameters?: Record<string, string | string[] | object | object[] | null | undefined>;
     }
 

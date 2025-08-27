@@ -14,18 +14,18 @@ paths:
           application/json:
             schema:
               oneOf:
-                - $ref: '#/components/schemas/Circle'
-                - $ref: '#/components/schemas/Square'
+                - $ref: "#/components/schemas/Circle"
+                - $ref: "#/components/schemas/Square"
               x-fern-discriminated: false
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
                 oneOf:
-                  - $ref: '#/components/schemas/Circle'
-                  - $ref: '#/components/schemas/Square'
+                  - $ref: "#/components/schemas/Circle"
+                  - $ref: "#/components/schemas/Square"
                 x-fern-discriminated: false
 
 components:
