@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.27.0
+  changelogEntry:
+    - summary: |
+        Client imports are now lazy loaded by default. This will greatly reduce memory footprint when using a small portion of a large API.
+        The tradeoff is a latency penalty when first accessing a client.
+        Users can opt in to eager loading (the old behavior) by setting the `lazy_imports` flag to `false` in their configuration.
+      type: feat
+  createdAt: "2025-08-27"
+  irVersion: 59
+
 - version: 4.26.1
   changelogEntry:
     - summary: Additional handling of inferred auth
