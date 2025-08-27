@@ -3,12 +3,12 @@ types:
   NullableUserId:
     docs: An alias for a nullable user ID
     type: nullable<string>
-  
+
   # Test optional alias type
   OptionalUserId:
     docs: An alias for an optional user ID
     type: optional<string>
-  
+
   # Test object with various nullable and optional combinations
   UserProfile:
     docs: Test object with nullable and optional fields
@@ -75,7 +75,7 @@ types:
       - USER
       - GUEST
       - MODERATOR
-  
+
   UserStatus:
     docs: Test enum with values for optional enum fields
     enum:
@@ -87,7 +87,7 @@ types:
         value: suspended
       - name: DELETED
         value: deleted
-  
+
   # Union types for testing
   NotificationMethod:
     docs: Discriminated union for testing nullable unions
@@ -96,40 +96,40 @@ types:
       email: EmailNotification
       sms: SmsNotification
       push: PushNotification
-  
+
   EmailNotification:
     properties:
       emailAddress: string
       subject: string
       htmlContent: optional<string>
-  
+
   SmsNotification:
     properties:
       phoneNumber: string
       message: string
       shortCode: optional<string>
-  
+
   PushNotification:
     properties:
       deviceToken: string
       title: string
       body: string
       badge: optional<integer>
-  
+
   SearchResult:
     docs: Undiscriminated union for testing
     union:
       user: UserResponse
       organization: Organization
       document: Document
-  
+
   Organization:
     properties:
       id: string
       name: string
       domain: nullable<string>
       employeeCount: optional<integer>
-  
+
   Document:
     properties:
       id: string
@@ -137,44 +137,44 @@ types:
       content: string
       author: nullable<string>
       tags: optional<list<string>>
-  
+
   # Complex type with all nullable/optional combinations including enums and unions
   ComplexProfile:
     docs: Test object with nullable enums, unions, and arrays
     properties:
       id: string
-      
+
       # Nullable and optional enums
       nullableRole: nullable<UserRole>
       optionalRole: optional<UserRole>
       optionalNullableRole: optional<nullable<UserRole>>
-      
+
       nullableStatus: nullable<UserStatus>
       optionalStatus: optional<UserStatus>
       optionalNullableStatus: optional<nullable<UserStatus>>
-      
+
       # Nullable and optional unions
       nullableNotification: nullable<NotificationMethod>
       optionalNotification: optional<NotificationMethod>
       optionalNullableNotification: optional<nullable<NotificationMethod>>
-      
+
       # Undiscriminated unions
       nullableSearchResult: nullable<SearchResult>
       optionalSearchResult: optional<SearchResult>
-      
+
       # Arrays (different from lists in some generators)
       nullableArray: nullable<list<string>>
       optionalArray: optional<list<string>>
       optionalNullableArray: optional<nullable<list<string>>>
-      
+
       # Nested nullable collections
       nullableListOfNullables: nullable<list<nullable<string>>>
       nullableMapOfNullables: nullable<map<string, nullable<Address>>>
-      
+
       # Complex nested nullable
       nullableListOfUnions: nullable<list<NotificationMethod>>
       optionalMapOfEnums: optional<map<string, UserRole>>
-  
+
   # Request/Response for deserialization testing
   DeserializationTestRequest:
     docs: Request body for testing deserialization of null values
@@ -183,19 +183,19 @@ types:
       nullableString: nullable<string>
       optionalString: optional<string>
       optionalNullableString: optional<nullable<string>>
-      
+
       nullableEnum: nullable<UserRole>
       optionalEnum: optional<UserStatus>
-      
+
       nullableUnion: nullable<NotificationMethod>
       optionalUnion: optional<SearchResult>
-      
+
       nullableList: nullable<list<string>>
       nullableMap: nullable<map<string, integer>>
-      
+
       nullableObject: nullable<Address>
       optionalObject: optional<Organization>
-  
+
   DeserializationTestResponse:
     docs: Response for deserialization test
     properties:
@@ -203,7 +203,7 @@ types:
       processedAt: datetime
       nullCount: integer
       presentFieldsCount: integer
-  
+
   # Response types
   UserResponse:
     properties:
@@ -273,7 +273,7 @@ service:
           role: optional<string>
           isActive: optional<nullable<boolean>>
       response: list<UserResponse>
-    
+
     # Test endpoint for complex profile with enums and unions
     createComplexProfile:
       docs: Create a complex profile to test nullable enums and unions
@@ -281,7 +281,7 @@ service:
       path: /profiles/complex
       request: ComplexProfile
       response: ComplexProfile
-    
+
     # Test endpoint for getting complex profile
     getComplexProfile:
       docs: Get a complex profile by ID
@@ -290,7 +290,7 @@ service:
       path-parameters:
         profileId: string
       response: ComplexProfile
-    
+
     # Test endpoint for updating complex profile with nullable fields
     updateComplexProfile:
       docs: Update complex profile to test nullable field updates
@@ -308,7 +308,7 @@ service:
             nullableSearchResult: optional<nullable<SearchResult>>
             nullableArray: optional<nullable<list<string>>>
       response: ComplexProfile
-    
+
     # Deserialization test endpoint
     testDeserialization:
       docs: Test endpoint for validating null deserialization
@@ -316,7 +316,7 @@ service:
       path: /test/deserialization
       request: DeserializationTestRequest
       response: DeserializationTestResponse
-    
+
     # Test nullable enum in query parameters
     filterByRole:
       docs: Filter users by role with nullable enum
@@ -329,7 +329,7 @@ service:
           status: optional<UserStatus>
           secondaryRole: optional<nullable<UserRole>>
       response: list<UserResponse>
-    
+
     # Test nullable union in response
     getNotificationSettings:
       docs: Get notification settings which may be null
@@ -340,7 +340,7 @@ service:
       response:
         docs: Nullable notification method or empty for no preference
         type: nullable<NotificationMethod>
-    
+
     # Test array vs list handling
     updateTags:
       docs: Update tags to test array handling
@@ -358,7 +358,7 @@ service:
       response:
         docs: Updated tags
         type: list<string>
-    
+
     # Test nested nullable collections
     getSearchResults:
       docs: Get search results with nullable unions
