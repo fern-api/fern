@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Fix downloadFiles mode to respect organization's selfHostedSdKs flag for Java SDK generation
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-27"
+  version: 0.66.28
+
+- changelogEntry:
     - summary: Fix readmeConfig.disabledSections type - change from set to list.
       type: fix
   irVersion: 59
