@@ -16,6 +16,8 @@ export function assertValidSemVerChangeOrThrow(currentRelease: ReleaseRequest, p
 }
 
 export class SemVer {
+    private static readonly rcSeparator = "-rc";
+
     constructor(
         public readonly major: number,
         public readonly minor: number,
@@ -26,13 +28,13 @@ export class SemVer {
     toString(): string {
         let version = `${this.major}.${this.minor}.${this.patch}`;
         if (this.prerelease !== undefined) {
-            version += `-r${this.prerelease}`;
+            version += `${SemVer.rcSeparator}${this.prerelease}`;
         }
         return version;
     }
 
     static fromString(version: string): SemVer {
-        const [main, prerelease] = version.split("-r", 2);
+        const [main, prerelease] = version.split(SemVer.rcSeparator, 2);
         if (main === undefined) {
             throw new InvalidSemVerError(`Invalid semver: ${version}`);
         }
