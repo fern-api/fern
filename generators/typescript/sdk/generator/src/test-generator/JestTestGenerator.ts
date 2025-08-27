@@ -8,7 +8,8 @@ import {
     HttpEndpoint,
     HttpMethod,
     HttpService,
-    IntermediateRepresentation
+    IntermediateRepresentation,
+	Name
 } from "@fern-fern/ir-sdk/api";
 import {
     DependencyManager,
@@ -719,16 +720,41 @@ describe("${serviceName}", () => {
                 `
                     : ""
             }.build();
-            
+
         ${
             isHeadersResponse
                 ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
         expect(headers).toBeInstanceOf(Headers);`
-                : code`const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
-        expect(response).toEqual(${expected});`
+                : code `const expected = ${expected};
+                    ${
+                        endpoint.pagination != undefined
+                            ? code`const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                    expect(expected.${this.getEndpointPaginationPropertyName(endpoint, context)}).toEqual(page.data);
+
+                    expect(page.hasNextPage()).toBe(true);
+                    const nextPage = await page.getNextPage();
+                    expect(expected.${this.getEndpointPaginationPropertyName(endpoint, context)}).toEqual(nextPage.data);`
+                            : code`const received = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                    expect(received).toEqual(expected)`
+                    }`
         }
     });
           `;
+    }
+
+	private getEndpointPaginationPropertyName(endpoint: HttpEndpoint, context: SdkContext): string {
+		if (endpoint.pagination === undefined) {
+			return ""
+		}
+
+		return [
+            ...(endpoint.pagination.results.propertyPath ?? []).map((name) => this.getName({ name, context })),
+			this.getName({ name: endpoint.pagination.results.property.name.name, context })
+            ].join(".");
+	}
+
+	private getName({ name, context }: { name: Name; context: SdkContext }): string {
+        return context.retainOriginalCasing || !context.includeSerdeLayer ? name.originalName : name.camelCase.safeName;
     }
 
     private shouldBuildTest(endpoint: HttpEndpoint): boolean {
@@ -781,9 +807,7 @@ describe("${serviceName}", () => {
         if (endpoint.idempotent) {
             return false;
         }
-        if (endpoint.pagination) {
-            return false;
-        }
+        // NOTE: Pagination is now supported.
         return true;
     }
 
