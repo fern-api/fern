@@ -154,6 +154,20 @@ fixtures:
         inline-path-parameters: true
       outputFolder: inline-file-properties
     - outputFolder: no-custom-config
+    - customConfig:
+      readmeConfig:
+        apiName: "CustomName"
+        disabledSections:
+          - "contributing"
+        bannerLink: https://www.fernapi.com
+        apiReferenceLink: https://www.docs.fernapi.com
+        defaultEndpoint: POST /movie
+        features:
+          timeouts:
+            - GET /movie/{movieId}
+            - method: POST
+              path: /movie
+      outputFolder: readme-config
   nullable:
     - customConfig:
         wrapped-aliases: true

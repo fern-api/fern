@@ -5,12 +5,8 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": [
-    "./src/**/*"
-  ],
-  "exclude": [
-    "./src/asIs/**/*"
-  ],
+  "include": ["./src/**/*"],
+  "exclude": ["./src/asIs/**/*"],
   "references": [
     {
       "path": "../../../packages/cli/logger"

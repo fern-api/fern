@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 
 module Seed
   module Imdb
@@ -13,24 +12,34 @@ module Seed
       # @return [String]
       def create_movie(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          method: POST,
+          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          method: "POST",
           path: "/movies/create-movie",
-          body: Seed::Imdb::Types::CreateMovieRequest.new(params[:request]).to_h
+          body: Seed::Imdb::Types::CreateMovieRequest.new(params).to_h,
         )
         _response = @client.send(_request)
-        return Seed::Imdb::Types::MovieId.load(_response.body) if _response.code >= "200" && _response.code < "300"
-
-        raise _response.body
+        if _response.code >= "200" && _response.code < "300"
+          return Seed::Imdb::Types::MovieId.load(_response.body)
+        else
+          raise _response.body
+        end
       end
 
       # @return [Seed::Imdb::Types::Movie]
       def get_movie(request_options: {}, **params)
-        _request = params
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          method: "GET",
+          path: "/movies/#{"
+        )
         _response = @client.send(_request)
-        return Seed::Imdb::Types::Movie.load(_response.body) if _response.code >= "200" && _response.code < "300"
-
-        raise _response.body
+        if _response.code >= "200" && _response.code < "300"
+          return Seed::Imdb::Types::Movie.load(_response.body)
+        else
+          raise _response.body
+        end
       end
+
     end
   end
 end

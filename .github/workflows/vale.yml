@@ -1,8 +1,8 @@
 name: reviewdog
-on: 
+on:
   pull_request:
     paths:
-      - 'fern/docs/pages/**'
+      - "fern/docs/pages/**"
 
 jobs:
   vale:
@@ -15,7 +15,7 @@ jobs:
         id: files
         uses: masesgroup/retrieve-changed-files@v2
         with:
-          format: 'json'
+          format: "json"
 
       - name: Run Vale
         uses: errata-ai/vale-action@reviewdog

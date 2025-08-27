@@ -121,13 +121,13 @@ public final class UserResponse {
     }
 
     private boolean equalTo(UserResponse other) {
-        return java.util.Objects.equals(id, other.id)
-                && java.util.Objects.equals(username, other.username)
-                && java.util.Objects.equals(email, other.email)
-                && java.util.Objects.equals(phone, other.phone)
-                && java.util.Objects.equals(createdAt, other.createdAt)
-                && java.util.Objects.equals(updatedAt, other.updatedAt)
-                && java.util.Objects.equals(address, other.address);
+        return id.equals(other.id)
+                && username.equals(other.username)
+                && email.equals(other.email)
+                && phone.equals(other.phone)
+                && createdAt.equals(other.createdAt)
+                && updatedAt.equals(other.updatedAt)
+                && address.equals(other.address);
     }
 
     @java.lang.Override

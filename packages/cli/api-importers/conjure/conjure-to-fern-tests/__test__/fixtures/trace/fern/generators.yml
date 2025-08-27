@@ -1,5 +1,5 @@
-api: 
-  specs: 
+api:
+  specs:
     conjure: ../conjure
 groups:
   local:

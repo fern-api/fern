@@ -4,13 +4,13 @@
         Add support for semantic distinction between `nullable<T>` and `optional<T>` types via `use-nullable-annotation` flag.
         When enabled, `nullable<T>` generates as raw type `T` with `@Nullable` annotation, while `optional<T>` remains as `Optional<T>`.
         This provides proper API semantics for fields that can be null vs those that may be absent from requests.
-        
+
         ```yaml
         customConfig:
           use-nullable-annotation: true
         ```
       type: feat
-  createdAt: '2025-08-25'
+  createdAt: "2025-08-25"
   irVersion: 58
 
 - version: 2.41.3
@@ -19,7 +19,7 @@
         Add convenient `addHeader()` method to SDK builders for adding custom headers without requiring
         OkHttpClient customization or inheritance.
       type: feat
-  createdAt: '2025-08-19'
+  createdAt: "2025-08-19"
   irVersion: 58
 
 - version: 2.41.2
@@ -27,7 +27,7 @@
     - summary: |
         Link reference.md in the README.md.
       type: feat
-  createdAt: '2025-08-19'
+  createdAt: "2025-08-19"
   irVersion: 58
 
 - version: 2.41.1
@@ -35,7 +35,7 @@
     - summary: |
         Fix integer overflow when processing OpenAPI specs with large integer values in examples. Values exceeding Java's Integer range are automatically converted to long type to prevent generation failures.
       type: fix
-  createdAt: '2025-08-15'
+  createdAt: "2025-08-15"
   irVersion: 58
 
 - version: 2.41.0
@@ -43,21 +43,21 @@
     - summary: |
         Add support for generating wire tests via `enable-wire-tests` flag. Wire tests verify HTTP protocol communication
         using MockWebServer and are generated for all endpoints in a service.
-        
+
         ```yaml
         customConfig:
           enable-wire-tests: true
         ```
-        
+
         Generated tests include:
         - Working 404/500 error tests that compile immediately
         - Success test templates with TODO comments for customization
         - Proper handling of staged vs regular builders
         - Constants for all magic strings for better maintainability
-        
+
         Note: Complex request bodies and response validation require manual customization.
       type: feat
-  createdAt: '2025-08-14'
+  createdAt: "2025-08-14"
   irVersion: 58
 
 - version: 2.40.0
@@ -81,7 +81,7 @@
         QueryStringMapper.addQueryParameter(httpUrl, "per_page", request.getPerPage().orElse(50), false);
         ```
       type: feat
-  createdAt: '2025-08-13'
+  createdAt: "2025-08-13"
   irVersion: 58
 
 - version: 2.39.6
@@ -102,7 +102,7 @@
         }
         ```
       type: feat
-  createdAt: '2025-08-05'
+  createdAt: "2025-08-05"
   irVersion: 58
 
 - version: 2.39.5
@@ -110,7 +110,7 @@
     - summary: |
         Fix undiscriminated union deserialization to catch all RuntimeException types instead of just IllegalArgumentException.
       type: fix
-  createdAt: '2025-08-05'
+  createdAt: "2025-08-05"
   irVersion: 58
 
 - version: 2.39.4
@@ -118,7 +118,7 @@
     - summary: |
         Ensure JUnit dependencies are always added when test files are generated
       type: fix
-  createdAt: '2025-08-04'
+  createdAt: "2025-08-04"
   irVersion: 58
 
 - version: 2.39.3
@@ -126,7 +126,7 @@
     - summary: |
         Fix compilation error when using boolean path parameters by properly handling primitive boolean to String conversion
       type: fix
-  createdAt: '2025-08-04'
+  createdAt: "2025-08-04"
   irVersion: 58
 
 - version: 2.39.2
@@ -134,7 +134,7 @@
     - summary: |
         Fix javadoc compilation errors by using HTML entities for special characters in builder examples
       type: fix
-  createdAt: '2025-07-31'
+  createdAt: "2025-07-31"
   irVersion: 58
 
 - version: 2.39.1
@@ -143,7 +143,7 @@
         Refactor builder extension pattern to use Template Method with dynamic generation. Configuration methods 
         are only generated based on API spec (auth, headers, variables). All methods are protected for override.
       type: fix
-  createdAt: '2025-07-25'
+  createdAt: "2025-07-25"
   irVersion: 58
 
 - version: 2.39.0
@@ -154,7 +154,7 @@
         to ClientOptions.Builder for copying existing configurations. This enables use cases like environment variable expansion 
         in URLs and custom authentication methods.
       type: feat
-  createdAt: '2025-07-24'
+  createdAt: "2025-07-24"
   irVersion: 58
 
 - version: 2.38.8
@@ -162,7 +162,7 @@
     - summary: |
         Fix byte array convenience methods to include all parameters when delegating to InputStream methods.
       type: fix
-  createdAt: '2025-07-23'
+  createdAt: "2025-07-23"
   irVersion: 58
 
 - version: 2.38.7
@@ -170,7 +170,7 @@
     - summary: |
         Swap InputStreamRequestBody arguments to match constructor.
       type: fix
-  createdAt: '2025-07-23'
+  createdAt: "2025-07-23"
   irVersion: 58
 
 - version: 2.38.6
@@ -178,15 +178,15 @@
     - summary: |
         Add explicit type to pagination lambda parameters.
       type: fix
-  createdAt: '2025-07-21'
+  createdAt: "2025-07-21"
   irVersion: 58
-  
+
 - version: 2.38.5
   changelogEntry:
     - summary: |
-        Remove internal OkHttp utility dependency and use a more robust file closing method. 
+        Remove internal OkHttp utility dependency and use a more robust file closing method.
       type: chore
-  createdAt: '2025-07-18'
+  createdAt: "2025-07-18"
   irVersion: 58
 
 - version: 2.38.4
@@ -194,7 +194,7 @@
     - summary: |
         Fix stream SSE test to use Java 8 compatible stream collection method.
       type: fix
-  createdAt: '2025-07-17'
+  createdAt: "2025-07-17"
   irVersion: 58
 
 - version: 2.38.3
@@ -202,7 +202,7 @@
     - summary: |
         Add reference.md generation for Java SDKs.
       type: fix
-  createdAt: '2025-07-16'
+  createdAt: "2025-07-16"
   irVersion: 58
 
 - version: 2.38.2
@@ -210,7 +210,7 @@
     - summary: |
         Fix java sdk readme generation to properly create maven shield.
       type: fix
-  createdAt: '2025-07-09'
+  createdAt: "2025-07-09"
   irVersion: 58
 
 - version: 2.38.1
@@ -222,7 +222,7 @@
         JavaPoet from interpreting them as template variables. This ensures that dollar signs in documentation 
         are rendered correctly in the final generated code.
       type: fix
-  createdAt: '2025-06-23'
+  createdAt: "2025-06-23"
   irVersion: 58
 
 - version: 2.38.0
@@ -237,7 +237,7 @@
 
         This configuration enables automatic publishing to Maven Central with proper metadata and signing configuration.
       type: chore
-  createdAt: '2025-06-23'
+  createdAt: "2025-06-23"
   irVersion: 58
 
 - version: 2.37.2
@@ -245,41 +245,41 @@
     - summary: |
         No changes. Publishing changes from 2.37.1-rc0 and 2.37.1-rc1 to release track.
       type: chore
-  createdAt: '2025-06-23'
+  createdAt: "2025-06-23"
   irVersion: 58
- 
+
 - version: 2.37.1-rc1
   changelogEntry:
     - summary: |
         Remove Content-Type from headers when request has no body
       type: fix
-  createdAt: '2025-06-16'
+  createdAt: "2025-06-16"
   irVersion: 58
 - version: 2.37.1-rc0
   changelogEntry:
     - summary: |
         Fix array query params are treated as exploded: true
       type: fix
-  createdAt: '2025-06-13'
+  createdAt: "2025-06-13"
   irVersion: 58
 - version: 2.37.0
   changelogEntry:
     - summary: |
         Add support for generating a full project in filesystem mode.
       type: feat
-  createdAt: '2025-06-04'
+  createdAt: "2025-06-04"
   irVersion: 58
 - version: 2.36.5
   changelogEntry:
     - summary: Update the IR to v58.
       type: internal
-  createdAt: '2025-06-03'
+  createdAt: "2025-06-03"
   irVersion: 58
 - changelogEntry:
     - summary: |
         Generates docs for method types.
       type: fix
-  createdAt: '2025-05-21'
+  createdAt: "2025-05-21"
   irVersion: 57
   version: 2.36.4
 - changelogEntry:
@@ -287,7 +287,7 @@
         Updates the generator to always commit changes, even if there are none, in self-hosted mode. This 
         allows users to make sure that the generator actually ran and attempted to make a commit.
       type: fix
-  createdAt: '2025-05-20'
+  createdAt: "2025-05-20"
   irVersion: 57
   version: 2.36.3
 - changelogEntry:
@@ -295,224 +295,224 @@
         Fix the generated README.md for the `maxRetries` configuration option, which is now
         shown on the client constructor.
       type: fix
-  createdAt: '2025-05-15'
+  createdAt: "2025-05-15"
   irVersion: 57
   version: 2.36.2
 - changelogEntry:
     - summary: |
         Add support for the custom introduction setting in the generated README.md.
       type: fix
-  createdAt: '2025-05-13'
+  createdAt: "2025-05-13"
   irVersion: 57
   version: 2.36.1
 - changelogEntry:
     - summary: |
         Support sending requests with content type application/x-www-form-urlencoded.
       type: feat
-  createdAt: '2025-05-11'
+  createdAt: "2025-05-11"
   irVersion: 57
   version: 2.36.0
 - changelogEntry:
     - summary: |
-        Rerelease with the latest generator-cli. 
+        Rerelease with the latest generator-cli.
       type: fix
-  createdAt: '2025-05-01'
+  createdAt: "2025-05-01"
   irVersion: 57
   version: 2.35.3
 - changelogEntry:
     - summary: |
-        Install the generator-cli at build time as a fallback if runtime installation fails. 
+        Install the generator-cli at build time as a fallback if runtime installation fails.
       type: fix
-  createdAt: '2025-05-01'
+  createdAt: "2025-05-01"
   irVersion: 57
   version: 2.35.2
 - changelogEntry:
     - summary: |
         Self hosted github user defaults to `fern-api[bot]`.
       type: fix
-  createdAt: '2025-05-01'
+  createdAt: "2025-05-01"
   irVersion: 57
   version: 2.35.1
 - changelogEntry:
     - summary: |
         Support pushing to GitHub enterprise.
       type: fix
-  createdAt: '2025-05-01'
+  createdAt: "2025-05-01"
   irVersion: 57
   version: 2.35.0
 - changelogEntry:
     - summary: |
         Upgrade to irV57
       type: fix
-  createdAt: '2025-05-01'
+  createdAt: "2025-05-01"
   irVersion: 57
   version: 2.34.0
 - changelogEntry:
     - summary: |
         (Corrected from 2.33.2) Use non-deprecated method to create request body
       type: fix
-  createdAt: '2025-04-28'
+  createdAt: "2025-04-28"
   irVersion: 55
   version: 2.33.4
 - changelogEntry:
     - summary: |
         Suppress unchecked cast warning for undiscriminated union visitor
       type: fix
-  createdAt: '2025-04-28'
+  createdAt: "2025-04-28"
   irVersion: 55
   version: 2.33.3
 - changelogEntry:
     - summary: |
         Use non-deprecated method to create request body
       type: fix
-  createdAt: '2025-04-25'
+  createdAt: "2025-04-25"
   irVersion: 55
   version: 2.33.2
 - changelogEntry:
     - summary: |
         Fix inline overrides undoing allow-multiple parameterization
       type: fix
-  createdAt: '2025-04-24'
+  createdAt: "2025-04-24"
   irVersion: 55
   version: 2.33.1
 - changelogEntry:
     - summary: |
         Support for literals in union types
       type: fix
-  createdAt: '2025-04-23'
+  createdAt: "2025-04-23"
   irVersion: 55
   version: 2.33.0
 - changelogEntry:
     - summary: |
         Auth header prefix should prepend with a concatenation operator
       type: fix
-  createdAt: '2025-04-21'
+  createdAt: "2025-04-21"
   irVersion: 55
   version: 2.32.9
 - changelogEntry:
     - summary: |
         Use safe name for version enum
       type: fix
-  createdAt: '2025-04-09'
+  createdAt: "2025-04-09"
   irVersion: 55
   version: 2.32.8
 - changelogEntry:
     - summary: |
         Run v2 generation for SDK generator only
       type: fix
-  createdAt: '2025-04-09'
+  createdAt: "2025-04-09"
   irVersion: 55
   version: 2.32.7
 - changelogEntry:
     - summary: |
         Fix getting the default version of an api versions enum to not require the `CURRENT` entry
       type: fix
-  createdAt: '2025-04-09'
+  createdAt: "2025-04-09"
   irVersion: 55
   version: 2.32.6
 - changelogEntry:
     - summary: |
         Fix inlining forward-compatible enums
       type: fix
-  createdAt: '2025-04-08'
+  createdAt: "2025-04-08"
   irVersion: 55
   version: 2.32.5
 - changelogEntry:
     - summary: |
         Fix typos in README generator
       type: fix
-  createdAt: '2025-04-01'
+  createdAt: "2025-04-01"
   irVersion: 55
   version: 2.32.4
 - changelogEntry:
     - summary: |
         Add logging for Java v2 generator call
       type: fix
-  createdAt: '2025-04-01'
+  createdAt: "2025-04-01"
   irVersion: 55
   version: 2.32.3
 - changelogEntry:
     - summary: |
         Add fallback snippet renderer for readme generation
       type: fix
-  createdAt: '2025-04-01'
+  createdAt: "2025-04-01"
   irVersion: 55
   version: 2.32.2
 - changelogEntry:
     - summary: |
         Fix pagination in raw clients
       type: fix
-  createdAt: '2025-03-31'
+  createdAt: "2025-03-31"
   irVersion: 55
   version: 2.32.1
 - changelogEntry:
     - summary: |
         Generate snippet.json
       type: feat
-  createdAt: '2025-03-29'
+  createdAt: "2025-03-29"
   irVersion: 55
   version: 2.32.0
 - changelogEntry:
     - summary: |
         Apply content type to request body creation
       type: fix
-  createdAt: '2025-03-27'
+  createdAt: "2025-03-27"
   irVersion: 55
   version: 2.31.0
 - changelogEntry:
     - summary: |
         Include response headers in API exceptions
       type: feat
-  createdAt: '2025-03-27'
+  createdAt: "2025-03-27"
   irVersion: 55
   version: 2.30.0
 - changelogEntry:
     - summary: |
         Query params respect allow-multiple
       type: fix
-  createdAt: '2025-03-27'
+  createdAt: "2025-03-27"
   irVersion: 55
   version: 2.29.0
 - changelogEntry:
     - summary: |
         Expose response headers
       type: feat
-  createdAt: '2025-03-26'
+  createdAt: "2025-03-26"
   irVersion: 55
   version: 2.28.0
 - changelogEntry:
     - summary: |
         Change method to `public static void main(String[] args)` in snippet generation
       type: fix
-  createdAt: '2025-03-24'
+  createdAt: "2025-03-24"
   irVersion: 55
   version: 2.27.1
 - changelogEntry:
     - summary: |
         Support automatic README.md generation
       type: feat
-  createdAt: '2025-03-21'
+  createdAt: "2025-03-21"
   irVersion: 55
   version: 2.27.0
 - changelogEntry:
     - summary: |
         Expose max retries for clients
       type: feat
-  createdAt: '2025-03-13'
+  createdAt: "2025-03-13"
   irVersion: 55
   version: 2.26.0
 - changelogEntry:
     - summary: |
         Add config to inline file properties
       type: feat
-  createdAt: '2025-03-13'
+  createdAt: "2025-03-13"
   irVersion: 55
   version: 2.25.0
 - changelogEntry:
     - summary: |
         Prevent put requests from generating without a request body
       type: fix
-  createdAt: '2025-03-12'
+  createdAt: "2025-03-12"
   irVersion: 55
   version: 2.24.4
 - changelogEntry:
@@ -522,126 +522,126 @@
     - summary: |
         Prevent enum keyword use in package paths
       type: fix
-  createdAt: '2025-03-12'
+  createdAt: "2025-03-12"
   irVersion: 55
   version: 2.24.3
 - changelogEntry:
     - summary: |
         Remove 'object' from Java reserved strings list
       type: fix
-  createdAt: '2025-03-12'
+  createdAt: "2025-03-12"
   irVersion: 55
   version: 2.24.2
 - changelogEntry:
     - summary: |
         Add @JsonIgnore to non-serialization getters for nullables
       type: fix
-  createdAt: '2025-03-11'
+  createdAt: "2025-03-11"
   irVersion: 55
   version: 2.24.1
 - changelogEntry:
     - summary: |
         Fix wrapped request paths in flat mode
       type: fix
-  createdAt: '2025-03-11'
+  createdAt: "2025-03-11"
   irVersion: 55
   version: 2.24.0
 - changelogEntry:
     - summary: |
         Fix async client builder generation
       type: fix
-  createdAt: '2025-03-07'
+  createdAt: "2025-03-07"
   irVersion: 55
   version: 2.23.1
 - changelogEntry:
     - summary: |
         Represent protobuf uint as int rather than long
       type: fix
-  createdAt: '2025-03-06'
+  createdAt: "2025-03-06"
   irVersion: 55
   version: 2.23.0
 - changelogEntry:
     - summary: |
         Add support for explicit nulls in serialization
       type: feat
-  createdAt: '2025-03-05'
+  createdAt: "2025-03-05"
   irVersion: 55
   version: 2.22.0
 - changelogEntry:
     - summary: |
         Add async clients
       type: feat
-  createdAt: '2025-03-04'
+  createdAt: "2025-03-04"
   irVersion: 55
   version: 2.21.0
 - changelogEntry:
     - summary: |
         Fix type reference syntax in readValue calls
       type: fix
-  createdAt: '2025-03-02'
+  createdAt: "2025-03-02"
   irVersion: 55
   version: 2.20.1
 - changelogEntry:
     - summary: |
         Fix collection serialization in multipart form body without form encoding
       type: fix
-  createdAt: '2025-02-27'
+  createdAt: "2025-02-27"
   irVersion: 55
   version: 2.20.0
 - changelogEntry:
     - summary: |
         Enable overriding literal headers
       type: feat
-  createdAt: '2025-02-26'
+  createdAt: "2025-02-26"
   irVersion: 55
   version: 2.19.0
 - changelogEntry:
     - summary: |
         Fix form body serialization
       type: fix
-  createdAt: '2025-02-25'
+  createdAt: "2025-02-25"
   irVersion: 55
   version: 2.18.1
 - changelogEntry:
     - summary: |
         Support form-data with deep object query params
       type: feat
-  createdAt: '2025-02-24'
+  createdAt: "2025-02-24"
   irVersion: 55
   version: 2.18.0
 - changelogEntry:
     - summary: |
         Support deep object query parameters
       type: feat
-  createdAt: '2025-02-24'
+  createdAt: "2025-02-24"
   irVersion: 55
   version: 2.17.0
 - changelogEntry:
     - summary: |
         Upgrade IR version dependency to v55
       type: chore
-  createdAt: '2025-02-20'
+  createdAt: "2025-02-20"
   irVersion: 55
   version: 2.16.0
 - changelogEntry:
     - summary: |
         Add support for custom HTTP client in Java SDK
       type: feat
-  createdAt: '2025-02-19'
+  createdAt: "2025-02-19"
   irVersion: 53
   version: 2.15.0
 - changelogEntry:
     - summary: |
         Support user-agent header
       type: feat
-  createdAt: '2025-02-19'
+  createdAt: "2025-02-19"
   irVersion: 53
   version: 2.14.0
 - changelogEntry:
     - summary: |
         Flat package layout by setting `page-layout: flat`
       type: feat
-  createdAt: '2025-02-18'
+  createdAt: "2025-02-18"
   irVersion: 53
   version: 2.13.0
 - changelogEntry:
@@ -651,42 +651,42 @@
     - summary: |
         Prevent discriminant from deserializing as additional property in unwrapped variant.
       type: fix
-  createdAt: '2025-02-14'
+  createdAt: "2025-02-14"
   irVersion: 53
   version: 2.12.1
 - changelogEntry:
     - summary: |
         Let users define custom headers in request options
       type: feat
-  createdAt: '2025-02-10'
+  createdAt: "2025-02-10"
   irVersion: 53
   version: 2.12.0
 - changelogEntry:
     - summary: |
         Don't add a semicolon twice when rendering accept header
       type: fix
-  createdAt: '2025-02-04'
+  createdAt: "2025-02-04"
   irVersion: 53
   version: 2.11.3
 - changelogEntry:
     - summary: |
         Add accept header if endpoint has errors
       type: fix
-  createdAt: '2025-02-03'
+  createdAt: "2025-02-03"
   irVersion: 53
   version: 2.11.2
 - changelogEntry:
     - summary: |
         Send only request body reference for body-only wrapped request
       type: fix
-  createdAt: '2025-02-03'
+  createdAt: "2025-02-03"
   irVersion: 53
   version: 2.11.1
 - changelogEntry:
     - summary: |
         Add deep cursor path pagination support.
       type: feat
-  createdAt: '2025-01-29'
+  createdAt: "2025-01-29"
   irVersion: 53
   version: 2.11.0
 - changelogEntry:
@@ -694,63 +694,63 @@
         Fix wrapped requests without inline path parameters checking not rendering
         no-request endpoint because of non-optional parameters
       type: fix
-  createdAt: '2025-01-23'
+  createdAt: "2025-01-23"
   irVersion: 53
   version: 2.10.7
 - changelogEntry:
     - summary: |
         Prevent accept header from being removed in wrapped requests
       type: fix
-  createdAt: '2025-01-21'
+  createdAt: "2025-01-21"
   irVersion: 53
   version: 2.10.6
 - changelogEntry:
     - summary: |
         Add Accept header for json responses
       type: fix
-  createdAt: '2025-01-21'
+  createdAt: "2025-01-21"
   irVersion: 53
   version: 2.10.5
 - changelogEntry:
     - summary: |
         Fix potential NPE initializing client options with default version
       type: fix
-  createdAt: '2025-01-19'
+  createdAt: "2025-01-19"
   irVersion: 53
   version: 2.10.4
 - changelogEntry:
     - summary: |
         Fix inlining unwrapped alias types.
       type: fix
-  createdAt: '2025-01-17'
+  createdAt: "2025-01-17"
   irVersion: 53
   version: 2.10.3
 - changelogEntry:
     - summary: |
         Omit methods with inlined types from interface definitions.
       type: fix
-  createdAt: '2025-01-16'
+  createdAt: "2025-01-16"
   irVersion: 53
   version: 2.10.2
 - changelogEntry:
     - summary: |
         Fix union inline type name conflict resolution.
       type: fix
-  createdAt: '2025-01-16'
+  createdAt: "2025-01-16"
   irVersion: 53
   version: 2.10.1
 - changelogEntry:
     - summary: |
         Support inline types in the Java generator.
       type: feat
-  createdAt: '2025-01-16'
+  createdAt: "2025-01-16"
   irVersion: 53
   version: 2.10.0
 - changelogEntry:
     - summary: |
         Support version headers in request and client options.
       type: feat
-  createdAt: '2025-01-07'
+  createdAt: "2025-01-07"
   irVersion: 53
   version: 2.9.0
 - changelogEntry:
@@ -763,35 +763,35 @@
             .build();
           ```
       type: feat
-  createdAt: '2024-12-23'
+  createdAt: "2024-12-23"
   irVersion: 53
   version: 2.8.1
 - changelogEntry:
     - summary: |
         Generate inline request bodies with their path parameters in the object.
       type: feat
-  createdAt: '2024-12-20'
+  createdAt: "2024-12-20"
   irVersion: 53
   version: 2.8.0
 - changelogEntry:
     - summary: |
         Apply Content-Type header from endpoint definition in SDK generator.
       type: feat
-  createdAt: '2024-12-11'
+  createdAt: "2024-12-11"
   irVersion: 53
   version: 2.7.0
 - changelogEntry:
     - summary: |
         Don't generate pagination with nonempty path. Fixes pagination seed tests breaking.
       type: fix
-  createdAt: '2024-12-10'
+  createdAt: "2024-12-10"
   irVersion: 53
   version: 2.6.0
 - changelogEntry:
     - summary: |
         Bump IR version to latest (v53)
       type: chore
-  createdAt: '2024-12-10'
+  createdAt: "2024-12-10"
   irVersion: 53
   version: 2.5.0
 - changelogEntry:
@@ -799,7 +799,7 @@
         We now support overriding sdk package prefixes by adding a "package-prefix" key under the java-sdk generator
         configuration.
       type: feat
-  createdAt: '2024-12-10'
+  createdAt: "2024-12-10"
   irVersion: 46
   version: 2.4.0
 
@@ -807,7 +807,7 @@
     - summary: |
         The rootProject.name is now set in settings.gradle and ci.yml uses ./gradlew sonatypeCentralUpload for publishing.
       type: fix
-  createdAt: '2024-12-04'
+  createdAt: "2024-12-04"
   irVersion: 46
   version: 2.3.1
 
@@ -815,7 +815,7 @@
     - summary: |
         Fix publishing to Maven Central with proper signing configuration and metadata.
       type: feat
-  createdAt: '2024-12-04'
+  createdAt: "2024-12-04"
   irVersion: 46
   version: 2.3.0
 
@@ -827,497 +827,497 @@
     - summary: |
         Bump Jackson version to latest (2.17.2)
       type: chore
-  createdAt: '2024-09-26'
+  createdAt: "2024-09-26"
   irVersion: 46
   version: 2.2.0
 
 - changelogEntry:
-  - summary: |
-      We no longer enforce non-null constraints for Object type properties in builders.
-    type: feat
-  createdAt: '2024-09-11'
+    - summary: |
+        We no longer enforce non-null constraints for Object type properties in builders.
+      type: feat
+  createdAt: "2024-09-11"
   irVersion: 46
   version: 2.1.0
 
 - changelogEntry:
-  - summary: |
-      The SDK generator is now on major version 2. To take this upgrade without any breaks, please add the below
-      configuration to your `generators.yml` file:
-      ```yaml
-      generators:
-        - name: fernapi/fern-java-sdk
-          config:
-            disable-required-property-builder-checks: true
-      ```
-    type: break
-  - summary: |
-      Generated builder methods now enforce non-null checks for required fields, ensuring that all required
-      fields are properly validated during object construction:
-        ```java
-        @java.lang.Override
-        @JsonSetter("name")
-        public NameStage name(@NotNull String name) {
-            this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
+    - summary: |
+        The SDK generator is now on major version 2. To take this upgrade without any breaks, please add the below
+        configuration to your `generators.yml` file:
+        ```yaml
+        generators:
+          - name: fernapi/fern-java-sdk
+            config:
+              disable-required-property-builder-checks: true
         ```
-    type: feat
-  createdAt: '2024-09-05'
+      type: break
+    - summary: |
+        Generated builder methods now enforce non-null checks for required fields, ensuring that all required
+        fields are properly validated during object construction:
+          ```java
+          @java.lang.Override
+          @JsonSetter("name")
+          public NameStage name(@NotNull String name) {
+              this.name = Objects.requireNonNull(name, "name must not be null");
+              return this;
+          }
+          ```
+      type: feat
+  createdAt: "2024-09-05"
   irVersion: 46
   version: 2.0.0
 
 - changelogEntry:
-  - summary: |
-      Public constructors can now be generated for all model types:
-      ```yaml
-      generators:
-        - name: fernapi/fern-java-sdk
-          config:
-            enable-public-constructors: true # default false
-        ```
-    type: feat
-  createdAt: '2024-09-04'
+    - summary: |
+        Public constructors can now be generated for all model types:
+        ```yaml
+        generators:
+          - name: fernapi/fern-java-sdk
+            config:
+              enable-public-constructors: true # default false
+          ```
+      type: feat
+  createdAt: "2024-09-04"
   irVersion: 46
   version: 1.0.7
 
 - changelogEntry:
-  - summary: Fixed a bug where optional collections are not handled properly in paginated responses.
-    type: fix
-  createdAt: '2024-09-04'
+    - summary: Fixed a bug where optional collections are not handled properly in paginated responses.
+      type: fix
+  createdAt: "2024-09-04"
   irVersion: 46
   version: 1.0.6
 
 - changelogEntry:
-  - summary: Fixed a bug where local generation custom config doesn't pick up some values, including exception naming.
-    type: fix
-  createdAt: '2024-07-26'
+    - summary: Fixed a bug where local generation custom config doesn't pick up some values, including exception naming.
+      type: fix
+  createdAt: "2024-07-26"
   irVersion: 46
   version: 1.0.5
 
 - changelogEntry:
-  - summary: Fixed a bug where OkHttp responses could be closed prematurely.
-    type: fix
-  createdAt: '2024-07-24'
+    - summary: Fixed a bug where OkHttp responses could be closed prematurely.
+      type: fix
+  createdAt: "2024-07-24"
   irVersion: 46
   version: 1.0.4
 
 - changelogEntry:
-  - summary: Generated builder methods for optional fields can now accept null directly.
-    type: feat
-  createdAt: '2024-07-23'
+    - summary: Generated builder methods for optional fields can now accept null directly.
+      type: feat
+  createdAt: "2024-07-23"
   irVersion: 46
   version: 1.0.3
 
 - changelogEntry:
-  - summary: |
-      The generator now adds a class-level `@JsonInclude(JsonInclude.Include.NON_ABSENT)` annotation to
-      each generated type in place of the previous `@JsonInclude(JsonInclude.Include.NON_EMPTY)` by default. This is
-      configurable in the `generators.yml` file:
-      ```yaml
-      generators:
-        - name: fernapi/fern-java-sdk
-          config:
-            json-include: non-empty # default non-absent
-      ```
-    type: feat
-  createdAt: '2024-07-02'
+    - summary: |
+        The generator now adds a class-level `@JsonInclude(JsonInclude.Include.NON_ABSENT)` annotation to
+        each generated type in place of the previous `@JsonInclude(JsonInclude.Include.NON_EMPTY)` by default. This is
+        configurable in the `generators.yml` file:
+        ```yaml
+        generators:
+          - name: fernapi/fern-java-sdk
+            config:
+              json-include: non-empty # default non-absent
+        ```
+      type: feat
+  createdAt: "2024-07-02"
   irVersion: 46
   version: 1.0.2-rc0
 
 - changelogEntry:
-  - summary: |
-      The Java SDK is now on major version 1. To take this upgrade without any breaks, please add the below
-      configuration to your `generators.yml` file:
-      ```yaml
-      generators:
-        - name: fernapi/fern-java-sdk
-          config:
-            base-api-exception-class-name: ApiError
-            base-exception-class-name: CompanyException # Optional: This should only be set if default naming is undesirable
-      ```
-    type: break
-  - summary: |
-      We now generate Exception types for all errors that are defined in the IR. Generated clients with an
-      error discrimination strategy of "status code" will throw one of these typed Exceptions based on the status code of
-      error responses. Example error type:
-      ```java
-      public final class BadRequest extends MyCompanyApiError {
-        public BadRequest(Object body) {
-            super("BadRequest", 400, body);
+    - summary: |
+        The Java SDK is now on major version 1. To take this upgrade without any breaks, please add the below
+        configuration to your `generators.yml` file:
+        ```yaml
+        generators:
+          - name: fernapi/fern-java-sdk
+            config:
+              base-api-exception-class-name: ApiError
+              base-exception-class-name: CompanyException # Optional: This should only be set if default naming is undesirable
+        ```
+      type: break
+    - summary: |
+        We now generate Exception types for all errors that are defined in the IR. Generated clients with an
+        error discrimination strategy of "status code" will throw one of these typed Exceptions based on the status code of
+        error responses. Example error type:
+        ```java
+        public final class BadRequest extends MyCompanyApiError {
+          public BadRequest(Object body) {
+              super("BadRequest", 400, body);
+          }
         }
-      }
-      ```
-    type: feat
-  createdAt: '2024-06-26'
+        ```
+      type: feat
+  createdAt: "2024-06-26"
   irVersion: 46
   version: 1.0.1
 
 - changelogEntry:
-  - summary: Add support for cursor and offset pagination.
-    added:
-      - |
-        Add support for cursor and offset pagination.
+    - summary: Add support for cursor and offset pagination.
+      added:
+        - |
+          Add support for cursor and offset pagination.
 
-        For example, consider the following endpoint `/users` endpoint:
+          For example, consider the following endpoint `/users` endpoint:
 
-        ```yaml
-        types:
-          User:
-            properties:
-              name: string
+          ```yaml
+          types:
+            User:
+              properties:
+                name: string
 
-          ListUserResponse:
-            properties:
-              next: optional<string>
-              data: list<User>
+            ListUserResponse:
+              properties:
+                next: optional<string>
+                data: list<User>
 
-        service:
-          auth: false
-          base-path: /users
-          endpoints:
-            list:
-              path: ""
-              method: GET
-              pagination:
-                cursor: $request.starting_after
-                next_cursor: $response.next
-                results: $response.data
-              request:
-                name: ListUsersRequest
-                query-parameters:
-                  starting_after: optional<string>
-              response: ListUsersResponse
-        ```
+          service:
+            auth: false
+            base-path: /users
+            endpoints:
+              list:
+                path: ""
+                method: GET
+                pagination:
+                  cursor: $request.starting_after
+                  next_cursor: $response.next
+                  results: $response.data
+                request:
+                  name: ListUsersRequest
+                  query-parameters:
+                    starting_after: optional<string>
+                response: ListUsersResponse
+          ```
 
-        The generated `SyncPagingIterable<User>` can then be used to traverse through the `User` objects:
+          The generated `SyncPagingIterable<User>` can then be used to traverse through the `User` objects:
 
-        ```java
-        for (User user : client.users.list(...)) {
-            System.out.println(user);
-        }
-        ```
+          ```java
+          for (User user : client.users.list(...)) {
+              System.out.println(user);
+          }
+          ```
 
-        Or stream them:
+          Or stream them:
 
-        ```java
-        client.users.list(...).streamItems().map(user -> ...);
-        ```
+          ```java
+          client.users.list(...).streamItems().map(user -> ...);
+          ```
 
-        Or statically calling `nextPage()` to perform the pagination manually:
+          Or statically calling `nextPage()` to perform the pagination manually:
 
-        ```java
-        SyncPagingIterable<User> pager = client.users.list(...);
-        // First page
-        System.out.println(pager.getItems());
-        // Second page
-        pager = pager.nextPage();
-        System.out.println(pager.getItems());
-        ```
-    type: feat
-  createdAt: '2024-06-13'
+          ```java
+          SyncPagingIterable<User> pager = client.users.list(...);
+          // First page
+          System.out.println(pager.getItems());
+          // Second page
+          pager = pager.nextPage();
+          System.out.println(pager.getItems());
+          ```
+      type: feat
+  createdAt: "2024-06-13"
   irVersion: 46
   version: 0.10.1
 
 - changelogEntry:
-  - summary: The generator now supports BigInteger types.
-    type: feat
-  createdAt: '2024-06-07'
+    - summary: The generator now supports BigInteger types.
+      type: feat
+  createdAt: "2024-06-07"
   irVersion: 46
   version: 0.10.0
 
 - changelogEntry:
-  - summary: |
-      `RequestOptions` are now generated with the `timeout` field initialized to `Optional.empty()` instead of `null` to avoid NPEs if `timeout` is not set in the builder.
-    type: feat
-  createdAt: '2024-06-06'
+    - summary: |
+        `RequestOptions` are now generated with the `timeout` field initialized to `Optional.empty()` instead of `null` to avoid NPEs if `timeout` is not set in the builder.
+      type: feat
+  createdAt: "2024-06-06"
   irVersion: 42
   version: 0.9.8
 
 - changelogEntry:
-  - summary: |
-      The SDK generator now generates `@java.lang.Override` over `@Override` in all files to avoid clashes with any
-      `Override.java` class that may have been generated in the same package. The former was used most places, but not all,
-      until this release.
-    type: feat
-  createdAt: '2024-06-06'
+    - summary: |
+        The SDK generator now generates `@java.lang.Override` over `@Override` in all files to avoid clashes with any
+        `Override.java` class that may have been generated in the same package. The former was used most places, but not all,
+        until this release.
+      type: feat
+  createdAt: "2024-06-06"
   irVersion: 42
   version: 0.9.7
 
 - changelogEntry:
-  - summary: The SDK generator now supports returning response properties from client methods rather than just the responses themselves.
-    type: feat
-  createdAt: '2024-06-05'
+    - summary: The SDK generator now supports returning response properties from client methods rather than just the responses themselves.
+      type: feat
+  createdAt: "2024-06-05"
   irVersion: 42
   version: 0.9.6
 
 - changelogEntry:
-  - summary: Types without fields are now generated with builders. Previously, they were not, which made them impossible to initialize.
-    type: fix
-  createdAt: '2024-05-30'
+    - summary: Types without fields are now generated with builders. Previously, they were not, which made them impossible to initialize.
+      type: fix
+  createdAt: "2024-05-30"
   irVersion: 42
   version: 0.9.5
 
 - changelogEntry:
-  - summary: The SDK now generates undiscriminated unions with de-conflicted method signatures. Previously, certain undiscriminated unions would have failed to compile due to Java's type erasure causing conflicts.
-    type: fix
-  createdAt: '2024-05-30'
+    - summary: The SDK now generates undiscriminated unions with de-conflicted method signatures. Previously, certain undiscriminated unions would have failed to compile due to Java's type erasure causing conflicts.
+      type: fix
+  createdAt: "2024-05-30"
   irVersion: 42
   version: 0.9.4
 
 - changelogEntry:
-  - summary: Generated SDK clients with an OAuth security scheme will now automatically refresh access tokens before they expire.
-    type: feat
-  createdAt: '2024-05-23'
+    - summary: Generated SDK clients with an OAuth security scheme will now automatically refresh access tokens before they expire.
+      type: feat
+  createdAt: "2024-05-23"
   irVersion: 42
   version: 0.9.3
 
 - changelogEntry:
-  - summary: Java 8 Compatibility.
-    type: fix
-  createdAt: '2024-05-21'
+    - summary: Java 8 Compatibility.
+      type: fix
+  createdAt: "2024-05-21"
   irVersion: 42
   version: 0.9.2
 
 - changelogEntry:
-  - summary: |
-      Support OAuth without token refresh. Example of initializing a client with OAuth:
+    - summary: |
+        Support OAuth without token refresh. Example of initializing a client with OAuth:
 
-      ```java
-      ExampleApiClient client = ExampleApiClient
-          .builder()
-          .clientId("4bf2a37d-8512-44a2-af50-28a7701d9f2e")
-          .clientSecret("b3b187b0-ef48-49ba-9d99-80d89fd11c4a")
-          .build();
-      ```
-    type: fix
-  createdAt: '2024-05-15'
+        ```java
+        ExampleApiClient client = ExampleApiClient
+            .builder()
+            .clientId("4bf2a37d-8512-44a2-af50-28a7701d9f2e")
+            .clientSecret("b3b187b0-ef48-49ba-9d99-80d89fd11c4a")
+            .build();
+        ```
+      type: fix
+  createdAt: "2024-05-15"
   irVersion: 42
   version: 0.9.1
 
 - changelogEntry:
-  - summary: Bump intermediate representation to v42
-    type: internal
-  createdAt: '2024-05-13'
+    - summary: Bump intermediate representation to v42
+      type: internal
+  createdAt: "2024-05-13"
   irVersion: 42
   version: 0.9.0-rc0
 
 - changelogEntry:
-  - summary: Corrects the fix in 0.8.10 to check null value as opposed to a .isPresent check, given the header is not `Optional`, it's always `String`
-    type: fix
-  createdAt: '2024-05-08'
+    - summary: Corrects the fix in 0.8.10 to check null value as opposed to a .isPresent check, given the header is not `Optional`, it's always `String`
+      type: fix
+  createdAt: "2024-05-08"
   irVersion: 31
   version: 0.8.11
 
 - changelogEntry:
-  - summary: Fixes regression from 0.8.8, headers are no longer added to the header map unless they are non-null.
-    type: fix
-  createdAt: '2024-05-08'
+    - summary: Fixes regression from 0.8.8, headers are no longer added to the header map unless they are non-null.
+      type: fix
+  createdAt: "2024-05-08"
   irVersion: 31
   version: 0.8.10
 
 - changelogEntry:
-  - summary: Generated SDK clients now handle null response bodies and avoid NPEs when they receive error responses.
-    type: fix
-  createdAt: '2024-05-07'
+    - summary: Generated SDK clients now handle null response bodies and avoid NPEs when they receive error responses.
+      type: fix
+  createdAt: "2024-05-07"
   irVersion: 31
   version: 0.8.9
 
 - changelogEntry:
-  - summary: The generated SDKs no longer require global headers that are not directly related to auth if auth is mandatory within the SDK. Previously, the generator would require all global headers if auth was mandatory.
-    type: fix
-  createdAt: '2024-05-07'
+    - summary: The generated SDKs no longer require global headers that are not directly related to auth if auth is mandatory within the SDK. Previously, the generator would require all global headers if auth was mandatory.
+      type: fix
+  createdAt: "2024-05-07"
   irVersion: 31
   version: 0.8.8
 
 - changelogEntry:
-  - summary: |
-      You can now specify publishing metadata to populate your POM on publish:
-      ```yaml
-      generators:
-        - name: fernapi/fern-java-sdk
-          version: 0.X.Y
-          output:
-            location: maven
-            registryUrl: ""
-            publish-metadata:
-              author: ""
-              email: ""
-              package-description: ""
-              reference-url: ""
-      ```
-    type: feat
-  createdAt: '2024-03-21'
+    - summary: |
+        You can now specify publishing metadata to populate your POM on publish:
+        ```yaml
+        generators:
+          - name: fernapi/fern-java-sdk
+            version: 0.X.Y
+            output:
+              location: maven
+              registryUrl: ""
+              publish-metadata:
+                author: ""
+                email: ""
+                package-description: ""
+                reference-url: ""
+        ```
+      type: feat
+  createdAt: "2024-03-21"
   irVersion: 31
   version: 0.8.7
 
 - changelogEntry:
-  - summary: |
-      The SDK now generates RequestOptions functions for timeouts with IdempotentRequestOptions correctly, previously
-      timeout functions were only taking in regular RequestOptions. This also addresses a JavaPoet issue where fields were
-      being initialized twice across RequestOptions and IdempotentRequestOptions classes, preventing the SDK from generating at all.
-    type: fix
-  createdAt: '2024-03-20'
+    - summary: |
+        The SDK now generates RequestOptions functions for timeouts with IdempotentRequestOptions correctly, previously
+        timeout functions were only taking in regular RequestOptions. This also addresses a JavaPoet issue where fields were
+        being initialized twice across RequestOptions and IdempotentRequestOptions classes, preventing the SDK from generating at all.
+      type: fix
+  createdAt: "2024-03-20"
   irVersion: 31
   version: 0.8.6
 
 - changelogEntry:
-  - summary: |
-      Add in publishing config that allows for signing published artifacts, this is required for publishing to Maven
-      Central.
-      To sign your artifacts, you must add the below to your publishing config:
-      ```yaml
-      generators:
-        - name: fernapi/fern-java-sdk
-          version: 0.X.Y
-          output:
-            location: maven
-            registryUrl: ""
-            signature:
-              keyId: ""
-              password: ""
-              secretKey: ""
-      ```
-      and secrets can be used, similar to how API keys are specified today:
-      ```yaml
-      generators:
-        - name: fernapi/fern-java-sdk
-          version: 0.X.Y
-          output:
-            location: maven
-            registryUrl: ""
-            signature:
-              keyId: ${MY_KID_ENVVAR}
-              password: ${MY_SECRET_ENVVAR}
-              secretKey: ${MY_SECRET_KEY_ENVVAR}
-      ```
-    type: feat
-  createdAt: '2024-03-18'
+    - summary: |
+        Add in publishing config that allows for signing published artifacts, this is required for publishing to Maven
+        Central.
+        To sign your artifacts, you must add the below to your publishing config:
+        ```yaml
+        generators:
+          - name: fernapi/fern-java-sdk
+            version: 0.X.Y
+            output:
+              location: maven
+              registryUrl: ""
+              signature:
+                keyId: ""
+                password: ""
+                secretKey: ""
+        ```
+        and secrets can be used, similar to how API keys are specified today:
+        ```yaml
+        generators:
+          - name: fernapi/fern-java-sdk
+            version: 0.X.Y
+            output:
+              location: maven
+              registryUrl: ""
+              signature:
+                keyId: ${MY_KID_ENVVAR}
+                password: ${MY_SECRET_ENVVAR}
+                secretKey: ${MY_SECRET_KEY_ENVVAR}
+        ```
+      type: feat
+  createdAt: "2024-03-18"
   irVersion: 31
   version: 0.8.5
 
 - changelogEntry:
-  - summary: Update docker image for Java SDK task runner.
-    type: internal
-  createdAt: '2024-02-23'
+    - summary: Update docker image for Java SDK task runner.
+      type: internal
+  createdAt: "2024-02-23"
   irVersion: 31
   version: 0.8.5-rc0
 
 - changelogEntry:
-  - summary: |
-      The timeout specified on the RequestOptions object now sets the timeout on the entire call, not just the
-      read timeout of the request.
-      As a refresher, a timeout can be added per request like so:
-      ```java
-      RequestOptions ro = RequestOptions.builder().timeout(90).build(); // Creates a timeout of 90 seconds for the request
-      //  You could also specify the timeunit, similar to as if you were using OkHttp directly
-      //  RequestOptions ro = RequestOptions.builder().timeout(2, TimeUnit.MINUTES).build();
-      client.films.list(ro);
-      ```
-    type: fix
-  createdAt: '2024-02-23'
+    - summary: |
+        The timeout specified on the RequestOptions object now sets the timeout on the entire call, not just the
+        read timeout of the request.
+        As a refresher, a timeout can be added per request like so:
+        ```java
+        RequestOptions ro = RequestOptions.builder().timeout(90).build(); // Creates a timeout of 90 seconds for the request
+        //  You could also specify the timeunit, similar to as if you were using OkHttp directly
+        //  RequestOptions ro = RequestOptions.builder().timeout(2, TimeUnit.MINUTES).build();
+        client.films.list(ro);
+        ```
+      type: fix
+  createdAt: "2024-02-23"
   irVersion: 31
   version: 0.8.4
 
 - changelogEntry:
-  - summary: The SDK generator now always creates a valid name for union discriminator wrapper classes.
-    type: fix
-  createdAt: '2024-02-23'
+    - summary: The SDK generator now always creates a valid name for union discriminator wrapper classes.
+      type: fix
+  createdAt: "2024-02-23"
   irVersion: 31
   version: 0.8.3
 
 - changelogEntry:
-  - summary: |
-      File upload endpoints no longer fail to compile because the reference to
-      the mime type variable is present.
+    - summary: |
+        File upload endpoints no longer fail to compile because the reference to
+        the mime type variable is present.
 
-      ```java
-      // Code that failed to compile
-      String fileMimeType = Files.probeContentType(file.toPath());
-      MediaType fileMediaType = fileMimeType != null ? MediaType.parse(mimeType) : null; // mimeType undefined
-      // Code that now compiles
-      MediaType fileMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-      ```
-    type: fix
-  createdAt: '2024-02-21'
+        ```java
+        // Code that failed to compile
+        String fileMimeType = Files.probeContentType(file.toPath());
+        MediaType fileMediaType = fileMimeType != null ? MediaType.parse(mimeType) : null; // mimeType undefined
+        // Code that now compiles
+        MediaType fileMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+        ```
+      type: fix
+  createdAt: "2024-02-21"
   irVersion: 31
   version: 0.8.2
 
 - changelogEntry:
-  - summary: |
-      The RequestOptions object now supports configuring an optional timeout to apply per-request.
-      ```java
-      RequestOptions ro = RequestOptions.builder().timeout(90).build(); // Creates a timeout of 90 seconds for the request
-      //  You could also specify the timeunit, similar to as if you were using OkHttp directly
-      //  RequestOptions ro = RequestOptions.builder().timeout(2, TimeUnit.MINUTES).build();
-      client.films.list(ro);
-      ```
-    type: feat
-  createdAt: '2024-02-14'
+    - summary: |
+        The RequestOptions object now supports configuring an optional timeout to apply per-request.
+        ```java
+        RequestOptions ro = RequestOptions.builder().timeout(90).build(); // Creates a timeout of 90 seconds for the request
+        //  You could also specify the timeunit, similar to as if you were using OkHttp directly
+        //  RequestOptions ro = RequestOptions.builder().timeout(2, TimeUnit.MINUTES).build();
+        client.films.list(ro);
+        ```
+      type: feat
+  createdAt: "2024-02-14"
   irVersion: 31
   version: 0.8.1
 
 - changelogEntry:
-  - summary: |
-      The SDK generator now supports whitelabelling. When this is turned on,
-      there will be no mention of Fern in the generated code.
+    - summary: |
+        The SDK generator now supports whitelabelling. When this is turned on,
+        there will be no mention of Fern in the generated code.
 
-      **Note**: You must be on the enterprise tier to enable this mode.
-    type: feat
-  createdAt: '2024-02-11'
+        **Note**: You must be on the enterprise tier to enable this mode.
+      type: feat
+  createdAt: "2024-02-11"
   irVersion: 31
   version: 0.8.0
 
 - changelogEntry:
-  - summary: |
-      The SDK generator now supports idempotency headers. Users
-      will be able to specify the idempotency headers in RequestOptions.
+    - summary: |
+        The SDK generator now supports idempotency headers. Users
+        will be able to specify the idempotency headers in RequestOptions.
 
-      ```java
-      Imdb imdb = Imdb.builder()
-        .apiKey("...")
-        .build();
+        ```java
+        Imdb imdb = Imdb.builder()
+          .apiKey("...")
+          .build();
 
-      var response = imdb.ticket.purchase("theatre-id", IdempotentRequestOptions.builder()
-        .idempotencyKey("...")
-        .build());
-      ```
-    type: feat
+        var response = imdb.ticket.purchase("theatre-id", IdempotentRequestOptions.builder()
+          .idempotencyKey("...")
+          .build());
+        ```
+      type: feat
 
-  - summary: |
-     The SDK generator now supports scanning API credentials
-      via environment variables.
-      ```java
-      Imdb imdb = Imdb.builder()
-        .apiKey("...") // defaults to System.getenv("IMDB_API_KEY")
-        .build();
-      ```
-    type: feat
+    - summary: |
+        The SDK generator now supports scanning API credentials
+         via environment variables.
+         ```java
+         Imdb imdb = Imdb.builder()
+           .apiKey("...") // defaults to System.getenv("IMDB_API_KEY")
+           .build();
+         ```
+      type: feat
 
-  - summary: |
-      The generated models now support boolean literals and users
-      do not have to specify them in the builder.
-      For example, for the following object
-      ```yaml
-      Actor:
-        properties:
-          name: string
-          isMale: literal<true>
-      ```
-      the user will not need to specify the literal properties when building
-      the object.
-      ```java
-      var actor = Actor.builder()
-        .name("Brad Pitt")
-        .build();
-      ```
-    type: feat
-  createdAt: '2024-02-04'
+    - summary: |
+        The generated models now support boolean literals and users
+        do not have to specify them in the builder.
+        For example, for the following object
+        ```yaml
+        Actor:
+          properties:
+            name: string
+            isMale: literal<true>
+        ```
+        the user will not need to specify the literal properties when building
+        the object.
+        ```java
+        var actor = Actor.builder()
+          .name("Brad Pitt")
+          .build();
+        ```
+      type: feat
+  createdAt: "2024-02-04"
   irVersion: 31
   version: 0.7.1
 
 - changelogEntry:
-  - summary: Release version 0.6.1
-    type: internal
-  createdAt: '2024-02-03'
+    - summary: Release version 0.6.1
+      type: internal
+  createdAt: "2024-02-03"
   irVersion: 31
   version: 0.6.1

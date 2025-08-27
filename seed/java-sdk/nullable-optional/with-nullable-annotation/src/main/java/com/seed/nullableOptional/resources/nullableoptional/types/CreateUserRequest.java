@@ -95,10 +95,10 @@ public final class CreateUserRequest {
     }
 
     private boolean equalTo(CreateUserRequest other) {
-        return java.util.Objects.equals(username, other.username)
-                && java.util.Objects.equals(email, other.email)
-                && java.util.Objects.equals(phone, other.phone)
-                && java.util.Objects.equals(address, other.address);
+        return username.equals(other.username)
+                && email.equals(other.email)
+                && phone.equals(other.phone)
+                && address.equals(other.address);
     }
 
     @java.lang.Override

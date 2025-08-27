@@ -18,7 +18,6 @@ services:
     package: com.birch.trace.migration
     base-path: /migration-info
     endpoints:
-
       getAttemptedMigrations:
         http: GET /all
         args:

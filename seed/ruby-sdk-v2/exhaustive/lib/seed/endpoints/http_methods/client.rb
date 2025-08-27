@@ -29,7 +29,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/http-methods",
-            body: Seed::Types::Object_::Types::ObjectWithRequiredField.new(params[:request]).to_h,
+            body: Seed::Types::Object_::Types::ObjectWithRequiredField.new(params).to_h,
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -45,7 +45,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "PUT",
             path: "/http-methods/#{params[:id]}",
-            body: Seed::Types::Object_::Types::ObjectWithRequiredField.new(params[:request]).to_h,
+            body: Seed::Types::Object_::Types::ObjectWithRequiredField.new(params).to_h,
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
@@ -61,7 +61,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "PATCH",
             path: "/http-methods/#{params[:id]}",
-            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params[:request]).to_h,
+            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params).to_h,
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"

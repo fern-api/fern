@@ -1204,54 +1204,6 @@ client.endpoints().object().getAndReturnNestedWithRequiredFieldAsList(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.testIntegerOverflowEdgeCases(request) -> ObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```java
-client.endpoints().object().testIntegerOverflowEdgeCases(
-    ObjectWithOptionalField
-        .builder()
-        .string("boundary-test")
-        .integer(2147483647)
-        .double_(1.7976931348623157e+308)
-        .bool(true)
-        .build()
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `ObjectWithOptionalField` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## Endpoints Params
 <details><summary><code>client.endpoints.params.getWithPath(param) -> String</code></summary>
 <dl>
