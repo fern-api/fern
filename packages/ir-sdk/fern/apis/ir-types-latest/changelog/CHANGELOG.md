@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v59.3.0] - 2025-08-26
 
-- Fix: Cahange readmeConfig.disabledSections type from set to list.
+- Fix: Change readmeConfig.disabledSections type from set to list.
 
 ## [v59.2.0] - 2025-08-26
 
