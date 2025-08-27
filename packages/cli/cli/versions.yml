@@ -4,6 +4,13 @@
       type: fix
   irVersion: 59
   createdAt: "2025-08-27"
+  version: 0.66.29
+
+- changelogEntry:
+    - summary: Fix downloadFiles mode to respect organization's selfHostedSdKs flag for Java SDK generation
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-27"
   version: 0.66.28
 
 - changelogEntry:
