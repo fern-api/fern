@@ -9,7 +9,8 @@ import {
     HttpMethod,
     HttpService,
     IntermediateRepresentation,
-	Name
+    Name,
+    Pagination
 } from "@fern-fern/ir-sdk/api";
 import {
     DependencyManager,
@@ -694,6 +695,21 @@ describe("${serviceName}", () => {
             );
         }
 
+        const expectedName =
+            endpoint.pagination !== undefined
+                ? this.getPaginationPropertyPath("expected", endpoint.pagination, context)
+                : "expected";
+        const pageName =
+            endpoint.pagination !== undefined
+                ? this.getPaginationPropertyPath("page", endpoint.pagination, context)
+                : "page";
+        const nextPageName =
+            endpoint.pagination !== undefined
+                ? this.getPaginationPropertyPath("nextPage", endpoint.pagination, context)
+                : "nextPage";
+        const paginationPropertyName =
+            endpoint.pagination !== undefined ? this.getPaginationPropertyName(endpoint.pagination, context) : "";
+
         return code`
     test("${endpoint.name.originalName}", async () => {
         const server = mockServerPool.createServer();${mockAuthSnippet ? mockAuthSnippet : ""}
@@ -725,35 +741,35 @@ describe("${serviceName}", () => {
             isHeadersResponse
                 ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
         expect(headers).toBeInstanceOf(Headers);`
-                : code `const expected = ${expected};
+                : code`
                     ${
-                        endpoint.pagination != undefined
-                            ? code`const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
-                    expect(expected.${this.getEndpointPaginationPropertyName(endpoint, context)}).toEqual(page.data);
+                        endpoint.pagination !== undefined
+                            ? code`const expected = ${expected}
+                    const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                    expect(${expectedName}.${paginationPropertyName}).toEqual(${pageName}.data);
 
-                    expect(page.hasNextPage()).toBe(true);
-                    const nextPage = await page.getNextPage();
-                    expect(expected.${this.getEndpointPaginationPropertyName(endpoint, context)}).toEqual(nextPage.data);`
-                            : code`const received = ${getTextOfTsNode(generatedExample.endpointInvocation)};
-                    expect(received).toEqual(expected)`
+                    expect(${pageName}.hasNextPage()).toBe(true);
+                    const nextPage = await ${pageName}.getNextPage();
+                    expect(${expectedName}.${paginationPropertyName}).toEqual(${nextPageName}.data);`
+                            : code`const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                    expect(response).toEqual(${expected})`
                     }`
         }
     });
           `;
     }
 
-	private getEndpointPaginationPropertyName(endpoint: HttpEndpoint, context: SdkContext): string {
-		if (endpoint.pagination === undefined) {
-			return ""
-		}
+    private getPaginationPropertyPath(base: string, pagination: Pagination, context: SdkContext): string {
+        return [base, ...(pagination.results.propertyPath ?? []).map((name) => this.getName({ name, context }))].join(
+            "."
+        );
+    }
 
-		return [
-            ...(endpoint.pagination.results.propertyPath ?? []).map((name) => this.getName({ name, context })),
-			this.getName({ name: endpoint.pagination.results.property.name.name, context })
-            ].join(".");
-	}
+    private getPaginationPropertyName(pagination: Pagination, context: SdkContext): string {
+        return this.getName({ name: pagination.results.property.name.name, context });
+    }
 
-	private getName({ name, context }: { name: Name; context: SdkContext }): string {
+    private getName({ name, context }: { name: Name; context: SdkContext }): string {
         return context.retainOriginalCasing || !context.includeSerdeLayer ? name.originalName : name.camelCase.safeName;
     }
 
