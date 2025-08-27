@@ -526,6 +526,7 @@ export function generateIntermediateRepresentation({
     };
 
     const resolvedReadme = readme ?? workspace.generatorsConfiguration?.rawConfiguration.readme;
+    console.debug("generateIntermediateRepresentation: resolvedReadme", resolvedReadme);
     const readmeConfig =
         resolvedReadme != null
             ? convertReadmeConfig({ readme: resolvedReadme, services: intermediateRepresentation.services })
