@@ -96,7 +96,6 @@ class GeneratorCli:
         pagination_enabled: Union[bool, None] = False,
         websocket_enabled: bool = False,
     ) -> str:
-        print(f"Generating readme for {self._package_name}")
         readme_snippet_builder = ReadmeSnippetBuilder(
             ir=self._ir,
             package_name=self._package_name,
@@ -144,7 +143,6 @@ class GeneratorCli:
         github_repo_url: Optional[str] = None,
         github_installation_token: Optional[str] = None,
     ) -> str:
-        print(f"Writing readme config for {self._package_name}")
         readme_config = self._get_readme_config(
             snippets=snippets,
             github_repo_url=github_repo_url,
@@ -161,7 +159,6 @@ class GeneratorCli:
         github_repo_url: Optional[str] = None,
         github_installation_token: Optional[str] = None,
     ) -> generatorcli.readme.ReadmeConfig:
-        print(f"Getting readme config for {self._package_name}")
         feature_config = self._read_feature_config()
         features: List[generatorcli.readme.ReadmeFeature] = []
         for feature in feature_config.features:
@@ -177,7 +174,6 @@ class GeneratorCli:
                     snippets_are_optional=False,
                 ),
             )
-        print(f"Readme config: {self._ir.readme_config}")
         return generatorcli.readme.ReadmeConfig(
             introduction=self._ir.readme_config.introduction if self._ir.readme_config else None,
             organization=self._organization,
