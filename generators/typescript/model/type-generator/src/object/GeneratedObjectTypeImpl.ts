@@ -1,8 +1,8 @@
 import { ExampleTypeShape, ObjectProperty, ObjectTypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import {
-    GetReferenceOpts,
     generateInlinePropertiesModule,
     getPropertyKey,
+    GetReferenceOpts,
     getTextOfTsNode,
     maybeAddDocsStructure,
     TypeReferenceNode
@@ -185,12 +185,20 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             if (originalTypeForProperty.type !== "object") {
                 throw new Error("Property does not come from an object");
             }
-            const key = originalTypeForProperty.getPropertyKey({ propertyWireKey: property.name.wireValue });
-            return ts.factory.createPropertyAssignment(
-                getPropertyKey(key),
-                context.type.getGeneratedExample(property.value).build(context, opts)
-            );
-        });
+            try {
+                const key = originalTypeForProperty.getPropertyKey({ propertyWireKey: property.name.wireValue });
+                return ts.factory.createPropertyAssignment(
+                    getPropertyKey(key),
+                    context.type.getGeneratedExample(property.value).build(context, opts)
+                );
+            } catch (e) {
+                console.error(
+                    `Failed to get property key for property with wire value '${property.name.wireValue}' in object example. ` +
+                    `This may indicate a mismatch between the example and the type definition.`
+                );
+                return undefined;
+            }
+        }).filter((property) => property != null);
     }
 
     public getAllPropertiesIncludingExtensions(
