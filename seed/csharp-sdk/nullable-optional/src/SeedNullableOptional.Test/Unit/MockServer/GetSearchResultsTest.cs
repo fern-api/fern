@@ -6,14 +6,28 @@ using SeedNullableOptional.Core;
 namespace SeedNullableOptional.Test.Unit.MockServer;
 
 [TestFixture]
-public class ListUsersTest : BaseMockServerTest
+public class GetSearchResultsTest : BaseMockServerTest
 {
     [Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
+        const string requestJson = """
+            {
+              "query": "query",
+              "filters": {
+                "filters": "filters"
+              },
+              "includeTypes": [
+                "includeTypes",
+                "includeTypes"
+              ]
+            }
+            """;
+
         const string mockResponse = """
             [
               {
+                "type": "user",
                 "id": "id",
                 "username": "username",
                 "email": "email",
@@ -31,6 +45,7 @@ public class ListUsersTest : BaseMockServerTest
                 }
               },
               {
+                "type": "user",
                 "id": "id",
                 "username": "username",
                 "email": "email",
@@ -54,11 +69,9 @@ public class ListUsersTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/api/users")
-                    .WithParam("limit", "1")
-                    .WithParam("offset", "1")
-                    .WithParam("sortBy", "sortBy")
-                    .UsingGet()
+                    .WithPath("/api/search")
+                    .UsingPost()
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -67,18 +80,17 @@ public class ListUsersTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.NullableOptional.ListUsersAsync(
-            new ListUsersRequest
+        var response = await Client.NullableOptional.GetSearchResultsAsync(
+            new SearchRequest
             {
-                Limit = 1,
-                Offset = 1,
-                IncludeDeleted = true,
-                SortBy = "sortBy",
+                Query = "query",
+                Filters = new Dictionary<string, string?>() { { "filters", "filters" } },
+                IncludeTypes = new List<string>() { "includeTypes", "includeTypes" },
             }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<UserResponse>>(mockResponse))
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<SearchResult>?>(mockResponse))
                 .UsingDefaults()
         );
     }
