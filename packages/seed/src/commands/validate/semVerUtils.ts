@@ -10,8 +10,15 @@ export function assertValidSemVerOrThrow(version: string): void {
 export function assertValidSemVerChangeOrThrow(currentRelease: ReleaseRequest, previousRelease: ReleaseRequest): void {
     const currentVersion = SemVer.fromString(currentRelease.version);
     const previousVersion = SemVer.fromString(previousRelease.version);
+    if (!isValidSemVerChange(currentVersion, previousVersion)) {
+        throw new InvalidSemVerError(`Invalid semver change: ${previousRelease.version} -> ${currentRelease.version}`);
+    }
     if (currentRelease.changelogEntry?.some((entry) => entry.type === ChangelogEntryType.Feat)) {
-        assertValidSemVerChangeForFeatureOrThrow(currentVersion, previousVersion);
+        if (!hasFeatureLevelSemVerChange(currentVersion, previousVersion)) {
+            throw new InvalidSemVerError(
+                `Invalid semver change for feature change type: ${previousRelease.version} -> ${currentRelease.version}`
+            );
+        }
     }
 }
 
@@ -51,27 +58,31 @@ export class SemVer {
     }
 }
 
-export function assertValidSemVerChangeForFeatureOrThrow(currentVersion: SemVer, previousVersion: SemVer): void {
-    if (!isValidSemVerChangeForFeature(currentVersion, previousVersion)) {
-        throw new InvalidSemVerError(
-            `Invalid semver change for feature change type: ${previousVersion} -> ${currentVersion}`
-        );
-    }
+export function hasFeatureLevelSemVerChange(currentVersion: SemVer, previousVersion: SemVer): boolean {
+    return currentVersion.major !== previousVersion.major || currentVersion.minor !== previousVersion.minor;
 }
 
-export function isValidSemVerChangeForFeature(currentVersion: SemVer, previousVersion: SemVer): boolean {
+export function isValidSemVerChange(currentVersion: SemVer, previousVersion: SemVer): boolean {
     if (currentVersion.major !== previousVersion.major) {
         return (
             currentVersion.major === previousVersion.major + 1 &&
             currentVersion.minor === 0 &&
-            currentVersion.patch === 0
+            currentVersion.patch === 0 &&
+            (currentVersion.prerelease === undefined || currentVersion.prerelease === 0)
         );
     }
     if (currentVersion.minor !== previousVersion.minor) {
-        return currentVersion.minor === previousVersion.minor + 1 && currentVersion.patch === 0;
+        return (
+            currentVersion.minor === previousVersion.minor + 1 &&
+            currentVersion.patch === 0 &&
+            (currentVersion.prerelease === undefined || currentVersion.prerelease === 0)
+        );
     }
     if (currentVersion.patch !== previousVersion.patch) {
-        return false;
+        return (
+            currentVersion.patch === previousVersion.patch + 1 &&
+            (currentVersion.prerelease === undefined || currentVersion.prerelease === 0)
+        );
     }
     if (currentVersion.prerelease === undefined) {
         return false;
