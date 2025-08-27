@@ -134,6 +134,10 @@ if [ ${#failed_changelogs[@]} -gt 0 ]; then
         fi
     done
 
+    echo "❌ The following changelogs failed validation:"
+    printf '  - %s\n' "${failed_changelogs[@]}"
+    echo ""
+
     # Clean up temp files
     rm -rf "$temp_dir"
 
