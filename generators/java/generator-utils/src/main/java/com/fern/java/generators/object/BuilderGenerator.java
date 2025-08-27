@@ -372,6 +372,9 @@ public final class BuilderGenerator {
         List<EnrichedObjectPropertyWithField> finalStageProperties = stagedBuilderConfig.finalStage();
         for (EnrichedObjectPropertyWithField enrichedProperty : finalStageProperties) {
             TypeName poetTypeName = enrichedProperty.enrichedObjectProperty.poetTypeName();
+            boolean isNullable = enrichedProperty.enrichedObjectProperty.nullable() 
+                    || enrichedProperty.enrichedObjectProperty.aliasOfNullable();
+            
             if (poetTypeName instanceof ParameterizedTypeName) {
                 addAdditionalSetters(
                         (ParameterizedTypeName) poetTypeName,
@@ -391,9 +394,18 @@ public final class BuilderGenerator {
                         builderImpl::addReversedFields,
                         builderImpl::addReversedMethods,
                         false);
+            } else if (isNullable) {
+                // Handle nullable fields that are not wrapped types
+                // These should have a setter that accepts nullable values
+                addNullableFieldSetter(
+                        enrichedProperty,
+                        finalStageClassName,
+                        finalStageBuilder::addMethod,
+                        builderImpl::addReversedFields,
+                        builderImpl::addReversedMethods);
             } else {
-                throw new RuntimeException("Encountered final stage property that is not a ParameterizedTypeName: "
-                        + poetTypeName.toString());
+                throw new RuntimeException("Encountered final stage property that is not a ParameterizedTypeName and not nullable: "
+                        + poetTypeName.toString() + " for field: " + enrichedProperty.fieldSpec.name);
             }
         }
         return PoetTypeWithClassName.of(finalStageClassName, finalStageBuilder.build());
@@ -553,7 +565,9 @@ public final class BuilderGenerator {
                     .build());
             implSetterConsumer.accept(
                     createMapPutAllSetter(enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
+                            .beginControlFlow("if ($L != null)", fieldSpec.name)
                             .addStatement("this.$L.putAll($L)", fieldSpec.name, fieldSpec.name)
+                            .endControlFlow()
                             .addStatement("return this")
                             .build());
             implSetterConsumer.accept(
@@ -590,7 +604,9 @@ public final class BuilderGenerator {
                     .build());
             implSetterConsumer.accept(createCollectionAddAllSetter(
                             enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
+                    .beginControlFlow("if ($L != null)", fieldSpec.name)
                     .addStatement("this.$L.addAll($L)", fieldSpec.name, fieldSpec.name)
+                    .endControlFlow()
                     .addStatement("return this")
                     .build());
         } else if (isEqual(propertyTypeName, ClassName.get(Set.class))) {
@@ -618,7 +634,9 @@ public final class BuilderGenerator {
                     .build());
             implSetterConsumer.accept(createCollectionAddAllSetter(
                             enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
+                    .beginControlFlow("if ($L != null)", fieldSpec.name)
                     .addStatement("this.$L.addAll($L)", fieldSpec.name, fieldSpec.name)
+                    .endControlFlow()
                     .addStatement("return this")
                     .build());
         }
@@ -831,6 +849,69 @@ public final class BuilderGenerator {
         return setter;
     }
 
+    private void addNullableFieldSetter(
+            EnrichedObjectPropertyWithField enrichedProperty,
+            ClassName returnClass,
+            Consumer<MethodSpec> interfaceSetterConsumer,
+            Consumer<FieldSpec> implFieldConsumer,
+            Consumer<MethodSpec> implSetterConsumer) {
+        FieldSpec fieldSpec = enrichedProperty.fieldSpec;
+        TypeName poetTypeName = enrichedProperty.enrichedObjectProperty.poetTypeName();
+        
+        // Add field to implementation
+        implFieldConsumer.accept(FieldSpec.builder(fieldSpec.type, fieldSpec.name, Modifier.PRIVATE)
+                .build());
+        
+        // Create interface method without @NotNull annotation
+        MethodSpec.Builder interfaceSetter = MethodSpec.methodBuilder(fieldSpec.name)
+                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                .returns(returnClass);
+        
+        // Add parameter with @Nullable annotation if the field is nullable
+        ParameterSpec.Builder paramBuilder = ParameterSpec.builder(poetTypeName, fieldSpec.name);
+        if (enrichedProperty.enrichedObjectProperty.nullable()
+                || enrichedProperty.enrichedObjectProperty.aliasOfNullable()) {
+            paramBuilder.addAnnotation(nullableClassName);
+        }
+        interfaceSetter.addParameter(paramBuilder.build());
+        
+        if (enrichedProperty.enrichedObjectProperty.docs().isPresent()) {
+            interfaceSetter.addJavadoc(JavaDocUtils.render(
+                    enrichedProperty.enrichedObjectProperty.docs().get()));
+        }
+        
+        interfaceSetterConsumer.accept(interfaceSetter.build());
+        
+        // Create implementation method
+        MethodSpec.Builder implSetter = MethodSpec.methodBuilder(fieldSpec.name)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(returnClass)
+                .addAnnotation(ClassName.get("", "java.lang.Override"));
+        
+        // Add parameter with @Nullable annotation
+        implSetter.addParameter(paramBuilder.build());
+        
+        // Add JsonSetter annotation if wire key is present
+        if (enrichedProperty.enrichedObjectProperty.wireKey().isPresent()) {
+            implSetter.addAnnotation(AnnotationSpec.builder(JsonSetter.class)
+                    .addMember("value", "$S", 
+                            enrichedProperty.enrichedObjectProperty.wireKey().get())
+                    .build());
+        }
+        
+        // Simple assignment without null check since nullable values are allowed
+        implSetter.addStatement("this.$L = $L", fieldSpec.name, fieldSpec.name);
+        implSetter.addStatement("return this");
+        
+        if (enrichedProperty.enrichedObjectProperty.docs().isPresent()) {
+            implSetter.addJavadoc(JavaDocUtils.render(
+                    enrichedProperty.enrichedObjectProperty.docs().get()));
+            implSetter.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
+        }
+        
+        implSetterConsumer.accept(implSetter.build());
+    }
+
     private static MethodSpec.Builder createNullableItemTypeNameSetter(
             EnrichedObjectPropertyWithField enrichedObjectProperty,
             ClassName nullableClassName,
@@ -904,6 +985,13 @@ public final class BuilderGenerator {
     }
 
     private boolean isRequired(EnrichedObjectPropertyWithField enrichedObjectProperty) {
+        // Nullable fields should be treated as non-required, allowing them to be set
+        // in the final stage where null values can be passed
+        if (enrichedObjectProperty.enrichedObjectProperty.nullable()
+                || enrichedObjectProperty.enrichedObjectProperty.aliasOfNullable()) {
+            return false;
+        }
+        
         TypeName poetTypeName = enrichedObjectProperty.enrichedObjectProperty.poetTypeName();
         if (poetTypeName instanceof ParameterizedTypeName) {
             ParameterizedTypeName poetParameterizedTypeName = (ParameterizedTypeName) poetTypeName;
