@@ -36,5 +36,5 @@ jobs:
       - name: Seed Build
         run: pnpm seed:build
 
-      - name: Validate changelog
+      - name: Validate changelogs
         run: pnpm scripts/validate-all-changelogs.sh
