@@ -4,12 +4,15 @@
 
 package resources.nullable.types;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import core.Nullable;
+import core.NullableNonemptyFilter;
 import core.ObjectMappers;
 import java.lang.Integer;
 import java.lang.Object;
@@ -64,8 +67,11 @@ public final class User {
     return id;
   }
 
-  @JsonProperty("tags")
+  @JsonIgnore
   public Optional<List<String>> getTags() {
+    if (tags == null) {
+      return Optional.empty();
+    }
     return tags;
   }
 
@@ -74,8 +80,11 @@ public final class User {
     return metadata;
   }
 
-  @JsonProperty("email")
+  @JsonIgnore
   public Email getEmail() {
+    if (email == null) {
+      return Email.of(Optional.empty());
+    }
     return email;
   }
 
@@ -92,6 +101,24 @@ public final class User {
   @JsonProperty("strings")
   public Optional<Map<String, Object>> getStrings() {
     return strings;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("tags")
+  private Optional<List<String>> _getTags() {
+    return tags;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("email")
+  private Email _getEmail() {
+    return email;
   }
 
   @java.lang.Override
@@ -125,11 +152,7 @@ public final class User {
   }
 
   public interface IdStage {
-    EmailStage id(@NotNull UserId id);
-  }
-
-  public interface EmailStage {
-    FavoriteNumberStage email(@NotNull Email email);
+    FavoriteNumberStage id(@NotNull UserId id);
   }
 
   public interface FavoriteNumberStage {
@@ -143,9 +166,13 @@ public final class User {
 
     _FinalStage tags(List<String> tags);
 
+    _FinalStage tags(Nullable<List<String>> tags);
+
     _FinalStage metadata(Optional<Metadata> metadata);
 
     _FinalStage metadata(Metadata metadata);
+
+    _FinalStage email(Nullable<Email> email);
 
     _FinalStage numbers(Optional<List<Integer>> numbers);
 
@@ -159,12 +186,10 @@ public final class User {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements NameStage, IdStage, EmailStage, FavoriteNumberStage, _FinalStage {
+  public static final class Builder implements NameStage, IdStage, FavoriteNumberStage, _FinalStage {
     private String name;
 
     private UserId id;
-
-    private Email email;
 
     private WeirdNumber favoriteNumber;
 
@@ -201,15 +226,8 @@ public final class User {
 
     @java.lang.Override
     @JsonSetter("id")
-    public EmailStage id(@NotNull UserId id) {
+    public FavoriteNumberStage id(@NotNull UserId id) {
       this.id = Objects.requireNonNull(id, "id must not be null");
-      return this;
-    }
-
-    @java.lang.Override
-    @JsonSetter("email")
-    public FavoriteNumberStage email(@NotNull Email email) {
-      this.email = Objects.requireNonNull(email, "email must not be null");
       return this;
     }
 
@@ -252,6 +270,19 @@ public final class User {
       return this;
     }
 
+    public _FinalStage email(Nullable<Email> email) {
+      if (email.isNull()) {
+        this.email = null;
+      }
+      else if (email.isEmpty()) {
+        this.email = Email.of(Optional.empty());
+      }
+      else {
+        this.email = email.get();
+      }
+      return this;
+    }
+
     @java.lang.Override
     public _FinalStage metadata(Metadata metadata) {
       this.metadata = Optional.ofNullable(metadata);
@@ -265,6 +296,20 @@ public final class User {
     )
     public _FinalStage metadata(Optional<Metadata> metadata) {
       this.metadata = metadata;
+      return this;
+    }
+
+    @java.lang.Override
+    public _FinalStage tags(Nullable<List<String>> tags) {
+      if (tags.isNull()) {
+        this.tags = null;
+      }
+      else if (tags.isEmpty()) {
+        this.tags = Optional.empty();
+      }
+      else {
+        this.tags = Optional.of(tags.get());
+      }
       return this;
     }
 

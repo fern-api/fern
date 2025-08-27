@@ -115,7 +115,7 @@ export async function runLocalGenerationForWorkspace({
                     org: organization.ok ? organization.body : undefined,
                     version,
                     packageName,
-                    context
+                    context: interactiveTaskContext
                 });
                 if (publishConfig != null) {
                     intermediateRepresentation.publishConfig = publishConfig;
@@ -233,7 +233,12 @@ function getPublishConfig({
     }
 
     return generatorInvocation.outputMode._visit({
-        downloadFiles: () => undefined,
+        downloadFiles: () => {
+            return FernIr.PublishingConfig.filesystem({
+                generateFullProject: org?.selfHostedSdKs ?? false,
+                publishTarget: undefined
+            });
+        },
         github: () => undefined,
         githubV2: () => undefined,
         publish: () => undefined,

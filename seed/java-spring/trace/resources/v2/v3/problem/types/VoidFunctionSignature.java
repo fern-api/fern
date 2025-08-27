@@ -87,7 +87,9 @@ public final class VoidFunctionSignature {
     }
 
     public Builder addAllParameters(List<Parameter> parameters) {
-      this.parameters.addAll(parameters);
+      if (parameters != null) {
+        this.parameters.addAll(parameters);
+      }
       return this;
     }
 

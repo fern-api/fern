@@ -6,6 +6,8 @@ import pydantic
 import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...core.serialization import FieldMetadata
+from .nullable_user_id import NullableUserId
+from .optional_user_id import OptionalUserId
 
 
 class Address(UniversalBaseModel):
@@ -18,6 +20,8 @@ class Address(UniversalBaseModel):
     state: typing.Optional[str] = None
     zip_code: typing_extensions.Annotated[str, FieldMetadata(alias="zipCode")]
     country: typing.Optional[str] = None
+    building_id: typing_extensions.Annotated[NullableUserId, FieldMetadata(alias="buildingId")]
+    tenant_id: typing_extensions.Annotated[OptionalUserId, FieldMetadata(alias="tenantId")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

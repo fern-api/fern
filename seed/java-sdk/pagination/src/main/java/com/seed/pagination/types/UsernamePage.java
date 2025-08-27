@@ -114,7 +114,9 @@ public final class UsernamePage {
         }
 
         public Builder addAllData(List<String> data) {
-            this.data.addAll(data);
+            if (data != null) {
+                this.data.addAll(data);
+            }
             return this;
         }
 

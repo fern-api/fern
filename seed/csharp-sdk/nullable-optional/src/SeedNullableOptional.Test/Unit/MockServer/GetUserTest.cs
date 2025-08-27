@@ -24,7 +24,9 @@ public class GetUserTest : BaseMockServerTest
                 "city": "city",
                 "state": "state",
                 "zipCode": "zipCode",
-                "country": "country"
+                "country": "country",
+                "buildingId": "buildingId",
+                "tenantId": "tenantId"
               }
             }
             """;

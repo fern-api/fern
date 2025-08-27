@@ -2,6 +2,9 @@
 
 # isort: skip_file
 
+from .search_request import SearchRequest
 from .service import AbstractNullableOptionalService
+from .update_complex_profile_request import UpdateComplexProfileRequest
+from .update_tags_request import UpdateTagsRequest
 
-__all__ = ["AbstractNullableOptionalService"]
+__all__ = ["AbstractNullableOptionalService", "SearchRequest", "UpdateComplexProfileRequest", "UpdateTagsRequest"]

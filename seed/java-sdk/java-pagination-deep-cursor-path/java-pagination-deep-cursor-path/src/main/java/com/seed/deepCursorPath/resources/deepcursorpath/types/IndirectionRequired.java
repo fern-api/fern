@@ -115,7 +115,9 @@ public final class IndirectionRequired {
         }
 
         public Builder addAllResults(List<String> results) {
-            this.results.addAll(results);
+            if (results != null) {
+                this.results.addAll(results);
+            }
             return this;
         }
 

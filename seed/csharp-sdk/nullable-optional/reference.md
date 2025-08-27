@@ -94,6 +94,8 @@ await client.NullableOptional.CreateUserAsync(
             State = "state",
             ZipCode = "zipCode",
             Country = "country",
+            BuildingId = "buildingId",
+            TenantId = "tenantId",
         },
     }
 );
@@ -164,6 +166,8 @@ await client.NullableOptional.UpdateUserAsync(
             State = "state",
             ZipCode = "zipCode",
             Country = "country",
+            BuildingId = "buildingId",
+            TenantId = "tenantId",
         },
     }
 );
@@ -314,6 +318,721 @@ await client.NullableOptional.SearchUsersAsync(
 <dd>
 
 **request:** `SearchUsersRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">CreateComplexProfileAsync</a>(ComplexProfile { ... }) -> ComplexProfile</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a complex profile to test nullable enums and unions
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.NullableOptional.CreateComplexProfileAsync(
+    new ComplexProfile
+    {
+        Id = "id",
+        NullableRole = UserRole.Admin,
+        OptionalRole = UserRole.Admin,
+        OptionalNullableRole = UserRole.Admin,
+        NullableStatus = UserStatus.Active,
+        OptionalStatus = UserStatus.Active,
+        OptionalNullableStatus = UserStatus.Active,
+        NullableNotification = new NotificationMethod(
+            new NotificationMethod.Email(
+                new EmailNotification
+                {
+                    EmailAddress = "emailAddress",
+                    Subject = "subject",
+                    HtmlContent = "htmlContent",
+                }
+            )
+        ),
+        OptionalNotification = new NotificationMethod(
+            new NotificationMethod.Email(
+                new EmailNotification
+                {
+                    EmailAddress = "emailAddress",
+                    Subject = "subject",
+                    HtmlContent = "htmlContent",
+                }
+            )
+        ),
+        OptionalNullableNotification = new NotificationMethod(
+            new NotificationMethod.Email(
+                new EmailNotification
+                {
+                    EmailAddress = "emailAddress",
+                    Subject = "subject",
+                    HtmlContent = "htmlContent",
+                }
+            )
+        ),
+        NullableSearchResult = new SearchResult(
+            new SearchResult.User(
+                new UserResponse
+                {
+                    Id = "id",
+                    Username = "username",
+                    Email = "email",
+                    Phone = "phone",
+                    CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+                    UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+                    Address = new Address
+                    {
+                        Street = "street",
+                        City = "city",
+                        State = "state",
+                        ZipCode = "zipCode",
+                        Country = "country",
+                        BuildingId = "buildingId",
+                        TenantId = "tenantId",
+                    },
+                }
+            )
+        ),
+        OptionalSearchResult = new SearchResult(
+            new SearchResult.User(
+                new UserResponse
+                {
+                    Id = "id",
+                    Username = "username",
+                    Email = "email",
+                    Phone = "phone",
+                    CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+                    UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+                    Address = new Address
+                    {
+                        Street = "street",
+                        City = "city",
+                        State = "state",
+                        ZipCode = "zipCode",
+                        Country = "country",
+                        BuildingId = "buildingId",
+                        TenantId = "tenantId",
+                    },
+                }
+            )
+        ),
+        NullableArray = new List<string>() { "nullableArray", "nullableArray" },
+        OptionalArray = new List<string>() { "optionalArray", "optionalArray" },
+        OptionalNullableArray = new List<string>()
+        {
+            "optionalNullableArray",
+            "optionalNullableArray",
+        },
+        NullableListOfNullables = new List<string>()
+        {
+            "nullableListOfNullables",
+            "nullableListOfNullables",
+        },
+        NullableMapOfNullables = new Dictionary<string, Address?>()
+        {
+            {
+                "nullableMapOfNullables",
+                new Address
+                {
+                    Street = "street",
+                    City = "city",
+                    State = "state",
+                    ZipCode = "zipCode",
+                    Country = "country",
+                    BuildingId = "buildingId",
+                    TenantId = "tenantId",
+                }
+            },
+        },
+        NullableListOfUnions = new List<NotificationMethod>()
+        {
+            new NotificationMethod(
+                new NotificationMethod.Email(
+                    new EmailNotification
+                    {
+                        EmailAddress = "emailAddress",
+                        Subject = "subject",
+                        HtmlContent = "htmlContent",
+                    }
+                )
+            ),
+            new NotificationMethod(
+                new NotificationMethod.Email(
+                    new EmailNotification
+                    {
+                        EmailAddress = "emailAddress",
+                        Subject = "subject",
+                        HtmlContent = "htmlContent",
+                    }
+                )
+            ),
+        },
+        OptionalMapOfEnums = new Dictionary<string, UserRole>()
+        {
+            { "optionalMapOfEnums", UserRole.Admin },
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ComplexProfile` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">GetComplexProfileAsync</a>(profileId) -> ComplexProfile</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a complex profile by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.NullableOptional.GetComplexProfileAsync("profileId");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**profileId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">UpdateComplexProfileAsync</a>(profileId, UpdateComplexProfileRequest { ... }) -> ComplexProfile</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update complex profile to test nullable field updates
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.NullableOptional.UpdateComplexProfileAsync(
+    "profileId",
+    new UpdateComplexProfileRequest
+    {
+        NullableRole = UserRole.Admin,
+        NullableStatus = UserStatus.Active,
+        NullableNotification = new NotificationMethod(
+            new NotificationMethod.Email(
+                new EmailNotification
+                {
+                    EmailAddress = "emailAddress",
+                    Subject = "subject",
+                    HtmlContent = "htmlContent",
+                }
+            )
+        ),
+        NullableSearchResult = new SearchResult(
+            new SearchResult.User(
+                new UserResponse
+                {
+                    Id = "id",
+                    Username = "username",
+                    Email = "email",
+                    Phone = "phone",
+                    CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+                    UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+                    Address = new Address
+                    {
+                        Street = "street",
+                        City = "city",
+                        State = "state",
+                        ZipCode = "zipCode",
+                        Country = "country",
+                        BuildingId = "buildingId",
+                        TenantId = "tenantId",
+                    },
+                }
+            )
+        ),
+        NullableArray = new List<string>() { "nullableArray", "nullableArray" },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**profileId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdateComplexProfileRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">TestDeserializationAsync</a>(DeserializationTestRequest { ... }) -> DeserializationTestResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Test endpoint for validating null deserialization
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.NullableOptional.TestDeserializationAsync(
+    new DeserializationTestRequest
+    {
+        RequiredString = "requiredString",
+        NullableString = "nullableString",
+        OptionalString = "optionalString",
+        OptionalNullableString = "optionalNullableString",
+        NullableEnum = UserRole.Admin,
+        OptionalEnum = UserStatus.Active,
+        NullableUnion = new NotificationMethod(
+            new NotificationMethod.Email(
+                new EmailNotification
+                {
+                    EmailAddress = "emailAddress",
+                    Subject = "subject",
+                    HtmlContent = "htmlContent",
+                }
+            )
+        ),
+        OptionalUnion = new SearchResult(
+            new SearchResult.User(
+                new UserResponse
+                {
+                    Id = "id",
+                    Username = "username",
+                    Email = "email",
+                    Phone = "phone",
+                    CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+                    UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+                    Address = new Address
+                    {
+                        Street = "street",
+                        City = "city",
+                        State = "state",
+                        ZipCode = "zipCode",
+                        Country = "country",
+                        BuildingId = "buildingId",
+                        TenantId = "tenantId",
+                    },
+                }
+            )
+        ),
+        NullableList = new List<string>() { "nullableList", "nullableList" },
+        NullableMap = new Dictionary<string, int>() { { "nullableMap", 1 } },
+        NullableObject = new Address
+        {
+            Street = "street",
+            City = "city",
+            State = "state",
+            ZipCode = "zipCode",
+            Country = "country",
+            BuildingId = "buildingId",
+            TenantId = "tenantId",
+        },
+        OptionalObject = new Organization
+        {
+            Id = "id",
+            Name = "name",
+            Domain = "domain",
+            EmployeeCount = 1,
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `DeserializationTestRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">FilterByRoleAsync</a>(FilterByRoleRequest { ... }) -> IEnumerable<UserResponse></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Filter users by role with nullable enum
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.NullableOptional.FilterByRoleAsync(
+    new FilterByRoleRequest
+    {
+        Role = UserRole.Admin,
+        Status = UserStatus.Active,
+        SecondaryRole = UserRole.Admin,
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `FilterByRoleRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">GetNotificationSettingsAsync</a>(userId) -> NotificationMethod?</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get notification settings which may be null
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.NullableOptional.GetNotificationSettingsAsync("userId");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**userId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">UpdateTagsAsync</a>(userId, UpdateTagsRequest { ... }) -> IEnumerable<string></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update tags to test array handling
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.NullableOptional.UpdateTagsAsync(
+    "userId",
+    new UpdateTagsRequest
+    {
+        Tags = new List<string>() { "tags", "tags" },
+        Categories = new List<string>() { "categories", "categories" },
+        Labels = new List<string>() { "labels", "labels" },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**userId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdateTagsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">GetSearchResultsAsync</a>(SearchRequest { ... }) -> IEnumerable<SearchResult>?</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get search results with nullable unions
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.NullableOptional.GetSearchResultsAsync(
+    new SearchRequest
+    {
+        Query = "query",
+        Filters = new Dictionary<string, string?>() { { "filters", "filters" } },
+        IncludeTypes = new List<string>() { "includeTypes", "includeTypes" },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SearchRequest` 
     
 </dd>
 </dl>

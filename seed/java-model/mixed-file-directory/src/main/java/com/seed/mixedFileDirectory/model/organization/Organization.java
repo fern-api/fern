@@ -123,7 +123,9 @@ public final class Organization {
 
         @java.lang.Override
         public _FinalStage addAllUsers(List<User> users) {
-            this.users.addAll(users);
+            if (users != null) {
+                this.users.addAll(users);
+            }
             return this;
         }
 

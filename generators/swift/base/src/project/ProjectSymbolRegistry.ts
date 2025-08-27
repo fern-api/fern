@@ -26,6 +26,12 @@ export class ProjectSymbolRegistry {
         this.requestsRegistry = new SymbolRegistry({ reservedSymbolNames: [] });
     }
 
+    public getModuleSymbolOrThrow(): string {
+        const symbolName = this.registry.getSymbolNameById(this.getModuleSymbolId());
+        assertDefined(symbolName, "Module symbol not found.");
+        return symbolName;
+    }
+
     public getRootClientSymbolOrThrow(): string {
         const symbolName = this.registry.getSymbolNameById(this.getRootClientSymbolId());
         assertDefined(symbolName, "Root client symbol not found.");
@@ -87,21 +93,49 @@ export class ProjectSymbolRegistry {
     }
 
     /**
+     * Registers a unique symbol name for the module.
+     * Tries preferred name first, then falls back to standard candidates.
+     *
+     * @returns The registered unique module symbol name
+     */
+    public registerModuleSymbol({
+        configModuleName,
+        apiNamePascalCase
+    }: {
+        configModuleName: string | undefined;
+        apiNamePascalCase: string;
+    }): string {
+        const candidates: [string, ...string[]] = [
+            `${apiNamePascalCase}`,
+            `${apiNamePascalCase}Api`,
+            `${apiNamePascalCase}Module`
+        ];
+        if (typeof configModuleName === "string") {
+            candidates.unshift(configModuleName);
+        }
+        return this.registry.registerSymbol(this.getModuleSymbolId(), candidates);
+    }
+
+    /**
      * Registers a unique symbol name for the root client class.
      * Tries preferred name first, then falls back to standard candidates.
      *
-     * @param apiNamePascalCase The API name in PascalCase
-     * @param preferredName Preferred name for the symbol
      * @returns The registered unique root client symbol name
      */
-    public registerRootClientSymbol(apiNamePascalCase: string, preferredName: string | undefined): string {
+    public registerRootClientSymbol({
+        configClientClassName,
+        apiNamePascalCase
+    }: {
+        configClientClassName: string | undefined;
+        apiNamePascalCase: string;
+    }): string {
         const candidates: [string, ...string[]] = [
             `${apiNamePascalCase}Client`,
-            `${apiNamePascalCase}Api`,
-            `${apiNamePascalCase}ApiClient`
+            `${apiNamePascalCase}ApiClient`,
+            `${apiNamePascalCase}Service`
         ];
-        if (typeof preferredName === "string") {
-            candidates.unshift(preferredName);
+        if (typeof configClientClassName === "string") {
+            candidates.unshift(configClientClassName);
         }
         return this.registry.registerSymbol(this.getRootClientSymbolId(), candidates);
     }
@@ -110,18 +144,22 @@ export class ProjectSymbolRegistry {
      * Registers and generates a unique symbol name for the environment enum.
      * Tries preferred name first, then falls back to standard candidates.
      *
-     * @param apiNamePascalCase The API name in PascalCase
-     * @param preferredName Preferred name for the symbol
      * @returns The generated unique environment symbol name
      */
-    public registerEnvironmentSymbol(apiNamePascalCase: string, preferredName: string | undefined): string {
+    public registerEnvironmentSymbol({
+        configEnvironmentEnumName,
+        apiNamePascalCase
+    }: {
+        configEnvironmentEnumName: string | undefined;
+        apiNamePascalCase: string;
+    }): string {
         const candidates: [string, ...string[]] = [
             `${apiNamePascalCase}Environment`,
             `${apiNamePascalCase}Environ`,
             `${apiNamePascalCase}Env`
         ];
-        if (typeof preferredName === "string") {
-            candidates.unshift(preferredName);
+        if (typeof configEnvironmentEnumName === "string") {
+            candidates.unshift(configEnvironmentEnumName);
         }
         return this.registry.registerSymbol(this.getEnvironmentSymbolId(), candidates);
     }
@@ -142,7 +180,13 @@ export class ProjectSymbolRegistry {
      * @param requestNamePascalCase The request name in PascalCase
      * @returns The generated unique inline request type symbol name
      */
-    public registerRequestTypeSymbol(endpointId: string, requestNamePascalCase: string): string {
+    public registerRequestTypeSymbol({
+        endpointId,
+        requestNamePascalCase
+    }: {
+        endpointId: string;
+        requestNamePascalCase: string;
+    }): string {
         const symbolId = this.getRequestTypeSymbolId(endpointId, requestNamePascalCase);
         const fallbackCandidates: string[] = [`${requestNamePascalCase}Type`];
         if (requestNamePascalCase.endsWith("Request")) {
@@ -167,11 +211,15 @@ export class ProjectSymbolRegistry {
      * @param subpackageNamePascalCase The subpackage name in PascalCase
      * @returns The generated unique sub-client symbol name
      */
-    public registerSubClientSymbol(
-        subpackageId: string,
-        fernFilepathPartNamesPascalCase: string[],
-        subpackageNamePascalCase: string
-    ): string {
+    public registerSubClientSymbol({
+        subpackageId,
+        fernFilepathPartNamesPascalCase,
+        subpackageNamePascalCase
+    }: {
+        subpackageId: string;
+        fernFilepathPartNamesPascalCase: string[];
+        subpackageNamePascalCase: string;
+    }): string {
         const reversedParts = fernFilepathPartNamesPascalCase.toReversed();
         reversedParts.shift();
         const fallbackCandidates = reversedParts.map(
@@ -204,6 +252,10 @@ export class ProjectSymbolRegistry {
             `${typeDeclarationNamePascalCase}Model`,
             `${typeDeclarationNamePascalCase}Schema`
         ]);
+    }
+
+    private getModuleSymbolId(): string {
+        return `${SYMBOL_ID_PREFIX}module`;
     }
 
     private getRootClientSymbolId(): string {

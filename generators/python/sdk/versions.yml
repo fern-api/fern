@@ -2,8 +2,9 @@
 # For unreleased changes, use unreleased.yml
 - version: 4.26.2
   changelogEntry:
-    - summary: Generator passes readme configs apiName, disabledSections, and whiteLabel
-      type: feat
+    - summary: |
+        Upgrade docker image to use python 3.11.13 so that users can depend on packages that require python 3.11.
+      type: fix
   createdAt: "2025-08-26"
   irVersion: 59
 

@@ -335,31 +335,21 @@ public final class UserProfile {
     }
 
     public interface UsernameStage {
-        NullableStringStage username(@NotNull String username);
-    }
-
-    public interface NullableStringStage {
-        NullableIntegerStage nullableString(String nullableString);
-    }
-
-    public interface NullableIntegerStage {
-        NullableBooleanStage nullableInteger(Integer nullableInteger);
-    }
-
-    public interface NullableBooleanStage {
-        NullableDateStage nullableBoolean(Boolean nullableBoolean);
-    }
-
-    public interface NullableDateStage {
-        NullableObjectStage nullableDate(OffsetDateTime nullableDate);
-    }
-
-    public interface NullableObjectStage {
-        _FinalStage nullableObject(Address nullableObject);
+        _FinalStage username(@NotNull String username);
     }
 
     public interface _FinalStage {
         UserProfile build();
+
+        _FinalStage nullableString(@com.seed.nullableOptional.core.Nullable String nullableString);
+
+        _FinalStage nullableInteger(@com.seed.nullableOptional.core.Nullable Integer nullableInteger);
+
+        _FinalStage nullableBoolean(@com.seed.nullableOptional.core.Nullable Boolean nullableBoolean);
+
+        _FinalStage nullableDate(@com.seed.nullableOptional.core.Nullable OffsetDateTime nullableDate);
+
+        _FinalStage nullableObject(@com.seed.nullableOptional.core.Nullable Address nullableObject);
 
         _FinalStage nullableList(List<String> nullableList);
 
@@ -415,28 +405,10 @@ public final class UserProfile {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder
-            implements IdStage,
-                    UsernameStage,
-                    NullableStringStage,
-                    NullableIntegerStage,
-                    NullableBooleanStage,
-                    NullableDateStage,
-                    NullableObjectStage,
-                    _FinalStage {
+    public static final class Builder implements IdStage, UsernameStage, _FinalStage {
         private String id;
 
         private String username;
-
-        private String nullableString;
-
-        private Integer nullableInteger;
-
-        private Boolean nullableBoolean;
-
-        private OffsetDateTime nullableDate;
-
-        private Address nullableObject;
 
         private Optional<Address> optionalNullableObject = Optional.empty();
 
@@ -459,6 +431,16 @@ public final class UserProfile {
         private Map<String, String> nullableMap = new LinkedHashMap<>();
 
         private List<String> nullableList = new ArrayList<>();
+
+        private Address nullableObject;
+
+        private OffsetDateTime nullableDate;
+
+        private Boolean nullableBoolean;
+
+        private Integer nullableInteger;
+
+        private String nullableString;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -497,43 +479,8 @@ public final class UserProfile {
 
         @java.lang.Override
         @JsonSetter("username")
-        public NullableStringStage username(@NotNull String username) {
+        public _FinalStage username(@NotNull String username) {
             this.username = Objects.requireNonNull(username, "username must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("nullableString")
-        public NullableIntegerStage nullableString(String nullableString) {
-            this.nullableString = nullableString;
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("nullableInteger")
-        public NullableBooleanStage nullableInteger(Integer nullableInteger) {
-            this.nullableInteger = nullableInteger;
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("nullableBoolean")
-        public NullableDateStage nullableBoolean(Boolean nullableBoolean) {
-            this.nullableBoolean = nullableBoolean;
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("nullableDate")
-        public NullableObjectStage nullableDate(OffsetDateTime nullableDate) {
-            this.nullableDate = nullableDate;
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("nullableObject")
-        public _FinalStage nullableObject(Address nullableObject) {
-            this.nullableObject = nullableObject;
             return this;
         }
 
@@ -688,7 +635,9 @@ public final class UserProfile {
 
         @java.lang.Override
         public _FinalStage putAllNullableMap(Map<String, String> nullableMap) {
-            this.nullableMap.putAll(nullableMap);
+            if (nullableMap != null) {
+                this.nullableMap.putAll(nullableMap);
+            }
             return this;
         }
 
@@ -702,7 +651,9 @@ public final class UserProfile {
 
         @java.lang.Override
         public _FinalStage addAllNullableList(List<String> nullableList) {
-            this.nullableList.addAll(nullableList);
+            if (nullableList != null) {
+                this.nullableList.addAll(nullableList);
+            }
             return this;
         }
 
@@ -717,6 +668,41 @@ public final class UserProfile {
         public _FinalStage nullableList(List<String> nullableList) {
             this.nullableList.clear();
             this.nullableList.addAll(nullableList);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("nullableObject")
+        public _FinalStage nullableObject(@com.seed.nullableOptional.core.Nullable Address nullableObject) {
+            this.nullableObject = nullableObject;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("nullableDate")
+        public _FinalStage nullableDate(@com.seed.nullableOptional.core.Nullable OffsetDateTime nullableDate) {
+            this.nullableDate = nullableDate;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("nullableBoolean")
+        public _FinalStage nullableBoolean(@com.seed.nullableOptional.core.Nullable Boolean nullableBoolean) {
+            this.nullableBoolean = nullableBoolean;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("nullableInteger")
+        public _FinalStage nullableInteger(@com.seed.nullableOptional.core.Nullable Integer nullableInteger) {
+            this.nullableInteger = nullableInteger;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("nullableString")
+        public _FinalStage nullableString(@com.seed.nullableOptional.core.Nullable String nullableString) {
+            this.nullableString = nullableString;
             return this;
         }
 
