@@ -34,6 +34,10 @@ public final class Address {
 
     private final Optional<String> country;
 
+    private final String buildingId;
+
+    private final Optional<String> tenantId;
+
     private final Map<String, Object> additionalProperties;
 
     private Address(
@@ -42,12 +46,16 @@ public final class Address {
             Optional<String> state,
             String zipCode,
             Optional<String> country,
+            String buildingId,
+            Optional<String> tenantId,
             Map<String, Object> additionalProperties) {
         this.street = street;
         this.city = city;
         this.state = state;
         this.zipCode = zipCode;
         this.country = country;
+        this.buildingId = buildingId;
+        this.tenantId = tenantId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -80,6 +88,16 @@ public final class Address {
         return country;
     }
 
+    @JsonIgnore
+    public String getBuildingId() {
+        return buildingId;
+    }
+
+    @JsonProperty("tenantId")
+    public Optional<String> getTenantId() {
+        return tenantId;
+    }
+
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("city")
     private String _getCity() {
@@ -90,6 +108,12 @@ public final class Address {
     @JsonProperty("country")
     private Optional<String> _getCountry() {
         return country;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("buildingId")
+    private String _getBuildingId() {
+        return buildingId;
     }
 
     @java.lang.Override
@@ -108,12 +132,15 @@ public final class Address {
                 && city.equals(other.city)
                 && state.equals(other.state)
                 && zipCode.equals(other.zipCode)
-                && country.equals(other.country);
+                && country.equals(other.country)
+                && buildingId.equals(other.buildingId)
+                && tenantId.equals(other.tenantId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.street, this.city, this.state, this.zipCode, this.country);
+        return Objects.hash(
+                this.street, this.city, this.state, this.zipCode, this.country, this.buildingId, this.tenantId);
     }
 
     @java.lang.Override
@@ -126,13 +153,9 @@ public final class Address {
     }
 
     public interface StreetStage {
-        CityStage street(@NotNull String street);
+        ZipCodeStage street(@NotNull String street);
 
         Builder from(Address other);
-    }
-
-    public interface CityStage {
-        ZipCodeStage city(String city);
     }
 
     public interface ZipCodeStage {
@@ -141,6 +164,8 @@ public final class Address {
 
     public interface _FinalStage {
         Address build();
+
+        _FinalStage city(@com.seed.nullableOptional.core.Nullable String city);
 
         _FinalStage state(Optional<String> state);
 
@@ -151,19 +176,29 @@ public final class Address {
         _FinalStage country(String country);
 
         _FinalStage country(com.seed.nullableOptional.core.Nullable<String> country);
+
+        _FinalStage buildingId(@com.seed.nullableOptional.core.Nullable String buildingId);
+
+        _FinalStage tenantId(Optional<String> tenantId);
+
+        _FinalStage tenantId(String tenantId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements StreetStage, CityStage, ZipCodeStage, _FinalStage {
+    public static final class Builder implements StreetStage, ZipCodeStage, _FinalStage {
         private String street;
 
-        private String city;
-
         private String zipCode;
+
+        private Optional<String> tenantId = Optional.empty();
+
+        private String buildingId;
 
         private Optional<String> country = Optional.empty();
 
         private Optional<String> state = Optional.empty();
+
+        private String city;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -177,20 +212,15 @@ public final class Address {
             state(other.getState());
             zipCode(other.getZipCode());
             country(other.getCountry());
+            buildingId(other.getBuildingId());
+            tenantId(other.getTenantId());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("street")
-        public CityStage street(@NotNull String street) {
+        public ZipCodeStage street(@NotNull String street) {
             this.street = Objects.requireNonNull(street, "street must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("city")
-        public ZipCodeStage city(String city) {
-            this.city = city;
             return this;
         }
 
@@ -198,6 +228,26 @@ public final class Address {
         @JsonSetter("zipCode")
         public _FinalStage zipCode(@NotNull String zipCode) {
             this.zipCode = Objects.requireNonNull(zipCode, "zipCode must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage tenantId(String tenantId) {
+            this.tenantId = Optional.ofNullable(tenantId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "tenantId", nulls = Nulls.SKIP)
+        public _FinalStage tenantId(Optional<String> tenantId) {
+            this.tenantId = tenantId;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("buildingId")
+        public _FinalStage buildingId(@com.seed.nullableOptional.core.Nullable String buildingId) {
+            this.buildingId = buildingId;
             return this;
         }
 
@@ -240,8 +290,15 @@ public final class Address {
         }
 
         @java.lang.Override
+        @JsonSetter("city")
+        public _FinalStage city(@com.seed.nullableOptional.core.Nullable String city) {
+            this.city = city;
+            return this;
+        }
+
+        @java.lang.Override
         public Address build() {
-            return new Address(street, city, state, zipCode, country, additionalProperties);
+            return new Address(street, city, state, zipCode, country, buildingId, tenantId, additionalProperties);
         }
     }
 }

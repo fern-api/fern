@@ -155,7 +155,8 @@ public interface EnrichedObjectProperty {
 
     @Value.Lazy
     default boolean nullable() {
-        boolean nullable = generator().equals(AbstractGeneratorContext.GeneratorType.SDK)
+        boolean nullable = (generator().equals(AbstractGeneratorContext.GeneratorType.SDK)
+                        || generator().equals(AbstractGeneratorContext.GeneratorType.SPRING))
                 && isNullable(objectProperty().getValueType());
         return nullable || optionalNullable();
     }
@@ -180,7 +181,9 @@ public interface EnrichedObjectProperty {
                         .getContainer()
                         .get()
                         .isNullable();
-        return generator().equals(AbstractGeneratorContext.GeneratorType.SDK) && aliasOfNullable;
+        return (generator().equals(AbstractGeneratorContext.GeneratorType.SDK)
+                        || generator().equals(AbstractGeneratorContext.GeneratorType.SPRING))
+                && aliasOfNullable;
     }
 
     @Value.Lazy
