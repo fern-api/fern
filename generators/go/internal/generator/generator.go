@@ -200,6 +200,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 						return nil, nil, err
 					}
 				}
+			}
 		}
 		file, err := writer.File()
 		if err != nil {
@@ -304,7 +305,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.InlinePathParameters,
 			g.config.InlineFileProperties,
 			g.config.UseReaderForBytesRequest,
-			
 			g.config.UnionVersion,
 			nil,
 			nil,
@@ -354,7 +354,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.InlinePathParameters,
 			g.config.InlineFileProperties,
 			g.config.UseReaderForBytesRequest,
-			
 			g.config.UnionVersion,
 			ir.Types,
 			ir.Errors,
@@ -387,7 +386,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.InlinePathParameters,
 				g.config.InlineFileProperties,
 				g.config.UseReaderForBytesRequest,
-				
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -414,7 +412,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.InlinePathParameters,
 			g.config.InlineFileProperties,
 			g.config.UseReaderForBytesRequest,
-			
 			g.config.UnionVersion,
 			ir.Types,
 			ir.Errors,
@@ -448,7 +445,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.InlinePathParameters,
 				g.config.InlineFileProperties,
 				g.config.UseReaderForBytesRequest,
-				
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -472,7 +468,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.InlinePathParameters,
 				g.config.InlineFileProperties,
 				g.config.UseReaderForBytesRequest,
-				
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -499,7 +494,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.InlinePathParameters,
 				g.config.InlineFileProperties,
 				g.config.UseReaderForBytesRequest,
-				
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -525,7 +519,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.InlinePathParameters,
 			g.config.InlineFileProperties,
 			g.config.UseReaderForBytesRequest,
-			
 			g.config.UnionVersion,
 			ir.Types,
 			ir.Errors,
@@ -585,7 +578,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.InlinePathParameters,
 				g.config.InlineFileProperties,
 				g.config.UseReaderForBytesRequest,
-				
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -1160,10 +1152,8 @@ func newClientTestFile(
 	clientNameOverride string,
 	clientConstructorNameOverride string,
 ) (*File, error) {
-	var (
-		filename    = "client_test.go"
-		packageName = rootPackageName
-	)
+	var filename = "client/client_test.go"
+	var packageName = "client"
 	f := newFileWriter(
 		filename,
 		packageName,
