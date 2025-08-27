@@ -1,42 +1,51 @@
-import { Logger } from "@fern-api/logger";
 import {
     ChangelogEntryType,
     ReleaseRequest
 } from "@fern-fern/generators-sdk/api/resources/generators/resources/commons/types";
-import { GeneratorReleaseRequest } from "@fern-fern/generators-sdk/api/resources/generators/resources/versions/types";
-
-export interface SemVer {
-    major: number;
-    minor: number;
-    patch: number;
-    prerelease?: number;
-}
-
-export function parseSemVer(version: string): SemVer {
-    const [main, prerelease] = version.split("-r", 2);
-    if (main === undefined) {
-        throw new InvalidSemVerError(`Invalid semver: ${version}`);
-    }
-    const [major, minor, patch] = main.split(".");
-    if (major === undefined || minor === undefined || patch === undefined) {
-        throw new InvalidSemVerError(`Invalid semver: ${version}`);
-    }
-    return {
-        major: parseInt(major),
-        minor: parseInt(minor),
-        patch: parseInt(patch),
-        prerelease: prerelease ? parseInt(prerelease) : undefined
-    };
-}
 
 export function assertValidSemVerOrThrow(version: string): void {
-    parseSemVer(version);
+    SemVer.fromString(version);
 }
 
-export class InvalidSemVerError extends Error {
-    constructor(message: string) {
-        super(message);
-        Object.setPrototypeOf(this, InvalidSemVerError.prototype);
+export function assertValidSemVerChange(currentRelease: ReleaseRequest, previousRelease: ReleaseRequest): void {
+    const currentVersion = SemVer.fromString(currentRelease.version);
+    const previousVersion = SemVer.fromString(previousRelease.version);
+    if (currentRelease.changelogEntry?.some((entry) => entry.type === ChangelogEntryType.Feat)) {
+        assertValidSemVerChangeForFeatureOrThrow(currentVersion, previousVersion);
+    }
+}
+
+export class SemVer {
+    constructor(
+        public readonly major: number,
+        public readonly minor: number,
+        public readonly patch: number,
+        public readonly prerelease?: number
+    ) {}
+
+    toString(): string {
+        let version = `${this.major}.${this.minor}.${this.patch}`;
+        if (this.prerelease !== undefined) {
+            version += `-r${this.prerelease}`;
+        }
+        return version;
+    }
+
+    static fromString(version: string): SemVer {
+        const [main, prerelease] = version.split("-r", 2);
+        if (main === undefined) {
+            throw new InvalidSemVerError(`Invalid semver: ${version}`);
+        }
+        const [major, minor, patch] = main.split(".");
+        if (major === undefined || minor === undefined || patch === undefined) {
+            throw new InvalidSemVerError(`Invalid semver: ${version}`);
+        }
+        return new SemVer(
+            parseInt(major),
+            parseInt(minor),
+            parseInt(patch),
+            prerelease ? parseInt(prerelease) : undefined
+        );
     }
 }
 
@@ -45,14 +54,6 @@ export function assertValidSemVerChangeForFeatureOrThrow(currentVersion: SemVer,
         throw new InvalidSemVerError(
             `Invalid semver change for feature change type: ${previousVersion} -> ${currentVersion}`
         );
-    }
-}
-
-export function assertValidSemVerChange(currentRelease: ReleaseRequest, previousRelease: ReleaseRequest): void {
-    const currentVersion = parseSemVer(currentRelease.version);
-    const previousVersion = parseSemVer(previousRelease.version);
-    if (currentRelease.changelogEntry?.some((entry) => entry.type === ChangelogEntryType.Feat)) {
-        assertValidSemVerChangeForFeatureOrThrow(currentVersion, previousVersion);
     }
 }
 
@@ -77,4 +78,11 @@ export function isValidSemVerChangeForFeature(currentVersion: SemVer, previousVe
         return true;
     }
     return currentVersion.prerelease === previousVersion.prerelease + 1;
+}
+
+export class InvalidSemVerError extends Error {
+    constructor(message: string) {
+        super(message);
+        Object.setPrototypeOf(this, InvalidSemVerError.prototype);
+    }
 }
