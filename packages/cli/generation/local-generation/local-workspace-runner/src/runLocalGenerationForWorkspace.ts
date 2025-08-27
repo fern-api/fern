@@ -233,7 +233,12 @@ function getPublishConfig({
     }
 
     return generatorInvocation.outputMode._visit({
-        downloadFiles: () => undefined,
+        downloadFiles: () => {
+            return FernIr.PublishingConfig.filesystem({
+                generateFullProject: org?.selfHostedSdKs ?? false,
+                publishTarget: undefined
+            });
+        },
         github: () => undefined,
         githubV2: () => undefined,
         publish: () => undefined,

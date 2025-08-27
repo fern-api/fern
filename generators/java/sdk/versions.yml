@@ -1,10 +1,3 @@
-- version: 2.42.1
-  changelogEntry:
-    - summary: Fix client code not being generated when `generateFullProject` is enabled
-      type: fix
-  createdAt: "2025-08-27"
-  irVersion: 58
-
 - version: 2.42.0
   changelogEntry:
     - summary: |
