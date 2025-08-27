@@ -341,11 +341,11 @@ describe("assertValidSemVerChangeOrThrow", () => {
             expect(() => assertValidSemVerChangeOrThrow(current, previous)).toThrow(InvalidSemVerError);
         });
 
-        it("should throw for feature change with prerelease only", () => {
+        it("should not throw for feature change with prerelease only", () => {
             const current = createMockReleaseRequest("1.2.2-rc1", true);
             const previous = createMockReleaseRequest("1.2.2");
 
-            expect(() => assertValidSemVerChangeOrThrow(current, previous)).toThrow(InvalidSemVerError);
+            expect(() => assertValidSemVerChangeOrThrow(current, previous)).not.toThrow(InvalidSemVerError);
         });
     });
 
@@ -408,10 +408,10 @@ describe("hasFeatureLevelSemVerChange", () => {
         expect(hasFeatureLevelSemVerChange(current, previous)).toBe(false);
     });
 
-    it("should return false for prerelease change only", () => {
+    it("should return true for prerelease change only", () => {
         const current = new SemVer(1, 5, 10, 1);
         const previous = new SemVer(1, 5, 10);
-        expect(hasFeatureLevelSemVerChange(current, previous)).toBe(false);
+        expect(hasFeatureLevelSemVerChange(current, previous)).toBe(true);
     });
 
     it("should return false for no version change", () => {
@@ -426,16 +426,16 @@ describe("hasFeatureLevelSemVerChange", () => {
         expect(hasFeatureLevelSemVerChange(current, previous)).toBe(false);
     });
 
-    it("should return false for same major and minor with different prerelease", () => {
+    it("should return true for same major and minor with different prerelease", () => {
         const current = new SemVer(1, 5, 10, 1);
         const previous = new SemVer(1, 5, 10, 0);
-        expect(hasFeatureLevelSemVerChange(current, previous)).toBe(false);
+        expect(hasFeatureLevelSemVerChange(current, previous)).toBe(true);
     });
 
-    it("should return false for same major and minor with prerelease vs no prerelease", () => {
+    it("should return true for same major and minor with prerelease vs no prerelease", () => {
         const current = new SemVer(1, 5, 10, 1);
         const previous = new SemVer(1, 5, 10);
-        expect(hasFeatureLevelSemVerChange(current, previous)).toBe(false);
+        expect(hasFeatureLevelSemVerChange(current, previous)).toBe(true);
     });
 
     it("should return true for minor change with prerelease", () => {

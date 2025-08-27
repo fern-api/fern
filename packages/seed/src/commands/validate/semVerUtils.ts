@@ -7,6 +7,23 @@ export function assertValidSemVerOrThrow(version: string): void {
     SemVer.fromString(version);
 }
 
+// TODO: Current version comparison logic for prerelease/RC versions:
+//
+// We currently allow feature-level changes (major/minor/patch) when comparing RC versions,
+// which means going from 1.0.0-rc17 -> 1.0.0-rc18 is considered valid for feature changes.
+//
+// This is a simplified approach that works for most cases but has an edge case:
+// - Going from 0.x.y -> 1.0.0-rc<> is valid (major version bump with RC)
+// - Going from 1.0.0 -> 1.0.1-rc18 would NOT be valid (minor bump without proper RC progression)
+//
+// Future improvement needed: Instead of just comparing the two most recent versions,
+// we should implement logic that:
+// 1. If the latest version is non-RC, compare it to the last non-RC version
+// 2. If the latest version is RC, compare it to the previous RC version
+// 3. This would prevent bundling features in patch releases that go directly to RC
+//
+// For now, we're keeping the current logic to avoid complexity, but this edge case exists.
+
 export function assertValidSemVerChangeOrThrow(currentRelease: ReleaseRequest, previousRelease: ReleaseRequest): void {
     const currentVersion = SemVer.fromString(currentRelease.version);
     const previousVersion = SemVer.fromString(previousRelease.version);
@@ -76,7 +93,11 @@ export class SemVer {
 }
 
 export function hasFeatureLevelSemVerChange(currentVersion: SemVer, previousVersion: SemVer): boolean {
-    return currentVersion.major !== previousVersion.major || currentVersion.minor !== previousVersion.minor;
+    return (
+        currentVersion.major !== previousVersion.major ||
+        currentVersion.minor !== previousVersion.minor ||
+        currentVersion.prerelease !== previousVersion.prerelease
+    );
 }
 
 export function isValidSemVerChange(currentVersion: SemVer, previousVersion: SemVer): boolean {
