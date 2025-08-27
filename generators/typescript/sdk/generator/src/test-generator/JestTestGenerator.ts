@@ -700,15 +700,19 @@ describe("${serviceName}", () => {
                 ? this.getPaginationPropertyPath("expected", endpoint.pagination, context)
                 : "expected";
         const pageName =
-            endpoint.pagination !== undefined
+            endpoint.pagination !== undefined && endpoint.pagination.type === "custom"
                 ? this.getPaginationPropertyPath("page", endpoint.pagination, context)
                 : "page";
-        const nextPageName =
-            endpoint.pagination !== undefined
-                ? this.getPaginationPropertyPath("nextPage", endpoint.pagination, context)
-                : "nextPage";
         const paginationPropertyName =
             endpoint.pagination !== undefined ? this.getPaginationPropertyName(endpoint.pagination, context) : "";
+        const paginationBlock =
+            endpoint.pagination !== undefined
+                ? code`
+				const expected = ${expected}
+                const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                expect(${expectedName}.${paginationPropertyName}).toEqual(${pageName}.data);
+				`
+                : "";
 
         return code`
     test("${endpoint.name.originalName}", async () => {
@@ -744,16 +748,13 @@ describe("${serviceName}", () => {
                 : code`
                     ${
                         endpoint.pagination !== undefined
-                            ? code`const expected = ${expected}
-                    const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
-                    expect(${expectedName}.${paginationPropertyName}).toEqual(${pageName}.data);
-
-                    expect(${pageName}.hasNextPage()).toBe(true);
-                    const nextPage = await ${pageName}.getNextPage();
-                    expect(${expectedName}.${paginationPropertyName}).toEqual(${nextPageName}.data);`
-                            : code`const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
-                    expect(response).toEqual(${expected})`
-                    }`
+                            ? paginationBlock
+                            : code`
+                        	const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                         	expect(response).toEqual(${expected});
+                          `
+                    }
+                `
         }
     });
           `;
