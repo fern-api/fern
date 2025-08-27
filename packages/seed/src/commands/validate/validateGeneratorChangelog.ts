@@ -7,7 +7,12 @@ import chalk from "chalk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
-import { assertValidSemVerChangeForFeatureOrThrow, assertValidSemVerOrThrow, parseSemVer } from "./semVerUtils";
+import {
+    assertValidSemVerChange,
+    assertValidSemVerChangeForFeatureOrThrow,
+    assertValidSemVerOrThrow,
+    parseSemVer
+} from "./semVerUtils";
 
 const parseReleaseOrThrow = serializers.generators.GeneratorReleaseRequest.parseOrThrow;
 
@@ -71,15 +76,10 @@ async function validateGeneratorChangelog({
         if (changelogs.length > 1) {
             try {
                 const currentRelease = parseReleaseOrThrow({ generatorId, ...changelogs[0] });
-                if (currentRelease.changelogEntry?.some((entry) => entry.type === ChangelogEntryType.Feat)) {
-                    const previousRelease = parseReleaseOrThrow({ generatorId, ...changelogs[1] });
-                    assertValidSemVerChangeForFeatureOrThrow(
-                        parseSemVer(currentRelease.version),
-                        parseSemVer(previousRelease.version)
-                    );
-                }
+                const previousRelease = parseReleaseOrThrow({ generatorId, ...changelogs[1] });
+                assertValidSemVerChange(currentRelease, previousRelease);
             } catch (e) {
-                context.logger.error(`Failed to parse: ${yaml.dump(changelogs[0])}`);
+                context.logger.error(`Failed to validate semver change: ${yaml.dump(changelogs[0])}`);
                 context.logger.error((e as Error)?.message);
                 hasErrors = true;
             }
