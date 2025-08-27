@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module seed
+module Seed
   module Internal
     module Types
       # @abstract
       module Type
-        include seed::Internal::JSON::Serializable
+        include Seed::Internal::JSON::Serializable
 
         # Coerces a value to this type
         #
@@ -32,4 +32,4 @@ module seed
       end
     end
   end
-end 
+end

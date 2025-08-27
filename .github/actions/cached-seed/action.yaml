@@ -11,15 +11,15 @@ inputs:
   validate-git-diff:
     description: Whether to validate that no git-tracked files were changed
     required: false
-    default: 'true'
+    default: "true"
   skip-scripts:
     description: Whether to skip running scripts during seed generation
     required: false
-    default: 'false'
+    default: "false"
   allow-unexpected-failures:
     description: Whether to allow unexpected failures during seed generation
     required: false
-    default: 'false'
+    default: "false"
 
 runs:
   using: "composite"
@@ -48,7 +48,7 @@ runs:
     - name: Install
       if: steps.cache.outputs.cache-hit != 'true'
       uses: ./.github/actions/install
-      
+
     - uses: bufbuild/buf-setup-action@v1.34.0
       if: steps.cache.outputs.cache-hit != 'true'
       with:

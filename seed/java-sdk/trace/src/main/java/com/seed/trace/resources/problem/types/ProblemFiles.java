@@ -118,7 +118,9 @@ public final class ProblemFiles {
 
         @java.lang.Override
         public _FinalStage addAllReadOnlyFiles(List<FileInfo> readOnlyFiles) {
-            this.readOnlyFiles.addAll(readOnlyFiles);
+            if (readOnlyFiles != null) {
+                this.readOnlyFiles.addAll(readOnlyFiles);
+            }
             return this;
         }
 

@@ -29,6 +29,7 @@ defaultCustomConfig: {}
 fixtures:
   client-side-params:
     - customConfig:
+        moduleName: MyCustomModule
         clientClassName: MyCustomClient
       outputFolder: with-custom-config
     - customConfig: null

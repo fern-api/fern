@@ -1,4 +1,4 @@
-imports: 
+imports:
   root: __package__.yml
 
 service:
@@ -8,10 +8,10 @@ service:
     send:
       path: /path/{operand}/{operandOrColor}
       method: POST
-      path-parameters: 
+      path-parameters:
         operand: root.Operand
         operandOrColor: root.ColorOrOperand
-      examples: 
+      examples:
         - path-parameters:
             operand: $root.Operand.GreaterThan
             operandOrColor: $root.ColorOrOperand.Red

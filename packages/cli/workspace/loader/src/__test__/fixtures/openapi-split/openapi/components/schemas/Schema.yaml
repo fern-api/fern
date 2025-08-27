@@ -42,7 +42,7 @@ properties:
     description: Property name's description (type is string or null)
     type:
       - string
-      - 'null'
+      - "null"
     examples:
       - example
   stringEnumValues:

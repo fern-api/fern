@@ -332,7 +332,9 @@ public final class ExtendedMovie implements IMovie {
 
         @java.lang.Override
         public _FinalStage addAllCast(List<String> cast) {
-            this.cast.addAll(cast);
+            if (cast != null) {
+                this.cast.addAll(cast);
+            }
             return this;
         }
 
@@ -358,7 +360,9 @@ public final class ExtendedMovie implements IMovie {
 
         @java.lang.Override
         public _FinalStage putAllMetadata(Map<String, Object> metadata) {
-            this.metadata.putAll(metadata);
+            if (metadata != null) {
+                this.metadata.putAll(metadata);
+            }
             return this;
         }
 

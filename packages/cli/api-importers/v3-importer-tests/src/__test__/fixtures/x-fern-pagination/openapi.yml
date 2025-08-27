@@ -51,14 +51,14 @@ paths:
             type: integer
 components:
   schemas:
-    Meta: 
-      properties: 
-        hasMore: 
+    Meta:
+      properties:
+        hasMore:
           type: boolean
     UsersResponse:
       type: object
       properties:
-        meta:   
+        meta:
           $ref: "#/components/schemas/Meta"
         users:
           type: array

@@ -53,9 +53,9 @@ paths:
               $ref: "#/components/examples/ref1"
             referenced-example-2:
               $ref: "#/components/examples/ref2"
-              
+
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:

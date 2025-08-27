@@ -88,7 +88,9 @@ public final class WorkspaceStarterFilesResponseV2 {
         }
 
         public Builder putAllFilesByLanguage(Map<Language, Files> filesByLanguage) {
-            this.filesByLanguage.putAll(filesByLanguage);
+            if (filesByLanguage != null) {
+                this.filesByLanguage.putAll(filesByLanguage);
+            }
             return this;
         }
 

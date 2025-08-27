@@ -15,7 +15,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/container/list-of-primitives",
-            body: params[:request]
+            body: params
           )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"
@@ -29,7 +29,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/container/list-of-objects",
-            body: params[:request]
+            body: params
           )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"
@@ -43,7 +43,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/container/set-of-primitives",
-            body: params[:request]
+            body: params
           )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"
@@ -57,7 +57,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/container/set-of-objects",
-            body: params[:request]
+            body: params
           )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"
@@ -71,7 +71,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/container/map-prim-to-prim",
-            body: params[:request]
+            body: params
           )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"
@@ -85,7 +85,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/container/map-prim-to-object",
-            body: params[:request]
+            body: params
           )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"
@@ -99,7 +99,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/container/opt-objects",
-            body: params[:request]
+            body: params
           )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"

@@ -136,7 +136,9 @@ public final class SendEnumListAsQueryParamRequest {
         }
 
         public Builder addAllOperand(List<Operand> operand) {
-            this.operand.addAll(operand);
+            if (operand != null) {
+                this.operand.addAll(operand);
+            }
             return this;
         }
 
@@ -174,7 +176,9 @@ public final class SendEnumListAsQueryParamRequest {
         }
 
         public Builder addAllOperandOrColor(List<ColorOrOperand> operandOrColor) {
-            this.operandOrColor.addAll(operandOrColor);
+            if (operandOrColor != null) {
+                this.operandOrColor.addAll(operandOrColor);
+            }
             return this;
         }
 

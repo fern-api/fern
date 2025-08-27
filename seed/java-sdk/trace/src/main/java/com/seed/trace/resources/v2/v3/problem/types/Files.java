@@ -91,7 +91,9 @@ public final class Files {
         }
 
         public Builder addAllFiles(List<FileInfoV2> files) {
-            this.files.addAll(files);
+            if (files != null) {
+                this.files.addAll(files);
+            }
             return this;
         }
 
