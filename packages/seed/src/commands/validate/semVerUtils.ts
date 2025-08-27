@@ -63,6 +63,7 @@ export function hasFeatureLevelSemVerChange(currentVersion: SemVer, previousVers
 }
 
 export function isValidSemVerChange(currentVersion: SemVer, previousVersion: SemVer): boolean {
+    // If major version has changed, it should only be incremented by 1, and other version numbers should be reset
     if (currentVersion.major !== previousVersion.major) {
         return (
             currentVersion.major === previousVersion.major + 1 &&
@@ -71,6 +72,7 @@ export function isValidSemVerChange(currentVersion: SemVer, previousVersion: Sem
             (currentVersion.prerelease === undefined || currentVersion.prerelease === 0)
         );
     }
+    // If minor version has changed, it should only be incremented by 1, and patch and prerelease should be reset
     if (currentVersion.minor !== previousVersion.minor) {
         return (
             currentVersion.minor === previousVersion.minor + 1 &&
@@ -78,18 +80,22 @@ export function isValidSemVerChange(currentVersion: SemVer, previousVersion: Sem
             (currentVersion.prerelease === undefined || currentVersion.prerelease === 0)
         );
     }
+    // If patch version has changed, it should only be incremented by 1, and prerelease should be reset
     if (currentVersion.patch !== previousVersion.patch) {
         return (
             currentVersion.patch === previousVersion.patch + 1 &&
             (currentVersion.prerelease === undefined || currentVersion.prerelease === 0)
         );
     }
+    // If prerelease is undefined, and no otehr versions are different, it's invalie
     if (currentVersion.prerelease === undefined) {
         return false;
     }
+    // If previous version is not a prerelease, and current version is a prerelease, it's valid
     if (previousVersion.prerelease === undefined) {
         return true;
     }
+    // If current and prev both have prerelease versions, the prerelease number should be incremented by 1
     return currentVersion.prerelease === previousVersion.prerelease + 1;
 }
 
