@@ -746,7 +746,6 @@ func (g *Generator) generateRootService(
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
 		g.config.UseReaderForBytesRequest,
-		
 		g.config.UnionVersion,
 		ir.Types,
 		ir.Errors,
@@ -765,7 +764,6 @@ func (g *Generator) generateRootService(
 		rootClientInstantiation,
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
-		
 		g.config.ClientName,
 		g.config.ClientConstructorName,
 	)
@@ -796,7 +794,6 @@ func (g *Generator) generateService(
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
 		g.config.UseReaderForBytesRequest,
-		
 		g.config.UnionVersion,
 		ir.Types,
 		ir.Errors,
@@ -815,7 +812,6 @@ func (g *Generator) generateService(
 		rootClientInstantiation,
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
-		
 		"",
 		"",
 	)
@@ -849,7 +845,6 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
 		g.config.UseReaderForBytesRequest,
-		
 		g.config.UnionVersion,
 		ir.Types,
 		ir.Errors,
@@ -868,7 +863,6 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		rootClientInstantiation,
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
-		
 		"",
 		"",
 	); err != nil {
@@ -897,7 +891,6 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
 		g.config.UseReaderForBytesRequest,
-		
 		g.config.UnionVersion,
 		ir.Types,
 		ir.Errors,
@@ -916,7 +909,6 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		rootClientInstantiation,
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
-		
 		g.config.ClientName,
 		g.config.ClientConstructorName,
 	)
