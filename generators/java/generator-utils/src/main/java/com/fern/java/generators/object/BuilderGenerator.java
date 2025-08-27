@@ -372,9 +372,9 @@ public final class BuilderGenerator {
         List<EnrichedObjectPropertyWithField> finalStageProperties = stagedBuilderConfig.finalStage();
         for (EnrichedObjectPropertyWithField enrichedProperty : finalStageProperties) {
             TypeName poetTypeName = enrichedProperty.enrichedObjectProperty.poetTypeName();
-            boolean isNullable = enrichedProperty.enrichedObjectProperty.nullable() 
+            boolean isNullable = enrichedProperty.enrichedObjectProperty.nullable()
                     || enrichedProperty.enrichedObjectProperty.aliasOfNullable();
-            
+
             if (poetTypeName instanceof ParameterizedTypeName) {
                 addAdditionalSetters(
                         (ParameterizedTypeName) poetTypeName,
@@ -404,8 +404,9 @@ public final class BuilderGenerator {
                         builderImpl::addReversedFields,
                         builderImpl::addReversedMethods);
             } else {
-                throw new RuntimeException("Encountered final stage property that is not a ParameterizedTypeName and not nullable: "
-                        + poetTypeName.toString() + " for field: " + enrichedProperty.fieldSpec.name);
+                throw new RuntimeException(
+                        "Encountered final stage property that is not a ParameterizedTypeName and not nullable: "
+                                + poetTypeName.toString() + " for field: " + enrichedProperty.fieldSpec.name);
             }
         }
         return PoetTypeWithClassName.of(finalStageClassName, finalStageBuilder.build());
@@ -857,16 +858,16 @@ public final class BuilderGenerator {
             Consumer<MethodSpec> implSetterConsumer) {
         FieldSpec fieldSpec = enrichedProperty.fieldSpec;
         TypeName poetTypeName = enrichedProperty.enrichedObjectProperty.poetTypeName();
-        
+
         // Add field to implementation
         implFieldConsumer.accept(FieldSpec.builder(fieldSpec.type, fieldSpec.name, Modifier.PRIVATE)
                 .build());
-        
+
         // Create interface method without @NotNull annotation
         MethodSpec.Builder interfaceSetter = MethodSpec.methodBuilder(fieldSpec.name)
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .returns(returnClass);
-        
+
         // Add parameter with @Nullable annotation if the field is nullable
         ParameterSpec.Builder paramBuilder = ParameterSpec.builder(poetTypeName, fieldSpec.name);
         if (enrichedProperty.enrichedObjectProperty.nullable()
@@ -874,41 +875,43 @@ public final class BuilderGenerator {
             paramBuilder.addAnnotation(nullableClassName);
         }
         interfaceSetter.addParameter(paramBuilder.build());
-        
+
         if (enrichedProperty.enrichedObjectProperty.docs().isPresent()) {
             interfaceSetter.addJavadoc(JavaDocUtils.render(
                     enrichedProperty.enrichedObjectProperty.docs().get()));
         }
-        
+
         interfaceSetterConsumer.accept(interfaceSetter.build());
-        
+
         // Create implementation method
         MethodSpec.Builder implSetter = MethodSpec.methodBuilder(fieldSpec.name)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(returnClass)
                 .addAnnotation(ClassName.get("", "java.lang.Override"));
-        
+
         // Add parameter with @Nullable annotation
         implSetter.addParameter(paramBuilder.build());
-        
+
         // Add JsonSetter annotation if wire key is present
         if (enrichedProperty.enrichedObjectProperty.wireKey().isPresent()) {
             implSetter.addAnnotation(AnnotationSpec.builder(JsonSetter.class)
-                    .addMember("value", "$S", 
+                    .addMember(
+                            "value",
+                            "$S",
                             enrichedProperty.enrichedObjectProperty.wireKey().get())
                     .build());
         }
-        
+
         // Simple assignment without null check since nullable values are allowed
         implSetter.addStatement("this.$L = $L", fieldSpec.name, fieldSpec.name);
         implSetter.addStatement("return this");
-        
+
         if (enrichedProperty.enrichedObjectProperty.docs().isPresent()) {
             implSetter.addJavadoc(JavaDocUtils.render(
                     enrichedProperty.enrichedObjectProperty.docs().get()));
             implSetter.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
         }
-        
+
         implSetterConsumer.accept(implSetter.build());
     }
 
@@ -991,7 +994,7 @@ public final class BuilderGenerator {
                 || enrichedObjectProperty.enrichedObjectProperty.aliasOfNullable()) {
             return false;
         }
-        
+
         TypeName poetTypeName = enrichedObjectProperty.enrichedObjectProperty.poetTypeName();
         if (poetTypeName instanceof ParameterizedTypeName) {
             ParameterizedTypeName poetParameterizedTypeName = (ParameterizedTypeName) poetTypeName;

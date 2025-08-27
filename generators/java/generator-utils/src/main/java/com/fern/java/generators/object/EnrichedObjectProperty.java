@@ -158,7 +158,7 @@ public interface EnrichedObjectProperty {
         // Both SDK and Spring generators should treat nullable fields the same way
         // for staged builder generation
         boolean nullable = (generator().equals(AbstractGeneratorContext.GeneratorType.SDK)
-                || generator().equals(AbstractGeneratorContext.GeneratorType.SPRING))
+                        || generator().equals(AbstractGeneratorContext.GeneratorType.SPRING))
                 && isNullable(objectProperty().getValueType());
         return nullable || optionalNullable();
     }
@@ -186,7 +186,7 @@ public interface EnrichedObjectProperty {
         // Both SDK and Spring generators should treat nullable aliases the same way
         // for consistent builder generation
         return (generator().equals(AbstractGeneratorContext.GeneratorType.SDK)
-                || generator().equals(AbstractGeneratorContext.GeneratorType.SPRING))
+                        || generator().equals(AbstractGeneratorContext.GeneratorType.SPRING))
                 && aliasOfNullable;
     }
 
