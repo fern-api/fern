@@ -47,34 +47,22 @@ export class EndpointSnippetGenerator {
         snippetRequest: FernIr.dynamic.EndpointSnippetRequest;
         options: Options;
     }) {
-        const methodName = "getUsers"; // TODO(kafkas): Implement
         const fileComponents: swift.FileComponent[] = [
-            swift.Statement.import("Acme"), // TODO(kafkas): Implement
+            this.generateImportModuleStatement(),
             swift.LineBreak.single(),
-            this.generateRootClientInitializationSnippet(),
+            this.generateRootClientInitializationStatement(),
             swift.LineBreak.single(),
-            swift.Statement.expressionStatement(
-                swift.Expression.try(
-                    swift.Expression.await(
-                        swift.Expression.methodCall({
-                            target: swift.Expression.rawValue(
-                                [
-                                    CLIENT_CONST_NAME
-                                    // TODO(kafkas): Add subpackages
-                                ].join(".")
-                            ),
-                            methodName,
-                            arguments_: [], // TODO(kafkas): Implement
-                            multiline: true
-                        })
-                    )
-                )
-            )
+            this.generateEndpointMethodCallStatement()
         ];
         return fileComponents.map((c) => c.toString()).join("");
     }
 
-    private generateRootClientInitializationSnippet() {
+    private generateImportModuleStatement() {
+        // TODO(kafkas): Implement
+        return swift.Statement.import("Acme");
+    }
+
+    private generateRootClientInitializationStatement() {
         type ParamsByScheme = {
             header?: {
                 param: swift.FunctionParameter;
@@ -136,6 +124,27 @@ export class EndpointSnippetGenerator {
                 multiline: rootClientArgs.length > 1 ? true : undefined
             })
         });
+    }
+
+    private generateEndpointMethodCallStatement() {
+        const methodName = "getUsers"; // TODO(kafkas): Implement
+        return swift.Statement.expressionStatement(
+            swift.Expression.try(
+                swift.Expression.await(
+                    swift.Expression.methodCall({
+                        target: swift.Expression.rawValue(
+                            [
+                                CLIENT_CONST_NAME
+                                // TODO(kafkas): Add subpackages
+                            ].join(".")
+                        ),
+                        methodName,
+                        arguments_: [], // TODO(kafkas): Implement
+                        multiline: true
+                    })
+                )
+            )
+        );
     }
 
     private getStyle(options: Options): Style {
