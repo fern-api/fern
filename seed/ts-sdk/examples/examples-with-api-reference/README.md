@@ -5,7 +5,7 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
 [![npm shield](https://img.shields.io/npm/v/@fern/examples)](https://www.npmjs.com/package/@fern/examples)
 
-This is a custom introduction
+The CustomName TypeScript library provides convenient access to the CustomName APIs from TypeScript.
 
 ## Documentation
 

@@ -261,7 +261,6 @@ fixtures:
         apiName: "CustomName"
         disabledSections:
           - "contributing"
-        introduction: "This is a custom introduction"
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie
