@@ -41,38 +41,37 @@ export class SemVer {
     }
 
     static fromString(version: string): SemVer {
-        const [main, prerelease] = version.split(SemVer.rcSeparator, 2);
-        if (main === undefined) {
-            throw new InvalidSemVerError(`Invalid semver: ${version}`);
-        }
-        const parts = main.split(".");
+        const parts = version.split(".");
         if (parts.length !== 3) {
             throw new InvalidSemVerError(`Invalid semver: ${version}`);
         }
-        const [major, minor, patch] = parts;
-        if (major === undefined || minor === undefined || patch === undefined) {
+
+        const [major, minor, patchRaw] = parts;
+        if (major === undefined || minor === undefined || patchRaw === undefined) {
+            throw new InvalidSemVerError(`Invalid semver: ${version}`);
+        }
+        const patchParts = patchRaw.split(SemVer.rcSeparator);
+        if (patchParts.length > 2) {
+            throw new InvalidSemVerError(`Invalid semver: ${version}`);
+        }
+        const [patch, prerelease] = patchParts;
+
+        if (patch === undefined) {
             throw new InvalidSemVerError(`Invalid semver: ${version}`);
         }
 
-        // Validate that all parts are numeric
-        const majorNum = parseInt(major);
-        const minorNum = parseInt(minor);
-        const patchNum = parseInt(patch);
-
-        if (isNaN(majorNum) || isNaN(minorNum) || isNaN(patchNum)) {
-            throw new InvalidSemVerError(`Invalid semver: ${version}`);
-        }
-
-        // Validate prerelease if present
-        let prereleaseNum: number | undefined;
-        if (prerelease !== undefined) {
-            prereleaseNum = parseInt(prerelease);
-            if (isNaN(prereleaseNum)) {
+        for (const part of [major, minor, patch, prerelease]) {
+            if (part !== undefined && (Array.from(part).some((char) => isNaN(parseInt(char))) || part === "")) {
                 throw new InvalidSemVerError(`Invalid semver: ${version}`);
             }
         }
 
-        return new SemVer(majorNum, minorNum, patchNum, prereleaseNum);
+        return new SemVer(
+            parseInt(major),
+            parseInt(minor),
+            parseInt(patch),
+            prerelease ? parseInt(prerelease) : undefined
+        );
     }
 }
 
