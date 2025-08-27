@@ -68,13 +68,9 @@ class SeedExhaustive:
             timeout=_defaulted_timeout,
         )
         self.endpoints = EndpointsClient(client_wrapper=self._client_wrapper)
-
         self.inlined_requests = InlinedRequestsClient(client_wrapper=self._client_wrapper)
-
         self.no_auth = NoAuthClient(client_wrapper=self._client_wrapper)
-
         self.no_req_body = NoReqBodyClient(client_wrapper=self._client_wrapper)
-
         self.req_with_headers = ReqWithHeadersClient(client_wrapper=self._client_wrapper)
 
 
@@ -135,11 +131,7 @@ class AsyncSeedExhaustive:
             timeout=_defaulted_timeout,
         )
         self.endpoints = AsyncEndpointsClient(client_wrapper=self._client_wrapper)
-
         self.inlined_requests = AsyncInlinedRequestsClient(client_wrapper=self._client_wrapper)
-
         self.no_auth = AsyncNoAuthClient(client_wrapper=self._client_wrapper)
-
         self.no_req_body = AsyncNoReqBodyClient(client_wrapper=self._client_wrapper)
-
         self.req_with_headers = AsyncReqWithHeadersClient(client_wrapper=self._client_wrapper)

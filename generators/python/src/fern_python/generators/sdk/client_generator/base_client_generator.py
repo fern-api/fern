@@ -167,11 +167,11 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
         for subpackage_id in self._package.subpackages:
             subpackage = self._context.ir.subpackages[subpackage_id]
             if subpackage.has_endpoints_in_tree:
-                if self._context.custom_config.lazy_imports:
-                    if should_declare_client_wrapper:
-                        writer.write_line("self._client_wrapper = client_wrapper")
-                        should_declare_client_wrapper = False
+                if should_declare_client_wrapper:
+                    writer.write_line("self._client_wrapper = client_wrapper")
+                    should_declare_client_wrapper = False
 
+                if self._context.custom_config.lazy_imports:
                     service_reference = (
                         self._context.get_reference_to_async_subpackage_service(subpackage_id, lazy_import=True)
                         if is_async
@@ -195,7 +195,6 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
                             ),
                         )
                     )
-                    writer.write_line()
 
     def _get_subpackage_service_instantiation(
         self, *, subpackage_id: ir_types.SubpackageId, is_async: bool

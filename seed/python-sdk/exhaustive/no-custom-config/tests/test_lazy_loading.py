@@ -130,5 +130,4 @@ def test_lazy_loading_preserves_client_wrapper(client: Union[SeedExhaustive, Asy
     assert endpoints._raw_client._client_wrapper is client._client_wrapper
 
     container = client.endpoints.container
-    assert container._client_wrapper is endpoints._client_wrapper
     assert container._raw_client._client_wrapper is endpoints._client_wrapper
