@@ -24,7 +24,3 @@ impl ApiClient {
 
 }
 
-  }
-
-}
-

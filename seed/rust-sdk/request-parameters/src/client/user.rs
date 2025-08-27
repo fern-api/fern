@@ -13,12 +13,34 @@ impl UserClient {
         Ok(Self { http_client })
     }
 
-    pub async fn create_username(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn create_username(&self, tags: Option<Vec<String>>, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ClientError> {
         self.http_client.execute_request(
             Method::POST,
             "/user/username",
             Some(serde_json::to_value(request).unwrap_or_default()),
-            None,
+            {
+            let mut query_params = Vec::new();
+            if let Some(value) = tags {
+                query_params.push(("tags".to_string(), serde_json::to_string(&value).unwrap_or_default()));
+            }
+            Some(query_params)
+        },
+            options,
+        ).await
+    }
+
+    pub async fn create_username_with_referenced_type(&self, tags: Option<Vec<String>>, request: &CreateUsernameBody, options: Option<RequestOptions>) -> Result<(), ClientError> {
+        self.http_client.execute_request(
+            Method::POST,
+            "/user/username-referenced",
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            {
+            let mut query_params = Vec::new();
+            if let Some(value) = tags {
+                query_params.push(("tags".to_string(), serde_json::to_string(&value).unwrap_or_default()));
+            }
+            Some(query_params)
+        },
             options,
         ).await
     }
