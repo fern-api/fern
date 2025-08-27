@@ -106,7 +106,9 @@ public final class NamedMetadata {
 
         @java.lang.Override
         public _FinalStage putAllValue(Map<String, Object> value) {
-            this.value.putAll(value);
+            if (value != null) {
+                this.value.putAll(value);
+            }
             return this;
         }
 
