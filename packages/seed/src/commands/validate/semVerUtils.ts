@@ -40,6 +40,22 @@ export class InvalidSemVerError extends Error {
     }
 }
 
+export function assertValidSemVerChangeForFeatureOrThrow(currentVersion: SemVer, previousVersion: SemVer): void {
+    if (!isValidSemVerChangeForFeature(currentVersion, previousVersion)) {
+        throw new InvalidSemVerError(
+            `Invalid semver change for feature change type: ${previousVersion} -> ${currentVersion}`
+        );
+    }
+}
+
+export function assertValidSemVerChange(currentRelease: ReleaseRequest, previousRelease: ReleaseRequest): void {
+    const currentVersion = parseSemVer(currentRelease.version);
+    const previousVersion = parseSemVer(previousRelease.version);
+    if (currentRelease.changelogEntry?.some((entry) => entry.type === ChangelogEntryType.Feat)) {
+        assertValidSemVerChangeForFeatureOrThrow(currentVersion, previousVersion);
+    }
+}
+
 export function isValidSemVerChangeForFeature(currentVersion: SemVer, previousVersion: SemVer): boolean {
     if (currentVersion.major !== previousVersion.major) {
         return (
@@ -61,24 +77,4 @@ export function isValidSemVerChangeForFeature(currentVersion: SemVer, previousVe
         return true;
     }
     return currentVersion.prerelease === previousVersion.prerelease + 1;
-}
-
-export function assertValidSemVerChangeForFeatureOrThrow(currentVersion: SemVer, previousVersion: SemVer): void {
-    if (!isValidSemVerChangeForFeature(currentVersion, previousVersion)) {
-        throw new InvalidSemVerError(
-            `Invalid semver change for feature change type: ${previousVersion} -> ${currentVersion}`
-        );
-    }
-}
-
-export function assertValidSemVerChange(currentRelease: ReleaseRequest, previousRelease: ReleaseRequest): void {
-    const currentVersion = parseSemVer(currentRelease.version);
-    const previousVersion = parseSemVer(previousRelease.version);
-    if (currentRelease.changelogEntry?.some((entry) => entry.type === ChangelogEntryType.Feat)) {
-        if (!isValidSemVerChangeForFeature(currentVersion, previousVersion)) {
-            throw new InvalidSemVerError(
-                `Invalid semver change for feature change type: ${previousRelease.version} -> ${currentRelease.version}`
-            );
-        }
-    }
 }
