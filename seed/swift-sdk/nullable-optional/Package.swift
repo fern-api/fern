@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "MyCustomModule",
+    name: "NullableOptional",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,14 +12,14 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "MyCustomModule",
-            targets: ["MyCustomModule"]
+            name: "NullableOptional",
+            targets: ["NullableOptional"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "MyCustomModule",
+            name: "NullableOptional",
             path: "Sources"
         )
     ]
