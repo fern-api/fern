@@ -5,6 +5,7 @@
         Add support for autogenerating simple tests for pagination endpoints.
       type: feat
   createdAt: "2025-08-27"
+  irVersion: 59
 
 - version: 2.9.0
   changelogEntry:
