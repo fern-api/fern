@@ -1,0 +1,573 @@
+{
+  "type": "object",
+  "properties": {
+    "echo": {
+      "$ref": "#/definitions/nullable-optional.DeserializationTestRequest"
+    },
+    "processedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "nullCount": {
+      "type": "integer"
+    },
+    "presentFieldsCount": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "echo",
+    "processedAt",
+    "nullCount",
+    "presentFieldsCount"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "nullable-optional.UserRole": {
+      "type": "string",
+      "enum": [
+        "ADMIN",
+        "USER",
+        "GUEST",
+        "MODERATOR"
+      ]
+    },
+    "nullable-optional.UserStatus": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "suspended",
+        "deleted"
+      ]
+    },
+    "nullable-optional.NotificationMethod": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "email",
+            "sms",
+            "push"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "email"
+            },
+            "emailAddress": {
+              "type": "string"
+            },
+            "subject": {
+              "type": "string"
+            },
+            "htmlContent": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "emailAddress",
+            "subject"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "sms"
+            },
+            "phoneNumber": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            },
+            "shortCode": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "phoneNumber",
+            "message"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "push"
+            },
+            "deviceToken": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "body": {
+              "type": "string"
+            },
+            "badge": {
+              "oneOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "deviceToken",
+            "title",
+            "body"
+          ]
+        }
+      ]
+    },
+    "nullable-optional.NullableUserId": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullable-optional.OptionalUserId": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullable-optional.Address": {
+      "type": "object",
+      "properties": {
+        "street": {
+          "type": "string"
+        },
+        "city": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "zipCode": {
+          "type": "string"
+        },
+        "country": {
+          "oneOf": [
+            {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "buildingId": {
+          "$ref": "#/definitions/nullable-optional.NullableUserId"
+        },
+        "tenantId": {
+          "$ref": "#/definitions/nullable-optional.OptionalUserId"
+        }
+      },
+      "required": [
+        "street",
+        "city",
+        "zipCode",
+        "buildingId"
+      ],
+      "additionalProperties": false
+    },
+    "nullable-optional.SearchResult": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "user",
+            "organization",
+            "document"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "user"
+            },
+            "id": {
+              "type": "string"
+            },
+            "username": {
+              "type": "string"
+            },
+            "email": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "phone": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "updatedAt": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "address": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/nullable-optional.Address"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "id",
+            "username",
+            "email",
+            "createdAt",
+            "updatedAt"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "organization"
+            },
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "domain": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "employeeCount": {
+              "oneOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "id",
+            "name",
+            "domain"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "document"
+            },
+            "id": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "content": {
+              "type": "string"
+            },
+            "author": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "tags": {
+              "oneOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "id",
+            "title",
+            "content",
+            "author"
+          ]
+        }
+      ]
+    },
+    "nullable-optional.Organization": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "domain": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "employeeCount": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "domain"
+      ],
+      "additionalProperties": false
+    },
+    "nullable-optional.DeserializationTestRequest": {
+      "type": "object",
+      "properties": {
+        "requiredString": {
+          "type": "string"
+        },
+        "nullableString": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "optionalString": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "optionalNullableString": {
+          "oneOf": [
+            {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nullableEnum": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/nullable-optional.UserRole"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "optionalEnum": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/nullable-optional.UserStatus"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nullableUnion": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/nullable-optional.NotificationMethod"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "optionalUnion": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/nullable-optional.SearchResult"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nullableList": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nullableMap": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "integer"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nullableObject": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/nullable-optional.Address"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "optionalObject": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/nullable-optional.Organization"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "requiredString",
+        "nullableString",
+        "nullableEnum",
+        "nullableUnion",
+        "nullableList",
+        "nullableMap",
+        "nullableObject"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

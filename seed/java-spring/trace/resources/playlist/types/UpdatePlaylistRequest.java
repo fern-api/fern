@@ -120,7 +120,9 @@ public final class UpdatePlaylistRequest {
      */
     @java.lang.Override
     public _FinalStage addAllProblems(List<ProblemId> problems) {
-      this.problems.addAll(problems);
+      if (problems != null) {
+        this.problems.addAll(problems);
+      }
       return this;
     }
 

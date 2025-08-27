@@ -116,17 +116,15 @@ public final class SearchUsersRequest {
     }
 
     public interface QueryStage {
-        DepartmentStage query(@NotNull String query);
+        _FinalStage query(@NotNull String query);
 
         Builder from(SearchUsersRequest other);
     }
 
-    public interface DepartmentStage {
-        _FinalStage department(String department);
-    }
-
     public interface _FinalStage {
         SearchUsersRequest build();
+
+        _FinalStage department(@com.seed.nullableOptional.core.Nullable String department);
 
         _FinalStage role(Optional<String> role);
 
@@ -140,14 +138,14 @@ public final class SearchUsersRequest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements QueryStage, DepartmentStage, _FinalStage {
+    public static final class Builder implements QueryStage, _FinalStage {
         private String query;
-
-        private String department;
 
         private Optional<Boolean> isActive = Optional.empty();
 
         private Optional<String> role = Optional.empty();
+
+        private String department;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -165,15 +163,8 @@ public final class SearchUsersRequest {
 
         @java.lang.Override
         @JsonSetter("query")
-        public DepartmentStage query(@NotNull String query) {
+        public _FinalStage query(@NotNull String query) {
             this.query = Objects.requireNonNull(query, "query must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("department")
-        public _FinalStage department(String department) {
-            this.department = department;
             return this;
         }
 
@@ -212,6 +203,13 @@ public final class SearchUsersRequest {
         @JsonSetter(value = "role", nulls = Nulls.SKIP)
         public _FinalStage role(Optional<String> role) {
             this.role = role;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("department")
+        public _FinalStage department(@com.seed.nullableOptional.core.Nullable String department) {
+            this.department = department;
             return this;
         }
 

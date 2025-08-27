@@ -87,6 +87,125 @@ export interface NullableOptionalServiceMethods {
         },
         next: express.NextFunction,
     ): void | Promise<void>;
+    createComplexProfile(
+        req: express.Request<never, SeedNullableOptional.ComplexProfile, SeedNullableOptional.ComplexProfile, never>,
+        res: {
+            send: (responseBody: SeedNullableOptional.ComplexProfile) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    getComplexProfile(
+        req: express.Request<
+            {
+                profileId: string;
+            },
+            SeedNullableOptional.ComplexProfile,
+            never,
+            never
+        >,
+        res: {
+            send: (responseBody: SeedNullableOptional.ComplexProfile) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    updateComplexProfile(
+        req: express.Request<
+            {
+                profileId: string;
+            },
+            SeedNullableOptional.ComplexProfile,
+            SeedNullableOptional.UpdateComplexProfileRequest,
+            never
+        >,
+        res: {
+            send: (responseBody: SeedNullableOptional.ComplexProfile) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    testDeserialization(
+        req: express.Request<
+            never,
+            SeedNullableOptional.DeserializationTestResponse,
+            SeedNullableOptional.DeserializationTestRequest,
+            never
+        >,
+        res: {
+            send: (responseBody: SeedNullableOptional.DeserializationTestResponse) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    filterByRole(
+        req: express.Request<
+            never,
+            SeedNullableOptional.UserResponse[],
+            never,
+            {
+                role: SeedNullableOptional.UserRole | null;
+                status?: SeedNullableOptional.UserStatus;
+                secondaryRole?: SeedNullableOptional.UserRole | null;
+            }
+        >,
+        res: {
+            send: (responseBody: SeedNullableOptional.UserResponse[]) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    getNotificationSettings(
+        req: express.Request<
+            {
+                userId: string;
+            },
+            SeedNullableOptional.NotificationMethod | null,
+            never,
+            never
+        >,
+        res: {
+            send: (responseBody: SeedNullableOptional.NotificationMethod | null) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    updateTags(
+        req: express.Request<
+            {
+                userId: string;
+            },
+            string[],
+            SeedNullableOptional.UpdateTagsRequest,
+            never
+        >,
+        res: {
+            send: (responseBody: string[]) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    getSearchResults(
+        req: express.Request<
+            never,
+            SeedNullableOptional.SearchResult[] | null,
+            SeedNullableOptional.SearchRequest,
+            never
+        >,
+        res: {
+            send: (responseBody: SeedNullableOptional.SearchResult[] | null) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
 }
 
 export class NullableOptionalService {
@@ -298,6 +417,334 @@ export class NullableOptionalService {
                     res.status(500).json("Internal Server Error");
                 }
                 next(error);
+            }
+        });
+        this.router.post("/profiles/complex", async (req, res, next) => {
+            const request = serializers.ComplexProfile.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.createComplexProfile(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.ComplexProfile.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    if (!res.writableEnded) {
+                        next();
+                    }
+                } catch (error) {
+                    if (error instanceof errors.SeedNullableOptionalError) {
+                        console.warn(
+                            `Endpoint 'createComplexProfile' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.",
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.get("/profiles/complex/:profileId", async (req, res, next) => {
+            try {
+                await this.methods.getComplexProfile(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                serializers.ComplexProfile.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                }),
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next,
+                );
+                if (!res.writableEnded) {
+                    next();
+                }
+            } catch (error) {
+                if (error instanceof errors.SeedNullableOptionalError) {
+                    console.warn(
+                        `Endpoint 'getComplexProfile' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition.",
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.patch("/profiles/complex/:profileId", async (req, res, next) => {
+            const request = serializers.UpdateComplexProfileRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.updateComplexProfile(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.ComplexProfile.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    if (!res.writableEnded) {
+                        next();
+                    }
+                } catch (error) {
+                    if (error instanceof errors.SeedNullableOptionalError) {
+                        console.warn(
+                            `Endpoint 'updateComplexProfile' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.",
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.post("/test/deserialization", async (req, res, next) => {
+            const request = serializers.DeserializationTestRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.testDeserialization(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.DeserializationTestResponse.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    if (!res.writableEnded) {
+                        next();
+                    }
+                } catch (error) {
+                    if (error instanceof errors.SeedNullableOptionalError) {
+                        console.warn(
+                            `Endpoint 'testDeserialization' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.",
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.get("/users/filter", async (req, res, next) => {
+            try {
+                await this.methods.filterByRole(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                serializers.nullableOptional.filterByRole.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                }),
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next,
+                );
+                if (!res.writableEnded) {
+                    next();
+                }
+            } catch (error) {
+                if (error instanceof errors.SeedNullableOptionalError) {
+                    console.warn(
+                        `Endpoint 'filterByRole' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition.",
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.get("/users/:userId/notifications", async (req, res, next) => {
+            try {
+                await this.methods.getNotificationSettings(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                serializers.nullableOptional.getNotificationSettings.Response.jsonOrThrow(
+                                    responseBody,
+                                    { unrecognizedObjectKeys: "strip" },
+                                ),
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next,
+                );
+                if (!res.writableEnded) {
+                    next();
+                }
+            } catch (error) {
+                if (error instanceof errors.SeedNullableOptionalError) {
+                    console.warn(
+                        `Endpoint 'getNotificationSettings' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition.",
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.put("/users/:userId/tags", async (req, res, next) => {
+            const request = serializers.UpdateTagsRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.updateTags(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.nullableOptional.updateTags.Response.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    if (!res.writableEnded) {
+                        next();
+                    }
+                } catch (error) {
+                    if (error instanceof errors.SeedNullableOptionalError) {
+                        console.warn(
+                            `Endpoint 'updateTags' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.",
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.post("/search", async (req, res, next) => {
+            const request = serializers.SearchRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.getSearchResults(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.nullableOptional.getSearchResults.Response.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    if (!res.writableEnded) {
+                        next();
+                    }
+                } catch (error) {
+                    if (error instanceof errors.SeedNullableOptionalError) {
+                        console.warn(
+                            `Endpoint 'getSearchResults' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.",
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
+                    ),
+                });
+                next(request.errors);
             }
         });
         return this.router;

@@ -12,6 +12,9 @@ vi.mock("../utils/isCI", () => ({
     isCI: vi.fn().mockReturnValue(false)
 }));
 
+vi.mock("../persistence/output-directories/getOutputDirectories");
+vi.mock("../persistence/output-directories/storeOutputDirectories");
+
 describe.sequential("checkOutputDirectory", () => {
     let mockCliContext: {
         confirmPrompt: Mock & ((message: string, defaultValue?: boolean) => Promise<boolean>);
@@ -22,6 +25,11 @@ describe.sequential("checkOutputDirectory", () => {
         mockCliContext = {
             confirmPrompt: vi.fn().mockImplementation(async () => true)
         };
+        // Reset mocks before each test
+        vi.mocked(getOutputDirectories).mockReset();
+        vi.mocked(storeOutputDirectories).mockReset();
+        // Default mock implementation - no directories in safelist
+        vi.mocked(getOutputDirectories).mockResolvedValue([]);
     });
 
     afterEach(() => {
@@ -75,8 +83,8 @@ describe.sequential("checkOutputDirectory", () => {
         await mkdir(safelistedDir);
         await writeFile(join(safelistedDir, RelativeFilePath.of("test.txt")), "test");
 
-        // Add to safelist
-        await storeOutputDirectories([safelistedDir]);
+        // Mock that the directory is in the safelist
+        vi.mocked(getOutputDirectories).mockResolvedValue([safelistedDir]);
 
         const result = await checkOutputDirectory(safelistedDir, mockCliContext as unknown as CliContext, false);
 
@@ -92,6 +100,10 @@ describe.sequential("checkOutputDirectory", () => {
         await mkdir(dirToSafelist);
         await writeFile(join(dirToSafelist, RelativeFilePath.of("test.txt")), "test");
 
+        // Mock that the directory is not initially in the safelist
+        vi.mocked(getOutputDirectories).mockResolvedValue([]);
+        vi.mocked(storeOutputDirectories).mockResolvedValue();
+
         mockCliContext.confirmPrompt.mockResolvedValueOnce(true);
 
         const result = await checkOutputDirectory(dirToSafelist, mockCliContext as unknown as CliContext, false);
@@ -100,9 +112,8 @@ describe.sequential("checkOutputDirectory", () => {
             shouldProceed: true
         });
 
-        // Verify directory was added to safelist
-        const savedDirectories = await getOutputDirectories();
-        expect(savedDirectories).toContain(dirToSafelist);
+        // Verify storeOutputDirectories was called with the directory
+        expect(storeOutputDirectories).toHaveBeenCalledWith([dirToSafelist]);
     });
 
     it("doesn't proceed if user declines overwrite", async () => {

@@ -120,7 +120,9 @@ public final class Record {
 
         @java.lang.Override
         public _FinalStage putAllFoo(Map<String, String> foo) {
-            this.foo.putAll(foo);
+            if (foo != null) {
+                this.foo.putAll(foo);
+            }
             return this;
         }
 

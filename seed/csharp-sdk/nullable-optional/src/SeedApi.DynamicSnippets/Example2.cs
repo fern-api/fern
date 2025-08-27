@@ -23,7 +23,9 @@ public class Example2
                     City = "city",
                     State = "state",
                     ZipCode = "zipCode",
-                    Country = "country"
+                    Country = "country",
+                    BuildingId = "buildingId",
+                    TenantId = "tenantId"
                 }
             }
         );

@@ -176,7 +176,9 @@ public final class Practitioner implements IBaseResource {
 
         @java.lang.Override
         public _FinalStage addAllRelatedResources(List<ResourceList> relatedResources) {
-            this.relatedResources.addAll(relatedResources);
+            if (relatedResources != null) {
+                this.relatedResources.addAll(relatedResources);
+            }
             return this;
         }
 

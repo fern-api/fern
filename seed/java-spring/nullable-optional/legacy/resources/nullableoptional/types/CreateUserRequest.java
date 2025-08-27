@@ -4,12 +4,15 @@
 
 package resources.nullableoptional.types;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import core.Nullable;
+import core.NullableNonemptyFilter;
 import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
@@ -43,8 +46,11 @@ public final class CreateUserRequest {
     return username;
   }
 
-  @JsonProperty("email")
+  @JsonIgnore
   public Optional<String> getEmail() {
+    if (email == null) {
+      return Optional.empty();
+    }
     return email;
   }
 
@@ -56,6 +62,15 @@ public final class CreateUserRequest {
   @JsonProperty("address")
   public Optional<Address> getAddress() {
     return address;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("email")
+  private Optional<String> _getEmail() {
+    return email;
   }
 
   @java.lang.Override
@@ -94,6 +109,8 @@ public final class CreateUserRequest {
     _FinalStage email(Optional<String> email);
 
     _FinalStage email(String email);
+
+    _FinalStage email(Nullable<String> email);
 
     _FinalStage phone(Optional<String> phone);
 
@@ -164,6 +181,20 @@ public final class CreateUserRequest {
     )
     public _FinalStage phone(Optional<String> phone) {
       this.phone = phone;
+      return this;
+    }
+
+    @java.lang.Override
+    public _FinalStage email(Nullable<String> email) {
+      if (email.isNull()) {
+        this.email = null;
+      }
+      else if (email.isEmpty()) {
+        this.email = Optional.empty();
+      }
+      else {
+        this.email = Optional.of(email.get());
+      }
       return this;
     }
 

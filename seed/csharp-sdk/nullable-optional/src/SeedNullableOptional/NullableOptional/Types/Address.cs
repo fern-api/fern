@@ -29,6 +29,12 @@ public record Address : IJsonOnDeserialized
     [JsonPropertyName("country")]
     public string? Country { get; set; }
 
+    [JsonPropertyName("buildingId")]
+    public string? BuildingId { get; set; }
+
+    [JsonPropertyName("tenantId")]
+    public string? TenantId { get; set; }
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
