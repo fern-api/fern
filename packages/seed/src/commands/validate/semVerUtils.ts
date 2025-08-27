@@ -87,7 +87,7 @@ export function isValidSemVerChange(currentVersion: SemVer, previousVersion: Sem
             (currentVersion.prerelease === undefined || currentVersion.prerelease === 0)
         );
     }
-    // If prerelease is undefined, and no otehr versions are different, it's invalie
+    // If prerelease is undefined, and no other versions are different, it's invalid
     if (currentVersion.prerelease === undefined) {
         return false;
     }
