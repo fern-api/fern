@@ -703,6 +703,10 @@ describe("${serviceName}", () => {
             endpoint.pagination !== undefined && endpoint.pagination.type === "custom"
                 ? this.getPaginationPropertyPath("page", endpoint.pagination, context)
                 : "page";
+        const nextPageName =
+            endpoint.pagination !== undefined && endpoint.pagination.type === "custom"
+                ? this.getPaginationPropertyPath("nextPage", endpoint.pagination, context)
+                : "nextPage";
         const paginationPropertyName =
             endpoint.pagination !== undefined ? this.getPaginationPropertyName(endpoint.pagination, context) : "";
         const paginationBlock =
@@ -711,6 +715,15 @@ describe("${serviceName}", () => {
 				const expected = ${expected}
                 const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
                 expect(${expectedName}.${paginationPropertyName}).toEqual(${pageName}.data);
+                ${
+                    endpoint.pagination.type !== "custom"
+                        ? code`
+                            expect(${pageName}.hasNextPage()).toBe(true);
+                            const nextPage = await ${pageName}.getNextPage();
+                            expect(${expectedName}.${paginationPropertyName}).toEqual(${nextPageName}.data);
+                        `
+                        : ""
+                }
 				`
                 : "";
 
@@ -824,7 +837,6 @@ describe("${serviceName}", () => {
         if (endpoint.idempotent) {
             return false;
         }
-        // NOTE: Pagination is now supported.
         return true;
     }
 
