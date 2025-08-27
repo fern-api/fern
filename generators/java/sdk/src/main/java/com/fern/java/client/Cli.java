@@ -171,19 +171,18 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         if (generateFullProject) {
             this.runInProjectModeHook(generatorExecClient, generatorConfig, ir, sdkCustomConfig);
-            return;
+        } else {
+            ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
+                    customConfig.packagePrefix().map(List::of).orElseGet(Collections::emptyList),
+                    customConfig.packageLayout());
+            ClientGeneratorContext context = new ClientGeneratorContext(
+                    ir,
+                    generatorConfig,
+                    sdkCustomConfig,
+                    clientPoetClassNameFactory,
+                    new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes());
+            generateClient(context, ir, generatorExecClient);
         }
-
-        ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
-                customConfig.packagePrefix().map(List::of).orElseGet(Collections::emptyList),
-                customConfig.packageLayout());
-        ClientGeneratorContext context = new ClientGeneratorContext(
-                ir,
-                generatorConfig,
-                sdkCustomConfig,
-                clientPoetClassNameFactory,
-                new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes());
-        generateClient(context, ir, generatorExecClient);
     }
 
     @Override

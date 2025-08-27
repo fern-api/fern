@@ -115,7 +115,7 @@ export async function runLocalGenerationForWorkspace({
                     org: organization.ok ? organization.body : undefined,
                     version,
                     packageName,
-                    context
+                    context: interactiveTaskContext
                 });
                 if (publishConfig != null) {
                     intermediateRepresentation.publishConfig = publishConfig;
