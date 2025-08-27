@@ -6,7 +6,7 @@ using SeedNullableOptional.Core;
 namespace SeedNullableOptional.Test.Unit.MockServer;
 
 [TestFixture]
-public class ListUsersTest : BaseMockServerTest
+public class FilterByRoleTest : BaseMockServerTest
 {
     [Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
@@ -54,10 +54,10 @@ public class ListUsersTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/api/users")
-                    .WithParam("limit", "1")
-                    .WithParam("offset", "1")
-                    .WithParam("sortBy", "sortBy")
+                    .WithPath("/api/users/filter")
+                    .WithParam("role", "ADMIN")
+                    .WithParam("status", "active")
+                    .WithParam("secondaryRole", "ADMIN")
                     .UsingGet()
             )
             .RespondWith(
@@ -67,13 +67,12 @@ public class ListUsersTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.NullableOptional.ListUsersAsync(
-            new ListUsersRequest
+        var response = await Client.NullableOptional.FilterByRoleAsync(
+            new FilterByRoleRequest
             {
-                Limit = 1,
-                Offset = 1,
-                IncludeDeleted = true,
-                SortBy = "sortBy",
+                Role = UserRole.Admin,
+                Status = UserStatus.Active,
+                SecondaryRole = UserRole.Admin,
             }
         );
         Assert.That(
