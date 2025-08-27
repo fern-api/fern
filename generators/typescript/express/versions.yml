@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Fixed semver for changelog validation.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-08-27"
+  version: 0.18.5
+
+- changelogEntry:
     - summary: |
         Invert condition for running `next` in the generated service.
       type: fix

@@ -230,7 +230,9 @@ public final class GetPlaylistsRequest {
 
         @java.lang.Override
         public _FinalStage addAllMultipleField(List<String> multipleField) {
-            this.multipleField.addAll(multipleField);
+            if (multipleField != null) {
+                this.multipleField.addAll(multipleField);
+            }
             return this;
         }
 

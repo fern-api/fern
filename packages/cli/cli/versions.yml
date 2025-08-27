@@ -1,5 +1,33 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Update docs workspace validator to skip file type validation when running in selfhosted mode
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-27"
+  version: 0.66.29
+
+- changelogEntry:
+    - summary: Fix downloadFiles mode to respect organization's selfHostedSdKs flag for Java SDK generation
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-27"
+  version: 0.66.28
+
+- changelogEntry:
+    - summary: Fix readmeConfig.disabledSections type - change from set to list.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-26"
+  version: 0.66.27
+
+- changelogEntry:
+    - summary: Add whiteLabel setting to FernIr.ReadmeConfig based on org properties
+      type: chore
+  irVersion: 59
+  createdAt: "2025-08-26"
+  version: 0.66.26
+
+- changelogEntry:
     - summary: Handle object-style examples in OpenAPI spec
       type: chore
   irVersion: 59

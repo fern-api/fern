@@ -4,12 +4,15 @@
 
 package resources.nullableoptional.types;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import core.Nullable;
+import core.NullableNonemptyFilter;
 import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
@@ -58,8 +61,11 @@ public final class UserResponse {
     return username;
   }
 
-  @JsonProperty("email")
+  @JsonIgnore
   public Optional<String> getEmail() {
+    if (email == null) {
+      return Optional.empty();
+    }
     return email;
   }
 
@@ -73,14 +79,35 @@ public final class UserResponse {
     return createdAt;
   }
 
-  @JsonProperty("updatedAt")
+  @JsonIgnore
   public Optional<OffsetDateTime> getUpdatedAt() {
+    if (updatedAt == null) {
+      return Optional.empty();
+    }
     return updatedAt;
   }
 
   @JsonProperty("address")
   public Optional<Address> getAddress() {
     return address;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("email")
+  private Optional<String> _getEmail() {
+    return email;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("updatedAt")
+  private Optional<OffsetDateTime> _getUpdatedAt() {
+    return updatedAt;
   }
 
   @java.lang.Override
@@ -128,6 +155,8 @@ public final class UserResponse {
 
     _FinalStage email(String email);
 
+    _FinalStage email(Nullable<String> email);
+
     _FinalStage phone(Optional<String> phone);
 
     _FinalStage phone(String phone);
@@ -135,6 +164,8 @@ public final class UserResponse {
     _FinalStage updatedAt(Optional<OffsetDateTime> updatedAt);
 
     _FinalStage updatedAt(OffsetDateTime updatedAt);
+
+    _FinalStage updatedAt(Nullable<OffsetDateTime> updatedAt);
 
     _FinalStage address(Optional<Address> address);
 
@@ -212,6 +243,20 @@ public final class UserResponse {
     }
 
     @java.lang.Override
+    public _FinalStage updatedAt(Nullable<OffsetDateTime> updatedAt) {
+      if (updatedAt.isNull()) {
+        this.updatedAt = null;
+      }
+      else if (updatedAt.isEmpty()) {
+        this.updatedAt = Optional.empty();
+      }
+      else {
+        this.updatedAt = Optional.of(updatedAt.get());
+      }
+      return this;
+    }
+
+    @java.lang.Override
     public _FinalStage updatedAt(OffsetDateTime updatedAt) {
       this.updatedAt = Optional.ofNullable(updatedAt);
       return this;
@@ -240,6 +285,20 @@ public final class UserResponse {
     )
     public _FinalStage phone(Optional<String> phone) {
       this.phone = phone;
+      return this;
+    }
+
+    @java.lang.Override
+    public _FinalStage email(Nullable<String> email) {
+      if (email.isNull()) {
+        this.email = null;
+      }
+      else if (email.isEmpty()) {
+        this.email = Optional.empty();
+      }
+      else {
+        this.email = Optional.of(email.get());
+      }
       return this;
     }
 

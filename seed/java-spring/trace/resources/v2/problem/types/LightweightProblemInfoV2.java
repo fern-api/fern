@@ -156,7 +156,9 @@ public final class LightweightProblemInfoV2 {
 
     @java.lang.Override
     public _FinalStage addAllVariableTypes(Set<VariableType> variableTypes) {
-      this.variableTypes.addAll(variableTypes);
+      if (variableTypes != null) {
+        this.variableTypes.addAll(variableTypes);
+      }
       return this;
     }
 

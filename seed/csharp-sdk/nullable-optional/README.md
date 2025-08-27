@@ -40,6 +40,8 @@ await client.NullableOptional.CreateUserAsync(
             State = "state",
             ZipCode = "zipCode",
             Country = "country",
+            BuildingId = "buildingId",
+            TenantId = "tenantId",
         },
     }
 );

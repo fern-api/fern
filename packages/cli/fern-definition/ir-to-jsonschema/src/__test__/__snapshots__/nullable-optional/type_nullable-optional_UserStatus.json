@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "enum": [
+    "active",
+    "inactive",
+    "suspended",
+    "deleted"
+  ],
+  "definitions": {}
+}

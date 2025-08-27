@@ -13,6 +13,8 @@ export const Address: core.serialization.ObjectSchema<serializers.Address.Raw, S
         state: core.serialization.string().optional(),
         zipCode: core.serialization.string(),
         country: core.serialization.string().optionalNullable(),
+        buildingId: core.serialization.lazy(() => serializers.NullableUserId),
+        tenantId: core.serialization.lazy(() => serializers.OptionalUserId),
     });
 
 export declare namespace Address {
@@ -22,5 +24,7 @@ export declare namespace Address {
         state?: string | null;
         zipCode: string;
         country?: (string | null) | null;
+        buildingId: serializers.NullableUserId.Raw;
+        tenantId?: serializers.OptionalUserId.Raw;
     }
 }

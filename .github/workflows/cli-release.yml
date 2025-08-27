@@ -36,10 +36,10 @@ jobs:
         run: |
           previous_commit=$(git log -n 2 --pretty=format:"%h" -- packages/cli/cli/versions.yml | tail -n 1)
           current_commit=$(git log -n 1 --pretty=format:"%h" -- packages/cli/cli/versions.yml)
-          
+
           # Get the previous version of the file using the specific commit that last changed it
           git show ${previous_commit}:packages/cli/cli/versions.yml > tmp_cli_previous_versions.yml
-          
+
           echo "Preview of the previous file (${previous_commit})"
           head tmp_cli_previous_versions.yml
 

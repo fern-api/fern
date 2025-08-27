@@ -93,8 +93,16 @@ export async function runLocalGenerationForWorkspace({
                     return;
                 }
 
-                if (organization.ok && organization.body.selfHostedSdKs) {
-                    intermediateRepresentation.selfHosted = true;
+                if (organization.ok) {
+                    if (organization.body.selfHostedSdKs) {
+                        intermediateRepresentation.selfHosted = true;
+                    }
+                    if (organization.body.isWhitelabled) {
+                        if (intermediateRepresentation.readmeConfig == null) {
+                            intermediateRepresentation.readmeConfig = emptyReadmeConfig;
+                        }
+                        intermediateRepresentation.readmeConfig.whiteLabel = true;
+                    }
                 }
 
                 // Set the publish config on the intermediateRepresentation if available
@@ -107,7 +115,7 @@ export async function runLocalGenerationForWorkspace({
                     org: organization.ok ? organization.body : undefined,
                     version,
                     packageName,
-                    context
+                    context: interactiveTaskContext
                 });
                 if (publishConfig != null) {
                     intermediateRepresentation.publishConfig = publishConfig;
@@ -225,7 +233,12 @@ function getPublishConfig({
     }
 
     return generatorInvocation.outputMode._visit({
-        downloadFiles: () => undefined,
+        downloadFiles: () => {
+            return FernIr.PublishingConfig.filesystem({
+                generateFullProject: org?.selfHostedSdKs ?? false,
+                publishTarget: undefined
+            });
+        },
         github: () => undefined,
         githubV2: () => undefined,
         publish: () => undefined,
@@ -245,3 +258,14 @@ function isGithubSelfhosted(
     }
     return "uri" in github && "token" in github;
 }
+
+const emptyReadmeConfig: FernIr.ReadmeConfig = {
+    defaultEndpoint: undefined,
+    bannerLink: undefined,
+    introduction: undefined,
+    apiReferenceLink: undefined,
+    apiName: undefined,
+    disabledFeatures: undefined,
+    whiteLabel: undefined,
+    features: undefined
+};

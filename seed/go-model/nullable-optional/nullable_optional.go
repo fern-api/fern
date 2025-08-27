@@ -9,6 +9,12 @@ import (
 	time "time"
 )
 
+// An alias for a nullable user ID
+type NullableUserId = *string
+
+// An alias for an optional user ID
+type OptionalUserId = *string
+
 // Test object with nullable and optional fields
 type UserProfile struct {
 	Id                     string            `json:"id" url:"id"`
@@ -221,11 +227,13 @@ func (u *UserProfile) String() string {
 
 // Nested object for testing
 type Address struct {
-	Street  string  `json:"street" url:"street"`
-	City    *string `json:"city" url:"city"`
-	State   *string `json:"state,omitempty" url:"state,omitempty"`
-	ZipCode string  `json:"zipCode" url:"zipCode"`
-	Country *string `json:"country,omitempty" url:"country,omitempty"`
+	Street     string         `json:"street" url:"street"`
+	City       *string        `json:"city" url:"city"`
+	State      *string        `json:"state,omitempty" url:"state,omitempty"`
+	ZipCode    string         `json:"zipCode" url:"zipCode"`
+	Country    *string        `json:"country,omitempty" url:"country,omitempty"`
+	BuildingId NullableUserId `json:"buildingId" url:"buildingId"`
+	TenantId   OptionalUserId `json:"tenantId,omitempty" url:"tenantId,omitempty"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
@@ -264,6 +272,20 @@ func (a *Address) GetCountry() *string {
 		return nil
 	}
 	return a.Country
+}
+
+func (a *Address) GetBuildingId() NullableUserId {
+	if a == nil {
+		return nil
+	}
+	return a.BuildingId
+}
+
+func (a *Address) GetTenantId() OptionalUserId {
+	if a == nil {
+		return nil
+	}
+	return a.TenantId
 }
 
 func (a *Address) GetExtraProperties() map[string]any {
@@ -452,6 +474,879 @@ func (u *UpdateUserRequest) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
+}
+
+// Test enum for nullable enum fields
+type UserRole string
+
+const (
+	UserRoleAdmin     = "ADMIN"
+	UserRoleUser      = "USER"
+	UserRoleGuest     = "GUEST"
+	UserRoleModerator = "MODERATOR"
+)
+
+func NewUserRoleFromString(s string) (UserRole, error) {
+	switch s {
+	case "ADMIN":
+		return UserRoleAdmin, nil
+	case "USER":
+		return UserRoleUser, nil
+	case "GUEST":
+		return UserRoleGuest, nil
+	case "MODERATOR":
+		return UserRoleModerator, nil
+	}
+	var t UserRole
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (u UserRole) Ptr() *UserRole {
+	return &u
+}
+
+// Test enum with values for optional enum fields
+type UserStatus string
+
+const (
+	UserStatusActive    = "active"
+	UserStatusInactive  = "inactive"
+	UserStatusSuspended = "suspended"
+	UserStatusDeleted   = "deleted"
+)
+
+func NewUserStatusFromString(s string) (UserStatus, error) {
+	switch s {
+	case "active":
+		return UserStatusActive, nil
+	case "inactive":
+		return UserStatusInactive, nil
+	case "suspended":
+		return UserStatusSuspended, nil
+	case "deleted":
+		return UserStatusDeleted, nil
+	}
+	var t UserStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (u UserStatus) Ptr() *UserStatus {
+	return &u
+}
+
+// Discriminated union for testing nullable unions
+type NotificationMethod struct {
+	// Discriminated union for testing nullable unions
+	Type  string
+	Email EmailNotification
+	Sms   SmsNotification
+	Push  PushNotification
+}
+
+type EmailNotification struct {
+	EmailAddress string  `json:"emailAddress" url:"emailAddress"`
+	Subject      string  `json:"subject" url:"subject"`
+	HtmlContent  *string `json:"htmlContent,omitempty" url:"htmlContent,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (e *EmailNotification) GetEmailAddress() string {
+	if e == nil {
+		return ""
+	}
+	return e.EmailAddress
+}
+
+func (e *EmailNotification) GetSubject() string {
+	if e == nil {
+		return ""
+	}
+	return e.Subject
+}
+
+func (e *EmailNotification) GetHtmlContent() *string {
+	if e == nil {
+		return nil
+	}
+	return e.HtmlContent
+}
+
+func (e *EmailNotification) GetExtraProperties() map[string]any {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *EmailNotification) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler EmailNotification
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = EmailNotification(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *EmailNotification) String() string {
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
+type SmsNotification struct {
+	PhoneNumber string  `json:"phoneNumber" url:"phoneNumber"`
+	Message     string  `json:"message" url:"message"`
+	ShortCode   *string `json:"shortCode,omitempty" url:"shortCode,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (s *SmsNotification) GetPhoneNumber() string {
+	if s == nil {
+		return ""
+	}
+	return s.PhoneNumber
+}
+
+func (s *SmsNotification) GetMessage() string {
+	if s == nil {
+		return ""
+	}
+	return s.Message
+}
+
+func (s *SmsNotification) GetShortCode() *string {
+	if s == nil {
+		return nil
+	}
+	return s.ShortCode
+}
+
+func (s *SmsNotification) GetExtraProperties() map[string]any {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SmsNotification) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler SmsNotification
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SmsNotification(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SmsNotification) String() string {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+type PushNotification struct {
+	DeviceToken string `json:"deviceToken" url:"deviceToken"`
+	Title       string `json:"title" url:"title"`
+	Body        string `json:"body" url:"body"`
+	Badge       *int   `json:"badge,omitempty" url:"badge,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (p *PushNotification) GetDeviceToken() string {
+	if p == nil {
+		return ""
+	}
+	return p.DeviceToken
+}
+
+func (p *PushNotification) GetTitle() string {
+	if p == nil {
+		return ""
+	}
+	return p.Title
+}
+
+func (p *PushNotification) GetBody() string {
+	if p == nil {
+		return ""
+	}
+	return p.Body
+}
+
+func (p *PushNotification) GetBadge() *int {
+	if p == nil {
+		return nil
+	}
+	return p.Badge
+}
+
+func (p *PushNotification) GetExtraProperties() map[string]any {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PushNotification) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler PushNotification
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PushNotification(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PushNotification) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
+// Undiscriminated union for testing
+type SearchResult struct {
+	// Undiscriminated union for testing
+	Type         string
+	User         UserResponse
+	Organization Organization
+	Document     Document
+}
+
+type Organization struct {
+	Id            string  `json:"id" url:"id"`
+	Name          string  `json:"name" url:"name"`
+	Domain        *string `json:"domain" url:"domain"`
+	EmployeeCount *int    `json:"employeeCount,omitempty" url:"employeeCount,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (o *Organization) GetId() string {
+	if o == nil {
+		return ""
+	}
+	return o.Id
+}
+
+func (o *Organization) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *Organization) GetDomain() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Domain
+}
+
+func (o *Organization) GetEmployeeCount() *int {
+	if o == nil {
+		return nil
+	}
+	return o.EmployeeCount
+}
+
+func (o *Organization) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *Organization) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Organization
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = Organization(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *Organization) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+type Document struct {
+	Id      string   `json:"id" url:"id"`
+	Title   string   `json:"title" url:"title"`
+	Content string   `json:"content" url:"content"`
+	Author  *string  `json:"author" url:"author"`
+	Tags    []string `json:"tags,omitempty" url:"tags,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (d *Document) GetId() string {
+	if d == nil {
+		return ""
+	}
+	return d.Id
+}
+
+func (d *Document) GetTitle() string {
+	if d == nil {
+		return ""
+	}
+	return d.Title
+}
+
+func (d *Document) GetContent() string {
+	if d == nil {
+		return ""
+	}
+	return d.Content
+}
+
+func (d *Document) GetAuthor() *string {
+	if d == nil {
+		return nil
+	}
+	return d.Author
+}
+
+func (d *Document) GetTags() []string {
+	if d == nil {
+		return nil
+	}
+	return d.Tags
+}
+
+func (d *Document) GetExtraProperties() map[string]any {
+	if d == nil {
+		return nil
+	}
+	return d.extraProperties
+}
+
+func (d *Document) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Document
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = Document(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (d *Document) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
+}
+
+// Test object with nullable enums, unions, and arrays
+type ComplexProfile struct {
+	Id                           string                `json:"id" url:"id"`
+	NullableRole                 *UserRole             `json:"nullableRole" url:"nullableRole"`
+	OptionalRole                 *UserRole             `json:"optionalRole,omitempty" url:"optionalRole,omitempty"`
+	OptionalNullableRole         *UserRole             `json:"optionalNullableRole,omitempty" url:"optionalNullableRole,omitempty"`
+	NullableStatus               *UserStatus           `json:"nullableStatus" url:"nullableStatus"`
+	OptionalStatus               *UserStatus           `json:"optionalStatus,omitempty" url:"optionalStatus,omitempty"`
+	OptionalNullableStatus       *UserStatus           `json:"optionalNullableStatus,omitempty" url:"optionalNullableStatus,omitempty"`
+	NullableNotification         *NotificationMethod   `json:"nullableNotification" url:"nullableNotification"`
+	OptionalNotification         *NotificationMethod   `json:"optionalNotification,omitempty" url:"optionalNotification,omitempty"`
+	OptionalNullableNotification *NotificationMethod   `json:"optionalNullableNotification,omitempty" url:"optionalNullableNotification,omitempty"`
+	NullableSearchResult         *SearchResult         `json:"nullableSearchResult" url:"nullableSearchResult"`
+	OptionalSearchResult         *SearchResult         `json:"optionalSearchResult,omitempty" url:"optionalSearchResult,omitempty"`
+	NullableArray                []string              `json:"nullableArray" url:"nullableArray"`
+	OptionalArray                []string              `json:"optionalArray,omitempty" url:"optionalArray,omitempty"`
+	OptionalNullableArray        []string              `json:"optionalNullableArray,omitempty" url:"optionalNullableArray,omitempty"`
+	NullableListOfNullables      []*string             `json:"nullableListOfNullables" url:"nullableListOfNullables"`
+	NullableMapOfNullables       map[string]*Address   `json:"nullableMapOfNullables" url:"nullableMapOfNullables"`
+	NullableListOfUnions         []*NotificationMethod `json:"nullableListOfUnions" url:"nullableListOfUnions"`
+	OptionalMapOfEnums           map[string]*UserRole  `json:"optionalMapOfEnums,omitempty" url:"optionalMapOfEnums,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *ComplexProfile) GetId() string {
+	if c == nil {
+		return ""
+	}
+	return c.Id
+}
+
+func (c *ComplexProfile) GetNullableRole() *UserRole {
+	if c == nil {
+		return nil
+	}
+	return c.NullableRole
+}
+
+func (c *ComplexProfile) GetOptionalRole() *UserRole {
+	if c == nil {
+		return nil
+	}
+	return c.OptionalRole
+}
+
+func (c *ComplexProfile) GetOptionalNullableRole() *UserRole {
+	if c == nil {
+		return nil
+	}
+	return c.OptionalNullableRole
+}
+
+func (c *ComplexProfile) GetNullableStatus() *UserStatus {
+	if c == nil {
+		return nil
+	}
+	return c.NullableStatus
+}
+
+func (c *ComplexProfile) GetOptionalStatus() *UserStatus {
+	if c == nil {
+		return nil
+	}
+	return c.OptionalStatus
+}
+
+func (c *ComplexProfile) GetOptionalNullableStatus() *UserStatus {
+	if c == nil {
+		return nil
+	}
+	return c.OptionalNullableStatus
+}
+
+func (c *ComplexProfile) GetNullableNotification() *NotificationMethod {
+	if c == nil {
+		return nil
+	}
+	return c.NullableNotification
+}
+
+func (c *ComplexProfile) GetOptionalNotification() *NotificationMethod {
+	if c == nil {
+		return nil
+	}
+	return c.OptionalNotification
+}
+
+func (c *ComplexProfile) GetOptionalNullableNotification() *NotificationMethod {
+	if c == nil {
+		return nil
+	}
+	return c.OptionalNullableNotification
+}
+
+func (c *ComplexProfile) GetNullableSearchResult() *SearchResult {
+	if c == nil {
+		return nil
+	}
+	return c.NullableSearchResult
+}
+
+func (c *ComplexProfile) GetOptionalSearchResult() *SearchResult {
+	if c == nil {
+		return nil
+	}
+	return c.OptionalSearchResult
+}
+
+func (c *ComplexProfile) GetNullableArray() []string {
+	if c == nil {
+		return nil
+	}
+	return c.NullableArray
+}
+
+func (c *ComplexProfile) GetOptionalArray() []string {
+	if c == nil {
+		return nil
+	}
+	return c.OptionalArray
+}
+
+func (c *ComplexProfile) GetOptionalNullableArray() []string {
+	if c == nil {
+		return nil
+	}
+	return c.OptionalNullableArray
+}
+
+func (c *ComplexProfile) GetNullableListOfNullables() []*string {
+	if c == nil {
+		return nil
+	}
+	return c.NullableListOfNullables
+}
+
+func (c *ComplexProfile) GetNullableMapOfNullables() map[string]*Address {
+	if c == nil {
+		return nil
+	}
+	return c.NullableMapOfNullables
+}
+
+func (c *ComplexProfile) GetNullableListOfUnions() []*NotificationMethod {
+	if c == nil {
+		return nil
+	}
+	return c.NullableListOfUnions
+}
+
+func (c *ComplexProfile) GetOptionalMapOfEnums() map[string]*UserRole {
+	if c == nil {
+		return nil
+	}
+	return c.OptionalMapOfEnums
+}
+
+func (c *ComplexProfile) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ComplexProfile) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ComplexProfile
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ComplexProfile(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ComplexProfile) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Request body for testing deserialization of null values
+type DeserializationTestRequest struct {
+	RequiredString         string              `json:"requiredString" url:"requiredString"`
+	NullableString         *string             `json:"nullableString" url:"nullableString"`
+	OptionalString         *string             `json:"optionalString,omitempty" url:"optionalString,omitempty"`
+	OptionalNullableString *string             `json:"optionalNullableString,omitempty" url:"optionalNullableString,omitempty"`
+	NullableEnum           *UserRole           `json:"nullableEnum" url:"nullableEnum"`
+	OptionalEnum           *UserStatus         `json:"optionalEnum,omitempty" url:"optionalEnum,omitempty"`
+	NullableUnion          *NotificationMethod `json:"nullableUnion" url:"nullableUnion"`
+	OptionalUnion          *SearchResult       `json:"optionalUnion,omitempty" url:"optionalUnion,omitempty"`
+	NullableList           []string            `json:"nullableList" url:"nullableList"`
+	NullableMap            map[string]int      `json:"nullableMap" url:"nullableMap"`
+	NullableObject         *Address            `json:"nullableObject" url:"nullableObject"`
+	OptionalObject         *Organization       `json:"optionalObject,omitempty" url:"optionalObject,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (d *DeserializationTestRequest) GetRequiredString() string {
+	if d == nil {
+		return ""
+	}
+	return d.RequiredString
+}
+
+func (d *DeserializationTestRequest) GetNullableString() *string {
+	if d == nil {
+		return nil
+	}
+	return d.NullableString
+}
+
+func (d *DeserializationTestRequest) GetOptionalString() *string {
+	if d == nil {
+		return nil
+	}
+	return d.OptionalString
+}
+
+func (d *DeserializationTestRequest) GetOptionalNullableString() *string {
+	if d == nil {
+		return nil
+	}
+	return d.OptionalNullableString
+}
+
+func (d *DeserializationTestRequest) GetNullableEnum() *UserRole {
+	if d == nil {
+		return nil
+	}
+	return d.NullableEnum
+}
+
+func (d *DeserializationTestRequest) GetOptionalEnum() *UserStatus {
+	if d == nil {
+		return nil
+	}
+	return d.OptionalEnum
+}
+
+func (d *DeserializationTestRequest) GetNullableUnion() *NotificationMethod {
+	if d == nil {
+		return nil
+	}
+	return d.NullableUnion
+}
+
+func (d *DeserializationTestRequest) GetOptionalUnion() *SearchResult {
+	if d == nil {
+		return nil
+	}
+	return d.OptionalUnion
+}
+
+func (d *DeserializationTestRequest) GetNullableList() []string {
+	if d == nil {
+		return nil
+	}
+	return d.NullableList
+}
+
+func (d *DeserializationTestRequest) GetNullableMap() map[string]int {
+	if d == nil {
+		return nil
+	}
+	return d.NullableMap
+}
+
+func (d *DeserializationTestRequest) GetNullableObject() *Address {
+	if d == nil {
+		return nil
+	}
+	return d.NullableObject
+}
+
+func (d *DeserializationTestRequest) GetOptionalObject() *Organization {
+	if d == nil {
+		return nil
+	}
+	return d.OptionalObject
+}
+
+func (d *DeserializationTestRequest) GetExtraProperties() map[string]any {
+	if d == nil {
+		return nil
+	}
+	return d.extraProperties
+}
+
+func (d *DeserializationTestRequest) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler DeserializationTestRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = DeserializationTestRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (d *DeserializationTestRequest) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
+}
+
+// Response for deserialization test
+type DeserializationTestResponse struct {
+	Echo               *DeserializationTestRequest `json:"echo" url:"echo"`
+	ProcessedAt        time.Time                   `json:"processedAt" url:"processedAt"`
+	NullCount          int                         `json:"nullCount" url:"nullCount"`
+	PresentFieldsCount int                         `json:"presentFieldsCount" url:"presentFieldsCount"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (d *DeserializationTestResponse) GetEcho() *DeserializationTestRequest {
+	if d == nil {
+		return nil
+	}
+	return d.Echo
+}
+
+func (d *DeserializationTestResponse) GetProcessedAt() time.Time {
+	if d == nil {
+		return time.Time{}
+	}
+	return d.ProcessedAt
+}
+
+func (d *DeserializationTestResponse) GetNullCount() int {
+	if d == nil {
+		return 0
+	}
+	return d.NullCount
+}
+
+func (d *DeserializationTestResponse) GetPresentFieldsCount() int {
+	if d == nil {
+		return 0
+	}
+	return d.PresentFieldsCount
+}
+
+func (d *DeserializationTestResponse) GetExtraProperties() map[string]any {
+	if d == nil {
+		return nil
+	}
+	return d.extraProperties
+}
+
+func (d *DeserializationTestResponse) UnmarshalJSON(
+	data []byte,
+) error {
+	type embed DeserializationTestResponse
+	var unmarshaler = struct {
+		embed
+		ProcessedAt *internal.DateTime `json:"processedAt"`
+	}{
+		embed: embed(*d),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*d = DeserializationTestResponse(unmarshaler.embed)
+	d.ProcessedAt = unmarshaler.ProcessedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (d *DeserializationTestResponse) MarshalJSON() ([]byte, error) {
+	type embed DeserializationTestResponse
+	var marshaler = struct {
+		embed
+		ProcessedAt *internal.DateTime `json:"processedAt"`
+	}{
+		embed:       embed(*d),
+		ProcessedAt: internal.NewDateTime(d.ProcessedAt),
+	}
+	return json.Marshal(marshaler)
+}
+
+func (d *DeserializationTestResponse) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
 }
 
 type UserResponse struct {
