@@ -74,7 +74,7 @@ class AbstractGenerator(ABC):
             exclude_types_from_init_exports = generator_config.custom_config.get("exclude_types_from_init_exports")
 
         lazy_imports = bool(
-            generator_config.custom_config is not None and generator_config.custom_config.get("lazy_imports", False)
+            generator_config.custom_config is not None and generator_config.custom_config.get("lazy_imports", True)
         )
 
         with Project(

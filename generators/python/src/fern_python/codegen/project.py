@@ -47,7 +47,7 @@ class Project:
         license_: Optional[LicenseConfig],
         user_defined_toml: Optional[str] = None,
         exclude_types_from_init_exports: Optional[bool] = False,
-        lazy_imports: bool = False,
+        lazy_imports: bool = True,
     ) -> None:
         relative_path_to_project = relative_path_to_project.replace(".", "/")
         if flat_layout:

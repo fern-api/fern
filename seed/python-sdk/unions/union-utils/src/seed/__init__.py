@@ -2,61 +2,144 @@
 
 # isort: skip_file
 
-from .types import (
-    Bar,
-    Foo,
-    FooExtended,
-    Union,
-    UnionWithBaseProperties,
-    UnionWithDiscriminant,
-    UnionWithDuplicatePrimitive,
-    UnionWithDuplicateTypes,
-    UnionWithLiteral,
-    UnionWithMultipleNoProperties,
-    UnionWithNoProperties,
-    UnionWithOptionalTime,
-    UnionWithPrimitive,
-    UnionWithSingleElement,
-    UnionWithSubTypes,
-    UnionWithTime,
-    UnionWithoutKey,
-)
-from . import bigunion, types, union
-from .bigunion import (
-    ActiveDiamond,
-    AttractiveScript,
-    BigUnion,
-    CircularCard,
-    ColorfulCover,
-    DiligentDeal,
-    DisloyalValue,
-    DistinctFailure,
-    FalseMirror,
-    FrozenSleep,
-    GaseousRoad,
-    GruesomeCoach,
-    HarmoniousPlay,
-    HastyPain,
-    HoarseMouse,
-    JumboEnd,
-    LimpingStep,
-    MistySnow,
-    NormalSweet,
-    PopularLimit,
-    PotableBad,
-    PracticalPrinciple,
-    PrimaryBlock,
-    RotatingRatio,
-    ThankfulFactor,
-    TotalWork,
-    TriangularRepair,
-    UniqueStress,
-    UnwillingSmoke,
-    VibrantExcitement,
-)
-from .client import AsyncSeedUnions, SeedUnions
-from .union import Circle, GetShapeRequest, Shape, Square
-from .version import __version__
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .types import (
+        Bar,
+        Foo,
+        FooExtended,
+        Union,
+        UnionWithBaseProperties,
+        UnionWithDiscriminant,
+        UnionWithDuplicatePrimitive,
+        UnionWithDuplicateTypes,
+        UnionWithLiteral,
+        UnionWithMultipleNoProperties,
+        UnionWithNoProperties,
+        UnionWithOptionalTime,
+        UnionWithPrimitive,
+        UnionWithSingleElement,
+        UnionWithSubTypes,
+        UnionWithTime,
+        UnionWithoutKey,
+    )
+    from . import bigunion, types, union
+    from .bigunion import (
+        ActiveDiamond,
+        AttractiveScript,
+        BigUnion,
+        CircularCard,
+        ColorfulCover,
+        DiligentDeal,
+        DisloyalValue,
+        DistinctFailure,
+        FalseMirror,
+        FrozenSleep,
+        GaseousRoad,
+        GruesomeCoach,
+        HarmoniousPlay,
+        HastyPain,
+        HoarseMouse,
+        JumboEnd,
+        LimpingStep,
+        MistySnow,
+        NormalSweet,
+        PopularLimit,
+        PotableBad,
+        PracticalPrinciple,
+        PrimaryBlock,
+        RotatingRatio,
+        ThankfulFactor,
+        TotalWork,
+        TriangularRepair,
+        UniqueStress,
+        UnwillingSmoke,
+        VibrantExcitement,
+    )
+    from .client import AsyncSeedUnions, SeedUnions
+    from .union import Circle, GetShapeRequest, Shape, Square
+    from .version import __version__
+_dynamic_imports: typing.Dict[str, str] = {
+    "ActiveDiamond": ".bigunion",
+    "AsyncSeedUnions": ".client",
+    "AttractiveScript": ".bigunion",
+    "Bar": ".types",
+    "BigUnion": ".bigunion",
+    "Circle": ".union",
+    "CircularCard": ".bigunion",
+    "ColorfulCover": ".bigunion",
+    "DiligentDeal": ".bigunion",
+    "DisloyalValue": ".bigunion",
+    "DistinctFailure": ".bigunion",
+    "FalseMirror": ".bigunion",
+    "Foo": ".types",
+    "FooExtended": ".types",
+    "FrozenSleep": ".bigunion",
+    "GaseousRoad": ".bigunion",
+    "GetShapeRequest": ".union",
+    "GruesomeCoach": ".bigunion",
+    "HarmoniousPlay": ".bigunion",
+    "HastyPain": ".bigunion",
+    "HoarseMouse": ".bigunion",
+    "JumboEnd": ".bigunion",
+    "LimpingStep": ".bigunion",
+    "MistySnow": ".bigunion",
+    "NormalSweet": ".bigunion",
+    "PopularLimit": ".bigunion",
+    "PotableBad": ".bigunion",
+    "PracticalPrinciple": ".bigunion",
+    "PrimaryBlock": ".bigunion",
+    "RotatingRatio": ".bigunion",
+    "SeedUnions": ".client",
+    "Shape": ".union",
+    "Square": ".union",
+    "ThankfulFactor": ".bigunion",
+    "TotalWork": ".bigunion",
+    "TriangularRepair": ".bigunion",
+    "Union": ".types",
+    "UnionWithBaseProperties": ".types",
+    "UnionWithDiscriminant": ".types",
+    "UnionWithDuplicatePrimitive": ".types",
+    "UnionWithDuplicateTypes": ".types",
+    "UnionWithLiteral": ".types",
+    "UnionWithMultipleNoProperties": ".types",
+    "UnionWithNoProperties": ".types",
+    "UnionWithOptionalTime": ".types",
+    "UnionWithPrimitive": ".types",
+    "UnionWithSingleElement": ".types",
+    "UnionWithSubTypes": ".types",
+    "UnionWithTime": ".types",
+    "UnionWithoutKey": ".types",
+    "UniqueStress": ".bigunion",
+    "UnwillingSmoke": ".bigunion",
+    "VibrantExcitement": ".bigunion",
+    "__version__": ".version",
+    "bigunion": ".",
+    "types": ".",
+    "union": ".",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "ActiveDiamond",
