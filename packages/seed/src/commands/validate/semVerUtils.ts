@@ -41,29 +41,29 @@ export class SemVer {
     }
 
     static fromString(version: string): SemVer {
+        const throwInvalid = () => {
+            throw new InvalidSemVerError(`Invalid semver: ${version}`);
+        };
+
         const parts = version.split(".");
-        if (parts.length !== 3) {
-            throw new InvalidSemVerError(`Invalid semver: ${version}`);
-        }
+        if (parts.length !== 3) throwInvalid();
 
-        const [major, minor, patchRaw] = parts;
-        if (major === undefined || minor === undefined || patchRaw === undefined) {
-            throw new InvalidSemVerError(`Invalid semver: ${version}`);
-        }
+        const [major, minor, patchRaw] = parts as [string, string, string];
+
         const patchParts = patchRaw.split(SemVer.rcSeparator);
-        if (patchParts.length > 2) {
-            throw new InvalidSemVerError(`Invalid semver: ${version}`);
-        }
-        const [patch, prerelease] = patchParts;
+        if (patchParts.length > 2) throwInvalid();
 
-        if (patch === undefined) {
-            throw new InvalidSemVerError(`Invalid semver: ${version}`);
+        const [patch, prerelease] = patchParts as [string, string | undefined];
+
+        // Validate all parts are numeric (and non-empty)
+        const isInteger = (str: string) => /^\d+$/.test(str);
+
+        if (!isInteger(major) || !isInteger(minor) || !isInteger(patch)) {
+            throwInvalid();
         }
 
-        for (const part of [major, minor, patch, prerelease]) {
-            if (part !== undefined && (Array.from(part).some((char) => isNaN(parseInt(char))) || part === "")) {
-                throw new InvalidSemVerError(`Invalid semver: ${version}`);
-            }
+        if (prerelease !== undefined && !isInteger(prerelease)) {
+            throwInvalid();
         }
 
         return new SemVer(
