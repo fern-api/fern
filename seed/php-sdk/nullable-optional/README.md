@@ -40,6 +40,8 @@ $client->nullableOptional->createUser(
             'state' => 'state',
             'zipCode' => 'zipCode',
             'country' => 'country',
+            'buildingId' => 'buildingId',
+            'tenantId' => 'tenantId',
         ]),
     ]),
 );
