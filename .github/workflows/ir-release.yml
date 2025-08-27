@@ -43,7 +43,7 @@ jobs:
           cd packages/ir-sdk
           version=$(cat fern/apis/ir-types-latest/VERSION)
           fern generate --api ir-types-latest --group dynamic-ir --version $version
-  
+
   python:
     runs-on: ubuntu-latest
     steps:
@@ -77,7 +77,7 @@ jobs:
           cd packages/ir-sdk
           version=$(cat fern/apis/ir-types-latest/VERSION)
           fern generate --api ir-types-latest --group go --version $version
-  
+
   java:
     runs-on: ubuntu-latest
     steps:
