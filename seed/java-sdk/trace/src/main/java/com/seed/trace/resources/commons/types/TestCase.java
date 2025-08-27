@@ -116,7 +116,9 @@ public final class TestCase {
 
         @java.lang.Override
         public _FinalStage addAllParams(List<VariableValue> params) {
-            this.params.addAll(params);
+            if (params != null) {
+                this.params.addAll(params);
+            }
             return this;
         }
 
