@@ -21,8 +21,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  validate-fern-cli:
-    name: Fern CLI
+  validate-changelogs:
+    name: Validate Changelogs
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo at current ref
@@ -33,96 +33,8 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Validate changelog
-        run: |
-          pnpm seed:local validate cli --log-level debug
-
-  setup:
-    name: Setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo at current ref
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Build seed
+      - name: Seed Build
         run: pnpm seed:build
 
-      - name: Upload seed build
-        uses: actions/upload-artifact@v4
-        with:
-          name: seed-build
-          path: packages/seed/dist
-
-  validate-generators:
-    name: Validate Generators
-    runs-on: ubuntu-latest
-    needs: setup
-    steps:
-      - name: Checkout repo at current ref
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Download seed build
-        uses: actions/download-artifact@v4
-        with:
-          name: seed-build
-          path: packages/seed/dist
-
-      - name: Validate changelog for all generators
-        run: |
-          # Run all validations in parallel and collect errors
-          generators=(
-            fastapi pydantic python-sdk go-sdk ruby-sdk postman openapi
-            java-sdk java-model java-spring ts-express csharp-sdk csharp-model
-            php-sdk php-model rust-sdk rust-model swift-sdk
-          )
-          
-          # Create temporary files for each generator's output
-          temp_dir=$(mktemp -d)
-          error_files=()
-          
-          for generator in "${generators[@]}"; do
-            error_file="$temp_dir/${generator}.log"
-            error_files+=("$error_file")
-            
-            # Run validation in background, redirecting both stdout and stderr
-            (pnpm seed validate generator "$generator" --log-level debug > "$error_file" 2>&1; echo $? > "$temp_dir/${generator}.exit") &
-          done
-          
-          # Wait for all background jobs to complete
-          wait
-          
-          # Check results and collect errors
-          failed_generators=()
-          for generator in "${generators[@]}"; do
-            exit_code=$(cat "$temp_dir/${generator}.exit")
-            if [ "$exit_code" -ne 0 ]; then
-              failed_generators+=("$generator")
-              echo "❌ $generator failed:"
-              cat "$temp_dir/${generator}.log"
-              echo ""
-            else
-              echo "✅ $generator passed"
-            fi
-          done
-          
-          # Clean up temp files
-          rm -rf "$temp_dir"
-          
-          # Fail the step if any generator failed
-          if [ ${#failed_generators[@]} -gt 0 ]; then
-            echo "❌ The following generators failed validation:"
-            printf '  - %s\n' "${failed_generators[@]}"
-            exit 1
-          fi
-          
-          echo "✅ All generators passed validation!"
+      - name: Validate changelog
+        run: pnpm scripts/validate-all-changelogs.sh
