@@ -98,4 +98,3 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PR_BOT_GH_PAT }}
         run: gh pr review ${{ steps.cpr.outputs.pull-request-number }} --repo fern-api/docs --approve
-        
