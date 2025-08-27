@@ -1,0 +1,104 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "email",
+        "sms",
+        "push"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "email"
+        },
+        "emailAddress": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "htmlContent": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "emailAddress",
+        "subject"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "sms"
+        },
+        "phoneNumber": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "shortCode": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "phoneNumber",
+        "message"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "push"
+        },
+        "deviceToken": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "badge": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "deviceToken",
+        "title",
+        "body"
+      ]
+    }
+  ],
+  "definitions": {}
+}

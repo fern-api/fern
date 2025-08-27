@@ -209,6 +209,26 @@
   ],
   "additionalProperties": false,
   "definitions": {
+    "nullable-optional.NullableUserId": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullable-optional.OptionalUserId": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "nullable-optional.Address": {
       "type": "object",
       "properties": {
@@ -254,12 +274,19 @@
               "type": "null"
             }
           ]
+        },
+        "buildingId": {
+          "$ref": "#/definitions/nullable-optional.NullableUserId"
+        },
+        "tenantId": {
+          "$ref": "#/definitions/nullable-optional.OptionalUserId"
         }
       },
       "required": [
         "street",
         "city",
-        "zipCode"
+        "zipCode",
+        "buildingId"
       ],
       "additionalProperties": false
     }
