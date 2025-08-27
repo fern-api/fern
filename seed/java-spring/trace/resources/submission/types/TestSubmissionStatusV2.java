@@ -156,7 +156,9 @@ public final class TestSubmissionStatusV2 {
 
     @java.lang.Override
     public _FinalStage addAllUpdates(List<TestSubmissionUpdate> updates) {
-      this.updates.addAll(updates);
+      if (updates != null) {
+        this.updates.addAll(updates);
+      }
       return this;
     }
 
