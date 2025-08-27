@@ -68,5 +68,9 @@ describe("Complex", () => {
             },
         });
         expect(expected.conversations).toEqual(page.data);
+
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.conversations).toEqual(nextPage.data);
     });
 });

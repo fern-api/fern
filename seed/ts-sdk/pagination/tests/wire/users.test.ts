@@ -51,6 +51,10 @@ describe("Users", () => {
             starting_after: "starting_after",
         });
         expect(expected.data).toEqual(page.data);
+
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.data).toEqual(nextPage.data);
     });
 
     test("listWithMixedTypeCursorPagination", async () => {
@@ -83,6 +87,10 @@ describe("Users", () => {
             cursor: "cursor",
         });
         expect(expected.data).toEqual(page.data);
+
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.data).toEqual(nextPage.data);
     });
 
     test("listWithBodyCursorPagination", async () => {
@@ -136,6 +144,10 @@ describe("Users", () => {
             },
         });
         expect(expected.data).toEqual(page.data);
+
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.data).toEqual(nextPage.data);
     });
 
     test("listWithOffsetPagination", async () => {
@@ -183,6 +195,10 @@ describe("Users", () => {
             starting_after: "starting_after",
         });
         expect(expected.data).toEqual(page.data);
+
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.data).toEqual(nextPage.data);
     });
 
     test("listWithDoubleOffsetPagination", async () => {
@@ -230,6 +246,10 @@ describe("Users", () => {
             starting_after: "starting_after",
         });
         expect(expected.data).toEqual(page.data);
+
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.data).toEqual(nextPage.data);
     });
 
     test("listWithBodyOffsetPagination", async () => {
@@ -283,6 +303,10 @@ describe("Users", () => {
             },
         });
         expect(expected.data).toEqual(page.data);
+
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.data).toEqual(nextPage.data);
     });
 
     test("listWithOffsetStepPagination", async () => {
@@ -329,6 +353,10 @@ describe("Users", () => {
             order: "asc",
         });
         expect(expected.data).toEqual(page.data);
+
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.data).toEqual(nextPage.data);
     });
 
     test("listWithOffsetPaginationHasNextPage", async () => {
@@ -375,6 +403,10 @@ describe("Users", () => {
             order: "asc",
         });
         expect(expected.data).toEqual(page.data);
+
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.data).toEqual(nextPage.data);
     });
 
     test("listWithExtendedResults", async () => {
@@ -413,6 +445,10 @@ describe("Users", () => {
             cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         });
         expect(expected.data.users).toEqual(page.data);
+
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.data.users).toEqual(nextPage.data);
     });
 
     test("listWithExtendedResultsAndOptionalData", async () => {
@@ -451,6 +487,10 @@ describe("Users", () => {
             cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         });
         expect(expected.data.users).toEqual(page.data);
+
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.data.users).toEqual(nextPage.data);
     });
 
     test("listUsernames", async () => {
@@ -470,6 +510,10 @@ describe("Users", () => {
             starting_after: "starting_after",
         });
         expect(expected.cursor.data).toEqual(page.data);
+
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.cursor.data).toEqual(nextPage.data);
     });
 
     test("listWithGlobalConfig", async () => {
@@ -486,5 +530,9 @@ describe("Users", () => {
             offset: 1,
         });
         expect(expected.results).toEqual(page.data);
+
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.results).toEqual(nextPage.data);
     });
 });
