@@ -66,6 +66,7 @@ export class GenerationRunner {
                         }
 
                         try {
+                            console.debug("GenerationRunner: generatorInvocation", generatorInvocation);
                             const { ir, generatorConfig } = await this.executeGenerator({
                                 generatorGroup,
                                 generatorInvocation,
