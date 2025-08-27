@@ -1,18 +1,11 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { ChangelogEntryType } from "@fern-fern/generators-sdk/api/resources/generators/resources/commons/types";
-import { GeneratorReleaseRequest } from "@fern-fern/generators-sdk/api/resources/generators/resources/versions/types";
 import * as serializers from "@fern-fern/generators-sdk/serialization";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
-import {
-    assertValidSemVerChange,
-    assertValidSemVerChangeForFeatureOrThrow,
-    assertValidSemVerOrThrow,
-    parseSemVer
-} from "./semVerUtils";
+import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils";
 
 const parseReleaseOrThrow = serializers.generators.GeneratorReleaseRequest.parseOrThrow;
 
@@ -77,7 +70,7 @@ async function validateGeneratorChangelog({
             try {
                 const currentRelease = parseReleaseOrThrow({ generatorId, ...changelogs[0] });
                 const previousRelease = parseReleaseOrThrow({ generatorId, ...changelogs[1] });
-                assertValidSemVerChange(currentRelease, previousRelease);
+                assertValidSemVerChangeOrThrow(currentRelease, previousRelease);
             } catch (e) {
                 context.logger.error(`Failed to validate semver change: ${yaml.dump(changelogs[0])}`);
                 context.logger.error((e as Error)?.message);

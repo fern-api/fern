@@ -7,7 +7,7 @@ export function assertValidSemVerOrThrow(version: string): void {
     SemVer.fromString(version);
 }
 
-export function assertValidSemVerChange(currentRelease: ReleaseRequest, previousRelease: ReleaseRequest): void {
+export function assertValidSemVerChangeOrThrow(currentRelease: ReleaseRequest, previousRelease: ReleaseRequest): void {
     const currentVersion = SemVer.fromString(currentRelease.version);
     const previousVersion = SemVer.fromString(previousRelease.version);
     if (currentRelease.changelogEntry?.some((entry) => entry.type === ChangelogEntryType.Feat)) {

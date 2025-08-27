@@ -6,7 +6,7 @@ import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
 import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
-import { assertValidSemVerChange } from "./semVerUtils";
+import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils";
 
 export async function validateCliRelease({ context }: { context: TaskContext }): Promise<void> {
     const cliWorkspace = await loadCliWorkspace();
@@ -46,6 +46,7 @@ async function validateCliChangelog({
         for (const entry of changelogs) {
             try {
                 const release = serializers.generators.CliReleaseRequest.parseOrThrow(entry);
+                assertValidSemVerOrThrow(release.version);
                 context.logger.debug(chalk.green(`${release.version} is valid`));
             } catch (e) {
                 hasErrors = true;
@@ -63,7 +64,7 @@ async function validateCliChangelog({
             try {
                 const currentRelease = serializers.generators.CliReleaseRequest.parseOrThrow(changelogs[0]);
                 const previousRelease = serializers.generators.CliReleaseRequest.parseOrThrow(changelogs[1]);
-                assertValidSemVerChange(currentRelease, previousRelease);
+                assertValidSemVerChangeOrThrow(currentRelease, previousRelease);
             } catch (e) {
                 context.logger.error(`Failed to validate semver change: ${yaml.dump(changelogs[0])}`);
                 context.logger.error((e as Error)?.message);
