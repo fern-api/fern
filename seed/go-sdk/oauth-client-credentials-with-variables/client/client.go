@@ -11,7 +11,6 @@ import (
 	option "github.com/oauth-client-credentials-with-variables/fern/option"
 	service "github.com/oauth-client-credentials-with-variables/fern/service"
 	simple "github.com/oauth-client-credentials-with-variables/fern/simple"
-	http "net/http"
 )
 
 type Client struct {
@@ -21,19 +20,20 @@ type Client struct {
 	Service      *service.Client
 	Simple       *simple.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		Auth:         auth.NewClient(opts...),
-		NestedNoAuth: client.NewClient(opts...),
-		Nested:       nestedclient.NewClient(opts...),
-		Service:      service.NewClient(opts...),
-		Simple:       simple.NewClient(opts...),
+		Auth:         auth.NewClient(options),
+		NestedNoAuth: client.NewClient(options),
+		Nested:       nestedclient.NewClient(options),
+		Service:      service.NewClient(options),
+		Simple:       simple.NewClient(options),
+		options:      options,
 		baseURL:      options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -41,6 +41,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

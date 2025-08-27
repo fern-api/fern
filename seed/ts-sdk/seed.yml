@@ -56,7 +56,7 @@ fixtures:
       outputFolder: allow-custom-fetcher
     - outputFolder: wrapper
       customConfig:
-        streamType: "wrapper"
+        streamType: 'wrapper'
   audiences:
     - customConfig: null
       outputFolder: no-custom-config
@@ -87,27 +87,27 @@ fixtures:
     - customConfig:
         useBrandedStringAliases: true
         neverThrowErrors: true
-        namespaceExport: "Fiddle"
+        namespaceExport: 'Fiddle'
         bundle: true
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
         extraDependencies:
-          lodash-es: "^4.17.21"
+          lodash-es: '^4.17.21'
       outputFolder: bundle
     - customConfig:
         useBrandedStringAliases: true
         neverThrowErrors: true
-        namespaceExport: "Fiddle"
+        namespaceExport: 'Fiddle'
         bundle: true
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
         extraDependencies:
-          lodash-es: "^4.17.21"
+          lodash-es: '^4.17.21'
         packageJson:
-          version: "0.0.2"
+          version: '0.0.2'
           dependencies:
-            stream: "^0.0.2"
-            qs: "^6.11.2"
+            stream: '^0.0.2'
+            qs: '^6.11.2'
           files:
             - exampleFile
             - dist
@@ -115,7 +115,7 @@ fixtures:
             command-exists: false
             execa: false
           engines:
-            node: ">=16.0.0"
+            node: '>=16.0.0'
       outputFolder: custom-package-json
     - customConfig:
         retainOriginalCasing: true
@@ -126,18 +126,18 @@ fixtures:
     - customConfig:
         useBrandedStringAliases: true
         neverThrowErrors: true
-        namespaceExport: "Fiddle"
+        namespaceExport: 'Fiddle'
         bundle: true
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
         extraDependencies:
-          lodash-es: "^4.17.21"
+          lodash-es: '^4.17.21'
         extraDevDependencies:
-          jest: "^29.7.0"
+          jest: '^29.7.0'
         extraPeerDependencies:
-          "openai": "^4.47.1"
+          'openai': '^4.47.1'
         extraPeerDependenciesMeta:
-          "openai":
+          'openai':
             optional: true
       outputFolder: dev-dependencies
     - outputFolder: jsr
@@ -185,9 +185,9 @@ fixtures:
       outputFolder: file-download-response-headers
     - outputFolder: wrapper
       customConfig:
-        streamType: "wrapper"
+        streamType: 'wrapper'
     - customConfig:
-        fileResponseType: "stream"
+        fileResponseType: 'stream'
       outputFolder: stream
   file-upload:
     - customConfig: null
@@ -201,10 +201,10 @@ fixtures:
       outputFolder: serde
     - outputFolder: wrapper
       customConfig:
-        streamType: "wrapper"
+        streamType: 'wrapper'
     - outputFolder: form-data-node16
       customConfig:
-        formDataSupport: "Node16"
+        formDataSupport: 'Node16'
   unknown:
     - customConfig: null
       outputFolder: no-custom-config
@@ -233,6 +233,9 @@ fixtures:
         useDefaultRequestParameterValues: true
         useBigInt: true
       outputFolder: use-big-int-and-default-request-parameter-values
+    - customConfig:
+        flattenRequestParameters: true
+      outputFolder: flatten-request-parameters
   trace:
     - customConfig: null
       outputFolder: no-custom-config
@@ -249,12 +252,15 @@ fixtures:
         includeCredentialsOnCrossOriginRequests: true
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
-        timeoutInSeconds: "infinity"
+        timeoutInSeconds: 'infinity'
       outputFolder: exhaustive
   examples:
     - customConfig:
         includeApiReference: true
       readmeConfig:
+        apiName: "CustomName"
+        disabledSections:
+          - "contributing"
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie

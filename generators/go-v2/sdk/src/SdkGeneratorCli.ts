@@ -133,6 +133,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     private generateRootClient(context: SdkGeneratorContext) {
         const client = new ClientGenerator({
             context,
+            isRootClient: true,
             fernFilepath: context.ir.rootPackage.fernFilepath,
             subpackage: undefined,
             nestedSubpackages: context.ir.rootPackage.subpackages,

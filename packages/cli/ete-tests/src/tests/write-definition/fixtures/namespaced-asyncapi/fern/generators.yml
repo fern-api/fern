@@ -1,7 +1,7 @@
 api:
   namespaces:
     alpha:
-    - path: alpha_one.yml
-    - path: alpha_two.yml
+      - path: alpha_one.yml
+      - path: alpha_two.yml
     beta:
-    - path: beta_one.yml
+      - path: beta_one.yml

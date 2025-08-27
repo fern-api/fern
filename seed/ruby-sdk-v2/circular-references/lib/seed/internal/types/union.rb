@@ -72,11 +72,9 @@ module Seed
             raise Errors::TypeError, "could not resolve to member of union #{self}"
           end
 
-          value = value.except(@discriminant) if type <= Model && value.is_a?(::Hash)
-
           Utils.coerce(type, value, strict: strict)
         end
       end
     end
   end
-end 
+end

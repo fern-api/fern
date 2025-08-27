@@ -1,0 +1,490 @@
+{
+  "info": {
+    "name": "Nullable Optional",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Nullable Optional",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Get User",
+          "request": {
+            "description": "Get a user by ID",
+            "url": {
+              "raw": "{{baseUrl}}/api/users/:userId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                ":userId"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "userId",
+                  "description": null,
+                  "value": "userId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Get a user by ID",
+                "url": {
+                  "raw": "{{baseUrl}}/api/users/:userId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    ":userId"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "userId",
+                      "description": null,
+                      "value": "userId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"id\": \"id\",\n    \"username\": \"username\",\n    \"email\": \"email\",\n    \"phone\": \"phone\",\n    \"createdAt\": \"2024-01-15T09:30:00Z\",\n    \"updatedAt\": \"2024-01-15T09:30:00Z\",\n    \"address\": {\n        \"street\": \"street\",\n        \"city\": \"city\",\n        \"state\": \"state\",\n        \"zipCode\": \"zipCode\",\n        \"country\": \"country\"\n    }\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Create User",
+          "request": {
+            "description": "Create a new user",
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"username\",\n    \"email\": \"email\",\n    \"phone\": \"phone\",\n    \"address\": {\n        \"street\": \"street\",\n        \"city\": \"city\",\n        \"state\": \"state\",\n        \"zipCode\": \"zipCode\",\n        \"country\": \"country\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Create a new user",
+                "url": {
+                  "raw": "{{baseUrl}}/api/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"username\": \"username\",\n    \"email\": \"email\",\n    \"phone\": \"phone\",\n    \"address\": {\n        \"street\": \"street\",\n        \"city\": \"city\",\n        \"state\": \"state\",\n        \"zipCode\": \"zipCode\",\n        \"country\": \"country\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"id\": \"id\",\n    \"username\": \"username\",\n    \"email\": \"email\",\n    \"phone\": \"phone\",\n    \"createdAt\": \"2024-01-15T09:30:00Z\",\n    \"updatedAt\": \"2024-01-15T09:30:00Z\",\n    \"address\": {\n        \"street\": \"street\",\n        \"city\": \"city\",\n        \"state\": \"state\",\n        \"zipCode\": \"zipCode\",\n        \"country\": \"country\"\n    }\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Update User",
+          "request": {
+            "description": "Update a user (partial update)",
+            "url": {
+              "raw": "{{baseUrl}}/api/users/:userId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                ":userId"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "userId",
+                  "description": null,
+                  "value": "userId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"username\",\n    \"email\": \"email\",\n    \"phone\": \"phone\",\n    \"address\": {\n        \"street\": \"street\",\n        \"city\": \"city\",\n        \"state\": \"state\",\n        \"zipCode\": \"zipCode\",\n        \"country\": \"country\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Update a user (partial update)",
+                "url": {
+                  "raw": "{{baseUrl}}/api/users/:userId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    ":userId"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "userId",
+                      "description": null,
+                      "value": "userId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"username\": \"username\",\n    \"email\": \"email\",\n    \"phone\": \"phone\",\n    \"address\": {\n        \"street\": \"street\",\n        \"city\": \"city\",\n        \"state\": \"state\",\n        \"zipCode\": \"zipCode\",\n        \"country\": \"country\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"id\": \"id\",\n    \"username\": \"username\",\n    \"email\": \"email\",\n    \"phone\": \"phone\",\n    \"createdAt\": \"2024-01-15T09:30:00Z\",\n    \"updatedAt\": \"2024-01-15T09:30:00Z\",\n    \"address\": {\n        \"street\": \"street\",\n        \"city\": \"city\",\n        \"state\": \"state\",\n        \"zipCode\": \"zipCode\",\n        \"country\": \"country\"\n    }\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "List Users",
+          "request": {
+            "description": "List all users",
+            "url": {
+              "raw": "{{baseUrl}}/api/users?limit=1&offset=1&includeDeleted=true&sortBy=sortBy",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "description": null,
+                  "value": "1"
+                },
+                {
+                  "key": "offset",
+                  "description": null,
+                  "value": "1"
+                },
+                {
+                  "key": "includeDeleted",
+                  "description": null,
+                  "value": "true"
+                },
+                {
+                  "key": "sortBy",
+                  "description": null,
+                  "value": "sortBy"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "List all users",
+                "url": {
+                  "raw": "{{baseUrl}}/api/users?limit=1&offset=1&includeDeleted=true&sortBy=sortBy",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "description": null,
+                      "value": "1"
+                    },
+                    {
+                      "key": "offset",
+                      "description": null,
+                      "value": "1"
+                    },
+                    {
+                      "key": "includeDeleted",
+                      "description": null,
+                      "value": "true"
+                    },
+                    {
+                      "key": "sortBy",
+                      "description": null,
+                      "value": "sortBy"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "[\n    {\n        \"id\": \"id\",\n        \"username\": \"username\",\n        \"email\": \"email\",\n        \"phone\": \"phone\",\n        \"createdAt\": \"2024-01-15T09:30:00Z\",\n        \"updatedAt\": \"2024-01-15T09:30:00Z\",\n        \"address\": {\n            \"street\": \"street\",\n            \"city\": \"city\",\n            \"state\": \"state\",\n            \"zipCode\": \"zipCode\",\n            \"country\": \"country\"\n        }\n    },\n    {\n        \"id\": \"id\",\n        \"username\": \"username\",\n        \"email\": \"email\",\n        \"phone\": \"phone\",\n        \"createdAt\": \"2024-01-15T09:30:00Z\",\n        \"updatedAt\": \"2024-01-15T09:30:00Z\",\n        \"address\": {\n            \"street\": \"street\",\n            \"city\": \"city\",\n            \"state\": \"state\",\n            \"zipCode\": \"zipCode\",\n            \"country\": \"country\"\n        }\n    }\n]",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Search Users",
+          "request": {
+            "description": "Search users",
+            "url": {
+              "raw": "{{baseUrl}}/api/users/search?query=query&department=department&role=role&isActive=true",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "query",
+                  "description": null,
+                  "value": "query"
+                },
+                {
+                  "key": "department",
+                  "description": null,
+                  "value": "department"
+                },
+                {
+                  "key": "role",
+                  "description": null,
+                  "value": "role"
+                },
+                {
+                  "key": "isActive",
+                  "description": null,
+                  "value": "true"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Search users",
+                "url": {
+                  "raw": "{{baseUrl}}/api/users/search?query=query&department=department&role=role&isActive=true",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "description": null,
+                      "value": "query"
+                    },
+                    {
+                      "key": "department",
+                      "description": null,
+                      "value": "department"
+                    },
+                    {
+                      "key": "role",
+                      "description": null,
+                      "value": "role"
+                    },
+                    {
+                      "key": "isActive",
+                      "description": null,
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "[\n    {\n        \"id\": \"id\",\n        \"username\": \"username\",\n        \"email\": \"email\",\n        \"phone\": \"phone\",\n        \"createdAt\": \"2024-01-15T09:30:00Z\",\n        \"updatedAt\": \"2024-01-15T09:30:00Z\",\n        \"address\": {\n            \"street\": \"street\",\n            \"city\": \"city\",\n            \"state\": \"state\",\n            \"zipCode\": \"zipCode\",\n            \"country\": \"country\"\n        }\n    },\n    {\n        \"id\": \"id\",\n        \"username\": \"username\",\n        \"email\": \"email\",\n        \"phone\": \"phone\",\n        \"createdAt\": \"2024-01-15T09:30:00Z\",\n        \"updatedAt\": \"2024-01-15T09:30:00Z\",\n        \"address\": {\n            \"street\": \"street\",\n            \"city\": \"city\",\n            \"state\": \"state\",\n            \"zipCode\": \"zipCode\",\n            \"country\": \"country\"\n        }\n    }\n]",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

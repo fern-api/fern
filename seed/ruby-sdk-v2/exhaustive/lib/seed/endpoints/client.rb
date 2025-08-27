@@ -10,52 +10,52 @@ module Seed
 
       # @return [Seed::Container::Client]
       def container
-        @container ||= Seed::Container::Client.new(client: @raw_client)
+        @container ||= Seed::Endpoints::Container::Client.new(client: @client)
       end
 
       # @return [Seed::ContentType::Client]
-      def contentType
-        @contentType ||= Seed::ContentType::Client.new(client: @raw_client)
+      def content_type
+        @content_type ||= Seed::Endpoints::ContentType::Client.new(client: @client)
       end
 
       # @return [Seed::Enum::Client]
       def enum
-        @enum ||= Seed::Enum::Client.new(client: @raw_client)
+        @enum ||= Seed::Endpoints::Enum::Client.new(client: @client)
       end
 
       # @return [Seed::HttpMethods::Client]
-      def httpMethods
-        @httpMethods ||= Seed::HttpMethods::Client.new(client: @raw_client)
+      def http_methods
+        @http_methods ||= Seed::Endpoints::HttpMethods::Client.new(client: @client)
       end
 
       # @return [Seed::Object_::Client]
       def object
-        @object ||= Seed::Object_::Client.new(client: @raw_client)
+        @object ||= Seed::Endpoints::Object_::Client.new(client: @client)
       end
 
       # @return [Seed::Params::Client]
       def params
-        @params ||= Seed::Params::Client.new(client: @raw_client)
+        @params ||= Seed::Endpoints::Params::Client.new(client: @client)
       end
 
       # @return [Seed::Primitive::Client]
       def primitive
-        @primitive ||= Seed::Primitive::Client.new(client: @raw_client)
+        @primitive ||= Seed::Endpoints::Primitive::Client.new(client: @client)
       end
 
       # @return [Seed::Put::Client]
       def put
-        @put ||= Seed::Put::Client.new(client: @raw_client)
+        @put ||= Seed::Endpoints::Put::Client.new(client: @client)
       end
 
       # @return [Seed::Union::Client]
       def union
-        @union ||= Seed::Union::Client.new(client: @raw_client)
+        @union ||= Seed::Endpoints::Union::Client.new(client: @client)
       end
 
       # @return [Seed::Urls::Client]
       def urls
-        @urls ||= Seed::Urls::Client.new(client: @raw_client)
+        @urls ||= Seed::Endpoints::Urls::Client.new(client: @client)
       end
     end
   end

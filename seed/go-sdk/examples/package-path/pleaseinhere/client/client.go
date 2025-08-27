@@ -11,7 +11,6 @@ import (
 	internal "github.com/examples/fern/pleaseinhere/internal"
 	option "github.com/examples/fern/pleaseinhere/option"
 	service "github.com/examples/fern/pleaseinhere/service"
-	http "net/http"
 )
 
 type Client struct {
@@ -20,18 +19,19 @@ type Client struct {
 	Health          *healthclient.Client
 	Service         *service.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		File:            client.NewClient(opts...),
-		Health:          healthclient.NewClient(opts...),
-		Service:         service.NewClient(opts...),
+		File:            client.NewClient(options),
+		Health:          healthclient.NewClient(options),
+		Service:         service.NewClient(options),
 		WithRawResponse: NewRawClient(options),
+		options:         options,
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -39,7 +39,6 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 

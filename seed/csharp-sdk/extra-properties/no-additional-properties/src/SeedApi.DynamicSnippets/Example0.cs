@@ -14,6 +14,8 @@ public class Example0
 
         await client.User.CreateUserAsync(
             new CreateUserRequest{
+                Type = "CreateUserRequest",
+                Version = "v1",
                 Name = "name"
             }
         );

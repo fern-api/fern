@@ -6,6 +6,9 @@ namespace SeedRequestParameters;
 [Serializable]
 public record CreateUsernameRequest
 {
+    [JsonIgnore]
+    public IEnumerable<string> Tags { get; set; } = new List<string>();
+
     [JsonPropertyName("username")]
     public required string Username { get; set; }
 

@@ -620,7 +620,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 this.context.callMergeHeaders([
                     go.selector({
                         on: this.getReceiverCodeBlock({ subpackage, rawClient }),
-                        selector: go.codeblock("header.Clone()")
+                        selector: go.codeblock("options.ToHeader()")
                     }),
                     go.codeblock("options.ToHeader()")
                 ])

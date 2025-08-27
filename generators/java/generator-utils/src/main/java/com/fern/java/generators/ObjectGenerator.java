@@ -301,6 +301,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                     .nullableNonemptyFilterClassName(prop.nullableNonemptyFilterClassName())
                     .generator(prop.generator())
                     .allowMultiple(prop.allowMultiple())
+                    .useNullableAnnotation(prop.useNullableAnnotation())
                     .wireKey(prop.wireKey())
                     .docs(prop.docs())
                     .literal(prop.literal())
@@ -351,7 +352,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                                     ? ParameterizedTypeName.get(
                                             ClassName.get(Optional.class), ClassName.get(File.class))
                                     : ClassName.get(File.class),
-                            false);
+                            false,
+                            generatorContext.getCustomConfig().useNullableAnnotation());
                 })
                 .collect(Collectors.toList()));
         result.addAll(allowMultipleProperties.stream()
@@ -392,7 +394,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                             false,
                             generatorContext.getCustomConfig().wrappedAliases(),
                             poetTypeName,
-                            !isCollection);
+                            !isCollection,
+                            generatorContext.getCustomConfig().useNullableAnnotation());
                 })
                 .collect(Collectors.toList()));
         if (selfInterface.isEmpty()) {
@@ -413,7 +416,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                                 inline,
                                 generatorContext.getCustomConfig().wrappedAliases(),
                                 poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType()),
-                                false);
+                                false,
+                                generatorContext.getCustomConfig().useNullableAnnotation());
                     })
                     .collect(Collectors.toList()));
         }
@@ -442,7 +446,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                             inline,
                             generatorContext.getCustomConfig().wrappedAliases(),
                             propertyMethodSpec.methodSpec().returnType,
-                            false);
+                            false,
+                            generatorContext.getCustomConfig().useNullableAnnotation());
                 })
                 .collect(Collectors.toList());
     }

@@ -1,0 +1,302 @@
+openapi: 3.0.1
+info:
+  title: nullable-optional
+  version: ''
+paths:
+  /api/users/{userId}:
+    get:
+      description: Get a user by ID
+      operationId: nullableOptional_getUser
+      tags:
+        - NullableOptional
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+    patch:
+      description: Update a user (partial update)
+      operationId: nullableOptional_updateUser
+      tags:
+        - NullableOptional
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+  /api/users:
+    post:
+      description: Create a new user
+      operationId: nullableOptional_createUser
+      tags:
+        - NullableOptional
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+    get:
+      description: List all users
+      operationId: nullableOptional_listUsers
+      tags:
+        - NullableOptional
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: includeDeleted
+          in: query
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+        - name: sortBy
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponse'
+  /api/users/search:
+    get:
+      description: Search users
+      operationId: nullableOptional_searchUsers
+      tags:
+        - NullableOptional
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: department
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: role
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: isActive
+          in: query
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponse'
+components:
+  schemas:
+    UserProfile:
+      title: UserProfile
+      type: object
+      description: Test object with nullable and optional fields
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        nullableString:
+          type: string
+          nullable: true
+        nullableInteger:
+          type: integer
+          nullable: true
+        nullableBoolean:
+          type: boolean
+          nullable: true
+        nullableDate:
+          type: string
+          format: date-time
+          nullable: true
+        nullableObject:
+          $ref: '#/components/schemas/Address'
+          nullable: true
+        nullableList:
+          type: array
+          items:
+            type: string
+          nullable: true
+        nullableMap:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+        optionalString:
+          type: string
+          nullable: true
+        optionalInteger:
+          type: integer
+          nullable: true
+        optionalBoolean:
+          type: boolean
+          nullable: true
+        optionalDate:
+          type: string
+          format: date-time
+          nullable: true
+        optionalObject:
+          $ref: '#/components/schemas/Address'
+          nullable: true
+        optionalList:
+          type: array
+          items:
+            type: string
+          nullable: true
+        optionalMap:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+        optionalNullableString:
+          type: string
+          nullable: true
+        optionalNullableObject:
+          $ref: '#/components/schemas/Address'
+          nullable: true
+      required:
+        - id
+        - username
+    Address:
+      title: Address
+      type: object
+      description: Nested object for testing
+      properties:
+        street:
+          type: string
+        city:
+          type: string
+          nullable: true
+        state:
+          type: string
+          nullable: true
+        zipCode:
+          type: string
+        country:
+          type: string
+          nullable: true
+      required:
+        - street
+        - zipCode
+    CreateUserRequest:
+      title: CreateUserRequest
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        address:
+          $ref: '#/components/schemas/Address'
+          nullable: true
+      required:
+        - username
+    UpdateUserRequest:
+      title: UpdateUserRequest
+      type: object
+      description: For testing PATCH operations
+      properties:
+        username:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        address:
+          $ref: '#/components/schemas/Address'
+          nullable: true
+    UserResponse:
+      title: UserResponse
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+        address:
+          $ref: '#/components/schemas/Address'
+          nullable: true
+      required:
+        - id
+        - username
+        - createdAt
+  securitySchemes: {}

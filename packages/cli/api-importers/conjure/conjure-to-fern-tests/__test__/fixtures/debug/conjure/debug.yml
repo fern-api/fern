@@ -8,7 +8,6 @@ services:
     package: com.birch.debug.service
     base-path: /debug
     endpoints:
-
       debugEndpointAlpha:
         docs: Test endpoint alpha.
         http: GET /debug-endpoint-alpha

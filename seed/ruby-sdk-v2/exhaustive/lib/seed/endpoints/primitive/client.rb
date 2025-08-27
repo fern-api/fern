@@ -15,7 +15,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/primitive/string",
-            body: params[:request]
+            body: params
           )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"
@@ -29,7 +29,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/primitive/integer",
-            body: params[:request]
+            body: params
           )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"
@@ -43,7 +43,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/primitive/long",
-            body: params[:request]
+            body: params
           )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"
@@ -57,7 +57,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/primitive/double",
-            body: params[:request]
+            body: params
           )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"
@@ -71,7 +71,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/primitive/boolean",
-            body: params[:request]
+            body: params
           )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"
@@ -85,7 +85,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/primitive/datetime",
-            body: params[:request]
+            body: params
           )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"
@@ -99,7 +99,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/primitive/date",
-            body: params[:request]
+            body: params
           )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"
@@ -113,7 +113,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/primitive/uuid",
-            body: params[:request]
+            body: params
           )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"
@@ -127,7 +127,7 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/primitive/base64",
-            body: params[:request]
+            body: params
           )
           _response = @client.send(_request)
           return if _response.code >= "200" && _response.code < "300"

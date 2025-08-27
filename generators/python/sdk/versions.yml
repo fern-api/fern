@@ -8,6 +8,14 @@
         Users can opt in to eager loading (the old behavior) by setting the `lazy_imports` flag to `false` in their configuration.
       type: feat
   createdAt: "2025-08-27"
+
+- version: 4.26.2
+  changelogEntry:
+    - summary: |
+        Upgrade docker image to use python 3.11.13 so that users can depend on packages that require python 3.11.
+      type: fix
+  createdAt: "2025-08-26"
+
   irVersion: 59
 
 - version: 4.26.1

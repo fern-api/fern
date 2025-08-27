@@ -45,20 +45,20 @@ paths:
           description: Success
 components:
   schemas:
-    Meta: 
-      properties: 
-        hasMore: 
+    Meta:
+      properties:
+        hasMore:
           type: boolean
-    IgnoredSchema: 
+    IgnoredSchema:
       x-fern-ignore: true
       type: object
-      properties: 
-        hasMore: 
+      properties:
+        hasMore:
           type: boolean
     UsersResponse:
       type: object
       properties:
-        meta:   
+        meta:
           $ref: "#/components/schemas/Meta"
         users:
           type: array

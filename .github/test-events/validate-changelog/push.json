@@ -1,8 +1,5 @@
 {
   "push": {
-    "paths": [
-      "packages/cli/cli/versions.yml",
-      "generators/fastapi/versions.yml"
-    ]
+    "paths": ["packages/cli/cli/versions.yml", "generators/fastapi/versions.yml"]
   }
 }

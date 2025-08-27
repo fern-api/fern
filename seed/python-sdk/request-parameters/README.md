@@ -26,6 +26,7 @@ client = SeedRequestParameters(
     base_url="https://yourhost.com/path/to/api",
 )
 client.user.create_username(
+    tags=["tags", "tags"],
     username="username",
     password="password",
     name="test",
@@ -48,6 +49,7 @@ client = AsyncSeedRequestParameters(
 
 async def main() -> None:
     await client.user.create_username(
+        tags=["tags", "tags"],
         username="username",
         password="password",
         name="test",

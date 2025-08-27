@@ -1,15 +1,15 @@
-imports: 
+imports:
   service: service.yml
   types: types.yml
   examples: examples.yml
   commons: commons.yml
 
-types: 
-  WebSocketChannelSchema: 
-    extends: 
+types:
+  WebSocketChannelSchema:
+    extends:
       - commons.DeclarationSchema
       - commons.WithDisplayName
-    properties: 
+    properties:
       auth: boolean
       url: optional<string>
       path: string
@@ -18,35 +18,35 @@ types:
       query-parameters: optional<map<string, service.HttpQueryParameterSchema>>
       messages: optional<map<string, WebSocketChannelMessageSchema>>
       examples: optional<list<examples.ExampleWebSocketSession>>
-  
-  WebSocketChannelMessageSchema: 
-    extends: 
+
+  WebSocketChannelMessageSchema:
+    extends:
       - commons.DeclarationSchema
       - commons.WithDisplayName
-    properties: 
+    properties:
       origin: WebSocketOrigin
       body: WebSocketChannelMessageBodySchema
-  
-  WebSocketOrigin: 
-    enum: 
+
+  WebSocketOrigin:
+    enum:
       - client
       - server
-  
-  WebSocketChannelMessageBodySchema: 
+
+  WebSocketChannelMessageBodySchema:
     discriminated: false
-    union: 
+    union:
       - string
       - WebSocketChannelReferencedMessageSchema
       - WebSocketChannelInlinedMessageSchema
-  
+
   WebSocketChannelReferencedMessageSchema:
-    extends: 
+    extends:
       - commons.WithDocsSchema
-    properties: 
-       type: string
-  
-  WebSocketChannelInlinedMessageSchema: 
-    properties: 
+    properties:
+      type: string
+
+  WebSocketChannelInlinedMessageSchema:
+    properties:
       name: string
       extends: optional<types.ObjectExtendsSchema>
-      properties: optional<map<string, types.ObjectPropertySchema>> 
+      properties: optional<map<string, types.ObjectPropertySchema>>

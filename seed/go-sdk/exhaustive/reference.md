@@ -1368,63 +1368,6 @@ client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object.TestIntegerOverflowEdgeCases(request) -> *types.ObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Endpoints.Object.TestIntegerOverflowEdgeCases(
-        context.TODO(),
-        &types.ObjectWithOptionalField{
-            String: fern.String(
-                "boundary-test",
-            ),
-            Integer: fern.Int(
-                2147483647,
-            ),
-            Double: fern.Float64(
-                1.7976931348623157e+308,
-            ),
-            Bool: fern.Bool(
-                true,
-            ),
-        },
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `*types.ObjectWithOptionalField` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## Endpoints Params
 <details><summary><code>client.Endpoints.Params.GetWithPath(Param) -> string</code></summary>
 <dl>

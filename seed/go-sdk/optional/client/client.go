@@ -7,21 +7,21 @@ import (
 	internal "github.com/optional/fern/internal"
 	option "github.com/optional/fern/option"
 	optional "github.com/optional/fern/optional"
-	http "net/http"
 )
 
 type Client struct {
 	Optional *optional.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		Optional: optional.NewClient(opts...),
+		Optional: optional.NewClient(options),
+		options:  options,
 		baseURL:  options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -29,6 +29,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

@@ -6,14 +6,13 @@ import (
 	core "github.com/websocket-bearer-auth/fern/core"
 	internal "github.com/websocket-bearer-auth/fern/internal"
 	option "github.com/websocket-bearer-auth/fern/option"
-	http "net/http"
 	os "os"
 )
 
 type Client struct {
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -22,6 +21,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 		options.ApiKey = os.Getenv("SEED_API_KEY")
 	}
 	return &Client{
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -29,6 +29,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

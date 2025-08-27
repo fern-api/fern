@@ -1,0 +1,125 @@
+types:
+  # Test object with various nullable and optional combinations
+  UserProfile:
+    docs: Test object with nullable and optional fields
+    properties:
+      # Required fields
+      id: string
+      username: string
+
+      # Nullable fields (can be null)
+      nullableString: nullable<string>
+      nullableInteger: nullable<integer>
+      nullableBoolean: nullable<boolean>
+      nullableDate: nullable<datetime>
+      nullableObject: nullable<Address>
+      nullableList: nullable<list<string>>
+      nullableMap: nullable<map<string, string>>
+
+      # Optional fields (may be absent)
+      optionalString: optional<string>
+      optionalInteger: optional<integer>
+      optionalBoolean: optional<boolean>
+      optionalDate: optional<datetime>
+      optionalObject: optional<Address>
+      optionalList: optional<list<string>>
+      optionalMap: optional<map<string, string>>
+
+      # Optional nullable fields (may be absent or explicitly null)
+      optionalNullableString: optional<nullable<string>>
+      optionalNullableObject: optional<nullable<Address>>
+
+  Address:
+    docs: Nested object for testing
+    properties:
+      street: string
+      city: nullable<string>
+      state: optional<string>
+      zipCode: string
+      country: optional<nullable<string>>
+
+  # Request types for testing
+  CreateUserRequest:
+    properties:
+      username: string
+      email: nullable<string>
+      phone: optional<string>
+      address: optional<nullable<Address>>
+
+  UpdateUserRequest:
+    docs: For testing PATCH operations
+    properties:
+      username: optional<string>
+      email: optional<nullable<string>>
+      phone: optional<string>
+      address: optional<nullable<Address>>
+
+  # Response types
+  UserResponse:
+    properties:
+      id: string
+      username: string
+      email: nullable<string>
+      phone: optional<string>
+      createdAt: datetime
+      updatedAt: nullable<datetime>
+      address: optional<Address>
+
+service:
+  base-path: /api
+  auth: false
+  endpoints:
+    # GET endpoint with nullable response fields
+    getUser:
+      docs: Get a user by ID
+      method: GET
+      path: /users/{userId}
+      path-parameters:
+        userId: string
+      response: UserResponse
+
+    # POST endpoint with nullable request fields
+    createUser:
+      docs: Create a new user
+      method: POST
+      path: /users
+      request: CreateUserRequest
+      response: UserResponse
+
+    # PATCH endpoint for testing update semantics
+    updateUser:
+      docs: Update a user (partial update)
+      method: PATCH
+      path: /users/{userId}
+      path-parameters:
+        userId: string
+      request: UpdateUserRequest
+      response: UserResponse
+
+    # GET endpoint returning list with nullable items
+    listUsers:
+      docs: List all users
+      method: GET
+      path: /users
+      request:
+        name: ListUsersRequest
+        query-parameters:
+          limit: optional<integer>
+          offset: optional<integer>
+          includeDeleted: optional<boolean>
+          sortBy: optional<nullable<string>>
+      response: list<UserResponse>
+
+    # Endpoint with nullable path and query parameters
+    searchUsers:
+      docs: Search users
+      method: GET
+      path: /users/search
+      request:
+        name: SearchUsersRequest
+        query-parameters:
+          query: string
+          department: nullable<string>
+          role: optional<string>
+          isActive: optional<nullable<boolean>>
+      response: list<UserResponse>

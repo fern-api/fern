@@ -30,11 +30,19 @@ class UserClient:
         return self._raw_client
 
     def create_username(
-        self, *, username: str, password: str, name: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        tags: typing.Sequence[str],
+        username: str,
+        password: str,
+        name: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
         ----------
+        tags : typing.Sequence[str]
+
         username : str
 
         password : str
@@ -56,13 +64,60 @@ class UserClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.create_username(
+            tags=["tags", "tags"],
             username="username",
             password="password",
             name="test",
         )
         """
         _response = self._raw_client.create_username(
-            username=username, password=password, name=name, request_options=request_options
+            tags=tags, username=username, password=password, name=name, request_options=request_options
+        )
+        return _response.data
+
+    def create_username_with_referenced_type(
+        self,
+        *,
+        tags: typing.Sequence[str],
+        username: str,
+        password: str,
+        name: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        tags : typing.Sequence[str]
+
+        username : str
+
+        password : str
+
+        name : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import SeedRequestParameters
+
+        client = SeedRequestParameters(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.user.create_username_with_referenced_type(
+            tags=["tags", "tags"],
+            username="username",
+            password="password",
+            name="test",
+        )
+        """
+        _response = self._raw_client.create_username_with_referenced_type(
+            tags=tags, username=username, password=password, name=name, request_options=request_options
         )
         return _response.data
 
@@ -229,11 +284,19 @@ class AsyncUserClient:
         return self._raw_client
 
     async def create_username(
-        self, *, username: str, password: str, name: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        tags: typing.Sequence[str],
+        username: str,
+        password: str,
+        name: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
         ----------
+        tags : typing.Sequence[str]
+
         username : str
 
         password : str
@@ -260,6 +323,7 @@ class AsyncUserClient:
 
         async def main() -> None:
             await client.user.create_username(
+                tags=["tags", "tags"],
                 username="username",
                 password="password",
                 name="test",
@@ -269,7 +333,61 @@ class AsyncUserClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create_username(
-            username=username, password=password, name=name, request_options=request_options
+            tags=tags, username=username, password=password, name=name, request_options=request_options
+        )
+        return _response.data
+
+    async def create_username_with_referenced_type(
+        self,
+        *,
+        tags: typing.Sequence[str],
+        username: str,
+        password: str,
+        name: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        tags : typing.Sequence[str]
+
+        username : str
+
+        password : str
+
+        name : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedRequestParameters
+
+        client = AsyncSeedRequestParameters(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.user.create_username_with_referenced_type(
+                tags=["tags", "tags"],
+                username="username",
+                password="password",
+                name="test",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create_username_with_referenced_type(
+            tags=tags, username=username, password=password, name=name, request_options=request_options
         )
         return _response.data
 

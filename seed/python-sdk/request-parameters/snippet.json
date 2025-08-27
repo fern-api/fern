@@ -9,8 +9,21 @@
                 "identifier_override": "endpoint_user.createUsername"
             },
             "snippet": {
-                "sync_client": "from seed import SeedRequestParameters\n\nclient = SeedRequestParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.create_username(\n    username=\"username\",\n    password=\"password\",\n    name=\"test\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedRequestParameters\n\nclient = AsyncSeedRequestParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.create_username(\n        username=\"username\",\n        password=\"password\",\n        name=\"test\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedRequestParameters\n\nclient = SeedRequestParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.create_username(\n    tags=[\"tags\", \"tags\"],\n    username=\"username\",\n    password=\"password\",\n    name=\"test\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedRequestParameters\n\nclient = AsyncSeedRequestParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.create_username(\n        tags=[\"tags\", \"tags\"],\n        username=\"username\",\n        password=\"password\",\n        name=\"test\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/user/username-referenced",
+                "method": "POST",
+                "identifier_override": "endpoint_user.createUsernameWithReferencedType"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedRequestParameters\n\nclient = SeedRequestParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.create_username_with_referenced_type(\n    tags=[\"tags\", \"tags\"],\n    username=\"username\",\n    password=\"password\",\n    name=\"test\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedRequestParameters\n\nclient = AsyncSeedRequestParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.create_username_with_referenced_type(\n        tags=[\"tags\", \"tags\"],\n        username=\"username\",\n        password=\"password\",\n        name=\"test\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },

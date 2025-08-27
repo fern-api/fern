@@ -11,32 +11,32 @@ servers:
     protocol: wss
 channels:
   testChannels:
-    address: '/test'
+    address: "/test"
     servers:
-      - $ref: '#/servers/betawebsocket'
+      - $ref: "#/servers/betawebsocket"
     messages:
       sendMessage:
-        $ref: '#/components/messages/sendMessage'
+        $ref: "#/components/messages/sendMessage"
   testChannels2:
-    address: '/test2'
+    address: "/test2"
     servers:
-      - $ref: '#/servers/betawebsocket2'
+      - $ref: "#/servers/betawebsocket2"
     messages:
       sendMessage:
-        $ref: '#/components/messages/sendMessage'
+        $ref: "#/components/messages/sendMessage"
 operations:
   send:
     action: send
     channel:
-      $ref: '#/channels/testChannels'
+      $ref: "#/channels/testChannels"
     messages:
-      - $ref: '#/channels/testChannels/messages/sendMessage'
+      - $ref: "#/channels/testChannels/messages/sendMessage"
   send2:
     action: send
     channel:
-      $ref: '#/channels/testChannels2'
+      $ref: "#/channels/testChannels2"
     messages:
-      - $ref: '#/channels/testChannels2/messages/sendMessage'
+      - $ref: "#/channels/testChannels2/messages/sendMessage"
 components:
   messages:
     sendMessage:

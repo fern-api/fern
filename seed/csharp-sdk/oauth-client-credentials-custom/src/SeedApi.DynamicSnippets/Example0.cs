@@ -20,6 +20,8 @@ public class Example0
                 Csr = "csr",
                 Scp = "scp",
                 EntityId = "entity_id",
+                Audience = "https://api.example.com",
+                GrantType = "client_credentials",
                 Scope = "scope"
             }
         );
