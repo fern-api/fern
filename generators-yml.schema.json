@@ -2195,8 +2195,7 @@
               "type": "array",
               "items": {
                 "type": "string"
-              },
-              "uniqueItems": true
+              }
             },
             {
               "type": "null"
