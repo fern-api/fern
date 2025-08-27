@@ -3,6 +3,53 @@
 # isort: skip_file
 
 from . import nullable_optional
-from .nullable_optional import Address, CreateUserRequest, UpdateUserRequest, UserProfile, UserResponse
+from .nullable_optional import (
+    Address,
+    ComplexProfile,
+    CreateUserRequest,
+    DeserializationTestRequest,
+    DeserializationTestResponse,
+    Document,
+    EmailNotification,
+    NotificationMethod,
+    NullableUserId,
+    OptionalUserId,
+    Organization,
+    PushNotification,
+    SearchRequest,
+    SearchResult,
+    SmsNotification,
+    UpdateComplexProfileRequest,
+    UpdateTagsRequest,
+    UpdateUserRequest,
+    UserProfile,
+    UserResponse,
+    UserRole,
+    UserStatus,
+)
 
-__all__ = ["Address", "CreateUserRequest", "UpdateUserRequest", "UserProfile", "UserResponse", "nullable_optional"]
+__all__ = [
+    "Address",
+    "ComplexProfile",
+    "CreateUserRequest",
+    "DeserializationTestRequest",
+    "DeserializationTestResponse",
+    "Document",
+    "EmailNotification",
+    "NotificationMethod",
+    "NullableUserId",
+    "OptionalUserId",
+    "Organization",
+    "PushNotification",
+    "SearchRequest",
+    "SearchResult",
+    "SmsNotification",
+    "UpdateComplexProfileRequest",
+    "UpdateTagsRequest",
+    "UpdateUserRequest",
+    "UserProfile",
+    "UserResponse",
+    "UserRole",
+    "UserStatus",
+    "nullable_optional",
+]

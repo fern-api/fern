@@ -2,6 +2,50 @@
 
 # isort: skip_file
 
-from .types import Address, CreateUserRequest, UpdateUserRequest, UserProfile, UserResponse
+from .service import SearchRequest, UpdateComplexProfileRequest, UpdateTagsRequest
+from .types import (
+    Address,
+    ComplexProfile,
+    CreateUserRequest,
+    DeserializationTestRequest,
+    DeserializationTestResponse,
+    Document,
+    EmailNotification,
+    NotificationMethod,
+    NullableUserId,
+    OptionalUserId,
+    Organization,
+    PushNotification,
+    SearchResult,
+    SmsNotification,
+    UpdateUserRequest,
+    UserProfile,
+    UserResponse,
+    UserRole,
+    UserStatus,
+)
 
-__all__ = ["Address", "CreateUserRequest", "UpdateUserRequest", "UserProfile", "UserResponse"]
+__all__ = [
+    "Address",
+    "ComplexProfile",
+    "CreateUserRequest",
+    "DeserializationTestRequest",
+    "DeserializationTestResponse",
+    "Document",
+    "EmailNotification",
+    "NotificationMethod",
+    "NullableUserId",
+    "OptionalUserId",
+    "Organization",
+    "PushNotification",
+    "SearchRequest",
+    "SearchResult",
+    "SmsNotification",
+    "UpdateComplexProfileRequest",
+    "UpdateTagsRequest",
+    "UpdateUserRequest",
+    "UserProfile",
+    "UserResponse",
+    "UserRole",
+    "UserStatus",
+]
