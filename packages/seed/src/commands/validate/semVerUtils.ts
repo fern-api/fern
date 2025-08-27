@@ -45,16 +45,34 @@ export class SemVer {
         if (main === undefined) {
             throw new InvalidSemVerError(`Invalid semver: ${version}`);
         }
-        const [major, minor, patch] = main.split(".");
+        const parts = main.split(".");
+        if (parts.length !== 3) {
+            throw new InvalidSemVerError(`Invalid semver: ${version}`);
+        }
+        const [major, minor, patch] = parts;
         if (major === undefined || minor === undefined || patch === undefined) {
             throw new InvalidSemVerError(`Invalid semver: ${version}`);
         }
-        return new SemVer(
-            parseInt(major),
-            parseInt(minor),
-            parseInt(patch),
-            prerelease ? parseInt(prerelease) : undefined
-        );
+
+        // Validate that all parts are numeric
+        const majorNum = parseInt(major);
+        const minorNum = parseInt(minor);
+        const patchNum = parseInt(patch);
+
+        if (isNaN(majorNum) || isNaN(minorNum) || isNaN(patchNum)) {
+            throw new InvalidSemVerError(`Invalid semver: ${version}`);
+        }
+
+        // Validate prerelease if present
+        let prereleaseNum: number | undefined;
+        if (prerelease !== undefined) {
+            prereleaseNum = parseInt(prerelease);
+            if (isNaN(prereleaseNum)) {
+                throw new InvalidSemVerError(`Invalid semver: ${version}`);
+            }
+        }
+
+        return new SemVer(majorNum, minorNum, patchNum, prereleaseNum);
     }
 }
 
