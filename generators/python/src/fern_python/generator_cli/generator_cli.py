@@ -186,6 +186,9 @@ class GeneratorCli:
             banner_link=self._ir.readme_config.banner_link if self._ir.readme_config else None,
             features=features,
             reference_markdown_path=f"./{REFERENCE_FILENAME}",
+            api_name=self._ir.readme_config.api_name if self._ir.readme_config else None,
+            disabled_features=self._ir.readme_config.disabled_features if self._ir.readme_config else None,
+            white_label=self._ir.readme_config.white_label if self._ir.readme_config else None,
         )
 
     def _read_feature_config(self) -> generatorcli.feature.FeatureConfig:
