@@ -41,11 +41,9 @@ export class DynamicTypeLiteralMapper {
                 return this.convertNamed({ named, value: args.value, as: args.as });
             }
             case "nullable":
-                // TODO(kafkas): Implement
-                return swift.Expression.nop();
+                return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
             case "optional":
-                // TODO(kafkas): Implement
-                return swift.Expression.nop();
+                return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
             case "set":
