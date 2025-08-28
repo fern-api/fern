@@ -1516,9 +1516,6 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
-      '@fern-api/dynamic-ir-sdk':
-        specifier: ^58.2.0
-        version: 58.2.0
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
@@ -1528,12 +1525,6 @@ importers:
       '@fern-api/ruby-ast':
         specifier: workspace:*
         version: link:../ast
-      '@fern-api/ruby-dynamic-snippets':
-        specifier: workspace:*
-        version: link:../dynamic-snippets
-      '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
         version: 58.2.0
@@ -1660,15 +1651,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
-      '@fern-api/dynamic-ir-sdk':
-        specifier: ^58.2.0
-        version: 58.2.0
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
-      '@fern-api/logger':
-        specifier: workspace:*
-        version: link:../../../packages/cli/logger
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
@@ -1687,9 +1672,6 @@ importers:
       '@fern-api/ruby-model':
         specifier: workspace:*
         version: link:../model
-      '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.33
-        version: 0.0.33
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045
