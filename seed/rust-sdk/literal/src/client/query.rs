@@ -12,41 +12,45 @@ impl QueryClient {
         Ok(Self { http_client })
     }
 
-    pub async fn send(&self, prompt: Option<String>, optional_prompt: Option<Option<String>>, alias_prompt: Option<AliasToPrompt>, alias_optional_prompt: Option<Option<AliasToPrompt>>, query: Option<String>, stream: Option<bool>, optional_stream: Option<Option<bool>>, alias_stream: Option<AliasToStream>, alias_optional_stream: Option<Option<AliasToStream>>, options: Option<RequestOptions>) -> Result<SendResponse, ClientError> {
+    pub async fn send(&self, prompt: Option<String>, optional_prompt: Option<String>, alias_prompt: Option<AliasToPrompt>, alias_optional_prompt: Option<AliasToPrompt>, query: Option<String>, stream: Option<bool>, optional_stream: Option<bool>, alias_stream: Option<AliasToStream>, alias_optional_stream: Option<AliasToStream>, options: Option<RequestOptions>) -> Result<SendResponse, ClientError> {
         self.http_client.execute_request(
             Method::POST,
             "query",
             None,
             {
-            let mut query_params = Vec::new();
+            let mut query_builder = crate::QueryParameterBuilder::new();
             if let Some(value) = prompt {
-                query_params.push(("prompt".to_string(), serde_json::to_string(&value).unwrap_or_default()));
+                query_builder.add_simple("prompt", &serde_json::to_string(&value).unwrap_or_default());
             }
-            if let Some(Some(value)) = optional_prompt {
-                query_params.push(("optional_prompt".to_string(), serde_json::to_string(&value).unwrap_or_default()));
+            if let Some(value) = optional_prompt {
+                query_builder.add_simple("optional_prompt", &serde_json::to_string(&value).unwrap_or_default());
             }
             if let Some(value) = alias_prompt {
-                query_params.push(("alias_prompt".to_string(), serde_json::to_string(&value).unwrap_or_default()));
+                query_builder.add_simple("alias_prompt", &serde_json::to_string(&value).unwrap_or_default());
             }
-            if let Some(Some(value)) = alias_optional_prompt {
-                query_params.push(("alias_optional_prompt".to_string(), serde_json::to_string(&value).unwrap_or_default()));
+            if let Some(value) = alias_optional_prompt {
+                query_builder.add_simple("alias_optional_prompt", &serde_json::to_string(&value).unwrap_or_default());
             }
             if let Some(value) = query {
-                query_params.push(("query".to_string(), value.to_string()));
+                // Try to parse as structured query, fall back to simple if it fails
+                if let Err(_) = query_builder.add_structured_query(&value) {
+                    query_builder.add_simple("query", &value);
+                }
             }
             if let Some(value) = stream {
-                query_params.push(("stream".to_string(), serde_json::to_string(&value).unwrap_or_default()));
+                query_builder.add_simple("stream", &serde_json::to_string(&value).unwrap_or_default());
             }
-            if let Some(Some(value)) = optional_stream {
-                query_params.push(("optional_stream".to_string(), serde_json::to_string(&value).unwrap_or_default()));
+            if let Some(value) = optional_stream {
+                query_builder.add_simple("optional_stream", &serde_json::to_string(&value).unwrap_or_default());
             }
             if let Some(value) = alias_stream {
-                query_params.push(("alias_stream".to_string(), serde_json::to_string(&value).unwrap_or_default()));
+                query_builder.add_simple("alias_stream", &serde_json::to_string(&value).unwrap_or_default());
             }
-            if let Some(Some(value)) = alias_optional_stream {
-                query_params.push(("alias_optional_stream".to_string(), serde_json::to_string(&value).unwrap_or_default()));
+            if let Some(value) = alias_optional_stream {
+                query_builder.add_simple("alias_optional_stream", &serde_json::to_string(&value).unwrap_or_default());
             }
-            Some(query_params)
+            let params = query_builder.build();
+            if params.is_empty() { None } else { Some(params) }
         },
             options,
         ).await

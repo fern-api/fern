@@ -42,14 +42,14 @@ impl UserClient {
         ).await
     }
 
-    pub async fn search_users(&self, tenant_id: &String, user_id: &String, limit: Option<Option<i32>>, options: Option<RequestOptions>) -> Result<Vec<User>, ClientError> {
+    pub async fn search_users(&self, tenant_id: &String, user_id: &String, limit: Option<i32>, options: Option<RequestOptions>) -> Result<Vec<User>, ClientError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("/{}{}", tenant_id, user_id),
             None,
             {
             let mut query_params = Vec::new();
-            if let Some(Some(value)) = limit {
+            if let Some(value) = limit {
                 query_params.push(("limit".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             Some(query_params)

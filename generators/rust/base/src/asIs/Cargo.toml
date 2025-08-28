@@ -13,6 +13,7 @@ thiserror = "1.0"
 chrono = { version = "0.4", features = ["serde"] }
 uuid = { version = "1.0", features = ["serde"] }
 num-bigint = { version = "0.4", features = ["serde"] }
+percent-encoding = "2.3"
 {{EXTRA_DEPENDENCIES}}
 [dev-dependencies]
 tokio-test = "0.4"

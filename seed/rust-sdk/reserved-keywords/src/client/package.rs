@@ -20,7 +20,7 @@ impl PackageClient {
             {
             let mut query_params = Vec::new();
             if let Some(value) = for_ {
-                query_params.push(("for".to_string(), value.to_string()));
+                query_params.push(("for".to_string(), value.clone()));
             }
             Some(query_params)
         },

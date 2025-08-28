@@ -33,7 +33,7 @@ impl ServiceClient {
                 query_params.push(("page_limit".to_string(), value.to_string()));
             }
             if let Some(value) = before_date {
-                query_params.push(("beforeDate".to_string(), value.to_string()));
+                query_params.push(("beforeDate".to_string(), value.to_rfc3339()));
             }
             Some(query_params)
         },
