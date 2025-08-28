@@ -5,7 +5,7 @@
     - summary: |
         Introduce a custom configuration called `flattenRequestParameters` which collapses referenced bodies into the 
         request instead of nesting under a body key. 
-        
+
         **Before**: 
         ```ts
         client.users.create({
@@ -24,7 +24,7 @@
         });
         ```
       type: fix
-  createdAt: '2025-08-22'
+  createdAt: "2025-08-22"
   irVersion: 59
 
 - version: 2.9.0
