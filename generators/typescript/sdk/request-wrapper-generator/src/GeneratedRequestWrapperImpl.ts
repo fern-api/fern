@@ -810,7 +810,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         if (referenceToRequestBody.requestBodyType.type === "named") {
             const typeDeclaration = this.getTypeDeclaration(referenceToRequestBody.requestBodyType, context);
             if (typeDeclaration?.shape.type === "object") {
-                const typeProperties = this.getFlattenedPropertiesFromTypeDeclaration(typeDeclaration, context, referenceToRequestBody.requestBodyType.name.pascalCase.safeName);
+                const typeProperties = this.getFlattenedPropertiesFromTypeDeclaration(
+                    typeDeclaration,
+                    context,
+                    referenceToRequestBody.requestBodyType.name.pascalCase.safeName
+                );
                 properties.push(...typeProperties);
             }
             return properties;
