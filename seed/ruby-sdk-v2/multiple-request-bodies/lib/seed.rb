@@ -32,3 +32,4 @@ require_relative "seed/types/document_upload_result"
 
 # Client Types
 require_relative "seed/environment"
+require_relative "../README.md"

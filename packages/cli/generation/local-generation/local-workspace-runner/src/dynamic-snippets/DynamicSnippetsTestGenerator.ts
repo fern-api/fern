@@ -11,6 +11,7 @@ import { DynamicSnippetsJavaTestGenerator } from "./java/DynamicSnippetsJavaTest
 import { DynamicSnippetsPhpTestGenerator } from "./php/DynamicSnippetsPhpTestGenerator";
 import { DynamicSnippetsPythonTestGenerator } from "./python/DynamicSnippetsPythonTestGenerator";
 import { DynamicSnippetsTypeScriptTestGenerator } from "./typescript/DynamicSnippetsTypeScriptTestGenerator";
+import { DynamicSnippetsRubyTestGenerator } from "./ruby/DynamicSnippetsRubyTestGenerator";
 
 interface DynamicSnippetsGenerator {
     new (
@@ -44,7 +45,7 @@ export class DynamicSnippetsTestGenerator {
         // TODO: Re-enable dynamic snippet tests when example generation is resolved.
         typescript: { generator: DynamicSnippetsTypeScriptTestGenerator, unstable: true },
         python: { generator: DynamicSnippetsPythonTestGenerator, unstable: true },
-        ruby: undefined,
+        ruby: { generator: DynamicSnippetsRubyTestGenerator }, // CHRISM - enable this when we have a test suite
         rust: undefined,
         swift: undefined
     };

@@ -19,6 +19,7 @@ export class GeneratorAgentClient {
     }
 
     public async generateReadme<ReadmeConfig>({ readmeConfig }: { readmeConfig: ReadmeConfig }): Promise<string> {
+        this.logger.debug("In generators base!!!!!");
         const readmeConfigFilepath = await this.writeConfig({
             config: readmeConfig
         });

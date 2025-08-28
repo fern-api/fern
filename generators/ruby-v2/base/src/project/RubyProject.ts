@@ -42,7 +42,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await this.createVersionFile();
         await this.createModuleFile();
         await this.createRubocoopFile();
-        await this.createReadmeFile();
+        // await this.createReadmeFile();
     }
 
     private async createGemspecfile(): Promise<void> {

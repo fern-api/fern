@@ -40,6 +40,7 @@
     "@fern-api/dynamic-ir-sdk": "^58.2.0",
     "@fern-api/path-utils": "workspace:*",
     "@fern-api/ruby-ast": "workspace:*",
+    "@fern-fern/ir-sdk": "^58.2.0",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "string.prototype.replaceall": "^1.0.10",

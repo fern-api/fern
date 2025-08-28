@@ -1,4 +1,5 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { AbstractRubyGeneratorCli } from "@fern-api/ruby-base";
 import { generateModels } from "@fern-api/ruby-model";
@@ -10,6 +11,10 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
+import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
+import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
+import { convertIr } from "./utils/convertIr";
+import { DynamicSnippetsGenerator } from "@fern-api/ruby-dynamic-snippets";
 
 export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -87,6 +92,42 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             _other: () => undefined
         });
 
+        await context.snippetGenerator.populateSnippetsCache();
+
+        if (this.shouldGenerateReadme(context)) {
+            try {
+                const endpointSnippets = this.generateSnippets({ context });
+                context.logger.debug("Generated snippets!");
+                if (endpointSnippets[0] !== undefined) {
+                    context.logger.debug("CHRISM Endpoint snippets type: ", endpointSnippets[0].snippet.type);
+                } else {
+                    context.logger.debug("CHRISM Endpoint snippets type: undefined");
+                }
+                await this.generateReadme({
+                    context,
+                    endpointSnippets
+                });
+                context.logger.debug("Generated readme!");
+            } catch (e) {
+                context.logger.error("Failed to generate README.md");
+                if (e instanceof Error) {
+                    context.logger.debug(e.message);
+                    context.logger.debug(e.stack ?? "");
+                }
+            }
+        }
+
+        // TODO: Coming soon to a PR near you
+        // try {
+        //     await this.generateReference({ context });
+        // } catch (error) {
+        //     context.logger.warn("Failed to generate reference.md, this is OK.");
+        //     if (error instanceof Error) {
+        //         context.logger.warn((error as Error)?.message);
+        //         context.logger.warn((error as Error)?.stack ?? "");
+        //     }
+        // }
+
         await context.project.persist();
 
         try {
@@ -117,5 +158,72 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 context.project.addRawFiles(wrappedRequest);
             }
         });
+    }
+
+    private shouldGenerateReadme(context: SdkGeneratorContext): boolean {
+        const hasSnippetFilepath = context.config.output.snippetFilepath != null;
+        const publishConfig = context.ir.publishConfig;
+        switch (publishConfig?.type) {
+            case "filesystem":
+                return publishConfig.generateFullProject || hasSnippetFilepath;
+            case "github":
+            case "direct":
+            default:
+                return hasSnippetFilepath;
+        }
+    }
+
+    private async generateReadme({
+        context,
+        endpointSnippets
+    }: {
+        context: SdkGeneratorContext;
+        endpointSnippets: Endpoint[];
+    }): Promise<void> {
+        if (endpointSnippets.length === 0) {
+            context.logger.debug("No snippets were produced; skipping README.md generation.");
+            return;
+        }
+
+        context.logger.debug("Has snippets length: ", endpointSnippets.length.toString());
+        const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
+        context.project.addRawFiles(
+            new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
+        );
+    }
+
+    private generateSnippets({ context }: { context: SdkGeneratorContext }): Endpoint[] {
+        const endpointSnippets: Endpoint[] = [];
+
+        const dynamicIr = context.ir.dynamic;
+        if (dynamicIr == null) {
+            throw new Error("Cannot generate dynamic snippets without dynamic IR");
+        }
+
+        const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
+            ir: convertIr(dynamicIr),
+            config: context.config
+        });
+
+        for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
+            const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
+            for (const endpointExample of endpoint.examples ?? []) {
+                endpointSnippets.push({
+                    exampleIdentifier: endpointExample.id,
+                    id: {
+                        method: endpoint.location.method,
+                        path,
+                        identifierOverride: endpointId
+                    },
+                    snippet: FernGeneratorExec.EndpointSnippet.go({
+                        client: dynamicSnippetsGenerator.generateSync(
+                            convertDynamicEndpointSnippetRequest(endpointExample)
+                        ).snippet
+                    })
+                });
+            }
+        }
+
+        return endpointSnippets;
     }
 }
