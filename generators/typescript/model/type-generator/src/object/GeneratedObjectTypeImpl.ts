@@ -1,8 +1,8 @@
 import { ExampleTypeShape, ObjectProperty, ObjectTypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import {
+    GetReferenceOpts,
     generateInlinePropertiesModule,
     getPropertyKey,
-    GetReferenceOpts,
     getTextOfTsNode,
     maybeAddDocsStructure,
     TypeReferenceNode
