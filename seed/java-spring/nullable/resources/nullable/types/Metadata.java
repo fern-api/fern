@@ -4,12 +4,15 @@
 
 package resources.nullable.types;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import core.Nullable;
+import core.NullableNonemptyFilter;
 import core.ObjectMappers;
 import java.lang.Boolean;
 import java.lang.Object;
@@ -57,8 +60,11 @@ public final class Metadata {
     return updatedAt;
   }
 
-  @JsonProperty("avatar")
+  @JsonIgnore
   public Optional<String> getAvatar() {
+    if (avatar == null) {
+      return Optional.empty();
+    }
     return avatar;
   }
 
@@ -75,6 +81,15 @@ public final class Metadata {
   @JsonProperty("values")
   public Optional<Map<String, Optional<String>>> getValues() {
     return values;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("avatar")
+  private Optional<String> _getAvatar() {
+    return avatar;
   }
 
   @java.lang.Override
@@ -121,6 +136,8 @@ public final class Metadata {
     _FinalStage avatar(Optional<String> avatar);
 
     _FinalStage avatar(String avatar);
+
+    _FinalStage avatar(Nullable<String> avatar);
 
     _FinalStage activated(Optional<Boolean> activated);
 
@@ -211,6 +228,20 @@ public final class Metadata {
     )
     public _FinalStage activated(Optional<Boolean> activated) {
       this.activated = activated;
+      return this;
+    }
+
+    @java.lang.Override
+    public _FinalStage avatar(Nullable<String> avatar) {
+      if (avatar.isNull()) {
+        this.avatar = null;
+      }
+      else if (avatar.isEmpty()) {
+        this.avatar = Optional.empty();
+      }
+      else {
+        this.avatar = Optional.of(avatar.get());
+      }
       return this;
     }
 

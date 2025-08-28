@@ -25,7 +25,9 @@ public class ListUsersTest : BaseMockServerTest
                   "city": "city",
                   "state": "state",
                   "zipCode": "zipCode",
-                  "country": "country"
+                  "country": "country",
+                  "buildingId": "buildingId",
+                  "tenantId": "tenantId"
                 }
               },
               {
@@ -40,7 +42,9 @@ public class ListUsersTest : BaseMockServerTest
                   "city": "city",
                   "state": "state",
                   "zipCode": "zipCode",
-                  "country": "country"
+                  "country": "country",
+                  "buildingId": "buildingId",
+                  "tenantId": "tenantId"
                 }
               }
             ]

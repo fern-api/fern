@@ -11,7 +11,14 @@ from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from .types.address import Address
+from .types.complex_profile import ComplexProfile
+from .types.deserialization_test_response import DeserializationTestResponse
+from .types.notification_method import NotificationMethod
+from .types.organization import Organization
+from .types.search_result import SearchResult
 from .types.user_response import UserResponse
+from .types.user_role import UserRole
+from .types.user_status import UserStatus
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -287,6 +294,544 @@ class RawNullableOptionalClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def create_complex_profile(
+        self,
+        *,
+        id: str,
+        nullable_role: typing.Optional[UserRole] = OMIT,
+        optional_role: typing.Optional[UserRole] = OMIT,
+        optional_nullable_role: typing.Optional[UserRole] = OMIT,
+        nullable_status: typing.Optional[UserStatus] = OMIT,
+        optional_status: typing.Optional[UserStatus] = OMIT,
+        optional_nullable_status: typing.Optional[UserStatus] = OMIT,
+        nullable_notification: typing.Optional[NotificationMethod] = OMIT,
+        optional_notification: typing.Optional[NotificationMethod] = OMIT,
+        optional_nullable_notification: typing.Optional[NotificationMethod] = OMIT,
+        nullable_search_result: typing.Optional[SearchResult] = OMIT,
+        optional_search_result: typing.Optional[SearchResult] = OMIT,
+        nullable_array: typing.Optional[typing.Sequence[str]] = OMIT,
+        optional_array: typing.Optional[typing.Sequence[str]] = OMIT,
+        optional_nullable_array: typing.Optional[typing.Sequence[str]] = OMIT,
+        nullable_list_of_nullables: typing.Optional[typing.Sequence[typing.Optional[str]]] = OMIT,
+        nullable_map_of_nullables: typing.Optional[typing.Dict[str, typing.Optional[Address]]] = OMIT,
+        nullable_list_of_unions: typing.Optional[typing.Sequence[NotificationMethod]] = OMIT,
+        optional_map_of_enums: typing.Optional[typing.Dict[str, UserRole]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[ComplexProfile]:
+        """
+        Create a complex profile to test nullable enums and unions
+
+        Parameters
+        ----------
+        id : str
+
+        nullable_role : typing.Optional[UserRole]
+
+        optional_role : typing.Optional[UserRole]
+
+        optional_nullable_role : typing.Optional[UserRole]
+
+        nullable_status : typing.Optional[UserStatus]
+
+        optional_status : typing.Optional[UserStatus]
+
+        optional_nullable_status : typing.Optional[UserStatus]
+
+        nullable_notification : typing.Optional[NotificationMethod]
+
+        optional_notification : typing.Optional[NotificationMethod]
+
+        optional_nullable_notification : typing.Optional[NotificationMethod]
+
+        nullable_search_result : typing.Optional[SearchResult]
+
+        optional_search_result : typing.Optional[SearchResult]
+
+        nullable_array : typing.Optional[typing.Sequence[str]]
+
+        optional_array : typing.Optional[typing.Sequence[str]]
+
+        optional_nullable_array : typing.Optional[typing.Sequence[str]]
+
+        nullable_list_of_nullables : typing.Optional[typing.Sequence[typing.Optional[str]]]
+
+        nullable_map_of_nullables : typing.Optional[typing.Dict[str, typing.Optional[Address]]]
+
+        nullable_list_of_unions : typing.Optional[typing.Sequence[NotificationMethod]]
+
+        optional_map_of_enums : typing.Optional[typing.Dict[str, UserRole]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ComplexProfile]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/profiles/complex",
+            method="POST",
+            json={
+                "id": id,
+                "nullableRole": nullable_role,
+                "optionalRole": optional_role,
+                "optionalNullableRole": optional_nullable_role,
+                "nullableStatus": nullable_status,
+                "optionalStatus": optional_status,
+                "optionalNullableStatus": optional_nullable_status,
+                "nullableNotification": convert_and_respect_annotation_metadata(
+                    object_=nullable_notification, annotation=typing.Optional[NotificationMethod], direction="write"
+                ),
+                "optionalNotification": convert_and_respect_annotation_metadata(
+                    object_=optional_notification, annotation=NotificationMethod, direction="write"
+                ),
+                "optionalNullableNotification": convert_and_respect_annotation_metadata(
+                    object_=optional_nullable_notification,
+                    annotation=typing.Optional[NotificationMethod],
+                    direction="write",
+                ),
+                "nullableSearchResult": convert_and_respect_annotation_metadata(
+                    object_=nullable_search_result, annotation=typing.Optional[SearchResult], direction="write"
+                ),
+                "optionalSearchResult": convert_and_respect_annotation_metadata(
+                    object_=optional_search_result, annotation=SearchResult, direction="write"
+                ),
+                "nullableArray": nullable_array,
+                "optionalArray": optional_array,
+                "optionalNullableArray": optional_nullable_array,
+                "nullableListOfNullables": nullable_list_of_nullables,
+                "nullableMapOfNullables": convert_and_respect_annotation_metadata(
+                    object_=nullable_map_of_nullables,
+                    annotation=typing.Optional[typing.Dict[str, typing.Optional[Address]]],
+                    direction="write",
+                ),
+                "nullableListOfUnions": convert_and_respect_annotation_metadata(
+                    object_=nullable_list_of_unions,
+                    annotation=typing.Optional[typing.Sequence[NotificationMethod]],
+                    direction="write",
+                ),
+                "optionalMapOfEnums": optional_map_of_enums,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ComplexProfile,
+                    parse_obj_as(
+                        type_=ComplexProfile,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_complex_profile(
+        self, profile_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[ComplexProfile]:
+        """
+        Get a complex profile by ID
+
+        Parameters
+        ----------
+        profile_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ComplexProfile]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/profiles/complex/{jsonable_encoder(profile_id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ComplexProfile,
+                    parse_obj_as(
+                        type_=ComplexProfile,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def update_complex_profile(
+        self,
+        profile_id: str,
+        *,
+        nullable_role: typing.Optional[UserRole] = OMIT,
+        nullable_status: typing.Optional[UserStatus] = OMIT,
+        nullable_notification: typing.Optional[NotificationMethod] = OMIT,
+        nullable_search_result: typing.Optional[SearchResult] = OMIT,
+        nullable_array: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[ComplexProfile]:
+        """
+        Update complex profile to test nullable field updates
+
+        Parameters
+        ----------
+        profile_id : str
+
+        nullable_role : typing.Optional[UserRole]
+
+        nullable_status : typing.Optional[UserStatus]
+
+        nullable_notification : typing.Optional[NotificationMethod]
+
+        nullable_search_result : typing.Optional[SearchResult]
+
+        nullable_array : typing.Optional[typing.Sequence[str]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ComplexProfile]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/profiles/complex/{jsonable_encoder(profile_id)}",
+            method="PATCH",
+            json={
+                "nullableRole": nullable_role,
+                "nullableStatus": nullable_status,
+                "nullableNotification": convert_and_respect_annotation_metadata(
+                    object_=nullable_notification, annotation=typing.Optional[NotificationMethod], direction="write"
+                ),
+                "nullableSearchResult": convert_and_respect_annotation_metadata(
+                    object_=nullable_search_result, annotation=typing.Optional[SearchResult], direction="write"
+                ),
+                "nullableArray": nullable_array,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ComplexProfile,
+                    parse_obj_as(
+                        type_=ComplexProfile,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def test_deserialization(
+        self,
+        *,
+        required_string: str,
+        nullable_string: typing.Optional[str] = OMIT,
+        optional_string: typing.Optional[str] = OMIT,
+        optional_nullable_string: typing.Optional[str] = OMIT,
+        nullable_enum: typing.Optional[UserRole] = OMIT,
+        optional_enum: typing.Optional[UserStatus] = OMIT,
+        nullable_union: typing.Optional[NotificationMethod] = OMIT,
+        optional_union: typing.Optional[SearchResult] = OMIT,
+        nullable_list: typing.Optional[typing.Sequence[str]] = OMIT,
+        nullable_map: typing.Optional[typing.Dict[str, int]] = OMIT,
+        nullable_object: typing.Optional[Address] = OMIT,
+        optional_object: typing.Optional[Organization] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[DeserializationTestResponse]:
+        """
+        Test endpoint for validating null deserialization
+
+        Parameters
+        ----------
+        required_string : str
+
+        nullable_string : typing.Optional[str]
+
+        optional_string : typing.Optional[str]
+
+        optional_nullable_string : typing.Optional[str]
+
+        nullable_enum : typing.Optional[UserRole]
+
+        optional_enum : typing.Optional[UserStatus]
+
+        nullable_union : typing.Optional[NotificationMethod]
+
+        optional_union : typing.Optional[SearchResult]
+
+        nullable_list : typing.Optional[typing.Sequence[str]]
+
+        nullable_map : typing.Optional[typing.Dict[str, int]]
+
+        nullable_object : typing.Optional[Address]
+
+        optional_object : typing.Optional[Organization]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[DeserializationTestResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/test/deserialization",
+            method="POST",
+            json={
+                "requiredString": required_string,
+                "nullableString": nullable_string,
+                "optionalString": optional_string,
+                "optionalNullableString": optional_nullable_string,
+                "nullableEnum": nullable_enum,
+                "optionalEnum": optional_enum,
+                "nullableUnion": convert_and_respect_annotation_metadata(
+                    object_=nullable_union, annotation=typing.Optional[NotificationMethod], direction="write"
+                ),
+                "optionalUnion": convert_and_respect_annotation_metadata(
+                    object_=optional_union, annotation=SearchResult, direction="write"
+                ),
+                "nullableList": nullable_list,
+                "nullableMap": nullable_map,
+                "nullableObject": convert_and_respect_annotation_metadata(
+                    object_=nullable_object, annotation=typing.Optional[Address], direction="write"
+                ),
+                "optionalObject": convert_and_respect_annotation_metadata(
+                    object_=optional_object, annotation=Organization, direction="write"
+                ),
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DeserializationTestResponse,
+                    parse_obj_as(
+                        type_=DeserializationTestResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def filter_by_role(
+        self,
+        *,
+        role: typing.Optional[UserRole] = None,
+        status: typing.Optional[UserStatus] = None,
+        secondary_role: typing.Optional[UserRole] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[typing.List[UserResponse]]:
+        """
+        Filter users by role with nullable enum
+
+        Parameters
+        ----------
+        role : typing.Optional[UserRole]
+
+        status : typing.Optional[UserStatus]
+
+        secondary_role : typing.Optional[UserRole]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.List[UserResponse]]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/users/filter",
+            method="GET",
+            params={
+                "role": role,
+                "status": status,
+                "secondaryRole": secondary_role,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[UserResponse],
+                    parse_obj_as(
+                        type_=typing.List[UserResponse],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_notification_settings(
+        self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[typing.Optional[NotificationMethod]]:
+        """
+        Get notification settings which may be null
+
+        Parameters
+        ----------
+        user_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.Optional[NotificationMethod]]
+            Nullable notification method or empty for no preference
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/users/{jsonable_encoder(user_id)}/notifications",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Optional[NotificationMethod],
+                    parse_obj_as(
+                        type_=typing.Optional[NotificationMethod],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def update_tags(
+        self,
+        user_id: str,
+        *,
+        tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        categories: typing.Optional[typing.Sequence[str]] = OMIT,
+        labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[typing.List[str]]:
+        """
+        Update tags to test array handling
+
+        Parameters
+        ----------
+        user_id : str
+
+        tags : typing.Optional[typing.Sequence[str]]
+
+        categories : typing.Optional[typing.Sequence[str]]
+
+        labels : typing.Optional[typing.Sequence[str]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.List[str]]
+            Updated tags
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/users/{jsonable_encoder(user_id)}/tags",
+            method="PUT",
+            json={
+                "tags": tags,
+                "categories": categories,
+                "labels": labels,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[str],
+                    parse_obj_as(
+                        type_=typing.List[str],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_search_results(
+        self,
+        *,
+        query: str,
+        filters: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        include_types: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[typing.Optional[typing.List[SearchResult]]]:
+        """
+        Get search results with nullable unions
+
+        Parameters
+        ----------
+        query : str
+
+        filters : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+
+        include_types : typing.Optional[typing.Sequence[str]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.Optional[typing.List[SearchResult]]]
+            List of search results, can be null if no results
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/search",
+            method="POST",
+            json={
+                "query": query,
+                "filters": filters,
+                "includeTypes": include_types,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Optional[typing.List[SearchResult]],
+                    parse_obj_as(
+                        type_=typing.Optional[typing.List[SearchResult]],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawNullableOptionalClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -549,6 +1094,544 @@ class AsyncRawNullableOptionalClient:
                     typing.List[UserResponse],
                     parse_obj_as(
                         type_=typing.List[UserResponse],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def create_complex_profile(
+        self,
+        *,
+        id: str,
+        nullable_role: typing.Optional[UserRole] = OMIT,
+        optional_role: typing.Optional[UserRole] = OMIT,
+        optional_nullable_role: typing.Optional[UserRole] = OMIT,
+        nullable_status: typing.Optional[UserStatus] = OMIT,
+        optional_status: typing.Optional[UserStatus] = OMIT,
+        optional_nullable_status: typing.Optional[UserStatus] = OMIT,
+        nullable_notification: typing.Optional[NotificationMethod] = OMIT,
+        optional_notification: typing.Optional[NotificationMethod] = OMIT,
+        optional_nullable_notification: typing.Optional[NotificationMethod] = OMIT,
+        nullable_search_result: typing.Optional[SearchResult] = OMIT,
+        optional_search_result: typing.Optional[SearchResult] = OMIT,
+        nullable_array: typing.Optional[typing.Sequence[str]] = OMIT,
+        optional_array: typing.Optional[typing.Sequence[str]] = OMIT,
+        optional_nullable_array: typing.Optional[typing.Sequence[str]] = OMIT,
+        nullable_list_of_nullables: typing.Optional[typing.Sequence[typing.Optional[str]]] = OMIT,
+        nullable_map_of_nullables: typing.Optional[typing.Dict[str, typing.Optional[Address]]] = OMIT,
+        nullable_list_of_unions: typing.Optional[typing.Sequence[NotificationMethod]] = OMIT,
+        optional_map_of_enums: typing.Optional[typing.Dict[str, UserRole]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[ComplexProfile]:
+        """
+        Create a complex profile to test nullable enums and unions
+
+        Parameters
+        ----------
+        id : str
+
+        nullable_role : typing.Optional[UserRole]
+
+        optional_role : typing.Optional[UserRole]
+
+        optional_nullable_role : typing.Optional[UserRole]
+
+        nullable_status : typing.Optional[UserStatus]
+
+        optional_status : typing.Optional[UserStatus]
+
+        optional_nullable_status : typing.Optional[UserStatus]
+
+        nullable_notification : typing.Optional[NotificationMethod]
+
+        optional_notification : typing.Optional[NotificationMethod]
+
+        optional_nullable_notification : typing.Optional[NotificationMethod]
+
+        nullable_search_result : typing.Optional[SearchResult]
+
+        optional_search_result : typing.Optional[SearchResult]
+
+        nullable_array : typing.Optional[typing.Sequence[str]]
+
+        optional_array : typing.Optional[typing.Sequence[str]]
+
+        optional_nullable_array : typing.Optional[typing.Sequence[str]]
+
+        nullable_list_of_nullables : typing.Optional[typing.Sequence[typing.Optional[str]]]
+
+        nullable_map_of_nullables : typing.Optional[typing.Dict[str, typing.Optional[Address]]]
+
+        nullable_list_of_unions : typing.Optional[typing.Sequence[NotificationMethod]]
+
+        optional_map_of_enums : typing.Optional[typing.Dict[str, UserRole]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ComplexProfile]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/profiles/complex",
+            method="POST",
+            json={
+                "id": id,
+                "nullableRole": nullable_role,
+                "optionalRole": optional_role,
+                "optionalNullableRole": optional_nullable_role,
+                "nullableStatus": nullable_status,
+                "optionalStatus": optional_status,
+                "optionalNullableStatus": optional_nullable_status,
+                "nullableNotification": convert_and_respect_annotation_metadata(
+                    object_=nullable_notification, annotation=typing.Optional[NotificationMethod], direction="write"
+                ),
+                "optionalNotification": convert_and_respect_annotation_metadata(
+                    object_=optional_notification, annotation=NotificationMethod, direction="write"
+                ),
+                "optionalNullableNotification": convert_and_respect_annotation_metadata(
+                    object_=optional_nullable_notification,
+                    annotation=typing.Optional[NotificationMethod],
+                    direction="write",
+                ),
+                "nullableSearchResult": convert_and_respect_annotation_metadata(
+                    object_=nullable_search_result, annotation=typing.Optional[SearchResult], direction="write"
+                ),
+                "optionalSearchResult": convert_and_respect_annotation_metadata(
+                    object_=optional_search_result, annotation=SearchResult, direction="write"
+                ),
+                "nullableArray": nullable_array,
+                "optionalArray": optional_array,
+                "optionalNullableArray": optional_nullable_array,
+                "nullableListOfNullables": nullable_list_of_nullables,
+                "nullableMapOfNullables": convert_and_respect_annotation_metadata(
+                    object_=nullable_map_of_nullables,
+                    annotation=typing.Optional[typing.Dict[str, typing.Optional[Address]]],
+                    direction="write",
+                ),
+                "nullableListOfUnions": convert_and_respect_annotation_metadata(
+                    object_=nullable_list_of_unions,
+                    annotation=typing.Optional[typing.Sequence[NotificationMethod]],
+                    direction="write",
+                ),
+                "optionalMapOfEnums": optional_map_of_enums,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ComplexProfile,
+                    parse_obj_as(
+                        type_=ComplexProfile,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_complex_profile(
+        self, profile_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[ComplexProfile]:
+        """
+        Get a complex profile by ID
+
+        Parameters
+        ----------
+        profile_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ComplexProfile]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/profiles/complex/{jsonable_encoder(profile_id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ComplexProfile,
+                    parse_obj_as(
+                        type_=ComplexProfile,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def update_complex_profile(
+        self,
+        profile_id: str,
+        *,
+        nullable_role: typing.Optional[UserRole] = OMIT,
+        nullable_status: typing.Optional[UserStatus] = OMIT,
+        nullable_notification: typing.Optional[NotificationMethod] = OMIT,
+        nullable_search_result: typing.Optional[SearchResult] = OMIT,
+        nullable_array: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[ComplexProfile]:
+        """
+        Update complex profile to test nullable field updates
+
+        Parameters
+        ----------
+        profile_id : str
+
+        nullable_role : typing.Optional[UserRole]
+
+        nullable_status : typing.Optional[UserStatus]
+
+        nullable_notification : typing.Optional[NotificationMethod]
+
+        nullable_search_result : typing.Optional[SearchResult]
+
+        nullable_array : typing.Optional[typing.Sequence[str]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ComplexProfile]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/profiles/complex/{jsonable_encoder(profile_id)}",
+            method="PATCH",
+            json={
+                "nullableRole": nullable_role,
+                "nullableStatus": nullable_status,
+                "nullableNotification": convert_and_respect_annotation_metadata(
+                    object_=nullable_notification, annotation=typing.Optional[NotificationMethod], direction="write"
+                ),
+                "nullableSearchResult": convert_and_respect_annotation_metadata(
+                    object_=nullable_search_result, annotation=typing.Optional[SearchResult], direction="write"
+                ),
+                "nullableArray": nullable_array,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ComplexProfile,
+                    parse_obj_as(
+                        type_=ComplexProfile,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def test_deserialization(
+        self,
+        *,
+        required_string: str,
+        nullable_string: typing.Optional[str] = OMIT,
+        optional_string: typing.Optional[str] = OMIT,
+        optional_nullable_string: typing.Optional[str] = OMIT,
+        nullable_enum: typing.Optional[UserRole] = OMIT,
+        optional_enum: typing.Optional[UserStatus] = OMIT,
+        nullable_union: typing.Optional[NotificationMethod] = OMIT,
+        optional_union: typing.Optional[SearchResult] = OMIT,
+        nullable_list: typing.Optional[typing.Sequence[str]] = OMIT,
+        nullable_map: typing.Optional[typing.Dict[str, int]] = OMIT,
+        nullable_object: typing.Optional[Address] = OMIT,
+        optional_object: typing.Optional[Organization] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[DeserializationTestResponse]:
+        """
+        Test endpoint for validating null deserialization
+
+        Parameters
+        ----------
+        required_string : str
+
+        nullable_string : typing.Optional[str]
+
+        optional_string : typing.Optional[str]
+
+        optional_nullable_string : typing.Optional[str]
+
+        nullable_enum : typing.Optional[UserRole]
+
+        optional_enum : typing.Optional[UserStatus]
+
+        nullable_union : typing.Optional[NotificationMethod]
+
+        optional_union : typing.Optional[SearchResult]
+
+        nullable_list : typing.Optional[typing.Sequence[str]]
+
+        nullable_map : typing.Optional[typing.Dict[str, int]]
+
+        nullable_object : typing.Optional[Address]
+
+        optional_object : typing.Optional[Organization]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[DeserializationTestResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/test/deserialization",
+            method="POST",
+            json={
+                "requiredString": required_string,
+                "nullableString": nullable_string,
+                "optionalString": optional_string,
+                "optionalNullableString": optional_nullable_string,
+                "nullableEnum": nullable_enum,
+                "optionalEnum": optional_enum,
+                "nullableUnion": convert_and_respect_annotation_metadata(
+                    object_=nullable_union, annotation=typing.Optional[NotificationMethod], direction="write"
+                ),
+                "optionalUnion": convert_and_respect_annotation_metadata(
+                    object_=optional_union, annotation=SearchResult, direction="write"
+                ),
+                "nullableList": nullable_list,
+                "nullableMap": nullable_map,
+                "nullableObject": convert_and_respect_annotation_metadata(
+                    object_=nullable_object, annotation=typing.Optional[Address], direction="write"
+                ),
+                "optionalObject": convert_and_respect_annotation_metadata(
+                    object_=optional_object, annotation=Organization, direction="write"
+                ),
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DeserializationTestResponse,
+                    parse_obj_as(
+                        type_=DeserializationTestResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def filter_by_role(
+        self,
+        *,
+        role: typing.Optional[UserRole] = None,
+        status: typing.Optional[UserStatus] = None,
+        secondary_role: typing.Optional[UserRole] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[typing.List[UserResponse]]:
+        """
+        Filter users by role with nullable enum
+
+        Parameters
+        ----------
+        role : typing.Optional[UserRole]
+
+        status : typing.Optional[UserStatus]
+
+        secondary_role : typing.Optional[UserRole]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[typing.List[UserResponse]]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/users/filter",
+            method="GET",
+            params={
+                "role": role,
+                "status": status,
+                "secondaryRole": secondary_role,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[UserResponse],
+                    parse_obj_as(
+                        type_=typing.List[UserResponse],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_notification_settings(
+        self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[typing.Optional[NotificationMethod]]:
+        """
+        Get notification settings which may be null
+
+        Parameters
+        ----------
+        user_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[typing.Optional[NotificationMethod]]
+            Nullable notification method or empty for no preference
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/users/{jsonable_encoder(user_id)}/notifications",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Optional[NotificationMethod],
+                    parse_obj_as(
+                        type_=typing.Optional[NotificationMethod],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def update_tags(
+        self,
+        user_id: str,
+        *,
+        tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        categories: typing.Optional[typing.Sequence[str]] = OMIT,
+        labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[typing.List[str]]:
+        """
+        Update tags to test array handling
+
+        Parameters
+        ----------
+        user_id : str
+
+        tags : typing.Optional[typing.Sequence[str]]
+
+        categories : typing.Optional[typing.Sequence[str]]
+
+        labels : typing.Optional[typing.Sequence[str]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[typing.List[str]]
+            Updated tags
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/users/{jsonable_encoder(user_id)}/tags",
+            method="PUT",
+            json={
+                "tags": tags,
+                "categories": categories,
+                "labels": labels,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[str],
+                    parse_obj_as(
+                        type_=typing.List[str],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_search_results(
+        self,
+        *,
+        query: str,
+        filters: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        include_types: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[typing.Optional[typing.List[SearchResult]]]:
+        """
+        Get search results with nullable unions
+
+        Parameters
+        ----------
+        query : str
+
+        filters : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+
+        include_types : typing.Optional[typing.Sequence[str]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[typing.Optional[typing.List[SearchResult]]]
+            List of search results, can be null if no results
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/search",
+            method="POST",
+            json={
+                "query": query,
+                "filters": filters,
+                "includeTypes": include_types,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Optional[typing.List[SearchResult]],
+                    parse_obj_as(
+                        type_=typing.Optional[typing.List[SearchResult]],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

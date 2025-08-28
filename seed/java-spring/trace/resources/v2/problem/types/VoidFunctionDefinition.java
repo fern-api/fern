@@ -110,7 +110,9 @@ public final class VoidFunctionDefinition {
 
     @java.lang.Override
     public _FinalStage addAllParameters(List<Parameter> parameters) {
-      this.parameters.addAll(parameters);
+      if (parameters != null) {
+        this.parameters.addAll(parameters);
+      }
       return this;
     }
 

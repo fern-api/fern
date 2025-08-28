@@ -161,7 +161,9 @@ public final class BasicCustomFiles {
 
     @java.lang.Override
     public _FinalStage putAllAdditionalFiles(Map<Language, Files> additionalFiles) {
-      this.additionalFiles.putAll(additionalFiles);
+      if (additionalFiles != null) {
+        this.additionalFiles.putAll(additionalFiles);
+      }
       return this;
     }
 

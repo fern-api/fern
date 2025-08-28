@@ -106,7 +106,9 @@ public final class GeneratedFiles {
     }
 
     public Builder putAllGeneratedTestCaseFiles(Map<Language, Files> generatedTestCaseFiles) {
-      this.generatedTestCaseFiles.putAll(generatedTestCaseFiles);
+      if (generatedTestCaseFiles != null) {
+        this.generatedTestCaseFiles.putAll(generatedTestCaseFiles);
+      }
       return this;
     }
 
@@ -126,7 +128,9 @@ public final class GeneratedFiles {
     }
 
     public Builder putAllGeneratedTemplateFiles(Map<Language, Files> generatedTemplateFiles) {
-      this.generatedTemplateFiles.putAll(generatedTemplateFiles);
+      if (generatedTemplateFiles != null) {
+        this.generatedTemplateFiles.putAll(generatedTemplateFiles);
+      }
       return this;
     }
 
@@ -146,7 +150,9 @@ public final class GeneratedFiles {
     }
 
     public Builder putAllOther(Map<Language, Files> other) {
-      this.other.putAll(other);
+      if (other != null) {
+        this.other.putAll(other);
+      }
       return this;
     }
 

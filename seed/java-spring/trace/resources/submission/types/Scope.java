@@ -83,7 +83,9 @@ public final class Scope {
     }
 
     public Builder putAllVariables(Map<String, DebugVariableValue> variables) {
-      this.variables.putAll(variables);
+      if (variables != null) {
+        this.variables.putAll(variables);
+      }
       return this;
     }
 
