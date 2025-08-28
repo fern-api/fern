@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |
+        Add Maven publish target support for Java generators. Extract Maven coordinates from 
+        generator config and create PublishTarget.maven() with repository credentials. Supports 
+        coordinate, group/artifact, and hyphenated field formats.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-28"
+  version: 0.66.30
+
+- changelogEntry:
     - summary: Update docs workspace validator to skip file type validation when running in selfhosted mode
       type: fix
   irVersion: 59
