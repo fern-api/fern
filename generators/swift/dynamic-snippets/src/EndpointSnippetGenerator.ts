@@ -53,7 +53,7 @@ export class EndpointSnippetGenerator {
             swift.LineBreak.single(),
             this.generateRootClientInitializationStatement({ auth: endpoint.auth, values: snippetRequest.auth }),
             swift.LineBreak.single(),
-            this.generateEndpointMethodCallStatement()
+            this.generateEndpointMethodCallStatement({ endpoint })
         ];
         return fileComponents.map((c) => c.toString()).join("");
     }
@@ -70,13 +70,11 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.Auth | undefined;
         values: FernIr.dynamic.AuthValues | undefined;
     }) {
-        const clientClassName = "AcmeClient"; // TODO(kafkas): Implement
         const rootClientArgs = auth && values ? this.getRootClientAuthArgs({ auth, values }) : [];
-
         return swift.Statement.constantDeclaration({
             unsafeName: CLIENT_CONST_NAME,
             value: swift.Expression.classInitialization({
-                unsafeName: clientClassName,
+                unsafeName: this.context.getRootClientClassName(),
                 arguments_: rootClientArgs,
                 multiline: rootClientArgs.length > 1 ? true : undefined
             })
@@ -155,25 +153,27 @@ export class EndpointSnippetGenerator {
         }
     }
 
-    private generateEndpointMethodCallStatement() {
-        const methodName = "getUsers"; // TODO(kafkas): Implement
+    private generateEndpointMethodCallStatement({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }) {
         return swift.Statement.expressionStatement(
             swift.Expression.try(
                 swift.Expression.await(
                     swift.Expression.methodCall({
-                        target: swift.Expression.rawValue(
-                            [
-                                CLIENT_CONST_NAME
-                                // TODO(kafkas): Add subpackages
-                            ].join(".")
-                        ),
-                        methodName,
+                        target: swift.Expression.rawValue(CLIENT_CONST_NAME),
+                        methodName: this.getMethodName({ endpoint }),
                         arguments_: [], // TODO(kafkas): Implement
                         multiline: true
                     })
                 )
             )
         );
+    }
+
+    private getMethodName({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): string {
+        if (endpoint.declaration.fernFilepath.allParts.length > 0) {
+            const pathToMethod = `${endpoint.declaration.fernFilepath.allParts.map((p) => p.camelCase.unsafeName).join(".")}`;
+            return `${pathToMethod}.${endpoint.declaration.name.camelCase.unsafeName}`;
+        }
+        return endpoint.declaration.name.camelCase.unsafeName;
     }
 
     private getStyle(options: Options): Style {
