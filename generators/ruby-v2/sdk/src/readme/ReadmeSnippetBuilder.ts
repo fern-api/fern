@@ -252,8 +252,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             if (endpointSnippet.id.identifierOverride == null) {
                 throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
             }
-            // CHRISM - changing this to go works (generates go code though) so just need to get working for ruby
-            if (endpointSnippet.snippet.type !== "go") { 
+            if (endpointSnippet.snippet.type !== "ruby") { 
                 throw new Error(`Internal error; expected ruby snippet but got: ${endpointSnippet.snippet.type}`);
             }
             snippets[endpointSnippet.id.identifierOverride] = endpointSnippet.snippet.client;

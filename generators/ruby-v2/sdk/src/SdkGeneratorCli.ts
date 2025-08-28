@@ -97,12 +97,6 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         if (this.shouldGenerateReadme(context)) {
             try {
                 const endpointSnippets = this.generateSnippets({ context });
-                context.logger.debug("Generated snippets!");
-                if (endpointSnippets[0] !== undefined) {
-                    context.logger.debug("CHRISM Endpoint snippets type: ", endpointSnippets[0].snippet.type);
-                } else {
-                    context.logger.debug("CHRISM Endpoint snippets type: undefined");
-                }
                 await this.generateReadme({
                     context,
                     endpointSnippets
@@ -215,7 +209,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                         path,
                         identifierOverride: endpointId
                     },
-                    snippet: FernGeneratorExec.EndpointSnippet.go({
+                    snippet: FernGeneratorExec.EndpointSnippet.ruby({
                         client: dynamicSnippetsGenerator.generateSync(
                             convertDynamicEndpointSnippetRequest(endpointExample)
                         ).snippet
