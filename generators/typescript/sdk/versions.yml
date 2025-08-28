@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.9.4
+  changelogEntry:
+    - summary: |
+        Grab overrideable root header value from Client as default.
+      type: chore
+  createdAt: "2025-08-28"
+  irVersion: 59
+
 - version: 2.9.3
   changelogEntry:
     - summary: |

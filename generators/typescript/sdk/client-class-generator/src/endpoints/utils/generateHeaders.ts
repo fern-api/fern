@@ -286,7 +286,7 @@ function getOverridableRootHeaders({
                         getOptionKeyForHeader(header)
                     );
 
-                    // Add nullish coalescing with this._options.accountToken
+                    // Add nullish coalescing with this._options.{header}
                     value = ts.factory.createBinaryExpression(
                         originalExpr,
                         ts.SyntaxKind.QuestionQuestionToken,
