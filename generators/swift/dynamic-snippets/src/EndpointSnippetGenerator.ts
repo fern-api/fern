@@ -11,7 +11,7 @@ const CLIENT_CONST_NAME = "client";
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
 
-    constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
+    public constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
         this.context = context;
     }
 
@@ -53,7 +53,7 @@ export class EndpointSnippetGenerator {
             swift.LineBreak.single(),
             this.generateRootClientInitializationStatement({ auth: endpoint.auth, values: snippetRequest.auth }),
             swift.LineBreak.single(),
-            this.generateEndpointMethodCallStatement({ endpoint })
+            this.generateEndpointMethodCallStatement({ endpoint, snippet: snippetRequest })
         ];
         return fileComponents.map((c) => c.toString()).join("");
     }
@@ -100,11 +100,11 @@ export class EndpointSnippetGenerator {
                 return [
                     swift.functionArgument({
                         label: auth.username.camelCase.unsafeName,
-                        value: swift.Expression.rawStringValue(values.username)
+                        value: swift.Expression.stringLiteral(values.username)
                     }),
                     swift.functionArgument({
                         label: auth.password.camelCase.unsafeName,
-                        value: swift.Expression.rawStringValue(values.password)
+                        value: swift.Expression.stringLiteral(values.password)
                     })
                 ];
             case "bearer":
@@ -118,7 +118,7 @@ export class EndpointSnippetGenerator {
                 return [
                     swift.functionArgument({
                         label: auth.token.camelCase.unsafeName,
-                        value: swift.Expression.rawStringValue(values.token)
+                        value: swift.Expression.stringLiteral(values.token)
                     })
                 ];
             case "header":
@@ -153,14 +153,20 @@ export class EndpointSnippetGenerator {
         }
     }
 
-    private generateEndpointMethodCallStatement({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }) {
+    private generateEndpointMethodCallStatement({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }) {
         return swift.Statement.expressionStatement(
             swift.Expression.try(
                 swift.Expression.await(
                     swift.Expression.methodCall({
                         target: swift.Expression.rawValue(CLIENT_CONST_NAME),
                         methodName: this.getMethodName({ endpoint }),
-                        arguments_: [], // TODO(kafkas): Implement
+                        arguments_: this.getMethodArguments({ endpoint, snippet }),
                         multiline: true
                     })
                 )
@@ -174,6 +180,62 @@ export class EndpointSnippetGenerator {
             return `${pathToMethod}.${endpoint.declaration.name.camelCase.unsafeName}`;
         }
         return endpoint.declaration.name.camelCase.unsafeName;
+    }
+
+    private getMethodArguments({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): swift.FunctionArgument[] {
+        switch (endpoint.request.type) {
+            case "inlined":
+                return this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet });
+            case "body":
+                return this.getMethodArgsForBodyRequest({ request: endpoint.request, snippet });
+            default:
+                assertNever(endpoint.request);
+        }
+    }
+
+    private getMethodArgsForInlinedRequest({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.InlinedRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): swift.FunctionArgument[] {
+        // TODO(kafkas): Implement
+        return [];
+    }
+
+    private getMethodArgsForBodyRequest({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.BodyRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): swift.FunctionArgument[] {
+        const args: swift.FunctionArgument[] = [];
+        if (request.body) {
+            if (request.body.type === "typeReference") {
+                args.push(
+                    swift.functionArgument({
+                        label: "request",
+                        value: this.context.dynamicTypeLiteralMapper.convert({
+                            typeReference: request.body.value,
+                            value: snippet.requestBody
+                        })
+                    })
+                );
+            } else if (request.body.type === "bytes") {
+                // TODO(kafkas): Implement
+            } else {
+                assertNever(request.body);
+            }
+        }
+        return args;
     }
 
     private getStyle(options: Options): Style {

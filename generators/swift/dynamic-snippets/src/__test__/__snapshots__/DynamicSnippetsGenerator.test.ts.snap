@@ -28,20 +28,24 @@ exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 let client = AcmeAcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.service.createBigEntity(
-
+    request: BigEntity(
+        castMember: ,
+        extendedMovie: 
+    )
 )
 "
 `;
 
 exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`] = `
-"import Acme
-
-let client = AcmeAcmeClient(token: "<YOUR_API_KEY>")
-
-try await client.service.createMovie(
-
-)
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "title"
+    ],
+    "message": "Expected string, got number"
+  }
+]"
 `;
 
 exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
@@ -50,7 +54,21 @@ exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
 let client = AcmeAcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.service.createMovie(
-
+    request: Movie(
+        id: "movie-c06a4ad7",
+        prequel: ,
+        title: "The Boy and the Heron",
+        from: "Hayao Miyazaki",
+        rating: 8,
+        type: ,
+        tag: "development",
+        metadata: [
+            "actors": , 
+            "releaseDate": , 
+            "ratings": 
+        ],
+        revenue: 1000000
+    )
 )
 "
 `;
@@ -61,20 +79,49 @@ exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-opti
 let client = AcmeAcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.endpoints.object.getAndReturnWithOptionalField(
-
+    request: ObjectWithOptionalField(
+        string: ,
+        integer: ,
+        long: ,
+        double: ,
+        bool: ,
+        datetime: ,
+        date: ,
+        uuid: ,
+        base64: ,
+        list: ,
+        set: ,
+        map: ,
+        bigint: 
+    )
 )
 "
 `;
 
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `
-"import Acme
-
-let client = AcmeAcmeClient(token: "<YOUR_API_KEY>")
-
-try await client.endpoints.container.getAndReturnListOfObjects(
-
-)
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "string"
+    ],
+    "message": "Expected string, got boolean"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "invalid"
+    ],
+    "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "string"
+    ],
+    "message": "Expected string, got number"
+  }
+]"
 `;
 
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
@@ -83,7 +130,17 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (sim
 let client = AcmeAcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.endpoints.container.getAndReturnListOfObjects(
-
+    request: [
+        ObjectWithRequiredField(
+            string: "one"
+        ),
+        ObjectWithRequiredField(
+            string: "two"
+        ),
+        ObjectWithRequiredField(
+            string: "three"
+        )
+    ]
 )
 "
 `;
@@ -94,7 +151,11 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (
 let client = AcmeAcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.endpoints.container.getAndReturnListOfPrimitives(
-
+    request: [
+        "one",
+        "two",
+        "three"
+    ]
 )
 "
 `;
@@ -149,7 +210,10 @@ exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = 
 let client = AcmeAcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.imdb.createMovie(
-
+    request: CreateMovieRequest(
+        title: "The Matrix",
+        rating: 8.2
+    )
 )
 "
 `;
