@@ -48,18 +48,6 @@ type ClassInitialization = {
     multiline?: true;
 };
 
-type DictionaryLiteral = {
-    type: "dictionary-literal";
-    entries?: [Expression, Expression][];
-    multiline?: true;
-};
-
-type ArrayLiteral = {
-    type: "array-literal";
-    elements?: Expression[];
-    multiline?: true;
-};
-
 type MethodCall = {
     type: "method-call";
     target: Expression;
@@ -103,6 +91,38 @@ type Await = {
     expression: Expression;
 };
 
+type StringLiteral = {
+    type: "string-literal";
+    value: string;
+};
+
+type NumberLiteral = {
+    type: "number-literal";
+    value: number;
+};
+
+type BoolLiteral = {
+    type: "bool-literal";
+    value: boolean;
+};
+
+type UUIDLiteral = {
+    type: "uuid-literal";
+    value: string;
+};
+
+type DictionaryLiteral = {
+    type: "dictionary-literal";
+    entries?: [Expression, Expression][];
+    multiline?: true;
+};
+
+type ArrayLiteral = {
+    type: "array-literal";
+    elements?: Expression[];
+    multiline?: true;
+};
+
 type RawValue = {
     type: "raw-value";
     value: string;
@@ -119,8 +139,6 @@ type InternalExpression =
     | FunctionCall
     | StructInitialization
     | ClassInitialization
-    | DictionaryLiteral
-    | ArrayLiteral
     | MethodCall
     | MethodCallWithTrailingClosure
     | ContextualMethodCall
@@ -128,6 +146,12 @@ type InternalExpression =
     | OptionalTry
     | ForceTry
     | Await
+    | StringLiteral
+    | NumberLiteral
+    | BoolLiteral
+    | UUIDLiteral
+    | DictionaryLiteral
+    | ArrayLiteral
     | RawValue
     | Nop;
 
@@ -184,12 +208,7 @@ export class Expression extends AstNode {
                     multiline: !!this.internalExpression.multiline
                 });
                 break;
-            case "dictionary-literal":
-                this.writeDictionaryLiteral(writer, this.internalExpression);
-                break;
-            case "array-literal":
-                this.writeArrayLiteral(writer, this.internalExpression);
-                break;
+
             case "method-call":
                 this.internalExpression.target.write(writer);
                 writer.write(".");
@@ -244,6 +263,24 @@ export class Expression extends AstNode {
             case "await":
                 writer.write("await ");
                 this.internalExpression.expression.write(writer);
+                break;
+            case "string-literal":
+                writer.write(`"${this.internalExpression.value}"`);
+                break;
+            case "number-literal":
+                writer.write(this.internalExpression.value.toString());
+                break;
+            case "bool-literal":
+                writer.write(this.internalExpression.value ? "True" : "False");
+                break;
+            case "uuid-literal":
+                writer.write(`UUID(uuidString: "${this.internalExpression.value}")`);
+                break;
+            case "dictionary-literal":
+                this.writeDictionaryLiteral(writer, this.internalExpression);
+                break;
+            case "array-literal":
+                this.writeArrayLiteral(writer, this.internalExpression);
                 break;
             case "raw-value":
                 writer.write(this.internalExpression.value);
@@ -362,6 +399,22 @@ export class Expression extends AstNode {
         return new this({ type: "class-initialization", ...params });
     }
 
+    public static stringLiteral(value: string): Expression {
+        return new this({ type: "string-literal", value });
+    }
+
+    public static numberLiteral(value: number): Expression {
+        return new this({ type: "number-literal", value });
+    }
+
+    public static boolLiteral(value: boolean): Expression {
+        return new this({ type: "bool-literal", value });
+    }
+
+    public static uuidLiteral(value: string): Expression {
+        return new this({ type: "uuid-literal", value });
+    }
+
     public static dictionaryLiteral(params: Omit<DictionaryLiteral, "type">): Expression {
         return new this({ type: "dictionary-literal", ...params });
     }
@@ -407,10 +460,6 @@ export class Expression extends AstNode {
     }
 
     // Helpers
-
-    public static rawStringValue(value: string): Expression {
-        return new this({ type: "raw-value", value: `"${value}"` });
-    }
 
     public static nil(): Expression {
         return new this({ type: "raw-value", value: "nil" });

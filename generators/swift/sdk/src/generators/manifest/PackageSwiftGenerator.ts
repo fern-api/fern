@@ -33,7 +33,7 @@ export class PackageSwiftGenerator {
                         arguments_: [
                             swift.functionArgument({
                                 label: "name",
-                                value: swift.Expression.rawStringValue(this.sdkGeneratorContext.packageName)
+                                value: swift.Expression.stringLiteral(this.sdkGeneratorContext.packageName)
                             }),
                             swift.functionArgument({
                                 label: "platforms",
@@ -84,7 +84,7 @@ export class PackageSwiftGenerator {
                                             arguments_: [
                                                 swift.functionArgument({
                                                     label: "name",
-                                                    value: swift.Expression.rawStringValue(
+                                                    value: swift.Expression.stringLiteral(
                                                         this.sdkGeneratorContext.libraryName
                                                     )
                                                 }),
@@ -92,7 +92,7 @@ export class PackageSwiftGenerator {
                                                     label: "targets",
                                                     value: swift.Expression.arrayLiteral({
                                                         elements: [
-                                                            swift.Expression.rawStringValue(
+                                                            swift.Expression.stringLiteral(
                                                                 this.sdkGeneratorContext.targetName
                                                             )
                                                         ]
@@ -120,13 +120,13 @@ export class PackageSwiftGenerator {
                                             arguments_: [
                                                 swift.functionArgument({
                                                     label: "name",
-                                                    value: swift.Expression.rawStringValue(
+                                                    value: swift.Expression.stringLiteral(
                                                         this.sdkGeneratorContext.targetName
                                                     )
                                                 }),
                                                 swift.functionArgument({
                                                     label: "path",
-                                                    value: swift.Expression.rawStringValue("Sources")
+                                                    value: swift.Expression.stringLiteral("Sources")
                                                 })
                                             ],
                                             multiline: true
