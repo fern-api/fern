@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.27.0
+- version: 4.27.0-rc0
   changelogEntry:
     - summary: |
         Client imports are now lazy loaded by default. This will greatly reduce memory footprint when using a small portion of a large API.
