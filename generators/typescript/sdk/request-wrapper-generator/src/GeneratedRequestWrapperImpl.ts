@@ -807,36 +807,24 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     ): GeneratedRequestWrapper.Property[] {
         const properties: GeneratedRequestWrapper.Property[] = [];
 
-        if (referenceToRequestBody.requestBodyType.type !== "named") {
-            const type = context.type.getReferenceToType(referenceToRequestBody.requestBodyType);
-            const name = this.getReferencedBodyPropertyName();
-            properties.push({
-                name,
-                safeName: name,
-                type: type.typeNodeWithoutUndefined,
-                isOptional: type.isOptional,
-                docs: referenceToRequestBody.docs != null ? [referenceToRequestBody.docs] : undefined
-            });
+        if (referenceToRequestBody.requestBodyType.type === "named") {
+            const typeDeclaration = this.getTypeDeclaration(referenceToRequestBody.requestBodyType, context);
+            if (typeDeclaration?.shape.type === "object") {
+                const typeProperties = this.getFlattenedPropertiesFromTypeDeclaration(typeDeclaration, context, referenceToRequestBody.requestBodyType.name.pascalCase.safeName);
+                properties.push(...typeProperties);
+            }
             return properties;
         }
 
-        const typeDeclaration = this.getTypeDeclaration(referenceToRequestBody.requestBodyType, context);
-
-        if (typeDeclaration?.shape.type === "object") {
-            const typeProperties = this.getPropertiesFromTypeDeclaration(typeDeclaration, context);
-            properties.push(...typeProperties);
-        } else {
-            const type = context.type.getReferenceToType(referenceToRequestBody.requestBodyType);
-            const name = this.getReferencedBodyPropertyName();
-            properties.push({
-                name,
-                safeName: name,
-                type: type.typeNodeWithoutUndefined,
-                isOptional: type.isOptional,
-                docs: referenceToRequestBody.docs != null ? [referenceToRequestBody.docs] : undefined
-            });
-        }
-
+        const type = context.type.getReferenceToType(referenceToRequestBody.requestBodyType);
+        const name = this.getReferencedBodyPropertyName();
+        properties.push({
+            name,
+            safeName: name,
+            type: type.typeNodeWithoutUndefined,
+            isOptional: type.isOptional,
+            docs: referenceToRequestBody.docs != null ? [referenceToRequestBody.docs] : undefined
+        });
         return properties;
     }
 
@@ -849,9 +837,10 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         });
     }
 
-    private getPropertiesFromTypeDeclaration(
+    private getFlattenedPropertiesFromTypeDeclaration(
         typeDeclaration: TypeDeclaration,
-        context: SdkContext
+        context: SdkContext,
+        typeName: string
     ): GeneratedRequestWrapper.Property[] {
         const properties: GeneratedRequestWrapper.Property[] = [];
 
@@ -861,7 +850,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
         for (const property of typeDeclaration.shape.properties) {
             const propertyType = this.flattenRequestParameters
-                ? this.createNamespacedPropertyType(property, context)
+                ? this.createNamespacedPropertyType(property, context, typeName)
                 : context.type.getReferenceToType(property.valueType);
             const hasDefaultValue = this.hasDefaultValue(property.valueType, context);
             const propertyName = this.getPropertyNameOfTypeDeclarationProperty(property);
@@ -882,16 +871,21 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     private createNamespacedPropertyType(
         property: ObjectProperty,
-        context: SdkContext
+        context: SdkContext,
+        typeName: string
     ): TypeReferenceNode {
-        // Use getReferenceToTypeForInlineUnion to get the fully expanded inline type definition
-        // This gives us the actual structure (e.g., { headers?: Record<string, string>; url: string; })
-        // instead of a reference (e.g., SeedRequestParameters.CreateAgentRequestConfigurationEndpoint)
-        const unionType = context.type.getReferenceToTypeForInlineUnion(property.valueType);
-        return {
-            typeNode: unionType.typeNode,
-            typeNodeWithoutUndefined: unionType.typeNodeWithoutUndefined,
-            isOptional: unionType.isOptional
-        };
+        if (context.enableInlineTypes) {
+            const unionType = context.type.getReferenceToInlinePropertyType(
+                property.valueType,
+                `${context.namespaceExport}.${typeName}`,
+                property.name.name.pascalCase.safeName
+            );
+            return {
+                typeNode: unionType.typeNode,
+                typeNodeWithoutUndefined: unionType.typeNodeWithoutUndefined,
+                isOptional: unionType.isOptional
+            };
+        }
+        return context.type.getReferenceToType(property.valueType);
     }
 }

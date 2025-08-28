@@ -38,17 +38,13 @@ export interface AgentsCreateRequest {
     /** The name of the project to create the agent in. */
     project?: string;
     /** The audio format of the agent. */
-    audio_format?: "pcm_44100" | "mulaw_8000";
+    audio_format?: SeedRequestParameters.CreateAgentRequest.AudioFormat;
     /** The audio speed of the agent. */
     audio_speed?: number;
     /** These words, or short phrases, will be more accurately recognized by the agent. */
     boosted_keywords?: string[];
     /** When not `null`, at the beginning of the conversation the agent will make a POST request to this endpoint when to get configuration options. */
-    configuration_endpoint?: {
-        headers?: Record<string, string> | undefined;
-        timeout_ms?: number | undefined;
-        url: string;
-    };
+    configuration_endpoint?: SeedRequestParameters.CreateAgentRequest.ConfigurationEndpoint;
     /** The name of the agent. Can only contain lowercase letters, numbers and hyphens. Must be unique within the project. */
     name: string;
     /** Seconds of silence before ending the conversation. */
@@ -63,16 +59,11 @@ export interface AgentsCreateRequest {
     /** Array of task objects with `name` and `description` fields. */
     tasks?: SeedRequestParameters.Task[];
     /** Variables that can be used in the welcome message and the system prompt. */
-    template_variables?: Record<
-        string,
-        {
-            default_value?: string | undefined;
-        }
-    >;
+    template_variables?: Record<string, SeedRequestParameters.CreateAgentRequest.TemplateVariables.Value>;
     /** The timezone of the agent. Used to format system variables like `{{system_time}}`. */
     timezone?: string;
     /** Array of built-in or custom tool names to use. */
-    tools?: ("keypad_input" | "natural_conversation_ending" | string)[];
+    tools?: SeedRequestParameters.CreateAgentRequest.Tools.Item[];
     /** The voice ID to use. */
     voice_id?: string;
     /** Message to play when the conversation starts. Can contain template variables like `{{customer_name}}`. */
