@@ -1,4 +1,32 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 2.9.1
+  changelogEntry:
+    - summary: |
+        Introduce a custom configuration called `flattenRequestParameters` which collapses referenced bodies into the 
+        request instead of nesting under a body key. 
+
+        **Before**: 
+        ```ts
+        client.users.create({
+          userId: "...",
+          body: {
+            "name": "Joe Scott"
+          }
+        });
+        ```
+
+        **After** 
+        ```ts
+        client.users.create({
+          userId: "...",
+          "name": "Joe Scott"
+        });
+        ```
+      type: fix
+  createdAt: "2025-08-22"
+  irVersion: 59
+
 - version: 2.9.0
   changelogEntry:
     - summary: Generator passes readme configs apiName, disabledSections, and whiteLabel
