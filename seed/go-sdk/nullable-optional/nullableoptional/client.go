@@ -118,3 +118,143 @@ func (c *Client) SearchUsers(
 	}
 	return response.Body, nil
 }
+
+// Create a complex profile to test nullable enums and unions
+func (c *Client) CreateComplexProfile(
+	ctx context.Context,
+	request *fern.ComplexProfile,
+	opts ...option.RequestOption,
+) (*fern.ComplexProfile, error) {
+	response, err := c.WithRawResponse.CreateComplexProfile(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Get a complex profile by ID
+func (c *Client) GetComplexProfile(
+	ctx context.Context,
+	profileId string,
+	opts ...option.RequestOption,
+) (*fern.ComplexProfile, error) {
+	response, err := c.WithRawResponse.GetComplexProfile(
+		ctx,
+		profileId,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Update complex profile to test nullable field updates
+func (c *Client) UpdateComplexProfile(
+	ctx context.Context,
+	profileId string,
+	request *fern.UpdateComplexProfileRequest,
+	opts ...option.RequestOption,
+) (*fern.ComplexProfile, error) {
+	response, err := c.WithRawResponse.UpdateComplexProfile(
+		ctx,
+		profileId,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Test endpoint for validating null deserialization
+func (c *Client) TestDeserialization(
+	ctx context.Context,
+	request *fern.DeserializationTestRequest,
+	opts ...option.RequestOption,
+) (*fern.DeserializationTestResponse, error) {
+	response, err := c.WithRawResponse.TestDeserialization(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Filter users by role with nullable enum
+func (c *Client) FilterByRole(
+	ctx context.Context,
+	request *fern.FilterByRoleRequest,
+	opts ...option.RequestOption,
+) ([]*fern.UserResponse, error) {
+	response, err := c.WithRawResponse.FilterByRole(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Get notification settings which may be null
+func (c *Client) GetNotificationSettings(
+	ctx context.Context,
+	userId string,
+	opts ...option.RequestOption,
+) (*fern.NotificationMethod, error) {
+	response, err := c.WithRawResponse.GetNotificationSettings(
+		ctx,
+		userId,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Update tags to test array handling
+func (c *Client) UpdateTags(
+	ctx context.Context,
+	userId string,
+	request *fern.UpdateTagsRequest,
+	opts ...option.RequestOption,
+) ([]string, error) {
+	response, err := c.WithRawResponse.UpdateTags(
+		ctx,
+		userId,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Get search results with nullable unions
+func (c *Client) GetSearchResults(
+	ctx context.Context,
+	request *fern.SearchRequest,
+	opts ...option.RequestOption,
+) ([]*fern.SearchResult, error) {
+	response, err := c.WithRawResponse.GetSearchResults(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}

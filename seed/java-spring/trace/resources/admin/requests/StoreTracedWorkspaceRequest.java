@@ -112,7 +112,9 @@ public final class StoreTracedWorkspaceRequest {
 
     @java.lang.Override
     public _FinalStage addAllTraceResponses(List<TraceResponse> traceResponses) {
-      this.traceResponses.addAll(traceResponses);
+      if (traceResponses != null) {
+        this.traceResponses.addAll(traceResponses);
+      }
       return this;
     }
 

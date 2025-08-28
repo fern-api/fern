@@ -88,7 +88,9 @@ public final class FunctionImplementationForMultipleLanguages {
         }
 
         public Builder putAllCodeByLanguage(Map<Language, FunctionImplementation> codeByLanguage) {
-            this.codeByLanguage.putAll(codeByLanguage);
+            if (codeByLanguage != null) {
+                this.codeByLanguage.putAll(codeByLanguage);
+            }
             return this;
         }
 

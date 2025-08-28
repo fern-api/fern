@@ -131,7 +131,9 @@ public final class StackFrame {
 
     @java.lang.Override
     public _FinalStage addAllScopes(List<Scope> scopes) {
-      this.scopes.addAll(scopes);
+      if (scopes != null) {
+        this.scopes.addAll(scopes);
+      }
       return this;
     }
 

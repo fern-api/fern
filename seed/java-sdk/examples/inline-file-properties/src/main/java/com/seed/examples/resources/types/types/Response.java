@@ -116,7 +116,9 @@ public final class Response {
 
         @java.lang.Override
         public _FinalStage addAllIdentifiers(List<Identifier> identifiers) {
-            this.identifiers.addAll(identifiers);
+            if (identifiers != null) {
+                this.identifiers.addAll(identifiers);
+            }
             return this;
         }
 

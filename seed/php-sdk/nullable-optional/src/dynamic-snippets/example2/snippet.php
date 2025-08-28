@@ -23,6 +23,8 @@ $client->nullableOptional->updateUser(
             'state' => 'state',
             'zipCode' => 'zipCode',
             'country' => 'country',
+            'buildingId' => 'buildingId',
+            'tenantId' => 'tenantId',
         ]),
     ]),
 );

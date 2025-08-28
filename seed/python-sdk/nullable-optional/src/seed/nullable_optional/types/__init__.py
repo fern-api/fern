@@ -3,9 +3,54 @@
 # isort: skip_file
 
 from .address import Address
+from .complex_profile import ComplexProfile
 from .create_user_request import CreateUserRequest
+from .deserialization_test_request import DeserializationTestRequest
+from .deserialization_test_response import DeserializationTestResponse
+from .document import Document
+from .email_notification import EmailNotification
+from .notification_method import (
+    NotificationMethod,
+    NotificationMethod_Email,
+    NotificationMethod_Push,
+    NotificationMethod_Sms,
+)
+from .nullable_user_id import NullableUserId
+from .optional_user_id import OptionalUserId
+from .organization import Organization
+from .push_notification import PushNotification
+from .search_result import SearchResult, SearchResult_Document, SearchResult_Organization, SearchResult_User
+from .sms_notification import SmsNotification
 from .update_user_request import UpdateUserRequest
 from .user_profile import UserProfile
 from .user_response import UserResponse
+from .user_role import UserRole
+from .user_status import UserStatus
 
-__all__ = ["Address", "CreateUserRequest", "UpdateUserRequest", "UserProfile", "UserResponse"]
+__all__ = [
+    "Address",
+    "ComplexProfile",
+    "CreateUserRequest",
+    "DeserializationTestRequest",
+    "DeserializationTestResponse",
+    "Document",
+    "EmailNotification",
+    "NotificationMethod",
+    "NotificationMethod_Email",
+    "NotificationMethod_Push",
+    "NotificationMethod_Sms",
+    "NullableUserId",
+    "OptionalUserId",
+    "Organization",
+    "PushNotification",
+    "SearchResult",
+    "SearchResult_Document",
+    "SearchResult_Organization",
+    "SearchResult_User",
+    "SmsNotification",
+    "UpdateUserRequest",
+    "UserProfile",
+    "UserResponse",
+    "UserRole",
+    "UserStatus",
+]
