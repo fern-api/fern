@@ -7,7 +7,7 @@ import {
     Name,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { getPropertyKey, GetReferenceOpts, PackageId } from "@fern-typescript/commons";
+import { GetReferenceOpts, getPropertyKey, PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
