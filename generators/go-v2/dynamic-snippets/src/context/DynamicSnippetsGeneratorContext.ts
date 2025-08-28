@@ -105,9 +105,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getClientImportPath(): string {
-        if (this.customConfig?.packageLayout === "flat") {
-            return this.rootImportPath;
-        }
         return `${this.rootImportPath}/client`;
     }
 

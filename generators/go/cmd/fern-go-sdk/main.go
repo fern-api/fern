@@ -42,7 +42,6 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.PackageName,
 		config.PackagePath,
 		config.ExportedClientName,
-		config.PackageLayout,
 		config.UnionVersion,
 		config.Module,
 	)

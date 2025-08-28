@@ -17,7 +17,6 @@ export const baseGoCustomConfigSchema = z.object({
     includeLegacyClientOptions: z.boolean().optional(),
     inlinePathParameters: z.boolean().optional(),
     inlineFileProperties: z.boolean().optional(),
-    packageLayout: z.enum(["flat", "nested"]).optional(),
     union: z.enum(["v0", "v1"]).optional(),
     useReaderForBytesRequest: z.boolean().optional(),
     useDefaultRequestParameterValues: z.boolean().optional()
