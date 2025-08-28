@@ -73,7 +73,7 @@ export function generateHeaders({
     const authorizationHeaderValue = generatedSdkClientClass.getAuthorizationHeaderValue();
     if (authorizationHeaderValue != null) {
         elements.push({
-            header: "Authorization-ADIHERE",
+            header: "Authorization",
             value: authorizationHeaderValue
         });
     }
