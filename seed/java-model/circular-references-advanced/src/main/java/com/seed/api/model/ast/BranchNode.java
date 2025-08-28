@@ -76,7 +76,9 @@ public final class BranchNode {
         }
 
         public Builder addAllChildren(List<Node> children) {
-            this.children.addAll(children);
+            if (children != null) {
+                this.children.addAll(children);
+            }
             return this;
         }
 

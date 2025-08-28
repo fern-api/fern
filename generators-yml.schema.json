@@ -2179,6 +2179,29 @@
             }
           ]
         },
+        "apiName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "disabledSections": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "defaultEndpoint": {
           "oneOf": [
             {

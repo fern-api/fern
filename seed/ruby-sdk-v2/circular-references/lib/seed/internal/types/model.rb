@@ -7,7 +7,7 @@ module Seed
       #
       # An abstract model that all data objects will inherit from
       class Model
-        extend Type
+        include Type
 
         class << self
           # The defined fields for this model
@@ -112,7 +112,7 @@ module Seed
             end
           end
 
-          def coerce(value, strict: strict?)
+          def coerce(value, strict: (respond_to?(:strict?) ? strict? : false))
             return value if value.is_a?(self)
 
             return value unless value.is_a?(::Hash)
@@ -170,6 +170,12 @@ module Seed
 
             next if value.nil? && field.optional && !field.nullable
 
+            if value.is_a?(::Array)
+              value = value.map { |item| item.respond_to?(:to_h) ? item.to_h : item }
+            elsif value.respond_to?(:to_h)
+              value = value.to_h
+            end
+
             acc[field.api_name] = value
           end
         end
@@ -189,4 +195,4 @@ module Seed
       end
     end
   end
-end 
+end

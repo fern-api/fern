@@ -110,7 +110,9 @@ public final class DefaultProvidedFile {
 
     @java.lang.Override
     public _FinalStage addAllRelatedTypes(List<VariableType> relatedTypes) {
-      this.relatedTypes.addAll(relatedTypes);
+      if (relatedTypes != null) {
+        this.relatedTypes.addAll(relatedTypes);
+      }
       return this;
     }
 

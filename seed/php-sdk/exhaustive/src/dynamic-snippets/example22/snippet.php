@@ -3,7 +3,6 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\Object\Types\ObjectWithOptionalField;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,11 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->object->testIntegerOverflowEdgeCases(
-    new ObjectWithOptionalField([
-        'string' => 'just-over-boundary',
-        'integer' => 2147483648,
-        'double' => 2,
-        'bool' => false,
-    ]),
+$client->endpoints->params->getWithPath(
+    'param',
 );

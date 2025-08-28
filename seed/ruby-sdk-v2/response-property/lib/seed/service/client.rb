@@ -1,117 +1,114 @@
+# frozen_string_literal: true
 
 module Seed
-    module Service
-        class Client
-            # @option client [Seed::Internal::Http::RawClient]
-            #
-            # @return [Seed::Service::Client]
-            def initialize(client)
-                @client = client
-            end
+  module Service
+    class Client
+      # @return [Seed::Service::Client]
+      def initialize(client:)
+        @client = client
+      end
 
-            # @return [Seed::Service::Response]
-            def get_movie(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "movie"
-                )
+      # @return [Seed::Service::Types::Response]
+      def get_movie(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          method: "POST",
+          path: "movie",
+          body: params
+        )
+        _response = @client.send(_request)
+        return Seed::Service::Types::Response.load(_response.body) if _response.code >= "200" && _response.code < "300"
 
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return Seed::Service::Types::Response.load(_response.body)
+        raise _response.body
+      end
 
-                else
-                    raise _response.body
-            end
+      # @return [Seed::Service::Types::Response]
+      def get_movie_docs(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          method: "POST",
+          path: "movie",
+          body: params
+        )
+        _response = @client.send(_request)
+        return Seed::Service::Types::Response.load(_response.body) if _response.code >= "200" && _response.code < "300"
 
-            # @return [Seed::Service::Response]
-            def get_movie_docs(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "movie"
-                )
+        raise _response.body
+      end
 
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return Seed::Service::Types::Response.load(_response.body)
+      # @return [Seed::Types::StringResponse]
+      def get_movie_name(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          method: "POST",
+          path: "movie",
+          body: params
+        )
+        _response = @client.send(_request)
+        return Seed::Types::StringResponse.load(_response.body) if _response.code >= "200" && _response.code < "300"
 
-                else
-                    raise _response.body
-            end
+        raise _response.body
+      end
 
-            # @return [Seed::StringResponse]
-            def get_movie_name(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "movie"
-                )
+      # @return [Seed::Service::Types::Response]
+      def get_movie_metadata(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          method: "POST",
+          path: "movie",
+          body: params
+        )
+        _response = @client.send(_request)
+        return Seed::Service::Types::Response.load(_response.body) if _response.code >= "200" && _response.code < "300"
 
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return Seed::Types::StringResponse.load(_response.body)
+        raise _response.body
+      end
 
-                else
-                    raise _response.body
-            end
+      # @return [Seed::Service::Types::Response | nil]
+      def get_optional_movie(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          method: "POST",
+          path: "movie",
+          body: params
+        )
+        _response = @client.send(_request)
+        return if _response.code >= "200" && _response.code < "300"
 
-            # @return [Seed::Service::Response]
-            def get_movie_metadata(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "movie"
-                )
+        raise _response.body
+      end
 
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return Seed::Service::Types::Response.load(_response.body)
+      # @return [Seed::Service::Types::WithDocs | nil]
+      def get_optional_movie_docs(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          method: "POST",
+          path: "movie",
+          body: params
+        )
+        _response = @client.send(_request)
+        if _response.code >= "200" && _response.code < "300"
+          return Seed::Service::Types::OptionalWithDocs.load(_response.body)
+        end
 
-                else
-                    raise _response.body
-            end
+        raise _response.body
+      end
 
-            # @return [Seed::Service::Response | nil]
-            def get_optional_movie(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "movie"
-                )
+      # @return [Seed::Types::StringResponse | nil]
+      def get_optional_movie_name(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          method: "POST",
+          path: "movie",
+          body: params
+        )
+        _response = @client.send(_request)
+        if _response.code >= "200" && _response.code < "300"
+          return Seed::Types::OptionalStringResponse.load(_response.body)
+        end
 
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return 
-                else
-                    raise _response.body
-            end
-
-            # @return [Seed::Service::WithDocs | nil]
-            def get_optional_movie_docs(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "movie"
-                )
-
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return Seed::Service::Types::OptionalWithDocs.load(_response.body)
-
-                else
-                    raise _response.body
-            end
-
-            # @return [Seed::StringResponse | nil]
-            def get_optional_movie_name(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "movie"
-                )
-
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return Seed::Types::OptionalStringResponse.load(_response.body)
-
-                else
-                    raise _response.body
-            end
-
+        raise _response.body
+      end
     end
+  end
 end

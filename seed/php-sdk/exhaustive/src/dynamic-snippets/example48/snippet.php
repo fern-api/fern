@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\ReqWithHeaders\Requests\ReqWithHeaders;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,4 +11,10 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->urls->withEndingSlash();
+$client->reqWithHeaders->getWithCustomHeader(
+    new ReqWithHeaders([
+        'xTestServiceHeader' => 'X-TEST-SERVICE-HEADER',
+        'xTestEndpointHeader' => 'X-TEST-ENDPOINT-HEADER',
+        'body' => 'string',
+    ]),
+);

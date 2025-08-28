@@ -234,7 +234,9 @@ public final class PaginatedClientResponse {
          */
         @java.lang.Override
         public _FinalStage addAllClients(List<Client> clients) {
-            this.clients.addAll(clients);
+            if (clients != null) {
+                this.clients.addAll(clients);
+            }
             return this;
         }
 

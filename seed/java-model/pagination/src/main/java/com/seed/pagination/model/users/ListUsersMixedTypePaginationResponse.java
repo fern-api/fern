@@ -101,7 +101,9 @@ public final class ListUsersMixedTypePaginationResponse {
 
         @java.lang.Override
         public _FinalStage addAllData(List<User> data) {
-            this.data.addAll(data);
+            if (data != null) {
+                this.data.addAll(data);
+            }
             return this;
         }
 

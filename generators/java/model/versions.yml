@@ -3,223 +3,223 @@
     - summary: |
         Upgrade to irV57
       type: fix
-  createdAt: '2025-05-01'
+  createdAt: "2025-05-01"
   irVersion: 57
   version: 1.8.0
 - changelogEntry:
     - summary: |
         Upgrade IR version dependency to v55
       type: chore
-  createdAt: '2025-02-20'
+  createdAt: "2025-02-20"
   irVersion: 55
   version: 1.7.0
 - changelogEntry:
     - summary: |
         Flat package layout by setting `page-layout: flat`
       type: feat
-  createdAt: '2025-02-18'
+  createdAt: "2025-02-18"
   irVersion: 53
   version: 1.6.0
 - changelogEntry:
     - summary: |
         Send only request body reference for body-only wrapped request
       type: fix
-  createdAt: '2025-02-03'
+  createdAt: "2025-02-03"
   irVersion: 53
   version: 1.5.1
 - changelogEntry:
     - summary: |
         Add deep cursor path pagination support.
       type: feat
-  createdAt: '2025-01-29'
+  createdAt: "2025-01-29"
   irVersion: 53
   version: 1.5.0
 - changelogEntry:
     - summary: |
         Prevent accept header from being removed in wrapped requests
       type: fix
-  createdAt: '2025-01-21'
+  createdAt: "2025-01-21"
   irVersion: 53
   version: 1.4.5
 - changelogEntry:
     - summary: |
         Add Accept header for json responses
       type: fix
-  createdAt: '2025-01-21'
+  createdAt: "2025-01-21"
   irVersion: 53
   version: 1.4.4
 - changelogEntry:
     - summary: |
         Fix inlining unwrapped alias types.
       type: fix
-  createdAt: '2025-01-17'
+  createdAt: "2025-01-17"
   irVersion: 53
   version: 1.4.3
 - changelogEntry:
     - summary: |
         Omit methods with inlined types from interface definitions.
       type: fix
-  createdAt: '2025-01-16'
+  createdAt: "2025-01-16"
   irVersion: 53
   version: 1.4.2
 - changelogEntry:
     - summary: |
         Fix union inline type name conflict resolution.
       type: fix
-  createdAt: '2025-01-16'
+  createdAt: "2025-01-16"
   irVersion: 53
   version: 1.4.1
 - changelogEntry:
     - summary: |
         Support inline types in the Java generator.
       type: feat
-  createdAt: '2025-01-16'
+  createdAt: "2025-01-16"
   irVersion: 53
   version: 1.4.0
 - changelogEntry:
     - summary: |
         Bump IR version to latest (v53)
       type: chore
-  createdAt: '2024-12-10'
+  createdAt: "2024-12-10"
   irVersion: 53
   version: 1.3.0
 - changelogEntry:
     - summary: |
         Bump Jackson version to latest (2.17.2)
       type: chore
-  createdAt: '2024-09-26'
+  createdAt: "2024-09-26"
   irVersion: 46
   version: 1.2.0
 - changelogEntry:
-  - summary: |
-      We no longer enforce non-null constraints for Object type properties in builders.
-    type: feat
-  createdAt: '2024-09-11'
+    - summary: |
+        We no longer enforce non-null constraints for Object type properties in builders.
+      type: feat
+  createdAt: "2024-09-11"
   irVersion: 46
   version: 1.1.0
 
 - changelogEntry:
-  - summary: |
-      The Java Model generator is now on major version 1. To take this upgrade without any breaks, please add the below
-      configuration to your `generators.yml` file:
-      ```yaml
-      generators:
-        - name: fernapi/fern-java-spring
-          config:
-            disable-required-property-builder-checks: true
-      ```
-    type: break
-  - summary: |
-      Generated builder methods now enforce non-null checks for required fields, ensuring that all required 
-      fields are properly validated during object construction:
-        ```java
-        @java.lang.Override
-        @JsonSetter("name")
-        public NameStage name(@NotNull String name) {
-            this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
+    - summary: |
+        The Java Model generator is now on major version 1. To take this upgrade without any breaks, please add the below
+        configuration to your `generators.yml` file:
+        ```yaml
+        generators:
+          - name: fernapi/fern-java-spring
+            config:
+              disable-required-property-builder-checks: true
         ```
-    type: feat
-  createdAt: '2024-09-05'
+      type: break
+    - summary: |
+        Generated builder methods now enforce non-null checks for required fields, ensuring that all required 
+        fields are properly validated during object construction:
+          ```java
+          @java.lang.Override
+          @JsonSetter("name")
+          public NameStage name(@NotNull String name) {
+              this.name = Objects.requireNonNull(name, "name must not be null");
+              return this;
+          }
+          ```
+      type: feat
+  createdAt: "2024-09-05"
   irVersion: 46
   version: 1.0.0
 
 - changelogEntry:
-  - summary: |
-      Public constructors can now be generated for all model types:
-      ```yaml
-      generators:
-        - name: fernapi/fern-java-model
-          config:
-            enable-public-constructors: true # default false
-      ```
-    type: feat
+    - summary: |
+        Public constructors can now be generated for all model types:
+        ```yaml
+        generators:
+          - name: fernapi/fern-java-model
+            config:
+              enable-public-constructors: true # default false
+        ```
+      type: feat
   irVersion: 46
-  createdAt: '2024-09-04'
+  createdAt: "2024-09-04"
   version: 0.9.3
 
 - changelogEntry:
-  - summary: Generated builder methods for optional fields can now accept null directly.
-    type: feat
+    - summary: Generated builder methods for optional fields can now accept null directly.
+      type: feat
   irVersion: 46
-  createdAt: '2024-07-23'
+  createdAt: "2024-07-23"
   version: 0.9.2
 
 - changelogEntry:
-  - summary: |
-      The generator now adds a class-level `@JsonInclude(JsonInclude.Include.NON_ABSENT)` annotation to
-      each generated type in place of the previous `@JsonInclude(JsonInclude.Include.NON_EMPTY)` by default. This is
-      configurable in the `generators.yml` file:
-      ```yaml
-      generators:
-        - name: fernapi/fern-java-model
-          config:
-            json-include: non-empty # default non-absent
-      ```
-    type: feat
+    - summary: |
+        The generator now adds a class-level `@JsonInclude(JsonInclude.Include.NON_ABSENT)` annotation to
+        each generated type in place of the previous `@JsonInclude(JsonInclude.Include.NON_EMPTY)` by default. This is
+        configurable in the `generators.yml` file:
+        ```yaml
+        generators:
+          - name: fernapi/fern-java-model
+            config:
+              json-include: non-empty # default non-absent
+        ```
+      type: feat
   irVersion: 46
-  createdAt: '2024-07-02'
+  createdAt: "2024-07-02"
   version: 0.9.1-rc0
 
 - changelogEntry:
-  - summary: The generator now supports BigInteger types.
-    type: feat
-  - summary: Bump intermediate representation to v46
-    type: internal
-  createdAt: '2024-06-07'
+    - summary: The generator now supports BigInteger types.
+      type: feat
+    - summary: Bump intermediate representation to v46
+      type: internal
+  createdAt: "2024-06-07"
   irVersion: 46
   version: 0.9.0
 
 - changelogEntry:
-  - summary: Types without fields are now generated with builders. Previously, they were not, which made them impossible to initialize.
-    type: fix
-  createdAt: '2024-05-30'
+    - summary: Types without fields are now generated with builders. Previously, they were not, which made them impossible to initialize.
+      type: fix
+  createdAt: "2024-05-30"
   irVersion: 42
   version: 0.8.1
 
 - changelogEntry:
-  - summary: Undiscriminated unions are now generated with de-conflicted method signatures. Previously, certain undiscriminated unions would have failed to compile due to Java's type erasure causing conflicts.
-    type: fix
-  createdAt: '2024-05-28'
+    - summary: Undiscriminated unions are now generated with de-conflicted method signatures. Previously, certain undiscriminated unions would have failed to compile due to Java's type erasure causing conflicts.
+      type: fix
+  createdAt: "2024-05-28"
   irVersion: 42
   version: 0.8.9
 
 - changelogEntry:
-  - summary: Bump intermediate representation to v42
-    type: fix
-  createdAt: '2024-05-13'
+    - summary: Bump intermediate representation to v42
+      type: fix
+  createdAt: "2024-05-13"
   irVersion: 42
   version: 0.8.0-rc0
 
 - changelogEntry:
-  - summary: Bump intermediate representation to v31
-    type: internal
-  - summary: |
-      The generated models now support boolean literals and users
-      do not have to specify them in the builder.
-      For example, for the following object
-      ```yaml
-      Actor:
-        properties:
-          name: string
-          isMale: literal<true>
-      ```
-      the user will not need to specify the literal properties when building
-      the object.
-      ```java
-      var actor = Actor.builder()
-        .name("Brad Pitt")
-        .build();
-      ```
-    type: fix
-  createdAt: '2024-02-04'
+    - summary: Bump intermediate representation to v31
+      type: internal
+    - summary: |
+        The generated models now support boolean literals and users
+        do not have to specify them in the builder.
+        For example, for the following object
+        ```yaml
+        Actor:
+          properties:
+            name: string
+            isMale: literal<true>
+        ```
+        the user will not need to specify the literal properties when building
+        the object.
+        ```java
+        var actor = Actor.builder()
+          .name("Brad Pitt")
+          .build();
+        ```
+      type: fix
+  createdAt: "2024-02-04"
   irVersion: 31
   version: 0.7.1
 
 - changelogEntry:
-  - summary: Release version 0.6.1.
-    type: internal
+    - summary: Release version 0.6.1.
+      type: internal
   irVersion: 29
-  createdAt: '2024-02-02'
+  createdAt: "2024-02-02"
   version: 0.6.1

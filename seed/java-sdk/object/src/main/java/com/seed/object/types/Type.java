@@ -680,7 +680,9 @@ public final class Type {
 
         @java.lang.Override
         public _FinalStage addAllSeventeen(List<Optional<UUID>> seventeen) {
-            this.seventeen.addAll(seventeen);
+            if (seventeen != null) {
+                this.seventeen.addAll(seventeen);
+            }
             return this;
         }
 
@@ -700,7 +702,9 @@ public final class Type {
 
         @java.lang.Override
         public _FinalStage addAllSixteen(List<Map<String, Integer>> sixteen) {
-            this.sixteen.addAll(sixteen);
+            if (sixteen != null) {
+                this.sixteen.addAll(sixteen);
+            }
             return this;
         }
 
@@ -720,7 +724,9 @@ public final class Type {
 
         @java.lang.Override
         public _FinalStage addAllFifteen(List<List<Integer>> fifteen) {
-            this.fifteen.addAll(fifteen);
+            if (fifteen != null) {
+                this.fifteen.addAll(fifteen);
+            }
             return this;
         }
 
@@ -759,7 +765,9 @@ public final class Type {
 
         @java.lang.Override
         public _FinalStage putAllTwelve(Map<String, Boolean> twelve) {
-            this.twelve.putAll(twelve);
+            if (twelve != null) {
+                this.twelve.putAll(twelve);
+            }
             return this;
         }
 
@@ -773,7 +781,9 @@ public final class Type {
 
         @java.lang.Override
         public _FinalStage addAllEleven(Set<Double> eleven) {
-            this.eleven.addAll(eleven);
+            if (eleven != null) {
+                this.eleven.addAll(eleven);
+            }
             return this;
         }
 
@@ -793,7 +803,9 @@ public final class Type {
 
         @java.lang.Override
         public _FinalStage addAllTen(List<Integer> ten) {
-            this.ten.addAll(ten);
+            if (ten != null) {
+                this.ten.addAll(ten);
+            }
             return this;
         }
 

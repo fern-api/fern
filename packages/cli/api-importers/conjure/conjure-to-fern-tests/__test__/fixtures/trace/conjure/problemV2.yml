@@ -118,10 +118,10 @@ types:
           html: string
           paramId: ParameterId
       TestCaseMetadata:
-         fields:
-           id: TestCaseId
-           name: string
-           hidden: boolean
+        fields:
+          id: TestCaseId
+          name: string
+          hidden: boolean
       FunctionImplementationForMultipleLanguages:
         fields:
           codeByLanguage: map<commons.Language, FunctionImplementation>
@@ -191,14 +191,12 @@ types:
         fields:
           template: TestCaseTemplate
 
-
 services:
   ProblemInfoServicV2:
     name: Problem Info Service V2
     package: com.birch.trace.problems
     base-path: /problems-v2
     endpoints:
-
       getLightweightProblems:
         docs: Returns lightweight versions of all problems
         http: GET /lightweight-problem-info
@@ -208,7 +206,7 @@ services:
       getProblems:
         docs: Returns latest versions of all problems
         http: GET /problem-info
-        args: { }
+        args: {}
         returns: list<ProblemInfoV2>
 
       getLatestProblem:
@@ -231,7 +229,6 @@ services:
     package: com.birch.trace.v2problems
     base-path: /problem-crud-v2
     endpoints:
-
       createProblem:
         docs: Creates a problem
         http: POST /create

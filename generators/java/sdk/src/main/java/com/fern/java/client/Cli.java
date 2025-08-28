@@ -142,6 +142,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .customDependencies(customConfig.customDependencies())
                 .useDefaultRequestParameterValues(customConfig.useDefaultRequestParameterValues())
                 .enableWireTests(customConfig.enableWireTests())
+                .useNullableAnnotation(customConfig.useNullableAnnotation())
                 .build();
 
         Boolean generateFullProject = ir.getPublishConfig()

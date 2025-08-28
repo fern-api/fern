@@ -87,7 +87,9 @@ public final class NodesWrapper {
     }
 
     public Builder addAllNodes(List<List<Node>> nodes) {
-      this.nodes.addAll(nodes);
+      if (nodes != null) {
+        this.nodes.addAll(nodes);
+      }
       return this;
     }
 

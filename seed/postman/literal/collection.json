@@ -2,7 +2,7 @@
   "info": {
     "name": "Literal",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": "Test definition for literal schemas. "
+    "description": "Test definition for literal schemas."
   },
   "variable": [
     {

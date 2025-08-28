@@ -1,5 +1,5 @@
 # Build base image with dependencies
-FROM python:3.9.14 AS base
+FROM python:3.11.13 AS base
 
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1

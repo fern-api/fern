@@ -79,15 +79,15 @@ paths:
               properties:
                 color:
                   type: string
-                  example: 'red'
+                  example: "red"
                 name:
                   type: string
-                  example: 'Fern'
+                  example: "Fern"
             examples:
               fernRequestExample:
                 value:
-                  color: 'red'
-                  name: 'RedFern'
+                  color: "red"
+                  name: "RedFern"
               fernRequestExample2:
                 value:
                   color: "green"
@@ -107,11 +107,11 @@ paths:
               examples:
                 fernResponseExample:
                   value:
-                    message: 'RedFern created'
+                    message: "RedFern created"
                     code: 42
                 fernResponseExample2:
                   value:
-                    message: 'GreenFern created'
+                    message: "GreenFern created"
                     code: 84
 
   /ferns/{fernId}:
@@ -135,13 +135,13 @@ paths:
               properties:
                 color:
                   type: string
-                  example: 'red'
+                  example: "red"
                 name:
                   type: string
-                  example: 'Fern'
+                  example: "Fern"
             example:
-              color: 'blue'
-              name: 'BlueFern'
+              color: "blue"
+              name: "BlueFern"
 
   /grasses:
     post:
@@ -163,7 +163,7 @@ paths:
                   type: number
               example:
                 annual: true
-                foo: 'bar'
+                foo: "bar"
                 bar: 123
 
 components:
@@ -176,7 +176,7 @@ components:
       properties:
         species:
           type: string
-          example: 'Quercus alba'
+          example: "Quercus alba"
         height:
           type: number
           format: float
@@ -220,11 +220,11 @@ components:
   examples:
     oakTree:
       value:
-        id: '123e4567-e89b-12d3-a456-426614174000'
-        species: 'Quercus alba'
+        id: "123e4567-e89b-12d3-a456-426614174000"
+        species: "Quercus alba"
         height: 25.4
         age: 50
-        plantedDate: '2020-01-01T00:00:00Z'
+        plantedDate: "2020-01-01T00:00:00Z"
         location:
           latitude: 40.7128
           longitude: -74.0060
@@ -232,11 +232,11 @@ components:
 
     mapleTree:
       value:
-        id: '987fcdeb-51a2-43d7-9012-345678901234'
-        species: 'Acer saccharum'
+        id: "987fcdeb-51a2-43d7-9012-345678901234"
+        species: "Acer saccharum"
         height: 18.3
         age: 35
-        plantedDate: '2018-03-15T00:00:00Z'
+        plantedDate: "2018-03-15T00:00:00Z"
         location:
           latitude: 42.3601
           longitude: -71.0589
@@ -244,19 +244,19 @@ components:
 
     treeList:
       value:
-        - id: '123e4567-e89b-12d3-a456-426614174000'
-          species: 'Quercus alba'
+        - id: "123e4567-e89b-12d3-a456-426614174000"
+          species: "Quercus alba"
           height: 25.4
           age: 50
-          plantedDate: '2020-01-01T00:00:00Z'
+          plantedDate: "2020-01-01T00:00:00Z"
           location:
             latitude: 40.7128
             longitude: -74.0060
-        - id: '987fcdeb-51a2-43d7-9012-345678901234'
-          species: 'Acer saccharum'
+        - id: "987fcdeb-51a2-43d7-9012-345678901234"
+          species: "Acer saccharum"
           height: 18.3
           age: 35
-          plantedDate: '2018-03-15T00:00:00Z'
+          plantedDate: "2018-03-15T00:00:00Z"
           location:
             latitude: 42.3601
             longitude: -71.0589

@@ -87,7 +87,9 @@ public final class ContainerObject {
     }
 
     public Builder addAllNestedObjects(List<NestedObjectWithLiterals> nestedObjects) {
-      this.nestedObjects.addAll(nestedObjects);
+      if (nestedObjects != null) {
+        this.nestedObjects.addAll(nestedObjects);
+      }
       return this;
     }
 
