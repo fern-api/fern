@@ -193,7 +193,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                         context.type.getGeneratedExample(property.value).build(context, opts)
                     );
                 } catch (e) {
-                    console.error(
+                    context.logger.debug(
                         `Failed to get property key for property with wire value '${property.name.wireValue}' in object example. ` +
                             `This may indicate a mismatch between the example and the type definition.`
                     );
