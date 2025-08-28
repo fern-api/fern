@@ -1,4 +1,5 @@
-import { Options, Style } from "@fern-api/browser-compatible-base-generator";
+import { Options, Severity, Style } from "@fern-api/browser-compatible-base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { swift } from "@fern-api/swift-codegen";
 
@@ -50,7 +51,7 @@ export class EndpointSnippetGenerator {
         const fileComponents: swift.FileComponent[] = [
             this.generateImportModuleStatement(),
             swift.LineBreak.single(),
-            this.generateRootClientInitializationStatement(),
+            this.generateRootClientInitializationStatement({ auth: endpoint.auth, values: snippetRequest.auth }),
             swift.LineBreak.single(),
             this.generateEndpointMethodCallStatement()
         ];
@@ -62,59 +63,15 @@ export class EndpointSnippetGenerator {
         return swift.Statement.import("Acme");
     }
 
-    private generateRootClientInitializationStatement() {
-        type ParamsByScheme = {
-            header?: {
-                param: swift.FunctionParameter;
-                wireValue: string;
-            };
-            bearer?: {
-                stringParam: swift.FunctionParameter;
-                asyncProviderParam: swift.FunctionParameter;
-            };
-            basic?: {
-                usernameParam: swift.FunctionParameter;
-                passwordParam: swift.FunctionParameter;
-            };
-        };
-
-        const authSchemes: ParamsByScheme = {}; // TODO(kafkas): Implement
+    private generateRootClientInitializationStatement({
+        auth,
+        values
+    }: {
+        auth: FernIr.dynamic.Auth | undefined;
+        values: FernIr.dynamic.AuthValues | undefined;
+    }) {
         const clientClassName = "AcmeClient"; // TODO(kafkas): Implement
-
-        const rootClientArgs: swift.FunctionArgument[] = [];
-
-        if (authSchemes.header) {
-            rootClientArgs.push(
-                swift.functionArgument({
-                    label: authSchemes.header.param.argumentLabel,
-                    value: swift.Expression.rawStringValue("YOUR_TOKEN")
-                })
-            );
-        }
-
-        if (authSchemes.bearer) {
-            rootClientArgs.push(
-                swift.functionArgument({
-                    label: authSchemes.bearer.stringParam.argumentLabel,
-                    value: swift.Expression.rawStringValue("YOUR_TOKEN")
-                })
-            );
-        }
-
-        if (authSchemes.basic) {
-            rootClientArgs.push(
-                swift.functionArgument({
-                    label: authSchemes.basic.usernameParam.argumentLabel,
-                    value: swift.Expression.rawStringValue("YOUR_USERNAME")
-                })
-            );
-            rootClientArgs.push(
-                swift.functionArgument({
-                    label: authSchemes.basic.passwordParam.argumentLabel,
-                    value: swift.Expression.rawStringValue("YOUR_PASSWORD")
-                })
-            );
-        }
+        const rootClientArgs = auth && values ? this.getRootClientAuthArgs({ auth, values }) : [];
 
         return swift.Statement.constantDeclaration({
             unsafeName: CLIENT_CONST_NAME,
@@ -124,6 +81,78 @@ export class EndpointSnippetGenerator {
                 multiline: rootClientArgs.length > 1 ? true : undefined
             })
         });
+    }
+
+    private getRootClientAuthArgs({
+        auth,
+        values
+    }: {
+        auth: FernIr.dynamic.Auth;
+        values: FernIr.dynamic.AuthValues;
+    }): swift.FunctionArgument[] {
+        switch (auth.type) {
+            case "basic":
+                if (values.type !== "basic") {
+                    this.context.errors.add({
+                        severity: Severity.Critical,
+                        message: this.context.newAuthMismatchError({ auth, values }).message
+                    });
+                    return [];
+                }
+                return [
+                    swift.functionArgument({
+                        label: auth.username.camelCase.unsafeName,
+                        value: swift.Expression.rawStringValue(values.username)
+                    }),
+                    swift.functionArgument({
+                        label: auth.password.camelCase.unsafeName,
+                        value: swift.Expression.rawStringValue(values.password)
+                    })
+                ];
+            case "bearer":
+                if (values.type !== "bearer") {
+                    this.context.errors.add({
+                        severity: Severity.Critical,
+                        message: this.context.newAuthMismatchError({ auth, values }).message
+                    });
+                    return [];
+                }
+                return [
+                    swift.functionArgument({
+                        label: auth.token.camelCase.unsafeName,
+                        value: swift.Expression.rawStringValue(values.token)
+                    })
+                ];
+            case "header":
+                if (values.type !== "header") {
+                    this.context.errors.add({
+                        severity: Severity.Critical,
+                        message: this.context.newAuthMismatchError({ auth, values }).message
+                    });
+                    return [];
+                }
+                return [
+                    swift.functionArgument({
+                        label: auth.header.name.name.camelCase.unsafeName,
+                        value: this.context.dynamicTypeLiteralMapper.convert({
+                            typeReference: auth.header.typeReference,
+                            value: values.value
+                        })
+                    })
+                ];
+            case "oauth":
+                if (values.type !== "oauth") {
+                    this.context.errors.add({
+                        severity: Severity.Critical,
+                        message: this.context.newAuthMismatchError({ auth, values }).message
+                    });
+                    return [];
+                }
+                // TODO(kafkas): Add when oauth is supported
+                return [];
+            default:
+                assertNever(auth);
+        }
     }
 
     private generateEndpointMethodCallStatement() {

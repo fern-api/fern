@@ -108,6 +108,10 @@ type RawValue = {
     value: string;
 };
 
+type Nop = {
+    type: "nop";
+};
+
 type InternalExpression =
     | Reference
     | MemberAccess
@@ -124,7 +128,8 @@ type InternalExpression =
     | OptionalTry
     | ForceTry
     | Await
-    | RawValue;
+    | RawValue
+    | Nop;
 
 type WriteCallableExpressionParams = {
     writer: Writer;
@@ -242,6 +247,8 @@ export class Expression extends AstNode {
                 break;
             case "raw-value":
                 writer.write(this.internalExpression.value);
+                break;
+            case "nop":
                 break;
             default:
                 assertNever(this.internalExpression);
@@ -393,6 +400,10 @@ export class Expression extends AstNode {
 
     public static rawValue(value: string): Expression {
         return new this({ type: "raw-value", value });
+    }
+
+    public static nop(): Expression {
+        return new this({ type: "nop" });
     }
 
     // Helpers

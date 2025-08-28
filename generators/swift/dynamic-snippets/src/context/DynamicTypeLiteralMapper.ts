@@ -1,4 +1,5 @@
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { swift } from "@fern-api/swift-codegen";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 
@@ -19,5 +20,10 @@ export class DynamicTypeLiteralMapper {
 
     constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
         this.context = context;
+    }
+
+    public convert(args: DynamicTypeLiteralMapper.Args): swift.Expression {
+        // TODO(kafkas): Implement
+        return swift.Expression.rawStringValue("abc");
     }
 }

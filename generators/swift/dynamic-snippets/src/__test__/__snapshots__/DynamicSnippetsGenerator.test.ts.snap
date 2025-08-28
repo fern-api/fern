@@ -3,7 +3,7 @@
 exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -14,7 +14,7 @@ try await client.getUsers(
 exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -25,7 +25,7 @@ try await client.getUsers(
 exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -36,7 +36,7 @@ try await client.getUsers(
 exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -47,7 +47,7 @@ try await client.getUsers(
 exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -58,7 +58,7 @@ try await client.getUsers(
 exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -69,7 +69,7 @@ try await client.getUsers(
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -80,7 +80,7 @@ try await client.getUsers(
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -91,7 +91,7 @@ try await client.getUsers(
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -135,7 +135,7 @@ try await client.getUsers(
 exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -146,7 +146,7 @@ try await client.getUsers(
 exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -157,7 +157,7 @@ try await client.getUsers(
 exports[`snippets (default) > multi-url-environment > 'Custom environment' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -168,7 +168,7 @@ try await client.getUsers(
 exports[`snippets (default) > multi-url-environment > 'Invalid multi url environment' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -179,7 +179,7 @@ try await client.getUsers(
 exports[`snippets (default) > multi-url-environment > 'Production environment' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -190,7 +190,7 @@ try await client.getUsers(
 exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -201,7 +201,7 @@ try await client.getUsers(
 exports[`snippets (default) > multi-url-environment > 'Unrecognized environment' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -245,7 +245,7 @@ try await client.getUsers(
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -256,7 +256,7 @@ try await client.getUsers(
 exports[`snippets (default) > single-url-environment-default > 'Staging environment' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -267,7 +267,7 @@ try await client.getUsers(
 exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -278,7 +278,7 @@ try await client.getUsers(
 exports[`snippets (default) > single-url-environment-default > 'invalid baseURL and environment' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
@@ -289,7 +289,7 @@ try await client.getUsers(
 exports[`snippets (default) > single-url-environment-default > 'invalid environment' 1`] = `
 "import Acme
 
-let client = AcmeClient()
+let client = AcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.getUsers(
 
