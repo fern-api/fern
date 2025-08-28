@@ -25,6 +25,7 @@
         ```
       type: fix
   createdAt: '2025-08-22'
+  irVersion: 59
 
 - version: 2.9.0
   changelogEntry:
