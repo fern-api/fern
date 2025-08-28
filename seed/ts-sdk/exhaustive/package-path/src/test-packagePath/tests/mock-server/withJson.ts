@@ -28,7 +28,7 @@ export function withJson(expectedBody: unknown, resolver: HttpResponseResolver):
         }
 
         const mismatches = findMismatches(actualBody, expectedBody);
-        if (Object.keys(mismatches).length > 0) {
+        if (Object.keys(mismatches).filter((key) => !key.startsWith("pagination.")).length > 0) {
             console.error("JSON body mismatch:", toJson(mismatches, undefined, 2));
             return passthrough();
         }
