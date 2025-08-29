@@ -5,9 +5,18 @@ package com.seed.nullableOptional.resources.nullableoptional;
 
 import com.seed.nullableOptional.core.ClientOptions;
 import com.seed.nullableOptional.core.RequestOptions;
+import com.seed.nullableOptional.resources.nullableoptional.requests.FilterByRoleRequest;
 import com.seed.nullableOptional.resources.nullableoptional.requests.ListUsersRequest;
+import com.seed.nullableOptional.resources.nullableoptional.requests.SearchRequest;
 import com.seed.nullableOptional.resources.nullableoptional.requests.SearchUsersRequest;
+import com.seed.nullableOptional.resources.nullableoptional.requests.UpdateComplexProfileRequest;
+import com.seed.nullableOptional.resources.nullableoptional.requests.UpdateTagsRequest;
+import com.seed.nullableOptional.resources.nullableoptional.types.ComplexProfile;
 import com.seed.nullableOptional.resources.nullableoptional.types.CreateUserRequest;
+import com.seed.nullableOptional.resources.nullableoptional.types.DeserializationTestRequest;
+import com.seed.nullableOptional.resources.nullableoptional.types.DeserializationTestResponse;
+import com.seed.nullableOptional.resources.nullableoptional.types.NotificationMethod;
+import com.seed.nullableOptional.resources.nullableoptional.types.SearchResult;
 import com.seed.nullableOptional.resources.nullableoptional.types.UpdateUserRequest;
 import com.seed.nullableOptional.resources.nullableoptional.types.UserResponse;
 import java.util.List;
@@ -114,5 +123,133 @@ public class AsyncNullableOptionalClient {
     public CompletableFuture<List<UserResponse>> searchUsers(
             SearchUsersRequest request, RequestOptions requestOptions) {
         return this.rawClient.searchUsers(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Create a complex profile to test nullable enums and unions
+     */
+    public CompletableFuture<ComplexProfile> createComplexProfile(ComplexProfile request) {
+        return this.rawClient.createComplexProfile(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Create a complex profile to test nullable enums and unions
+     */
+    public CompletableFuture<ComplexProfile> createComplexProfile(
+            ComplexProfile request, RequestOptions requestOptions) {
+        return this.rawClient.createComplexProfile(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get a complex profile by ID
+     */
+    public CompletableFuture<ComplexProfile> getComplexProfile(String profileId) {
+        return this.rawClient.getComplexProfile(profileId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get a complex profile by ID
+     */
+    public CompletableFuture<ComplexProfile> getComplexProfile(String profileId, RequestOptions requestOptions) {
+        return this.rawClient.getComplexProfile(profileId, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update complex profile to test nullable field updates
+     */
+    public CompletableFuture<ComplexProfile> updateComplexProfile(String profileId) {
+        return this.rawClient.updateComplexProfile(profileId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update complex profile to test nullable field updates
+     */
+    public CompletableFuture<ComplexProfile> updateComplexProfile(
+            String profileId, UpdateComplexProfileRequest request) {
+        return this.rawClient.updateComplexProfile(profileId, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update complex profile to test nullable field updates
+     */
+    public CompletableFuture<ComplexProfile> updateComplexProfile(
+            String profileId, UpdateComplexProfileRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .updateComplexProfile(profileId, request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Test endpoint for validating null deserialization
+     */
+    public CompletableFuture<DeserializationTestResponse> testDeserialization(DeserializationTestRequest request) {
+        return this.rawClient.testDeserialization(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Test endpoint for validating null deserialization
+     */
+    public CompletableFuture<DeserializationTestResponse> testDeserialization(
+            DeserializationTestRequest request, RequestOptions requestOptions) {
+        return this.rawClient.testDeserialization(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Filter users by role with nullable enum
+     */
+    public CompletableFuture<List<UserResponse>> filterByRole(FilterByRoleRequest request) {
+        return this.rawClient.filterByRole(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Filter users by role with nullable enum
+     */
+    public CompletableFuture<List<UserResponse>> filterByRole(
+            FilterByRoleRequest request, RequestOptions requestOptions) {
+        return this.rawClient.filterByRole(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get notification settings which may be null
+     */
+    public CompletableFuture<NotificationMethod> getNotificationSettings(String userId) {
+        return this.rawClient.getNotificationSettings(userId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get notification settings which may be null
+     */
+    public CompletableFuture<NotificationMethod> getNotificationSettings(String userId, RequestOptions requestOptions) {
+        return this.rawClient.getNotificationSettings(userId, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update tags to test array handling
+     */
+    public CompletableFuture<List<String>> updateTags(String userId, UpdateTagsRequest request) {
+        return this.rawClient.updateTags(userId, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update tags to test array handling
+     */
+    public CompletableFuture<List<String>> updateTags(
+            String userId, UpdateTagsRequest request, RequestOptions requestOptions) {
+        return this.rawClient.updateTags(userId, request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get search results with nullable unions
+     */
+    public CompletableFuture<List<SearchResult>> getSearchResults(SearchRequest request) {
+        return this.rawClient.getSearchResults(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get search results with nullable unions
+     */
+    public CompletableFuture<List<SearchResult>> getSearchResults(
+            SearchRequest request, RequestOptions requestOptions) {
+        return this.rawClient.getSearchResults(request, requestOptions).thenApply(response -> response.body());
     }
 }

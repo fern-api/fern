@@ -21,7 +21,9 @@ public class CreateUserTest : BaseMockServerTest
                 "city": "city",
                 "state": "state",
                 "zipCode": "zipCode",
-                "country": "country"
+                "country": "country",
+                "buildingId": "buildingId",
+                "tenantId": "tenantId"
               }
             }
             """;
@@ -39,7 +41,9 @@ public class CreateUserTest : BaseMockServerTest
                 "city": "city",
                 "state": "state",
                 "zipCode": "zipCode",
-                "country": "country"
+                "country": "country",
+                "buildingId": "buildingId",
+                "tenantId": "tenantId"
               }
             }
             """;
@@ -72,6 +76,8 @@ public class CreateUserTest : BaseMockServerTest
                     State = "state",
                     ZipCode = "zipCode",
                     Country = "country",
+                    BuildingId = "buildingId",
+                    TenantId = "tenantId",
                 },
             }
         );

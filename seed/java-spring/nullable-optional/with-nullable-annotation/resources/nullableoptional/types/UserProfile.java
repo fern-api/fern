@@ -4,12 +4,14 @@
 
 package resources.nullableoptional.types;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import core.NullableNonemptyFilter;
 import core.ObjectMappers;
 import java.lang.Boolean;
 import java.lang.Integer;
@@ -104,43 +106,43 @@ public final class UserProfile {
   }
 
   @Nullable
-  @JsonProperty("nullableString")
+  @JsonIgnore
   public String getNullableString() {
     return nullableString;
   }
 
   @Nullable
-  @JsonProperty("nullableInteger")
+  @JsonIgnore
   public Integer getNullableInteger() {
     return nullableInteger;
   }
 
   @Nullable
-  @JsonProperty("nullableBoolean")
+  @JsonIgnore
   public Boolean getNullableBoolean() {
     return nullableBoolean;
   }
 
   @Nullable
-  @JsonProperty("nullableDate")
+  @JsonIgnore
   public OffsetDateTime getNullableDate() {
     return nullableDate;
   }
 
   @Nullable
-  @JsonProperty("nullableObject")
+  @JsonIgnore
   public Address getNullableObject() {
     return nullableObject;
   }
 
   @Nullable
-  @JsonProperty("nullableList")
+  @JsonIgnore
   public List<String> getNullableList() {
     return nullableList;
   }
 
   @Nullable
-  @JsonProperty("nullableMap")
+  @JsonIgnore
   public Map<String, String> getNullableMap() {
     return nullableMap;
   }
@@ -190,6 +192,69 @@ public final class UserProfile {
     return optionalNullableObject;
   }
 
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("nullableString")
+  private String _getNullableString() {
+    return nullableString;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("nullableInteger")
+  private Integer _getNullableInteger() {
+    return nullableInteger;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("nullableBoolean")
+  private Boolean _getNullableBoolean() {
+    return nullableBoolean;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("nullableDate")
+  private OffsetDateTime _getNullableDate() {
+    return nullableDate;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("nullableObject")
+  private Address _getNullableObject() {
+    return nullableObject;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("nullableList")
+  private List<String> _getNullableList() {
+    return nullableList;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("nullableMap")
+  private Map<String, String> _getNullableMap() {
+    return nullableMap;
+  }
+
   @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
@@ -221,31 +286,21 @@ public final class UserProfile {
   }
 
   public interface UsernameStage {
-    NullableStringStage username(@NotNull String username);
-  }
-
-  public interface NullableStringStage {
-    NullableIntegerStage nullableString(@NotNull String nullableString);
-  }
-
-  public interface NullableIntegerStage {
-    NullableBooleanStage nullableInteger(@NotNull Integer nullableInteger);
-  }
-
-  public interface NullableBooleanStage {
-    NullableDateStage nullableBoolean(@NotNull Boolean nullableBoolean);
-  }
-
-  public interface NullableDateStage {
-    NullableObjectStage nullableDate(@NotNull OffsetDateTime nullableDate);
-  }
-
-  public interface NullableObjectStage {
-    _FinalStage nullableObject(@NotNull Address nullableObject);
+    _FinalStage username(@NotNull String username);
   }
 
   public interface _FinalStage {
     UserProfile build();
+
+    _FinalStage nullableString(@core.Nullable String nullableString);
+
+    _FinalStage nullableInteger(@core.Nullable Integer nullableInteger);
+
+    _FinalStage nullableBoolean(@core.Nullable Boolean nullableBoolean);
+
+    _FinalStage nullableDate(@core.Nullable OffsetDateTime nullableDate);
+
+    _FinalStage nullableObject(@core.Nullable Address nullableObject);
 
     _FinalStage nullableList(List<String> nullableList);
 
@@ -299,20 +354,10 @@ public final class UserProfile {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements IdStage, UsernameStage, NullableStringStage, NullableIntegerStage, NullableBooleanStage, NullableDateStage, NullableObjectStage, _FinalStage {
+  public static final class Builder implements IdStage, UsernameStage, _FinalStage {
     private String id;
 
     private String username;
-
-    private String nullableString;
-
-    private Integer nullableInteger;
-
-    private Boolean nullableBoolean;
-
-    private OffsetDateTime nullableDate;
-
-    private Address nullableObject;
 
     private Optional<Address> optionalNullableObject = Optional.empty();
 
@@ -335,6 +380,16 @@ public final class UserProfile {
     private Map<String, String> nullableMap = new LinkedHashMap<>();
 
     private List<String> nullableList = new ArrayList<>();
+
+    private Address nullableObject;
+
+    private OffsetDateTime nullableDate;
+
+    private Boolean nullableBoolean;
+
+    private Integer nullableInteger;
+
+    private String nullableString;
 
     private Builder() {
     }
@@ -371,43 +426,8 @@ public final class UserProfile {
 
     @java.lang.Override
     @JsonSetter("username")
-    public NullableStringStage username(@NotNull String username) {
+    public _FinalStage username(@NotNull String username) {
       this.username = Objects.requireNonNull(username, "username must not be null");
-      return this;
-    }
-
-    @java.lang.Override
-    @JsonSetter("nullableString")
-    public NullableIntegerStage nullableString(@NotNull String nullableString) {
-      this.nullableString = Objects.requireNonNull(nullableString, "nullableString must not be null");
-      return this;
-    }
-
-    @java.lang.Override
-    @JsonSetter("nullableInteger")
-    public NullableBooleanStage nullableInteger(@NotNull Integer nullableInteger) {
-      this.nullableInteger = Objects.requireNonNull(nullableInteger, "nullableInteger must not be null");
-      return this;
-    }
-
-    @java.lang.Override
-    @JsonSetter("nullableBoolean")
-    public NullableDateStage nullableBoolean(@NotNull Boolean nullableBoolean) {
-      this.nullableBoolean = Objects.requireNonNull(nullableBoolean, "nullableBoolean must not be null");
-      return this;
-    }
-
-    @java.lang.Override
-    @JsonSetter("nullableDate")
-    public NullableObjectStage nullableDate(@NotNull OffsetDateTime nullableDate) {
-      this.nullableDate = Objects.requireNonNull(nullableDate, "nullableDate must not be null");
-      return this;
-    }
-
-    @java.lang.Override
-    @JsonSetter("nullableObject")
-    public _FinalStage nullableObject(@NotNull Address nullableObject) {
-      this.nullableObject = Objects.requireNonNull(nullableObject, "nullableObject must not be null");
       return this;
     }
 
@@ -563,7 +583,9 @@ public final class UserProfile {
 
     @java.lang.Override
     public _FinalStage putAllNullableMap(Map<String, String> nullableMap) {
-      this.nullableMap.putAll(nullableMap);
+      if (nullableMap != null) {
+        this.nullableMap.putAll(nullableMap);
+      }
       return this;
     }
 
@@ -580,7 +602,9 @@ public final class UserProfile {
 
     @java.lang.Override
     public _FinalStage addAllNullableList(List<String> nullableList) {
-      this.nullableList.addAll(nullableList);
+      if (nullableList != null) {
+        this.nullableList.addAll(nullableList);
+      }
       return this;
     }
 
@@ -598,6 +622,41 @@ public final class UserProfile {
     public _FinalStage nullableList(List<String> nullableList) {
       this.nullableList.clear();
       this.nullableList.addAll(nullableList);
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter("nullableObject")
+    public _FinalStage nullableObject(@core.Nullable Address nullableObject) {
+      this.nullableObject = nullableObject;
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter("nullableDate")
+    public _FinalStage nullableDate(@core.Nullable OffsetDateTime nullableDate) {
+      this.nullableDate = nullableDate;
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter("nullableBoolean")
+    public _FinalStage nullableBoolean(@core.Nullable Boolean nullableBoolean) {
+      this.nullableBoolean = nullableBoolean;
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter("nullableInteger")
+    public _FinalStage nullableInteger(@core.Nullable Integer nullableInteger) {
+      this.nullableInteger = nullableInteger;
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter("nullableString")
+    public _FinalStage nullableString(@core.Nullable String nullableString) {
+      this.nullableString = nullableString;
       return this;
     }
 

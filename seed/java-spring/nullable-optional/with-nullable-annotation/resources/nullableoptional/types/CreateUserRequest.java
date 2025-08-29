@@ -4,12 +4,14 @@
 
 package resources.nullableoptional.types;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import core.NullableNonemptyFilter;
 import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
@@ -45,7 +47,7 @@ public final class CreateUserRequest {
   }
 
   @Nullable
-  @JsonProperty("email")
+  @JsonIgnore
   public String getEmail() {
     return email;
   }
@@ -58,6 +60,15 @@ public final class CreateUserRequest {
   @JsonProperty("address")
   public Optional<Address> getAddress() {
     return address;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("email")
+  private String _getEmail() {
+    return email;
   }
 
   @java.lang.Override
@@ -85,17 +96,15 @@ public final class CreateUserRequest {
   }
 
   public interface UsernameStage {
-    EmailStage username(@NotNull String username);
+    _FinalStage username(@NotNull String username);
 
     Builder from(CreateUserRequest other);
   }
 
-  public interface EmailStage {
-    _FinalStage email(@NotNull String email);
-  }
-
   public interface _FinalStage {
     CreateUserRequest build();
+
+    _FinalStage email(@core.Nullable String email);
 
     _FinalStage phone(Optional<String> phone);
 
@@ -109,14 +118,14 @@ public final class CreateUserRequest {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements UsernameStage, EmailStage, _FinalStage {
+  public static final class Builder implements UsernameStage, _FinalStage {
     private String username;
-
-    private String email;
 
     private Optional<Address> address = Optional.empty();
 
     private Optional<String> phone = Optional.empty();
+
+    private String email;
 
     private Builder() {
     }
@@ -132,15 +141,8 @@ public final class CreateUserRequest {
 
     @java.lang.Override
     @JsonSetter("username")
-    public EmailStage username(@NotNull String username) {
+    public _FinalStage username(@NotNull String username) {
       this.username = Objects.requireNonNull(username, "username must not be null");
-      return this;
-    }
-
-    @java.lang.Override
-    @JsonSetter("email")
-    public _FinalStage email(@NotNull String email) {
-      this.email = Objects.requireNonNull(email, "email must not be null");
       return this;
     }
 
@@ -173,6 +175,13 @@ public final class CreateUserRequest {
     )
     public _FinalStage phone(Optional<String> phone) {
       this.phone = phone;
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter("email")
+    public _FinalStage email(@core.Nullable String email) {
+      this.email = email;
       return this;
     }
 

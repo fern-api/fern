@@ -35,6 +35,12 @@ func do() {
                 Country: fern.String(
                     "country",
                 ),
+                BuildingId: fern.String(
+                    "buildingId",
+                ),
+                TenantId: fern.String(
+                    "tenantId",
+                ),
             },
         },
     )

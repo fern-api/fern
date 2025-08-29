@@ -266,7 +266,9 @@ public final class RootType1 {
          */
         @java.lang.Override
         public _FinalStage addAllFooSet(Set<FooSetItem> fooSet) {
-            this.fooSet.addAll(fooSet);
+            if (fooSet != null) {
+                this.fooSet.addAll(fooSet);
+            }
             return this;
         }
 
@@ -297,7 +299,9 @@ public final class RootType1 {
          */
         @java.lang.Override
         public _FinalStage addAllFooList(List<FooListItem> fooList) {
-            this.fooList.addAll(fooList);
+            if (fooList != null) {
+                this.fooList.addAll(fooList);
+            }
             return this;
         }
 
@@ -338,7 +342,9 @@ public final class RootType1 {
          */
         @java.lang.Override
         public _FinalStage putAllFooMap(Map<String, FooMapValue> fooMap) {
-            this.fooMap.putAll(fooMap);
+            if (fooMap != null) {
+                this.fooMap.putAll(fooMap);
+            }
             return this;
         }
 

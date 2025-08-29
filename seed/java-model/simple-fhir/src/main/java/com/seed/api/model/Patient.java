@@ -173,7 +173,9 @@ public final class Patient implements IBaseResource {
 
         @java.lang.Override
         public _FinalStage addAllScripts(List<Script> scripts) {
-            this.scripts.addAll(scripts);
+            if (scripts != null) {
+                this.scripts.addAll(scripts);
+            }
             return this;
         }
 
@@ -193,7 +195,9 @@ public final class Patient implements IBaseResource {
 
         @java.lang.Override
         public _FinalStage addAllRelatedResources(List<ResourceList> relatedResources) {
-            this.relatedResources.addAll(relatedResources);
+            if (relatedResources != null) {
+                this.relatedResources.addAll(relatedResources);
+            }
             return this;
         }
 

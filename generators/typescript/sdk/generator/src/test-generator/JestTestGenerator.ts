@@ -8,7 +8,9 @@ import {
     HttpEndpoint,
     HttpMethod,
     HttpService,
-    IntermediateRepresentation
+    IntermediateRepresentation,
+    Name,
+    Pagination
 } from "@fern-fern/ir-sdk/api";
 import {
     DependencyManager,
@@ -693,6 +695,38 @@ describe("${serviceName}", () => {
             );
         }
 
+        const expectedName =
+            endpoint.pagination !== undefined
+                ? this.getPaginationPropertyPath("expected", endpoint.pagination, context)
+                : "expected";
+        const pageName =
+            endpoint.pagination !== undefined && endpoint.pagination.type === "custom"
+                ? this.getPaginationPropertyPath("page", endpoint.pagination, context)
+                : "page";
+        const nextPageName =
+            endpoint.pagination !== undefined && endpoint.pagination.type === "custom"
+                ? this.getPaginationPropertyPath("nextPage", endpoint.pagination, context)
+                : "nextPage";
+        const paginationPropertyName =
+            endpoint.pagination !== undefined ? this.getPaginationPropertyName(endpoint.pagination, context) : "";
+        const paginationBlock =
+            endpoint.pagination !== undefined
+                ? code`
+				const expected = ${expected}
+                const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                expect(${expectedName}.${paginationPropertyName}).toEqual(${pageName}.data);
+                ${
+                    endpoint.pagination.type !== "custom"
+                        ? code`
+                            expect(${pageName}.hasNextPage()).toBe(true);
+                            const nextPage = await ${pageName}.getNextPage();
+                            expect(${expectedName}.${paginationPropertyName}).toEqual(${nextPageName}.data);
+                        `
+                        : ""
+                }
+				`
+                : "";
+
         return code`
     test("${endpoint.name.originalName}", async () => {
         const server = mockServerPool.createServer();${mockAuthSnippet ? mockAuthSnippet : ""}
@@ -719,16 +753,38 @@ describe("${serviceName}", () => {
                 `
                     : ""
             }.build();
-            
+
         ${
             isHeadersResponse
                 ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
         expect(headers).toBeInstanceOf(Headers);`
-                : code`const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
-        expect(response).toEqual(${expected});`
+                : code`
+                    ${
+                        endpoint.pagination !== undefined
+                            ? paginationBlock
+                            : code`
+                        	const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                         	expect(response).toEqual(${expected});
+                          `
+                    }
+                `
         }
     });
           `;
+    }
+
+    private getPaginationPropertyPath(base: string, pagination: Pagination, context: SdkContext): string {
+        return [base, ...(pagination.results.propertyPath ?? []).map((name) => this.getName({ name, context }))].join(
+            "."
+        );
+    }
+
+    private getPaginationPropertyName(pagination: Pagination, context: SdkContext): string {
+        return this.getName({ name: pagination.results.property.name.name, context });
+    }
+
+    private getName({ name, context }: { name: Name; context: SdkContext }): string {
+        return context.retainOriginalCasing || !context.includeSerdeLayer ? name.originalName : name.camelCase.safeName;
     }
 
     private shouldBuildTest(endpoint: HttpEndpoint): boolean {
@@ -779,9 +835,6 @@ describe("${serviceName}", () => {
                 assertNever(responseType);
         }
         if (endpoint.idempotent) {
-            return false;
-        }
-        if (endpoint.pagination) {
             return false;
         }
         return true;
