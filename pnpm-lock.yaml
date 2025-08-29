@@ -4505,8 +4505,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-api/venus-api-sdk':
-        specifier: 0.14.3-1-g14981f0
-        version: 0.14.3-1-g14981f0
+        specifier: 0.17.3-3-gf696595
+        version: 0.17.3-3-gf696595
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
@@ -4665,8 +4665,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-api/venus-api-sdk':
-        specifier: 0.14.3-1-g14981f0
-        version: 0.14.3-1-g14981f0
+        specifier: 0.17.3-3-gf696595
+        version: 0.17.3-3-gf696595
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace/loader
@@ -6175,8 +6175,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../../generators/typescript-v2/dynamic-snippets
       '@fern-api/venus-api-sdk':
-        specifier: 0.14.3-1-g14981f0
-        version: 0.14.3-1-g14981f0
+        specifier: 0.17.3-3-gf696595
+        version: 0.17.3-3-gf696595
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../../workspace/loader
@@ -7622,8 +7622,8 @@ importers:
   packages/core:
     dependencies:
       '@fern-api/venus-api-sdk':
-        specifier: 0.14.3-1-g14981f0
-        version: 0.14.3-1-g14981f0
+        specifier: 0.17.3-3-gf696595
+        version: 0.17.3-3-gf696595
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.139.9-492ec7b92
         version: 0.139.9-492ec7b92
@@ -9303,8 +9303,9 @@ packages:
   '@fern-api/ui-core-utils@0.139.10-3367c7e52':
     resolution: {integrity: sha512-cXpmjY6mS74D5k3YkGSSiNa8aI2SVIAqytlsxOHUV+H3utqxqSUCUsOXCBEQQBa0YO2rOwlx21OoxwASsdvuHw==}
 
-  '@fern-api/venus-api-sdk@0.14.3-1-g14981f0':
-    resolution: {integrity: sha512-sOQH36HUDznonYxtdPvXiGrURqLcSBE4DvY5CMfbLd+qCxgkuGQnx88VUB8AXKdr5g04NqJsh4OWs48fgt4Lag==}
+  '@fern-api/venus-api-sdk@0.17.3-3-gf696595':
+    resolution: {integrity: sha512-JwtEDPtlrayTOTc4NR9opF4bD1LQtz222h1UnKseAv6Saopg2iHvxoGSf0SQfHA8i8atw+eJMNbHBWWTPdbBrA==}
+    engines: {node: '>=18.0.0'}
 
   '@fern-fern/docs-config@0.0.80':
     resolution: {integrity: sha512-wAZCNxwM4qIPn3idoIihPP65KWPjNuoTSfdP4+5f8K2jJLgs5cdkY0pm4cQlGWvi5K6b+lfbUWDaslnXscJ2gQ==}
@@ -16412,17 +16413,7 @@ snapshots:
       title: 3.5.3
       ua-parser-js: 1.0.40
 
-  '@fern-api/venus-api-sdk@0.14.3-1-g14981f0':
-    dependencies:
-      form-data: 4.0.1
-      formdata-node: 6.0.3
-      js-base64: 3.7.7
-      node-fetch: 2.7.0
-      qs: 6.14.0
-      readable-stream: 4.7.0
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
+  '@fern-api/venus-api-sdk@0.17.3-3-gf696595': {}
 
   '@fern-fern/docs-config@0.0.80': {}
 
