@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.28.0
+  changelogEntry:
+    - summary: Generator passes readme configs apiName, disabledSections, and whiteLabel.
+      type: feat
+  createdAt: "2025-08-29"
+  irVersion: 59
+
 - version: 4.27.0-rc0
   changelogEntry:
     - summary: |
