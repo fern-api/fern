@@ -149,6 +149,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     private generateSnippets({ context }: { context: SdkGeneratorContext }): Endpoint[] {
         const endpointSnippets: Endpoint[] = [];
 
+        const foo = dynamic.ir
         const dynamicIr = context.ir.dynamic as dynamic.DynamicIntermediateRepresentation;
         if (dynamicIr == null) {
             throw new Error("Cannot generate dynamic snippets without dynamic IR");
