@@ -522,20 +522,6 @@ export function convertSchemaObject(
         });
     }
 
-    // null type (OpenAPI 3.1 spec)
-    if ((schema.type as string) === "null") {
-        return SchemaWithExample.unknown({
-            nameOverride,
-            generatedName,
-            title,
-            description,
-            availability,
-            namespace,
-            groupName,
-            example: null
-        });
-    }
-
     // arrays
     if (schema.type === "array") {
         return convertArray({

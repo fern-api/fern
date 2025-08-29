@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
-    - summary: Add support for OpenAPI 3.1 null type schema
+    - summary: Skip OpenAPI 3.1 null type properties instead of failing
       type: fix
   irVersion: 59
   createdAt: "2025-08-28"
