@@ -1,5 +1,4 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
-import { dynamic } from "@fern-api/dynamic-ir-sdk/api";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { defaultBaseGoCustomConfigSchema } from "@fern-api/go-ast";
 import { AbstractGoGeneratorCli } from "@fern-api/go-base";
@@ -149,8 +148,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     private generateSnippets({ context }: { context: SdkGeneratorContext }): Endpoint[] {
         const endpointSnippets: Endpoint[] = [];
 
-        const foo = dynamic.ir
-        const dynamicIr = context.ir.dynamic as dynamic.DynamicIntermediateRepresentation;
+        const dynamicIr = context.ir.dynamic;
         if (dynamicIr == null) {
             throw new Error("Cannot generate dynamic snippets without dynamic IR");
         }

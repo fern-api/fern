@@ -1,4 +1,4 @@
-import { dynamic } from "@fern-api/dynamic-ir-sdk/api";
+import { dynamic } from "@fern-fern/ir-sdk/api";
 
 export type EndpointSnippetRequest = Omit<dynamic.EndpointSnippetRequest, "baseUrl"> & {
     baseURL: string | undefined;
@@ -11,6 +11,6 @@ export type EndpointSnippetRequest = Omit<dynamic.EndpointSnippetRequest, "baseU
 export function convertDynamicEndpointSnippetRequest(request: dynamic.EndpointSnippetRequest): EndpointSnippetRequest {
     return {
         ...request,
-        baseURL: request.baseURL
+        baseURL: request.baseUrl
     };
 }

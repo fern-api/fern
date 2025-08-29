@@ -1,6 +1,6 @@
 import { mapValues } from "@fern-api/core-utils";
 
-import { dynamic } from "@fern-api/dynamic-ir-sdk/api";
+import { dynamic } from "@fern-fern/ir-sdk/api";
 
 export type Endpoint = Omit<dynamic.Endpoint, "examples"> & {
     examples: EndpointExample[] | undefined;
@@ -28,6 +28,6 @@ function convertExamples(examples: dynamic.EndpointExample[]): EndpointExample[]
 function convertExample(example: dynamic.EndpointExample): EndpointExample {
     return {
         ...example,
-        baseURL: example.baseURL
+        baseURL: example.baseUrl
     };
 }
