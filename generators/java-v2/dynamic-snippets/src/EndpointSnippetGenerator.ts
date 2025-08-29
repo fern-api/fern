@@ -235,46 +235,33 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.Auth;
         values: FernIr.dynamic.AuthValues;
     }): java.BuilderParameter[] {
+        if (values.type !== auth.type) {
+            this.addError(this.context.newAuthMismatchError({ auth, values }).message);
+            return [];
+        }
         switch (auth.type) {
             case "basic":
-                if (values.type !== "basic") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return [];
-                }
-                return this.getRootClientBasicAuthArgs({ auth, values });
+                return values.type === "basic" ? this.getRootClientBasicAuthArgs({ auth, values }) : [];
             case "bearer":
-                if (values.type !== "bearer") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return [];
-                }
-                return this.getRootClientBearerAuthArgs({ auth, values });
+                return values.type === "bearer" ? this.getRootClientBearerAuthArgs({ auth, values }) : [];
             case "header":
-                if (values.type !== "header") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return [];
-                }
-                return this.getRootClientHeaderAuthArgs({ auth, values });
+                return values.type === "header" ? this.getRootClientHeaderAuthArgs({ auth, values }) : [];
             case "oauth":
-                if (values.type !== "oauth") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return [];
-                }
-                return this.getRootClientOAuthArgs({ auth, values });
+                return values.type === "oauth" ? this.getRootClientOAuthArgs({ auth, values }) : [];
+            case "inferred":
+                this.addWarning("The Java SDK Generator does not support Inferred auth scheme yet");
+                return [];
             default:
                 assertNever(auth);
         }
+    }
+
+    private addError(message: string): void {
+        this.context.errors.add({ severity: Severity.Critical, message });
+    }
+
+    private addWarning(message: string): void {
+        this.context.errors.add({ severity: Severity.Warning, message });
     }
 
     private getRootClientBasicAuthArgs({

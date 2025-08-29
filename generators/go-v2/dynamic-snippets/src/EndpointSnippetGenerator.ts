@@ -10,6 +10,7 @@ const SNIPPET_PACKAGE_NAME = "example";
 const SNIPPET_IMPORT_PATH = "fern";
 const SNIPPET_FUNC_NAME = "do";
 const CLIENT_VAR_NAME = "client";
+const TypeInst = go.TypeInstantiation;
 
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
@@ -145,50 +146,34 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.Auth;
         values: FernIr.dynamic.AuthValues;
     }): go.AstNode {
+        if (values.type !== auth.type) {
+            this.addError(this.context.newAuthMismatchError({ auth, values }).message);
+            return TypeInst.nop();
+        }
         switch (auth.type) {
             case "basic":
-                if (values.type !== "basic") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return go.TypeInstantiation.nop();
-                }
-                return this.getConstructorBasicAuthArg({ auth, values });
+                return values.type === "basic" ? this.getConstructorBasicAuthArg({ auth, values }) : TypeInst.nop();
             case "bearer":
-                if (values.type !== "bearer") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return go.TypeInstantiation.nop();
-                }
-                return this.getConstructorBearerAuthArg({ auth, values });
+                return values.type === "bearer" ? this.getConstructorBearerAuthArg({ auth, values }) : TypeInst.nop();
             case "header":
-                if (values.type !== "header") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return go.TypeInstantiation.nop();
-                }
-                return this.getConstructorHeaderAuthArg({ auth, values });
+                return values.type === "header" ? this.getConstructorHeaderAuthArg({ auth, values }) : TypeInst.nop();
             case "oauth":
-                if (values.type !== "oauth") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return go.TypeInstantiation.nop();
-                }
-                this.context.errors.add({
-                    severity: Severity.Warning,
-                    message: "The Go SDK doesn't support OAuth client credentials yet"
-                });
-                return go.TypeInstantiation.nop();
+                this.addWarning("The Go SDK doesn't support OAuth client credentials yet");
+                return TypeInst.nop();
+            case "inferred":
+                this.addWarning("The Go SDK Generator does not support Inferred auth scheme yet");
+                return TypeInst.nop();
             default:
                 assertNever(auth);
         }
+    }
+
+    private addError(message: string): void {
+        this.context.errors.add({ severity: Severity.Critical, message });
+    }
+
+    private addWarning(message: string): void {
+        this.context.errors.add({ severity: Severity.Warning, message });
     }
 
     private getConstructorBasicAuthArg({

@@ -207,43 +207,49 @@ export class EndpointSnippetGenerator {
         switch (auth.type) {
             case "basic":
                 if (values.type !== "basic") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
+                    this.addAuthMismatchError(auth, values);
                     return [];
                 }
                 return this.getConstructorBasicAuthArg({ auth, values });
             case "bearer":
                 if (values.type !== "bearer") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
+                    this.addAuthMismatchError(auth, values);
                     return [];
                 }
                 return this.getConstructorBearerAuthArgs({ auth, values });
             case "header":
                 if (values.type !== "header") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
+                    this.addAuthMismatchError(auth, values);
                     return [];
                 }
                 return this.getConstructorHeaderAuthArgs({ auth, values });
             case "oauth":
                 if (values.type !== "oauth") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
+                    this.addAuthMismatchError(auth, values);
                     return [];
                 }
                 return this.getConstructorOAuthArgs({ auth, values });
+            case "inferred":
+                if (values.type !== "inferred") {
+                    this.addAuthMismatchError(auth, values);
+                    return [];
+                }
+                this.addWarning("The Python SDK Generator does not support Inferred auth scheme yet");
+                return [];
             default:
                 assertNever(auth);
         }
+    }
+
+    private addAuthMismatchError(auth: FernIr.dynamic.Auth, values: FernIr.dynamic.AuthValues): void {
+        this.context.errors.add({
+            severity: Severity.Critical,
+            message: this.context.newAuthMismatchError({ auth, values }).message
+        });
+    }
+
+    private addWarning(message: string): void {
+        this.context.errors.add({ severity: Severity.Warning, message });
     }
 
     private getConstructorBasicAuthArg({

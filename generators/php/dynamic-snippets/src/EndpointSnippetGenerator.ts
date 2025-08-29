@@ -152,50 +152,34 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.Auth;
         values: FernIr.dynamic.AuthValues;
     }): NamedArgument[] {
+        if (values.type !== auth.type) {
+            this.addError(this.context.newAuthMismatchError({ auth, values }).message);
+            return [];
+        }
         switch (auth.type) {
             case "basic":
-                if (values.type !== "basic") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return [];
-                }
-                return this.getConstructorBasicAuthArgs({ auth, values });
+                return values.type === "basic" ? this.getConstructorBasicAuthArgs({ auth, values }) : [];
             case "bearer":
-                if (values.type !== "bearer") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return [];
-                }
-                return this.getConstructorBearerAuthArgs({ auth, values });
+                return values.type === "bearer" ? this.getConstructorBearerAuthArgs({ auth, values }) : [];
             case "header":
-                if (values.type !== "header") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return [];
-                }
-                return this.getConstructorHeaderAuthArgs({ auth, values });
+                return values.type === "header" ? this.getConstructorHeaderAuthArgs({ auth, values }) : [];
             case "oauth":
-                if (values.type !== "oauth") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return [];
-                }
-                this.context.errors.add({
-                    severity: Severity.Warning,
-                    message: "The PHP SDK doesn't support OAuth client credentials yet"
-                });
+                this.addWarning("The PHP SDK doesn't support OAuth client credentials yet");
+                return [];
+            case "inferred":
+                this.addWarning("The PHP SDK Generator does not support Inferred auth scheme yet");
                 return [];
             default:
                 assertNever(auth);
         }
+    }
+
+    private addError(message: string): void {
+        this.context.errors.add({ severity: Severity.Critical, message });
+    }
+
+    private addWarning(message: string): void {
+        this.context.errors.add({ severity: Severity.Warning, message });
     }
 
     private getConstructorBasicAuthArgs({
