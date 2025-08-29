@@ -73,7 +73,6 @@ class AbstractGenerator(ABC):
         ):
             exclude_types_from_init_exports = generator_config.custom_config.get("exclude_types_from_init_exports")
 
-
         with Project(
             filepath=generator_config.output.path,
             relative_path_to_project=os.path.join(
