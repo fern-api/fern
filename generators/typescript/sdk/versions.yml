@@ -3,7 +3,7 @@
   changelogEntry:
     - summary: |
         Grab overrideable root header value from Client as default.
-      type: chore
+      type: fix
   createdAt: "2025-08-28"
   irVersion: 59
 
