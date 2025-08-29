@@ -1,6 +1,6 @@
+import { dynamic } from "@fern-api/dynamic-ir-sdk/api";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
-
-import { dynamic, ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
@@ -28,7 +28,7 @@ export class EndpointSnippetsGenerator {
 
     public async populateSnippetsCache(): Promise<void> {
         const endpointSnippetsById = new Map<string, EndpointSnippets>();
-        const dynamicIr = this.context.ir.dynamic;
+        const dynamicIr = this.context.ir.dynamic as dynamic.DynamicIntermediateRepresentation;
 
         if (!dynamicIr) {
             this.context.logger.warn("Cannot populate snippets cache without dynamic IR");
