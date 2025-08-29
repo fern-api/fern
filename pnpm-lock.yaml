@@ -507,8 +507,8 @@ importers:
         specifier: ^0.0.1045
         version: 0.0.1045
       '@fern-fern/ir-sdk':
-        specifier: ^58.2.0
-        version: 58.2.0
+        specifier: ^59.3.0
+        version: 59.3.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -546,8 +546,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^58.2.0
-        version: 58.2.0
+        specifier: ^59.3.0
+        version: 59.4.0
       '@fern-api/go-ast':
         specifier: workspace:*
         version: link:../ast
@@ -622,8 +622,8 @@ importers:
         specifier: workspace:*
         version: link:../base
       '@fern-fern/ir-sdk':
-        specifier: ^58.2.0
-        version: 58.2.0
+        specifier: ^59.3.0
+        version: 59.3.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
