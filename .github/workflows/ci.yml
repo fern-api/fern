@@ -26,7 +26,7 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Compile
-        run: pnpm compile
+        run: pnpm compile --verbosity=2 --output-logs=full --summarize
 
   depcheck:
     runs-on: ubuntu-latest
