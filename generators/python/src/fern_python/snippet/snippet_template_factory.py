@@ -612,7 +612,7 @@ class SnippetTemplateFactory:
 
         return Template.factory.generic(
             GenericTemplate(
-                imports=[self._imports_manager._get_import_as_string(object_reference.import_)]
+                imports=[self._imports_manager.get_import_as_string(object_reference.import_)]
                 if object_reference.import_ is not None and not self._use_typeddict_requests
                 else [],
                 is_optional=True,
