@@ -26,7 +26,7 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Compile
-        run: pnpm compile --verbosity=2 --output-logs=full --summarize
+        run: pnpm compile --team=${{ env.TURBO_TEAM }} --token=${{ env.TURBO_TOKEN }} --verbosity=2 --output-logs=full --summarize
 
   depcheck:
     runs-on: ubuntu-latest
