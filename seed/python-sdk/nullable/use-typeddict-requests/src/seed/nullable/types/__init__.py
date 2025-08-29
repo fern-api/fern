@@ -2,12 +2,47 @@
 
 # isort: skip_file
 
-from .email import Email
-from .metadata import Metadata
-from .status import Status, Status_Active, Status_Archived, Status_SoftDeleted
-from .user import User
-from .user_id import UserId
-from .weird_number import WeirdNumber
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .email import Email
+    from .metadata import Metadata
+    from .status import Status, Status_Active, Status_Archived, Status_SoftDeleted
+    from .user import User
+    from .user_id import UserId
+    from .weird_number import WeirdNumber
+_dynamic_imports: typing.Dict[str, str] = {
+    "Email": ".email",
+    "Metadata": ".metadata",
+    "Status": ".status",
+    "Status_Active": ".status",
+    "Status_Archived": ".status",
+    "Status_SoftDeleted": ".status",
+    "User": ".user",
+    "UserId": ".user_id",
+    "WeirdNumber": ".weird_number",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "Email",

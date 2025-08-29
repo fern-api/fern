@@ -1067,9 +1067,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (subpackage == null) {
             return this.context.getRootClientReceiverName();
         }
-        if (subpackage != null && this.context.isFlatPackageLayout()) {
-            return this.context.getReceiverName(subpackage.name);
-        }
         return "c";
     }
 

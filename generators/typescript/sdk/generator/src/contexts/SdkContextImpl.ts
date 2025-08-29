@@ -186,6 +186,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly relativePackagePath: string;
     public readonly relativeTestPath: string;
     public readonly authProvider: AuthProviderContext;
+    public readonly enableInlineTypes: boolean;
 
     constructor({
         logger,
@@ -274,6 +275,7 @@ export class SdkContextImpl implements SdkContext {
         this.exportsManager = exportsManager;
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
+        this.enableInlineTypes = enableInlineTypes;
         this.externalDependencies = createExternalDependencies({
             dependencyManager,
             importsManager

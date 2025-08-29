@@ -1,4 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- changelogEntry:
+    - summary: Ignore self-referential types that are optional<nullable<SELF>>
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-28"
+  version: 0.66.31
+
+- changelogEntry:
+    - summary: |
+        Alpha testing: add support for HTTP proxies
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-29"
+  version: 0.66.30-rc0
+
+- changelogEntry:
+    - summary: Skip OpenAPI 3.1 null type properties instead of failing
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-28"
+  version: 0.66.30
+
 - changelogEntry:
     - summary: Update docs workspace validator to skip file type validation when running in selfhosted mode
       type: fix

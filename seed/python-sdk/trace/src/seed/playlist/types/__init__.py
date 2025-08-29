@@ -2,12 +2,45 @@
 
 # isort: skip_file
 
-from .playlist import Playlist
-from .playlist_create_request import PlaylistCreateRequest
-from .playlist_id import PlaylistId
-from .playlist_id_not_found_error_body import PlaylistIdNotFoundErrorBody, PlaylistIdNotFoundErrorBody_PlaylistId
-from .reserved_keyword_enum import ReservedKeywordEnum
-from .update_playlist_request import UpdatePlaylistRequest
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .playlist import Playlist
+    from .playlist_create_request import PlaylistCreateRequest
+    from .playlist_id import PlaylistId
+    from .playlist_id_not_found_error_body import PlaylistIdNotFoundErrorBody, PlaylistIdNotFoundErrorBody_PlaylistId
+    from .reserved_keyword_enum import ReservedKeywordEnum
+    from .update_playlist_request import UpdatePlaylistRequest
+_dynamic_imports: typing.Dict[str, str] = {
+    "Playlist": ".playlist",
+    "PlaylistCreateRequest": ".playlist_create_request",
+    "PlaylistId": ".playlist_id",
+    "PlaylistIdNotFoundErrorBody": ".playlist_id_not_found_error_body",
+    "PlaylistIdNotFoundErrorBody_PlaylistId": ".playlist_id_not_found_error_body",
+    "ReservedKeywordEnum": ".reserved_keyword_enum",
+    "UpdatePlaylistRequest": ".update_playlist_request",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "Playlist",
