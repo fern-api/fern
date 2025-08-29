@@ -16,16 +16,6 @@ env:
   TURBO_TEAM: "buildwithfern"
 
 jobs:
-  # TEMPORARY: Check draft status
-  draft-check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check draft status
-        run: |
-          echo "PR Draft status: ${{ github.event.pull_request.draft }}"
-          echo "Event name: ${{ github.event_name }}"
-          echo "Action: ${{ github.event.action }}"
-
   compile:
     runs-on: ubuntu-latest
     steps:
