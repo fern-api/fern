@@ -1,43 +1,43 @@
-# yaml-language-server: $schema=https://schema.buildwithfern.dev/fern.json 
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/fern.json
 
-service: 
-   base-path: /sdk
-   auth: true
-   audiences: 
+service:
+  base-path: /sdk
+  auth: true
+  audiences:
     - external
-   endpoints: 
-      generate: 
-        method: POST
-        display-name: Generate SDK
-        path: /generate
-        availability: pre-release
-        docs: Generate an SDK for your API definition in one of our supported languages.
-        request:
-          name: GenerateSDKRequest
-          body: 
-            properties: 
-              api:
-                type: APIDefinition
-                docs: The API definition to use as input for SDK generation.
-              language: 
-                type: SDKLanguage
-                docs: The target programming language for the generated SDK.
-              publishing:
-                type: SDKPublishingConfiguration
-                docs: Configuration options for publishing the generated SDK.          
-        response: GenerateSDKResponse
-      
-      getStatus:
-        method: GET
-        display-name: Get SDK Generation Status
-        path: /status/{jobId}
-        availability: pre-release
-        docs: Get the status of an SDK generation job.
-        path-parameters:
-          jobId:
-            type: string
-            docs: The ID of the SDK generation job to check the status of
-        response: SDKGenerationStatus
+  endpoints:
+    generate:
+      method: POST
+      display-name: Generate SDK
+      path: /generate
+      availability: pre-release
+      docs: Generate an SDK for your API definition in one of our supported languages.
+      request:
+        name: GenerateSDKRequest
+        body:
+          properties:
+            api:
+              type: APIDefinition
+              docs: The API definition to use as input for SDK generation.
+            language:
+              type: SDKLanguage
+              docs: The target programming language for the generated SDK.
+            publishing:
+              type: SDKPublishingConfiguration
+              docs: Configuration options for publishing the generated SDK.
+      response: GenerateSDKResponse
+
+    getStatus:
+      method: GET
+      display-name: Get SDK Generation Status
+      path: /status/{jobId}
+      availability: pre-release
+      docs: Get the status of an SDK generation job.
+      path-parameters:
+        jobId:
+          type: string
+          docs: The ID of the SDK generation job to check the status of
+      response: SDKGenerationStatus
 
 types:
   GenerateSDKResponse:
@@ -46,18 +46,18 @@ types:
         type: string
         docs: The ID of the SDK generation job that was created
 
-  APIDefinition: 
-    union: 
-      openapi: 
-        type: unknown 
+  APIDefinition:
+    union:
+      openapi:
+        type: unknown
         docs: An OpenAPI specification to generate SDKs from.
-      postman: 
-        type: unknown 
-        docs: A Postman Collection to generate SDKs from.  
-      fern: 
-        type: unknown 
+      postman:
+        type: unknown
+        docs: A Postman Collection to generate SDKs from.
+      fern:
+        type: unknown
         docs: A Fern Definition to generate SDKs from.
-  
+
   SDKLanguage:
     docs: The programming language to generate the SDK in
     enum:
@@ -69,17 +69,17 @@ types:
       - ruby
       - php
       - rust
-  
-  SDKPublishingConfiguration: 
+
+  SDKPublishingConfiguration:
     properties:
-      repository: 
+      repository:
         type: optional<Repository>
         docs: Repository to sync the generated SDK to (e.g. GitHub, GitLab)
-      registry: 
-        type: optional<Registry> 
+      registry:
+        type: optional<Registry>
         docs: Package registry where the SDK should be published
 
-  Registry: 
+  Registry:
     union:
       npm: NpmPublishingConfiguration
       pypi: PypiPublishingConfiguration
@@ -89,18 +89,18 @@ types:
       packagist: PackagistPublishingConfiguration
       crates: CratesPublishingConfiguration
 
-  NpmPublishingConfiguration: 
-    properties: 
-      url: 
+  NpmPublishingConfiguration:
+    properties:
+      url:
         type: optional<string>
         docs: Registry URL (defaults to public NPM registry)
-      packageName: 
+      packageName:
         type: string
         docs: Name of the package to publish
-      token: 
+      token:
         type: optional<string>
         docs: NPM authentication token for publishing
-  
+
   PypiPublishingConfiguration:
     properties:
       url:
@@ -175,30 +175,30 @@ types:
       token:
         type: optional<string>
         docs: Crates.io authentication token for publishing
-  
-  Repository: 
-    union: 
+
+  Repository:
+    union:
       github: GitHubRepository
       gitlab: GitLabRepository
 
-  GitHubRepository: 
+  GitHubRepository:
     properties:
-      repository: 
+      repository:
         type: string
-        docs: | 
+        docs: |
           GitHub repository to sync to (format: owner/repo)
-    
+
   GitLabRepository:
     properties:
       repository:
         type: string
-        docs: | 
+        docs: |
           GitLab repository to sync to (format: owner/repo)
-  
+
   SDKGenerationStatus:
     union:
       running: RunningSDKGenerationStatus
-      completed: CompletedSDKGenerationStatus  
+      completed: CompletedSDKGenerationStatus
       failed: FailedSDKGenerationStatus
 
   RunningSDKGenerationStatus:
@@ -212,12 +212,12 @@ types:
       downloadUrl:
         type: string
         docs: URL to download the raw source code of the generated SDK
-      repository: 
+      repository:
         type: optional<Repository>
         docs: Repository to sync the generated SDK to (e.g. GitHub, GitLab)
-      registry: 
-        type: optional<Registry> 
-        docs: Package registry where the SDK should be published      
+      registry:
+        type: optional<Registry>
+        docs: Package registry where the SDK should be published
 
   FailedSDKGenerationStatus:
     properties:

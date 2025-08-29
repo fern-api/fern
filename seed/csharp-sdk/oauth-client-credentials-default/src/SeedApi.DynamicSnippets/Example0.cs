@@ -17,7 +17,8 @@ public class Example0
         await client.Auth.GetTokenAsync(
             new GetTokenRequest{
                 ClientId = "client_id",
-                ClientSecret = "client_secret"
+                ClientSecret = "client_secret",
+                GrantType = "client_credentials"
             }
         );
     }

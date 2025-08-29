@@ -17,6 +17,8 @@ public class Example0
                 XApiKey = "X-Api-Key",
                 ClientId = "client_id",
                 ClientSecret = "client_secret",
+                Audience = "https://api.example.com",
+                GrantType = "client_credentials",
                 Scope = "scope"
             }
         );

@@ -14,6 +14,9 @@ export const ReadmeConfig: core.serialization.ObjectSchema<serializers.ReadmeCon
         bannerLink: core.serialization.string().optional(),
         introduction: core.serialization.string().optional(),
         apiReferenceLink: core.serialization.string().optional(),
+        apiName: core.serialization.string().optional(),
+        disabledFeatures: core.serialization.list(FeatureId).optional(),
+        whiteLabel: core.serialization.boolean().optional(),
         features: core.serialization.record(FeatureId, core.serialization.list(EndpointId)).optional(),
     });
 
@@ -23,6 +26,9 @@ export declare namespace ReadmeConfig {
         bannerLink?: string | null;
         introduction?: string | null;
         apiReferenceLink?: string | null;
+        apiName?: string | null;
+        disabledFeatures?: FeatureId.Raw[] | null;
+        whiteLabel?: boolean | null;
         features?: Record<FeatureId.Raw, EndpointId.Raw[]> | null;
     }
 }

@@ -15,7 +15,7 @@ paths:
             schema:
               $ref: "#/components/schemas/Request"
       responses:
-        '200':
+        "200":
           description: A simple API response.
           content:
             application/json:
@@ -31,8 +31,8 @@ components:
       properties:
         id:
           anyOf:
-          - type: string
-          - type: 'null'
+            - type: string
+            - type: "null"
           description: |
             An optional string value.
           title: ID
@@ -44,12 +44,12 @@ components:
       properties:
         value:
           anyOf:
-          - type: number
-          - type: 'null'
+            - type: number
+            - type: "null"
           description: |
             An optional numerical value.
           title: Value
-    
+
     SampleUnion:
       oneOf:
         - $ref: "#/components/schemas/Request"

@@ -242,7 +242,9 @@ public final class CreateProblemRequestV2 {
 
         @java.lang.Override
         public _FinalStage addAllSupportedLanguages(Set<Language> supportedLanguages) {
-            this.supportedLanguages.addAll(supportedLanguages);
+            if (supportedLanguages != null) {
+                this.supportedLanguages.addAll(supportedLanguages);
+            }
             return this;
         }
 
@@ -262,7 +264,9 @@ public final class CreateProblemRequestV2 {
 
         @java.lang.Override
         public _FinalStage addAllTestcases(List<TestCaseV2> testcases) {
-            this.testcases.addAll(testcases);
+            if (testcases != null) {
+                this.testcases.addAll(testcases);
+            }
             return this;
         }
 
@@ -282,7 +286,9 @@ public final class CreateProblemRequestV2 {
 
         @java.lang.Override
         public _FinalStage addAllCustomTestCaseTemplates(List<TestCaseTemplate> customTestCaseTemplates) {
-            this.customTestCaseTemplates.addAll(customTestCaseTemplates);
+            if (customTestCaseTemplates != null) {
+                this.customTestCaseTemplates.addAll(customTestCaseTemplates);
+            }
             return this;
         }
 

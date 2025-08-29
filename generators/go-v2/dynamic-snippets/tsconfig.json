@@ -6,9 +6,7 @@
     "rootDir": "src",
     "types": ["vitest/globals"]
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
       "path": "../../../packages/commons/core-utils"

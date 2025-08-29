@@ -13,6 +13,7 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.utils.JavaDocUtils;
 import com.fern.java.utils.KeyWordUtils;
+import com.fern.java.utils.NullableAnnotationUtils;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -54,6 +55,8 @@ public interface EnrichedObjectProperty {
 
     boolean allowMultiple();
 
+    boolean useNullableAnnotation();
+
     @Value.Lazy
     default Optional<FieldSpec> fieldSpec() {
         if (literal().isPresent()) {
@@ -73,7 +76,14 @@ public interface EnrichedObjectProperty {
                         KeyWordUtils.getKeyWordCompatibleMethodName("get" + pascalCaseKey()))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(poetTypeName());
-        if (nullable()) {
+
+        boolean shouldUseNullableAnnotation =
+                useNullableAnnotation() && isNullable(objectProperty().getValueType());
+        if (shouldUseNullableAnnotation) {
+            getterBuilder.addAnnotation(NullableAnnotationUtils.getNullableAnnotation());
+        }
+
+        if (nullable() && !shouldUseNullableAnnotation) {
             getterBuilder
                     .beginControlFlow("if ($L == null)", fieldSpec().get().name)
                     .addStatement("return $T.empty()", Optional.class)
@@ -145,7 +155,8 @@ public interface EnrichedObjectProperty {
 
     @Value.Lazy
     default boolean nullable() {
-        boolean nullable = generator().equals(AbstractGeneratorContext.GeneratorType.SDK)
+        boolean nullable = (generator().equals(AbstractGeneratorContext.GeneratorType.SDK)
+                        || generator().equals(AbstractGeneratorContext.GeneratorType.SPRING))
                 && isNullable(objectProperty().getValueType());
         return nullable || optionalNullable();
     }
@@ -170,7 +181,9 @@ public interface EnrichedObjectProperty {
                         .getContainer()
                         .get()
                         .isNullable();
-        return generator().equals(AbstractGeneratorContext.GeneratorType.SDK) && aliasOfNullable;
+        return (generator().equals(AbstractGeneratorContext.GeneratorType.SDK)
+                        || generator().equals(AbstractGeneratorContext.GeneratorType.SPRING))
+                && aliasOfNullable;
     }
 
     @Value.Lazy
@@ -206,7 +219,8 @@ public interface EnrichedObjectProperty {
             boolean inline,
             boolean wrappedAliases,
             TypeName poetTypeName,
-            boolean allowMultiple) {
+            boolean allowMultiple,
+            boolean useNullableAnnotation) {
         Name name = objectProperty.getName().getName();
         Optional<Literal> maybeLiteral =
                 objectProperty.getValueType().getContainer().flatMap(ContainerType::getLiteral);
@@ -221,6 +235,7 @@ public interface EnrichedObjectProperty {
                 .nullableNonemptyFilterClassName(nullableNonemptyFilterClassName)
                 .generator(generator)
                 .allowMultiple(allowMultiple)
+                .useNullableAnnotation(useNullableAnnotation)
                 .wireKey(objectProperty.getName().getWireValue())
                 .docs(objectProperty.getDocs())
                 .literal(maybeLiteral)

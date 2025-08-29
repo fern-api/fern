@@ -20,7 +20,8 @@ public class Example2
                     Line2 = "line2",
                     City = "city",
                     State = "state",
-                    Zip = "zip"
+                    Zip = "zip",
+                    Country = "USA"
                 }
             }
         );

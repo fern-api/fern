@@ -2,7 +2,6 @@ name: "🐛 Bug Report"
 description: "Uh-oh! Something not working?"
 type: "bug"
 body:
-
   - type: dropdown
     id: product
     attributes:

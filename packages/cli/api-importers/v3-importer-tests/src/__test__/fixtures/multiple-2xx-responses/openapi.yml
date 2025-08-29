@@ -7,7 +7,7 @@ paths:
     get:
       operationId: getStatus
       responses:
-        '200':
+        "200":
           description: OK response
           content:
             application/json:
@@ -17,7 +17,7 @@ paths:
                   message:
                     type: string
                     example: "All systems operational"
-        '201':
+        "201":
           description: Created response
           content:
             application/json:

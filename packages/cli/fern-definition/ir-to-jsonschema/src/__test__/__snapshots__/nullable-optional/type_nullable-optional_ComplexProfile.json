@@ -1,0 +1,633 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "nullableRole": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/nullable-optional.UserRole"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalRole": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/nullable-optional.UserRole"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalNullableRole": {
+      "oneOf": [
+        {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/nullable-optional.UserRole"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullableStatus": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/nullable-optional.UserStatus"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalStatus": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/nullable-optional.UserStatus"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalNullableStatus": {
+      "oneOf": [
+        {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/nullable-optional.UserStatus"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullableNotification": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/nullable-optional.NotificationMethod"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalNotification": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/nullable-optional.NotificationMethod"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalNullableNotification": {
+      "oneOf": [
+        {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/nullable-optional.NotificationMethod"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullableSearchResult": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/nullable-optional.SearchResult"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalSearchResult": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/nullable-optional.SearchResult"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullableArray": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalArray": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalNullableArray": {
+      "oneOf": [
+        {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullableListOfNullables": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullableMapOfNullables": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/nullable-optional.Address"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullableListOfUnions": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/nullable-optional.NotificationMethod"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalMapOfEnums": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/nullable-optional.UserRole"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "nullableRole",
+    "nullableStatus",
+    "nullableNotification",
+    "nullableSearchResult",
+    "nullableArray",
+    "nullableListOfNullables",
+    "nullableMapOfNullables",
+    "nullableListOfUnions"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "nullable-optional.UserRole": {
+      "type": "string",
+      "enum": [
+        "ADMIN",
+        "USER",
+        "GUEST",
+        "MODERATOR"
+      ]
+    },
+    "nullable-optional.UserStatus": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "suspended",
+        "deleted"
+      ]
+    },
+    "nullable-optional.NotificationMethod": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "email",
+            "sms",
+            "push"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "email"
+            },
+            "emailAddress": {
+              "type": "string"
+            },
+            "subject": {
+              "type": "string"
+            },
+            "htmlContent": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "emailAddress",
+            "subject"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "sms"
+            },
+            "phoneNumber": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            },
+            "shortCode": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "phoneNumber",
+            "message"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "push"
+            },
+            "deviceToken": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "body": {
+              "type": "string"
+            },
+            "badge": {
+              "oneOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "deviceToken",
+            "title",
+            "body"
+          ]
+        }
+      ]
+    },
+    "nullable-optional.NullableUserId": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullable-optional.OptionalUserId": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullable-optional.Address": {
+      "type": "object",
+      "properties": {
+        "street": {
+          "type": "string"
+        },
+        "city": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "zipCode": {
+          "type": "string"
+        },
+        "country": {
+          "oneOf": [
+            {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "buildingId": {
+          "$ref": "#/definitions/nullable-optional.NullableUserId"
+        },
+        "tenantId": {
+          "$ref": "#/definitions/nullable-optional.OptionalUserId"
+        }
+      },
+      "required": [
+        "street",
+        "city",
+        "zipCode",
+        "buildingId"
+      ],
+      "additionalProperties": false
+    },
+    "nullable-optional.SearchResult": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "user",
+            "organization",
+            "document"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "user"
+            },
+            "id": {
+              "type": "string"
+            },
+            "username": {
+              "type": "string"
+            },
+            "email": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "phone": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "updatedAt": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "address": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/nullable-optional.Address"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "id",
+            "username",
+            "email",
+            "createdAt",
+            "updatedAt"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "organization"
+            },
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "domain": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "employeeCount": {
+              "oneOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "id",
+            "name",
+            "domain"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "document"
+            },
+            "id": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "content": {
+              "type": "string"
+            },
+            "author": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "tags": {
+              "oneOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "id",
+            "title",
+            "content",
+            "author"
+          ]
+        }
+      ]
+    }
+  }
+}
