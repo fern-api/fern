@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
 - changelogEntry:
+    - summary: Ignore self-referential types that are optional<nullable<SELF>>
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-28"
+  version: 0.66.31
+
+- changelogEntry:
     - summary: |
         Alpha testing: add support for HTTP proxies
       type: feat
