@@ -420,49 +420,29 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.Auth;
         values: FernIr.dynamic.AuthValues;
     }): rust.Expression {
+        if (values.type !== auth.type) {
+            this.addError(this.context.newAuthMismatchError({ auth, values }).message);
+        }
+        const mismatchResult = () => rust.Expression.raw('todo!("Auth mismatch error")');
+        const notImplementedResult = (name: string) => rust.Expression.raw(`todo!("${name}not implemented")`);
         switch (auth.type) {
             case "basic":
-                if (values.type !== "basic") {
-                    this.addAuthMismatchError(auth, values);
-                    return rust.Expression.raw('todo!("Auth mismatch error")');
-                }
-                return this.getConstructorBasicAuthArg({ auth, values });
+                return values.type === "basic" ? this.getConstructorBasicAuthArg({ auth, values }) : mismatchResult();
             case "bearer":
-                if (values.type !== "bearer") {
-                    this.addAuthMismatchError(auth, values);
-                    return rust.Expression.raw('todo!("Auth mismatch error")');
-                }
-                return this.getConstructorBearerAuthArg({ auth, values });
+                return values.type === "bearer" ? this.getConstructorBearerAuthArg({ auth, values }) : mismatchResult();
             case "header":
-                if (values.type !== "header") {
-                    this.addAuthMismatchError(auth, values);
-                    return rust.Expression.raw('todo!("Auth mismatch error")');
-                }
-                return this.getConstructorHeaderAuthArg({ auth, values });
+                return values.type === "header" ? this.getConstructorHeaderAuthArg({ auth, values }) : mismatchResult();
             case "oauth":
-                if (values.type !== "oauth") {
-                    this.addAuthMismatchError(auth, values);
-                    return rust.Expression.raw('todo!("Auth mismatch error")');
-                }
-                this.addWarning("OAuth client credentials are not supported yet");
-                return rust.Expression.raw('todo!("OAuth not implemented")');
+                return values.type === "oauth" ? notImplementedResult("Oauth") : mismatchResult();
             case "inferred":
-                if (values.type !== "inferred") {
-                    this.addAuthMismatchError(auth, values);
-                    return rust.Expression.raw('todo!("Auth mismatch error")');
-                }
-                this.addWarning("Inferred auth scheme is not supported yet");
-                return rust.Expression.raw('todo!("Inferred auth not implemented")');
+                return values.type === "inferred" ? notImplementedResult("Inferred Auth Scheme") : mismatchResult();
             default:
                 assertNever(auth);
         }
     }
 
-    private addAuthMismatchError(auth: FernIr.dynamic.Auth, values: FernIr.dynamic.AuthValues): void {
-        this.context.errors.add({
-            severity: Severity.Critical,
-            message: this.context.newAuthMismatchError({ auth, values }).message
-        });
+    private addError(message: string): void {
+        this.context.errors.add({ severity: Severity.Critical, message });
     }
 
     private addWarning(message: string): void {

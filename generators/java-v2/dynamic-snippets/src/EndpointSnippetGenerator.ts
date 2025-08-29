@@ -235,36 +235,19 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.Auth;
         values: FernIr.dynamic.AuthValues;
     }): java.BuilderParameter[] {
+        if (values.type !== auth.type) {
+            this.addError(this.context.newAuthMismatchError({ auth, values }).message);
+        }
         switch (auth.type) {
             case "basic":
-                if (values.type !== "basic") {
-                    this.addAuthMismatchError(auth, values);
-                    return [];
-                }
-                return this.getRootClientBasicAuthArgs({ auth, values });
+                return values.type === "basic" ? this.getRootClientBasicAuthArgs({ auth, values }) : [];
             case "bearer":
-                if (values.type !== "bearer") {
-                    this.addAuthMismatchError(auth, values);
-                    return [];
-                }
-                return this.getRootClientBearerAuthArgs({ auth, values });
+                return values.type === "bearer" ? this.getRootClientBearerAuthArgs({ auth, values }) : [];
             case "header":
-                if (values.type !== "header") {
-                    this.addAuthMismatchError(auth, values);
-                    return [];
-                }
-                return this.getRootClientHeaderAuthArgs({ auth, values });
+                return values.type === "header" ? this.getRootClientHeaderAuthArgs({ auth, values }) : [];
             case "oauth":
-                if (values.type !== "oauth") {
-                    this.addAuthMismatchError(auth, values);
-                    return [];
-                }
-                return this.getRootClientOAuthArgs({ auth, values });
+                return values.type === "oauth" ? this.getRootClientOAuthArgs({ auth, values }) : [];
             case "inferred":
-                if (values.type !== "inferred") {
-                    this.addAuthMismatchError(auth, values);
-                    return [];
-                }
                 this.addWarning("The Java SDK Generator does not support Inferred auth scheme yet");
                 return [];
             default:
@@ -272,11 +255,8 @@ export class EndpointSnippetGenerator {
         }
     }
 
-    private addAuthMismatchError(auth: FernIr.dynamic.Auth, values: FernIr.dynamic.AuthValues): void {
-        this.context.errors.add({
-            severity: Severity.Critical,
-            message: this.context.newAuthMismatchError({ auth, values }).message
-        });
+    private addError(message: string): void {
+        this.context.errors.add({ severity: Severity.Critical, message });
     }
 
     private addWarning(message: string): void {
