@@ -740,8 +740,8 @@ importers:
         specifier: workspace:*
         version: link:../ast
       '@fern-fern/ir-sdk':
-        specifier: ^58.2.0
-        version: 58.2.0
+        specifier: ^59.3.0
+        version: 59.3.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -836,14 +836,14 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli/logger
       '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.33
-        version: 0.0.33
+        specifier: 0.0.42
+        version: 0.0.42
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045
       '@fern-fern/ir-sdk':
-        specifier: ^58.2.0
-        version: 58.2.0
+        specifier: ^59.3.0
+        version: 59.3.0
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12

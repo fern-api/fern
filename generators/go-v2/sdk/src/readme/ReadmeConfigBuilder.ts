@@ -48,9 +48,7 @@ export class ReadmeConfigBuilder {
             introduction: context.ir.readmeConfig?.introduction,
             referenceMarkdownPath: "./reference.md",
             apiName: context.ir.readmeConfig?.apiName,
-            disabledFeatures: context.ir.readmeConfig?.disabledFeatures
-                ? Array.from(context.ir.readmeConfig.disabledFeatures)
-                : undefined,
+            disabledFeatures: context.ir.readmeConfig?.disabledFeatures,
             whiteLabel: context.ir.readmeConfig?.whiteLabel,
             features
         };
