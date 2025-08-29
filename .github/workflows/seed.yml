@@ -119,14 +119,24 @@ jobs:
           echo "Event name: ${{ github.event_name }}"
           echo "Action: ${{ github.event.action }}"
 
+  debug-conditions:
+  runs-on: ubuntu-latest
+  needs: changes
+  steps:
+    - name: Debug condition parts
+      run: |
+        echo "=== Condition Debugging ==="
+        echo "needs.changes.outputs.ruby: ${{ needs.changes.outputs.ruby }}"
+        echo "needs.changes.outputs.seed: ${{ needs.changes.outputs.seed }}"
+        echo "github.event.pull_request.draft: ${{ github.event.pull_request.draft }}"
+        echo "draft == false: ${{ github.event.pull_request.draft == false }}"
+        echo "First part (ruby OR seed): ${{ needs.changes.outputs.ruby == 'true' || needs.changes.outputs.seed == 'true' }}"
+        echo "Full condition result: ${{ (needs.changes.outputs.ruby == 'true' || needs.changes.outputs.seed == 'true') && github.event.pull_request.draft == false }}"
+
   ruby-model:
     runs-on: Seed
     needs: changes
-    if: >
-      ${{
-        (needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false
-      }}
+    if: ${{ (needs.changes.outputs.ruby == 'true' || needs.changes.outputs.seed == 'true') && github.event.pull_request.draft == false }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
