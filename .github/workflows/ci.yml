@@ -13,7 +13,7 @@ concurrency:
 
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TURBO_TEAM: "buildwithfern"
+  TURBO_TEAM: ${{ env.TURBO_TEAM }}
 
 jobs:
   compile:
