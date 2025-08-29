@@ -66,6 +66,14 @@ class SdkGenerator(AbstractGenerator):
         custom_config = SDKCustomConfig.parse_obj(generator_config.custom_config or {})
         return not custom_config.skip_formatting
 
+    def should_use_lazy_imports(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+    ) -> bool:
+        custom_config = SDKCustomConfig.parse_obj(generator_config.custom_config or {})
+        return custom_config.lazy_imports
+
     def get_relative_path_to_project_for_publish(
         self,
         *,
