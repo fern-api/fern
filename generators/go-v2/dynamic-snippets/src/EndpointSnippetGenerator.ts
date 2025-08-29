@@ -148,6 +148,7 @@ export class EndpointSnippetGenerator {
     }): go.AstNode {
         if (values.type !== auth.type) {
             this.addError(this.context.newAuthMismatchError({ auth, values }).message);
+            return TypeInst.nop();
         }
         switch (auth.type) {
             case "basic":

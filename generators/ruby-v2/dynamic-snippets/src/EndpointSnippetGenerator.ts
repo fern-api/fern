@@ -1,4 +1,4 @@
-import { AbstractFormatter } from "@fern-api/browser-compatible-base-generator";
+import { AbstractFormatter, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { ruby } from "@fern-api/ruby-ast";
@@ -142,47 +142,34 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.Auth;
         values: FernIr.dynamic.AuthValues;
     }): ruby.KeywordArgument[] {
+        if (values.type !== auth.type) {
+            this.addError(this.context.newAuthMismatchError({ auth, values }).message);
+            return [];
+        }
+
         switch (auth.type) {
             case "basic":
-                if (values.type !== "basic") {
-                    this.context.errors.add({
-                        severity: "CRITICAL",
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return [];
-                }
-                return this.getRootClientBasicAuthArgs({ auth, values });
+                return values.type === "basic" ? this.getRootClientBasicAuthArgs({ auth, values }) : [];
             case "bearer":
-                if (values.type !== "bearer") {
-                    this.context.errors.add({
-                        severity: "CRITICAL",
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return [];
-                }
-                return this.getRootClientBearerAuthArgs({ auth, values });
+                return values.type === "bearer" ? this.getRootClientBearerAuthArgs({ auth, values }) : [];
             case "header":
-                if (values.type !== "header") {
-                    this.context.errors.add({
-                        severity: "CRITICAL",
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return [];
-                }
-                return this.getRootClientHeaderAuthArgs({ auth, values });
+                return values.type === "header" ? this.getRootClientHeaderAuthArgs({ auth, values }) : [];
             case "oauth":
-                if (values.type !== "oauth") {
-                    this.context.errors.add({
-                        severity: "CRITICAL",
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return [];
-                }
-                return this.getRootClientOAuthArgs({ auth, values });
-            default:
-                // Should never happen
+                return values.type === "oauth" ? this.getRootClientOAuthArgs({ auth, values }) : [];
+            case "inferred":
+                this.addWarning("Ruby SDK does not support inferred auth yet");
                 return [];
+            default:
+                assertNever(auth);
         }
+    }
+
+    private addError(message: string): void {
+        this.context.errors.add({ severity: Severity.Critical, message });
+    }
+
+    private addWarning(message: string): void {
+        this.context.errors.add({ severity: Severity.Warning, message });
     }
 
     private getRootClientBasicAuthArgs({

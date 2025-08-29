@@ -281,7 +281,8 @@ export class EndpointSnippetGenerator {
         values: FernIr.dynamic.AuthValues;
     }): NamedArgument[] {
         if (values.type !== auth.type) {
-            this.addAuthMismatchError(auth, values);
+            this.addError(this.context.newAuthMismatchError({ auth, values }).message);
+            return [];
         }
 
         switch (auth.type) {
@@ -299,6 +300,10 @@ export class EndpointSnippetGenerator {
             default:
                 assertNever(auth);
         }
+    }
+
+    private addError(message: string): void {
+        this.context.errors.add({ severity: Severity.Critical, message });
     }
 
     private addWarning(message: string): void {

@@ -420,10 +420,12 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.Auth;
         values: FernIr.dynamic.AuthValues;
     }): rust.Expression {
+        const mismatchResult = () => rust.Expression.raw('todo!("Auth mismatch error")');
         if (values.type !== auth.type) {
             this.addError(this.context.newAuthMismatchError({ auth, values }).message);
+            return mismatchResult();
         }
-        const mismatchResult = () => rust.Expression.raw('todo!("Auth mismatch error")');
+
         const notImplementedResult = (name: string) => rust.Expression.raw(`todo!("${name}not implemented")`);
         switch (auth.type) {
             case "basic":

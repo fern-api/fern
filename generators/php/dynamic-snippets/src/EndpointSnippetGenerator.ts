@@ -154,6 +154,7 @@ export class EndpointSnippetGenerator {
     }): NamedArgument[] {
         if (values.type !== auth.type) {
             this.addError(this.context.newAuthMismatchError({ auth, values }).message);
+            return [];
         }
         switch (auth.type) {
             case "basic":
