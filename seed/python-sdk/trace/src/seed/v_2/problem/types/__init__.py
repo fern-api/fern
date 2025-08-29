@@ -2,64 +2,144 @@
 
 # isort: skip_file
 
-from .assert_correctness_check import (
-    AssertCorrectnessCheck,
-    AssertCorrectnessCheck_Custom,
-    AssertCorrectnessCheck_DeepEquality,
-)
-from .basic_custom_files import BasicCustomFiles
-from .basic_test_case_template import BasicTestCaseTemplate
-from .create_problem_request_v_2 import CreateProblemRequestV2
-from .custom_files import CustomFiles, CustomFiles_Basic, CustomFiles_Custom
-from .deep_equality_correctness_check import DeepEqualityCorrectnessCheck
-from .default_provided_file import DefaultProvidedFile
-from .file_info_v_2 import FileInfoV2
-from .files import Files
-from .function_implementation import FunctionImplementation
-from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
-from .function_signature import (
-    FunctionSignature,
-    FunctionSignature_NonVoid,
-    FunctionSignature_Void,
-    FunctionSignature_VoidThatTakesActualResult,
-)
-from .generated_files import GeneratedFiles
-from .get_basic_solution_file_request import GetBasicSolutionFileRequest
-from .get_basic_solution_file_response import GetBasicSolutionFileResponse
-from .get_function_signature_request import GetFunctionSignatureRequest
-from .get_function_signature_response import GetFunctionSignatureResponse
-from .get_generated_test_case_file_request import GetGeneratedTestCaseFileRequest
-from .get_generated_test_case_template_file_request import GetGeneratedTestCaseTemplateFileRequest
-from .lightweight_problem_info_v_2 import LightweightProblemInfoV2
-from .non_void_function_definition import NonVoidFunctionDefinition
-from .non_void_function_signature import NonVoidFunctionSignature
-from .parameter import Parameter
-from .parameter_id import ParameterId
-from .problem_info_v_2 import ProblemInfoV2
-from .test_case_expects import TestCaseExpects
-from .test_case_function import TestCaseFunction, TestCaseFunction_Custom, TestCaseFunction_WithActualResult
-from .test_case_id import TestCaseId
-from .test_case_implementation import TestCaseImplementation
-from .test_case_implementation_description import TestCaseImplementationDescription
-from .test_case_implementation_description_board import (
-    TestCaseImplementationDescriptionBoard,
-    TestCaseImplementationDescriptionBoard_Html,
-    TestCaseImplementationDescriptionBoard_ParamId,
-)
-from .test_case_implementation_reference import (
-    TestCaseImplementationReference,
-    TestCaseImplementationReference_Implementation,
-    TestCaseImplementationReference_TemplateId,
-)
-from .test_case_metadata import TestCaseMetadata
-from .test_case_template import TestCaseTemplate
-from .test_case_template_id import TestCaseTemplateId
-from .test_case_v_2 import TestCaseV2
-from .test_case_with_actual_result_implementation import TestCaseWithActualResultImplementation
-from .void_function_definition import VoidFunctionDefinition
-from .void_function_definition_that_takes_actual_result import VoidFunctionDefinitionThatTakesActualResult
-from .void_function_signature import VoidFunctionSignature
-from .void_function_signature_that_takes_actual_result import VoidFunctionSignatureThatTakesActualResult
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .assert_correctness_check import (
+        AssertCorrectnessCheck,
+        AssertCorrectnessCheck_Custom,
+        AssertCorrectnessCheck_DeepEquality,
+    )
+    from .basic_custom_files import BasicCustomFiles
+    from .basic_test_case_template import BasicTestCaseTemplate
+    from .create_problem_request_v_2 import CreateProblemRequestV2
+    from .custom_files import CustomFiles, CustomFiles_Basic, CustomFiles_Custom
+    from .deep_equality_correctness_check import DeepEqualityCorrectnessCheck
+    from .default_provided_file import DefaultProvidedFile
+    from .file_info_v_2 import FileInfoV2
+    from .files import Files
+    from .function_implementation import FunctionImplementation
+    from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
+    from .function_signature import (
+        FunctionSignature,
+        FunctionSignature_NonVoid,
+        FunctionSignature_Void,
+        FunctionSignature_VoidThatTakesActualResult,
+    )
+    from .generated_files import GeneratedFiles
+    from .get_basic_solution_file_request import GetBasicSolutionFileRequest
+    from .get_basic_solution_file_response import GetBasicSolutionFileResponse
+    from .get_function_signature_request import GetFunctionSignatureRequest
+    from .get_function_signature_response import GetFunctionSignatureResponse
+    from .get_generated_test_case_file_request import GetGeneratedTestCaseFileRequest
+    from .get_generated_test_case_template_file_request import GetGeneratedTestCaseTemplateFileRequest
+    from .lightweight_problem_info_v_2 import LightweightProblemInfoV2
+    from .non_void_function_definition import NonVoidFunctionDefinition
+    from .non_void_function_signature import NonVoidFunctionSignature
+    from .parameter import Parameter
+    from .parameter_id import ParameterId
+    from .problem_info_v_2 import ProblemInfoV2
+    from .test_case_expects import TestCaseExpects
+    from .test_case_function import TestCaseFunction, TestCaseFunction_Custom, TestCaseFunction_WithActualResult
+    from .test_case_id import TestCaseId
+    from .test_case_implementation import TestCaseImplementation
+    from .test_case_implementation_description import TestCaseImplementationDescription
+    from .test_case_implementation_description_board import (
+        TestCaseImplementationDescriptionBoard,
+        TestCaseImplementationDescriptionBoard_Html,
+        TestCaseImplementationDescriptionBoard_ParamId,
+    )
+    from .test_case_implementation_reference import (
+        TestCaseImplementationReference,
+        TestCaseImplementationReference_Implementation,
+        TestCaseImplementationReference_TemplateId,
+    )
+    from .test_case_metadata import TestCaseMetadata
+    from .test_case_template import TestCaseTemplate
+    from .test_case_template_id import TestCaseTemplateId
+    from .test_case_v_2 import TestCaseV2
+    from .test_case_with_actual_result_implementation import TestCaseWithActualResultImplementation
+    from .void_function_definition import VoidFunctionDefinition
+    from .void_function_definition_that_takes_actual_result import VoidFunctionDefinitionThatTakesActualResult
+    from .void_function_signature import VoidFunctionSignature
+    from .void_function_signature_that_takes_actual_result import VoidFunctionSignatureThatTakesActualResult
+_dynamic_imports: typing.Dict[str, str] = {
+    "AssertCorrectnessCheck": ".assert_correctness_check",
+    "AssertCorrectnessCheck_Custom": ".assert_correctness_check",
+    "AssertCorrectnessCheck_DeepEquality": ".assert_correctness_check",
+    "BasicCustomFiles": ".basic_custom_files",
+    "BasicTestCaseTemplate": ".basic_test_case_template",
+    "CreateProblemRequestV2": ".create_problem_request_v_2",
+    "CustomFiles": ".custom_files",
+    "CustomFiles_Basic": ".custom_files",
+    "CustomFiles_Custom": ".custom_files",
+    "DeepEqualityCorrectnessCheck": ".deep_equality_correctness_check",
+    "DefaultProvidedFile": ".default_provided_file",
+    "FileInfoV2": ".file_info_v_2",
+    "Files": ".files",
+    "FunctionImplementation": ".function_implementation",
+    "FunctionImplementationForMultipleLanguages": ".function_implementation_for_multiple_languages",
+    "FunctionSignature": ".function_signature",
+    "FunctionSignature_NonVoid": ".function_signature",
+    "FunctionSignature_Void": ".function_signature",
+    "FunctionSignature_VoidThatTakesActualResult": ".function_signature",
+    "GeneratedFiles": ".generated_files",
+    "GetBasicSolutionFileRequest": ".get_basic_solution_file_request",
+    "GetBasicSolutionFileResponse": ".get_basic_solution_file_response",
+    "GetFunctionSignatureRequest": ".get_function_signature_request",
+    "GetFunctionSignatureResponse": ".get_function_signature_response",
+    "GetGeneratedTestCaseFileRequest": ".get_generated_test_case_file_request",
+    "GetGeneratedTestCaseTemplateFileRequest": ".get_generated_test_case_template_file_request",
+    "LightweightProblemInfoV2": ".lightweight_problem_info_v_2",
+    "NonVoidFunctionDefinition": ".non_void_function_definition",
+    "NonVoidFunctionSignature": ".non_void_function_signature",
+    "Parameter": ".parameter",
+    "ParameterId": ".parameter_id",
+    "ProblemInfoV2": ".problem_info_v_2",
+    "TestCaseExpects": ".test_case_expects",
+    "TestCaseFunction": ".test_case_function",
+    "TestCaseFunction_Custom": ".test_case_function",
+    "TestCaseFunction_WithActualResult": ".test_case_function",
+    "TestCaseId": ".test_case_id",
+    "TestCaseImplementation": ".test_case_implementation",
+    "TestCaseImplementationDescription": ".test_case_implementation_description",
+    "TestCaseImplementationDescriptionBoard": ".test_case_implementation_description_board",
+    "TestCaseImplementationDescriptionBoard_Html": ".test_case_implementation_description_board",
+    "TestCaseImplementationDescriptionBoard_ParamId": ".test_case_implementation_description_board",
+    "TestCaseImplementationReference": ".test_case_implementation_reference",
+    "TestCaseImplementationReference_Implementation": ".test_case_implementation_reference",
+    "TestCaseImplementationReference_TemplateId": ".test_case_implementation_reference",
+    "TestCaseMetadata": ".test_case_metadata",
+    "TestCaseTemplate": ".test_case_template",
+    "TestCaseTemplateId": ".test_case_template_id",
+    "TestCaseV2": ".test_case_v_2",
+    "TestCaseWithActualResultImplementation": ".test_case_with_actual_result_implementation",
+    "VoidFunctionDefinition": ".void_function_definition",
+    "VoidFunctionDefinitionThatTakesActualResult": ".void_function_definition_that_takes_actual_result",
+    "VoidFunctionSignature": ".void_function_signature",
+    "VoidFunctionSignatureThatTakesActualResult": ".void_function_signature_that_takes_actual_result",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "AssertCorrectnessCheck",
