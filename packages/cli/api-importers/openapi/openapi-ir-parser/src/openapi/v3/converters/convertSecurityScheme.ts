@@ -1,6 +1,6 @@
+import { assertNever } from "@fern-api/core-utils";
 import { EnumSchema, SecurityScheme, Source } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
-
 import { getExtension } from "../../../getExtension";
 import { convertEnum } from "../../../schema/convertEnum";
 import { convertSchemaWithExampleToSchema } from "../../../schema/utils/convertSchemaWithExampleToSchema";
@@ -16,52 +16,72 @@ import {
 
 export function convertSecurityScheme(
     securityScheme: OpenAPIV3.SecuritySchemeObject | OpenAPIV3.ReferenceObject,
-    source: Source
-): SecurityScheme | undefined {
+    source: Source,
+    key: string
+): SecurityScheme {
     if (isReferenceObject(securityScheme)) {
         throw new Error(`Converting referenced security schemes is unsupported: ${JSON.stringify(securityScheme)}`);
     }
-    return convertSecuritySchemeHelper(securityScheme, source);
+    return convertSecuritySchemeHelper(securityScheme, source, key);
 }
 
 function convertSecuritySchemeHelper(
     securityScheme: OpenAPIV3.SecuritySchemeObject,
-    source: Source
-): SecurityScheme | undefined {
-    if (securityScheme.type === "apiKey" && securityScheme.in === "header") {
-        const bearerFormat = getExtension<string>(securityScheme, OpenAPIExtension.BEARER_FORMAT);
-        const headerNames = getExtension<HeaderSecuritySchemeNames>(
-            securityScheme,
-            FernOpenAPIExtension.FERN_HEADER_AUTH
-        );
-        return SecurityScheme.header({
-            headerName: securityScheme.name,
-            prefix: bearerFormat != null ? "Bearer" : headerNames?.prefix,
-            headerVariableName:
-                headerNames?.name ?? getExtension<string>(securityScheme, FernOpenAPIExtension.HEADER_VARIABLE_NAME),
-            headerEnvVar: headerNames?.env
-        });
-    } else if (securityScheme.type === "http" && securityScheme.scheme?.toLowerCase() === "bearer") {
-        // ^ case insensitivity for securityScheme.scheme required in OAS
-        const bearerNames = getExtension<SecuritySchemeNames>(securityScheme, FernOpenAPIExtension.FERN_BEARER_TOKEN);
-        return SecurityScheme.bearer({
-            tokenVariableName:
-                bearerNames?.name ??
-                getExtension<string>(securityScheme, FernOpenAPIExtension.BEARER_TOKEN_VARIABLE_NAME),
-            tokenEnvVar: bearerNames?.env
-        });
-    } else if (securityScheme.type === "http" && securityScheme.scheme?.toLowerCase() === "basic") {
-        // ^ case insensitivity for securityScheme.scheme required in OAS
-        const basicSecuritySchemeNamingAndEnvvar = getBasicSecuritySchemeNameAndEnvvar(securityScheme);
-        const basicSecuritySchemeNaming = getBasicSecuritySchemeNames(securityScheme);
-        return SecurityScheme.basic({
-            usernameVariableName:
-                basicSecuritySchemeNamingAndEnvvar?.username?.name ?? basicSecuritySchemeNaming.usernameVariable,
-            usernameEnvVar: basicSecuritySchemeNamingAndEnvvar?.username?.env,
-            passwordVariableName:
-                basicSecuritySchemeNamingAndEnvvar?.password?.name ?? basicSecuritySchemeNaming.passwordVariable,
-            passwordEnvVar: basicSecuritySchemeNamingAndEnvvar?.password?.env
-        });
+    source: Source,
+    key: string
+): SecurityScheme {
+    if (securityScheme.type === "apiKey") {
+        if (securityScheme.in === "header") {
+            const bearerFormat = getExtension<string>(securityScheme, OpenAPIExtension.BEARER_FORMAT);
+            const headerNames = getExtension<HeaderSecuritySchemeNames>(
+                securityScheme,
+                FernOpenAPIExtension.FERN_HEADER_AUTH
+            );
+            return SecurityScheme.header({
+                headerName: securityScheme.name,
+                prefix: bearerFormat != null ? "Bearer" : headerNames?.prefix,
+                headerVariableName:
+                    headerNames?.name ??
+                    getExtension<string>(securityScheme, FernOpenAPIExtension.HEADER_VARIABLE_NAME),
+                headerEnvVar: headerNames?.env
+            });
+        } else if (securityScheme.in === "query") {
+            // Handle API key in query parameter
+            // Optionally, you could add support for FernOpenAPIExtension for query param naming/envvar in the future
+            return SecurityScheme.query({
+                queryParameterName: securityScheme.name
+            });
+        } else {
+            throw new Error(`Unsupported API key location ${key}: ${securityScheme.in}`);
+        }
+    } else if (securityScheme.type === "http") {
+        if (securityScheme.scheme?.toLowerCase() === "bearer") {
+            // ^ case insensitivity for securityScheme.scheme required in OAS
+            const bearerNames = getExtension<SecuritySchemeNames>(
+                securityScheme,
+                FernOpenAPIExtension.FERN_BEARER_TOKEN
+            );
+            return SecurityScheme.bearer({
+                tokenVariableName:
+                    bearerNames?.name ??
+                    getExtension<string>(securityScheme, FernOpenAPIExtension.BEARER_TOKEN_VARIABLE_NAME),
+                tokenEnvVar: bearerNames?.env
+            });
+        } else if (securityScheme.scheme?.toLowerCase() === "basic") {
+            // ^ case insensitivity for securityScheme.scheme required in OAS
+            const basicSecuritySchemeNamingAndEnvvar = getBasicSecuritySchemeNameAndEnvvar(securityScheme);
+            const basicSecuritySchemeNaming = getBasicSecuritySchemeNames(securityScheme);
+            return SecurityScheme.basic({
+                usernameVariableName:
+                    basicSecuritySchemeNamingAndEnvvar?.username?.name ?? basicSecuritySchemeNaming.usernameVariable,
+                usernameEnvVar: basicSecuritySchemeNamingAndEnvvar?.username?.env,
+                passwordVariableName:
+                    basicSecuritySchemeNamingAndEnvvar?.password?.name ?? basicSecuritySchemeNaming.passwordVariable,
+                passwordEnvVar: basicSecuritySchemeNamingAndEnvvar?.password?.env
+            });
+        } else {
+            throw new Error(`Unsupported HTTP scheme - ${key}: ${securityScheme.scheme}`);
+        }
     } else if (securityScheme.type === "openIdConnect") {
         return SecurityScheme.bearer({
             tokenVariableName: undefined,
@@ -71,8 +91,9 @@ function convertSecuritySchemeHelper(
         return SecurityScheme.oauth({
             scopesEnum: getScopes(securityScheme, source)
         });
+    } else {
+        assertNever(securityScheme);
     }
-    return undefined;
 }
 
 function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme, source: Source): EnumSchema | undefined {
