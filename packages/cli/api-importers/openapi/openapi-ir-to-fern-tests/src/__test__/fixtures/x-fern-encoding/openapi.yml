@@ -8,7 +8,7 @@ components:
     Metadata:
       type: object
       additionalProperties:
-        $ref: '#/components/schemas/MetadataValue'
+        $ref: "#/components/schemas/MetadataValue"
       x-fern-encoding:
         proto:
           type: google.protobuf.Struct
@@ -21,7 +21,7 @@ components:
         - type: boolean
         - type: array
           items:
-            $ref: '#/components/schemas/Value'
+            $ref: "#/components/schemas/Value"
       x-fern-encoding:
         proto:
           type: google.protobuf.Value

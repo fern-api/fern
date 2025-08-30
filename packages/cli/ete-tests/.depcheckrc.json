@@ -1,9 +1,4 @@
 {
-    "ignores": [
-    ],
-    "ignore-patterns": [
-        "lib",
-        "dist",
-        "src/tests/generate/fixtures/basic/sdks/typescript"
-    ]
+  "ignores": [],
+  "ignore-patterns": ["lib", "dist", "src/tests/generate/fixtures/basic/sdks/typescript"]
 }

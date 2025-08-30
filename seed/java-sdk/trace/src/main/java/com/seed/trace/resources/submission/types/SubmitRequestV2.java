@@ -237,7 +237,9 @@ public final class SubmitRequestV2 {
 
         @java.lang.Override
         public _FinalStage addAllSubmissionFiles(List<SubmissionFileInfo> submissionFiles) {
-            this.submissionFiles.addAll(submissionFiles);
+            if (submissionFiles != null) {
+                this.submissionFiles.addAll(submissionFiles);
+            }
             return this;
         }
 

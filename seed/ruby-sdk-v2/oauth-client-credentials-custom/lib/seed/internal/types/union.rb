@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module seed
+module Seed
   module Internal
     module Types
       # Define a union between two types
       module Union
-        include seed::Internal::Types::Type
+        include Seed::Internal::Types::Type
 
         def members
           @members ||= []
@@ -72,11 +72,9 @@ module seed
             raise Errors::TypeError, "could not resolve to member of union #{self}"
           end
 
-          value = value.except(@discriminant) if type <= Model && value.is_a?(::Hash)
-
           Utils.coerce(type, value, strict: strict)
         end
       end
     end
   end
-end 
+end

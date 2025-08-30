@@ -5,22 +5,22 @@ info:
 servers:
   - url: https://api.com
     x-fern-server-name: production
-    x-fern-audiences: [ "public" ]
+    x-fern-audiences: ["public"]
   - url: https://private.api.com
     x-fern-server-name: sandbox
-    x-fern-audiences: [ "private" ]
-paths: 
-  /v1/users: 
-    post: 
-     requestBody: 
+    x-fern-audiences: ["private"]
+paths:
+  /v1/users:
+    post:
+      requestBody:
         content:
           application/json:
-            schema: 
+            schema:
               type: object
               properties:
                 public_property:
                   type: string
-                  x-fern-audiences: [ "public" ]
+                  x-fern-audiences: ["public"]
                 private_property:
                   type: string
 components:
@@ -31,4 +31,4 @@ components:
         id:
           type: string
           format: uuid
-          x-fern-audiences: [ "public" ]
+          x-fern-audiences: ["public"]

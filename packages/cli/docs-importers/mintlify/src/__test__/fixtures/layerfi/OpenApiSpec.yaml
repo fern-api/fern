@@ -6,27 +6,27 @@ info:
 paths:
   /whoami:
     get:
-      summary: 'Get client info'
+      summary: "Get client info"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/RootInfoResponse'
+                $ref: "#/components/schemas/RootInfoResponse"
   /v1/activity:
     get:
-      summary: 'Summary of activities for all businesses'
+      summary: "Summary of activities for all businesses"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ClientActivitySummary'
+                $ref: "#/components/schemas/ClientActivitySummary"
   /v1/activity/businesses/{businessId}:
     get:
-      summary: 'Summary of business activities'
+      summary: "Summary of business activities"
       parameters:
         - name: businessId
           in: path
@@ -34,16 +34,16 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/BusinessActivitySummary'
-                
+                $ref: "#/components/schemas/BusinessActivitySummary"
+
   /v1/activity/businesses/{businessId}/activities:
     get:
-      summary: 'List business activities'
+      summary: "List business activities"
       parameters:
         - name: businessId
           in: path
@@ -51,36 +51,36 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
                 type: array
-                items: 
-                  $ref: '#/components/schemas/ApiTypedActivity'
+                items:
+                  $ref: "#/components/schemas/ApiTypedActivity"
 
   /v1/unit-transactions:
     post:
-      summary: 'Import transactions'
+      summary: "Import transactions"
       requestBody:
         content:
           application/json:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/FlatUnitTransactionInput'
+                $ref: "#/components/schemas/FlatUnitTransactionInput"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FlatUnitTransactionResult'
+                $ref: "#/components/schemas/FlatUnitTransactionResult"
 
   /v1/businesses/{id}/auth-token:
     get:
-      summary: 'Get business auth token'
+      summary: "Get business auth token"
       parameters:
         - name: id
           in: path
@@ -88,93 +88,93 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/AuthToken'
+                $ref: "#/components/schemas/AuthToken"
 
   /v1/configure/plaid:
     get:
-      summary: 'Get plaid client id and secret'
+      summary: "Get plaid client id and secret"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/PlaidConfigurationResponse'
+                $ref: "#/components/schemas/PlaidConfigurationResponse"
     put:
-      summary: 'Configure plaid client id and secret'
+      summary: "Configure plaid client id and secret"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PlaidConfigurationInput'
+              $ref: "#/components/schemas/PlaidConfigurationInput"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/PlaidConfigurationResponse'
-                
+                $ref: "#/components/schemas/PlaidConfigurationResponse"
+
   /v1/configure/stripe:
     get:
-      summary: 'Get stripe secret'
+      summary: "Get stripe secret"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/StripeConfigurationResponse'
+                $ref: "#/components/schemas/StripeConfigurationResponse"
     put:
-      summary: 'Configure stripe secret'
+      summary: "Configure stripe secret"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StripeConfigurationInput'
+              $ref: "#/components/schemas/StripeConfigurationInput"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/StripeConfigurationResponse'
-                
+                $ref: "#/components/schemas/StripeConfigurationResponse"
+
   /v1/businesses:
     post:
-      summary: 'Create new business'
+      summary: "Create new business"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewBusinessParams'
+              $ref: "#/components/schemas/NewBusinessParams"
       responses:
-        '201':
+        "201":
           description: CREATED
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiBusiness'
+                $ref: "#/components/schemas/ApiBusiness"
     get:
-      summary: 'List businesses'
+      summary: "List businesses"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ApiBusiness'
-                  
+                  $ref: "#/components/schemas/ApiBusiness"
+
   /v1/businesses/{businessId}:
     get:
-      summary: 'Get business'
+      summary: "Get business"
       parameters:
         - name: businessId
           in: path
@@ -182,14 +182,14 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiBusiness'
+                $ref: "#/components/schemas/ApiBusiness"
     put:
-      summary: 'Update business'
+      summary: "Update business"
       parameters:
         - name: businessId
           in: path
@@ -200,18 +200,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BusinessUpdatePayload'
+              $ref: "#/components/schemas/BusinessUpdatePayload"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiBusiness'
-                
+                $ref: "#/components/schemas/ApiBusiness"
+
   /v1/businesses/{businessId}/archive:
     put:
-      summary: 'Archive business'
+      summary: "Archive business"
       parameters:
         - name: businessId
           in: path
@@ -219,16 +219,16 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiBusiness'
-                
+                $ref: "#/components/schemas/ApiBusiness"
+
   /v1/businesses/{businessId}/categories:
     get:
-      summary: 'List chart of accounts categories for business'
+      summary: "List chart of accounts categories for business"
       parameters:
         - name: businessId
           in: path
@@ -236,16 +236,16 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/CategoryList'
-                
+                $ref: "#/components/schemas/CategoryList"
+
   /v1/businesses/{businessId}/balances:
     get:
-      summary: 'Get chart of accounts for business'
+      summary: "Get chart of accounts for business"
       parameters:
         - name: businessId
           in: path
@@ -253,16 +253,16 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiChartOfAccountsOld'
-                                
+                $ref: "#/components/schemas/ApiChartOfAccountsOld"
+
   /v1/businesses/{businessId}/plaid/items:
     get:
-      summary: 'List plaid items for business'
+      summary: "List plaid items for business"
       parameters:
         - name: businessId
           in: path
@@ -270,16 +270,16 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiPlaidItem'
-                
+                $ref: "#/components/schemas/ApiPlaidItem"
+
   /v1/businesses/{businessId}/plaid/items/{plaidItemPlaidId}:
     delete:
-      summary: 'Delete plaid item from business'
+      summary: "Delete plaid item from business"
       parameters:
         - name: businessId
           in: path
@@ -292,16 +292,16 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/EmptyResponse'
-                
+                $ref: "#/components/schemas/EmptyResponse"
+
   /v1/businesses/{businessId}/plaid/items/{plaidItemPlaidId}/configuration:
     get:
-      summary: 'Get plaid item configuration'
+      summary: "Get plaid item configuration"
       parameters:
         - name: businessId
           in: path
@@ -314,14 +314,14 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/PlaidItemConfiguration'
+                $ref: "#/components/schemas/PlaidItemConfiguration"
     put:
-      summary: 'Set plaid item configuration'
+      summary: "Set plaid item configuration"
       parameters:
         - name: businessId
           in: path
@@ -337,18 +337,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PlaidItemConfiguration'
+              $ref: "#/components/schemas/PlaidItemConfiguration"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/PlaidItemConfiguration'
-                
+                $ref: "#/components/schemas/PlaidItemConfiguration"
+
   /v1/businesses/{businessId}/plaid/items/{plaidItemPlaidId}/unlink:
     post:
-      summary: 'Unlink and archive plaid item and child plaid accounts'
+      summary: "Unlink and archive plaid item and child plaid accounts"
       parameters:
         - name: businessId
           in: path
@@ -361,16 +361,16 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/EmptyResponse'
-                
+                $ref: "#/components/schemas/EmptyResponse"
+
   /v1/businesses/{businessId}/plaid/link:
     post:
-      summary: 'Create plaid item link token'
+      summary: "Create plaid item link token"
       parameters:
         - name: businessId
           in: path
@@ -378,16 +378,16 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiLinkToken'
-                
+                $ref: "#/components/schemas/ApiLinkToken"
+
   /v1/businesses/{businessId}/plaid/link/exchange:
     post:
-      summary: 'Exchange plaid token and add item to business'
+      summary: "Exchange plaid token and add item to business"
       parameters:
         - name: businessId
           in: path
@@ -398,18 +398,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PlaidLinkPublicToken'
+              $ref: "#/components/schemas/PlaidLinkPublicToken"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/EmptyResponse'
-                
+                $ref: "#/components/schemas/EmptyResponse"
+
   /v1/businesses/{businessId}/plaid/update-mode-link:
     post:
-      summary: 'Update plaid link link'
+      summary: "Update plaid link link"
       parameters:
         - name: businessId
           in: path
@@ -420,18 +420,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateModeLinkCreationPayload'
+              $ref: "#/components/schemas/UpdateModeLinkCreationPayload"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiLinkToken'
-                
+                $ref: "#/components/schemas/ApiLinkToken"
+
   /v1/businesses/{businessId}/plaid/accounts:
     get:
-      summary: 'List plaid accounts for business'
+      summary: "List plaid accounts for business"
       parameters:
         - name: businessId
           in: path
@@ -439,18 +439,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ApiPlaidAccount'
-                  
+                  $ref: "#/components/schemas/ApiPlaidAccount"
+
   /v1/businesses/{businessId}/plaid/accounts/{plaidAccountId}/archive:
     post:
-      summary: 'Archive plaid account'
+      summary: "Archive plaid account"
       parameters:
         - name: businessId
           in: path
@@ -461,18 +461,18 @@ paths:
           in: path
           required: true
           schema:
-            type: string            
+            type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiPlaidAccount'
-                
+                $ref: "#/components/schemas/ApiPlaidAccount"
+
   /v1/businesses/{businessId}/plaid/accounts/{plaidAccountId}/reactivate:
     post:
-      summary: 'Reactivate archived plaid account'
+      summary: "Reactivate archived plaid account"
       parameters:
         - name: businessId
           in: path
@@ -483,18 +483,18 @@ paths:
           in: path
           required: true
           schema:
-            type: string            
+            type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiPlaidAccount'
-                
+                $ref: "#/components/schemas/ApiPlaidAccount"
+
   /v1/businesses/{businessId}/plaid/accounts/{plaidAccountId}/configuration:
     get:
-      summary: 'Get plaid account configuration'
+      summary: "Get plaid account configuration"
       parameters:
         - name: businessId
           in: path
@@ -507,14 +507,14 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/PlaidAccountConfiguration'
+                $ref: "#/components/schemas/PlaidAccountConfiguration"
     put:
-      summary: 'Set plaid account configuration'
+      summary: "Set plaid account configuration"
       parameters:
         - name: businessId
           in: path
@@ -530,18 +530,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PlaidAccountConfiguration'
+              $ref: "#/components/schemas/PlaidAccountConfiguration"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/PlaidAccountConfiguration'
-                
+                $ref: "#/components/schemas/PlaidAccountConfiguration"
+
   /v1/businesses/{businessId}/bank-transactions:
     get:
-      summary: 'List transactions from business'
+      summary: "List transactions from business"
       parameters:
         - name: businessId
           in: path
@@ -549,18 +549,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ApiBankTransaction'
-                  
+                  $ref: "#/components/schemas/ApiBankTransaction"
+
   /v1/businesses/{businessId}/bank-transactions/{transactionId}:
     get:
-      summary: 'Get transaction from business'
+      summary: "Get transaction from business"
       parameters:
         - name: businessId
           in: path
@@ -573,16 +573,16 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiBankTransaction'
-                
+                $ref: "#/components/schemas/ApiBankTransaction"
+
   /v1/businesses/{businessId}/bank-transactions/{transactionId}/categorize:
     put:
-      summary: 'Categorize transaction'
+      summary: "Categorize transaction"
       parameters:
         - name: businessId
           in: path
@@ -598,18 +598,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BankTransactionCategorization'
+              $ref: "#/components/schemas/BankTransactionCategorization"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiBankTransaction'
-                
+                $ref: "#/components/schemas/ApiBankTransaction"
+
   /v1/businesses/{businessId}/bank-transactions/{transactionId}/uncategorize:
     put:
-      summary: 'Uncategorize transaction'
+      summary: "Uncategorize transaction"
       parameters:
         - name: businessId
           in: path
@@ -622,16 +622,16 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiBankTransaction'
-                
+                $ref: "#/components/schemas/ApiBankTransaction"
+
   /v1/businesses/{businessId}/bank-transactions/{transactionId}/match:
     put:
-      summary: 'Match transaction'
+      summary: "Match transaction"
       parameters:
         - name: businessId
           in: path
@@ -647,18 +647,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MatchPayload'
+              $ref: "#/components/schemas/MatchPayload"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiMatch'
-                
+                $ref: "#/components/schemas/ApiMatch"
+
   /v1/businesses/{businessId}/bank-transactions/bulk-match:
     post:
-      summary: 'Bulk match transactions'
+      summary: "Bulk match transactions"
       parameters:
         - name: businessId
           in: path
@@ -669,18 +669,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SuggestedMatchesWithTransactions'
+              $ref: "#/components/schemas/SuggestedMatchesWithTransactions"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/EmptyResponse'
-                
+                $ref: "#/components/schemas/EmptyResponse"
+
   /v1/businesses/{businessId}/bank-transactions/{transactionId}/ledger-entries:
     get:
-      summary: 'List transaction ledger entries'
+      summary: "List transaction ledger entries"
       parameters:
         - name: businessId
           in: path
@@ -693,18 +693,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
                 type: array
-                items: 
-                  $ref: '#/components/schemas/ApiLedgerEntry'
+                items:
+                  $ref: "#/components/schemas/ApiLedgerEntry"
 
   /v1/businesses/{businessId}/payouts/{payoutId}:
     get:
-      summary: 'Get payout from business'
+      summary: "Get payout from business"
       parameters:
         - name: businessId
           in: path
@@ -717,16 +717,16 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiPayout'
-                
+                $ref: "#/components/schemas/ApiPayout"
+
   /v1/businesses/{businessId}/invoices/bulk:
     post:
-      summary: 'Create invoices from batch'
+      summary: "Create invoices from batch"
       parameters:
         - name: businessId
           in: path
@@ -739,614 +739,180 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/NewInvoicePostParams'
+                $ref: "#/components/schemas/NewInvoicePostParams"
       responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ApiInvoice'
-                  
-  /v1/businesses/{businessId}/invoices/{invoiceId}:
-    get:
-      summary: 'Get invoice from business'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: invoiceId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/ApiInvoice'
-                
-  /v1/businesses/{businessId}/invoices/{invoiceId}/delete:
-    post:
-      summary: 'Delete invoice from business'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: invoiceId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/ApiInvoice'
-                
-  /v1/businesses/{businessId}/invoices/payments:
-    get:
-      summary: 'List invoice payments from business'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ApiInvoicePayment'
-                  
-  /v1/businesses/{businessId}/invoices/payments/:
-    post:
-      summary: 'Create invoice payments from batch'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/CreateStandaloneInvoicePayment'
-                
-  /v1/businesses/{businessId}/invoices/payments/{paymentId}:
-    get:
-      summary: 'Get invoice payment from business'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: paymentId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/ApiInvoicePayment'
-                
-  /v1/businesses/{businessId}/invoices/payments/{paymentId}/delete:
-    post:
-      summary: 'Delete invoice payment from business'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: paymentId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/ApiInvoicePayment'
-                
-  /v1/businesses/{businessId}/invoices/refunds/:
-    get:
-      summary: 'List refunds from business'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ApiRefund'
-                  
-  /v1/businesses/{businessId}/external-accounts/:
-    get:
-      summary: 'List linked external accounts from business'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/ApiExternalAccounts'
-                
-  /v1/businesses/{businessId}/external-accounts/{accountId}:
-    get:
-      summary: 'Get linked external account from business'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: accountId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/ApiExternalAccount'
-                
-  /v1/businesses/{businessId}/external-accounts/{accountId}/transactions:
-    get:
-      summary: 'Get transactions from linked external account'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: accountId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/ApiTransactions'
-                
-  /v1/businesses/{businessId}/external-accounts/{accountId}/balance-timestamps:
-    get:
-      summary: 'List balance timestamps from linked external account'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: accountId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/ApiBalanceTimestamps'
-                
-  /v1/businesses/{businessId}/external-accounts/{accountId}/opening-balance:
-    get:
-      summary: 'Get opening balance from linked external account'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: accountId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/ApiOpeningBalance'
-                
-  /v1/businesses/{businessId}/external-accounts/{accountId}/archive:
-    post:
-      summary: 'Archive linked external account'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: accountId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/EmptyResponse'
-                
-  /v1/businesses/{businessId}/custom-accounts/:
-    post:
-      summary: 'Add custom account for business'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/NewCustomAccountParams'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/ApiCustomAccount'
-    get:
-      summary: 'List custom accounts from business'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/ApiCustomAccounts'
-                
-  /v1/businesses/{businessId}/custom-accounts/{customAccountId}:
-    get:
-      summary: 'Get custom account from business'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: customAccountId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/ApiCustomAccount'  
-                
-    patch:
-      summary: 'Update custom account from business'
-      parameters:  
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: customAccountId
-          in: path
-          required: true
-          schema:
-            type: string  
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateCustomAccountParams'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/ApiCustomAccount'
-                
-    put:  
-      summary: 'Replace custom account from business'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: customAccountId
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/NewCustomAccountParams'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/ApiCustomAccount'
-                
-    post:
-      summary: 'Upload custom account transactions by JSON'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: customAccountId
-          in: path
-          required: true
-          schema:
-            type: string  
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/NewCustomTransactions' 
-      responses:
-        '201':
-          description: CREATED
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/EmptyResponse'
-                
-  /v1/businesses/{businessId}/custom-accounts/{customAccountId}/archive:
-    post: 
-      summary: 'Archive custom account from business'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: customAccountId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiCustomAccount'
+                type: array
+                items:
+                  $ref: "#/components/schemas/ApiInvoice"
 
-  /v1/businesses/{businessId}/custom-accounts/{customAccountId}/reactivate:
-    post:
-      summary: 'Reactivate custom account from business'
-      parameters:  
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: customAccountId
-          in: path
-          required: true
-          schema:
-            type: string  
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/ApiCustomAccount'
-                
-  /v1/businesses/{businessId}/custom-accounts/{customAccountId}/balance:
-    post: 
-      summary: 'Create custom account balance timestamp'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: customAccountId
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/NewCustomAccountBalance'
-      responses:
-        '201':
-          description: CREATED
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/EmptyResponse'
-                
-  /v1/businesses/{businessId}/custom-accounts/{customAccountId}/opening-balance:
-    post:
-      summary: 'Calculate new custom account opening balance entry'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: customAccountId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '201':
-          description: CREATED
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/ApiOpeningBalance'
-                
-  /v1/businesses/{businessId}/ledger/balances:
-    get:  
-      summary: 'List account balances from ledger'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/ApiLedgerBalances'
-                
-  /v1/businesses/{businessId}/ledger/chart:
+  /v1/businesses/{businessId}/invoices/{invoiceId}:
     get:
-      summary: 'Get chart of accounts from business'
-      parameters:  
+      summary: "Get invoice from business"
+      parameters:
         - name: businessId
           in: path
           required: true
           schema:
-            type: string  
+            type: string
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiChartOfAccounts'
-                
-  /v1/businesses/{businessId}/ledger/manual-entries:
+                $ref: "#/components/schemas/ApiInvoice"
+
+  /v1/businesses/{businessId}/invoices/{invoiceId}/delete:
     post:
-      summary: 'Create manual ledger entries'
+      summary: "Delete invoice from business"
       parameters:
         - name: businessId
           in: path
           required: true
           schema:
             type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateManualLedgerEntry'  
-      responses:
-        '201':
-          description: CREATED
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/ApiManualLedgerEntry'
-                
-  /v1/businesses/{businessId}/ledger/accounts:
-    get:
-      summary: 'Get ledger from business'
-      parameters:
-        - name: businessId
+        - name: invoiceId
           in: path
           required: true
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiLedger'
-                
-    post:  
-      summary: 'Create ledger account for business'
+                $ref: "#/components/schemas/ApiInvoice"
+
+  /v1/businesses/{businessId}/invoices/payments:
+    get:
+      summary: "List invoice payments from business"
       parameters:
         - name: businessId
           in: path
           required: true
           schema:
             type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateApiLedgerAccount'
       responses:
-        '201':
-          description: CREATED
+        "200":
+          description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/SingleApiChartAccount'
-                
-  /v1/businesses/{businessId}/ledger/accounts/{accountId}/lines:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ApiInvoicePayment"
+
+  /v1/businesses/{businessId}/invoices/payments/:
+    post:
+      summary: "Create invoice payments from batch"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateStandaloneInvoicePayment"
+
+  /v1/businesses/{businessId}/invoices/payments/{paymentId}:
     get:
-      summary: 'List ledger account line items'
+      summary: "Get invoice payment from business"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: paymentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiInvoicePayment"
+
+  /v1/businesses/{businessId}/invoices/payments/{paymentId}/delete:
+    post:
+      summary: "Delete invoice payment from business"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: paymentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiInvoicePayment"
+
+  /v1/businesses/{businessId}/invoices/refunds/:
+    get:
+      summary: "List refunds from business"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ApiRefund"
+
+  /v1/businesses/{businessId}/external-accounts/:
+    get:
+      summary: "List linked external accounts from business"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiExternalAccounts"
+
+  /v1/businesses/{businessId}/external-accounts/{accountId}:
+    get:
+      summary: "Get linked external account from business"
       parameters:
         - name: businessId
           in: path
@@ -1359,134 +925,104 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ApiLedgerAccountLineItem'
-                  
-  /v1/businesses/{businessId}/ledger/entries:
+                $ref: "#/components/schemas/ApiExternalAccount"
+
+  /v1/businesses/{businessId}/external-accounts/{accountId}/transactions:
     get:
-      summary: 'List ledger entries from business'
+      summary: "Get transactions from linked external account"
       parameters:
         - name: businessId
           in: path
           required: true
           schema:
             type: string
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ApiLedgerEntry'
-                  
-  /v1/businesses/{businessId}/ledger/entries/{entryId}:
+                $ref: "#/components/schemas/ApiTransactions"
+
+  /v1/businesses/{businessId}/external-accounts/{accountId}/balance-timestamps:
     get:
-      summary: 'Get ledger entry from business'
+      summary: "List balance timestamps from linked external account"
       parameters:
         - name: businessId
           in: path
           required: true
           schema:
             type: string
-        - name: entryId
+        - name: accountId
           in: path
           required: true
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiLedgerEntryWithTransaction'
-                
-  /v1/businesses/{businessId}/ledger/entries/{entryId}/reverse:
+                $ref: "#/components/schemas/ApiBalanceTimestamps"
+
+  /v1/businesses/{businessId}/external-accounts/{accountId}/opening-balance:
+    get:
+      summary: "Get opening balance from linked external account"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiOpeningBalance"
+
+  /v1/businesses/{businessId}/external-accounts/{accountId}/archive:
     post:
-      summary: 'Create reversal entry for ledger entry'
+      summary: "Archive linked external account"
       parameters:
         - name: businessId
           in: path
           required: true
           schema:
             type: string
-        - name: entryId
+        - name: accountId
           in: path
           required: true
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiLedgerEntryWithTransaction'
-                
-  /v1/businesses/{businessId}/reports/profit-and-loss:
-    get:
-      summary: 'Get profit and loss report for business'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                $ref: '#/components/schemas/ProfitAndLoss'
-                
-  /v1/businesses/{businessId}/reports/profit-and-loss-entries:
-    get:
-      summary: 'Get profit and loss entries from business'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:    
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PnlEntry'
-                  
-  /v1/businesses/{businessId}/reports/download-transactions-csv:
-    get:
-      summary: 'Download ledger transactions from business as csv'
-      parameters:
-        - name: businessId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            text/csv:    
-              schema:
-                type: string
-                
-  /v1/businesses/{businessId}/bank-transactions/tags:
+                $ref: "#/components/schemas/EmptyResponse"
+
+  /v1/businesses/{businessId}/custom-accounts/:
     post:
-      summary: 'Apply list of tags to list of transactions'
+      summary: "Add custom account for business"
       parameters:
         - name: businessId
           in: path
@@ -1497,20 +1033,484 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewTagsPostParams'
+              $ref: "#/components/schemas/NewCustomAccountParams"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiCustomAccount"
+    get:
+      summary: "List custom accounts from business"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiCustomAccounts"
+
+  /v1/businesses/{businessId}/custom-accounts/{customAccountId}:
+    get:
+      summary: "Get custom account from business"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: customAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiCustomAccount"
+
+    patch:
+      summary: "Update custom account from business"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: customAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCustomAccountParams"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiCustomAccount"
+
+    put:
+      summary: "Replace custom account from business"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: customAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewCustomAccountParams"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiCustomAccount"
+
+    post:
+      summary: "Upload custom account transactions by JSON"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: customAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewCustomTransactions"
+      responses:
+        "201":
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmptyResponse"
+
+  /v1/businesses/{businessId}/custom-accounts/{customAccountId}/archive:
+    post:
+      summary: "Archive custom account from business"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: customAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiCustomAccount"
+
+  /v1/businesses/{businessId}/custom-accounts/{customAccountId}/reactivate:
+    post:
+      summary: "Reactivate custom account from business"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: customAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiCustomAccount"
+
+  /v1/businesses/{businessId}/custom-accounts/{customAccountId}/balance:
+    post:
+      summary: "Create custom account balance timestamp"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: customAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewCustomAccountBalance"
+      responses:
+        "201":
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmptyResponse"
+
+  /v1/businesses/{businessId}/custom-accounts/{customAccountId}/opening-balance:
+    post:
+      summary: "Calculate new custom account opening balance entry"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: customAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "201":
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiOpeningBalance"
+
+  /v1/businesses/{businessId}/ledger/balances:
+    get:
+      summary: "List account balances from ledger"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiLedgerBalances"
+
+  /v1/businesses/{businessId}/ledger/chart:
+    get:
+      summary: "Get chart of accounts from business"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiChartOfAccounts"
+
+  /v1/businesses/{businessId}/ledger/manual-entries:
+    post:
+      summary: "Create manual ledger entries"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateManualLedgerEntry"
+      responses:
+        "201":
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiManualLedgerEntry"
+
+  /v1/businesses/{businessId}/ledger/accounts:
+    get:
+      summary: "Get ledger from business"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiLedger"
+
+    post:
+      summary: "Create ledger account for business"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateApiLedgerAccount"
+      responses:
+        "201":
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SingleApiChartAccount"
+
+  /v1/businesses/{businessId}/ledger/accounts/{accountId}/lines:
+    get:
+      summary: "List ledger account line items"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ApiTag'
-                  
+                  $ref: "#/components/schemas/ApiLedgerAccountLineItem"
+
+  /v1/businesses/{businessId}/ledger/entries:
+    get:
+      summary: "List ledger entries from business"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ApiLedgerEntry"
+
+  /v1/businesses/{businessId}/ledger/entries/{entryId}:
+    get:
+      summary: "Get ledger entry from business"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: entryId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiLedgerEntryWithTransaction"
+
+  /v1/businesses/{businessId}/ledger/entries/{entryId}/reverse:
+    post:
+      summary: "Create reversal entry for ledger entry"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: entryId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiLedgerEntryWithTransaction"
+
+  /v1/businesses/{businessId}/reports/profit-and-loss:
+    get:
+      summary: "Get profit and loss report for business"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfitAndLoss"
+
+  /v1/businesses/{businessId}/reports/profit-and-loss-entries:
+    get:
+      summary: "Get profit and loss entries from business"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PnlEntry"
+
+  /v1/businesses/{businessId}/reports/download-transactions-csv:
+    get:
+      summary: "Download ledger transactions from business as csv"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            text/csv:
+              schema:
+                type: string
+
+  /v1/businesses/{businessId}/bank-transactions/tags:
+    post:
+      summary: "Apply list of tags to list of transactions"
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewTagsPostParams"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ApiTag"
+
   /v1/businesses/{businessId}/bank-transactions/{transactionId}/tags:
     get:
-      summary: 'List tags applied to transaction'
+      summary: "List tags applied to transaction"
       parameters:
         - name: businessId
           in: path
@@ -1523,18 +1523,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ApiTag'
-                  
+                  $ref: "#/components/schemas/ApiTag"
+
   /v1/businesses/{businessId}/bank-transactions/{transactionId}/tags/{tagId}:
     delete:
-      summary: 'Remove tag from transaction'
+      summary: "Remove tag from transaction"
       parameters:
         - name: businessId
           in: path
@@ -1555,18 +1555,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TagsDeleteParams'
+              $ref: "#/components/schemas/TagsDeleteParams"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/EmptyResponse'
-                
+                $ref: "#/components/schemas/EmptyResponse"
+
   /v1/businesses/{businessId}/payouts/tags:
     post:
-      summary: 'Apply list of tags to list of payouts'
+      summary: "Apply list of tags to list of payouts"
       parameters:
         - name: businessId
           in: path
@@ -1577,19 +1577,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewTagsPostParams'
+              $ref: "#/components/schemas/NewTagsPostParams"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ApiTag'
-                  
+                  $ref: "#/components/schemas/ApiTag"
+
     delete:
-      summary: 'Delete list of payout tags'
+      summary: "Delete list of payout tags"
       parameters:
         - name: businessId
           in: path
@@ -1600,18 +1600,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TagsDeleteParams'
+              $ref: "#/components/schemas/TagsDeleteParams"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/EmptyResponse'
-                
+                $ref: "#/components/schemas/EmptyResponse"
+
   /v1/businesses/{businessId}/payouts/{payoutId}/tags/:
     get:
-      summary: 'List tags applied to payout'
+      summary: "List tags applied to payout"
       parameters:
         - name: businessId
           in: path
@@ -1624,18 +1624,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ApiTag'
-                  
+                  $ref: "#/components/schemas/ApiTag"
+
   /v1/businesses/{businessId}/invoices/tags:
     post:
-      summary: 'Apply list of tags to list of invoices'
+      summary: "Apply list of tags to list of invoices"
       parameters:
         - name: businessId
           in: path
@@ -1646,20 +1646,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewTagsPostParams'
+              $ref: "#/components/schemas/NewTagsPostParams"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
                 type: array
-                items: 
-                  $ref: '#/components/schemas/ApiTag'
-                  
+                items:
+                  $ref: "#/components/schemas/ApiTag"
+
   /v1/businesses/{businessId}/invoices/{invoiceId}/tags:
     get:
-      summary: 'List tags applied to invoice'
+      summary: "List tags applied to invoice"
       parameters:
         - name: businessId
           in: path
@@ -1672,17 +1672,17 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ApiTag'
+                  $ref: "#/components/schemas/ApiTag"
   /v1/businesses/{businessId}/invoices/payments/{paymentId}/tags:
     get:
-      summary: 'List tags applied to invoice payment'
+      summary: "List tags applied to invoice payment"
       parameters:
         - name: businessId
           in: path
@@ -1695,17 +1695,17 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ApiTag'
+                  $ref: "#/components/schemas/ApiTag"
   /v1/businesses/{businessId}/invoices/payments/{paymentId}/allocations/tags:
     delete:
-      summary: 'Delete tags applied to payment allocation'
+      summary: "Delete tags applied to payment allocation"
       parameters:
         - name: businessId
           in: path
@@ -1721,18 +1721,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TagsDeleteParams'
+              $ref: "#/components/schemas/TagsDeleteParams"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/EmptyResponse'
-                
+                $ref: "#/components/schemas/EmptyResponse"
+
   /v1/businesses/{businessId}/invoices/payments/allocations/tags:
     post:
-      summary: 'Apply list of tags to list of invoice payment allocations'
+      summary: "Apply list of tags to list of invoice payment allocations"
       parameters:
         - name: businessId
           in: path
@@ -1743,20 +1743,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewTagsPostParams'
+              $ref: "#/components/schemas/NewTagsPostParams"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ApiTag'
-                  
+                  $ref: "#/components/schemas/ApiTag"
+
   /v1/businesses/{businessId}/invoices/payments/{paymentId}/allocations/{allocationId}/tags:
     get:
-      summary: 'List tags applied to invoice payment allocation'
+      summary: "List tags applied to invoice payment allocation"
       parameters:
         - name: businessId
           in: path
@@ -1766,7 +1766,7 @@ paths:
         - name: paymentId
           in: path
           required: true
-          schema:  
+          schema:
             type: string
         - name: allocationId
           in: path
@@ -1774,18 +1774,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ApiTag'
-                  
+                  $ref: "#/components/schemas/ApiTag"
+
   /v1/businesses/{businessId}/payouts/:
     get:
-      summary: 'List payouts from business'
+      summary: "List payouts from business"
       parameters:
         - name: businessId
           in: path
@@ -1793,16 +1793,16 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ApiPayout'
+                  $ref: "#/components/schemas/ApiPayout"
     post:
-      summary: 'Create new payout for business'
+      summary: "Create new payout for business"
       parameters:
         - name: businessId
           in: path
@@ -1813,18 +1813,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreatePayoutParams'
+              $ref: "#/components/schemas/CreatePayoutParams"
       responses:
-        '201':
+        "201":
           description: CREATED
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/ApiPayout'
-                
+                $ref: "#/components/schemas/ApiPayout"
+
   /v1/businesses/{businessId}/ledger/accounts/{accountId}:
     get:
-      summary: 'Get or create ledger account on business'
+      summary: "Get or create ledger account on business"
       parameters:
         - name: businessId
           in: path
@@ -1837,14 +1837,14 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/SingleApiChartAccount'
+                $ref: "#/components/schemas/SingleApiChartAccount"
     put:
-      summary: 'Update ledger account on business'
+      summary: "Update ledger account on business"
       parameters:
         - name: businessId
           in: path
@@ -1860,15 +1860,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateApiLedgerAccount'
+              $ref: "#/components/schemas/UpdateApiLedgerAccount"
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            application/json:    
+            application/json:
               schema:
-                $ref: '#/components/schemas/SingleApiChartAccount'
-
+                $ref: "#/components/schemas/SingleApiChartAccount"
 
 components:
   securitySchemes:
@@ -1895,7 +1894,7 @@ components:
         accounts:
           type: array
           items:
-            $ref: '#/components/schemas/NestedApiChartAccount'
+            $ref: "#/components/schemas/NestedApiChartAccount"
     PlaidConfigurationResponse:
       type: object
       properties:
@@ -1924,7 +1923,7 @@ components:
         key_values:
           type: array
           items:
-            $ref: '#/components/schemas/TagKeyValue'
+            $ref: "#/components/schemas/TagKeyValue"
         transaction_ids:
           type: array
           items:
@@ -1938,7 +1937,7 @@ components:
         accounts:
           type: array
           items:
-            $ref: '#/components/schemas/Account'
+            $ref: "#/components/schemas/Account"
     CreateManualLedgerEntry:
       type: object
       properties:
@@ -1952,29 +1951,29 @@ components:
         line_items:
           type: array
           items:
-            $ref: '#/components/schemas/CreateLedgerEntryLineItem'
+            $ref: "#/components/schemas/CreateLedgerEntryLineItem"
         tags:
           type: array
           items:
-            $ref: '#/components/schemas/TagKeyValue'
+            $ref: "#/components/schemas/TagKeyValue"
     CreateApiLedgerAccount:
       type: object
       properties:
         name:
           type: string
         normality:
-          $ref: '#/components/schemas/BankTransactionDirection'
+          $ref: "#/components/schemas/BankTransactionDirection"
         parent_id:
-          $ref: '#/components/schemas/AccountIdentifier'
+          $ref: "#/components/schemas/AccountIdentifier"
         stable_name:
-          $ref: '#/components/schemas/AccountStableName'
+          $ref: "#/components/schemas/AccountStableName"
         account_type:
-          $ref: '#/components/schemas/LedgerAccountType'
+          $ref: "#/components/schemas/LedgerAccountType"
         account_subtype:
-          $ref: '#/components/schemas/LedgerAccountSubtype'
+          $ref: "#/components/schemas/LedgerAccountSubtype"
     MatchPayload:
       oneOf:
-        - $ref: '#/components/schemas/ConfirmMatch'
+        - $ref: "#/components/schemas/ConfirmMatch"
     CreateRefundParams:
       type: object
       properties:
@@ -1988,7 +1987,7 @@ components:
           type: string
           format: date-time
         method:
-          $ref: '#/components/schemas/RefundPaymentMethod'
+          $ref: "#/components/schemas/RefundPaymentMethod"
         processor:
           type: string
         invoice_id:
@@ -2027,11 +2026,11 @@ components:
         line_items:
           type: array
           items:
-            $ref: '#/components/schemas/NewInvoiceLineItem'
+            $ref: "#/components/schemas/NewInvoiceLineItem"
         additional_sales_taxes:
           type: array
           items:
-            $ref: '#/components/schemas/ApiTaxLineItem'
+            $ref: "#/components/schemas/ApiTaxLineItem"
         additional_discount:
           type: integer
         tips:
@@ -2039,14 +2038,14 @@ components:
         payments:
           type: array
           items:
-            $ref: '#/components/schemas/CreateImmediatePaymentInput'
+            $ref: "#/components/schemas/CreateImmediatePaymentInput"
     ApiOpeningBalance:
       type: object
       properties:
         external_account_external_id:
           type: string
         external_account_source:
-          $ref: '#/components/schemas/TransactionSource'
+          $ref: "#/components/schemas/TransactionSource"
         balance:
           type: integer
         effective_at:
@@ -2068,9 +2067,9 @@ components:
         tin:
           type: string
         us_state:
-          $ref: '#/components/schemas/USState'
+          $ref: "#/components/schemas/USState"
         entity_type:
-          $ref: '#/components/schemas/BusinessType'
+          $ref: "#/components/schemas/BusinessType"
         phone_number:
           type: string
         sms_enabled:
@@ -2084,23 +2083,23 @@ components:
         internal_bank_account_ids:
           type: array
           items:
-            $ref: '#/components/schemas/NewBusinessUnitAccountId'
+            $ref: "#/components/schemas/NewBusinessUnitAccountId"
         unit_ids:
           type: array
           items:
-            $ref: '#/components/schemas/NewBusinessUnitAccountId'
+            $ref: "#/components/schemas/NewBusinessUnitAccountId"
         plaid_items:
           type: array
           items:
-            $ref: '#/components/schemas/CreatePlaidItem'
+            $ref: "#/components/schemas/CreatePlaidItem"
         skip_onboarding:
           type: boolean
         industry:
-          $ref: '#/components/schemas/BusinessIndustry'
+          $ref: "#/components/schemas/BusinessIndustry"
         stripe_connect_accounts:
           type: array
           items:
-            $ref: '#/components/schemas/StripeConnectAccountInput'
+            $ref: "#/components/schemas/StripeConnectAccountInput"
     StripeConfigurationResponse:
       type: object
       properties:
@@ -2118,17 +2117,17 @@ components:
       type: object
       properties:
         stable_name:
-          $ref: '#/components/schemas/AccountStableName'
+          $ref: "#/components/schemas/AccountStableName"
         name:
           type: string
         normality:
-          $ref: '#/components/schemas/BankTransactionDirection'
+          $ref: "#/components/schemas/BankTransactionDirection"
         parent_id:
-          $ref: '#/components/schemas/AccountIdentifier'
+          $ref: "#/components/schemas/AccountIdentifier"
         account_type:
-          $ref: '#/components/schemas/LedgerAccountType'
+          $ref: "#/components/schemas/LedgerAccountType"
         account_subtype:
-          $ref: '#/components/schemas/LedgerAccountSubtype'
+          $ref: "#/components/schemas/LedgerAccountSubtype"
     ApiInvoice:
       type: object
       properties:
@@ -2141,7 +2140,7 @@ components:
         external_id:
           type: string
         status:
-          $ref: '#/components/schemas/InvoiceStatus'
+          $ref: "#/components/schemas/InvoiceStatus"
         sent_at:
           type: string
           format: date-time
@@ -2161,7 +2160,7 @@ components:
         line_items:
           type: array
           items:
-            $ref: '#/components/schemas/ApiInvoiceLineItem'
+            $ref: "#/components/schemas/ApiInvoiceLineItem"
         subtotal:
           type: integer
         additional_discount:
@@ -2171,7 +2170,7 @@ components:
         additional_sales_taxes:
           type: array
           items:
-            $ref: '#/components/schemas/ApiTaxLineItem'
+            $ref: "#/components/schemas/ApiTaxLineItem"
         tips:
           type: integer
         total_amount:
@@ -2181,7 +2180,7 @@ components:
         payment_allocations:
           type: array
           items:
-            $ref: '#/components/schemas/ApiInvoicePaymentAllocation'
+            $ref: "#/components/schemas/ApiInvoicePaymentAllocation"
         imported_at:
           type: string
           format: date-time
@@ -2191,25 +2190,25 @@ components:
         transaction_tags:
           type: array
           items:
-            $ref: '#/components/schemas/ApiTag'
+            $ref: "#/components/schemas/ApiTag"
     ApiBalanceTimestamps:
       type: object
       properties:
         external_account_external_id:
           type: string
         external_account_source:
-          $ref: '#/components/schemas/TransactionSource'
+          $ref: "#/components/schemas/TransactionSource"
         balance_timestamps:
           type: array
           items:
-            $ref: '#/components/schemas/ApiBalanceTimestamp'
+            $ref: "#/components/schemas/ApiBalanceTimestamp"
     ApiLedgerBalances:
       type: object
       properties:
         accounts:
           type: array
           items:
-            $ref: '#/components/schemas/NestedApiLedgerAccount'
+            $ref: "#/components/schemas/NestedApiLedgerAccount"
     BusinessType:
       type: string
       enum:
@@ -2318,11 +2317,11 @@ components:
         tin:
           type: string
         us_state:
-          $ref: '#/components/schemas/USState'
+          $ref: "#/components/schemas/USState"
         entity_type:
-          $ref: '#/components/schemas/BusinessType'
+          $ref: "#/components/schemas/BusinessType"
         industry:
-          $ref: '#/components/schemas/BusinessIndustry'
+          $ref: "#/components/schemas/BusinessIndustry"
         phone_number:
           type: string
         sms_enabled:
@@ -2345,17 +2344,17 @@ components:
         unit_accounts:
           type: array
           items:
-            $ref: '#/components/schemas/APIUnitAccount'
+            $ref: "#/components/schemas/APIUnitAccount"
         plaid_items:
           type: array
           items:
-            $ref: '#/components/schemas/ApiPlaidItem'
+            $ref: "#/components/schemas/ApiPlaidItem"
         previously_imported:
           type: boolean
         stripe_connect_accounts:
           type: array
           items:
-            $ref: '#/components/schemas/ApiStripeConnectAccount'
+            $ref: "#/components/schemas/ApiStripeConnectAccount"
     ApiMatch:
       type: object
       properties:
@@ -2363,11 +2362,11 @@ components:
           type: string
           format: uuid
         match_type:
-          $ref: '#/components/schemas/MatchType'
+          $ref: "#/components/schemas/MatchType"
         bank_transaction:
-          $ref: '#/components/schemas/ApiBankTransactionInterface'
+          $ref: "#/components/schemas/ApiBankTransactionInterface"
         details:
-          $ref: '#/components/schemas/ApiMatchDetails'
+          $ref: "#/components/schemas/ApiMatchDetails"
     BusinessActivitySummary:
       type: object
       properties:
@@ -2416,7 +2415,7 @@ components:
         new_custom_transaction_params:
           type: array
           items:
-            $ref: '#/components/schemas/NewCustomTransactionParams'
+            $ref: "#/components/schemas/NewCustomTransactionParams"
     ClientActivitySummary:
       type: object
       properties:
@@ -2444,24 +2443,22 @@ components:
         custom_accounts:
           type: array
           items:
-            $ref: '#/components/schemas/ApiCustomAccount'
+            $ref: "#/components/schemas/ApiCustomAccount"
     PnlEntry:
       anyOf:
-        - $ref: '#/components/schemas/BankTransactionPnlEntry'
-        - $ref: '#/components/schemas/SplitBankTransactionPnlEntry'
+        - $ref: "#/components/schemas/BankTransactionPnlEntry"
+        - $ref: "#/components/schemas/SplitBankTransactionPnlEntry"
     ExternalAccountQueryParams:
       type: object
       properties:
         account_source:
-          $ref: '#/components/schemas/TransactionSource'
+          $ref: "#/components/schemas/TransactionSource"
         start_date:
           type: string
           format: date-time
         end_date:
           type: string
           format: date-time
-
-
 
     TagsDeleteParams:
       type: object
@@ -2494,7 +2491,7 @@ components:
           type: string
           description: Plaid's unique identifier for the item
         status:
-          $ref: '#/components/schemas/AccountStatus'
+          $ref: "#/components/schemas/AccountStatus"
         mask:
           type: string
           nullable: true
@@ -2550,7 +2547,7 @@ components:
           type: string
           description: The public token returned by Plaid Link
         institution:
-          $ref: '#/components/schemas/PlaidInstitution'
+          $ref: "#/components/schemas/PlaidInstitution"
 
     PlaidAccountConfiguration:
       type: object
@@ -2561,7 +2558,7 @@ components:
           nullable: true
           description: Timestamp to start syncing account transactions from
         status:
-          $ref: '#/components/schemas/AccountStatus'
+          $ref: "#/components/schemas/AccountStatus"
 
     CreatePlaidItem:
       type: object
@@ -2595,18 +2592,17 @@ components:
           nullable: true
           description: URL for the institution's logo
 
-
     ApiTransactions:
       type: object
       properties:
         external_account_external_id:
           type: string
         external_account_source:
-          $ref: '#/components/schemas/TransactionSource'
+          $ref: "#/components/schemas/TransactionSource"
         transactions:
           type: array
           items:
-            $ref: '#/components/schemas/ApiBankTransactionDataOnly'
+            $ref: "#/components/schemas/ApiBankTransactionDataOnly"
     AccountStatus:
       type: string
       enum:
@@ -2625,7 +2621,7 @@ components:
           type: string
           format: date-time
         method:
-          $ref: '#/components/schemas/PaymentMethod'
+          $ref: "#/components/schemas/PaymentMethod"
         fee:
           type: integer
           format: int64
@@ -2641,11 +2637,11 @@ components:
         allocations:
           type: array
           items:
-            $ref: '#/components/schemas/ApiInvoicePaymentAllocation'
+            $ref: "#/components/schemas/ApiInvoicePaymentAllocation"
         transaction_tags:
           type: array
           items:
-            $ref: '#/components/schemas/ApiTag'
+            $ref: "#/components/schemas/ApiTag"
     ApiBankTransaction:
       type: object
       properties:
@@ -2658,7 +2654,7 @@ components:
           format: uuid
           description: Universally unique identifier of the business
         source:
-          $ref: '#/components/schemas/TransactionSource'
+          $ref: "#/components/schemas/TransactionSource"
         source_transaction_id:
           type: string
           description: Transaction ID from the source
@@ -2674,7 +2670,7 @@ components:
           format: date-time
           description: Date of the transaction
         direction:
-          $ref: '#/components/schemas/BankTransactionDirection'
+          $ref: "#/components/schemas/BankTransactionDirection"
         amount:
           type: integer
           format: int64
@@ -2692,27 +2688,27 @@ components:
           nullable: true
           description: Name of the bank account
         categorization_status:
-          $ref: '#/components/schemas/CategorizationStatus'
+          $ref: "#/components/schemas/CategorizationStatus"
         category:
-          $ref: '#/components/schemas/ApiCategorization'
+          $ref: "#/components/schemas/ApiCategorization"
         categorization_method:
-          $ref: '#/components/schemas/ClassifierAgent'
+          $ref: "#/components/schemas/ClassifierAgent"
         categorization_flow:
-          $ref: '#/components/schemas/ApiCategorizationFlow'
+          $ref: "#/components/schemas/ApiCategorizationFlow"
         categorization_ux:
-          $ref: '#/components/schemas/CategorizationUX'
+          $ref: "#/components/schemas/CategorizationUX"
         projected_income_category:
-          $ref: '#/components/schemas/ProjectedIncomeCategory'
+          $ref: "#/components/schemas/ProjectedIncomeCategory"
         suggested_matches:
           type: array
           items:
-            $ref: '#/components/schemas/ApiSuggestedMatch'
+            $ref: "#/components/schemas/ApiSuggestedMatch"
         match:
-          $ref: '#/components/schemas/ApiMatch'
+          $ref: "#/components/schemas/ApiMatch"
         transaction_tags:
           type: array
           items:
-            $ref: '#/components/schemas/ApiTag'
+            $ref: "#/components/schemas/ApiTag"
     ApiManualLedgerEntry:
       type: object
       properties:
@@ -2740,12 +2736,12 @@ components:
           type: string
           description: External ID of the external account
         external_account_source:
-          $ref: '#/components/schemas/TransactionSource'
+          $ref: "#/components/schemas/TransactionSource"
         external_account_name:
           type: string
           description: Name of the external account
         latest_balance_timestamp:
-          $ref: '#/components/schemas/ApiBalanceTimestamp'
+          $ref: "#/components/schemas/ApiBalanceTimestamp"
         current_ledger_balance:
           type: integer
           format: int64
@@ -2755,7 +2751,7 @@ components:
           nullable: true
           description: Masked account number of the external account
         institution:
-          $ref: '#/components/schemas/ApiExternalAccountInstitution'
+          $ref: "#/components/schemas/ApiExternalAccountInstitution"
         connection_needs_repair_as_of:
           type: string
           format: date-time
@@ -2765,18 +2761,18 @@ components:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/AccountIdentifier'
+          $ref: "#/components/schemas/AccountIdentifier"
         name:
           type: string
           description: Name of the account
         stable_name:
-          $ref: '#/components/schemas/AccountStableName'
+          $ref: "#/components/schemas/AccountStableName"
         normality:
-          $ref: '#/components/schemas/BankTransactionDirection'
+          $ref: "#/components/schemas/BankTransactionDirection"
         account_type:
-          $ref: '#/components/schemas/ApiLedgerAccountType'
+          $ref: "#/components/schemas/ApiLedgerAccountType"
         account_subtype:
-          $ref: '#/components/schemas/ApiLedgerAccountSubtype'
+          $ref: "#/components/schemas/ApiLedgerAccountSubtype"
     ApiCustomAccount:
       type: object
       properties:
@@ -2823,10 +2819,10 @@ components:
           type: string
         agent:
           oneOf:
-            - $ref: '#/components/schemas/ClassifierAgent'
+            - $ref: "#/components/schemas/ClassifierAgent"
         entry_type:
           oneOf:
-            - $ref: '#/components/schemas/LedgerEntryType'
+            - $ref: "#/components/schemas/LedgerEntryType"
         date:
           type: string
           format: date-time
@@ -2842,19 +2838,19 @@ components:
         line_items:
           type: array
           items:
-            $ref: '#/components/schemas/ApiLineItem'
+            $ref: "#/components/schemas/ApiLineItem"
         transaction:
           oneOf:
-            - $ref: '#/components/schemas/ApiBankTransaction'
+            - $ref: "#/components/schemas/ApiBankTransaction"
         invoice:
           oneOf:
-            - $ref: '#/components/schemas/ApiInvoice'
+            - $ref: "#/components/schemas/ApiInvoice"
         manual_entry:
           oneOf:
-            - $ref: '#/components/schemas/ApiManualLedgerEntry'
+            - $ref: "#/components/schemas/ApiManualLedgerEntry"
         source:
           oneOf:
-            - $ref: '#/components/schemas/LedgerEntrySource'
+            - $ref: "#/components/schemas/LedgerEntrySource"
     ApiLineItem:
       type: object
       properties:
@@ -2863,12 +2859,12 @@ components:
         entry_id:
           type: string
         account:
-          $ref: '#/components/schemas/SingleApiChartAccount'
+          $ref: "#/components/schemas/SingleApiChartAccount"
         amount:
           type: integer
           format: int64
         direction:
-          $ref: '#/components/schemas/BankTransactionDirection'
+          $ref: "#/components/schemas/BankTransactionDirection"
         entry_at:
           type: string
           format: date-time
@@ -2890,14 +2886,14 @@ components:
           type: integer
           format: int64
         processor:
-          $ref: '#/components/schemas/PaymentProcessor'
+          $ref: "#/components/schemas/PaymentProcessor"
         completed_at:
           type: string
           format: date-time
         payments:
           type: array
           items:
-            $ref: '#/components/schemas/PayoutPaymentInput'
+            $ref: "#/components/schemas/PayoutPaymentInput"
         overwrite_payment_fees:
           type: boolean
           nullable: true
@@ -2928,7 +2924,7 @@ components:
           type: integer
           format: int64
         processor:
-          $ref: '#/components/schemas/PaymentProcessor'
+          $ref: "#/components/schemas/PaymentProcessor"
         imported_at:
           type: string
           format: date-time
@@ -2937,33 +2933,33 @@ components:
           format: date-time
         match:
           oneOf:
-            - $ref: '#/components/schemas/ApiMatch'
+            - $ref: "#/components/schemas/ApiMatch"
         payments:
           type: array
           items:
-            $ref: '#/components/schemas/ApiInvoicePayment'
+            $ref: "#/components/schemas/ApiInvoicePayment"
         transaction_tags:
           type: array
           items:
-            $ref: '#/components/schemas/ApiTag'
+            $ref: "#/components/schemas/ApiTag"
     ApiExternalAccounts:
       type: object
       properties:
         external_accounts:
           type: array
           items:
-            $ref: '#/components/schemas/ApiExternalAccount'
+            $ref: "#/components/schemas/ApiExternalAccount"
     ApiLedger:
       type: object
       properties:
         accounts:
           type: array
           items:
-            $ref: '#/components/schemas/NestedApiLedgerAccount'
+            $ref: "#/components/schemas/NestedApiLedgerAccount"
         entries:
           type: array
           items:
-            $ref: '#/components/schemas/ApiLedgerEntry'
+            $ref: "#/components/schemas/ApiLedgerEntry"
     PlaidConfigurationInput:
       type: object
       properties:
@@ -2983,10 +2979,10 @@ components:
           type: string
         agent:
           oneOf:
-            - $ref: '#/components/schemas/ClassifierAgent'
+            - $ref: "#/components/schemas/ClassifierAgent"
         entry_type:
           oneOf:
-            - $ref: '#/components/schemas/LedgerEntryType'
+            - $ref: "#/components/schemas/LedgerEntryType"
         date:
           type: string
           format: date-time
@@ -3002,40 +2998,40 @@ components:
         line_items:
           type: array
           items:
-            $ref: '#/components/schemas/ApiLineItem'
+            $ref: "#/components/schemas/ApiLineItem"
 
     NestedApiChartAccount:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/AccountIdentifier'
+          $ref: "#/components/schemas/AccountIdentifier"
         name:
           type: string
         stable_name:
           oneOf:
-            - $ref: '#/components/schemas/AccountStableName'
+            - $ref: "#/components/schemas/AccountStableName"
         normality:
-          $ref: '#/components/schemas/BankTransactionDirection'
+          $ref: "#/components/schemas/BankTransactionDirection"
         account_type:
           oneOf:
-            - $ref: '#/components/schemas/ApiLedgerAccountType'
+            - $ref: "#/components/schemas/ApiLedgerAccountType"
         account_subtype:
           oneOf:
-            - $ref: '#/components/schemas/ApiLedgerAccountSubtype'
+            - $ref: "#/components/schemas/ApiLedgerAccountSubtype"
         sub_accounts:
           type: array
           items:
-            $ref: '#/components/schemas/NestedApiChartAccount'
+            $ref: "#/components/schemas/NestedApiChartAccount"
     CreateLedgerEntryLineItem:
       type: object
       properties:
         account_identifier:
-          $ref: '#/components/schemas/AccountIdentifier'
+          $ref: "#/components/schemas/AccountIdentifier"
         amount:
           type: integer
           format: int64
         direction:
-          $ref: '#/components/schemas/BankTransactionDirection'
+          $ref: "#/components/schemas/BankTransactionDirection"
     TagKeyValue:
       type: object
       properties:
@@ -3048,7 +3044,7 @@ components:
       properties:
         account_identifier:
           oneOf:
-            - $ref: '#/components/schemas/AccountIdentifier'
+            - $ref: "#/components/schemas/AccountIdentifier"
         description:
           type: string
           nullable: true
@@ -3068,7 +3064,7 @@ components:
         sales_taxes:
           type: array
           items:
-            $ref: '#/components/schemas/ApiTaxLineItem'
+            $ref: "#/components/schemas/ApiTaxLineItem"
           nullable: true
         is_prepayment:
           type: boolean
@@ -3080,7 +3076,7 @@ components:
           type: string
           nullable: true
         method:
-          $ref: '#/components/schemas/PaymentMethod'
+          $ref: "#/components/schemas/PaymentMethod"
         fee:
           type: integer
           format: int64
@@ -3096,7 +3092,7 @@ components:
       properties:
         tax_account:
           oneOf:
-            - $ref: '#/components/schemas/TaxAccountIdentifier'
+            - $ref: "#/components/schemas/TaxAccountIdentifier"
         amount:
           type: integer
           format: int64
@@ -3163,7 +3159,7 @@ components:
           type: string
           format: uuid
         source:
-          $ref: '#/components/schemas/TransactionSource'
+          $ref: "#/components/schemas/TransactionSource"
         source_transaction_id:
           type: string
         source_account_id:
@@ -3175,7 +3171,7 @@ components:
           type: string
           format: date-time
         direction:
-          $ref: '#/components/schemas/BankTransactionDirection'
+          $ref: "#/components/schemas/BankTransactionDirection"
         amount:
           type: integer
           format: int64
@@ -3189,7 +3185,7 @@ components:
           type: string
           nullable: true
         categorization_status:
-          $ref: '#/components/schemas/CategorizationStatus'
+          $ref: "#/components/schemas/CategorizationStatus"
     ApiMatchDetails:
       type: object
       required:
@@ -3227,7 +3223,7 @@ components:
           format: uuid
         account_identifier:
           oneOf:
-            - $ref: '#/components/schemas/AccountIdentifier'
+            - $ref: "#/components/schemas/AccountIdentifier"
         description:
           type: string
           nullable: true
@@ -3235,7 +3231,7 @@ components:
           type: string
           nullable: true
         unit_price:
-          $ref: '#/components/schemas/SignedAmount'
+          $ref: "#/components/schemas/SignedAmount"
         quantity:
           type: number
           format: bigdecimal
@@ -3251,7 +3247,7 @@ components:
         sales_taxes:
           type: array
           items:
-            $ref: '#/components/schemas/ApiTaxLineItem'
+            $ref: "#/components/schemas/ApiTaxLineItem"
           nullable: true
         total_amount:
           type: integer
@@ -3271,7 +3267,7 @@ components:
         transaction_tags:
           type: array
           items:
-            $ref: '#/components/schemas/ApiTag'
+            $ref: "#/components/schemas/ApiTag"
     PaymentMethod:
       type: string
       enum:
@@ -3295,8 +3291,6 @@ components:
         - payment
         - refund
         - payment_refund
-
-
 
     ClassifierAgent:
       type: string
@@ -3534,8 +3528,6 @@ components:
         - CITRUS_NO_LICENSING
         - FLORIST
 
-
-
     ClientStringName:
       type: string
       enum:
@@ -3563,15 +3555,15 @@ components:
         usState:
           nullable: true
           allOf:
-            - $ref: '#/components/schemas/USState'
+            - $ref: "#/components/schemas/USState"
         entityType:
           nullable: true
           allOf:
-            - $ref: '#/components/schemas/BusinessType'
+            - $ref: "#/components/schemas/BusinessType"
         industry:
           nullable: true
           allOf:
-            - $ref: '#/components/schemas/BusinessIndustry'
+            - $ref: "#/components/schemas/BusinessIndustry"
         phoneNumber:
           type: string
           nullable: true
@@ -3593,22 +3585,22 @@ components:
         unitIds:
           type: array
           items:
-            $ref: '#/components/schemas/NewBusinessUnitAccountId'
+            $ref: "#/components/schemas/NewBusinessUnitAccountId"
           nullable: true
         internalBankAccountIds:
           type: array
           items:
-            $ref: '#/components/schemas/NewBusinessUnitAccountId'
+            $ref: "#/components/schemas/NewBusinessUnitAccountId"
           nullable: true
         plaidItems:
           type: array
           items:
-            $ref: '#/components/schemas/CreatePlaidItem'
+            $ref: "#/components/schemas/CreatePlaidItem"
           nullable: true
         stripeConnectAccounts:
           type: array
           items:
-            $ref: '#/components/schemas/StripeConnectAccountInput'
+            $ref: "#/components/schemas/StripeConnectAccountInput"
           nullable: true
     ApiExternalAccountInstitution:
       type: object
@@ -3625,9 +3617,9 @@ components:
           type: string
           format: uuid
         matchType:
-          $ref: '#/components/schemas/MatchType'
+          $ref: "#/components/schemas/MatchType"
         details:
-          $ref: '#/components/schemas/ApiMatchDetails'
+          $ref: "#/components/schemas/ApiMatchDetails"
     CategorizationUX:
       type: object
       properties:
@@ -3637,14 +3629,14 @@ components:
         options:
           type: array
           items:
-            $ref: '#/components/schemas/CategorizationOption'
+            $ref: "#/components/schemas/CategorizationOption"
 
     CategorizationOption:
       oneOf:
-        - $ref: '#/components/schemas/CategorizationOption_MenuOption'
-        - $ref: '#/components/schemas/CategorizationOption_CategorizeOption'
-        - $ref: '#/components/schemas/CategorizationOption_SplitOption'
-        - $ref: '#/components/schemas/CategorizationOption_FreeSelectOption'
+        - $ref: "#/components/schemas/CategorizationOption_MenuOption"
+        - $ref: "#/components/schemas/CategorizationOption_CategorizeOption"
+        - $ref: "#/components/schemas/CategorizationOption_SplitOption"
+        - $ref: "#/components/schemas/CategorizationOption_FreeSelectOption"
 
     CategorizationOption_MenuOption:
       type: object
@@ -3659,7 +3651,7 @@ components:
         menu_options:
           type: array
           items:
-            $ref: '#/components/schemas/CategorizationOption'
+            $ref: "#/components/schemas/CategorizationOption"
 
     CategorizationOption_CategorizeOption:
       type: object
@@ -3672,7 +3664,7 @@ components:
           type: string
           nullable: true
         account:
-          $ref: '#/components/schemas/ApiCategorization'
+          $ref: "#/components/schemas/ApiCategorization"
 
     CategorizationOption_SplitOption:
       type: object
@@ -3703,14 +3695,14 @@ components:
       type: object
       properties:
         type:
-          $ref: '#/components/schemas/InputStrategy'
+          $ref: "#/components/schemas/InputStrategy"
         category:
           oneOf:
-            - $ref: '#/components/schemas/ApiCategorization'
+            - $ref: "#/components/schemas/ApiCategorization"
         suggestions:
           type: array
           items:
-            $ref: '#/components/schemas/ApiCategorization'
+            $ref: "#/components/schemas/ApiCategorization"
           nullable: true
     CategorizationStatus:
       type: string
@@ -3752,7 +3744,7 @@ components:
           type: string
           format: date-time
         method:
-          $ref: '#/components/schemas/PaymentMethod'
+          $ref: "#/components/schemas/PaymentMethod"
         fee:
           type: integer
           format: int64
@@ -3766,7 +3758,7 @@ components:
         invoice_payments:
           type: array
           items:
-            $ref: '#/components/schemas/InvoicePaymentAllocationInput'
+            $ref: "#/components/schemas/InvoicePaymentAllocationInput"
     InvoicePaymentAllocationInput:
       type: object
       properties:
@@ -3795,7 +3787,7 @@ components:
           type: string
           format: date-time
         method:
-          $ref: '#/components/schemas/RefundPaymentMethod'
+          $ref: "#/components/schemas/RefundPaymentMethod"
         processor:
           type: string
           nullable: true
@@ -3821,24 +3813,24 @@ components:
         entry_id:
           type: string
         account:
-          $ref: '#/components/schemas/SingleApiChartAccount'
+          $ref: "#/components/schemas/SingleApiChartAccount"
         amount:
           type: integer
           format: int64
         direction:
-          $ref: '#/components/schemas/BankTransactionDirection'
+          $ref: "#/components/schemas/BankTransactionDirection"
         date:
           type: string
           format: date-time
         source:
-          $ref: '#/components/schemas/LedgerEntrySource'
+          $ref: "#/components/schemas/LedgerEntrySource"
         running_balance:
           type: integer
           format: int64
         transaction:
-          $ref: '#/components/schemas/ApiBankTransaction'
+          $ref: "#/components/schemas/ApiBankTransaction"
         invoice:
-          $ref: '#/components/schemas/ApiInvoice'
+          $ref: "#/components/schemas/ApiInvoice"
     ProfitAndLoss:
       type: object
       properties:
@@ -3852,30 +3844,30 @@ components:
           type: string
           format: date-time
         income:
-          $ref: '#/components/schemas/LineItem'
+          $ref: "#/components/schemas/LineItem"
         cost_of_goods_sold:
           oneOf:
-            - $ref: '#/components/schemas/LineItem'
+            - $ref: "#/components/schemas/LineItem"
         gross_profit:
           type: integer
           format: int64
         expenses:
-          $ref: '#/components/schemas/LineItem'
+          $ref: "#/components/schemas/LineItem"
         profit_before_taxes:
           type: integer
           format: int64
         taxes:
-          $ref: '#/components/schemas/LineItem'
+          $ref: "#/components/schemas/LineItem"
         net_profit:
           type: integer
           format: int64
         other_outflows:
           oneOf:
-            - $ref: '#/components/schemas/LineItem'
+            - $ref: "#/components/schemas/LineItem"
           nullable: true
         personal_expenses:
           oneOf:
-            - $ref: '#/components/schemas/LineItem'
+            - $ref: "#/components/schemas/LineItem"
         fully_categorized:
           type: boolean
     SuggestedMatchesWithTransactions:
@@ -3884,7 +3876,7 @@ components:
         match_pairs:
           type: array
           items:
-            $ref: '#/components/schemas/SuggestedMatchWithTransaction'
+            $ref: "#/components/schemas/SuggestedMatchWithTransaction"
     SuggestedMatchWithTransaction:
       type: object
       properties:
@@ -3907,7 +3899,7 @@ components:
           description: Whether to sync transactions for this item
         institution:
           oneOf:
-            - $ref: '#/components/schemas/ApiPlaidInstitution'
+            - $ref: "#/components/schemas/ApiPlaidInstitution"
           description: The financial institution associated with this item (may be null for older items)
     LedgerEntryType:
       type: string
@@ -3919,7 +3911,7 @@ components:
       type: object
       properties:
         value:
-          $ref: '#/components/schemas/LedgerAccountType'
+          $ref: "#/components/schemas/LedgerAccountType"
         display_name:
           type: string
 
@@ -3937,7 +3929,7 @@ components:
       type: object
       properties:
         value:
-          $ref: '#/components/schemas/LedgerAccountSubtype'
+          $ref: "#/components/schemas/LedgerAccountSubtype"
         display_name:
           type: string
 
@@ -3984,11 +3976,11 @@ components:
         categories:
           type: array
           items:
-            $ref: '#/components/schemas/NestedApiCategorization'
+            $ref: "#/components/schemas/NestedApiCategorization"
     AccountIdentifier:
       oneOf:
-        - $ref: '#/components/schemas/AccountId'
-        - $ref: '#/components/schemas/AccountStableName'
+        - $ref: "#/components/schemas/AccountId"
+        - $ref: "#/components/schemas/AccountStableName"
 
     AccountId:
       type: object
@@ -4010,7 +4002,7 @@ components:
           type: string
           format: uuid
         source:
-          $ref: '#/components/schemas/TransactionSource'
+          $ref: "#/components/schemas/TransactionSource"
         source_transaction_id:
           type: string
         source_account_id:
@@ -4022,7 +4014,7 @@ components:
           type: string
           format: date-time
         direction:
-          $ref: '#/components/schemas/BankTransactionDirection'
+          $ref: "#/components/schemas/BankTransactionDirection"
         amount:
           type: integer
           format: int64
@@ -4036,20 +4028,20 @@ components:
           type: string
           nullable: true
         categorization_status:
-          $ref: '#/components/schemas/CategorizationStatus'
+          $ref: "#/components/schemas/CategorizationStatus"
         category:
-          $ref: '#/components/schemas/ApiCategorization'
+          $ref: "#/components/schemas/ApiCategorization"
         categorization_method:
           oneOf:
-            - $ref: '#/components/schemas/ClassifierAgent'
+            - $ref: "#/components/schemas/ClassifierAgent"
         categorization_flow:
           oneOf:
-            - $ref: '#/components/schemas/ApiCategorizationFlow'
+            - $ref: "#/components/schemas/ApiCategorizationFlow"
         categorization_ux:
           oneOf:
-            - $ref: '#/components/schemas/CategorizationUX'
+            - $ref: "#/components/schemas/CategorizationUX"
         projected_income_category:
-          $ref: '#/components/schemas/ProjectedIncomeCategory'
+          $ref: "#/components/schemas/ProjectedIncomeCategory"
 
     SplitBankTransactionPnlEntry:
       type: object
@@ -4061,7 +4053,7 @@ components:
           type: string
           format: uuid
         source:
-          $ref: '#/components/schemas/TransactionSource'
+          $ref: "#/components/schemas/TransactionSource"
         source_transaction_id:
           type: string
         source_account_id:
@@ -4073,7 +4065,7 @@ components:
           type: string
           format: date-time
         direction:
-          $ref: '#/components/schemas/BankTransactionDirection'
+          $ref: "#/components/schemas/BankTransactionDirection"
         amount:
           type: integer
           format: int64
@@ -4087,20 +4079,20 @@ components:
           type: string
           nullable: true
         categorization_status:
-          $ref: '#/components/schemas/CategorizationStatus'
+          $ref: "#/components/schemas/CategorizationStatus"
         category:
-          $ref: '#/components/schemas/ApiCategorization'
+          $ref: "#/components/schemas/ApiCategorization"
         categorization_method:
           oneOf:
-            - $ref: '#/components/schemas/ClassifierAgent'
+            - $ref: "#/components/schemas/ClassifierAgent"
         categorization_flow:
           oneOf:
-            - $ref: '#/components/schemas/ApiCategorizationFlow'
+            - $ref: "#/components/schemas/ApiCategorizationFlow"
         categorization_ux:
           oneOf:
-            - $ref: '#/components/schemas/CategorizationUX'
+            - $ref: "#/components/schemas/CategorizationUX"
         projected_income_category:
-          $ref: '#/components/schemas/ProjectedIncomeCategory'
+          $ref: "#/components/schemas/ProjectedIncomeCategory"
     NewCustomTransactionParams:
       type: object
       properties:
@@ -4110,7 +4102,7 @@ components:
           type: integer
           format: int64
         direction:
-          $ref: '#/components/schemas/BankTransactionDirection'
+          $ref: "#/components/schemas/BankTransactionDirection"
         date:
           type: string
           format: date-time
@@ -4121,7 +4113,7 @@ components:
           type: string
           nullable: true
         currency_code:
-          $ref: '#/components/schemas/CurrencyCode'
+          $ref: "#/components/schemas/CurrencyCode"
         description:
           type: string
         display_description:
@@ -4153,7 +4145,7 @@ components:
           type: string
           format: uuid
         source:
-          $ref: '#/components/schemas/TransactionSource'
+          $ref: "#/components/schemas/TransactionSource"
         source_transaction_id:
           type: string
         source_account_id:
@@ -4165,7 +4157,7 @@ components:
           type: string
           format: date-time
         direction:
-          $ref: '#/components/schemas/BankTransactionDirection'
+          $ref: "#/components/schemas/BankTransactionDirection"
         amount:
           type: integer
           format: int64
@@ -4179,22 +4171,22 @@ components:
           type: string
           nullable: true
         categorization_status:
-          $ref: '#/components/schemas/CategorizationStatus'
+          $ref: "#/components/schemas/CategorizationStatus"
     SignedAmount:
       type: integer
       format: int64
     ExclusionClassification:
       oneOf:
-        - $ref: '#/components/schemas/Exclusion'
+        - $ref: "#/components/schemas/Exclusion"
       discriminator:
         propertyName: classificationType
         mapping:
-          Exclusion: '#/components/schemas/Exclusion'
+          Exclusion: "#/components/schemas/Exclusion"
     Exclusion:
       type: object
       properties:
         exclusion_type:
-          $ref: '#/components/schemas/ExclusionType'
+          $ref: "#/components/schemas/ExclusionType"
       required:
         - exclusion_type
     ExclusionType:
@@ -4211,19 +4203,19 @@ components:
     ApiCategorization:
       description: Base schema for categorization of API entities.
       oneOf:
-        - $ref: '#/components/schemas/AccountCategorization'
-        - $ref: '#/components/schemas/ExclusionCategorization'
-        - $ref: '#/components/schemas/SplitCategorization'
-        - $ref: '#/components/schemas/NestedApiCategorization'
+        - $ref: "#/components/schemas/AccountCategorization"
+        - $ref: "#/components/schemas/ExclusionCategorization"
+        - $ref: "#/components/schemas/SplitCategorization"
+        - $ref: "#/components/schemas/NestedApiCategorization"
       discriminator:
         propertyName: type
         mapping:
-          Account: '#/components/schemas/AccountCategorization'
-          Exclusion: '#/components/schemas/ExclusionCategorization'
-          Split_Categorization: '#/components/schemas/SplitCategorization'
-          AccountNested: '#/components/schemas/NestedAccountCategorization'
-          OptionalAccountNested: '#/components/schemas/NestedOptionalCatetoryCategorization'
-          ExclusionNested: '#/components/schemas/NestedExclusionCategorization'
+          Account: "#/components/schemas/AccountCategorization"
+          Exclusion: "#/components/schemas/ExclusionCategorization"
+          Split_Categorization: "#/components/schemas/SplitCategorization"
+          AccountNested: "#/components/schemas/NestedAccountCategorization"
+          OptionalAccountNested: "#/components/schemas/NestedOptionalCatetoryCategorization"
+          ExclusionNested: "#/components/schemas/NestedExclusionCategorization"
     AccountCategorization:
       type: object
       properties:
@@ -4261,7 +4253,7 @@ components:
           type: integer
           format: int64
         category:
-          $ref: '#/components/schemas/AccountCategorization'
+          $ref: "#/components/schemas/AccountCategorization"
     SplitCategorization:
       type: object
       properties:
@@ -4277,20 +4269,20 @@ components:
         entries:
           type: array
           items:
-            $ref: '#/components/schemas/SplitCategorizationEntry'
+            $ref: "#/components/schemas/SplitCategorizationEntry"
       required:
         - entries
     NestedApiCategorization:
       type: object
       oneOf:
-        - $ref: '#/components/schemas/NestedAccountCategorization'
-        - $ref: '#/components/schemas/NestedOptionalCatetoryCategorization'
-        - $ref: '#/components/schemas/NestedExclusionCategorization'
+        - $ref: "#/components/schemas/NestedAccountCategorization"
+        - $ref: "#/components/schemas/NestedOptionalCatetoryCategorization"
+        - $ref: "#/components/schemas/NestedExclusionCategorization"
 
     NestedApiSubCategories:
       type: array
       items:
-        $ref: '#/components/schemas/NestedApiCategorization'
+        $ref: "#/components/schemas/NestedApiCategorization"
       nullable: true
 
     NestedAccountCategorization:
@@ -4307,7 +4299,7 @@ components:
         display_name:
           type: string
         subCategories:
-          $ref: '#/components/schemas/NestedApiSubCategories'
+          $ref: "#/components/schemas/NestedApiSubCategories"
 
     NestedOptionalCatetoryCategorization:
       type: object
@@ -4322,7 +4314,7 @@ components:
         display_name:
           type: string
         subCategories:
-          $ref: '#/components/schemas/NestedApiSubCategories'
+          $ref: "#/components/schemas/NestedApiSubCategories"
 
     NestedExclusionCategorization:
       type: object
@@ -4334,7 +4326,7 @@ components:
         display_name:
           type: string
         subCategories:
-          $ref: '#/components/schemas/NestedApiSubCategories'
+          $ref: "#/components/schemas/NestedApiSubCategories"
 
     AccountName:
       type: string
@@ -4343,21 +4335,21 @@ components:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/AccountId'
+          $ref: "#/components/schemas/AccountId"
         accountStableName:
           oneOf:
-            - $ref: '#/components/schemas/AccountStableName'
+            - $ref: "#/components/schemas/AccountStableName"
         number:
           type: integer
         name:
-          $ref: '#/components/schemas/AccountName'
+          $ref: "#/components/schemas/AccountName"
         subAccounts:
           type: array
           items:
-            $ref: '#/components/schemas/Account'
+            $ref: "#/components/schemas/Account"
           nullable: true
         normality:
-          $ref: '#/components/schemas/BankTransactionDirection'
+          $ref: "#/components/schemas/BankTransactionDirection"
         balance:
           type: integer
           format: int64
@@ -4367,7 +4359,7 @@ components:
         entries:
           type: array
           items:
-            $ref: '#/components/schemas/ApiLineItem'
+            $ref: "#/components/schemas/ApiLineItem"
     ConfirmMatch:
       type: object
       properties:
@@ -4377,13 +4369,13 @@ components:
     TaxAccountIdentifier:
       type: object
       oneOf:
-        - $ref: '#/components/schemas/LedgerAccountIdentifier'
-        - $ref: '#/components/schemas/TaxName'
+        - $ref: "#/components/schemas/LedgerAccountIdentifier"
+        - $ref: "#/components/schemas/TaxName"
       discriminator:
         propertyName: type
         mapping:
-          Legder_Account_Id: '#/components/schemas/LedgerAccountIdentifier'
-          Tax_Name: '#/components/schemas/TaxName'
+          Legder_Account_Id: "#/components/schemas/LedgerAccountIdentifier"
+          Tax_Name: "#/components/schemas/TaxName"
     LedgerAccountIdentifier:
       type: object
       properties:
@@ -4413,38 +4405,38 @@ components:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/AccountId'
+          $ref: "#/components/schemas/AccountId"
         name:
           type: string
         stable_name:
           oneOf:
-            - $ref: '#/components/schemas/AccountStableName'
+            - $ref: "#/components/schemas/AccountStableName"
         normality:
-          $ref: '#/components/schemas/BankTransactionDirection'
+          $ref: "#/components/schemas/BankTransactionDirection"
         account_type:
           oneOf:
-            - $ref: '#/components/schemas/ApiLedgerAccountType'
+            - $ref: "#/components/schemas/ApiLedgerAccountType"
         account_subtype:
           oneOf:
-            - $ref: '#/components/schemas/ApiLedgerAccountSubtype'
+            - $ref: "#/components/schemas/ApiLedgerAccountSubtype"
         balance:
           type: integer
           format: int64
         entries:
           type: array
           items:
-            $ref: '#/components/schemas/ApiLineItem'
+            $ref: "#/components/schemas/ApiLineItem"
         sub_accounts:
           type: array
           items:
-            $ref: '#/components/schemas/NestedApiLedgerAccount'
+            $ref: "#/components/schemas/NestedApiLedgerAccount"
     ApiBalanceTimestamp:
       type: object
       properties:
         external_account_external_id:
           type: string
         external_account_source:
-          $ref: '#/components/schemas/TransactionSource'
+          $ref: "#/components/schemas/TransactionSource"
         balance:
           type: integer
           format: int64
@@ -4457,23 +4449,23 @@ components:
     LedgerEntrySource:
       type: object
       oneOf:
-        - $ref: '#/components/schemas/TransactionLedgerEntrySource'
-        - $ref: '#/components/schemas/InvoiceLedgerEntrySource'
-        - $ref: '#/components/schemas/ManualLedgerEntrySource'
-        - $ref: '#/components/schemas/InvoicePaymentLedgerEntrySource'
-        - $ref: '#/components/schemas/RefundPaymentLedgerEntrySource'
-        - $ref: '#/components/schemas/OpeningBalanceLedgerEntrySource'
-        - $ref: '#/components/schemas/PayoutLedgerEntrySource'
+        - $ref: "#/components/schemas/TransactionLedgerEntrySource"
+        - $ref: "#/components/schemas/InvoiceLedgerEntrySource"
+        - $ref: "#/components/schemas/ManualLedgerEntrySource"
+        - $ref: "#/components/schemas/InvoicePaymentLedgerEntrySource"
+        - $ref: "#/components/schemas/RefundPaymentLedgerEntrySource"
+        - $ref: "#/components/schemas/OpeningBalanceLedgerEntrySource"
+        - $ref: "#/components/schemas/PayoutLedgerEntrySource"
       discriminator:
         propertyName: type
         mapping:
-          Transaction_Ledger_Entry_Source: '#/components/schemas/TransactionLedgerEntrySource'
-          Invoice_Ledger_Entry_Source: '#/components/schemas/InvoiceLedgerEntrySource'
-          Manual_Ledger_Entry_Source: '#/components/schemas/ManualLedgerEntrySource'
-          Invoice_Payment_Ledger_Entry_Source: '#/components/schemas/InvoicePaymentLedgerEntrySource'
-          Refund_Ledger_Entry_Source: '#/components/schemas/RefundPaymentLedgerEntrySource'
-          Opening_Balance_Ledger_Entry_Source: '#/components/schemas/OpeningBalanceLedgerEntrySource'
-          Payout_Ledger_Entry_Source: '#/components/schemas/PayoutLedgerEntrySource'
+          Transaction_Ledger_Entry_Source: "#/components/schemas/TransactionLedgerEntrySource"
+          Invoice_Ledger_Entry_Source: "#/components/schemas/InvoiceLedgerEntrySource"
+          Manual_Ledger_Entry_Source: "#/components/schemas/ManualLedgerEntrySource"
+          Invoice_Payment_Ledger_Entry_Source: "#/components/schemas/InvoicePaymentLedgerEntrySource"
+          Refund_Ledger_Entry_Source: "#/components/schemas/RefundPaymentLedgerEntrySource"
+          Opening_Balance_Ledger_Entry_Source: "#/components/schemas/OpeningBalanceLedgerEntrySource"
+          Payout_Ledger_Entry_Source: "#/components/schemas/PayoutLedgerEntrySource"
     TransactionLedgerEntrySource:
       type: object
       properties:
@@ -4491,7 +4483,7 @@ components:
           type: integer
           format: int64
         direction:
-          $ref: '#/components/schemas/BankTransactionDirection'
+          $ref: "#/components/schemas/BankTransactionDirection"
         counterparty:
           type: string
           nullable: true
@@ -4634,13 +4626,13 @@ components:
         - OTHER
     BankTransactionCategorization:
       oneOf:
-        - $ref: '#/components/schemas/Category'
-        - $ref: '#/components/schemas/ApiSplitInput'
+        - $ref: "#/components/schemas/Category"
+        - $ref: "#/components/schemas/ApiSplitInput"
     Category:
       type: object
       properties:
         category:
-          $ref: '#/components/schemas/BankTransactionClassification'
+          $ref: "#/components/schemas/BankTransactionClassification"
     SplitEntry:
       type: object
       properties:
@@ -4648,18 +4640,18 @@ components:
           type: integer
           format: int64
         category:
-          $ref: '#/components/schemas/BankTransactionClassification'
+          $ref: "#/components/schemas/BankTransactionClassification"
     BankTransactionClassification:
       oneOf:
-        - $ref: '#/components/schemas/ExclusionClassification'
-        - $ref: '#/components/schemas/AccountIdentifier'
+        - $ref: "#/components/schemas/ExclusionClassification"
+        - $ref: "#/components/schemas/AccountIdentifier"
     ApiSplitInput:
       type: object
       properties:
         entries:
           type: array
           items:
-            $ref: '#/components/schemas/SplitEntry'
+            $ref: "#/components/schemas/SplitEntry"
     AuthToken:
       type: object
       properties:
@@ -4683,7 +4675,7 @@ components:
         line_items:
           type: array
           items:
-            $ref: '#/components/schemas/LineItem'
+            $ref: "#/components/schemas/LineItem"
         is_contra:
           type: boolean
       required:
@@ -4707,24 +4699,24 @@ components:
       discriminator:
         propertyName: type
         mapping:
-          Categorize_Transaction_Activity: '#/components/schemas/ApiCategorizeBankTransactionActivity'
-          Load_PnL_Activity: '#/components/schemas/ApiLoadPnlActivity'
+          Categorize_Transaction_Activity: "#/components/schemas/ApiCategorizeBankTransactionActivity"
+          Load_PnL_Activity: "#/components/schemas/ApiLoadPnlActivity"
       oneOf:
-        - $ref: '#/components/schemas/ApiCategorizeBankTransactionActivity'
-        - $ref: '#/components/schemas/ApiLoadPnlActivity'
+        - $ref: "#/components/schemas/ApiCategorizeBankTransactionActivity"
+        - $ref: "#/components/schemas/ApiLoadPnlActivity"
 
     ApiCategorizeBankTransactionActivity:
       type: object
       allOf:
-        - $ref: '#/components/schemas/ApiTypedActivity'
+        - $ref: "#/components/schemas/ApiTypedActivity"
       properties:
         transactionId:
           type: string
           format: uuid
         categorizationMethod:
-          $ref: '#/components/schemas/ClassifierAgent'
+          $ref: "#/components/schemas/ClassifierAgent"
         categorization:
-          $ref: '#/components/schemas/BankTransactionCategorization'
+          $ref: "#/components/schemas/BankTransactionCategorization"
       required:
         - transactionId
         - categorizationMethod
@@ -4733,7 +4725,7 @@ components:
     ApiLoadPnlActivity:
       type: object
       allOf:
-        - $ref: '#/components/schemas/ApiTypedActivity'
+        - $ref: "#/components/schemas/ApiTypedActivity"
       properties:
         pnlStartDate:
           type: string
@@ -4758,7 +4750,7 @@ components:
         unit_account_id:
           type: string
         direction:
-          $ref: '#/components/schemas/BankTransactionDirection'
+          $ref: "#/components/schemas/BankTransactionDirection"
         balance:
           type: integer
           format: int64
@@ -4819,7 +4811,7 @@ components:
           type: string
           format: uuid
         direction:
-          $ref: '#/components/schemas/BankTransactionDirection'
+          $ref: "#/components/schemas/BankTransactionDirection"
         balance:
           type: integer
           format: int64
@@ -4849,11 +4841,11 @@ components:
           nullable: true
         category:
           oneOf:
-            - $ref: '#/components/schemas/ApiCategorization'
+            - $ref: "#/components/schemas/ApiCategorization"
           nullable: true
         categorizationStatus:
           oneOf:
-            - $ref: '#/components/schemas/CategorizationStatus'
+            - $ref: "#/components/schemas/CategorizationStatus"
           nullable: true
         previouslyImported:
           type: boolean

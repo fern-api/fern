@@ -10,14 +10,14 @@ types:
       type: Type
       value: string
       label: string
-  
+
   BasicType:
     enum:
       - name: Primitive
         value: primitive
       - name: Literal
         value: literal
-  
+
   ComplexType:
     enum:
       - name: Object

@@ -91,7 +91,9 @@ public final class MapValue {
         }
 
         public Builder addAllKeyValuePairs(List<KeyValuePair> keyValuePairs) {
-            this.keyValuePairs.addAll(keyValuePairs);
+            if (keyValuePairs != null) {
+                this.keyValuePairs.addAll(keyValuePairs);
+            }
             return this;
         }
 

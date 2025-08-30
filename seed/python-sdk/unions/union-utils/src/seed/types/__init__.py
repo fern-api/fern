@@ -2,25 +2,68 @@
 
 # isort: skip_file
 
-from .types import (
-    Bar,
-    Foo,
-    FooExtended,
-    Union,
-    UnionWithBaseProperties,
-    UnionWithDiscriminant,
-    UnionWithDuplicatePrimitive,
-    UnionWithDuplicateTypes,
-    UnionWithLiteral,
-    UnionWithMultipleNoProperties,
-    UnionWithNoProperties,
-    UnionWithOptionalTime,
-    UnionWithPrimitive,
-    UnionWithSingleElement,
-    UnionWithSubTypes,
-    UnionWithTime,
-    UnionWithoutKey,
-)
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .types import (
+        Bar,
+        Foo,
+        FooExtended,
+        Union,
+        UnionWithBaseProperties,
+        UnionWithDiscriminant,
+        UnionWithDuplicatePrimitive,
+        UnionWithDuplicateTypes,
+        UnionWithLiteral,
+        UnionWithMultipleNoProperties,
+        UnionWithNoProperties,
+        UnionWithOptionalTime,
+        UnionWithPrimitive,
+        UnionWithSingleElement,
+        UnionWithSubTypes,
+        UnionWithTime,
+        UnionWithoutKey,
+    )
+_dynamic_imports: typing.Dict[str, str] = {
+    "Bar": ".types",
+    "Foo": ".types",
+    "FooExtended": ".types",
+    "Union": ".types",
+    "UnionWithBaseProperties": ".types",
+    "UnionWithDiscriminant": ".types",
+    "UnionWithDuplicatePrimitive": ".types",
+    "UnionWithDuplicateTypes": ".types",
+    "UnionWithLiteral": ".types",
+    "UnionWithMultipleNoProperties": ".types",
+    "UnionWithNoProperties": ".types",
+    "UnionWithOptionalTime": ".types",
+    "UnionWithPrimitive": ".types",
+    "UnionWithSingleElement": ".types",
+    "UnionWithSubTypes": ".types",
+    "UnionWithTime": ".types",
+    "UnionWithoutKey": ".types",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "Bar",

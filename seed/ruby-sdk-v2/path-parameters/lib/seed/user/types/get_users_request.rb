@@ -1,9 +1,12 @@
+# frozen_string_literal: true
 
 module Seed
-    module User
-        class GetUsersRequest
-            field :tenant_id, String, optional: false, nullable: false
-            field :user_id, String, optional: false, nullable: false
-
+  module User
+    module Types
+      class GetUsersRequest < Internal::Types::Model
+        field :tenant_id, -> { String }, optional: false, nullable: false
+        field :user_id, -> { String }, optional: false, nullable: false
+      end
     end
+  end
 end

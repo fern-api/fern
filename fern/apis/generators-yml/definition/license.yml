@@ -4,9 +4,9 @@ types:
     union:
       - GithubLicenseType
       - GithubLicenseCustomSchema
-  
-  GithubLicenseType: 
-    enum: 
+
+  GithubLicenseType:
+    enum:
       - MIT
       - name: Apache
         value: Apache-2.0

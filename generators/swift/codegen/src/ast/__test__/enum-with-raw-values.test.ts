@@ -2,6 +2,17 @@ import { swift } from "../..";
 
 describe("Enum", () => {
     describe("write", () => {
+        it("should correctly render empty enum", () => {
+            const enum_ = swift.enumWithRawValues({
+                name: "EmptyEnum",
+                cases: []
+            });
+
+            expect(enum_.toString()).toMatchInlineSnapshot(`
+              "enum EmptyEnum {}"
+            `);
+        });
+
         it("should omit raw values if they are the same as the case names", () => {
             const enum_ = swift.enumWithRawValues({
                 name: "Direction",

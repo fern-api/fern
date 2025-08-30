@@ -127,7 +127,9 @@ public final class User {
 
         @java.lang.Override
         public _FinalStage putAllExtraProperties(Map<String, String> extraProperties) {
-            this.extraProperties.putAll(extraProperties);
+            if (extraProperties != null) {
+                this.extraProperties.putAll(extraProperties);
+            }
             return this;
         }
 
@@ -141,7 +143,9 @@ public final class User {
 
         @java.lang.Override
         public _FinalStage addAllMetadataTags(List<String> metadataTags) {
-            this.metadataTags.addAll(metadataTags);
+            if (metadataTags != null) {
+                this.metadataTags.addAll(metadataTags);
+            }
             return this;
         }
 
