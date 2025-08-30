@@ -2,14 +2,15 @@ import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { dynamic } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+
 import { DynamicSnippetsCsharpTestGenerator } from "./csharp/DynamicSnippetsCsharpTestGenerator";
 import { DynamicSnippetsTestSuite } from "./DynamicSnippetsTestSuite";
 import { DynamicSnippetsGoTestGenerator } from "./go/DynamicSnippetsGoTestGenerator";
 import { DynamicSnippetsJavaTestGenerator } from "./java/DynamicSnippetsJavaTestGenerator";
 import { DynamicSnippetsPhpTestGenerator } from "./php/DynamicSnippetsPhpTestGenerator";
 import { DynamicSnippetsPythonTestGenerator } from "./python/DynamicSnippetsPythonTestGenerator";
+import { DynamicSnippetsRubyTestGenerator } from "./ruby/DynamicSnippetsRubyTestGenerator";
 import { DynamicSnippetsTypeScriptTestGenerator } from "./typescript/DynamicSnippetsTypeScriptTestGenerator";
 
 interface DynamicSnippetsGenerator {
@@ -44,7 +45,7 @@ export class DynamicSnippetsTestGenerator {
         // TODO: Re-enable dynamic snippet tests when example generation is resolved.
         typescript: { generator: DynamicSnippetsTypeScriptTestGenerator, unstable: true },
         python: { generator: DynamicSnippetsPythonTestGenerator, unstable: true },
-        ruby: undefined,
+        ruby: { generator: DynamicSnippetsRubyTestGenerator },
         rust: undefined,
         swift: undefined
     };
