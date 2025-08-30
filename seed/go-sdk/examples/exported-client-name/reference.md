@@ -769,6 +769,7 @@ client.Service.CreateBigEntity(
 ```go
 client.Service.RefreshToken(
         context.TODO(),
+        nil,
     )
 }
 ```

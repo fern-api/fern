@@ -17,5 +17,6 @@ func do() {
     )
     client.Service.RefreshToken(
         context.TODO(),
+        nil,
     )
 }
