@@ -6,7 +6,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct GetSubmissionStateResponse {
     #[serde(rename = "timeSubmitted")]
-    #[serde(with = "chrono::serde::ts_seconds_option")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub time_submitted: Option<chrono::DateTime<chrono::Utc>>,
     pub submission: String,

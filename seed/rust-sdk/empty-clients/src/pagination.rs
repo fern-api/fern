@@ -7,7 +7,7 @@ use std::task::{Context, Poll};
 use futures::Stream;
 use serde_json::Value;
 
-use crate::{ClientError, HttpClient};
+use crate::{ApiError, HttpClient};
 
 /// Result of a pagination request
 #[derive(Debug)]
@@ -20,11 +20,11 @@ pub struct PaginationResult<T> {
 /// Async paginator that implements Stream for iterating over paginated results
 pub struct AsyncPaginator<T> {
     http_client: Arc<HttpClient>,
-    page_loader: Box<dyn Fn(Arc<HttpClient>, Option<String>) -> Pin<Box<dyn Future<Output = Result<PaginationResult<T>, ClientError>> + Send>> + Send + Sync>,
+    page_loader: Box<dyn Fn(Arc<HttpClient>, Option<String>) -> Pin<Box<dyn Future<Output = Result<PaginationResult<T>, ApiError>> + Send>> + Send + Sync>,
     current_page: VecDeque<T>,
     current_cursor: Option<String>,
     has_next_page: bool,
-    loading_next: Option<Pin<Box<dyn Future<Output = Result<PaginationResult<T>, ClientError>> + Send>>>,
+    loading_next: Option<Pin<Box<dyn Future<Output = Result<PaginationResult<T>, ApiError>> + Send>>>,
 }
 
 impl<T> AsyncPaginator<T> {
@@ -32,10 +32,10 @@ impl<T> AsyncPaginator<T> {
         http_client: Arc<HttpClient>,
         page_loader: F,
         initial_cursor: Option<String>,
-    ) -> Result<Self, ClientError>
+    ) -> Result<Self, ApiError>
     where
         F: Fn(Arc<HttpClient>, Option<String>) -> Fut + Send + Sync + 'static,
-        Fut: Future<Output = Result<PaginationResult<T>, ClientError>> + Send + 'static,
+        Fut: Future<Output = Result<PaginationResult<T>, ApiError>> + Send + 'static,
     {
         Ok(Self {
             http_client,
@@ -53,7 +53,7 @@ impl<T> AsyncPaginator<T> {
     }
 
     /// Load the next page explicitly
-    pub async fn next_page(&mut self) -> Result<Vec<T>, ClientError> {
+    pub async fn next_page(&mut self) -> Result<Vec<T>, ApiError> {
         if !self.has_next_page {
             return Ok(Vec::new());
         }
@@ -71,7 +71,7 @@ impl<T> Stream for AsyncPaginator<T>
 where
     T: Unpin,
 {
-    type Item = Result<T, ClientError>;
+    type Item = Result<T, ApiError>;
 
     fn poll_next(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
         // If we have items in the current page, return the next one
@@ -147,7 +147,7 @@ where
 /// Synchronous paginator for blocking iteration
 pub struct SyncPaginator<T> {
     http_client: Arc<HttpClient>,
-    page_loader: Box<dyn Fn(Arc<HttpClient>, Option<String>) -> Result<PaginationResult<T>, ClientError> + Send + Sync>,
+    page_loader: Box<dyn Fn(Arc<HttpClient>, Option<String>) -> Result<PaginationResult<T>, ApiError> + Send + Sync>,
     current_page: VecDeque<T>,
     current_cursor: Option<String>,
     has_next_page: bool,
@@ -158,9 +158,9 @@ impl<T> SyncPaginator<T> {
         http_client: Arc<HttpClient>,
         page_loader: F,
         initial_cursor: Option<String>,
-    ) -> Result<Self, ClientError>
+    ) -> Result<Self, ApiError>
     where
-        F: Fn(Arc<HttpClient>, Option<String>) -> Result<PaginationResult<T>, ClientError> + Send + Sync + 'static,
+        F: Fn(Arc<HttpClient>, Option<String>) -> Result<PaginationResult<T>, ApiError> + Send + Sync + 'static,
     {
         Ok(Self {
             http_client,
@@ -177,7 +177,7 @@ impl<T> SyncPaginator<T> {
     }
 
     /// Load the next page explicitly
-    pub fn next_page(&mut self) -> Result<Vec<T>, ClientError> {
+    pub fn next_page(&mut self) -> Result<Vec<T>, ApiError> {
         if !self.has_next_page {
             return Ok(Vec::new());
         }
@@ -191,7 +191,7 @@ impl<T> SyncPaginator<T> {
     }
 
     /// Get all remaining items by loading all pages
-    pub fn collect_all(&mut self) -> Result<Vec<T>, ClientError> {
+    pub fn collect_all(&mut self) -> Result<Vec<T>, ApiError> {
         let mut all_items = Vec::new();
         
         // Add items from current page
@@ -210,7 +210,7 @@ impl<T> SyncPaginator<T> {
 }
 
 impl<T> Iterator for SyncPaginator<T> {
-    type Item = Result<T, ClientError>;
+    type Item = Result<T, ApiError>;
 
     fn next(&mut self) -> Option<Self::Item> {
         // If we have items in the current page, return the next one

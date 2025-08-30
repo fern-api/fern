@@ -9,8 +9,8 @@ export const AsIsFileNames = {
     ApiClientBuilder: "api_client_builder.rs",
     HttpClient: "http_client.rs",
     RequestOptions: "request_options.rs",
-    ClientError: "client_error.rs",
     Pagination: "pagination.rs",
+    QueryParameterBuilder: "query_parameter_builder.rs",
     // Project-level configuration files
     CargoToml: "Cargo.toml",
     Gitignore: ".gitignore",

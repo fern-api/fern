@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError};
+use crate::{ClientConfig, ApiError};
 
 pub mod auth;
 pub mod nested_no_auth;
@@ -13,7 +13,7 @@ pub struct InferredAuthExplicitClient {
 }
 
 impl InferredAuthExplicitClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
             auth: AuthClient::new(config.clone())?,

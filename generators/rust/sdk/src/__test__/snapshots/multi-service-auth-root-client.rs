@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError};
+use crate::{ClientConfig, ApiError};
 
 pub mod user;
 pub mod admin;
@@ -9,7 +9,7 @@ pub struct TestClient {
 }
 
 impl TestClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
             user: UserClient::new(config.clone())?,

@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -7,12 +7,12 @@ pub struct ServiceClient {
 }
 
 impl ServiceClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn endpoint(&self, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn endpoint(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::GET,
             "/service",
@@ -22,7 +22,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn unknown_request(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn unknown_request(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/service",

@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError};
+use crate::{ClientConfig, ApiError};
 
 pub mod ec_2;
 pub mod s_3;
@@ -9,7 +9,7 @@ pub struct MultiUrlEnvironmentClient {
 }
 
 impl MultiUrlEnvironmentClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
             ec_2: Ec2Client::new(config.clone())?,

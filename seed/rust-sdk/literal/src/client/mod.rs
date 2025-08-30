@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError};
+use crate::{ClientConfig, ApiError};
 
 pub mod headers;
 pub mod inlined;
@@ -15,7 +15,7 @@ pub struct LiteralClient {
 }
 
 impl LiteralClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
             headers: HeadersClient::new(config.clone())?,

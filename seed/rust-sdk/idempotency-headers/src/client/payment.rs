@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -7,12 +7,12 @@ pub struct PaymentClient {
 }
 
 impl PaymentClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn create(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<uuid::Uuid, ClientError> {
+    pub async fn create(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<uuid::Uuid, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/payment",
@@ -22,7 +22,7 @@ impl PaymentClient {
         ).await
     }
 
-    pub async fn delete(&self, payment_id: &String, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn delete(&self, payment_id: &String, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::DELETE,
             &format!("/payment/{}", payment_id),
