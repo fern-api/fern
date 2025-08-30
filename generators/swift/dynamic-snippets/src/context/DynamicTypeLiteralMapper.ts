@@ -47,7 +47,7 @@ export class DynamicTypeLiteralMapper {
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
             case "set":
-                // TODO(kafkas): Implement
+                // TODO(kafkas): Set is not supported yet
                 return swift.Expression.nop();
             case "unknown":
                 // TODO(kafkas): Implement
@@ -201,16 +201,14 @@ export class DynamicTypeLiteralMapper {
                 if (date == null) {
                     return swift.Expression.nop();
                 }
-                // TODO(kafkas): Implement
-                return swift.Expression.nop();
+                return swift.Expression.dateLiteral(new Date(date).getTime() / 1000);
             }
             case "DATE_TIME": {
                 const dateTime = this.context.getValueAsString({ value });
                 if (dateTime == null) {
                     return swift.Expression.nop();
                 }
-                // TODO(kafkas): Implement
-                return swift.Expression.nop();
+                return swift.Expression.dateLiteral(new Date(dateTime).getTime() / 1000);
             }
             case "UUID": {
                 const uuid = this.context.getValueAsString({ value });

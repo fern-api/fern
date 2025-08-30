@@ -106,6 +106,11 @@ type BoolLiteral = {
     value: boolean;
 };
 
+type DateLiteral = {
+    type: "date-literal";
+    timestampSeconds: number;
+};
+
 type UUIDLiteral = {
     type: "uuid-literal";
     value: string;
@@ -149,6 +154,7 @@ type InternalExpression =
     | StringLiteral
     | NumberLiteral
     | BoolLiteral
+    | DateLiteral
     | UUIDLiteral
     | DictionaryLiteral
     | ArrayLiteral
@@ -272,6 +278,9 @@ export class Expression extends AstNode {
                 break;
             case "bool-literal":
                 writer.write(this.internalExpression.value ? "True" : "False");
+                break;
+            case "date-literal":
+                writer.write(`Date(timeIntervalSince1970: ${this.internalExpression.timestampSeconds})`);
                 break;
             case "uuid-literal":
                 writer.write(`UUID(uuidString: "${this.internalExpression.value}")`);
@@ -409,6 +418,10 @@ export class Expression extends AstNode {
 
     public static boolLiteral(value: boolean): Expression {
         return new this({ type: "bool-literal", value });
+    }
+
+    public static dateLiteral(timestampSeconds: number): Expression {
+        return new this({ type: "date-literal", timestampSeconds });
     }
 
     public static uuidLiteral(value: string): Expression {
