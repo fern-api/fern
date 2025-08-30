@@ -1,5 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
+import { endpointMarkedUnstable } from "./utils/endpointAvailability";
 import {
+    AvailabilityStatus,
     ContainerType,
     DeclaredErrorName,
     DeclaredTypeName,
@@ -229,6 +231,10 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private checkServiceBreakingChanges({ id, from, to }: { id: string; from: HttpService; to: HttpService }): void {
+        if (from.endpoints.every(endpointMarkedUnstable)) {
+            return;
+        }
+
         this.checkHeadersBreakingChanges({ id, from: from.headers, to: to.headers });
         this.checkEndpointsBreakingChanges({ id, from, to });
     }
@@ -247,6 +253,10 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private checkEndpointBreakingChanges({ id, from, to }: { id: string; from: HttpEndpoint; to: HttpEndpoint }): void {
+        if (endpointMarkedUnstable(from)) {
+            return;
+        }
+
         this.checkHttpMethodsBreakingChanges({ id, from: from.method, to: to.method });
         this.checkHttpPathsBreakingChanges({ id, from: from.fullPath, to: to.fullPath });
         this.checkPathParametersBreakingChanges({ id, from: from.pathParameters, to: to.pathParameters });
