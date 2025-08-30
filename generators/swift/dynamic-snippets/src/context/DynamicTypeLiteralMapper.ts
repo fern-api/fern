@@ -2,6 +2,7 @@ import { Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { swift } from "@fern-api/swift-codegen";
+import { camelCase } from "lodash-es";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 
@@ -28,9 +29,17 @@ export class DynamicTypeLiteralMapper {
         switch (args.typeReference.type) {
             case "list":
                 return this.convertList({ list: args.typeReference.value, value: args.value });
-            case "literal":
-                // TODO(kafkas): Implement
-                return swift.Expression.nop();
+            case "literal": {
+                if (args.typeReference.value.type === "string") {
+                    return swift.Expression.enumCaseShorthand(camelCase(args.typeReference.value.value));
+                } else if (args.typeReference.value.type === "boolean") {
+                    // TODO(kafkas): Boolean literals are not supported yet
+                    return swift.Expression.nop();
+                } else {
+                    assertNever(args.typeReference.value);
+                    break;
+                }
+            }
             case "map":
                 return this.convertMap({ map: args.typeReference, value: args.value });
             case "named": {
