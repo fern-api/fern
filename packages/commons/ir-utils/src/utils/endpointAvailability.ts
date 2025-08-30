@@ -1,11 +1,7 @@
-import { AvailabilityStatus, HttpEndpoint } from "@fern-api/ir-sdk";
+import { Availability, AvailabilityStatus } from "@fern-api/ir-sdk";
 
-const unstableStatuses: AvailabilityStatus[] = [
-    AvailabilityStatus.InDevelopment,
-    AvailabilityStatus.PreRelease,
-    AvailabilityStatus.Deprecated,
-];
+const stableStatuses: AvailabilityStatus[] = [AvailabilityStatus.GeneralAvailability];
 
-export function endpointMarkedUnstable(endpoint: HttpEndpoint): boolean {
-    return endpoint.availability !== undefined && unstableStatuses.includes(endpoint.availability.status);
+export function isMarkedUnstable(availability: Availability | undefined): boolean {
+    return availability !== undefined && !stableStatuses.includes(availability.status);
 }
