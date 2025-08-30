@@ -61,6 +61,44 @@ impl HttpClient {
         self.parse_response(response).await
     }
     
+    /// Execute a request with bytes body for file uploads
+    pub async fn execute_bytes_request<T>(
+        &self,
+        method: Method,
+        path: &str,
+        body: Vec<u8>,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<T, ClientError>
+    where
+        T: DeserializeOwned,
+    {
+        let url = format!("{}/{}", 
+            self.config.base_url.trim_end_matches('/'), 
+            path.trim_start_matches('/')
+        );
+        let mut request = self.client.request(method, &url);
+        
+        // Apply query parameters if provided
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+        
+        // Apply bytes body - no additional processing needed since it's already Vec<u8>
+        request = request.body(body);
+        
+        // Build the request
+        let mut req = request.build().map_err(ClientError::RequestError)?;
+        
+        // Apply authentication and headers
+        self.apply_auth_headers(&mut req, &options)?;
+        self.apply_custom_headers(&mut req, &options)?;
+        
+        // Execute with retries
+        let response = self.execute_with_retries(req, &options).await?;
+        self.parse_response(response).await
+    }
+    
     fn apply_auth_headers(&self, request: &mut Request, options: &Option<RequestOptions>) -> Result<(), ClientError> {
         let headers = request.headers_mut();
         

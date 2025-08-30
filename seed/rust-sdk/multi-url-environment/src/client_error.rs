@@ -23,4 +23,13 @@ pub enum ClientError {
     
     #[error("Configuration error: {0}")]
     ConfigError(String),
+    
+    #[error("File upload error: {0}")]
+    FileUploadError(#[from] std::io::Error),
+    
+    #[error("Invalid file data")]
+    InvalidFileData,
+    
+    #[error("File too large: {0} bytes")]
+    FileTooLarge(u64),
 }

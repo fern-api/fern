@@ -15,11 +15,16 @@ impl ServiceClient {
     pub async fn get_direct_thread(&self, options: Option<RequestOptions>) -> Result<Response, ClientError> {
         self.http_client.execute_request(
             Method::GET,
-            "/partner-path",
+            "",
             None,
             None,
             options,
         ).await
+    }
+
+}
+
+it
     }
 
 }

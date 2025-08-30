@@ -2,7 +2,7 @@ use crate::basic_type::BasicType;
 use crate::complex_type::ComplexType;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]
 pub enum Type {
         BasicType(BasicType),
