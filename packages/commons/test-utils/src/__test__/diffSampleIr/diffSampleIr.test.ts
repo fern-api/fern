@@ -30,6 +30,7 @@ describe("diff sample ir - stable versions", () => {
         const changedIr = await createSampleIr(pathToAddedEndpointWorkspace);
         const changeDetector = new IntermediateRepresentationChangeDetector();
         const changes = await changeDetector.check({ from: baseIr, to: changedIr });
+        console.log(JSON.stringify(changes, null, 2));
         expect(changes.isBreaking).toBe(false);
         expect(changes.errors).toHaveLength(0);
         expect(changes.bump).toBe("minor");
@@ -109,5 +110,4 @@ describe("diff sample ir - stable versions", () => {
         expect(changes.isBreaking).toBe(true);
         expect(changes.bump).toBe("major");
     });
-
 });
