@@ -9,6 +9,8 @@ types:
         type: double
         docs: The rating scale is one to five stars
 
+  MovieList: list<Movie>
+
   CreateMovieRequest:
     properties:
       title: string
@@ -17,6 +19,7 @@ types:
 service:
   auth: false
   base-path: /movies
+  headers:
   endpoints:
     createMovie:
       docs: Add a movie to the database using the movies/*/... path.
@@ -35,6 +38,11 @@ service:
       response: Movie
       errors:
         - MovieDoesNotExistError
+
+    listMovies:
+      method: GET
+      path: /
+      response: MovieList
 
 errors:
   MovieDoesNotExistError:

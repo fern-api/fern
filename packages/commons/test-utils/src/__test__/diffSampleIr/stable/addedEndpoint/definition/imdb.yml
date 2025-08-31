@@ -14,6 +14,11 @@ types:
       title: string
       rating: double
 
+  UpdateMovieRequest:
+    properties:
+      title: string
+      rating: double
+
 service:
   auth: false
   base-path: /movies
@@ -27,6 +32,14 @@ service:
         type: MovieId
         status-code: 201
 
+    updateMovie:
+      method: PUT
+      path: /{movieId}
+      path-parameters:
+        movieId: MovieId
+      request: UpdateMovieRequest
+      response: Movie
+
     getMovie:
       method: GET
       path: /{movieId}
@@ -35,6 +48,11 @@ service:
       response: Movie
       errors:
         - MovieDoesNotExistError
+
+    listMovies:
+      method: GET
+      path: /
+      response: list<Movie>
 
 errors:
   MovieDoesNotExistError:

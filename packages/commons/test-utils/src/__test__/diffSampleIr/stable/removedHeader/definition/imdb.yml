@@ -36,6 +36,11 @@ service:
       errors:
         - MovieDoesNotExistError
 
+    listMovies:
+      method: GET
+      path: /
+      response: list<Movie>
+
 errors:
   MovieDoesNotExistError:
     status-code: 404

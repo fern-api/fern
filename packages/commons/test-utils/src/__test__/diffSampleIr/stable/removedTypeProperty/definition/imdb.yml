@@ -5,14 +5,10 @@ types:
     properties:
       id: MovieId
       title: string
-      rating:
-        type: double
-        docs: The rating scale is one to five stars
 
   CreateMovieRequest:
     properties:
       title: string
-      rating: double
 
 service:
   auth: false
@@ -35,6 +31,11 @@ service:
       response: Movie
       errors:
         - MovieDoesNotExistError
+
+    listMovies:
+      method: GET
+      path: /
+      response: list<Movie>
 
 errors:
   MovieDoesNotExistError:
