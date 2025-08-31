@@ -28,14 +28,18 @@ async function expectDiff(fromPath: AbsoluteFilePath, toPath: AbsoluteFilePath, 
     const to = await createSampleIr(toPath);
     const changeDetector = new IntermediateRepresentationChangeDetector();
     const changes = await changeDetector.check({ from, to });
-    console.log(`changes.errors: ${JSON.stringify(changes.errors, null, 2)}`);
-    // biome-ignore lint/suspicious/noMisplacedAssertion: test helper function
-    expect(changes.isBreaking).toBe(isBreaking);
-    // biome-ignore lint/suspicious/noMisplacedAssertion: test helper function
-    expect(changes.bump).toBe(isBreaking ? "major" : "minor");
-    if (!isBreaking) {
+    try {
         // biome-ignore lint/suspicious/noMisplacedAssertion: test helper function
-        expect(changes.errors).toHaveLength(0);
+        expect(changes.isBreaking).toBe(isBreaking);
+        // biome-ignore lint/suspicious/noMisplacedAssertion: test helper function
+        expect(changes.bump).toBe(isBreaking ? "major" : "minor");
+        if (!isBreaking) {
+            // biome-ignore lint/suspicious/noMisplacedAssertion: test helper function
+            expect(changes.errors).toHaveLength(0);
+        }
+    } catch (error) {
+        console.log(`changes.errors: ${JSON.stringify(changes.errors, null, 2)}`);
+        throw error;
     }
 }
 
