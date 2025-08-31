@@ -5,6 +5,7 @@ import com.fern.ir.model.auth.AuthScheme;
 import com.fern.ir.model.auth.BasicAuthScheme;
 import com.fern.ir.model.auth.BearerAuthScheme;
 import com.fern.ir.model.auth.HeaderAuthScheme;
+import com.fern.ir.model.auth.InferredAuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.java.AbstractGeneratorContext;
@@ -93,6 +94,11 @@ public final class AuthToSpringParameterSpecConverter {
                             .addMember("value", "$S", AUTHORIZATION_HEADER_NAME)
                             .build())
                     .build();
+        }
+
+        @Override
+        public ParameterSpec visitInferred(InferredAuthScheme value) {
+            throw new UnsupportedOperationException("Inferred auth schemes are not supported");
         }
 
         @Override
