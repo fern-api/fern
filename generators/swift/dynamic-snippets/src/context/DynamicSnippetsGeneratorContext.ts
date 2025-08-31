@@ -5,8 +5,9 @@ import {
 } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BaseSwiftCustomConfigSchema } from "@fern-api/swift-codegen";
-import { camelCase, upperFirst } from "lodash-es";
+import { camelCase } from "lodash-es";
 
+import { pascalCase } from "../util/pascal-case";
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { FilePropertyMapper } from "./FilePropertyMapper";
@@ -50,14 +51,10 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     private getBaseNamePrefix(): string {
-        return this.pascalCase(this.config.organization) + this.pascalCase(this.getApiName());
+        return pascalCase(this.config.organization) + pascalCase(this.getApiName());
     }
 
     private getApiName(): string {
         return camelCase(this.config.workspaceName);
-    }
-
-    private pascalCase(str: string) {
-        return upperFirst(camelCase(str));
     }
 }

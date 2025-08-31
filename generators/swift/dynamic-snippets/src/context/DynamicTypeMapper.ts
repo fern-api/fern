@@ -2,6 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { swift } from "@fern-api/swift-codegen";
 
+import { pascalCase } from "../util/pascal-case";
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 
 export declare namespace DynamicTypeMapper {
@@ -71,8 +72,7 @@ export class DynamicTypeMapper {
                 // TODO(kafkas): Boolean literals are not supported yet
                 return swift.Type.bool();
             case "string":
-                // TODO(kafkas): Implement
-                return swift.Type.string();
+                return swift.Type.custom(pascalCase(literal.value));
         }
     }
 

@@ -60,8 +60,7 @@ export class DynamicTypeLiteralMapper {
                 // TODO(kafkas): Set is not supported yet
                 return swift.Expression.nop();
             case "unknown":
-                // TODO(kafkas): Implement
-                return swift.Expression.nop();
+                return this.convertUnknown(args.value);
             default:
                 assertNever(args.typeReference);
         }
@@ -366,6 +365,75 @@ export class DynamicTypeLiteralMapper {
             message: `None of the types in the undiscriminated union matched the given "${typeof value}" value`
         });
         return undefined;
+    }
+
+    private convertUnknown(value: unknown): swift.Expression {
+        switch (typeof value) {
+            case "boolean": {
+                return swift.Expression.contextualMethodCall({
+                    methodName: "bool",
+                    arguments_: [
+                        swift.functionArgument({
+                            value: swift.Expression.boolLiteral(value)
+                        })
+                    ]
+                });
+            }
+            case "string": {
+                return swift.Expression.contextualMethodCall({
+                    methodName: "string",
+                    arguments_: [
+                        swift.functionArgument({
+                            value: swift.Expression.stringLiteral(value)
+                        })
+                    ]
+                });
+            }
+            case "number": {
+                return swift.Expression.contextualMethodCall({
+                    methodName: "number",
+                    arguments_: [
+                        swift.functionArgument({
+                            value: swift.Expression.numberLiteral(value)
+                        })
+                    ]
+                });
+            }
+            case "object": {
+                if (value === null) {
+                    return swift.Expression.enumCaseShorthand("null");
+                }
+                if (Array.isArray(value)) {
+                    return swift.Expression.contextualMethodCall({
+                        methodName: "array",
+                        arguments_: [
+                            swift.functionArgument({
+                                value: swift.Expression.arrayLiteral({
+                                    elements: value.map((v) => this.convertUnknown(v)),
+                                    multiline: true
+                                })
+                            })
+                        ]
+                    });
+                }
+                return swift.Expression.contextualMethodCall({
+                    methodName: "object",
+                    arguments_: [
+                        swift.functionArgument({
+                            value: swift.Expression.dictionaryLiteral({
+                                entries: Object.entries(value).map(([key, value]) => [
+                                    swift.Expression.stringLiteral(key),
+                                    this.convertUnknown(value)
+                                ]),
+                                multiline: true
+                            })
+                        })
+                    ]
+                });
+            }
+            default:
+                throw new Error(`Internal error; unsupported unknown type: ${typeof value}`);
+        }
     }
 
     private convertPrimitive({
