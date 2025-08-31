@@ -12,7 +12,7 @@ const addedOptionalTypeProperty = AbsoluteFilePath.of(resolve(__dirname, "stable
 const addedHeader = AbsoluteFilePath.of(resolve(__dirname, "stable/addedHeader"));
 const addedUnstableEndpoint = AbsoluteFilePath.of(resolve(__dirname, "unstable/addedUnstableEndpoint"));
 const addedUnstableType = AbsoluteFilePath.of(resolve(__dirname, "unstable/addedUnstableType"));
-const serviceUnstable = AbsoluteFilePath.of(resolve(__dirname, "unstable/serviceUnstableBase"));
+const serviceUnstable = AbsoluteFilePath.of(resolve(__dirname, "unstable/unstableServiceBase"));
 const unstableAddedEndpoint = AbsoluteFilePath.of(resolve(__dirname, "unstable/unstableServiceAddedEndpoint"));
 const unstableAddedType = AbsoluteFilePath.of(resolve(__dirname, "unstable/unstableServiceAddedType"));
 const unstableAddedHeader = AbsoluteFilePath.of(resolve(__dirname, "unstable/unstableServiceAddedHeader"));
@@ -47,12 +47,12 @@ describe("diff sample ir - stable versions", () => {
     it.each([
         { testCase: [base, base, false], name: "base to base" },
         { testCase: [base, addedEndpoint, false], name: "adding endpoint" },
-        { testCase: [base, addedType, false], name: "adding type" },
+        { testCase: [base, addedType, false], name: "adding unreferencedtype" },
         { testCase: [base, addedHeader, true], name: "adding header" },
         { testCase: [base, addedRequiredTypeProperty, true], name: "adding required type property" },
         { testCase: [base, addedOptionalTypeProperty, false], name: "adding optional type property" },
         { testCase: [addedEndpoint, base, true], name: "removing endpoint" },
-        { testCase: [addedType, base, true], name: "removing type" },
+        { testCase: [addedType, base, false], name: "removing unreferencedtype" },
         { testCase: [addedHeader, base, true], name: "removing header" },
         { testCase: [addedRequiredTypeProperty, base, true], name: "removing required type property" },
         { testCase: [addedOptionalTypeProperty, base, true], name: "removing optional type property" }
