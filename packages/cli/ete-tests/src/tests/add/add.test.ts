@@ -1,4 +1,4 @@
-import { getDirectoryContents, getDirectoryContentsForSnapshot } from "@fern-api/fs-utils";
+import { getDirectoryContentsForSnapshot } from "@fern-api/fs-utils";
 
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";

@@ -1,7 +1,7 @@
 name: conjure
-docs: | 
+docs: |
   This API Definition captures the Conjure API Schema. 
-  This schema is built for Fern's Conjure importer, which 
-  
+  This schema is built for Fern's Conjure importer, which
+
 error-discrimination:
   strategy: status-code

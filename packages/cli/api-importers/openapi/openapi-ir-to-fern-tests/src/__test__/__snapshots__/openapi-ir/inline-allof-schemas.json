@@ -1,0 +1,140 @@
+{
+  "title": "Inline allOf schemas with required property overrides",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Base": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "baseId",
+            "key": "id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "BaseId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "baseName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "BaseName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "baseDescription",
+            "key": "description",
+            "schema": {
+              "generatedName": "baseDescription",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "BaseDescription",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Base",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ChildMakesDescriptionRequired": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "childMakesDescriptionRequiredId",
+            "key": "id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ChildMakesDescriptionRequiredId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "childMakesDescriptionRequiredName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ChildMakesDescriptionRequiredName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "childMakesDescriptionRequiredDescription",
+            "key": "description",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ChildMakesDescriptionRequiredDescription",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ChildMakesDescriptionRequired",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

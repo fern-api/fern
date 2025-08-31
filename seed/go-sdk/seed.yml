@@ -56,6 +56,9 @@ fixtures:
         clientName: Acme
         clientConstructorName: New
       readmeConfig:
+        apiName: "CustomName"
+        disabledSections:
+          - "contributing"
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /big-entity
@@ -64,6 +67,9 @@ fixtures:
             - GET /movie/{movieId}
             - method: POST
               path: /movie
+    - outputFolder: package-path
+      customConfig:
+        packagePath: pleaseinhere
   go-bytes-request:
     - outputFolder: no-custom-config
       customConfig: null
@@ -73,14 +79,12 @@ fixtures:
   imdb:
     - outputFolder: no-custom-config
       customConfig: null
-    - outputFolder: flat-package-layout
+    - outputFolder: package-path
       customConfig:
-        packageLayout: flat
-    - outputFolder: flat-package-layout-with-custom-client-name
+        packagePath: inhereplease
+    - outputFolder: deep-package-path
       customConfig:
-        packageLayout: flat
-        clientName: Acme
-        clientConstructorName: New
+        packagePath: all/the/way/in/here/please
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1
@@ -146,14 +150,6 @@ fixtures:
   package-yml:
     - outputFolder: no-custom-config
       customConfig: null
-    - outputFolder: flat-package-layout
-      customConfig:
-        packageLayout: flat
-    - outputFolder: flat-package-layout-with-custom-client-name
-      customConfig:
-        packageLayout: flat
-        clientName: Acme
-        clientConstructorName: New
   streaming:
     - outputFolder: .
       outputVersion: v2.0.0
@@ -169,6 +165,15 @@ fixtures:
         module:
           path: github.com/idempotency-headers/fern
         includeLegacyClientOptions: true
+  literals-unions:
+    - outputFolder: no-custom-config
+      customConfig: null
+  mixed-case:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: default-values
+      customConfig:
+        useDefaultRequestParameterValues: true
 scripts:
   - docker: golang:1.18-alpine
     commands:

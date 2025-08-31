@@ -7,21 +7,21 @@ import (
 	internal "github.com/error-property/fern/internal"
 	option "github.com/error-property/fern/option"
 	propertybasederror "github.com/error-property/fern/propertybasederror"
-	http "net/http"
 )
 
 type Client struct {
 	PropertyBasedError *propertybasederror.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		PropertyBasedError: propertybasederror.NewClient(opts...),
+		PropertyBasedError: propertybasederror.NewClient(options),
+		options:            options,
 		baseURL:            options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -29,6 +29,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

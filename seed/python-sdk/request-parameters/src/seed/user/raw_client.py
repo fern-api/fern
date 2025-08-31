@@ -24,11 +24,19 @@ class RawUserClient:
         self._client_wrapper = client_wrapper
 
     def create_username(
-        self, *, username: str, password: str, name: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        tags: typing.Sequence[str],
+        username: str,
+        password: str,
+        name: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
         Parameters
         ----------
+        tags : typing.Sequence[str]
+
         username : str
 
         password : str
@@ -45,6 +53,58 @@ class RawUserClient:
         _response = self._client_wrapper.httpx_client.request(
             "user/username",
             method="POST",
+            params={
+                "tags": tags,
+            },
+            json={
+                "username": username,
+                "password": password,
+                "name": name,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def create_username_with_referenced_type(
+        self,
+        *,
+        tags: typing.Sequence[str],
+        username: str,
+        password: str,
+        name: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
+        """
+        Parameters
+        ----------
+        tags : typing.Sequence[str]
+
+        username : str
+
+        password : str
+
+        name : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "user/username-referenced",
+            method="POST",
+            params={
+                "tags": tags,
+            },
             json={
                 "username": username,
                 "password": password,
@@ -176,11 +236,19 @@ class AsyncRawUserClient:
         self._client_wrapper = client_wrapper
 
     async def create_username(
-        self, *, username: str, password: str, name: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        tags: typing.Sequence[str],
+        username: str,
+        password: str,
+        name: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
         Parameters
         ----------
+        tags : typing.Sequence[str]
+
         username : str
 
         password : str
@@ -197,6 +265,58 @@ class AsyncRawUserClient:
         _response = await self._client_wrapper.httpx_client.request(
             "user/username",
             method="POST",
+            params={
+                "tags": tags,
+            },
+            json={
+                "username": username,
+                "password": password,
+                "name": name,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def create_username_with_referenced_type(
+        self,
+        *,
+        tags: typing.Sequence[str],
+        username: str,
+        password: str,
+        name: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
+        """
+        Parameters
+        ----------
+        tags : typing.Sequence[str]
+
+        username : str
+
+        password : str
+
+        name : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "user/username-referenced",
+            method="POST",
+            params={
+                "tags": tags,
+            },
             json={
                 "username": username,
                 "password": password,

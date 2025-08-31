@@ -82,7 +82,9 @@ public final class ObjectTypeWithMapAliasTypeBoth {
     }
 
     public Builder putAllProp(Map<AliasProperty, OtherAliasProperty> prop) {
-      this.prop.putAll(prop);
+      if (prop != null) {
+        this.prop.putAll(prop);
+      }
       return this;
     }
 

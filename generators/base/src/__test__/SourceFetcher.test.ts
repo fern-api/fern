@@ -1,5 +1,5 @@
 import { AbstractGeneratorContext } from "@fern-api/browser-compatible-base-generator";
-import { AbsoluteFilePath, getDirectoryContents, getDirectoryContentsForSnapshot } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, getDirectoryContentsForSnapshot } from "@fern-api/fs-utils";
 import path from "path";
 
 import { SourceFetcher } from "../SourceFetcher";

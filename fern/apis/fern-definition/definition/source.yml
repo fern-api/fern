@@ -1,19 +1,18 @@
-types: 
-    
-  SourceSchema: 
+types:
+  SourceSchema:
     discriminated: false
-    union: 
+    union:
       - OpenAPISourceSchema
-      - ProtobufSourceSchema 
-  
-  OpenAPISourceSchema: 
-    properties: 
-      openapi: 
+      - ProtobufSourceSchema
+
+  OpenAPISourceSchema:
+    properties:
+      openapi:
         type: string
         docs: Path to the OpenAPI spec
-  
-  ProtobufSourceSchema: 
-    properties: 
-      proto: 
+
+  ProtobufSourceSchema:
+    properties:
+      proto:
         type: string
         docs: Path to the Protobuf spec

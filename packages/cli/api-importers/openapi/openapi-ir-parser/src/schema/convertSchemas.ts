@@ -250,6 +250,13 @@ export function convertSchemaObject(
         );
     }
 
+    // const
+    // NOTE(patrickthornton): This is an attribute of OpenAPIV3_1.SchemaObject;
+    // at some point we should probably migrate to that object altogether.
+    if ("const" in schema) {
+        schema.enum = [schema.const];
+    }
+
     // enums
     if (
         schema.enum != null &&

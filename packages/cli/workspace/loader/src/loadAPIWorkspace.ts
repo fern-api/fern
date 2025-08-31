@@ -99,7 +99,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                     respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false,
                     additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false,
                     typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? true,
-                    preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false
+                    preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false,
+                    inlineAllOfSchemas: definition.settings?.inlineAllOfSchemas ?? false
                 }
             });
             continue;
@@ -170,7 +171,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                 respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false,
                 additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false,
                 typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? true,
-                preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false
+                preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false,
+                inlineAllOfSchemas: definition.settings?.inlineAllOfSchemas ?? false
             },
             source: {
                 type: "openapi",

@@ -8,23 +8,23 @@ import (
 	internal "github.com/pagination/fern/internal"
 	option "github.com/pagination/fern/option"
 	users "github.com/pagination/fern/users"
-	http "net/http"
 )
 
 type Client struct {
 	Complex *complex.Client
 	Users   *users.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		Complex: complex.NewClient(opts...),
-		Users:   users.NewClient(opts...),
+		Complex: complex.NewClient(options),
+		Users:   users.NewClient(options),
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -32,6 +32,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

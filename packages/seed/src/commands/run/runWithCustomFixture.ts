@@ -39,10 +39,6 @@ export async function runWithCustomFixture({
     const taskContext = taskContextFactory.create(
         `${workspace.workspaceName}:${"custom"} - ${customFixtureConfig?.outputFolder ?? ""}`
     );
-    console.log(
-        `Running custom fixture for ${workspace.workspaceName} with config:`,
-        JSON.stringify(customFixtureConfig)
-    );
 
     let testRunner: TestRunner;
     let scriptRunner: ScriptRunner;
@@ -106,10 +102,17 @@ export async function runWithCustomFixture({
         }
 
         const runFixtureConfig: FixtureConfigurations = {
-            customConfig: generatorGroup.config,
-            outputFolder: "",
-            ...customFixtureConfig
+            ...customFixtureConfig,
+            customConfig: {
+                ...(customFixtureConfig?.customConfig as Record<string, unknown>),
+                ...(generatorGroup.invocation.config as Record<string, unknown>)
+            },
+            outputFolder: ""
         };
+        console.log(
+            `Running custom fixture for ${workspace.workspaceName} with config:`,
+            JSON.stringify(runFixtureConfig)
+        );
 
         await testRunner.build();
 
@@ -147,7 +150,7 @@ function getGeneratorGroup({
     image: string;
     imageAliases?: string[];
     absolutePathToOutput: AbsoluteFilePath;
-}): { group: GeneratorGroup; invocation: GeneratorInvocation; config: object } | undefined {
+}): { group: GeneratorGroup; invocation: GeneratorInvocation } | undefined {
     const groups = apiWorkspace.generatorsConfiguration?.groups;
     for (const group of groups ?? []) {
         for (const generator of group.generators) {
@@ -162,8 +165,7 @@ function getGeneratorGroup({
                         ...group,
                         generators: [invocation]
                     },
-                    invocation,
-                    config: generator.config as object
+                    invocation
                 };
             }
         }

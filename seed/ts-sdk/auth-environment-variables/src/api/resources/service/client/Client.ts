@@ -59,10 +59,10 @@ export class Service {
     }
 
     private async __getWithApiKey(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<string>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
-                "X-Another-Header": requestOptions?.xAnotherHeader,
+                "X-Another-Header": requestOptions?.xAnotherHeader ?? this._options?.xAnotherHeader,
                 "X-API-Version": requestOptions?.xApiVersion ?? "01-01-2000",
                 ...(await this._getCustomAuthorizationHeaders()),
             }),
@@ -133,11 +133,11 @@ export class Service {
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const { "X-Endpoint-Header": xEndpointHeader } = request;
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 "X-Endpoint-Header": xEndpointHeader,
-                "X-Another-Header": requestOptions?.xAnotherHeader,
+                "X-Another-Header": requestOptions?.xAnotherHeader ?? this._options?.xAnotherHeader,
                 "X-API-Version": requestOptions?.xApiVersion ?? "01-01-2000",
                 ...(await this._getCustomAuthorizationHeaders()),
             }),

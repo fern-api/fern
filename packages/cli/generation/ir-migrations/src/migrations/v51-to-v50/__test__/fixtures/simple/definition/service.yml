@@ -32,7 +32,7 @@ service:
                   type: goose
                 - name: Bob
                   type: goose
-    
+
     get:
       method: GET
       path: /{userId}
@@ -42,9 +42,8 @@ service:
         status-code: 201
         type: User
       examples:
-        - code-samples: 
+        - code-samples:
             - language: typescript
-              code: | 
+              code: |
                 const client = new Client();
                 const user = client.users.get(1234);
-        

@@ -1,4 +1,4 @@
-import { isOpenAPIV2, isOpenAPIV3_1 } from "@fern-api/api-workspace-commons";
+import { isOpenAPIV2 } from "@fern-api/api-workspace-commons";
 import { mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
 import { getParseOptions, OpenAPIDocument } from "@fern-api/openapi-ir-parser";
 import { OpenAPI, OpenAPIV3 } from "openapi-types";

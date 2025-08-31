@@ -4,19 +4,19 @@ info:
   title: Default Content Type
   version: v1
 servers:
-- url: https://ai.com
+  - url: https://ai.com
 paths:
   "/generateContent":
     post:
       tags:
-      - generativelanguage
+        - generativelanguage
       operationId: GenerateContent
       parameters:
-      - name: model
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: model
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         default:
           description: Successful operation
@@ -24,9 +24,9 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/GenerateContentResponse"
-components: 
-  schemas: 
-    GenerateContentResponse: 
-      properties: 
-        bar: 
+components:
+  schemas:
+    GenerateContentResponse:
+      properties:
+        bar:
           type: string

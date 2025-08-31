@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use DateTime;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,6 +11,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->primitive->getAndReturnString(
-    'string',
+$client->endpoints->primitive->getAndReturnDate(
+    new DateTime('2023-01-15'),
 );

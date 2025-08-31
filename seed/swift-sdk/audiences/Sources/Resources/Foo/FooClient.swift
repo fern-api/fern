@@ -7,7 +7,7 @@ public final class FooClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func find(optionalString: OptionalString, request: FindRequest, requestOptions: RequestOptions? = nil) async throws -> ImportingType {
+    public func find(optionalString: OptionalString, request: Requests.FindRequest, requestOptions: RequestOptions? = nil) async throws -> ImportingType {
         return try await httpClient.performRequest(
             method: .post,
             path: "/",

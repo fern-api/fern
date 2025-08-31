@@ -8,23 +8,23 @@ import (
 	internal "github.com/unions/fern/internal"
 	option "github.com/unions/fern/option"
 	union "github.com/unions/fern/union"
-	http "net/http"
 )
 
 type Client struct {
 	Bigunion *bigunion.Client
 	Union    *union.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		Bigunion: bigunion.NewClient(opts...),
-		Union:    union.NewClient(opts...),
+		Bigunion: bigunion.NewClient(options),
+		Union:    union.NewClient(options),
+		options:  options,
 		baseURL:  options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -32,6 +32,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

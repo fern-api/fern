@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "sendText2": {
+      "type": "string"
+    },
+    "sendParam2": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "sendText2",
+    "sendParam2"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

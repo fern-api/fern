@@ -4,6 +4,10 @@
 
 The Seed Go library provides convenient access to the Seed API from Go.
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:

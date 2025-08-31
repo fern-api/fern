@@ -17,4 +17,3 @@ jobs:
         run: |
           gh run watch ${{ inputs.run_id }} > /dev/null 2>&1
           gh run rerun ${{ inputs.run_id }} --failed
-          

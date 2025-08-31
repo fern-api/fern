@@ -1,4 +1,4 @@
-import { DiscriminatedUnionTypeInstance, Severity, TypeInstance } from "@fern-api/browser-compatible-base-generator";
+import { Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { java } from "@fern-api/java-ast";

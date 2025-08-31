@@ -5,7 +5,7 @@ module Seed
     module Types
       # Module for defining enums
       module Enum
-        include Seed::Internal::Types::Type
+        include Type
 
         # @api private
         #
@@ -45,4 +45,4 @@ module Seed
       end
     end
   end
-end 
+end

@@ -7,21 +7,21 @@ import (
 	internal "github.com/undiscriminated-unions/fern/internal"
 	option "github.com/undiscriminated-unions/fern/option"
 	union "github.com/undiscriminated-unions/fern/union"
-	http "net/http"
 )
 
 type Client struct {
 	Union *union.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		Union:   union.NewClient(opts...),
+		Union:   union.NewClient(options),
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -29,6 +29,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

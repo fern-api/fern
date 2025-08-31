@@ -3,7 +3,7 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FJava)
 [![Maven Central](https://img.shields.io/maven-central/v/com.fern/basic-auth)](https://central.sonatype.com/artifact/com.fern/basic-auth)
 
-The Seed Java library provides convenient access to the Seed API from Java.
+The Seed Java library provides convenient access to the Seed APIs from Java.
 
 ## Installation
 
@@ -146,6 +146,32 @@ client.basicAuth().postWithBasicAuth(
     RequestOptions
         .builder()
         .timeout(10)
+        .build()
+);
+```
+
+### Custom Headers
+
+The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
+
+```java
+import com.seed.basicAuth.SeedBasicAuthClient;
+import com.seed.basicAuth.core.RequestOptions;
+
+// Client level
+SeedBasicAuthClient client = SeedBasicAuthClient
+    .builder()
+    .addHeader("X-Custom-Header", "custom-value")
+    .addHeader("X-Request-Id", "abc-123")
+    .build();
+;
+
+// Request level
+client.basicAuth().postWithBasicAuth(
+    ...,
+    RequestOptions
+        .builder()
+        .addHeader("X-Request-Header", "request-value")
         .build()
 );
 ```

@@ -1,6 +1,5 @@
 import { python } from "..";
 import { Writer } from "../core/Writer";
-import { ClassMethodType } from "../Method";
 import { OperatorType } from "../OperatorType";
 
 describe("Lambda", () => {

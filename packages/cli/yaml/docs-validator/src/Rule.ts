@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Logger } from "@fern-api/logger";
-import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 
 import { DocsConfigFileAstNodeTypes } from "./docsAst/DocsConfigFileAstVisitor";
 

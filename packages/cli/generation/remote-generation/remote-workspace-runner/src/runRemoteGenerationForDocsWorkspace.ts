@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { replaceEnvVariables } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 
 import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { publishDocs } from "./publishDocs";

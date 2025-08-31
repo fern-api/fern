@@ -6,9 +6,7 @@
     "rootDir": "src",
     "types": ["vitest/globals"]
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
       "path": "../../packages/cli/fern-definition/schema"
@@ -21,6 +19,6 @@
     },
     {
       "path": "../../packages/commons/path-utils"
-    },
+    }
   ]
 }

@@ -6,13 +6,7 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { ExportsManager, ImportsManager, Reference, TypeReferenceNode } from "@fern-typescript/commons";
-import {
-    BaseContext,
-    GeneratedType,
-    GeneratedTypeReferenceExample,
-    TypeContext,
-    TypeSchemaContext
-} from "@fern-typescript/contexts";
+import { BaseContext, GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import {

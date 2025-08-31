@@ -4,7 +4,6 @@ import {
     HttpService,
     TypeDeclaration,
     Webhook,
-    WebSocketChannel,
     WebSocketChannelId
 } from "@fern-api/ir-sdk";
 

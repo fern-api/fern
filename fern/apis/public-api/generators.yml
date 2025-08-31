@@ -9,7 +9,7 @@ groups:
         version: 0.9.2
         output:
           location: npm
-          package-name: '@fern-api/node-sdk'
+          package-name: "@fern-api/node-sdk"
           token: ${NPM_TOKEN}
         github:
           repository: fern-api/node-sdk

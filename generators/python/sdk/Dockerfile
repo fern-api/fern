@@ -8,7 +8,7 @@ RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github
 COPY ./generators/python-v2/sdk/dist/cli.cjs /dist/cli.cjs
 
 # Stage 2: Base Python image with dependencies
-FROM python:3.9.14 AS python-base
+FROM python:3.11.13 AS python-base
 
 # Install node and npm.
 ENV NODE_VERSION=18.20.1

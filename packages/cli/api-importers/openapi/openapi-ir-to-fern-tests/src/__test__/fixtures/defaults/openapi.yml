@@ -11,7 +11,7 @@ paths:
           schema:
             type: boolean
             default: true
-        - name: boolParam2 
+        - name: boolParam2
           in: query
           schema:
             type: boolean
@@ -42,7 +42,7 @@ paths:
             type: integer
             default: 100
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:

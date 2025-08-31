@@ -10,12 +10,12 @@ paths:
       summary: Get tree
       operationId: getTree
       responses:
-        '200':
+        "200":
           description: Successfully retrieved tree
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TreeNode'
+                $ref: "#/components/schemas/TreeNode"
 
 components:
   schemas:
@@ -28,7 +28,7 @@ components:
           example: "root"
         left:
           description: Child nodes of this tree node
-          $ref: '#/components/schemas/TreeNode'
+          $ref: "#/components/schemas/TreeNode"
         right:
           description: Child nodes of this tree node
-          $ref: '#/components/schemas/TreeNode'
+          $ref: "#/components/schemas/TreeNode"

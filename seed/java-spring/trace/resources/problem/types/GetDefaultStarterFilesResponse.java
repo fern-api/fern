@@ -83,7 +83,9 @@ public final class GetDefaultStarterFilesResponse {
     }
 
     public Builder putAllFiles(Map<Language, ProblemFiles> files) {
-      this.files.putAll(files);
+      if (files != null) {
+        this.files.putAll(files);
+      }
       return this;
     }
 

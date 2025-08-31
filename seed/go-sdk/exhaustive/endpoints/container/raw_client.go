@@ -14,11 +14,12 @@ import (
 type RawClient struct {
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
+	options *core.RequestOptions
 }
 
 func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -26,7 +27,6 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
@@ -43,7 +43,7 @@ func (r *RawClient) GetAndReturnListOfPrimitives(
 	)
 	endpointURL := baseURL + "/container/list-of-primitives"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response []string
@@ -84,7 +84,7 @@ func (r *RawClient) GetAndReturnListOfObjects(
 	)
 	endpointURL := baseURL + "/container/list-of-objects"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response []*types.ObjectWithRequiredField
@@ -125,7 +125,7 @@ func (r *RawClient) GetAndReturnSetOfPrimitives(
 	)
 	endpointURL := baseURL + "/container/set-of-primitives"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response []string
@@ -166,7 +166,7 @@ func (r *RawClient) GetAndReturnSetOfObjects(
 	)
 	endpointURL := baseURL + "/container/set-of-objects"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response []*types.ObjectWithRequiredField
@@ -207,7 +207,7 @@ func (r *RawClient) GetAndReturnMapPrimToPrim(
 	)
 	endpointURL := baseURL + "/container/map-prim-to-prim"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response map[string]string
@@ -248,7 +248,7 @@ func (r *RawClient) GetAndReturnMapOfPrimToObject(
 	)
 	endpointURL := baseURL + "/container/map-prim-to-object"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response map[string]*types.ObjectWithRequiredField
@@ -289,7 +289,7 @@ func (r *RawClient) GetAndReturnOptional(
 	)
 	endpointURL := baseURL + "/container/opt-objects"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response *types.ObjectWithRequiredField

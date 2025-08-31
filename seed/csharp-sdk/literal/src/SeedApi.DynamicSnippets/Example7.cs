@@ -14,7 +14,15 @@ public class Example7
 
         await client.Query.SendAsync(
             new SendLiteralsInQueryRequest{
-                Query = "query"
+                Prompt = "You are a helpful assistant",
+                OptionalPrompt = "You are a helpful assistant",
+                AliasPrompt = "You are a helpful assistant",
+                AliasOptionalPrompt = "You are a helpful assistant",
+                Query = "query",
+                Stream = false,
+                OptionalStream = false,
+                AliasStream = false,
+                AliasOptionalStream = false
             }
         );
     }

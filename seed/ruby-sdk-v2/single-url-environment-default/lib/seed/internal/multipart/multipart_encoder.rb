@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module seed
+module Seed
   module Internal
     module Multipart
       # Encodes parameters into a `multipart/form-data` payload as described by RFC
@@ -138,4 +138,4 @@ module seed
       end
     end
   end
-end 
+end

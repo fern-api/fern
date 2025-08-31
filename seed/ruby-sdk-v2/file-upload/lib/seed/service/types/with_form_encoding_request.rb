@@ -1,5 +1,9 @@
+# frozen_string_literal: true
 
 module Seed
-    module Service
-        class WithFormEncodingRequest; endend
+  module Service
+    module Types
+      class WithFormEncodingRequest < Internal::Types::Model; end
+    end
+  end
 end

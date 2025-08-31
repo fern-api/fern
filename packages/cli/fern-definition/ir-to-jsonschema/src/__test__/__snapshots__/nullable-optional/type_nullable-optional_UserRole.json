@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "enum": [
+    "ADMIN",
+    "USER",
+    "GUEST",
+    "MODERATOR"
+  ],
+  "definitions": {}
+}

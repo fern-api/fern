@@ -185,7 +185,9 @@ public final class GetDefaultStarterFilesRequest {
 
         @java.lang.Override
         public _FinalStage addAllInputParams(List<VariableTypeAndName> inputParams) {
-            this.inputParams.addAll(inputParams);
+            if (inputParams != null) {
+                this.inputParams.addAll(inputParams);
+            }
             return this;
         }
 

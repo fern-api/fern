@@ -24,6 +24,33 @@ type QueryEncoder interface {
 	EncodeQueryValues(key string, v *url.Values) error
 }
 
+// prepareValue handles common validation and unwrapping logic for both functions
+func prepareValue(v interface{}) (reflect.Value, url.Values, error) {
+	values := make(url.Values)
+	val := reflect.ValueOf(v)
+	for val.Kind() == reflect.Ptr {
+		if val.IsNil() {
+			return reflect.Value{}, values, nil
+		}
+		val = val.Elem()
+	}
+
+	if v == nil {
+		return reflect.Value{}, values, nil
+	}
+
+	if val.Kind() != reflect.Struct {
+		return reflect.Value{}, nil, fmt.Errorf("query: Values() expects struct input. Got %v", val.Kind())
+	}
+
+	err := reflectValue(values, val, "")
+	if err != nil {
+		return reflect.Value{}, nil, err
+	}
+
+	return val, values, nil
+}
+
 // QueryValues encodes url.Values from request objects.
 //
 // Note: This type is inspired by Google's query encoding library, but
@@ -31,24 +58,47 @@ type QueryEncoder interface {
 //
 // Ref: https://github.com/google/go-querystring
 func QueryValues(v interface{}) (url.Values, error) {
-	values := make(url.Values)
-	val := reflect.ValueOf(v)
-	for val.Kind() == reflect.Ptr {
-		if val.IsNil() {
-			return values, nil
+	_, values, err := prepareValue(v)
+	return values, err
+}
+
+// QueryValuesWithDefaults encodes url.Values from request objects
+// and default values, merging the defaults into the request.
+// It's expected that the values of defaults are wire names.
+func QueryValuesWithDefaults(v interface{}, defaults map[string]interface{}) (url.Values, error) {
+	val, values, err := prepareValue(v)
+	if err != nil {
+		return values, err
+	}
+
+	// apply defaults to zero-value fields directly on the original struct
+	valType := val.Type()
+	for i := 0; i < val.NumField(); i++ {
+		field := val.Field(i)
+		fieldType := valType.Field(i)
+		fieldName := fieldType.Name
+
+		if fieldType.PkgPath != "" && !fieldType.Anonymous {
+			// Skip unexported fields.
+			continue
 		}
-		val = val.Elem()
+
+		// check if field is zero value and we have a default for it
+		if field.CanSet() && field.IsZero() {
+			tag := fieldType.Tag.Get("url")
+			if tag == "" || tag == "-" {
+				continue
+			}
+			wireName, _ := parseTag(tag)
+			if wireName == "" {
+				wireName = fieldName
+			}
+			if defaultVal, exists := defaults[wireName]; exists {
+				values.Set(wireName, valueString(reflect.ValueOf(defaultVal), tagOptions{}, reflect.StructField{}))
+			}
+		}
 	}
 
-	if v == nil {
-		return values, nil
-	}
-
-	if val.Kind() != reflect.Struct {
-		return nil, fmt.Errorf("query: Values() expects struct input. Got %v", val.Kind())
-	}
-
-	err := reflectValue(values, val, "")
 	return values, err
 }
 

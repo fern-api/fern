@@ -56,7 +56,7 @@ export class Service {
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             _binaryUploadRequest.headers,
             requestOptions?.headers,

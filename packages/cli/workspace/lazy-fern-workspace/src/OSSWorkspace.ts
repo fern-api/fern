@@ -11,10 +11,9 @@ import {
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
 import { Audiences } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
-import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
-import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
 import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
@@ -67,6 +66,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
                 // TODO: Update this to '.every' once AsyncAPI sources are correctly recognized.
                 .some((spec) => spec.settings?.respectForwardCompatibleEnums),
+            inlineAllOfSchemas: specs.every((spec) => spec.settings?.inlineAllOfSchemas),
             exampleGeneration: specs[0]?.settings?.exampleGeneration
         });
         this.specs = specs;
@@ -101,7 +101,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 inlinePathParameters: settings?.inlinePathParameters ?? this.inlinePathParameters,
                 objectQueryParameters: settings?.objectQueryParameters ?? this.objectQueryParameters,
                 exampleGeneration: settings?.exampleGeneration ?? this.exampleGeneration,
-                useBytesForBinaryResponse: settings?.useBytesForBinaryResponse ?? this.useBytesForBinaryResponse
+                useBytesForBinaryResponse: settings?.useBytesForBinaryResponse ?? this.useBytesForBinaryResponse,
+                inlineAllOfSchemas: settings?.inlineAllOfSchemas ?? this.inlineAllOfSchemas
             }
         });
     }

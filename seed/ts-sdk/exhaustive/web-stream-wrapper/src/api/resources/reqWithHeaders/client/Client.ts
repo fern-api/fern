@@ -65,7 +65,7 @@ export class ReqWithHeaders {
             "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
             body: _body,
         } = request;
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),

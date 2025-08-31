@@ -50,16 +50,19 @@ export function generateHeaders({
         statements.push(
             ts.factory.createVariableStatement(
                 undefined,
-                ts.factory.createVariableDeclarationList([
-                    ts.factory.createVariableDeclaration(
-                        "_authRequest",
-                        undefined,
-                        context.coreUtilities.auth.AuthRequest._getReferenceToType(),
-                        context.coreUtilities.auth.AuthProvider.getAuthRequest.invoke(
-                            generatedSdkClientClass.getReferenceToAuthProviderOrThrow()
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            "_authRequest",
+                            undefined,
+                            context.coreUtilities.auth.AuthRequest._getReferenceToType(),
+                            context.coreUtilities.auth.AuthProvider.getAuthRequest.invoke(
+                                generatedSdkClientClass.getReferenceToAuthProviderOrThrow()
+                            )
                         )
-                    )
-                ])
+                    ],
+                    ts.NodeFlags.Const
+                )
             )
         );
         authProviderHeaders = ts.factory.createIdentifier("_authRequest.headers");
@@ -157,21 +160,27 @@ export function generateHeaders({
     );
 
     statements.push(
-        ts.factory.createVariableStatement(undefined, [
-            ts.factory.createVariableDeclaration(
-                HEADERS_VAR_NAME,
-                undefined,
-                ts.factory.createIndexedAccessTypeNode(
-                    context.coreUtilities.fetcher.Fetcher.Args._getReferenceToType(),
-                    ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral("headers"))
-                ),
-                ts.factory.createCallExpression(
-                    ts.factory.createIdentifier("mergeHeaders"),
-                    undefined,
-                    mergeHeadersArgs
-                )
+        ts.factory.createVariableStatement(
+            undefined,
+            ts.factory.createVariableDeclarationList(
+                [
+                    ts.factory.createVariableDeclaration(
+                        HEADERS_VAR_NAME,
+                        undefined,
+                        ts.factory.createIndexedAccessTypeNode(
+                            context.coreUtilities.fetcher.Fetcher.Args._getReferenceToType(),
+                            ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral("headers"))
+                        ),
+                        ts.factory.createCallExpression(
+                            ts.factory.createIdentifier("mergeHeaders"),
+                            undefined,
+                            mergeHeadersArgs
+                        )
+                    )
+                ],
+                ts.NodeFlags.Let
             )
-        ])
+        )
     );
     return statements;
 }
@@ -271,10 +280,25 @@ function getOverridableRootHeaders({
                         );
                     }
                 } else {
-                    value = ts.factory.createPropertyAccessChain(
+                    const originalExpr = ts.factory.createPropertyAccessChain(
                         ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
                         ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                         getOptionKeyForHeader(header)
+                    );
+
+                    // Add nullish coalescing with this._options.{header}
+                    value = ts.factory.createBinaryExpression(
+                        originalExpr,
+                        ts.SyntaxKind.QuestionQuestionToken,
+                        ts.factory.createPropertyAccessChain(
+                            ts.factory.createPropertyAccessChain(
+                                ts.factory.createThis(),
+                                undefined,
+                                GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                            ts.factory.createIdentifier(getOptionKeyForHeader(header))
+                        )
                     );
                 }
 

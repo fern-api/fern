@@ -10,7 +10,19 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedRequestParameters;\n\nvar client = new SeedRequestParametersClient();\nawait client.User.CreateUsernameAsync(\n    new CreateUsernameRequest\n    {\n        Username = \"username\",\n        Password = \"password\",\n        Name = \"test\",\n    }\n);\n"
+                "client": "using SeedRequestParameters;\n\nvar client = new SeedRequestParametersClient();\nawait client.User.CreateUsernameAsync(\n    new CreateUsernameRequest\n    {\n        Tags = new List<string>() { \"tags\", \"tags\" },\n        Username = \"username\",\n        Password = \"password\",\n        Name = \"test\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/user/username-referenced",
+                "method": "POST",
+                "identifier_override": "endpoint_user.createUsernameWithReferencedType"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedRequestParameters;\n\nvar client = new SeedRequestParametersClient();\nawait client.User.CreateUsernameWithReferencedTypeAsync(\n    new CreateUsernameReferencedRequest\n    {\n        Tags = new List<string>() { \"tags\", \"tags\" },\n        Body = new CreateUsernameBody\n        {\n            Username = \"username\",\n            Password = \"password\",\n            Name = \"test\",\n        },\n    }\n);\n"
             }
         },
         {

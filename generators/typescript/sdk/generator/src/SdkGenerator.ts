@@ -1,5 +1,4 @@
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
-import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -149,6 +148,7 @@ export declare namespace SdkGenerator {
         omitFernHeaders: boolean;
         useDefaultRequestParameterValues: boolean;
         packageManager: "pnpm" | "yarn";
+        flattenRequestParameters: boolean;
     }
 }
 
@@ -1575,7 +1575,8 @@ export class SdkGenerator {
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath,
             formDataSupport: this.config.formDataSupport,
-            useDefaultRequestParameterValues: this.config.useDefaultRequestParameterValues
+            useDefaultRequestParameterValues: this.config.useDefaultRequestParameterValues,
+            flattenRequestParameters: this.config.flattenRequestParameters
         });
     }
 

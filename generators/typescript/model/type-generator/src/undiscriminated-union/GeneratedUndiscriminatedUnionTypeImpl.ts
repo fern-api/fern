@@ -3,12 +3,7 @@ import {
     UndiscriminatedUnionMember,
     UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-import {
-    GetReferenceOpts,
-    getWriterForMultiLineUnionType,
-    maybeAddDocsNode,
-    maybeAddDocsStructure
-} from "@fern-typescript/commons";
+import { GetReferenceOpts, getWriterForMultiLineUnionType, maybeAddDocsStructure } from "@fern-typescript/commons";
 import { BaseContext, GeneratedUndiscriminatedUnionType } from "@fern-typescript/contexts";
 import {
     ModuleDeclarationStructure,

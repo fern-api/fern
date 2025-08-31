@@ -16,6 +16,11 @@
 client.user().createUsername(
     CreateUsernameRequest
         .builder()
+        .tags(
+            new ArrayList<String>(
+                Arrays.asList("tags", "tags")
+            )
+        )
         .username("username")
         .password("password")
         .name("test")
@@ -31,6 +36,14 @@ client.user().createUsername(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**tags:** `List<String>` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -52,6 +65,71 @@ client.user().createUsername(
 <dd>
 
 **name:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.createUsernameWithReferencedType(request)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.user().createUsernameWithReferencedType(
+    CreateUsernameReferencedRequest
+        .builder()
+        .tags(
+            new ArrayList<String>(
+                Arrays.asList("tags", "tags")
+            )
+        )
+        .body(
+            CreateUsernameBody
+                .builder()
+                .username("username")
+                .password("password")
+                .name("test")
+                .build()
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tags:** `List<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `CreateUsernameBody` 
     
 </dd>
 </dl>
