@@ -1,9 +1,8 @@
-import { Options, Severity, Style } from "@fern-api/browser-compatible-base-generator";
+import { Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { swift } from "@fern-api/swift-codegen";
 
-import { Config } from "./Config";
 import { DynamicSnippetsGeneratorContext } from "./context";
 
 const CLIENT_CONST_NAME = "client";
@@ -206,8 +205,194 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.InlinedRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): swift.FunctionArgument[] {
+        const args: swift.FunctionArgument[] = [];
+
+        this.context.errors.scope(Scope.PathParameters);
+        const pathParameterFields: swift.FunctionArgument[] = [];
+        if (request.pathParameters != null) {
+            pathParameterFields.push(...this.getPathParameters({ namedParameters: request.pathParameters, snippet }));
+        }
+        this.context.errors.unscope();
+
+        args.push(...pathParameterFields);
+
+        args.push(
+            swift.functionArgument({
+                label: "request",
+                value: this.getInlinedRequestArg({
+                    request,
+                    snippet,
+                    pathParameterFields
+                })
+            })
+        );
+
+        return args;
+    }
+
+    private getPathParameters({
+        namedParameters,
+        snippet
+    }: {
+        namedParameters: FernIr.dynamic.NamedParameter[];
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): swift.FunctionArgument[] {
+        const args: swift.FunctionArgument[] = [];
+        const pathParameters = this.context.associateByWireValue({
+            parameters: namedParameters,
+            values: snippet.pathParameters ?? {},
+            ignoreMissingParameters: true
+        });
+        for (const parameter of pathParameters) {
+            args.push(
+                swift.functionArgument({
+                    label: parameter.name.name.camelCase.unsafeName,
+                    value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                })
+            );
+        }
+        return args;
+    }
+
+    private getInlinedRequestArg({
+        request,
+        snippet,
+        pathParameterFields
+    }: {
+        request: FernIr.dynamic.InlinedRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+        pathParameterFields: swift.FunctionArgument[];
+    }): swift.Expression {
+        this.context.errors.scope(Scope.QueryParameters);
+        const queryParameters = this.context.associateQueryParametersByWireValue({
+            parameters: request.queryParameters ?? [],
+            values: snippet.queryParameters ?? {}
+        });
+        const queryParameterFields = queryParameters.map((queryParameter) =>
+            swift.functionArgument({
+                label: queryParameter.name.name.camelCase.unsafeName,
+                value: this.context.dynamicTypeLiteralMapper.convert(queryParameter)
+            })
+        );
+        this.context.errors.unscope();
+
+        this.context.errors.scope(Scope.Headers);
+        const headers = this.context.associateByWireValue({
+            parameters: request.headers ?? [],
+            values: snippet.headers ?? {}
+        });
+        const headerFields = headers.map((header) =>
+            swift.functionArgument({
+                label: header.name.name.camelCase.unsafeName,
+                value: this.context.dynamicTypeLiteralMapper.convert(header)
+            })
+        );
+        this.context.errors.unscope();
+
+        this.context.errors.scope(Scope.RequestBody);
+        const requestBodyFields =
+            request.body != null
+                ? this.getInlinedRequestBodyObjectFields({
+                      body: request.body,
+                      value: snippet.requestBody
+                  })
+                : [];
+        this.context.errors.unscope();
+
+        const arguments_ = [...pathParameterFields, ...queryParameterFields, ...headerFields, ...requestBodyFields];
+
+        return swift.Expression.contextualMethodCall({
+            methodName: "init",
+            arguments_,
+            multiline: arguments_.length > 1 ? true : undefined
+        });
+    }
+
+    private getInlinedRequestBodyObjectFields({
+        body,
+        value
+    }: {
+        body: FernIr.dynamic.InlinedRequestBody;
+        value: unknown;
+    }): swift.FunctionArgument[] {
+        switch (body.type) {
+            case "properties":
+                return this.getInlinedRequestBodyPropertyObjectFields({ parameters: body.value, value });
+            case "referenced":
+                return [this.getReferencedRequestBodyPropertyObjectField({ body, value })];
+            case "fileUpload":
+                // TODO(kafkas): Implement
+                return [];
+            default:
+                assertNever(body);
+        }
+    }
+
+    private getInlinedRequestBodyPropertyObjectFields({
+        parameters,
+        value
+    }: {
+        parameters: FernIr.dynamic.NamedParameter[];
+        value: unknown;
+    }): swift.FunctionArgument[] {
+        const fields: swift.FunctionArgument[] = [];
+
+        const bodyProperties = this.context.associateByWireValue({
+            parameters,
+            values: this.context.getRecord(value) ?? {}
+        });
+        for (const parameter of bodyProperties) {
+            fields.push(
+                swift.functionArgument({
+                    label: parameter.name.name.camelCase.unsafeName,
+                    value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                })
+            );
+        }
+
+        return fields;
+    }
+
+    private getReferencedRequestBodyPropertyObjectField({
+        body,
+        value
+    }: {
+        body: FernIr.dynamic.ReferencedRequestBody;
+        value: unknown;
+    }): swift.FunctionArgument {
+        return swift.functionArgument({
+            label: body.bodyKey.camelCase.unsafeName,
+            value: this.getReferencedRequestBodyPropertyTypeLiteral({ body: body.bodyType, value })
+        });
+    }
+
+    private getReferencedRequestBodyPropertyTypeLiteral({
+        body,
+        value
+    }: {
+        body: FernIr.dynamic.ReferencedRequestBodyType;
+        value: unknown;
+    }): swift.Expression {
+        switch (body.type) {
+            case "bytes":
+                return this.getBytesBodyRequestArg({ value });
+            case "typeReference":
+                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
+            default:
+                assertNever(body);
+        }
+    }
+
+    private getBytesBodyRequestArg({ value }: { value: unknown }): swift.Expression {
+        if (typeof value !== "string") {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `Expected bytes value to be a string, got ${typeof value}`
+            });
+            return swift.Expression.nop();
+        }
         // TODO(kafkas): Implement
-        return [];
+        return swift.Expression.nop();
     }
 
     private getMethodArgsForBodyRequest({
@@ -236,13 +421,5 @@ export class EndpointSnippetGenerator {
             }
         }
         return args;
-    }
-
-    private getStyle(options: Options): Style {
-        return options.style ?? this.context.options.style ?? Style.Full;
-    }
-
-    private getConfig(options: Options): Config {
-        return options.config ?? this.context.options.config ?? {};
     }
 }

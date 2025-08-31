@@ -6,7 +6,14 @@ exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = 
 let client = AcmeAcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.service.getMetadata(
-
+    request: .init(
+        shallow: False,
+        tag: [
+            "development",
+            "public"
+        ],
+        xAPIVersion: "0.0.1"
+    )
 )
 "
 `;
@@ -17,7 +24,13 @@ exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `
 let client = AcmeAcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.service.getMetadata(
-
+    request: .init(
+        shallow: False,
+        tag: [
+            "development"
+        ],
+        xAPIVersion: "0.0.1"
+    )
 )
 "
 `;
@@ -219,7 +232,7 @@ exports[`snippets (default) > file-upload > 'POST /' 1`] = `
 let client = AcmeAcmeClient()
 
 try await client.service.post(
-
+    request: .init()
 )
 "
 `;
@@ -230,7 +243,7 @@ exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
 let client = AcmeAcmeClient()
 
 try await client.service.justFile(
-
+    request: .init()
 )
 "
 `;
@@ -241,7 +254,10 @@ exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 
 let client = AcmeAcmeClient()
 
 try await client.service.justFileWithQueryParams(
-
+    request: .init(
+        integer: 42,
+        maybeString: "exists"
+    )
 )
 "
 `;
@@ -277,7 +293,7 @@ exports[`snippets (default) > multi-url-environment > 'Custom environment' 1`] =
 let client = AcmeAcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.s3.getPresignedURL(
-
+    request: .init(s3Key: "xyz")
 )
 "
 `;
@@ -288,7 +304,7 @@ exports[`snippets (default) > multi-url-environment > 'Invalid multi url environ
 let client = AcmeAcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.s3.getPresignedURL(
-
+    request: .init(s3Key: "xyz")
 )
 "
 `;
@@ -299,7 +315,7 @@ exports[`snippets (default) > multi-url-environment > 'Production environment' 1
 let client = AcmeAcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.s3.getPresignedURL(
-
+    request: .init(s3Key: "xyz")
 )
 "
 `;
@@ -310,7 +326,7 @@ exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] 
 let client = AcmeAcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.s3.getPresignedURL(
-
+    request: .init(s3Key: "xyz")
 )
 "
 `;
@@ -321,7 +337,7 @@ exports[`snippets (default) > multi-url-environment > 'Unrecognized environment'
 let client = AcmeAcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.s3.getPresignedURL(
-
+    request: .init(s3Key: "xyz")
 )
 "
 `;
@@ -332,20 +348,33 @@ exports[`snippets (default) > nullable > 'Body properties' 1`] = `
 let client = AcmeAcmeClient()
 
 try await client.nullable.createUser(
-
+    request: .init(
+        username: "john.doe",
+        tags: [
+            "admin"
+        ],
+        metadata: Metadata(
+            createdAt: Date(timeIntervalSince1970: 315532800),
+            updatedAt: Date(timeIntervalSince1970: 315532800),
+            avatar: nil,
+            activated: nil
+        ),
+        avatar: nil
+    )
 )
 "
 `;
 
 exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
-"import Acme
-
-let client = AcmeAcmeClient()
-
-try await client.nullable.createUser(
-
-)
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody"
+    ],
+    "message": "Expected non-null value, but got null"
+  }
+]"
 `;
 
 exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
@@ -354,7 +383,16 @@ exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
 let client = AcmeAcmeClient()
 
 try await client.nullable.getUsers(
-
+    request: .init(
+        usernames: [
+            "john.doe",
+            "jane.doe"
+        ],
+        tags: [
+            nil
+        ],
+        extra: nil
+    )
 )
 "
 `;

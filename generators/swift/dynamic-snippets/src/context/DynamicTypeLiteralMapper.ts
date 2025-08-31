@@ -27,6 +27,16 @@ export class DynamicTypeLiteralMapper {
     }
 
     public convert(args: DynamicTypeLiteralMapper.Args): swift.Expression {
+        if (args.value === null) {
+            if (this.context.isNullable(args.typeReference)) {
+                return swift.Expression.nil();
+            }
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: "Expected non-null value, but got null"
+            });
+            return swift.Expression.nop();
+        }
         switch (args.typeReference.type) {
             case "list":
                 return this.convertList({ list: args.typeReference.value, value: args.value });
