@@ -30,6 +30,7 @@ import {
     TypeDeclaration,
     TypeReference
 } from "@fern-api/ir-sdk";
+import { isMarkedUnstable } from "./utils/availabilityUtils";
 
 export namespace IntermediateRepresentationChangeDetector {
     export type Result = {
@@ -215,6 +216,10 @@ export class IntermediateRepresentationChangeDetector {
         to: Record<string, HttpService>;
     }): void {
         for (const [serviceId, fromService] of Object.entries(from)) {
+            if (isMarkedUnstable(fromService.availability)) {
+                continue;
+            }
+
             const toService = to[serviceId];
             if (!toService) {
                 this.errors.add(`Service "${serviceId}" was removed.`);
@@ -237,6 +242,9 @@ export class IntermediateRepresentationChangeDetector {
         const fromEndpoints = Object.fromEntries(from.endpoints.map((endpoint) => [endpoint.id, endpoint]));
         const toEndpoints = Object.fromEntries(to.endpoints.map((endpoint) => [endpoint.id, endpoint]));
         for (const [endpointId, fromEndpoint] of Object.entries(fromEndpoints)) {
+            if (isMarkedUnstable(fromEndpoint.availability)) {
+                continue;
+            }
             const toEndpoint = toEndpoints[endpointId];
             if (!toEndpoint) {
                 this.errors.add(`Endpoint "${endpointId}" was removed.`);
@@ -247,6 +255,9 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private checkEndpointBreakingChanges({ id, from, to }: { id: string; from: HttpEndpoint; to: HttpEndpoint }): void {
+        if (isMarkedUnstable(from.availability)) {
+            return;
+        }
         this.checkHttpMethodsBreakingChanges({ id, from: from.method, to: to.method });
         this.checkHttpPathsBreakingChanges({ id, from: from.fullPath, to: to.fullPath });
         this.checkPathParametersBreakingChanges({ id, from: from.pathParameters, to: to.pathParameters });
