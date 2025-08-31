@@ -132,8 +132,7 @@ export class DynamicTypeLiteralMapper {
             case "object":
                 return this.convertObject({ object_: named, value, as });
             case "undiscriminatedUnion":
-                // TODO(kafkas): Implement
-                return swift.Expression.nop();
+                return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value });
             default:
                 assertNever(named);
         }
@@ -167,6 +166,44 @@ export class DynamicTypeLiteralMapper {
             }),
             multiline: true
         });
+    }
+
+    private convertUndiscriminatedUnion({
+        undiscriminatedUnion,
+        value
+    }: {
+        undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
+        value: unknown;
+    }): swift.Expression {
+        const result = this.findMatchingUndiscriminatedUnionType({
+            undiscriminatedUnion,
+            value
+        });
+        if (result == null) {
+            return swift.Expression.nop();
+        }
+        return result;
+    }
+
+    private findMatchingUndiscriminatedUnionType({
+        undiscriminatedUnion,
+        value
+    }: {
+        undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
+        value: unknown;
+    }): swift.Expression | undefined {
+        for (const typeReference of undiscriminatedUnion.types) {
+            try {
+                return this.convert({ typeReference, value });
+            } catch (e) {
+                continue;
+            }
+        }
+        this.context.errors.add({
+            severity: Severity.Critical,
+            message: `None of the types in the undiscriminated union matched the given "${typeof value}" value`
+        });
+        return undefined;
     }
 
     private convertPrimitive({

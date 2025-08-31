@@ -29,7 +29,10 @@ let client = AcmeAcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.service.createBigEntity(
     request: BigEntity(
-        castMember: ,
+        castMember: Actor(
+            id: "john.doe",
+            name: "John Doe"
+        ),
         extendedMovie: ExtendedMovie(
             cast: [
                 "John Travolta",
