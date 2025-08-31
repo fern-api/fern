@@ -5,7 +5,7 @@ service:
   base-path: /movies
   endpoints:
     createMovie:
-      audiences: 
+      audiences:
         - external
       docs: Add a movie to the database
       method: POST
@@ -56,16 +56,16 @@ types:
     properties:
       title: string
       rating: double
-  
-  Cast: 
-    base-properties: 
+
+  Cast:
+    base-properties:
       name: Name
-    union: 
+    union:
       actor: {}
       actress: {}
-  
+
   Name: string
-      
+
 errors:
   MovieDoesNotExistError:
     status-code: 404

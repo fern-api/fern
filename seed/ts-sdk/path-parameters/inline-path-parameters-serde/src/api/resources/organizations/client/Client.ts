@@ -57,7 +57,7 @@ export class Organizations {
         organizationId: string,
         requestOptions?: Organizations.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.Organization>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -133,7 +133,7 @@ export class Organizations {
         requestOptions?: Organizations.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { organizationId, userId } = request;
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -218,7 +218,7 @@ export class Organizations {
             _queryParams["limit"] = limit.toString();
         }
 
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??

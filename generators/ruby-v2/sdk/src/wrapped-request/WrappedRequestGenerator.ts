@@ -101,7 +101,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             node: ruby.codeblock((writer) => {
                 ruby.comment({ docs: "frozen_string_literal: true" });
                 writer.newLine();
-                ruby.wrapInModules(class_, this.getModules()).write(writer);
+                ruby.wrapInModules(class_, this.context.getModulesForServiceId(this.serviceId)).write(writer);
             }),
             directory: this.getFilepath(),
             filename: `${this.wrapper.wrapperName.snakeCase.safeName}.rb`,
@@ -120,15 +120,5 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             ].join("/")
         );
         return serviceDir;
-    }
-
-    protected getModules(): ruby.Module_[] {
-        return [
-            this.context.getRootModule(),
-            ...this.context
-                .getSubpackageForServiceId(this.serviceId)
-                .fernFilepath.allParts.map((part) => ruby.module({ name: part.pascalCase.safeName })),
-            this.context.getTypesModule()
-        ];
     }
 }

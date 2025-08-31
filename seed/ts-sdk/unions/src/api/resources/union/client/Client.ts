@@ -52,7 +52,7 @@ export class Union {
         id: string,
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<SeedUnions.Shape>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -113,7 +113,7 @@ export class Union {
         request: SeedUnions.Shape,
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??

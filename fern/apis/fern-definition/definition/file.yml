@@ -1,4 +1,4 @@
-imports: 
+imports:
   commons: commons.yml
   types: types.yml
   errors: errors.yml
@@ -12,13 +12,12 @@ imports:
   webhooks: webhooks.yml
   websocket: websocket.yml
 
-types: 
-
-  ## Fern definition file ## 
-  DefinitionFileSchema: 
-    extends: 
+types:
+  ## Fern definition file ##
+  DefinitionFileSchema:
+    extends:
       - commons.WithDocsSchema
-    properties: 
+    properties:
       imports: optional<map<string, string>>
       types: optional<map<string, types.TypeDeclarationSchema>>
       service: optional<service.HttpServiceSchema>
@@ -26,48 +25,47 @@ types:
       webhooks: optional<map<string, webhooks.WebhookSchema>>
       channel: optional<websocket.WebSocketChannelSchema>
 
-
-  ## Package marker file ## 
-  PackageMarkerFileSchema: 
+  ## Package marker file ##
+  PackageMarkerFileSchema:
     extends: DefinitionFileSchema
-    properties: 
-      navigation: 
+    properties:
+      navigation:
         availability: deprecated
         type: optional<Navigation>
       export: optional<Export>
-  
-  Navigation: 
+
+  Navigation:
     discriminated: false
-    union:  
+    union:
       - string
       - list<string>
-  
-  Export: 
+
+  Export:
     discriminated: false
-    union: 
+    union:
       - string
       - ExportDetailed
-  
-  ExportDetailed: 
-    properties: 
+
+  ExportDetailed:
+    properties:
       dependency: string
       url: optional<string>
-  
-  ## Root api.yml file ## 
-  WithHeadersSchema: 
-    properties: 
-      headers: 
+
+  ## Root api.yml file ##
+  WithHeadersSchema:
+    properties:
+      headers:
         type: optional<map<string, service.HttpHeaderSchema>>
         docs: Global Headers for the entire API
 
-  RootApiFileSchema: 
-    extends: 
+  RootApiFileSchema:
+    extends:
       - commons.WithDocsSchema
       - commons.WithDisplayName
       - environments.WithEnvironmentsSchema
       - auth.WithAuthSchema
       - WithHeadersSchema
-    properties: 
+    properties:
       name: string
       imports: optional<map<string, string>>
       error-discrimination: optional<ErrorDiscriminationSchema>
@@ -79,20 +77,19 @@ types:
       variables: optional<map<string, variables.VariableDeclarationSchema>>
       pagination: optional<pagination.PaginationSchema>
       product: optional<products.ProductDeclarationSchema>
-      version: optional<versioning.VersionDeclarationSchema> 
-  
-  ErrorDiscriminationSchema: 
+      version: optional<versioning.VersionDeclarationSchema>
+
+  ErrorDiscriminationSchema:
     discriminated: false
-    union: 
+    union:
       - PropertyBasedErrorDiscrimination
       - StatusCodeBasedErrorDiscrimination
 
-  PropertyBasedErrorDiscrimination: 
-    properties: 
+  PropertyBasedErrorDiscrimination:
+    properties:
       strategy: literal<"property">
       property-name: string
-  
-  StatusCodeBasedErrorDiscrimination: 
-    properties: 
+
+  StatusCodeBasedErrorDiscrimination:
+    properties:
       strategy: literal<"status-code">
-  

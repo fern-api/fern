@@ -535,15 +535,18 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
         if ir.readme_config is not None and ir.readme_config.default_endpoint is not None:
             return ir.readme_config.default_endpoint
 
+        # TODO(tjb9dc): The below condition will never match due to non-overlapping endpoint ID types, need to fix
         # Prefer endpoints that will not be used in other feature-specific sections as the default,
         # otherwise just filter down the full list of endpoints.
-        endpoints_without_a_feature = self._endpoint_feature_map[ReadmeSnippetBuilder.NO_FEATURE_PLACEHOLDER_ID]
-        filtered_snippet_endpoints = [
-            endpoint for endpoint in snippets.endpoints if endpoint.id not in endpoints_without_a_feature
-        ]
-        if len(filtered_snippet_endpoints) == 0:
-            # All snippets are likely used for feature blocks, just re-use one, filtering down the original list
-            filtered_snippet_endpoints = snippets.endpoints
+        # endpoints_without_a_feature = self._endpoint_feature_map[ReadmeSnippetBuilder.NO_FEATURE_PLACEHOLDER_ID]
+        # filtered_snippet_endpoints = [
+        #     endpoint for endpoint in snippets.endpoints if endpoint.id not in endpoints_without_a_feature
+        # ]
+        # if len(filtered_snippet_endpoints) == 0:
+        #     # All snippets are likely used for feature blocks, just re-use one, filtering down the original list
+        #     filtered_snippet_endpoints = snippets.endpoints
+
+        filtered_snippet_endpoints = snippets.endpoints
 
         # Prefer POST endpoints because they include better request structures in snippets.
         default_endpoint = next(

@@ -148,7 +148,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
     private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
         return new ruby.Method({
-            name: subpackage.name.camelCase.safeName,
+            name: subpackage.name.snakeCase.safeName,
             kind: ruby.MethodKind.Instance,
             returnType: ruby.Type.class_(
                 ruby.classReference({
@@ -160,7 +160,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             statements: [
                 ruby.codeblock((writer) => {
                     writer.writeLine(
-                        `@${subpackage.name.camelCase.safeName} ||= ` +
+                        `@${subpackage.name.snakeCase.safeName} ||= ` +
                             `${rootModule.name}::` +
                             `${subpackage.name.pascalCase.safeName}::` +
                             `Client.new(client: @raw_client)`

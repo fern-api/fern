@@ -108,7 +108,9 @@ public final class BinaryTreeValue {
     }
 
     public Builder putAllNodes(Map<NodeId, BinaryTreeNodeValue> nodes) {
-      this.nodes.putAll(nodes);
+      if (nodes != null) {
+        this.nodes.putAll(nodes);
+      }
       return this;
     }
 

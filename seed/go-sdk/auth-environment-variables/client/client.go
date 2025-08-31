@@ -7,16 +7,15 @@ import (
 	internal "github.com/auth-environment-variables/fern/internal"
 	option "github.com/auth-environment-variables/fern/option"
 	service "github.com/auth-environment-variables/fern/service"
-	http "net/http"
 	os "os"
 )
 
 type Client struct {
 	Service *service.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -31,7 +30,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 		options.XApiVersion = os.Getenv("VERSION")
 	}
 	return &Client{
-		Service: service.NewClient(opts...),
+		Service: service.NewClient(options),
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -39,6 +39,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

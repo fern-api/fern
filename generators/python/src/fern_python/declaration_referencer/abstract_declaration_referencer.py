@@ -16,6 +16,7 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
         as_request: bool,
         must_import_after_current_declaration: Optional[Callable[[T], bool]] = None,
         as_if_type_checking_import: bool = False,
+        has_been_dynamically_imported: bool = False,
     ) -> AST.ClassReference:
         filepath = self.get_filepath(name=name, as_request=as_request)
         return AST.ClassReference(
@@ -28,6 +29,7 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
             if must_import_after_current_declaration is not None
             else False,
             import_if_type_checking=as_if_type_checking_import,
+            has_been_dynamically_imported=has_been_dynamically_imported,
         )
 
     @abstractmethod

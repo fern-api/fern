@@ -16,6 +16,18 @@ env:
   TURBO_TEAM: "buildwithfern"
 
 jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Compile
+        run: pnpm compile
+
   depcheck:
     runs-on: ubuntu-latest
     steps:
@@ -47,6 +59,9 @@ jobs:
 
       - name: Format
         run: pnpm format:check
+
+      - name: Format YAML
+        run: pnpm format:yaml:check
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code

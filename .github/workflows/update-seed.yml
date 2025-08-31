@@ -5,14 +5,14 @@ on:
     branches:
       - main
     paths:
-      - '.github/workflows/update-seed.yml'
-      - 'packages/seed/**'
-      - 'packages/ir-sdk/fern/apis/**'
-      - 'packages/cli/generation/ir-generator/**'
-      - 'test-definitions/**'
-      - 'test-definitions-openapi/**'
-      - 'generators/**'
-      - 'seed/**'
+      - ".github/workflows/update-seed.yml"
+      - "packages/seed/**"
+      - "packages/ir-sdk/fern/apis/**"
+      - "packages/cli/generation/ir-generator/**"
+      - "test-definitions/**"
+      - "test-definitions-openapi/**"
+      - "generators/**"
+      - "seed/**"
   workflow_dispatch:
 
 permissions:
@@ -134,7 +134,7 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}      
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
   ruby-sdk:
     needs: changes
@@ -180,7 +180,7 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}      
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
   pydantic-model:
     needs: changes
@@ -226,7 +226,7 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}      
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
   python-sdk:
     needs: changes
@@ -272,7 +272,7 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}      
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
   fastapi:
     needs: changes
@@ -364,7 +364,7 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
   postman:
     needs: changes
@@ -410,7 +410,7 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
   java-sdk:
     needs: changes
@@ -456,7 +456,7 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
   java-model:
     needs: changes
@@ -502,7 +502,7 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
   java-spring:
     needs: changes
@@ -548,7 +548,7 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
   typescript-sdk:
     needs: changes
@@ -594,7 +594,7 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
   typescript-express:
     needs: changes
@@ -640,7 +640,7 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
   go-fiber:
     needs: changes
@@ -686,7 +686,7 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
   go-model:
     needs: changes
@@ -732,7 +732,7 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
   go-sdk:
     needs: changes
@@ -778,7 +778,7 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
   csharp-model:
     needs: changes
@@ -824,7 +824,7 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
   csharp-sdk:
     needs: changes
@@ -870,7 +870,7 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
   php-model:
     needs: changes
@@ -916,7 +916,7 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
   php-sdk:
     needs: changes
@@ -962,4 +962,4 @@ jobs:
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}

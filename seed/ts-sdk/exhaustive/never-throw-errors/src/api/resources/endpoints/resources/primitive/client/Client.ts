@@ -57,7 +57,7 @@ export class Primitive {
     ): Promise<
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnString.Error>>
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -120,7 +120,7 @@ export class Primitive {
     ): Promise<
         core.WithRawResponse<core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnInt.Error>>
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -183,7 +183,7 @@ export class Primitive {
     ): Promise<
         core.WithRawResponse<core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnLong.Error>>
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -246,7 +246,7 @@ export class Primitive {
     ): Promise<
         core.WithRawResponse<core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnDouble.Error>>
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -309,7 +309,7 @@ export class Primitive {
     ): Promise<
         core.WithRawResponse<core.APIResponse<boolean, SeedExhaustive.endpoints.primitive.getAndReturnBool.Error>>
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -374,7 +374,7 @@ export class Primitive {
     ): Promise<
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnDatetime.Error>>
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -437,7 +437,7 @@ export class Primitive {
     ): Promise<
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnDate.Error>>
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -500,7 +500,7 @@ export class Primitive {
     ): Promise<
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnUuid.Error>>
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -563,7 +563,7 @@ export class Primitive {
     ): Promise<
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnBase64.Error>>
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,

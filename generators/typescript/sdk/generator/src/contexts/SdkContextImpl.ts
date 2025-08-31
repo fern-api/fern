@@ -137,6 +137,7 @@ export declare namespace SdkContextImpl {
         relativeTestPath: string;
         formDataSupport: "Node16" | "Node18";
         useDefaultRequestParameterValues: boolean;
+        flattenRequestParameters: boolean;
     }
 }
 
@@ -179,11 +180,13 @@ export class SdkContextImpl implements SdkContext {
     public readonly generateOAuthClients: boolean;
     public readonly omitUndefined: boolean;
     public readonly neverThrowErrors: boolean;
+    public readonly flattenRequestParameters: boolean;
     public readonly importsManager: ImportsManager;
     public readonly exportsManager: ExportsManager;
     public readonly relativePackagePath: string;
     public readonly relativeTestPath: string;
     public readonly authProvider: AuthProviderContext;
+    public readonly enableInlineTypes: boolean;
 
     constructor({
         logger,
@@ -247,7 +250,8 @@ export class SdkContextImpl implements SdkContext {
         relativePackagePath,
         relativeTestPath,
         formDataSupport,
-        useDefaultRequestParameterValues
+        useDefaultRequestParameterValues,
+        flattenRequestParameters
     }: SdkContextImpl.Init) {
         this.logger = logger;
         this.ir = ir;
@@ -260,6 +264,7 @@ export class SdkContextImpl implements SdkContext {
         this.inlinePathParameters = inlinePathParameters;
         this.formDataSupport = formDataSupport;
         this.generateOAuthClients = generateOAuthClients;
+        this.flattenRequestParameters = flattenRequestParameters;
         this.namespaceExport = typeDeclarationReferencer.namespaceExport;
         this.rootClientVariableName = ROOT_CLIENT_VARIABLE_NAME;
         this.sdkInstanceReferenceForSnippet = ts.factory.createIdentifier(this.rootClientVariableName);
@@ -270,6 +275,7 @@ export class SdkContextImpl implements SdkContext {
         this.exportsManager = exportsManager;
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
+        this.enableInlineTypes = enableInlineTypes;
         this.externalDependencies = createExternalDependencies({
             dependencyManager,
             importsManager
@@ -372,7 +378,8 @@ export class SdkContextImpl implements SdkContext {
             inlineFileProperties,
             inlinePathParameters,
             enableInlineTypes,
-            formDataSupport
+            formDataSupport,
+            flattenRequestParameters
         });
         this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextImpl({
             importsManager,

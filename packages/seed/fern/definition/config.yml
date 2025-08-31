@@ -170,6 +170,8 @@ types:
       bannerLink: optional<string>
       apiReferenceLink: optional<string>
       features: optional<map<string, list<ReadmeEndpoint>>>
+      apiName: optional<string>
+      disabledSections: optional<list<string>>
 
   ReadmeEndpoint:
     discriminated: false

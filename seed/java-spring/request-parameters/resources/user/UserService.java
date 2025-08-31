@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import resources.user.requests.CreateUsernameRequest;
+import resources.user.types.CreateUsernameBody;
 import resources.user.types.NestedUser;
 import resources.user.types.User;
 
@@ -31,7 +32,16 @@ public interface UserService {
       produces = "application/json",
       consumes = "application/json"
   )
-  void createUsername(@RequestBody CreateUsernameRequest body);
+  void createUsername(@RequestParam("tags") List<String> tags,
+      @RequestBody CreateUsernameRequest body);
+
+  @PostMapping(
+      value = "/username-referenced",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  void createUsernameWithReferencedType(@RequestParam("tags") List<String> tags,
+      @RequestBody CreateUsernameBody body);
 
   @GetMapping(
       value = "",

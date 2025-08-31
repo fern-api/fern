@@ -23641,6 +23641,7 @@
     "respectForwardCompatibleEnums": false,
     "additionalPropertiesDefaultsTo": false,
     "typeDatesAsStrings": true,
-    "preserveSingleSchemaOneOf": false
+    "preserveSingleSchemaOneOf": false,
+    "inlineAllOfSchemas": false
   }
 }

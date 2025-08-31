@@ -92,7 +92,9 @@ public final class ObjectTypeWithListAliasType {
         }
 
         public Builder addAllProp(List<PropItem> prop) {
-            this.prop.addAll(prop);
+            if (prop != null) {
+                this.prop.addAll(prop);
+            }
             return this;
         }
 

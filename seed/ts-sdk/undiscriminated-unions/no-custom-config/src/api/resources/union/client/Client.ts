@@ -55,7 +55,7 @@ export class Union {
         request: SeedUndiscriminatedUnions.MyUnion,
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.MyUnion>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -114,7 +114,7 @@ export class Union {
     private async __getMetadata(
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.Metadata>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -179,7 +179,7 @@ export class Union {
         request: SeedUndiscriminatedUnions.MetadataUnion,
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -249,7 +249,7 @@ export class Union {
         request: SeedUndiscriminatedUnions.Request,
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -313,7 +313,7 @@ export class Union {
         request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.UnionWithDuplicateTypes>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -382,7 +382,7 @@ export class Union {
         request: SeedUndiscriminatedUnions.NestedUnionRoot,
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??

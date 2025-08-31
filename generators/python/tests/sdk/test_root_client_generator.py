@@ -38,13 +38,13 @@ def test_generated_root_client_builder() -> None:
                 constructor_parameter_name="base_url",
                 type_hint=None,  # type: ignore
                 private_member_name="_base_url",
-                instantiation=AST.Expression('base_url="acme.io"'),
+                initializer=AST.Expression('base_url="acme.io"'),
             ),
             ConstructorParameter(
                 constructor_parameter_name="environment",
                 type_hint=None,  # type: ignore
                 private_member_name="_environment",
-                instantiation=client_wrapper_generator._get_environment_instantiation(
+                initializer=client_wrapper_generator._get_environment_instantiation(
                     generated_environment=generated_environment,
                 ),
             ),

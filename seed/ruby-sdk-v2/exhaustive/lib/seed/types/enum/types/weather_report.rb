@@ -6,6 +6,7 @@ module Seed
       module Types
         module WeatherReport
           extend Seed::Internal::Types::Enum
+
           SUNNY = "SUNNY"
           CLOUDY = "CLOUDY"
           RAINING = "RAINING"

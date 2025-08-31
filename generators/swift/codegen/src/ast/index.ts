@@ -7,6 +7,7 @@ export { DocComment } from "./DocComment";
 export { EnumWithAssociatedValues } from "./EnumWithAssociatedValues";
 export { EnumWithRawValues } from "./EnumWithRawValues";
 export { Expression } from "./Expression";
+export { Extension } from "./Extension";
 export type { FileComponent } from "./FileComponent";
 export { FunctionArgument } from "./FunctionArgument";
 export { FunctionParameter } from "./FunctionParameter";

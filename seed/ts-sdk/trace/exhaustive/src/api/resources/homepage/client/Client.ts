@@ -59,11 +59,11 @@ export class Homepage {
     ): Promise<
         core.WithRawResponse<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>>
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader,
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
             }),
             requestOptions?.headers,
         );
@@ -122,11 +122,11 @@ export class Homepage {
         request: SeedTrace.ProblemId[],
         requestOptions?: Homepage.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader,
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
             }),
             requestOptions?.headers,
         );

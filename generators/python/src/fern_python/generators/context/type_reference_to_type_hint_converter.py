@@ -172,8 +172,8 @@ class TypeReferenceToTypeHintConverter:
                     as_if_type_checking_import=as_if_type_checking_import,
                     in_endpoint=in_endpoint,
                     # As soon as we handle the top-level typing_extensions.NotRequired, we don't
-                    # want to propagate the TypedDict handling any further. The remaining nested
-                    # type references should be handled as normal.
+                    #  want to propagate the TypedDict handling any further. The remaining nested
+                    #  type references should be handled as normal.
                     for_typeddict=False,
                 )
             ),

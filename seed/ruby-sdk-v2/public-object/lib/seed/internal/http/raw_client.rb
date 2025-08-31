@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module seed
+module Seed
   module Internal
     module Http
       # @api private
@@ -20,7 +20,7 @@ module seed
           }.merge(headers)
         end
 
-        # @param request [seed::Internal::Http::BaseRequest] The HTTP request.
+        # @param request [Seed::Internal::Http::BaseRequest] The HTTP request.
         # @return [HTTP::Response] The HTTP response.
         def send(request)
           url = build_url(request)
@@ -46,12 +46,12 @@ module seed
           # end
         end
 
-        # @param request [seed::Internal::Http::BaseRequest] The HTTP request.
+        # @param request [Seed::Internal::Http::BaseRequest] The HTTP request.
         # @return [URI::Generic] The URL.
         def build_url(request)
           path = request.path.start_with?("/") ? request.path[1..] : request.path
           url = "#{@base_url.chomp("/")}/#{path}"
-          url = "#{url}?#{encode_query(request.query)}" if request.query
+          url = "#{url}?#{encode_query(request.query)}" if request.query&.any?
           URI.parse(url)
         end
 
@@ -102,4 +102,4 @@ module seed
       end
     end
   end
-end 
+end

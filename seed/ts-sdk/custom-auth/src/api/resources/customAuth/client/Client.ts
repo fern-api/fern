@@ -55,7 +55,7 @@ export class CustomAuth {
     private async __getWithCustomAuth(
         requestOptions?: CustomAuth.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
             requestOptions?.headers,
@@ -135,7 +135,7 @@ export class CustomAuth {
         request?: unknown,
         requestOptions?: CustomAuth.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
             requestOptions?.headers,

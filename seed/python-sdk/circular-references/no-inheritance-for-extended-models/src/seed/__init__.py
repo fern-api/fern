@@ -2,26 +2,73 @@
 
 # isort: skip_file
 
-from .types import ImportingA, RootType
-from . import a, ast
-from .a import A
-from .ast import (
-    ContainerValue,
-    ContainerValue_List,
-    ContainerValue_Optional,
-    FieldValue,
-    FieldValue_ContainerValue,
-    FieldValue_ObjectValue,
-    FieldValue_PrimitiveValue,
-    JsonLike,
-    ObjectValue,
-    PrimitiveValue,
-    T,
-    TorU,
-    U,
-)
-from .client import AsyncSeedApi, SeedApi
-from .version import __version__
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .types import ImportingA, RootType
+    from . import a, ast
+    from .a import A
+    from .ast import (
+        ContainerValue,
+        ContainerValue_List,
+        ContainerValue_Optional,
+        FieldValue,
+        FieldValue_ContainerValue,
+        FieldValue_ObjectValue,
+        FieldValue_PrimitiveValue,
+        JsonLike,
+        ObjectValue,
+        PrimitiveValue,
+        T,
+        TorU,
+        U,
+    )
+    from .client import AsyncSeedApi, SeedApi
+    from .version import __version__
+_dynamic_imports: typing.Dict[str, str] = {
+    "A": ".a",
+    "AsyncSeedApi": ".client",
+    "ContainerValue": ".ast",
+    "ContainerValue_List": ".ast",
+    "ContainerValue_Optional": ".ast",
+    "FieldValue": ".ast",
+    "FieldValue_ContainerValue": ".ast",
+    "FieldValue_ObjectValue": ".ast",
+    "FieldValue_PrimitiveValue": ".ast",
+    "ImportingA": ".types",
+    "JsonLike": ".ast",
+    "ObjectValue": ".ast",
+    "PrimitiveValue": ".ast",
+    "RootType": ".types",
+    "SeedApi": ".client",
+    "T": ".ast",
+    "TorU": ".ast",
+    "U": ".ast",
+    "__version__": ".version",
+    "a": ".",
+    "ast": ".",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "A",

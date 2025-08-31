@@ -6,45 +6,43 @@ paths:
   /pet:
     put:
       tags:
-      - pet
+        - pet
       summary: Update an existing pet
       requestBody:
-        $ref: 'https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/openapi-3.1.0/spec.yaml#/components/requestBodies/Pet'
+        $ref: "https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/openapi-3.1.0/spec.yaml#/components/requestBodies/Pet"
       responses:
-        '200':
+        "200":
           description: A list of pets
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Pet'
+                $ref: "#/components/schemas/Pet"
 
   /order:
     get:
       tags:
-      - order
+        - order
       summary: Get an order
       responses:
-        '200':
+        "200":
           description: An order object
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
-
-      
+                $ref: "#/components/schemas/Order"
 
 components:
   schemas:
     Mammal:
       oneOf:
-        - $ref: 'https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/openapi-3.1.0/spec.yaml#/components/schemas/Pet'
-        - $ref: 'https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/openapi-3.1.0/spec.yaml#/components/schemas/User'
+        - $ref: "https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/openapi-3.1.0/spec.yaml#/components/schemas/Pet"
+        - $ref: "https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/openapi-3.1.0/spec.yaml#/components/schemas/User"
     Pet:
-      $ref: 'https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/openapi-3.1.0/spec.yaml#/components/schemas/Pet'
+      $ref: "https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/openapi-3.1.0/spec.yaml#/components/schemas/Pet"
     PetOwner:
       allOf:
-        - $ref: 'https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/openapi-3.1.0/spec.yaml#/components/schemas/User'
-        - $ref: 'https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/openapi-3.1.0/spec.yaml#/components/schemas/Pet'
-        - $ref: 'https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/openapi-3.1.0/spec.yaml#/components/schemas/Tag'
+        - $ref: "https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/openapi-3.1.0/spec.yaml#/components/schemas/User"
+        - $ref: "https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/openapi-3.1.0/spec.yaml#/components/schemas/Pet"
+        - $ref: "https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/openapi-3.1.0/spec.yaml#/components/schemas/Tag"
     Order:
-      $ref: 'https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/openapi-3.1.0/spec.yaml#/components/schemas/Order'
+      $ref: "https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/openapi-3.1.0/spec.yaml#/components/schemas/Order"

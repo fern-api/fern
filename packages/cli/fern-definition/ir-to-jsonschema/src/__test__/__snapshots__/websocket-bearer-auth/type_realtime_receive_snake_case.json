@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "receive_text": {
+      "type": "string"
+    },
+    "receive_int": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "receive_text",
+    "receive_int"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

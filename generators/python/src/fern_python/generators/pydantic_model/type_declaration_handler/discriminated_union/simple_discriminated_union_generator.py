@@ -288,7 +288,8 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
                 type_union = single_union_type.shape.get_as_union()
                 if (
                     type_union.properties_type == "samePropertiesAsObject"
-                    and type_union.name.pascal_case == AbstractSimpleDiscriminatedUnionGenerator.BASE_CLASS_NAME
+                    and type_union.name.pascal_case.safe_name
+                    == AbstractSimpleDiscriminatedUnionGenerator.BASE_CLASS_NAME
                 ):
                     is_base_class_name_present = True
 

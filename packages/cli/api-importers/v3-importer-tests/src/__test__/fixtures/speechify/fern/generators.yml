@@ -1,5 +1,5 @@
 api:
   specs:
     - openapi: ../openapi.json
-      settings: 
+      settings:
         default-form-parameter-encoding: form

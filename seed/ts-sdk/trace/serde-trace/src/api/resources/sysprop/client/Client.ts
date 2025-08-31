@@ -67,11 +67,11 @@ export class Sysprop {
         numWarmInstances: number,
         requestOptions?: Sysprop.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader,
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
             }),
             requestOptions?.headers,
         );
@@ -135,11 +135,11 @@ export class Sysprop {
     private async __getNumWarmInstances(
         requestOptions?: Sysprop.RequestOptions,
     ): Promise<core.WithRawResponse<Record<SeedTrace.Language, number | undefined>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader,
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
             }),
             requestOptions?.headers,
         );

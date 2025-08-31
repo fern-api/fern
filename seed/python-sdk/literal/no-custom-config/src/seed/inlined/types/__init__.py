@@ -2,17 +2,52 @@
 
 # isort: skip_file
 
-from .a_nested_literal import ANestedLiteral
-from .a_top_level_literal import ATopLevelLiteral
-from .discriminated_literal import (
-    DiscriminatedLiteral,
-    DiscriminatedLiteral_CustomName,
-    DiscriminatedLiteral_DefaultName,
-    DiscriminatedLiteral_George,
-    DiscriminatedLiteral_LiteralGeorge,
-)
-from .some_aliased_literal import SomeAliasedLiteral
-from .undiscriminated_literal import UndiscriminatedLiteral
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .a_nested_literal import ANestedLiteral
+    from .a_top_level_literal import ATopLevelLiteral
+    from .discriminated_literal import (
+        DiscriminatedLiteral,
+        DiscriminatedLiteral_CustomName,
+        DiscriminatedLiteral_DefaultName,
+        DiscriminatedLiteral_George,
+        DiscriminatedLiteral_LiteralGeorge,
+    )
+    from .some_aliased_literal import SomeAliasedLiteral
+    from .undiscriminated_literal import UndiscriminatedLiteral
+_dynamic_imports: typing.Dict[str, str] = {
+    "ANestedLiteral": ".a_nested_literal",
+    "ATopLevelLiteral": ".a_top_level_literal",
+    "DiscriminatedLiteral": ".discriminated_literal",
+    "DiscriminatedLiteral_CustomName": ".discriminated_literal",
+    "DiscriminatedLiteral_DefaultName": ".discriminated_literal",
+    "DiscriminatedLiteral_George": ".discriminated_literal",
+    "DiscriminatedLiteral_LiteralGeorge": ".discriminated_literal",
+    "SomeAliasedLiteral": ".some_aliased_literal",
+    "UndiscriminatedLiteral": ".undiscriminated_literal",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "ANestedLiteral",

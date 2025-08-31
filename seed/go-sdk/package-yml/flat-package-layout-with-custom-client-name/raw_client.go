@@ -13,11 +13,12 @@ import (
 type RawAcme struct {
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
+	options *core.RequestOptions
 }
 
 func NewRawAcme(options *core.RequestOptions) *RawAcme {
 	return &RawAcme{
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -25,7 +26,6 @@ func NewRawAcme(options *core.RequestOptions) *RawAcme {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
@@ -46,7 +46,7 @@ func (r *RawAcme) Echo(
 		id,
 	)
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	var response string

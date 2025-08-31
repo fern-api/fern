@@ -1,0 +1,103 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_.createType"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.CreateType(\n\tcontext.TODO(),\n\t\u0026pleaseinhere.Type{\n\t\tBasicType: pleaseinhere.BasicTypePrimitive,\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_.echo"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.Echo(\n\tcontext.TODO(),\n\t\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/check/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_health/service.check"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nerr := client.Health.Service.Check(\n\tcontext.TODO(),\n\t\"id-2sdx82h\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/notification/{notificationId}",
+                "method": "GET",
+                "identifier_override": "endpoint_file/notification/service.getException"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.File.Notification.Service.GetException(\n\tcontext.TODO(),\n\t\"notification-hsy129x\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/{filename}",
+                "method": "GET",
+                "identifier_override": "endpoint_file/service.getFile"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfile \"github.com/examples/fern/pleaseinhere/file\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.File.Service.GetFile(\n\tcontext.TODO(),\n\t\"file.txt\",\n\t\u0026file.GetFileRequest{\n\t\tXFileApiVersion: \"0.0.2\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/metadata",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getMetadata"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.Service.GetMetadata(\n\tcontext.TODO(),\n\t\u0026pleaseinhere.GetMetadataRequest{\n\t\tXApiVersion: \"0.0.1\",\n\t\tShallow: pleaseinhere.Bool(\n\t\t\tfalse,\n\t\t),\n\t\tTag: []*string{\n\t\t\tpleaseinhere.String(\n\t\t\t\t\"development\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/movie",
+                "method": "POST",
+                "identifier_override": "endpoint_service.createMovie"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.Service.CreateMovie(\n\tcontext.TODO(),\n\t\u0026pleaseinhere.Movie{\n\t\tId: \"movie-c06a4ad7\",\n\t\tPrequel: pleaseinhere.String(\n\t\t\t\"movie-cv9b914f\",\n\t\t),\n\t\tTitle:  \"The Boy and the Heron\",\n\t\tFrom:   \"Hayao Miyazaki\",\n\t\tRating: 8,\n\t\tTag:    \"tag-wf9as23d\",\n\t\tMetadata: map[string]interface{}{\n\t\t\t\"actors\": []interface{}{\n\t\t\t\t\"Christian Bale\",\n\t\t\t\t\"Florence Pugh\",\n\t\t\t\t\"Willem Dafoe\",\n\t\t\t},\n\t\t\t\"releaseDate\": \"2023-12-08\",\n\t\t\t\"ratings\": map[string]interface{}{\n\t\t\t\t\"imdb\":           7.6,\n\t\t\t\t\"rottenTomatoes\": 97,\n\t\t\t},\n\t\t},\n\t\tRevenue: 1000000,\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/movie/{movieId}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getMovie"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.Service.GetMovie(\n\tcontext.TODO(),\n\t\"movie-c06a4ad7\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/ping",
+                "method": "GET",
+                "identifier_override": "endpoint_health/service.ping"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.Health.Service.Ping(\n\tcontext.TODO(),\n)\n"
+            }
+        }
+    ]
+}

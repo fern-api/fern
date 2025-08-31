@@ -20,6 +20,7 @@ public class Example14
                 Title = "The Boy and the Heron",
                 From = "Hayao Miyazaki",
                 Rating = 8,
+                Type = "movie",
                 Tag = "tag-wf9as23d",
                 Metadata = new Dictionary<string, object>(){
                     ["actors"] = new List<object>() {

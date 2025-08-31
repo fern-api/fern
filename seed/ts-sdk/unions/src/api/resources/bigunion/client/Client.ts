@@ -52,7 +52,7 @@ export class Bigunion {
         id: string,
         requestOptions?: Bigunion.RequestOptions,
     ): Promise<core.WithRawResponse<SeedUnions.BigUnion>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -116,7 +116,7 @@ export class Bigunion {
         request: SeedUnions.BigUnion,
         requestOptions?: Bigunion.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -184,7 +184,7 @@ export class Bigunion {
         request: SeedUnions.BigUnion[],
         requestOptions?: Bigunion.RequestOptions,
     ): Promise<core.WithRawResponse<Record<string, boolean>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
