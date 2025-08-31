@@ -219,7 +219,10 @@ export class IntermediateRepresentationChangeDetector {
         to: Record<string, HttpService>;
     }): void {
         for (const [serviceId, fromService] of Object.entries(from)) {
-            if (isMarkedUnstable(fromService.availability)) {
+            if (
+                isMarkedUnstable(fromService.availability) ||
+                (fromService.endpoints?.every((endpoint) => isMarkedUnstable(endpoint.availability)) ?? false)
+            ) {
                 continue;
             }
 
