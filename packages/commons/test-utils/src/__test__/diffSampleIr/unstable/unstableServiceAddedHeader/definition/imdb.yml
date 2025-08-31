@@ -9,22 +9,27 @@ types:
         type: double
         docs: The rating scale is one to five stars
 
-  MovieList: list<Movie>
-
   CreateMovieRequest:
     properties:
       title: string
       rating: double
 
 service:
+  availability:
+    status: IN_DEVELOPMENT
+    message: "Unreleased service."
   auth: false
   base-path: /movies
+  headers:
+    x-service-header: string
   endpoints:
     createMovie:
       docs: Add a movie to the database using the movies/*/... path.
       method: POST
       path: /create-movie
-      request: CreateMovieRequest
+      request:
+        name: CreateMovieRequestBody
+        body: CreateMovieRequest
       response:
         type: MovieId
         status-code: 201
@@ -34,12 +39,16 @@ service:
       path: /{movieId}
       path-parameters:
         movieId: MovieId
+      request:
+        name: GetMovieRequest
       response: Movie
       errors:
         - MovieDoesNotExistError
 
     listMovies:
       method: GET
+      request:
+        name: ListMoviesRequest
       path: /
       response: list<Movie>
 

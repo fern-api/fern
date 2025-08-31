@@ -14,7 +14,15 @@ types:
       title: string
       rating: double
 
+  UpdateMovieRequest:
+    properties:
+      title: string
+      rating: double
+
 service:
+  availability:
+    status: IN_DEVELOPMENT
+    message: "Unreleased service."
   auth: false
   base-path: /movies
   endpoints:
@@ -26,6 +34,14 @@ service:
       response:
         type: MovieId
         status-code: 201
+
+    updateMovie:
+      method: PUT
+      path: /{movieId}
+      path-parameters:
+        movieId: MovieId
+      request: UpdateMovieRequest
+      response: Movie
 
     getMovie:
       method: GET

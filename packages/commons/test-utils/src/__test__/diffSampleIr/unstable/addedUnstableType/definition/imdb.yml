@@ -9,7 +9,11 @@ types:
         type: double
         docs: The rating scale is one to five stars
 
-  MovieList: list<Movie>
+  MovieList:
+    type: list<Movie>
+    availability:
+      status: IN_DEVELOPMENT
+      message: "Unreleased type."
 
   CreateMovieRequest:
     properties:

@@ -8,8 +8,7 @@ types:
       rating:
         type: double
         docs: The rating scale is one to five stars
-
-  MovieList: list<Movie>
+      releaseYear: integer
 
   CreateMovieRequest:
     properties:
@@ -17,6 +16,9 @@ types:
       rating: double
 
 service:
+  availability:
+    status: IN_DEVELOPMENT
+    message: "Unreleased service."
   auth: false
   base-path: /movies
   endpoints:

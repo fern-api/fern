@@ -1,13 +1,20 @@
 types:
+  MovieId: string
+
   Movie:
     properties:
-      id: string
+      id: MovieId
       title: string
       rating:
         type: double
         docs: The rating scale is one to five stars
 
   CreateMovieRequest:
+    properties:
+      title: string
+      rating: double
+
+  UpdateMovieRequest:
     properties:
       title: string
       rating: double
@@ -22,14 +29,25 @@ service:
       path: /create-movie
       request: CreateMovieRequest
       response:
-        type: string
+        type: MovieId
         status-code: 201
+
+    updateMovie:
+      method: PUT
+      availability:
+        status: IN_DEVELOPMENT
+        message: "Unreleased endpoint."
+      path: /{movieId}
+      path-parameters:
+        movieId: MovieId
+      request: UpdateMovieRequest
+      response: Movie
 
     getMovie:
       method: GET
       path: /{movieId}
       path-parameters:
-        movieId: string
+        movieId: MovieId
       response: Movie
       errors:
         - MovieDoesNotExistError
@@ -42,4 +60,4 @@ service:
 errors:
   MovieDoesNotExistError:
     status-code: 404
-    type: string
+    type: MovieId

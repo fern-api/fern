@@ -1,7 +1,0 @@
-name: api
-error-discrimination:
-  strategy: status-code
-headers:
-  x-simple-header:
-    type: string
-    env: SIMPLE_HEADER_ENV
