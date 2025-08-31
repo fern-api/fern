@@ -30,7 +30,7 @@ import {
     TypeDeclaration,
     TypeReference
 } from "@fern-api/ir-sdk";
-import { isMarkedUnstable } from "./utils/availabilityUtils";
+import { getStableTypeIdsFromIr, isMarkedUnstable } from "./utils/availabilityUtils";
 
 export namespace IntermediateRepresentationChangeDetector {
     export type Result = {
@@ -107,7 +107,9 @@ export class IntermediateRepresentationChangeDetector {
         from: IntermediateRepresentation;
         to: IntermediateRepresentation;
     }): IntermediateRepresentationChangeDetector.Result {
+        const fromStableTypeIds = getStableTypeIdsFromIr(from);
         this.checkTypeBreakingChanges({
+            fromStableTypeIds,
             from: from.types,
             to: to.types
         });
@@ -128,14 +130,16 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private checkTypeBreakingChanges({
+        fromStableTypeIds,
         from,
         to
     }: {
+        fromStableTypeIds: Set<string>;
         from: Record<string, TypeDeclaration>;
         to: Record<string, TypeDeclaration>;
     }): void {
         for (const [typeId, fromType] of Object.entries(from)) {
-            if (isMarkedUnstable(fromType.availability)) {
+            if (isMarkedUnstable(fromType.availability) || !fromStableTypeIds.has(typeId)) {
                 continue;
             }
             const toType = to[typeId];
