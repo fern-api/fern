@@ -180,6 +180,10 @@ export class DynamicSnippetsTestRunner {
                                     key2: 'val2'
                                 },
                                 jsonString: "abc"
+                            },
+                            migration: {
+                                name: "Migration 31 Aug",
+                                status: "RUNNING"
                             }
                         }
                     }
