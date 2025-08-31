@@ -5,6 +5,7 @@ import { swift } from "@fern-api/swift-codegen";
 import { camelCase } from "lodash-es";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
+import { DynamicTypeMapper } from "./DynamicTypeMapper";
 
 export declare namespace DynamicTypeLiteralMapper {
     interface Args {
@@ -317,7 +318,19 @@ export class DynamicTypeLiteralMapper {
     }): swift.Expression | undefined {
         for (const typeReference of undiscriminatedUnion.types) {
             try {
-                return this.convert({ typeReference, value });
+                const converted = this.convert({ typeReference, value });
+                const typeMapper = new DynamicTypeMapper({ context: this.context });
+                const swiftType = typeMapper.convert({ typeReference });
+                return swift.Expression.methodCall({
+                    target: swift.Expression.reference(undiscriminatedUnion.declaration.name.pascalCase.unsafeName),
+                    methodName: swiftType.toCaseName(),
+                    arguments_: [
+                        swift.functionArgument({
+                            value: converted
+                        })
+                    ],
+                    multiline: true
+                });
             } catch (e) {
                 continue;
             }
