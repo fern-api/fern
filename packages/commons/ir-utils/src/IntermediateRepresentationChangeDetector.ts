@@ -135,6 +135,9 @@ export class IntermediateRepresentationChangeDetector {
         to: Record<string, TypeDeclaration>;
     }): void {
         for (const [typeId, fromType] of Object.entries(from)) {
+            if (isMarkedUnstable(fromType.availability)) {
+                continue;
+            }
             const toType = to[typeId];
             if (!toType) {
                 this.errors.add(`Type "${typeId}" was removed.`);
@@ -159,6 +162,9 @@ export class IntermediateRepresentationChangeDetector {
         to: Record<string, ErrorDeclaration>;
     }): void {
         for (const [_, fromError] of Object.entries(from)) {
+            if (isMarkedUnstable(fromError.availability)) {
+                continue;
+            }
             const toError = Object.values(to).find((error) => error.name.errorId === fromError.name.errorId);
             if (!toError) {
                 this.errors.add(
@@ -174,6 +180,9 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private checkErrorBreakingChanges({ from, to }: { from: ErrorDeclaration; to: ErrorDeclaration }): void {
+        if (isMarkedUnstable(from.availability)) {
+            return;
+        }
         if (from.type != null) {
             if (to.type == null) {
                 this.errors.add(
@@ -610,6 +619,9 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private areTypeDeclarationsCompatible({ from, to }: { from: TypeDeclaration; to: TypeDeclaration }): boolean {
+        if (isMarkedUnstable(from.availability)) {
+            return true;
+        }
         return (
             this.areDeclaredTypeNamesCompatible({
                 from: from.name,

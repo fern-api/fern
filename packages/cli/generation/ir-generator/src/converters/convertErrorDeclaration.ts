@@ -6,6 +6,7 @@ import { FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";
 import { parseErrorName } from "../utils/parseErrorName";
+import { convertDeclaration } from "./convertDeclaration";
 import { convertTypeReferenceExample } from "./type-declarations/convertExampleType";
 
 export function convertErrorDeclaration({
@@ -23,10 +24,12 @@ export function convertErrorDeclaration({
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
 }): ErrorDeclaration {
+    const declaration = convertDeclaration(errorDeclaration);
     const examples: FernIr.ExampleError[] = [];
     if (errorDeclaration.type != null && errorDeclaration.examples != null) {
         for (const example of errorDeclaration.examples) {
             examples.push({
+                ...declaration,
                 name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
                 docs: example.docs,
                 jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({
@@ -47,6 +50,7 @@ export function convertErrorDeclaration({
     }
 
     return {
+        ...declaration,
         name: parseErrorName({
             errorName,
             file

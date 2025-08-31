@@ -9,7 +9,7 @@ import { DeclaredErrorName } from "./DeclaredErrorName";
 import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
 import { ExampleError } from "./ExampleError";
 import { V2SchemaExamples } from "../../examples/types/V2SchemaExamples";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { Declaration } from "../../commons/types/Declaration";
 
 export const ErrorDeclaration: core.serialization.ObjectSchema<
     serializers.ErrorDeclaration.Raw,
@@ -24,10 +24,10 @@ export const ErrorDeclaration: core.serialization.ObjectSchema<
         examples: core.serialization.list(ExampleError),
         v2Examples: V2SchemaExamples.optional(),
     })
-    .extend(WithDocs);
+    .extend(Declaration);
 
 export declare namespace ErrorDeclaration {
-    export interface Raw extends WithDocs.Raw {
+    export interface Raw extends Declaration.Raw {
         name: DeclaredErrorName.Raw;
         displayName?: string | null;
         discriminantValue: NameAndWireValue.Raw;

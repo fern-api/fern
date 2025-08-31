@@ -7,7 +7,7 @@ imports:
 
 types:
   ErrorDeclaration:
-    extends: commons.WithDocs
+    extends: commons.Declaration
     properties:
       name: DeclaredErrorName
       displayName: optional<string>
@@ -31,7 +31,7 @@ types:
   ExampleError:
     extends:
       - commons.WithJsonExample
-      - commons.WithDocs
+      - commons.Declaration
     properties:
       name: optional<commons.Name>
       shape: types.ExampleTypeReference

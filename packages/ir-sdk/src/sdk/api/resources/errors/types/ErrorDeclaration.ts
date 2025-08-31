@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export interface ErrorDeclaration extends FernIr.WithDocs {
+export interface ErrorDeclaration extends FernIr.Declaration {
     name: FernIr.DeclaredErrorName;
     displayName: string | undefined;
     discriminantValue: FernIr.NameAndWireValue;
