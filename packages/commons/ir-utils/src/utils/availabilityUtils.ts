@@ -322,11 +322,29 @@ function getStableTypeIdsFromFileUploadRequestProperty(property: FernIr.FileUplo
 }
 
 function getTypeIdsFromFileProperty(file: FernIr.FileProperty): Set<FernIr.TypeId> {
-    throw new Error("Not implemented");
+    return file._visit({
+        file: (file) => {
+            return getTypeIdsFromFilePropertySingle(file);
+        },
+        fileArray: (fileArray) => {
+            return getTypeIdsFromFilePropertyArray(fileArray);
+        },
+        _other: () => {
+            return new Set<FernIr.TypeId>();
+        }
+    });
+}
+
+function getTypeIdsFromFilePropertySingle(file: FernIr.FilePropertySingle): Set<FernIr.TypeId> {
+    return file.contentType === undefined ? new Set<FernIr.TypeId>() : new Set<FernIr.TypeId>([file.contentType]);
+}
+
+function getTypeIdsFromFilePropertyArray(file: FernIr.FilePropertyArray): Set<FernIr.TypeId> {
+    return file.contentType === undefined ? new Set<FernIr.TypeId>() : new Set<FernIr.TypeId>([file.contentType]);
 }
 
 function getTypeIdsFromBodyProperty(bodyProperty: FernIr.FileUploadBodyProperty): Set<FernIr.TypeId> {
-    throw new Error("Not implemented");
+    return getStableTypeIdsFromInlinedRequestBodyProperty(bodyProperty);
 }
 
 function getStableTypeIdsFromBytes(bytes: FernIr.BytesRequest): Set<FernIr.TypeId> {
@@ -362,16 +380,92 @@ function getStableTypeIdsFromResponse(response: FernIr.HttpResponse): Set<FernIr
     });
 }
 
+function getStableTypeIdsFromJsonResponse(json: FernIr.JsonResponse): Set<FernIr.TypeId> {
+    return json._visit({
+        response: (response) => {
+            return getStableTypeIdsFromJsonResponseBody(response);
+        },
+        nestedPropertyAsResponse: (nestedPropertyAsResponse) => {
+            return getStableTypeIdsFromJsonResponseBodyWithProperty(nestedPropertyAsResponse);
+        },
+        _other: () => {
+            return new Set<FernIr.TypeId>();
+        }
+    });
+}
+
+function getStableTypeIdsFromJsonResponseBody(body: FernIr.JsonResponseBody): Set<FernIr.TypeId> {
+    return getTypeIdsFromTypeReference(body.responseBodyType);
+}
+
+function getStableTypeIdsFromJsonResponseBodyWithProperty(
+    body: FernIr.JsonResponseBodyWithProperty
+): Set<FernIr.TypeId> {
+    let stableTypes = new Set<FernIr.TypeId>();
+    stableTypes = stableTypes.union(getTypeIdsFromTypeReference(body.responseBodyType));
+    if (body.responseProperty !== undefined && !isMarkedUnstable(body.responseProperty.availability)) {
+        stableTypes = stableTypes.union(getTypeIdsFromTypeReference(body.responseProperty.valueType));
+    }
+    return stableTypes;
+}
+
+function getStableTypeIdsFromFileDownloadResponse(fileDownload: FernIr.FileDownloadResponse): Set<FernIr.TypeId> {
+    return new Set<FernIr.TypeId>();
+}
+
+function getStableTypeIdsFromTextResponse(text: FernIr.TextResponse): Set<FernIr.TypeId> {
+    return new Set<FernIr.TypeId>();
+}
+
+function getStableTypeIdsFromBytesResponse(bytes: FernIr.BytesResponse): Set<FernIr.TypeId> {
+    return new Set<FernIr.TypeId>();
+}
+
+function getStableTypeIdsFromStreamingResponse(streaming: FernIr.StreamingResponse): Set<FernIr.TypeId> {
+    return streaming._visit({
+        json: (json) => {
+            return getStableTypeIdsFromJsonStreamChunk(json);
+        },
+        text: (text) => {
+            return getStableTypeIdsFromTextStreamChunk(text);
+        },
+        sse: (sse) => {
+            return getStableTypeIdsFromSseStreamChunk(sse);
+        },
+        _other: () => {
+            return new Set<FernIr.TypeId>();
+        }
+    });
+}
+
+function getStableTypeIdsFromJsonStreamChunk(chunk: FernIr.JsonStreamChunk): Set<FernIr.TypeId> {
+    return getTypeIdsFromTypeReference(chunk.payload);
+}
+
+function getStableTypeIdsFromTextStreamChunk(text: FernIr.TextStreamChunk): Set<FernIr.TypeId> {
+    return new Set<FernIr.TypeId>();
+}
+
+function getStableTypeIdsFromSseStreamChunk(sse: FernIr.SseStreamChunk): Set<FernIr.TypeId> {
+    return getTypeIdsFromTypeReference(sse.payload);
+}
+
+function getStableTypeIdsFromStreamParameterResponse(
+    streamParameter: FernIr.StreamParameterResponse
+): Set<FernIr.TypeId> {
+    return new Set<FernIr.TypeId>();
+}
+
 function getStableTypeIdsFromV2Responses(v2Responses: FernIr.V2HttpResponses): Set<FernIr.TypeId> {
-    throw new Error("Not implemented");
+    return (v2Responses.responses ?? []).reduce((acc, response) => {
+        return acc.union(getStableTypeIdsFromResponse(response));
+    }, new Set<FernIr.TypeId>());
 }
 
 function getStableTypeIdsFromV2RequestBodies(v2RequestBodies: FernIr.V2HttpRequestBodies): Set<FernIr.TypeId> {
-    throw new Error("Not implemented");
-}
-
-function getStableTypeIdsFromV2Examples(v2Examples: FernIr.V2HttpEndpointExamples): Set<FernIr.TypeId> {
-    throw new Error("Not implemented");
+    return (v2RequestBodies.requestBodies ?? []).reduce((acc, requestBody) => {
+        return acc.union(getStableTypeIdsFromRequestBody(requestBody));
+    }, new Set<FernIr.TypeId>());
 }
 
 function getStableTypeIdsFromHeader(header: FernIr.HttpHeader): Set<FernIr.TypeId> {
