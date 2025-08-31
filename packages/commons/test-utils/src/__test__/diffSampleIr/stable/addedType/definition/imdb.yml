@@ -42,7 +42,7 @@ service:
     listMovies:
       method: GET
       path: /
-      response: MovieList
+      response: list<Movie>
 
 errors:
   MovieDoesNotExistError:

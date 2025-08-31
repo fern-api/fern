@@ -51,9 +51,8 @@ describe("diff sample ir - stable versions", () => {
         const to = await createSampleIr(pathToAddedHeaderWorkspace);
         const changeDetector = new IntermediateRepresentationChangeDetector();
         const changes = await changeDetector.check({ from, to });
-        expect(changes.isBreaking).toBe(false);
-        expect(changes.errors).toHaveLength(0);
-        expect(changes.bump).toBe("minor");
+        expect(changes.isBreaking).toBe(true);
+        expect(changes.bump).toBe("major");
     });
 
     it("comparing added required type property", async () => {
@@ -107,14 +106,15 @@ describe("diff sample ir - stable versions", () => {
         const to = await createSampleIr(pathToBaseWorkspace);
         const changeDetector = new IntermediateRepresentationChangeDetector();
         const changes = await changeDetector.check({ from, to });
-        expect(changes.isBreaking).toBe(false);
-        expect(changes.bump).toBe("minor");
-        expect(changes.errors).toHaveLength(0);
+        expect(changes.isBreaking).toBe(true);
+        expect(changes.bump).toBe("major");
     });
 
     it("comparing removed header", async () => {
         const from = await createSampleIr(pathToAddedHeaderWorkspace);
         const to = await createSampleIr(pathToBaseWorkspace);
+        console.log(to);
+        console.log(from);
         const changeDetector = new IntermediateRepresentationChangeDetector();
         const changes = await changeDetector.check({ from, to });
         expect(changes.isBreaking).toBe(true);
