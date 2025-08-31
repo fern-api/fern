@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export interface ExampleError extends FernIr.WithJsonExample, FernIr.Declaration {
+export interface ExampleError extends FernIr.WithJsonExample, FernIr.WithDocs {
     name: FernIr.Name | undefined;
     shape: FernIr.ExampleTypeReference;
 }

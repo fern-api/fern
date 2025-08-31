@@ -162,9 +162,6 @@ export class IntermediateRepresentationChangeDetector {
         to: Record<string, ErrorDeclaration>;
     }): void {
         for (const [_, fromError] of Object.entries(from)) {
-            if (isMarkedUnstable(fromError.availability)) {
-                continue;
-            }
             const toError = Object.values(to).find((error) => error.name.errorId === fromError.name.errorId);
             if (!toError) {
                 this.errors.add(
@@ -180,9 +177,6 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private checkErrorBreakingChanges({ from, to }: { from: ErrorDeclaration; to: ErrorDeclaration }): void {
-        if (isMarkedUnstable(from.availability)) {
-            return;
-        }
         if (from.type != null) {
             if (to.type == null) {
                 this.errors.add(

@@ -1,4 +1,4 @@
-import { Availability, AvailabilityStatus, FernIr } from "@fern-api/ir-sdk";
+import { Availability, AvailabilityStatus } from "@fern-api/ir-sdk";
 
 const stableStatuses: AvailabilityStatus[] = [AvailabilityStatus.GeneralAvailability];
 

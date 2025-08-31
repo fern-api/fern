@@ -7,7 +7,7 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { Name } from "../../commons/types/Name";
 import { WithJsonExample } from "../../commons/types/WithJsonExample";
-import { Declaration } from "../../commons/types/Declaration";
+import { WithDocs } from "../../commons/types/WithDocs";
 
 export const ExampleError: core.serialization.ObjectSchema<serializers.ExampleError.Raw, FernIr.ExampleError> =
     core.serialization
@@ -16,10 +16,10 @@ export const ExampleError: core.serialization.ObjectSchema<serializers.ExampleEr
             shape: core.serialization.lazyObject(() => serializers.ExampleTypeReference),
         })
         .extend(WithJsonExample)
-        .extend(Declaration);
+        .extend(WithDocs);
 
 export declare namespace ExampleError {
-    export interface Raw extends WithJsonExample.Raw, Declaration.Raw {
+    export interface Raw extends WithJsonExample.Raw, WithDocs.Raw {
         name?: Name.Raw | null;
         shape: serializers.ExampleTypeReference.Raw;
     }
