@@ -79,14 +79,6 @@ fixtures:
   imdb:
     - outputFolder: no-custom-config
       customConfig: null
-    - outputFolder: flat-package-layout
-      customConfig:
-        packageLayout: flat
-    - outputFolder: flat-package-layout-with-custom-client-name
-      customConfig:
-        packageLayout: flat
-        clientName: Acme
-        clientConstructorName: New
     - outputFolder: package-path
       customConfig:
         packagePath: inhereplease
@@ -158,14 +150,6 @@ fixtures:
   package-yml:
     - outputFolder: no-custom-config
       customConfig: null
-    - outputFolder: flat-package-layout
-      customConfig:
-        packageLayout: flat
-    - outputFolder: flat-package-layout-with-custom-client-name
-      customConfig:
-        packageLayout: flat
-        clientName: Acme
-        clientConstructorName: New
   streaming:
     - outputFolder: .
       outputVersion: v2.0.0

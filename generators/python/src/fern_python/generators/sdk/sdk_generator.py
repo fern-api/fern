@@ -66,6 +66,14 @@ class SdkGenerator(AbstractGenerator):
         custom_config = SDKCustomConfig.parse_obj(generator_config.custom_config or {})
         return not custom_config.skip_formatting
 
+    def should_use_lazy_imports(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+    ) -> bool:
+        custom_config = SDKCustomConfig.parse_obj(generator_config.custom_config or {})
+        return custom_config.lazy_imports
+
     def get_relative_path_to_project_for_publish(
         self,
         *,
@@ -461,6 +469,7 @@ class SdkGenerator(AbstractGenerator):
             oauth_scheme=oauth_scheme,
             endpoint_metadata_collector=endpoint_metadata_collector,
             websocket=None,
+            imports_manager=source_file.get_imports_manager(),
         )
         root_client_generator.generate(source_file=source_file)
         generated_root_client = root_client_generator.get_generated_root_client()
@@ -482,6 +491,7 @@ class SdkGenerator(AbstractGenerator):
                 snippet_writer=snippet_writer,
                 endpoint_metadata_collector=endpoint_metadata_collector,
                 websocket=None,
+                imports_manager=raw_client_source_file.get_imports_manager(),
             ).generate(source_file=raw_client_source_file)
             project.write_source_file(source_file=raw_client_source_file, filepath=raw_client_filepath)
         return generated_root_client
@@ -529,6 +539,7 @@ class SdkGenerator(AbstractGenerator):
             snippet_writer=snippet_writer,
             endpoint_metadata_collector=endpoint_metadata_collector,
             websocket=websocket,
+            imports_manager=client_source_file.get_imports_manager(),
         ).generate(source_file=client_source_file)
         project.write_source_file(source_file=client_source_file, filepath=client_filepath)
 
@@ -547,6 +558,7 @@ class SdkGenerator(AbstractGenerator):
             snippet_writer=snippet_writer,
             endpoint_metadata_collector=endpoint_metadata_collector,
             websocket=websocket,
+            imports_manager=raw_client_source_file.get_imports_manager(),
         ).generate(source_file=raw_client_source_file)
         project.write_source_file(source_file=raw_client_source_file, filepath=raw_client_filepath)
 
