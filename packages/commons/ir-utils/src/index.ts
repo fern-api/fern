@@ -15,6 +15,7 @@ export { type AudienceId } from "./filtered-ir/ids";
 export { hashJSON } from "./hashJSON";
 export { IntermediateRepresentationChangeDetector } from "./IntermediateRepresentationChangeDetector";
 export { mergeIntermediateRepresentation } from "./mergeIntermediateRepresentation";
+export { getStableTypeIdsFromIr } from "./utils/availabilityUtils";
 export { IdGenerator } from "./utils/IdGenerator";
 export { isReferencedWebhookPayloadSchema } from "./utils/isReferencedWebhookPayloadSchema";
 export { stringifyFernFilepath } from "./utils/stringifyFernFilepath";
