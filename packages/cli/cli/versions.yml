@@ -1,4 +1,10 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: Fern cli diff command recognizes availability.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-28"
+  version: 0.67.0
 
 - changelogEntry:
     - summary: Ignore self-referential types that are optional<nullable<SELF>>
