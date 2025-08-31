@@ -1,6 +1,7 @@
 name: api
 error-discrimination:
   strategy: status-code
-x-simple-header:
-  type: string
-  env: SIMPLE_HEADER_ENV
+headers:
+  x-simple-header:
+    type: string
+    env: SIMPLE_HEADER_ENV

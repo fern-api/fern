@@ -25,7 +25,7 @@ describe("diff sample ir - stable versions", () => {
         expect(changes.bump).toBe("minor");
     });
 
-    it.skip("comparing added endpoint", async () => {
+    it("comparing added endpoint", async () => {
         const baseIr = await createSampleIr(pathToBaseWorkspace);
         const changedIr = await createSampleIr(pathToAddedEndpointWorkspace);
         const changeDetector = new IntermediateRepresentationChangeDetector();
@@ -95,6 +95,15 @@ describe("diff sample ir - stable versions", () => {
     it.skip("comparing removed type property", async () => {
         const baseIr = await createSampleIr(pathToBaseWorkspace);
         const changedIr = await createSampleIr(pathToRemovedTypePropertyWorkspace);
+        const changeDetector = new IntermediateRepresentationChangeDetector();
+        const changes = await changeDetector.check({ from: baseIr, to: changedIr });
+        expect(changes.isBreaking).toBe(true);
+        expect(changes.bump).toBe("major");
+    });
+
+    it.skip("comparing removed header", async () => {
+        const baseIr = await createSampleIr(pathToBaseWorkspace);
+        const changedIr = await createSampleIr(pathToRemovedHeaderWorkspace);
         const changeDetector = new IntermediateRepresentationChangeDetector();
         const changes = await changeDetector.check({ from: baseIr, to: changedIr });
         expect(changes.isBreaking).toBe(true);
