@@ -182,7 +182,7 @@ export class Expression extends AstNode {
 
     public asStructInitializationOrThrow(): StructInitialization {
         if (this.internalExpression.type !== "struct-initialization") {
-            throw new Error("Internal error; ts.TypeLiteral is not an object");
+            throw new Error("Internal error; swift.Expression is not a struct initialization");
         }
         return this.internalExpression;
     }
