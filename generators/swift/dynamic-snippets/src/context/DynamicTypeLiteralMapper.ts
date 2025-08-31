@@ -127,8 +127,7 @@ export class DynamicTypeLiteralMapper {
             case "discriminatedUnion":
                 return this.convertDiscriminatedUnion({ discriminatedUnion: named, value });
             case "enum":
-                // TODO(kafkas): Implement
-                return swift.Expression.nop();
+                return this.convertEnum({ enum_: named, value });
             case "object":
                 return this.convertObject({ object_: named, value, as });
             case "undiscriminatedUnion":
@@ -260,6 +259,33 @@ export class DynamicTypeLiteralMapper {
                 this.context.errors.unscope();
             }
         });
+    }
+
+    private convertEnum({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): swift.Expression {
+        const nameAndWireValue = this.getEnumValue({ enum_, value });
+        if (nameAndWireValue == null) {
+            return swift.Expression.nop();
+        }
+        return swift.Expression.enumCaseShorthand(nameAndWireValue.name.camelCase.unsafeName);
+    }
+
+    private getEnumValue({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }) {
+        if (typeof value !== "string") {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `Expected enum value string, got: ${typeof value}`
+            });
+            return undefined;
+        }
+        const enumValue = enum_.values.find((v) => v.wireValue === value);
+        if (enumValue == null) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `An enum value named "${value}" does not exist in this context`
+            });
+            return undefined;
+        }
+        return enumValue;
     }
 
     private convertObject({

@@ -64,6 +64,10 @@ try await client.service.createBigEntity(
                 ],
                 jsonString: "abc"
             )
+        ),
+        migration: Migration(
+            name: "Migration 31 Aug",
+            status: .running
         )
     )
 )
