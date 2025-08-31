@@ -4,7 +4,6 @@ import typing
 
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .realtime.client import AsyncRealtimeClient, RealtimeClient
 
 
 class SeedWebsocket:
@@ -59,7 +58,6 @@ class SeedWebsocket:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self.realtime = RealtimeClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncSeedWebsocket:
@@ -114,4 +112,3 @@ class AsyncSeedWebsocket:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self.realtime = AsyncRealtimeClient(client_wrapper=self._client_wrapper)

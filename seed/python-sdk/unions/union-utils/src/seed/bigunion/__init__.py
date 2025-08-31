@@ -2,38 +2,94 @@
 
 # isort: skip_file
 
-from .types import (
-    ActiveDiamond,
-    AttractiveScript,
-    BigUnion,
-    CircularCard,
-    ColorfulCover,
-    DiligentDeal,
-    DisloyalValue,
-    DistinctFailure,
-    FalseMirror,
-    FrozenSleep,
-    GaseousRoad,
-    GruesomeCoach,
-    HarmoniousPlay,
-    HastyPain,
-    HoarseMouse,
-    JumboEnd,
-    LimpingStep,
-    MistySnow,
-    NormalSweet,
-    PopularLimit,
-    PotableBad,
-    PracticalPrinciple,
-    PrimaryBlock,
-    RotatingRatio,
-    ThankfulFactor,
-    TotalWork,
-    TriangularRepair,
-    UniqueStress,
-    UnwillingSmoke,
-    VibrantExcitement,
-)
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .types import (
+        ActiveDiamond,
+        AttractiveScript,
+        BigUnion,
+        CircularCard,
+        ColorfulCover,
+        DiligentDeal,
+        DisloyalValue,
+        DistinctFailure,
+        FalseMirror,
+        FrozenSleep,
+        GaseousRoad,
+        GruesomeCoach,
+        HarmoniousPlay,
+        HastyPain,
+        HoarseMouse,
+        JumboEnd,
+        LimpingStep,
+        MistySnow,
+        NormalSweet,
+        PopularLimit,
+        PotableBad,
+        PracticalPrinciple,
+        PrimaryBlock,
+        RotatingRatio,
+        ThankfulFactor,
+        TotalWork,
+        TriangularRepair,
+        UniqueStress,
+        UnwillingSmoke,
+        VibrantExcitement,
+    )
+_dynamic_imports: typing.Dict[str, str] = {
+    "ActiveDiamond": ".types",
+    "AttractiveScript": ".types",
+    "BigUnion": ".types",
+    "CircularCard": ".types",
+    "ColorfulCover": ".types",
+    "DiligentDeal": ".types",
+    "DisloyalValue": ".types",
+    "DistinctFailure": ".types",
+    "FalseMirror": ".types",
+    "FrozenSleep": ".types",
+    "GaseousRoad": ".types",
+    "GruesomeCoach": ".types",
+    "HarmoniousPlay": ".types",
+    "HastyPain": ".types",
+    "HoarseMouse": ".types",
+    "JumboEnd": ".types",
+    "LimpingStep": ".types",
+    "MistySnow": ".types",
+    "NormalSweet": ".types",
+    "PopularLimit": ".types",
+    "PotableBad": ".types",
+    "PracticalPrinciple": ".types",
+    "PrimaryBlock": ".types",
+    "RotatingRatio": ".types",
+    "ThankfulFactor": ".types",
+    "TotalWork": ".types",
+    "TriangularRepair": ".types",
+    "UniqueStress": ".types",
+    "UnwillingSmoke": ".types",
+    "VibrantExcitement": ".types",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "ActiveDiamond",

@@ -2,36 +2,92 @@
 
 # isort: skip_file
 
-from .active_diamond import ActiveDiamond
-from .attractive_script import AttractiveScript
-from .big_union import BigUnion
-from .circular_card import CircularCard
-from .colorful_cover import ColorfulCover
-from .diligent_deal import DiligentDeal
-from .disloyal_value import DisloyalValue
-from .distinct_failure import DistinctFailure
-from .false_mirror import FalseMirror
-from .frozen_sleep import FrozenSleep
-from .gaseous_road import GaseousRoad
-from .gruesome_coach import GruesomeCoach
-from .harmonious_play import HarmoniousPlay
-from .hasty_pain import HastyPain
-from .hoarse_mouse import HoarseMouse
-from .jumbo_end import JumboEnd
-from .limping_step import LimpingStep
-from .misty_snow import MistySnow
-from .normal_sweet import NormalSweet
-from .popular_limit import PopularLimit
-from .potable_bad import PotableBad
-from .practical_principle import PracticalPrinciple
-from .primary_block import PrimaryBlock
-from .rotating_ratio import RotatingRatio
-from .thankful_factor import ThankfulFactor
-from .total_work import TotalWork
-from .triangular_repair import TriangularRepair
-from .unique_stress import UniqueStress
-from .unwilling_smoke import UnwillingSmoke
-from .vibrant_excitement import VibrantExcitement
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .active_diamond import ActiveDiamond
+    from .attractive_script import AttractiveScript
+    from .big_union import BigUnion
+    from .circular_card import CircularCard
+    from .colorful_cover import ColorfulCover
+    from .diligent_deal import DiligentDeal
+    from .disloyal_value import DisloyalValue
+    from .distinct_failure import DistinctFailure
+    from .false_mirror import FalseMirror
+    from .frozen_sleep import FrozenSleep
+    from .gaseous_road import GaseousRoad
+    from .gruesome_coach import GruesomeCoach
+    from .harmonious_play import HarmoniousPlay
+    from .hasty_pain import HastyPain
+    from .hoarse_mouse import HoarseMouse
+    from .jumbo_end import JumboEnd
+    from .limping_step import LimpingStep
+    from .misty_snow import MistySnow
+    from .normal_sweet import NormalSweet
+    from .popular_limit import PopularLimit
+    from .potable_bad import PotableBad
+    from .practical_principle import PracticalPrinciple
+    from .primary_block import PrimaryBlock
+    from .rotating_ratio import RotatingRatio
+    from .thankful_factor import ThankfulFactor
+    from .total_work import TotalWork
+    from .triangular_repair import TriangularRepair
+    from .unique_stress import UniqueStress
+    from .unwilling_smoke import UnwillingSmoke
+    from .vibrant_excitement import VibrantExcitement
+_dynamic_imports: typing.Dict[str, str] = {
+    "ActiveDiamond": ".active_diamond",
+    "AttractiveScript": ".attractive_script",
+    "BigUnion": ".big_union",
+    "CircularCard": ".circular_card",
+    "ColorfulCover": ".colorful_cover",
+    "DiligentDeal": ".diligent_deal",
+    "DisloyalValue": ".disloyal_value",
+    "DistinctFailure": ".distinct_failure",
+    "FalseMirror": ".false_mirror",
+    "FrozenSleep": ".frozen_sleep",
+    "GaseousRoad": ".gaseous_road",
+    "GruesomeCoach": ".gruesome_coach",
+    "HarmoniousPlay": ".harmonious_play",
+    "HastyPain": ".hasty_pain",
+    "HoarseMouse": ".hoarse_mouse",
+    "JumboEnd": ".jumbo_end",
+    "LimpingStep": ".limping_step",
+    "MistySnow": ".misty_snow",
+    "NormalSweet": ".normal_sweet",
+    "PopularLimit": ".popular_limit",
+    "PotableBad": ".potable_bad",
+    "PracticalPrinciple": ".practical_principle",
+    "PrimaryBlock": ".primary_block",
+    "RotatingRatio": ".rotating_ratio",
+    "ThankfulFactor": ".thankful_factor",
+    "TotalWork": ".total_work",
+    "TriangularRepair": ".triangular_repair",
+    "UniqueStress": ".unique_stress",
+    "UnwillingSmoke": ".unwilling_smoke",
+    "VibrantExcitement": ".vibrant_excitement",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "ActiveDiamond",

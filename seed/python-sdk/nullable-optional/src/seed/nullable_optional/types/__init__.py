@@ -2,10 +2,106 @@
 
 # isort: skip_file
 
-from .address import Address
-from .create_user_request import CreateUserRequest
-from .update_user_request import UpdateUserRequest
-from .user_profile import UserProfile
-from .user_response import UserResponse
+import typing
+from importlib import import_module
 
-__all__ = ["Address", "CreateUserRequest", "UpdateUserRequest", "UserProfile", "UserResponse"]
+if typing.TYPE_CHECKING:
+    from .address import Address
+    from .complex_profile import ComplexProfile
+    from .create_user_request import CreateUserRequest
+    from .deserialization_test_request import DeserializationTestRequest
+    from .deserialization_test_response import DeserializationTestResponse
+    from .document import Document
+    from .email_notification import EmailNotification
+    from .notification_method import (
+        NotificationMethod,
+        NotificationMethod_Email,
+        NotificationMethod_Push,
+        NotificationMethod_Sms,
+    )
+    from .nullable_user_id import NullableUserId
+    from .optional_user_id import OptionalUserId
+    from .organization import Organization
+    from .push_notification import PushNotification
+    from .search_result import SearchResult, SearchResult_Document, SearchResult_Organization, SearchResult_User
+    from .sms_notification import SmsNotification
+    from .update_user_request import UpdateUserRequest
+    from .user_profile import UserProfile
+    from .user_response import UserResponse
+    from .user_role import UserRole
+    from .user_status import UserStatus
+_dynamic_imports: typing.Dict[str, str] = {
+    "Address": ".address",
+    "ComplexProfile": ".complex_profile",
+    "CreateUserRequest": ".create_user_request",
+    "DeserializationTestRequest": ".deserialization_test_request",
+    "DeserializationTestResponse": ".deserialization_test_response",
+    "Document": ".document",
+    "EmailNotification": ".email_notification",
+    "NotificationMethod": ".notification_method",
+    "NotificationMethod_Email": ".notification_method",
+    "NotificationMethod_Push": ".notification_method",
+    "NotificationMethod_Sms": ".notification_method",
+    "NullableUserId": ".nullable_user_id",
+    "OptionalUserId": ".optional_user_id",
+    "Organization": ".organization",
+    "PushNotification": ".push_notification",
+    "SearchResult": ".search_result",
+    "SearchResult_Document": ".search_result",
+    "SearchResult_Organization": ".search_result",
+    "SearchResult_User": ".search_result",
+    "SmsNotification": ".sms_notification",
+    "UpdateUserRequest": ".update_user_request",
+    "UserProfile": ".user_profile",
+    "UserResponse": ".user_response",
+    "UserRole": ".user_role",
+    "UserStatus": ".user_status",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
+
+__all__ = [
+    "Address",
+    "ComplexProfile",
+    "CreateUserRequest",
+    "DeserializationTestRequest",
+    "DeserializationTestResponse",
+    "Document",
+    "EmailNotification",
+    "NotificationMethod",
+    "NotificationMethod_Email",
+    "NotificationMethod_Push",
+    "NotificationMethod_Sms",
+    "NullableUserId",
+    "OptionalUserId",
+    "Organization",
+    "PushNotification",
+    "SearchResult",
+    "SearchResult_Document",
+    "SearchResult_Organization",
+    "SearchResult_User",
+    "SmsNotification",
+    "UpdateUserRequest",
+    "UserProfile",
+    "UserResponse",
+    "UserRole",
+    "UserStatus",
+]

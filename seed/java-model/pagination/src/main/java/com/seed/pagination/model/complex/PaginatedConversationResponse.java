@@ -135,7 +135,9 @@ public final class PaginatedConversationResponse {
 
         @java.lang.Override
         public _FinalStage addAllConversations(List<Conversation> conversations) {
-            this.conversations.addAll(conversations);
+            if (conversations != null) {
+                this.conversations.addAll(conversations);
+            }
             return this;
         }
 

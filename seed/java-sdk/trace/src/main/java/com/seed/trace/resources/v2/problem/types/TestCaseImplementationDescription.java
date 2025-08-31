@@ -92,7 +92,9 @@ public final class TestCaseImplementationDescription {
         }
 
         public Builder addAllBoards(List<TestCaseImplementationDescriptionBoard> boards) {
-            this.boards.addAll(boards);
+            if (boards != null) {
+                this.boards.addAll(boards);
+            }
             return this;
         }
 

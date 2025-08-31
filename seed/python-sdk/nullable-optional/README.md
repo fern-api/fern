@@ -36,6 +36,8 @@ client.nullable_optional.create_user(
         state="state",
         zip_code="zipCode",
         country="country",
+        building_id="buildingId",
+        tenant_id="tenantId",
     ),
 )
 ```
@@ -66,6 +68,8 @@ async def main() -> None:
             state="state",
             zip_code="zipCode",
             country="country",
+            building_id="buildingId",
+            tenant_id="tenantId",
         ),
     )
 

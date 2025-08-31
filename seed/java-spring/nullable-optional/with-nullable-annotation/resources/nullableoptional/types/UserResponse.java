@@ -4,12 +4,14 @@
 
 package resources.nullableoptional.types;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import core.NullableNonemptyFilter;
 import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
@@ -60,7 +62,7 @@ public final class UserResponse {
   }
 
   @Nullable
-  @JsonProperty("email")
+  @JsonIgnore
   public String getEmail() {
     return email;
   }
@@ -76,7 +78,7 @@ public final class UserResponse {
   }
 
   @Nullable
-  @JsonProperty("updatedAt")
+  @JsonIgnore
   public OffsetDateTime getUpdatedAt() {
     return updatedAt;
   }
@@ -84,6 +86,24 @@ public final class UserResponse {
   @JsonProperty("address")
   public Optional<Address> getAddress() {
     return address;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("email")
+  private String _getEmail() {
+    return email;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("updatedAt")
+  private OffsetDateTime _getUpdatedAt() {
+    return updatedAt;
   }
 
   @java.lang.Override
@@ -117,27 +137,23 @@ public final class UserResponse {
   }
 
   public interface UsernameStage {
-    EmailStage username(@NotNull String username);
-  }
-
-  public interface EmailStage {
-    CreatedAtStage email(@NotNull String email);
+    CreatedAtStage username(@NotNull String username);
   }
 
   public interface CreatedAtStage {
-    UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
-  }
-
-  public interface UpdatedAtStage {
-    _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
+    _FinalStage createdAt(@NotNull OffsetDateTime createdAt);
   }
 
   public interface _FinalStage {
     UserResponse build();
 
+    _FinalStage email(@core.Nullable String email);
+
     _FinalStage phone(Optional<String> phone);
 
     _FinalStage phone(String phone);
+
+    _FinalStage updatedAt(@core.Nullable OffsetDateTime updatedAt);
 
     _FinalStage address(Optional<Address> address);
 
@@ -147,20 +163,20 @@ public final class UserResponse {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements IdStage, UsernameStage, EmailStage, CreatedAtStage, UpdatedAtStage, _FinalStage {
+  public static final class Builder implements IdStage, UsernameStage, CreatedAtStage, _FinalStage {
     private String id;
 
     private String username;
 
-    private String email;
-
     private OffsetDateTime createdAt;
-
-    private OffsetDateTime updatedAt;
 
     private Optional<Address> address = Optional.empty();
 
+    private OffsetDateTime updatedAt;
+
     private Optional<String> phone = Optional.empty();
+
+    private String email;
 
     private Builder() {
     }
@@ -186,29 +202,15 @@ public final class UserResponse {
 
     @java.lang.Override
     @JsonSetter("username")
-    public EmailStage username(@NotNull String username) {
+    public CreatedAtStage username(@NotNull String username) {
       this.username = Objects.requireNonNull(username, "username must not be null");
       return this;
     }
 
     @java.lang.Override
-    @JsonSetter("email")
-    public CreatedAtStage email(@NotNull String email) {
-      this.email = Objects.requireNonNull(email, "email must not be null");
-      return this;
-    }
-
-    @java.lang.Override
     @JsonSetter("createdAt")
-    public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+    public _FinalStage createdAt(@NotNull OffsetDateTime createdAt) {
       this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
-      return this;
-    }
-
-    @java.lang.Override
-    @JsonSetter("updatedAt")
-    public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
-      this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
       return this;
     }
 
@@ -229,6 +231,13 @@ public final class UserResponse {
     }
 
     @java.lang.Override
+    @JsonSetter("updatedAt")
+    public _FinalStage updatedAt(@core.Nullable OffsetDateTime updatedAt) {
+      this.updatedAt = updatedAt;
+      return this;
+    }
+
+    @java.lang.Override
     public _FinalStage phone(String phone) {
       this.phone = Optional.ofNullable(phone);
       return this;
@@ -241,6 +250,13 @@ public final class UserResponse {
     )
     public _FinalStage phone(Optional<String> phone) {
       this.phone = phone;
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter("email")
+    public _FinalStage email(@core.Nullable String email) {
+      this.email = email;
       return this;
     }
 

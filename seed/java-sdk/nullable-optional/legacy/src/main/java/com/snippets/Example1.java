@@ -25,6 +25,8 @@ public class Example1 {
                         .city("city")
                         .state("state")
                         .country("country")
+                        .buildingId("buildingId")
+                        .tenantId("tenantId")
                         .build()
                 )
                 .build()

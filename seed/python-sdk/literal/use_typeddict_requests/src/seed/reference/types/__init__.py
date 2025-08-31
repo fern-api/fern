@@ -2,9 +2,39 @@
 
 # isort: skip_file
 
-from .container_object import ContainerObject
-from .nested_object_with_literals import NestedObjectWithLiterals
-from .send_request import SendRequest
-from .some_literal import SomeLiteral
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .container_object import ContainerObject
+    from .nested_object_with_literals import NestedObjectWithLiterals
+    from .send_request import SendRequest
+    from .some_literal import SomeLiteral
+_dynamic_imports: typing.Dict[str, str] = {
+    "ContainerObject": ".container_object",
+    "NestedObjectWithLiterals": ".nested_object_with_literals",
+    "SendRequest": ".send_request",
+    "SomeLiteral": ".some_literal",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = ["ContainerObject", "NestedObjectWithLiterals", "SendRequest", "SomeLiteral"]
