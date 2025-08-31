@@ -740,8 +740,8 @@ importers:
         specifier: workspace:*
         version: link:../ast
       '@fern-fern/ir-sdk':
-        specifier: ^58.2.0
-        version: 58.2.0
+        specifier: ^59.4.0
+        version: 59.4.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -818,8 +818,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^58.2.0
-        version: 58.2.0
+        specifier: ^59.4.0
+        version: 59.4.0
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
@@ -836,14 +836,14 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli/logger
       '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.33
-        version: 0.0.33
+        specifier: 0.0.42
+        version: 0.0.42
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045
       '@fern-fern/ir-sdk':
-        specifier: ^58.2.0
-        version: 58.2.0
+        specifier: ^59.4.0
+        version: 59.4.0
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -9349,6 +9349,9 @@ packages:
   '@fern-fern/ir-sdk@59.3.0':
     resolution: {integrity: sha512-xtQ5k5UjoU7o4VZGnlD4J2WV6vUIQ0114eXDI03ckQOEmMW/B5orTmv1H/rTYjd+8A/LlwrEddDjiMoE4Gdfkg==}
 
+  '@fern-fern/ir-sdk@59.4.0':
+    resolution: {integrity: sha512-nenDO29aofr27ls26WEJcK0XeRXvbkvvYtnnvi5nx6l/RSBooWoJlnnkzrJRNBs6/ytHt0OYHY0ZhqENSjqPYg==}
+
   '@fern-fern/ir-v1-model@0.0.2':
     resolution: {integrity: sha512-Rho6qXYfRoB1sAISFS4V7vttVFN0ypoaztmbfKKNFmSTNVOyLN++e2xNZ+Aw9ckE5ZZmfMXK9v4+dnFReWVzvA==}
 
@@ -16520,6 +16523,16 @@ snapshots:
       - encoding
 
   '@fern-fern/ir-sdk@59.3.0':
+    dependencies:
+      form-data: 4.0.1
+      formdata-node: 6.0.3
+      node-fetch: 2.7.0
+      qs: 6.14.0
+      readable-stream: 4.7.0
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-fern/ir-sdk@59.4.0':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3

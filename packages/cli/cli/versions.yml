@@ -1,4 +1,10 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: Update ir migration versions for java generators
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-31"
+  version: 0.67.0
 
 - changelogEntry:
     - summary: Ignore self-referential types that are optional<nullable<SELF>>
