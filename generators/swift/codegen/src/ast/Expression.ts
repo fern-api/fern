@@ -176,6 +176,17 @@ export class Expression extends AstNode {
         this.internalExpression = internalExpression;
     }
 
+    public isStructInitialization() {
+        return this.internalExpression.type === "struct-initialization";
+    }
+
+    public asStructInitializationOrThrow(): StructInitialization {
+        if (this.internalExpression.type !== "struct-initialization") {
+            throw new Error("Internal error; ts.TypeLiteral is not an object");
+        }
+        return this.internalExpression;
+    }
+
     public write(writer: Writer): void {
         switch (this.internalExpression.type) {
             case "reference":

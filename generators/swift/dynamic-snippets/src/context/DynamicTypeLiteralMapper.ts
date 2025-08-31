@@ -1,4 +1,4 @@
-import { Severity } from "@fern-api/browser-compatible-base-generator";
+import { DiscriminatedUnionTypeInstance, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { swift } from "@fern-api/swift-codegen";
@@ -124,8 +124,7 @@ export class DynamicTypeLiteralMapper {
             case "alias":
                 return this.convert({ typeReference: named.typeReference, value, as });
             case "discriminatedUnion":
-                // TODO(kafkas): Implement
-                return swift.Expression.nop();
+                return this.convertDiscriminatedUnion({ discriminatedUnion: named, value });
             case "enum":
                 // TODO(kafkas): Implement
                 return swift.Expression.nop();
@@ -136,6 +135,130 @@ export class DynamicTypeLiteralMapper {
             default:
                 assertNever(named);
         }
+    }
+
+    private convertDiscriminatedUnion({
+        discriminatedUnion,
+        value
+    }: {
+        discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
+        value: unknown;
+    }): swift.Expression {
+        const discriminatedUnionTypeInstance = this.context.resolveDiscriminatedUnionTypeInstance({
+            discriminatedUnion,
+            value
+        });
+        if (discriminatedUnionTypeInstance == null) {
+            return swift.Expression.nop();
+        }
+        const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
+        const unionProperties = this.convertDiscriminatedUnionProperties({
+            discriminatedUnionTypeInstance,
+            unionVariant
+        });
+        if (unionProperties == null) {
+            return swift.Expression.nop();
+        }
+        return swift.Expression.methodCall({
+            target: swift.Expression.reference(discriminatedUnion.declaration.name.pascalCase.unsafeName),
+            methodName: unionVariant.discriminantValue.name.camelCase.unsafeName,
+            arguments_: [
+                swift.functionArgument({
+                    value: swift.Expression.contextualMethodCall({
+                        methodName: "init",
+                        arguments_: unionProperties,
+                        multiline: true
+                    })
+                })
+            ],
+            multiline: true
+        });
+    }
+
+    private convertDiscriminatedUnionProperties({
+        discriminatedUnionTypeInstance,
+        unionVariant
+    }: {
+        discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
+        unionVariant: FernIr.dynamic.SingleDiscriminatedUnionType;
+    }): swift.FunctionArgument[] | undefined {
+        const baseFields = this.getBaseFields({
+            discriminatedUnionTypeInstance,
+            singleDiscriminatedUnionType: unionVariant
+        });
+        switch (unionVariant.type) {
+            case "samePropertiesAsObject": {
+                const named = this.context.resolveNamedType({
+                    typeId: unionVariant.typeId
+                });
+                if (named == null) {
+                    return undefined;
+                }
+                const converted = this.convertNamed({ named, value: discriminatedUnionTypeInstance.value });
+                if (!converted.isStructInitialization()) {
+                    this.context.errors.add({
+                        severity: Severity.Critical,
+                        message: "Internal error; expected union value to be a struct"
+                    });
+                    return undefined;
+                }
+                const structInitialization = converted.asStructInitializationOrThrow();
+                return [...baseFields, ...(structInitialization.arguments_ ?? [])];
+            }
+            case "singleProperty": {
+                try {
+                    this.context.errors.scope(unionVariant.discriminantValue.wireValue);
+                    const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
+                    if (record == null) {
+                        return [...baseFields];
+                    }
+                    return [
+                        ...baseFields,
+                        swift.functionArgument({
+                            label: unionVariant.discriminantValue.name.camelCase.unsafeName,
+                            value: this.convert({
+                                typeReference: unionVariant.typeReference,
+                                value: record[unionVariant.discriminantValue.wireValue]
+                            })
+                        })
+                    ];
+                } finally {
+                    this.context.errors.unscope();
+                }
+            }
+            case "noProperties":
+                return baseFields;
+            default:
+                assertNever(unionVariant);
+        }
+    }
+
+    private getBaseFields({
+        discriminatedUnionTypeInstance,
+        singleDiscriminatedUnionType
+    }: {
+        discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
+        singleDiscriminatedUnionType: FernIr.dynamic.SingleDiscriminatedUnionType;
+    }): swift.FunctionArgument[] {
+        const properties = this.context.associateByWireValue({
+            parameters: singleDiscriminatedUnionType.properties ?? [],
+            values: this.context.getRecord(discriminatedUnionTypeInstance.value) ?? {},
+
+            // We're only selecting the base properties here. The rest of the properties
+            // are handled by the union variant.
+            ignoreMissingParameters: true
+        });
+        return properties.map((property) => {
+            this.context.errors.scope(property.name.wireValue);
+            try {
+                return swift.functionArgument({
+                    label: property.name.name.camelCase.unsafeName,
+                    value: this.convert(property)
+                });
+            } finally {
+                this.context.errors.unscope();
+            }
+        });
     }
 
     private convertObject({
