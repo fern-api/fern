@@ -12,7 +12,7 @@ types:
   MovieList:
     type: list<Movie>
     availability:
-      status: IN_DEVELOPMENT
+      status: in-development
       message: "Unreleased type."
 
   CreateMovieRequest:

@@ -16,7 +16,7 @@ types:
 
 service:
   availability:
-    status: IN_DEVELOPMENT
+    status: in-development
     message: "Unreleased service."
   auth: false
   base-path: /movies
