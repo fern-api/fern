@@ -8,7 +8,7 @@ types:
       rating:
         type: double
         docs: The rating scale is one to five stars
-      releaseYear: int
+      releaseYear: integer
 
   CreateMovieRequest:
     properties:
@@ -18,10 +18,6 @@ types:
 service:
   auth: false
   base-path: /movies
-  headers:
-  x-simple-header:
-    type: string
-    env: SIMPLE_HEADER_ENV
   endpoints:
     createMovie:
       docs: Add a movie to the database using the movies/*/... path.

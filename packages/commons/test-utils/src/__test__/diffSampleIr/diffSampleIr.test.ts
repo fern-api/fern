@@ -8,12 +8,13 @@ describe("diff sample ir - stable versions", () => {
     const pathToBaseWorkspace = AbsoluteFilePath.of(resolve(__dirname, "stable/base"));
     const pathToAddedEndpointWorkspace = AbsoluteFilePath.of(resolve(__dirname, "stable/addedEndpoint"));
     const pathToAddedTypeWorkspace = AbsoluteFilePath.of(resolve(__dirname, "stable/addedType"));
-    const pathToAddedTypePropertyWorkspace = AbsoluteFilePath.of(resolve(__dirname, "stable/addedTypeProperty"));
+    const pathToAddedRequiredTypePropertyWorkspace = AbsoluteFilePath.of(
+        resolve(__dirname, "stable/addedRequiredTypeProperty")
+    );
+    const pathToAddedOptionalTypePropertyWorkspace = AbsoluteFilePath.of(
+        resolve(__dirname, "stable/addedOptionalTypeProperty")
+    );
     const pathToAddedHeaderWorkspace = AbsoluteFilePath.of(resolve(__dirname, "stable/addedHeader"));
-    const pathToRemovedEndpointWorkspace = AbsoluteFilePath.of(resolve(__dirname, "stable/removedEndpoint"));
-    const pathToRemovedTypeWorkspace = AbsoluteFilePath.of(resolve(__dirname, "stable/removedType"));
-    const pathToRemovedTypePropertyWorkspace = AbsoluteFilePath.of(resolve(__dirname, "stable/removedTypeProperty"));
-    const pathToRemovedHeaderWorkspace = AbsoluteFilePath.of(resolve(__dirname, "stable/removedHeader"));
 
     it("comparing ", async () => {
         const ir = await createSampleIr(pathToBaseWorkspace);
@@ -26,87 +27,96 @@ describe("diff sample ir - stable versions", () => {
     });
 
     it("comparing added endpoint", async () => {
-        const baseIr = await createSampleIr(pathToBaseWorkspace);
-        const changedIr = await createSampleIr(pathToAddedEndpointWorkspace);
+        const from = await createSampleIr(pathToBaseWorkspace);
+        const to = await createSampleIr(pathToAddedEndpointWorkspace);
         const changeDetector = new IntermediateRepresentationChangeDetector();
-        const changes = await changeDetector.check({ from: baseIr, to: changedIr });
-        console.log(JSON.stringify(changes, null, 2));
+        const changes = await changeDetector.check({ from, to });
         expect(changes.isBreaking).toBe(false);
         expect(changes.errors).toHaveLength(0);
         expect(changes.bump).toBe("minor");
     });
 
-    it.skip("comparing added type", async () => {
-        const baseIr = await createSampleIr(pathToBaseWorkspace);
-        const changedIr = await createSampleIr(pathToAddedTypeWorkspace);
+    it("comparing added type", async () => {
+        const from = await createSampleIr(pathToBaseWorkspace);
+        const to = await createSampleIr(pathToAddedTypeWorkspace);
         const changeDetector = new IntermediateRepresentationChangeDetector();
-        const changes = await changeDetector.check({ from: baseIr, to: changedIr });
+        const changes = await changeDetector.check({ from, to });
         expect(changes.isBreaking).toBe(false);
         expect(changes.errors).toHaveLength(0);
         expect(changes.bump).toBe("minor");
     });
 
-    it.skip("comparing added header", async () => {
-        const baseIr = await createSampleIr(pathToBaseWorkspace);
-        const changedIr = await createSampleIr(pathToAddedHeaderWorkspace);
+    it("comparing added header", async () => {
+        const from = await createSampleIr(pathToBaseWorkspace);
+        const to = await createSampleIr(pathToAddedHeaderWorkspace);
         const changeDetector = new IntermediateRepresentationChangeDetector();
-        const changes = await changeDetector.check({ from: baseIr, to: changedIr });
+        const changes = await changeDetector.check({ from, to });
         expect(changes.isBreaking).toBe(false);
         expect(changes.errors).toHaveLength(0);
         expect(changes.bump).toBe("minor");
     });
 
-    it.skip("comparing added type property", async () => {
-        const baseIr = await createSampleIr(pathToBaseWorkspace);
-        const changedIr = await createSampleIr(pathToAddedTypePropertyWorkspace);
+    it("comparing added required type property", async () => {
+        const from = await createSampleIr(pathToBaseWorkspace);
+        const to = await createSampleIr(pathToAddedRequiredTypePropertyWorkspace);
         const changeDetector = new IntermediateRepresentationChangeDetector();
-        const changes = await changeDetector.check({ from: baseIr, to: changedIr });
+        const changes = await changeDetector.check({ from, to });
+        expect(changes.isBreaking).toBe(true);
+        expect(changes.bump).toBe("major");
+    });
+
+    it("comparing added optional type property", async () => {
+        const from = await createSampleIr(pathToBaseWorkspace);
+        const to = await createSampleIr(pathToAddedOptionalTypePropertyWorkspace);
+        const changeDetector = new IntermediateRepresentationChangeDetector();
+        const changes = await changeDetector.check({ from, to });
         expect(changes.isBreaking).toBe(false);
         expect(changes.errors).toHaveLength(0);
         expect(changes.bump).toBe("minor");
     });
 
-    it.skip("comparing removed endpoint", async () => {
-        const baseIr = await createSampleIr(pathToBaseWorkspace);
-        const changedIr = await createSampleIr(pathToRemovedEndpointWorkspace);
+    it("comparing removed endpoint", async () => {
+        const from = await createSampleIr(pathToAddedEndpointWorkspace);
+        const to = await createSampleIr(pathToBaseWorkspace);
         const changeDetector = new IntermediateRepresentationChangeDetector();
-        const changes = await changeDetector.check({ from: baseIr, to: changedIr });
+        const changes = await changeDetector.check({ from, to });
         expect(changes.isBreaking).toBe(true);
         expect(changes.bump).toBe("major");
     });
 
-    it.skip("comparing removed type", async () => {
-        const baseIr = await createSampleIr(pathToBaseWorkspace);
-        const changedIr = await createSampleIr(pathToRemovedTypeWorkspace);
+    it("comparing removed type", async () => {
+        const from = await createSampleIr(pathToAddedTypeWorkspace);
+        const to = await createSampleIr(pathToBaseWorkspace);
         const changeDetector = new IntermediateRepresentationChangeDetector();
-        const changes = await changeDetector.check({ from: baseIr, to: changedIr });
+        const changes = await changeDetector.check({ from, to });
         expect(changes.isBreaking).toBe(true);
         expect(changes.bump).toBe("major");
     });
 
-    it.skip("comparing removed type property", async () => {
-        const baseIr = await createSampleIr(pathToBaseWorkspace);
-        const changedIr = await createSampleIr(pathToRemovedTypePropertyWorkspace);
+    it("comparing removed required type property", async () => {
+        const from = await createSampleIr(pathToAddedRequiredTypePropertyWorkspace);
+        const to = await createSampleIr(pathToBaseWorkspace);
         const changeDetector = new IntermediateRepresentationChangeDetector();
-        const changes = await changeDetector.check({ from: baseIr, to: changedIr });
+        const changes = await changeDetector.check({ from, to });
         expect(changes.isBreaking).toBe(true);
         expect(changes.bump).toBe("major");
     });
 
-    it.skip("comparing removed type property", async () => {
-        const baseIr = await createSampleIr(pathToBaseWorkspace);
-        const changedIr = await createSampleIr(pathToRemovedTypePropertyWorkspace);
+    it("comparing removed optional type property", async () => {
+        const from = await createSampleIr(pathToAddedOptionalTypePropertyWorkspace);
+        const to = await createSampleIr(pathToBaseWorkspace);
         const changeDetector = new IntermediateRepresentationChangeDetector();
-        const changes = await changeDetector.check({ from: baseIr, to: changedIr });
-        expect(changes.isBreaking).toBe(true);
-        expect(changes.bump).toBe("major");
+        const changes = await changeDetector.check({ from, to });
+        expect(changes.isBreaking).toBe(false);
+        expect(changes.bump).toBe("minor");
+        expect(changes.errors).toHaveLength(0);
     });
 
-    it.skip("comparing removed header", async () => {
-        const baseIr = await createSampleIr(pathToBaseWorkspace);
-        const changedIr = await createSampleIr(pathToRemovedHeaderWorkspace);
+    it("comparing removed header", async () => {
+        const from = await createSampleIr(pathToAddedHeaderWorkspace);
+        const to = await createSampleIr(pathToBaseWorkspace);
         const changeDetector = new IntermediateRepresentationChangeDetector();
-        const changes = await changeDetector.check({ from: baseIr, to: changedIr });
+        const changes = await changeDetector.check({ from, to });
         expect(changes.isBreaking).toBe(true);
         expect(changes.bump).toBe("major");
     });
