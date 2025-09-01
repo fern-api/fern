@@ -4,12 +4,15 @@
 
 package resources.nullableoptional.types;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import core.Nullable;
+import core.NullableNonemptyFilter;
 import core.ObjectMappers;
 import java.lang.Boolean;
 import java.lang.Integer;
@@ -102,38 +105,59 @@ public final class UserProfile {
     return username;
   }
 
-  @JsonProperty("nullableString")
+  @JsonIgnore
   public Optional<String> getNullableString() {
+    if (nullableString == null) {
+      return Optional.empty();
+    }
     return nullableString;
   }
 
-  @JsonProperty("nullableInteger")
+  @JsonIgnore
   public Optional<Integer> getNullableInteger() {
+    if (nullableInteger == null) {
+      return Optional.empty();
+    }
     return nullableInteger;
   }
 
-  @JsonProperty("nullableBoolean")
+  @JsonIgnore
   public Optional<Boolean> getNullableBoolean() {
+    if (nullableBoolean == null) {
+      return Optional.empty();
+    }
     return nullableBoolean;
   }
 
-  @JsonProperty("nullableDate")
+  @JsonIgnore
   public Optional<OffsetDateTime> getNullableDate() {
+    if (nullableDate == null) {
+      return Optional.empty();
+    }
     return nullableDate;
   }
 
-  @JsonProperty("nullableObject")
+  @JsonIgnore
   public Optional<Address> getNullableObject() {
+    if (nullableObject == null) {
+      return Optional.empty();
+    }
     return nullableObject;
   }
 
-  @JsonProperty("nullableList")
+  @JsonIgnore
   public Optional<List<String>> getNullableList() {
+    if (nullableList == null) {
+      return Optional.empty();
+    }
     return nullableList;
   }
 
-  @JsonProperty("nullableMap")
+  @JsonIgnore
   public Optional<Map<String, String>> getNullableMap() {
+    if (nullableMap == null) {
+      return Optional.empty();
+    }
     return nullableMap;
   }
 
@@ -182,6 +206,69 @@ public final class UserProfile {
     return optionalNullableObject;
   }
 
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("nullableString")
+  private Optional<String> _getNullableString() {
+    return nullableString;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("nullableInteger")
+  private Optional<Integer> _getNullableInteger() {
+    return nullableInteger;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("nullableBoolean")
+  private Optional<Boolean> _getNullableBoolean() {
+    return nullableBoolean;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("nullableDate")
+  private Optional<OffsetDateTime> _getNullableDate() {
+    return nullableDate;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("nullableObject")
+  private Optional<Address> _getNullableObject() {
+    return nullableObject;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("nullableList")
+  private Optional<List<String>> _getNullableList() {
+    return nullableList;
+  }
+
+  @JsonInclude(
+      value = JsonInclude.Include.CUSTOM,
+      valueFilter = NullableNonemptyFilter.class
+  )
+  @JsonProperty("nullableMap")
+  private Optional<Map<String, String>> _getNullableMap() {
+    return nullableMap;
+  }
+
   @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
@@ -223,29 +310,43 @@ public final class UserProfile {
 
     _FinalStage nullableString(String nullableString);
 
+    _FinalStage nullableString(Nullable<String> nullableString);
+
     _FinalStage nullableInteger(Optional<Integer> nullableInteger);
 
     _FinalStage nullableInteger(Integer nullableInteger);
+
+    _FinalStage nullableInteger(Nullable<Integer> nullableInteger);
 
     _FinalStage nullableBoolean(Optional<Boolean> nullableBoolean);
 
     _FinalStage nullableBoolean(Boolean nullableBoolean);
 
+    _FinalStage nullableBoolean(Nullable<Boolean> nullableBoolean);
+
     _FinalStage nullableDate(Optional<OffsetDateTime> nullableDate);
 
     _FinalStage nullableDate(OffsetDateTime nullableDate);
+
+    _FinalStage nullableDate(Nullable<OffsetDateTime> nullableDate);
 
     _FinalStage nullableObject(Optional<Address> nullableObject);
 
     _FinalStage nullableObject(Address nullableObject);
 
+    _FinalStage nullableObject(Nullable<Address> nullableObject);
+
     _FinalStage nullableList(Optional<List<String>> nullableList);
 
     _FinalStage nullableList(List<String> nullableList);
 
+    _FinalStage nullableList(Nullable<List<String>> nullableList);
+
     _FinalStage nullableMap(Optional<Map<String, String>> nullableMap);
 
     _FinalStage nullableMap(Map<String, String> nullableMap);
+
+    _FinalStage nullableMap(Nullable<Map<String, String>> nullableMap);
 
     _FinalStage optionalString(Optional<String> optionalString);
 
@@ -509,6 +610,20 @@ public final class UserProfile {
     }
 
     @java.lang.Override
+    public _FinalStage nullableMap(Nullable<Map<String, String>> nullableMap) {
+      if (nullableMap.isNull()) {
+        this.nullableMap = null;
+      }
+      else if (nullableMap.isEmpty()) {
+        this.nullableMap = Optional.empty();
+      }
+      else {
+        this.nullableMap = Optional.of(nullableMap.get());
+      }
+      return this;
+    }
+
+    @java.lang.Override
     public _FinalStage nullableMap(Map<String, String> nullableMap) {
       this.nullableMap = Optional.ofNullable(nullableMap);
       return this;
@@ -521,6 +636,20 @@ public final class UserProfile {
     )
     public _FinalStage nullableMap(Optional<Map<String, String>> nullableMap) {
       this.nullableMap = nullableMap;
+      return this;
+    }
+
+    @java.lang.Override
+    public _FinalStage nullableList(Nullable<List<String>> nullableList) {
+      if (nullableList.isNull()) {
+        this.nullableList = null;
+      }
+      else if (nullableList.isEmpty()) {
+        this.nullableList = Optional.empty();
+      }
+      else {
+        this.nullableList = Optional.of(nullableList.get());
+      }
       return this;
     }
 
@@ -541,6 +670,20 @@ public final class UserProfile {
     }
 
     @java.lang.Override
+    public _FinalStage nullableObject(Nullable<Address> nullableObject) {
+      if (nullableObject.isNull()) {
+        this.nullableObject = null;
+      }
+      else if (nullableObject.isEmpty()) {
+        this.nullableObject = Optional.empty();
+      }
+      else {
+        this.nullableObject = Optional.of(nullableObject.get());
+      }
+      return this;
+    }
+
+    @java.lang.Override
     public _FinalStage nullableObject(Address nullableObject) {
       this.nullableObject = Optional.ofNullable(nullableObject);
       return this;
@@ -553,6 +696,20 @@ public final class UserProfile {
     )
     public _FinalStage nullableObject(Optional<Address> nullableObject) {
       this.nullableObject = nullableObject;
+      return this;
+    }
+
+    @java.lang.Override
+    public _FinalStage nullableDate(Nullable<OffsetDateTime> nullableDate) {
+      if (nullableDate.isNull()) {
+        this.nullableDate = null;
+      }
+      else if (nullableDate.isEmpty()) {
+        this.nullableDate = Optional.empty();
+      }
+      else {
+        this.nullableDate = Optional.of(nullableDate.get());
+      }
       return this;
     }
 
@@ -573,6 +730,20 @@ public final class UserProfile {
     }
 
     @java.lang.Override
+    public _FinalStage nullableBoolean(Nullable<Boolean> nullableBoolean) {
+      if (nullableBoolean.isNull()) {
+        this.nullableBoolean = null;
+      }
+      else if (nullableBoolean.isEmpty()) {
+        this.nullableBoolean = Optional.empty();
+      }
+      else {
+        this.nullableBoolean = Optional.of(nullableBoolean.get());
+      }
+      return this;
+    }
+
+    @java.lang.Override
     public _FinalStage nullableBoolean(Boolean nullableBoolean) {
       this.nullableBoolean = Optional.ofNullable(nullableBoolean);
       return this;
@@ -589,6 +760,20 @@ public final class UserProfile {
     }
 
     @java.lang.Override
+    public _FinalStage nullableInteger(Nullable<Integer> nullableInteger) {
+      if (nullableInteger.isNull()) {
+        this.nullableInteger = null;
+      }
+      else if (nullableInteger.isEmpty()) {
+        this.nullableInteger = Optional.empty();
+      }
+      else {
+        this.nullableInteger = Optional.of(nullableInteger.get());
+      }
+      return this;
+    }
+
+    @java.lang.Override
     public _FinalStage nullableInteger(Integer nullableInteger) {
       this.nullableInteger = Optional.ofNullable(nullableInteger);
       return this;
@@ -601,6 +786,20 @@ public final class UserProfile {
     )
     public _FinalStage nullableInteger(Optional<Integer> nullableInteger) {
       this.nullableInteger = nullableInteger;
+      return this;
+    }
+
+    @java.lang.Override
+    public _FinalStage nullableString(Nullable<String> nullableString) {
+      if (nullableString.isNull()) {
+        this.nullableString = null;
+      }
+      else if (nullableString.isEmpty()) {
+        this.nullableString = Optional.empty();
+      }
+      else {
+        this.nullableString = Optional.of(nullableString.get());
+      }
       return this;
     }
 

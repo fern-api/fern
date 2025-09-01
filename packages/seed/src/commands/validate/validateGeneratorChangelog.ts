@@ -4,8 +4,10 @@ import * as serializers from "@fern-fern/generators-sdk/serialization";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
-
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
+import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils";
+
+const parseReleaseOrThrow = serializers.generators.GeneratorReleaseRequest.parseOrThrow;
 
 // TODO: we should share the language and generator type with the FDR definition
 export async function validateGenerator({
@@ -49,7 +51,8 @@ async function validateGeneratorChangelog({
     if (Array.isArray(changelogs)) {
         for (const entry of changelogs) {
             try {
-                const release = serializers.generators.GeneratorReleaseRequest.parseOrThrow({ generatorId, ...entry });
+                const release = parseReleaseOrThrow({ generatorId, ...entry });
+                assertValidSemVerOrThrow(release.version);
                 context.logger.debug(chalk.green(`${release.version} is valid`));
             } catch (e) {
                 hasErrors = true;
@@ -61,6 +64,17 @@ async function validateGeneratorChangelog({
                 }
                 // biome-ignore lint: ignore next line
                 context.logger.error((e as Error)?.message);
+            }
+        }
+        if (changelogs.length > 1) {
+            try {
+                const currentRelease = parseReleaseOrThrow({ generatorId, ...changelogs[0] });
+                const previousRelease = parseReleaseOrThrow({ generatorId, ...changelogs[1] });
+                assertValidSemVerChangeOrThrow(currentRelease, previousRelease);
+            } catch (e) {
+                context.logger.error(`Failed to validate semver change: ${yaml.dump(changelogs[0])}`);
+                context.logger.error((e as Error)?.message);
+                hasErrors = true;
             }
         }
     }

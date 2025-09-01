@@ -68,6 +68,8 @@ class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
             generated_connect_method = websocket_connect_method_generator.generate()
             class_declaration.add_method(generated_connect_method.function)
 
+        self._generate_lazy_import_properties(class_declaration=class_declaration, is_async=is_async)
+
         return class_declaration
 
     def get_raw_client_class_name(self, *, is_async: bool) -> str:
@@ -122,25 +124,6 @@ class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
                 )
             )
 
-            # Initialize nested clients
-            for subpackage_id in self._package.subpackages:
-                subpackage = self._context.ir.subpackages[subpackage_id]
-                if subpackage.has_endpoints_in_tree:
-                    writer.write_node(
-                        AST.VariableDeclaration(
-                            name=f"self.{subpackage.name.snake_case.safe_name}",
-                            initializer=AST.Expression(
-                                AST.ClassInstantiation(
-                                    class_=(
-                                        self._context.get_reference_to_async_subpackage_service(subpackage_id)
-                                        if is_async
-                                        else self._context.get_reference_to_subpackage_service(subpackage_id)
-                                    ),
-                                    kwargs=kwargs,
-                                )
-                            ),
-                        )
-                    )
-                    writer.write_line()
+            self._initialize_nested_clients(writer=writer, is_async=is_async, declare_client_wrapper=True)
 
         return _write_constructor_body

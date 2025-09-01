@@ -116,17 +116,15 @@ public final class CreateUserRequest {
     }
 
     public interface UsernameStage {
-        EmailStage username(@NotNull String username);
+        _FinalStage username(@NotNull String username);
 
         Builder from(CreateUserRequest other);
     }
 
-    public interface EmailStage {
-        _FinalStage email(String email);
-    }
-
     public interface _FinalStage {
         CreateUserRequest build();
+
+        _FinalStage email(@com.seed.nullableOptional.core.Nullable String email);
 
         _FinalStage phone(Optional<String> phone);
 
@@ -140,14 +138,14 @@ public final class CreateUserRequest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements UsernameStage, EmailStage, _FinalStage {
+    public static final class Builder implements UsernameStage, _FinalStage {
         private String username;
-
-        private String email;
 
         private Optional<Address> address = Optional.empty();
 
         private Optional<String> phone = Optional.empty();
+
+        private String email;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -165,15 +163,8 @@ public final class CreateUserRequest {
 
         @java.lang.Override
         @JsonSetter("username")
-        public EmailStage username(@NotNull String username) {
+        public _FinalStage username(@NotNull String username) {
             this.username = Objects.requireNonNull(username, "username must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("email")
-        public _FinalStage email(String email) {
-            this.email = email;
             return this;
         }
 
@@ -212,6 +203,13 @@ public final class CreateUserRequest {
         @JsonSetter(value = "phone", nulls = Nulls.SKIP)
         public _FinalStage phone(Optional<String> phone) {
             this.phone = phone;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("email")
+        public _FinalStage email(@com.seed.nullableOptional.core.Nullable String email) {
+            this.email = email;
             return this;
         }
 

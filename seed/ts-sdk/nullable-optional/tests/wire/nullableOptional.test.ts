@@ -17,7 +17,15 @@ describe("NullableOptional", () => {
             phone: "phone",
             createdAt: "2024-01-15T09:30:00Z",
             updatedAt: "2024-01-15T09:30:00Z",
-            address: { street: "street", city: "city", state: "state", zipCode: "zipCode", country: "country" },
+            address: {
+                street: "street",
+                city: "city",
+                state: "state",
+                zipCode: "zipCode",
+                country: "country",
+                buildingId: "buildingId",
+                tenantId: "tenantId",
+            },
         };
         server.mockEndpoint().get("/api/users/userId").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
@@ -35,6 +43,8 @@ describe("NullableOptional", () => {
                 state: "state",
                 zipCode: "zipCode",
                 country: "country",
+                buildingId: "buildingId",
+                tenantId: "tenantId",
             },
         });
     });
@@ -46,7 +56,15 @@ describe("NullableOptional", () => {
             username: "username",
             email: "email",
             phone: "phone",
-            address: { street: "street", city: "city", state: "state", zipCode: "zipCode", country: "country" },
+            address: {
+                street: "street",
+                city: "city",
+                state: "state",
+                zipCode: "zipCode",
+                country: "country",
+                buildingId: "buildingId",
+                tenantId: "tenantId",
+            },
         };
         const rawResponseBody = {
             id: "id",
@@ -55,7 +73,15 @@ describe("NullableOptional", () => {
             phone: "phone",
             createdAt: "2024-01-15T09:30:00Z",
             updatedAt: "2024-01-15T09:30:00Z",
-            address: { street: "street", city: "city", state: "state", zipCode: "zipCode", country: "country" },
+            address: {
+                street: "street",
+                city: "city",
+                state: "state",
+                zipCode: "zipCode",
+                country: "country",
+                buildingId: "buildingId",
+                tenantId: "tenantId",
+            },
         };
         server
             .mockEndpoint()
@@ -76,6 +102,8 @@ describe("NullableOptional", () => {
                 state: "state",
                 zipCode: "zipCode",
                 country: "country",
+                buildingId: "buildingId",
+                tenantId: "tenantId",
             },
         });
         expect(response).toEqual({
@@ -91,6 +119,8 @@ describe("NullableOptional", () => {
                 state: "state",
                 zipCode: "zipCode",
                 country: "country",
+                buildingId: "buildingId",
+                tenantId: "tenantId",
             },
         });
     });
@@ -102,7 +132,15 @@ describe("NullableOptional", () => {
             username: "username",
             email: "email",
             phone: "phone",
-            address: { street: "street", city: "city", state: "state", zipCode: "zipCode", country: "country" },
+            address: {
+                street: "street",
+                city: "city",
+                state: "state",
+                zipCode: "zipCode",
+                country: "country",
+                buildingId: "buildingId",
+                tenantId: "tenantId",
+            },
         };
         const rawResponseBody = {
             id: "id",
@@ -111,7 +149,15 @@ describe("NullableOptional", () => {
             phone: "phone",
             createdAt: "2024-01-15T09:30:00Z",
             updatedAt: "2024-01-15T09:30:00Z",
-            address: { street: "street", city: "city", state: "state", zipCode: "zipCode", country: "country" },
+            address: {
+                street: "street",
+                city: "city",
+                state: "state",
+                zipCode: "zipCode",
+                country: "country",
+                buildingId: "buildingId",
+                tenantId: "tenantId",
+            },
         };
         server
             .mockEndpoint()
@@ -132,6 +178,8 @@ describe("NullableOptional", () => {
                 state: "state",
                 zipCode: "zipCode",
                 country: "country",
+                buildingId: "buildingId",
+                tenantId: "tenantId",
             },
         });
         expect(response).toEqual({
@@ -147,6 +195,8 @@ describe("NullableOptional", () => {
                 state: "state",
                 zipCode: "zipCode",
                 country: "country",
+                buildingId: "buildingId",
+                tenantId: "tenantId",
             },
         });
     });
@@ -163,7 +213,15 @@ describe("NullableOptional", () => {
                 phone: "phone",
                 createdAt: "2024-01-15T09:30:00Z",
                 updatedAt: "2024-01-15T09:30:00Z",
-                address: { street: "street", city: "city", state: "state", zipCode: "zipCode", country: "country" },
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
             },
             {
                 id: "id",
@@ -172,7 +230,15 @@ describe("NullableOptional", () => {
                 phone: "phone",
                 createdAt: "2024-01-15T09:30:00Z",
                 updatedAt: "2024-01-15T09:30:00Z",
-                address: { street: "street", city: "city", state: "state", zipCode: "zipCode", country: "country" },
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
             },
         ];
         server.mockEndpoint().get("/api/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -197,6 +263,8 @@ describe("NullableOptional", () => {
                     state: "state",
                     zipCode: "zipCode",
                     country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
                 },
             },
             {
@@ -212,6 +280,8 @@ describe("NullableOptional", () => {
                     state: "state",
                     zipCode: "zipCode",
                     country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
                 },
             },
         ]);
@@ -229,7 +299,15 @@ describe("NullableOptional", () => {
                 phone: "phone",
                 createdAt: "2024-01-15T09:30:00Z",
                 updatedAt: "2024-01-15T09:30:00Z",
-                address: { street: "street", city: "city", state: "state", zipCode: "zipCode", country: "country" },
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
             },
             {
                 id: "id",
@@ -238,7 +316,15 @@ describe("NullableOptional", () => {
                 phone: "phone",
                 createdAt: "2024-01-15T09:30:00Z",
                 updatedAt: "2024-01-15T09:30:00Z",
-                address: { street: "street", city: "city", state: "state", zipCode: "zipCode", country: "country" },
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
             },
         ];
         server.mockEndpoint().get("/api/users/search").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -263,6 +349,8 @@ describe("NullableOptional", () => {
                     state: "state",
                     zipCode: "zipCode",
                     country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
                 },
             },
             {
@@ -278,6 +366,1275 @@ describe("NullableOptional", () => {
                     state: "state",
                     zipCode: "zipCode",
                     country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+        ]);
+    });
+
+    test("createComplexProfile", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+        const rawRequestBody = {
+            id: "id",
+            nullableRole: "ADMIN",
+            optionalRole: "ADMIN",
+            optionalNullableRole: "ADMIN",
+            nullableStatus: "active",
+            optionalStatus: "active",
+            optionalNullableStatus: "active",
+            nullableNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            optionalNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            optionalNullableNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            nullableSearchResult: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            optionalSearchResult: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableArray: ["nullableArray", "nullableArray"],
+            optionalArray: ["optionalArray", "optionalArray"],
+            optionalNullableArray: ["optionalNullableArray", "optionalNullableArray"],
+            nullableListOfNullables: ["nullableListOfNullables", "nullableListOfNullables"],
+            nullableMapOfNullables: {
+                nullableMapOfNullables: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableListOfUnions: [
+                { type: "email", emailAddress: "emailAddress", subject: "subject", htmlContent: "htmlContent" },
+                { type: "email", emailAddress: "emailAddress", subject: "subject", htmlContent: "htmlContent" },
+            ],
+            optionalMapOfEnums: { optionalMapOfEnums: "ADMIN" },
+        };
+        const rawResponseBody = {
+            id: "id",
+            nullableRole: "ADMIN",
+            optionalRole: "ADMIN",
+            optionalNullableRole: "ADMIN",
+            nullableStatus: "active",
+            optionalStatus: "active",
+            optionalNullableStatus: "active",
+            nullableNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            optionalNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            optionalNullableNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            nullableSearchResult: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            optionalSearchResult: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableArray: ["nullableArray", "nullableArray"],
+            optionalArray: ["optionalArray", "optionalArray"],
+            optionalNullableArray: ["optionalNullableArray", "optionalNullableArray"],
+            nullableListOfNullables: ["nullableListOfNullables", "nullableListOfNullables"],
+            nullableMapOfNullables: {
+                nullableMapOfNullables: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableListOfUnions: [
+                { type: "email", emailAddress: "emailAddress", subject: "subject", htmlContent: "htmlContent" },
+                { type: "email", emailAddress: "emailAddress", subject: "subject", htmlContent: "htmlContent" },
+            ],
+            optionalMapOfEnums: { optionalMapOfEnums: "ADMIN" },
+        };
+        server
+            .mockEndpoint()
+            .post("/api/profiles/complex")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.nullableOptional.createComplexProfile({
+            id: "id",
+            nullableRole: "ADMIN",
+            optionalRole: "ADMIN",
+            optionalNullableRole: "ADMIN",
+            nullableStatus: "active",
+            optionalStatus: "active",
+            optionalNullableStatus: "active",
+            nullableNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            optionalNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            optionalNullableNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            nullableSearchResult: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            optionalSearchResult: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableArray: ["nullableArray", "nullableArray"],
+            optionalArray: ["optionalArray", "optionalArray"],
+            optionalNullableArray: ["optionalNullableArray", "optionalNullableArray"],
+            nullableListOfNullables: ["nullableListOfNullables", "nullableListOfNullables"],
+            nullableMapOfNullables: {
+                nullableMapOfNullables: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableListOfUnions: [
+                {
+                    type: "email",
+                    emailAddress: "emailAddress",
+                    subject: "subject",
+                    htmlContent: "htmlContent",
+                },
+                {
+                    type: "email",
+                    emailAddress: "emailAddress",
+                    subject: "subject",
+                    htmlContent: "htmlContent",
+                },
+            ],
+            optionalMapOfEnums: {
+                optionalMapOfEnums: "ADMIN",
+            },
+        });
+        expect(response).toEqual({
+            id: "id",
+            nullableRole: "ADMIN",
+            optionalRole: "ADMIN",
+            optionalNullableRole: "ADMIN",
+            nullableStatus: "active",
+            optionalStatus: "active",
+            optionalNullableStatus: "active",
+            nullableNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            optionalNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            optionalNullableNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            nullableSearchResult: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            optionalSearchResult: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableArray: ["nullableArray", "nullableArray"],
+            optionalArray: ["optionalArray", "optionalArray"],
+            optionalNullableArray: ["optionalNullableArray", "optionalNullableArray"],
+            nullableListOfNullables: ["nullableListOfNullables", "nullableListOfNullables"],
+            nullableMapOfNullables: {
+                nullableMapOfNullables: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableListOfUnions: [
+                {
+                    type: "email",
+                    emailAddress: "emailAddress",
+                    subject: "subject",
+                    htmlContent: "htmlContent",
+                },
+                {
+                    type: "email",
+                    emailAddress: "emailAddress",
+                    subject: "subject",
+                    htmlContent: "htmlContent",
+                },
+            ],
+            optionalMapOfEnums: {
+                optionalMapOfEnums: "ADMIN",
+            },
+        });
+    });
+
+    test("getComplexProfile", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+
+        const rawResponseBody = {
+            id: "id",
+            nullableRole: "ADMIN",
+            optionalRole: "ADMIN",
+            optionalNullableRole: "ADMIN",
+            nullableStatus: "active",
+            optionalStatus: "active",
+            optionalNullableStatus: "active",
+            nullableNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            optionalNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            optionalNullableNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            nullableSearchResult: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            optionalSearchResult: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableArray: ["nullableArray", "nullableArray"],
+            optionalArray: ["optionalArray", "optionalArray"],
+            optionalNullableArray: ["optionalNullableArray", "optionalNullableArray"],
+            nullableListOfNullables: ["nullableListOfNullables", "nullableListOfNullables"],
+            nullableMapOfNullables: {
+                nullableMapOfNullables: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableListOfUnions: [
+                { type: "email", emailAddress: "emailAddress", subject: "subject", htmlContent: "htmlContent" },
+                { type: "email", emailAddress: "emailAddress", subject: "subject", htmlContent: "htmlContent" },
+            ],
+            optionalMapOfEnums: { optionalMapOfEnums: "ADMIN" },
+        };
+        server
+            .mockEndpoint()
+            .get("/api/profiles/complex/profileId")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.nullableOptional.getComplexProfile("profileId");
+        expect(response).toEqual({
+            id: "id",
+            nullableRole: "ADMIN",
+            optionalRole: "ADMIN",
+            optionalNullableRole: "ADMIN",
+            nullableStatus: "active",
+            optionalStatus: "active",
+            optionalNullableStatus: "active",
+            nullableNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            optionalNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            optionalNullableNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            nullableSearchResult: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            optionalSearchResult: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableArray: ["nullableArray", "nullableArray"],
+            optionalArray: ["optionalArray", "optionalArray"],
+            optionalNullableArray: ["optionalNullableArray", "optionalNullableArray"],
+            nullableListOfNullables: ["nullableListOfNullables", "nullableListOfNullables"],
+            nullableMapOfNullables: {
+                nullableMapOfNullables: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableListOfUnions: [
+                {
+                    type: "email",
+                    emailAddress: "emailAddress",
+                    subject: "subject",
+                    htmlContent: "htmlContent",
+                },
+                {
+                    type: "email",
+                    emailAddress: "emailAddress",
+                    subject: "subject",
+                    htmlContent: "htmlContent",
+                },
+            ],
+            optionalMapOfEnums: {
+                optionalMapOfEnums: "ADMIN",
+            },
+        });
+    });
+
+    test("updateComplexProfile", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+        const rawRequestBody = {
+            nullableRole: "ADMIN",
+            nullableStatus: "active",
+            nullableNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            nullableSearchResult: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableArray: ["nullableArray", "nullableArray"],
+        };
+        const rawResponseBody = {
+            id: "id",
+            nullableRole: "ADMIN",
+            optionalRole: "ADMIN",
+            optionalNullableRole: "ADMIN",
+            nullableStatus: "active",
+            optionalStatus: "active",
+            optionalNullableStatus: "active",
+            nullableNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            optionalNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            optionalNullableNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            nullableSearchResult: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            optionalSearchResult: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableArray: ["nullableArray", "nullableArray"],
+            optionalArray: ["optionalArray", "optionalArray"],
+            optionalNullableArray: ["optionalNullableArray", "optionalNullableArray"],
+            nullableListOfNullables: ["nullableListOfNullables", "nullableListOfNullables"],
+            nullableMapOfNullables: {
+                nullableMapOfNullables: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableListOfUnions: [
+                { type: "email", emailAddress: "emailAddress", subject: "subject", htmlContent: "htmlContent" },
+                { type: "email", emailAddress: "emailAddress", subject: "subject", htmlContent: "htmlContent" },
+            ],
+            optionalMapOfEnums: { optionalMapOfEnums: "ADMIN" },
+        };
+        server
+            .mockEndpoint()
+            .patch("/api/profiles/complex/profileId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.nullableOptional.updateComplexProfile("profileId", {
+            nullableRole: "ADMIN",
+            nullableStatus: "active",
+            nullableNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            nullableSearchResult: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableArray: ["nullableArray", "nullableArray"],
+        });
+        expect(response).toEqual({
+            id: "id",
+            nullableRole: "ADMIN",
+            optionalRole: "ADMIN",
+            optionalNullableRole: "ADMIN",
+            nullableStatus: "active",
+            optionalStatus: "active",
+            optionalNullableStatus: "active",
+            nullableNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            optionalNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            optionalNullableNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            nullableSearchResult: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            optionalSearchResult: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableArray: ["nullableArray", "nullableArray"],
+            optionalArray: ["optionalArray", "optionalArray"],
+            optionalNullableArray: ["optionalNullableArray", "optionalNullableArray"],
+            nullableListOfNullables: ["nullableListOfNullables", "nullableListOfNullables"],
+            nullableMapOfNullables: {
+                nullableMapOfNullables: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableListOfUnions: [
+                {
+                    type: "email",
+                    emailAddress: "emailAddress",
+                    subject: "subject",
+                    htmlContent: "htmlContent",
+                },
+                {
+                    type: "email",
+                    emailAddress: "emailAddress",
+                    subject: "subject",
+                    htmlContent: "htmlContent",
+                },
+            ],
+            optionalMapOfEnums: {
+                optionalMapOfEnums: "ADMIN",
+            },
+        });
+    });
+
+    test("testDeserialization", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+        const rawRequestBody = {
+            requiredString: "requiredString",
+            nullableString: "nullableString",
+            optionalString: "optionalString",
+            optionalNullableString: "optionalNullableString",
+            nullableEnum: "ADMIN",
+            optionalEnum: "active",
+            nullableUnion: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            optionalUnion: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableList: ["nullableList", "nullableList"],
+            nullableMap: { nullableMap: 1 },
+            nullableObject: {
+                street: "street",
+                city: "city",
+                state: "state",
+                zipCode: "zipCode",
+                country: "country",
+                buildingId: "buildingId",
+                tenantId: "tenantId",
+            },
+            optionalObject: { id: "id", name: "name", domain: "domain", employeeCount: 1 },
+        };
+        const rawResponseBody = {
+            echo: {
+                requiredString: "requiredString",
+                nullableString: "nullableString",
+                optionalString: "optionalString",
+                optionalNullableString: "optionalNullableString",
+                nullableEnum: "ADMIN",
+                optionalEnum: "active",
+                nullableUnion: {
+                    type: "email",
+                    emailAddress: "emailAddress",
+                    subject: "subject",
+                    htmlContent: "htmlContent",
+                },
+                optionalUnion: {
+                    type: "user",
+                    id: "id",
+                    username: "username",
+                    email: "email",
+                    phone: "phone",
+                    createdAt: "2024-01-15T09:30:00Z",
+                    updatedAt: "2024-01-15T09:30:00Z",
+                    address: {
+                        street: "street",
+                        city: "city",
+                        state: "state",
+                        zipCode: "zipCode",
+                        country: "country",
+                        buildingId: "buildingId",
+                        tenantId: "tenantId",
+                    },
+                },
+                nullableList: ["nullableList", "nullableList"],
+                nullableMap: { nullableMap: 1 },
+                nullableObject: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+                optionalObject: { id: "id", name: "name", domain: "domain", employeeCount: 1 },
+            },
+            processedAt: "2024-01-15T09:30:00Z",
+            nullCount: 1,
+            presentFieldsCount: 1,
+        };
+        server
+            .mockEndpoint()
+            .post("/api/test/deserialization")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.nullableOptional.testDeserialization({
+            requiredString: "requiredString",
+            nullableString: "nullableString",
+            optionalString: "optionalString",
+            optionalNullableString: "optionalNullableString",
+            nullableEnum: "ADMIN",
+            optionalEnum: "active",
+            nullableUnion: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
+            },
+            optionalUnion: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableList: ["nullableList", "nullableList"],
+            nullableMap: {
+                nullableMap: 1,
+            },
+            nullableObject: {
+                street: "street",
+                city: "city",
+                state: "state",
+                zipCode: "zipCode",
+                country: "country",
+                buildingId: "buildingId",
+                tenantId: "tenantId",
+            },
+            optionalObject: {
+                id: "id",
+                name: "name",
+                domain: "domain",
+                employeeCount: 1,
+            },
+        });
+        expect(response).toEqual({
+            echo: {
+                requiredString: "requiredString",
+                nullableString: "nullableString",
+                optionalString: "optionalString",
+                optionalNullableString: "optionalNullableString",
+                nullableEnum: "ADMIN",
+                optionalEnum: "active",
+                nullableUnion: {
+                    type: "email",
+                    emailAddress: "emailAddress",
+                    subject: "subject",
+                    htmlContent: "htmlContent",
+                },
+                optionalUnion: {
+                    type: "user",
+                    id: "id",
+                    username: "username",
+                    email: "email",
+                    phone: "phone",
+                    createdAt: "2024-01-15T09:30:00Z",
+                    updatedAt: "2024-01-15T09:30:00Z",
+                    address: {
+                        street: "street",
+                        city: "city",
+                        state: "state",
+                        zipCode: "zipCode",
+                        country: "country",
+                        buildingId: "buildingId",
+                        tenantId: "tenantId",
+                    },
+                },
+                nullableList: ["nullableList", "nullableList"],
+                nullableMap: {
+                    nullableMap: 1,
+                },
+                nullableObject: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+                optionalObject: {
+                    id: "id",
+                    name: "name",
+                    domain: "domain",
+                    employeeCount: 1,
+                },
+            },
+            processedAt: "2024-01-15T09:30:00Z",
+            nullCount: 1,
+            presentFieldsCount: 1,
+        });
+    });
+
+    test("filterByRole", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+
+        const rawResponseBody = [
+            {
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            {
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+        ];
+        server.mockEndpoint().get("/api/users/filter").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+
+        const response = await client.nullableOptional.filterByRole({
+            role: "ADMIN",
+            status: "active",
+            secondaryRole: "ADMIN",
+        });
+        expect(response).toEqual([
+            {
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            {
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+        ]);
+    });
+
+    test("getNotificationSettings", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+
+        const rawResponseBody = {
+            type: "email",
+            emailAddress: "emailAddress",
+            subject: "subject",
+            htmlContent: "htmlContent",
+        };
+        server
+            .mockEndpoint()
+            .get("/api/users/userId/notifications")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.nullableOptional.getNotificationSettings("userId");
+        expect(response).toEqual({
+            type: "email",
+            emailAddress: "emailAddress",
+            subject: "subject",
+            htmlContent: "htmlContent",
+        });
+    });
+
+    test("updateTags", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+        const rawRequestBody = {
+            tags: ["tags", "tags"],
+            categories: ["categories", "categories"],
+            labels: ["labels", "labels"],
+        };
+        const rawResponseBody = ["string", "string"];
+        server
+            .mockEndpoint()
+            .put("/api/users/userId/tags")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.nullableOptional.updateTags("userId", {
+            tags: ["tags", "tags"],
+            categories: ["categories", "categories"],
+            labels: ["labels", "labels"],
+        });
+        expect(response).toEqual(["string", "string"]);
+    });
+
+    test("getSearchResults", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+        const rawRequestBody = {
+            query: "query",
+            filters: { filters: "filters" },
+            includeTypes: ["includeTypes", "includeTypes"],
+        };
+        const rawResponseBody = [
+            {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+        ];
+        server
+            .mockEndpoint()
+            .post("/api/search")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.nullableOptional.getSearchResults({
+            query: "query",
+            filters: {
+                filters: "filters",
+            },
+            includeTypes: ["includeTypes", "includeTypes"],
+        });
+        expect(response).toEqual([
+            {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
                 },
             },
         ]);

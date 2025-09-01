@@ -2,22 +2,69 @@
 
 # isort: skip_file
 
-from .create_problem_error import CreateProblemError, CreateProblemError_Generic
-from .create_problem_request import CreateProblemRequest
-from .create_problem_response import CreateProblemResponse, CreateProblemResponse_Error, CreateProblemResponse_Success
-from .generic_create_problem_error import GenericCreateProblemError
-from .get_default_starter_files_response import GetDefaultStarterFilesResponse
-from .problem_description import ProblemDescription
-from .problem_description_board import (
-    ProblemDescriptionBoard,
-    ProblemDescriptionBoard_Html,
-    ProblemDescriptionBoard_TestCaseId,
-    ProblemDescriptionBoard_Variable,
-)
-from .problem_files import ProblemFiles
-from .problem_info import ProblemInfo
-from .update_problem_response import UpdateProblemResponse
-from .variable_type_and_name import VariableTypeAndName
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .create_problem_error import CreateProblemError, CreateProblemError_Generic
+    from .create_problem_request import CreateProblemRequest
+    from .create_problem_response import (
+        CreateProblemResponse,
+        CreateProblemResponse_Error,
+        CreateProblemResponse_Success,
+    )
+    from .generic_create_problem_error import GenericCreateProblemError
+    from .get_default_starter_files_response import GetDefaultStarterFilesResponse
+    from .problem_description import ProblemDescription
+    from .problem_description_board import (
+        ProblemDescriptionBoard,
+        ProblemDescriptionBoard_Html,
+        ProblemDescriptionBoard_TestCaseId,
+        ProblemDescriptionBoard_Variable,
+    )
+    from .problem_files import ProblemFiles
+    from .problem_info import ProblemInfo
+    from .update_problem_response import UpdateProblemResponse
+    from .variable_type_and_name import VariableTypeAndName
+_dynamic_imports: typing.Dict[str, str] = {
+    "CreateProblemError": ".create_problem_error",
+    "CreateProblemError_Generic": ".create_problem_error",
+    "CreateProblemRequest": ".create_problem_request",
+    "CreateProblemResponse": ".create_problem_response",
+    "CreateProblemResponse_Error": ".create_problem_response",
+    "CreateProblemResponse_Success": ".create_problem_response",
+    "GenericCreateProblemError": ".generic_create_problem_error",
+    "GetDefaultStarterFilesResponse": ".get_default_starter_files_response",
+    "ProblemDescription": ".problem_description",
+    "ProblemDescriptionBoard": ".problem_description_board",
+    "ProblemDescriptionBoard_Html": ".problem_description_board",
+    "ProblemDescriptionBoard_TestCaseId": ".problem_description_board",
+    "ProblemDescriptionBoard_Variable": ".problem_description_board",
+    "ProblemFiles": ".problem_files",
+    "ProblemInfo": ".problem_info",
+    "UpdateProblemResponse": ".update_problem_response",
+    "VariableTypeAndName": ".variable_type_and_name",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "CreateProblemError",

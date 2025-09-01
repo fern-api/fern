@@ -1,3 +1,20 @@
+- version: 2.43.0
+  changelogEntry:
+    - summary: |
+        Add support for the `apiName` and `disabledFeatures` readme config options.
+      type: feat
+  createdAt: "2025-08-29"
+  irVersion: 59
+
+- version: 2.42.1
+  changelogEntry:
+    - summary: |
+        Fix nullable fields incorrectly requiring non-null values in staged builders when 
+        use-nullable-annotation is enabled.
+      type: fix
+  createdAt: "2025-08-27"
+  irVersion: 58
+
 - version: 2.42.0
   changelogEntry:
     - summary: |

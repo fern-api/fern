@@ -63,9 +63,6 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         if (subpackage == null && this.customConfig.clientName != null) {
             return this.customConfig.clientName;
         }
-        if (subpackage != null && this.isFlatPackageLayout()) {
-            return `${this.getClassName(subpackage.name)}Client`;
-        }
         return "Client";
     }
 
@@ -78,16 +75,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
                 return `New${this.customConfig.clientName}`;
             }
         }
-        if (subpackage != null && this.isFlatPackageLayout()) {
-            return `New${this.getClassName(subpackage.name)}Client`;
-        }
         return "NewClient";
     }
 
     public getClientFilename(subpackage?: Subpackage): string {
-        if (subpackage != null && this.isFlatPackageLayout()) {
-            return `${this.getFilename(subpackage.name)}.go`;
-        }
         return "client.go";
     }
 
@@ -97,18 +88,12 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public getRawClientClassName(subpackage?: Subpackage): string {
         if (subpackage != null) {
-            if (this.isFlatPackageLayout()) {
-                return `Raw${this.getClassName(subpackage.name)}Client`;
-            }
             return "RawClient";
         }
         return `Raw${this.getClientClassName()}`;
     }
 
     public getRawClientFilename(subpackage?: Subpackage): string {
-        if (subpackage != null && this.isFlatPackageLayout()) {
-            return `raw_${this.getFilename(subpackage.name)}.go`;
-        }
         return "raw_client.go";
     }
 
@@ -168,23 +153,14 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public getRootClientDirectory(): RelativeFilePath {
-        if (this.isFlatPackageLayout()) {
-            return RelativeFilePath.of(".");
-        }
         return RelativeFilePath.of(this.getRootClientPackageName());
     }
 
     public getRootClientImportPath(): string {
-        if (this.isFlatPackageLayout()) {
-            return this.getRootImportPath();
-        }
         return `${this.getRootImportPath()}/${this.getRootClientPackageName()}`;
     }
 
     public getRootClientPackageName(): string {
-        if (this.isFlatPackageLayout()) {
-            return this.getRootPackageName();
-        }
         return "client";
     }
 
@@ -255,9 +231,6 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         fernFilepath: FernFilepath;
         subpackage?: Subpackage;
     }): FileLocation {
-        if (this.isFlatPackageLayout()) {
-            return this.getPackageLocation(fernFilepath);
-        }
         return this.getFileLocationForClient({ fernFilepath, subpackage });
     }
 
@@ -664,10 +637,6 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             name: this.getNetHttpMethodTypeReferenceName(method),
             importPath: "net/http"
         });
-    }
-
-    public isFlatPackageLayout(): boolean {
-        return this.customConfig.packageLayout === "flat";
     }
 
     public getFileLocationForClient({

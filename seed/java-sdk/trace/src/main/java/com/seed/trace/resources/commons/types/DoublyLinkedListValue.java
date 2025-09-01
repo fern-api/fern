@@ -111,7 +111,9 @@ public final class DoublyLinkedListValue {
         }
 
         public Builder putAllNodes(Map<String, DoublyLinkedListNodeValue> nodes) {
-            this.nodes.putAll(nodes);
+            if (nodes != null) {
+                this.nodes.putAll(nodes);
+            }
             return this;
         }
 

@@ -87,7 +87,9 @@ public final class GetFunctionSignatureResponse {
         }
 
         public Builder putAllFunctionByLanguage(Map<Language, String> functionByLanguage) {
-            this.functionByLanguage.putAll(functionByLanguage);
+            if (functionByLanguage != null) {
+                this.functionByLanguage.putAll(functionByLanguage);
+            }
             return this;
         }
 
