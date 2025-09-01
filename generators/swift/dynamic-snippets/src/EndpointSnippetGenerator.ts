@@ -58,8 +58,7 @@ export class EndpointSnippetGenerator {
     }
 
     private generateImportModuleStatement() {
-        // TODO(kafkas): Implement
-        return swift.Statement.import("Acme");
+        return swift.Statement.import(this.context.getModuleName());
     }
 
     private generateRootClientInitializationStatement({

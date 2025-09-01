@@ -19,7 +19,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
     public filePropertyMapper: FilePropertyMapper;
 
-    constructor({
+    public constructor({
         ir,
         config,
         options
@@ -45,8 +45,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
     }
 
+    public getModuleName(): string {
+        return this.customConfig?.["moduleName"] ?? pascalCase(this.getApiName());
+    }
+
     public getRootClientClassName(): string {
-        // TODO(kafkas): This is not entirely correct. We need to use the symbol registry.
         return this.customConfig?.["clientClassName"] ?? `${this.getBaseNamePrefix()}Client`;
     }
 
