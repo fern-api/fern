@@ -1,0 +1,11 @@
+import Exhaustive
+
+let client = SeedExhaustiveClient(token: "<token>")
+
+try await client.endpoints.params.getWithPathAndQuery(
+    param: "param",
+    request: .init(
+        param: "param",
+        query: "query"
+    )
+)
