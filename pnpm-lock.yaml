@@ -6228,6 +6228,9 @@ importers:
       '@fern-api/sdk':
         specifier: 0.12.3
         version: 0.12.3
+      '@fern-api/swift-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../../../../../generators/swift/dynamic-snippets
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../../task-context
