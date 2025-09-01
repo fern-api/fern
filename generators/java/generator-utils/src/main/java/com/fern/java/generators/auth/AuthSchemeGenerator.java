@@ -4,6 +4,7 @@ import com.fern.ir.model.auth.AuthScheme;
 import com.fern.ir.model.auth.BasicAuthScheme;
 import com.fern.ir.model.auth.BearerAuthScheme;
 import com.fern.ir.model.auth.HeaderAuthScheme;
+import com.fern.ir.model.auth.InferredAuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaFile;
@@ -38,6 +39,11 @@ public final class AuthSchemeGenerator implements AuthScheme.Visitor<GeneratedJa
     public GeneratedJavaFile visitOauth(OAuthScheme oauth) {
         BearerAuthGenerator bearerAuthGenerator = new BearerAuthGenerator(generatorContext);
         return bearerAuthGenerator.generateFile();
+    }
+
+    @Override
+    public GeneratedJavaFile visitInferred(InferredAuthScheme oauth) {
+        throw new UnsupportedOperationException("Inferred auth schemes are not supported");
     }
 
     @Override
