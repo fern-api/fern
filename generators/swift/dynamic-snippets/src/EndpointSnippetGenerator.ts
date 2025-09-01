@@ -3,7 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { swift } from "@fern-api/swift-codegen";
 
-import { DynamicSnippetsGeneratorContext } from "./context";
+import { DynamicSnippetsGeneratorContext, FilePropertyInfo } from "./context";
 
 const CLIENT_CONST_NAME = "client";
 
@@ -214,6 +214,10 @@ export class EndpointSnippetGenerator {
         }
         this.context.errors.unscope();
 
+        this.context.errors.scope(Scope.RequestBody);
+        const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
+        this.context.errors.unscope();
+
         args.push(...pathParameterFields);
 
         args.push(
@@ -222,7 +226,8 @@ export class EndpointSnippetGenerator {
                 value: this.getInlinedRequestArg({
                     request,
                     snippet,
-                    pathParameterFields
+                    pathParameterFields,
+                    filePropertyInfo
                 })
             })
         );
@@ -254,14 +259,35 @@ export class EndpointSnippetGenerator {
         return args;
     }
 
+    private getFilePropertyInfo({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.InlinedRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): FilePropertyInfo {
+        if (request.body == null || !this.context.isFileUploadRequestBody(request.body)) {
+            return {
+                fileFields: [],
+                bodyPropertyFields: []
+            };
+        }
+        return this.context.filePropertyMapper.getFilePropertyInfo({
+            body: request.body,
+            value: snippet.requestBody
+        });
+    }
+
     private getInlinedRequestArg({
         request,
         snippet,
-        pathParameterFields
+        pathParameterFields,
+        filePropertyInfo
     }: {
         request: FernIr.dynamic.InlinedRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
         pathParameterFields: swift.FunctionArgument[];
+        filePropertyInfo: FilePropertyInfo;
     }): swift.Expression {
         this.context.errors.scope(Scope.QueryParameters);
         const queryParameters = this.context.associateQueryParametersByWireValue({
@@ -294,7 +320,8 @@ export class EndpointSnippetGenerator {
             request.body != null
                 ? this.getInlinedRequestBodyObjectFields({
                       body: request.body,
-                      value: snippet.requestBody
+                      value: snippet.requestBody,
+                      filePropertyInfo
                   })
                 : [];
         this.context.errors.unscope();
@@ -310,19 +337,20 @@ export class EndpointSnippetGenerator {
 
     private getInlinedRequestBodyObjectFields({
         body,
-        value
+        value,
+        filePropertyInfo
     }: {
         body: FernIr.dynamic.InlinedRequestBody;
         value: unknown;
+        filePropertyInfo: FilePropertyInfo;
     }): swift.FunctionArgument[] {
         switch (body.type) {
+            case "fileUpload":
+                return [...filePropertyInfo.fileFields, ...filePropertyInfo.bodyPropertyFields];
             case "properties":
                 return this.getInlinedRequestBodyPropertyObjectFields({ parameters: body.value, value });
             case "referenced":
                 return [this.getReferencedRequestBodyPropertyObjectField({ body, value })];
-            case "fileUpload":
-                // TODO(kafkas): Implement
-                return [];
             default:
                 assertNever(body);
         }
@@ -335,22 +363,16 @@ export class EndpointSnippetGenerator {
         parameters: FernIr.dynamic.NamedParameter[];
         value: unknown;
     }): swift.FunctionArgument[] {
-        const fields: swift.FunctionArgument[] = [];
-
         const bodyProperties = this.context.associateByWireValue({
             parameters,
             values: this.context.getRecord(value) ?? {}
         });
-        for (const parameter of bodyProperties) {
-            fields.push(
-                swift.functionArgument({
-                    label: parameter.name.name.camelCase.unsafeName,
-                    value: this.context.dynamicTypeLiteralMapper.convert(parameter)
-                })
-            );
-        }
-
-        return fields;
+        return bodyProperties.map((parameter) =>
+            swift.functionArgument({
+                label: parameter.name.name.camelCase.unsafeName,
+                value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+            })
+        );
     }
 
     private getReferencedRequestBodyPropertyObjectField({
@@ -391,8 +413,7 @@ export class EndpointSnippetGenerator {
             });
             return swift.Expression.nop();
         }
-        // TODO(kafkas): Implement
-        return swift.Expression.nop();
+        return swift.Expression.dataLiteral(value);
     }
 
     private getMethodArgsForBodyRequest({

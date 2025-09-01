@@ -232,7 +232,13 @@ exports[`snippets (default) > file-upload > 'POST /' 1`] = `
 let client = AcmeAcmeClient()
 
 try await client.service.post(
-    request: .init()
+    request: .init(
+        file: Data("Hello, world!".utf8),
+        fileList: [
+            Data("First".utf8),
+            Data("Second".utf8)
+        ]
+    )
 )
 "
 `;
@@ -243,7 +249,7 @@ exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
 let client = AcmeAcmeClient()
 
 try await client.service.justFile(
-    request: .init()
+    request: .init(file: Data("Hello, world!".utf8))
 )
 "
 `;
@@ -256,7 +262,8 @@ let client = AcmeAcmeClient()
 try await client.service.justFileWithQueryParams(
     request: .init(
         integer: 42,
-        maybeString: "exists"
+        maybeString: "exists",
+        file: Data("Hello, world!".utf8)
     )
 )
 "

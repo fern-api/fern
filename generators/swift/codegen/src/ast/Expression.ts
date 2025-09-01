@@ -128,6 +128,11 @@ type ArrayLiteral = {
     multiline?: true;
 };
 
+type DataLiteral = {
+    type: "data-literal";
+    value: string;
+};
+
 type RawValue = {
     type: "raw-value";
     value: string;
@@ -158,6 +163,7 @@ type InternalExpression =
     | UUIDLiteral
     | DictionaryLiteral
     | ArrayLiteral
+    | DataLiteral
     | RawValue
     | Nop;
 
@@ -174,6 +180,10 @@ export class Expression extends AstNode {
     private constructor(internalExpression: InternalExpression) {
         super();
         this.internalExpression = internalExpression;
+    }
+
+    public isNop() {
+        return this.internalExpression.type === "nop";
     }
 
     public isStructInitialization() {
@@ -301,6 +311,9 @@ export class Expression extends AstNode {
                 break;
             case "array-literal":
                 this.writeArrayLiteral(writer, this.internalExpression);
+                break;
+            case "data-literal":
+                writer.write(`Data("${this.internalExpression.value}".utf8)`);
                 break;
             case "raw-value":
                 writer.write(this.internalExpression.value);
@@ -445,6 +458,10 @@ export class Expression extends AstNode {
 
     public static arrayLiteral(params: Omit<ArrayLiteral, "type">): Expression {
         return new this({ type: "array-literal", ...params });
+    }
+
+    public static dataLiteral(value: string): Expression {
+        return new this({ type: "data-literal", value });
     }
 
     public static methodCall(params: Omit<MethodCall, "type">): Expression {
