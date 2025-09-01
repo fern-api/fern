@@ -95,6 +95,7 @@ exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`
   {
     "severity": "CRITICAL",
     "path": [
+      "requestBody",
       "title"
     ],
     "message": "Expected string, got number"
@@ -169,6 +170,7 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inv
   {
     "severity": "CRITICAL",
     "path": [
+      "requestBody[0]",
       "string"
     ],
     "message": "Expected string, got boolean"
@@ -176,6 +178,7 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inv
   {
     "severity": "CRITICAL",
     "path": [
+      "requestBody[1]",
       "invalid"
     ],
     "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
@@ -183,6 +186,7 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inv
   {
     "severity": "CRITICAL",
     "path": [
+      "requestBody[2]",
       "string"
     ],
     "message": "Expected string, got number"
@@ -275,7 +279,7 @@ exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 let client = AcmeAcmeClient(token: "<YOUR_API_KEY>")
 
 try await client.imdb.getMovie(
-
+    movieID: "movie_xyz"
 )
 "
 `;

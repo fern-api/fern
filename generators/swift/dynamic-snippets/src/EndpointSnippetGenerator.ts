@@ -424,23 +424,43 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): swift.FunctionArgument[] {
         const args: swift.FunctionArgument[] = [];
-        if (request.body) {
-            if (request.body.type === "typeReference") {
-                args.push(
-                    swift.functionArgument({
-                        label: "request",
-                        value: this.context.dynamicTypeLiteralMapper.convert({
-                            typeReference: request.body.value,
-                            value: snippet.requestBody
-                        })
-                    })
-                );
-            } else if (request.body.type === "bytes") {
-                // TODO(kafkas): Implement
-            } else {
-                assertNever(request.body);
-            }
+
+        this.context.errors.scope(Scope.PathParameters);
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+        if (pathParameters.length > 0) {
+            args.push(...this.getPathParameters({ namedParameters: pathParameters, snippet }));
         }
+        this.context.errors.unscope();
+
+        this.context.errors.scope(Scope.RequestBody);
+        if (request.body != null) {
+            args.push(this.getBodyRequestArg({ body: request.body, value: snippet.requestBody }));
+        }
+        this.context.errors.unscope();
+
         return args;
+    }
+
+    private getBodyRequestArg({
+        body,
+        value
+    }: {
+        body: FernIr.dynamic.ReferencedRequestBodyType;
+        value: unknown;
+    }): swift.FunctionArgument {
+        switch (body.type) {
+            case "bytes":
+                return swift.functionArgument({
+                    label: "request",
+                    value: this.getBytesBodyRequestArg({ value })
+                });
+            case "typeReference":
+                return swift.functionArgument({
+                    label: "request",
+                    value: this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value })
+                });
+            default:
+                assertNever(body);
+        }
     }
 }
