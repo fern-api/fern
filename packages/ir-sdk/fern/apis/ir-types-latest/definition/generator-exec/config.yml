@@ -34,6 +34,7 @@ types:
   CustomLicense:
     properties:
       filename: string
+      licenseName: optional<string>
   GeneratorOutputConfig:
     properties:
       path: string

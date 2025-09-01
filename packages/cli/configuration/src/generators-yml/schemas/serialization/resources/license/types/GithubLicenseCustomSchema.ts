@@ -11,10 +11,12 @@ export const GithubLicenseCustomSchema: core.serialization.ObjectSchema<
     FernDefinition.GithubLicenseCustomSchema
 > = core.serialization.object({
     custom: core.serialization.string(),
+    name: core.serialization.string().optional(),
 });
 
 export declare namespace GithubLicenseCustomSchema {
     export interface Raw {
         custom: string;
+        name?: string | null;
     }
 }

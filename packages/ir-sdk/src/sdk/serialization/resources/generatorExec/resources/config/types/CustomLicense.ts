@@ -11,10 +11,12 @@ export const CustomLicense: core.serialization.ObjectSchema<
     FernIr.generatorExec.CustomLicense
 > = core.serialization.objectWithoutOptionalProperties({
     filename: core.serialization.string(),
+    licenseName: core.serialization.string().optional(),
 });
 
 export declare namespace CustomLicense {
     export interface Raw {
         filename: string;
+        licenseName?: string | null;
     }
 }

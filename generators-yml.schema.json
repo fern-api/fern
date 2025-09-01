@@ -2657,6 +2657,16 @@
       "properties": {
         "custom": {
           "type": "string"
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [

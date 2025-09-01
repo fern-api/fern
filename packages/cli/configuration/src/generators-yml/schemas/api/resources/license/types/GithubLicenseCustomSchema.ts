@@ -4,4 +4,5 @@
 
 export interface GithubLicenseCustomSchema {
     custom: string;
+    name?: string;
 }

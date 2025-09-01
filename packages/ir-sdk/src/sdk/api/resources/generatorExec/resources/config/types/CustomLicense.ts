@@ -4,4 +4,5 @@
 
 export interface CustomLicense {
     filename: string;
+    licenseName: string | undefined;
 }
