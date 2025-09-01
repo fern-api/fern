@@ -45,7 +45,7 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     Optional<String> publishTo();
 
     @JsonProperty("custom-maven-pom-metadata")
-    Optional<MavenPomMetadataSchema> customMavenPomMetadata();
+    Optional<CustomMavenPomMetadataSchema> customMavenPomMetadata();
 
     @Value.Check
     default void validatePublishTo() {
@@ -70,8 +70,8 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-@JsonDeserialize(as = ImmutableMavenPomMetadataSchema.class)
-interface MavenPomMetadataSchema {
+@JsonDeserialize(as = ImmutableCustomMavenPomMetadataSchema.class)
+interface CustomMavenPomMetadataSchema {
 
     @JsonProperty("name")
     Optional<String> name();
