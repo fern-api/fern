@@ -2,7 +2,11 @@ import PackageYml
 
 let client = SeedPackageYmlClient()
 
-try await client.service.nop(
-    id: "id",
-    nestedId: "nestedId"
-)
+private func main() async throws {
+    try await client.service.nop(
+        id: "id",
+        nestedId: "nestedId"
+    )
+}
+
+try await main()

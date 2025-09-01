@@ -2,6 +2,10 @@ import Accept
 
 let client = SeedAcceptClient(token: "<token>")
 
-try await client.service.endpoint(
+private func main() async throws {
+    try await client.service.endpoint(
 
-)
+    )
+}
+
+try await main()

@@ -2,6 +2,10 @@ import ServerSentEvents
 
 let client = SeedServerSentEventsClient()
 
-try await client.completions.stream(
-    request: .init(query: "foo")
-)
+private func main() async throws {
+    try await client.completions.stream(
+        request: .init(query: "foo")
+    )
+}
+
+try await main()

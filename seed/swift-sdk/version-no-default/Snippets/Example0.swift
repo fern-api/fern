@@ -2,6 +2,10 @@ import Version
 
 let client = SeedVersionClient()
 
-try await client.user.getUser(
-    userId: "userId"
-)
+private func main() async throws {
+    try await client.user.getUser(
+        userId: "userId"
+    )
+}
+
+try await main()

@@ -2,6 +2,10 @@ import Examples
 
 let client = SeedExamplesClient(token: "<token>")
 
-try await client.health.service.ping(
+private func main() async throws {
+    try await client.health.service.ping(
 
-)
+    )
+}
+
+try await main()

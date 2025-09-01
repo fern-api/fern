@@ -5,8 +5,12 @@ let client = SeedBasicAuthClient(
     password: "<password>"
 )
 
-try await client.basicAuth.postWithBasicAuth(
-    request: .object([
-        "key": .string("value")
-    ])
-)
+private func main() async throws {
+    try await client.basicAuth.postWithBasicAuth(
+        request: .object([
+            "key": .string("value")
+        ])
+    )
+}
+
+try await main()

@@ -2,6 +2,10 @@ import AuthEnvironmentVariables
 
 let client = SeedAuthEnvironmentVariablesClient(apiKey: "<value>")
 
-try await client.service.getWithApiKey(
+private func main() async throws {
+    try await client.service.getWithApiKey(
 
-)
+    )
+}
+
+try await main()

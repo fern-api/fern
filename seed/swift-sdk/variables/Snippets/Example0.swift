@@ -2,6 +2,10 @@ import Variables
 
 let client = SeedVariablesClient()
 
-try await client.service.post(
-    endpointParam: "endpointParam"
-)
+private func main() async throws {
+    try await client.service.post(
+        endpointParam: "endpointParam"
+    )
+}
+
+try await main()

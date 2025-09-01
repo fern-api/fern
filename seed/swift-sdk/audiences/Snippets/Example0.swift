@@ -2,6 +2,10 @@ import Audiences
 
 let client = SeedAudiencesClient()
 
-try await client.folderA.service.getDirectThread(
+private func main() async throws {
+    try await client.folderA.service.getDirectThread(
 
-)
+    )
+}
+
+try await main()

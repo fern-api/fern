@@ -2,10 +2,14 @@ import ClientSideParams
 
 let client = SeedClientSideParamsClient(token: "<token>")
 
-try await client.service.getConnection(
-    connectionId: "connectionId",
-    request: .init(
+private func main() async throws {
+    try await client.service.getConnection(
         connectionId: "connectionId",
-        fields: "fields"
+        request: .init(
+            connectionId: "connectionId",
+            fields: "fields"
+        )
     )
-)
+}
+
+try await main()

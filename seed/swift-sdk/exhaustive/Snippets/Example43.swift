@@ -2,6 +2,10 @@ import Exhaustive
 
 let client = SeedExhaustiveClient(token: "<token>")
 
-try await client.endpoints.urls.withUnderscores(
+private func main() async throws {
+    try await client.endpoints.urls.withUnderscores(
 
-)
+    )
+}
+
+try await main()

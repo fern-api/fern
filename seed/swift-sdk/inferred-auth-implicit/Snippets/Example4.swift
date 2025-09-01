@@ -2,6 +2,10 @@ import InferredAuthImplicit
 
 let client = SeedInferredAuthImplicitClient()
 
-try await client.simple.getSomething(
+private func main() async throws {
+    try await client.simple.getSomething(
 
-)
+    )
+}
+
+try await main()

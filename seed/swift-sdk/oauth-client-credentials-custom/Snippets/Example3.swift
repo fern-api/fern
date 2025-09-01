@@ -2,6 +2,10 @@ import OauthClientCredentials
 
 let client = SeedOauthClientCredentialsClient()
 
-try await client.nested.api.getSomething(
+private func main() async throws {
+    try await client.nested.api.getSomething(
 
-)
+    )
+}
+
+try await main()

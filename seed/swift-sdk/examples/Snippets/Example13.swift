@@ -2,6 +2,10 @@ import Examples
 
 let client = SeedExamplesClient(token: "<token>")
 
-try await client.service.getMovie(
-    movieId: "movieId"
-)
+private func main() async throws {
+    try await client.service.getMovie(
+        movieId: "movieId"
+    )
+}
+
+try await main()

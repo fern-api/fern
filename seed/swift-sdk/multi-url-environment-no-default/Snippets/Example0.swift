@@ -2,6 +2,10 @@ import MultiUrlEnvironmentNoDefault
 
 let client = SeedMultiUrlEnvironmentNoDefaultClient(token: "<token>")
 
-try await client.ec2.bootInstance(
-    request: .init(size: "size")
-)
+private func main() async throws {
+    try await client.ec2.bootInstance(
+        request: .init(size: "size")
+    )
+}
+
+try await main()

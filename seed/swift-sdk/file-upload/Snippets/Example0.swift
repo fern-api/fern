@@ -2,6 +2,10 @@ import FileUpload
 
 let client = SeedFileUploadClient()
 
-try await client.service.simple(
+private func main() async throws {
+    try await client.service.simple(
 
-)
+    )
+}
+
+try await main()

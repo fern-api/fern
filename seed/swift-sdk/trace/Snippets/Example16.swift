@@ -2,7 +2,11 @@ import Trace
 
 let client = SeedTraceClient(token: "<token>")
 
-try await client.playlist.deletePlaylist(
-    serviceParam: 1,
-    playlistId: "playlist_id"
-)
+private func main() async throws {
+    try await client.playlist.deletePlaylist(
+        serviceParam: 1,
+        playlistId: "playlist_id"
+    )
+}
+
+try await main()

@@ -2,6 +2,10 @@ import Api
 
 let client = SeedApiClient()
 
-try await client.folder.service.endpoint(
+private func main() async throws {
+    try await client.folder.service.endpoint(
 
-)
+    )
+}
+
+try await main()

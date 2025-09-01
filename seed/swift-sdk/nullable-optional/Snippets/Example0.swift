@@ -2,6 +2,10 @@ import NullableOptional
 
 let client = SeedNullableOptionalClient()
 
-try await client.nullableOptional.getUser(
-    userId: "userId"
-)
+private func main() async throws {
+    try await client.nullableOptional.getUser(
+        userId: "userId"
+    )
+}
+
+try await main()

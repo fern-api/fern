@@ -2,12 +2,16 @@ import Examples
 
 let client = SeedExamplesClient(token: "<token>")
 
-try await client.service.getMetadata(
-    request: .init(
-        shallow: False,
-        tag: [
-            "development"
-        ],
-        xApiVersion: "0.0.1"
+private func main() async throws {
+    try await client.service.getMetadata(
+        request: .init(
+            shallow: False,
+            tag: [
+                "development"
+            ],
+            xApiVersion: "0.0.1"
+        )
     )
-)
+}
+
+try await main()

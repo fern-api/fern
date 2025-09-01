@@ -2,9 +2,13 @@ import Streaming
 
 let client = SeedStreamingClient()
 
-try await client.dummy.generateStream(
-    request: .init(
-        stream: ,
-        numEvents: 1
+private func main() async throws {
+    try await client.dummy.generateStream(
+        request: .init(
+            stream: ,
+            numEvents: 1
+        )
     )
-)
+}
+
+try await main()

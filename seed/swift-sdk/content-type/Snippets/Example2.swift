@@ -2,12 +2,16 @@ import ContentTypes
 
 let client = SeedContentTypesClient()
 
-try await client.service.namedPatchWithMixed(
-    id: "id",
-    request: .init(
+private func main() async throws {
+    try await client.service.namedPatchWithMixed(
         id: "id",
-        appId: "appId",
-        instructions: "instructions",
-        active: True
+        request: .init(
+            id: "id",
+            appId: "appId",
+            instructions: "instructions",
+            active: True
+        )
     )
-)
+}
+
+try await main()

@@ -2,6 +2,10 @@ import CustomAuth
 
 let client = SeedCustomAuthClient(customAuthScheme: "<value>")
 
-try await client.customAuth.getWithCustomAuth(
+private func main() async throws {
+    try await client.customAuth.getWithCustomAuth(
 
-)
+    )
+}
+
+try await main()

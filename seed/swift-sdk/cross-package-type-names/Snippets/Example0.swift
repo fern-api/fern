@@ -2,6 +2,10 @@ import CrossPackageTypeNames
 
 let client = SeedCrossPackageTypeNamesClient()
 
-try await client.folderA.service.getDirectThread(
+private func main() async throws {
+    try await client.folderA.service.getDirectThread(
 
-)
+    )
+}
+
+try await main()

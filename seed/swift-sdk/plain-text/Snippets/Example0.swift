@@ -2,6 +2,10 @@ import PlainText
 
 let client = SeedPlainTextClient()
 
-try await client.service.getText(
+private func main() async throws {
+    try await client.service.getText(
 
-)
+    )
+}
+
+try await main()

@@ -2,10 +2,14 @@ import PathParameters
 
 let client = SeedPathParametersClient()
 
-try await client.organizations.searchOrganizations(
-    organizationId: "organization_id",
-    request: .init(
+private func main() async throws {
+    try await client.organizations.searchOrganizations(
         organizationId: "organization_id",
-        limit: 1
+        request: .init(
+            organizationId: "organization_id",
+            limit: 1
+        )
     )
-)
+}
+
+try await main()

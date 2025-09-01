@@ -2,6 +2,10 @@ import SingleUrlEnvironmentDefault
 
 let client = SeedSingleUrlEnvironmentDefaultClient(token: "<token>")
 
-try await client.dummy.getDummy(
+private func main() async throws {
+    try await client.dummy.getDummy(
 
-)
+    )
+}
+
+try await main()

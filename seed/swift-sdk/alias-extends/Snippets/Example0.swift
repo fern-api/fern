@@ -2,9 +2,13 @@ import AliasExtends
 
 let client = SeedAliasExtendsClient()
 
-try await client.extendedInlineRequestBody(
-    request: .init(
-        parent: "parent",
-        child: "child"
+private func main() async throws {
+    try await client.extendedInlineRequestBody(
+        request: .init(
+            parent: "parent",
+            child: "child"
+        )
     )
-)
+}
+
+try await main()

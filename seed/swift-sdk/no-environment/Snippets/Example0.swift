@@ -2,6 +2,10 @@ import NoEnvironment
 
 let client = SeedNoEnvironmentClient(token: "<token>")
 
-try await client.dummy.getDummy(
+private func main() async throws {
+    try await client.dummy.getDummy(
 
-)
+    )
+}
+
+try await main()

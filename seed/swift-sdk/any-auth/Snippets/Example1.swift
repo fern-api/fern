@@ -2,6 +2,10 @@ import AnyAuth
 
 let client = SeedAnyAuthClient(token: "<token>")
 
-try await client.user.get(
+private func main() async throws {
+    try await client.user.get(
 
-)
+    )
+}
+
+try await main()

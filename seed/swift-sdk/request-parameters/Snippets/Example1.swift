@@ -2,16 +2,20 @@ import RequestParameters
 
 let client = SeedRequestParametersClient()
 
-try await client.user.createUsernameWithReferencedType(
-    request: .init(
-        tags: [
-            "tags",
-            "tags"
-        ],
-        body: CreateUsernameBody(
-            username: "username",
-            password: "password",
-            name: "test"
+private func main() async throws {
+    try await client.user.createUsernameWithReferencedType(
+        request: .init(
+            tags: [
+                "tags",
+                "tags"
+            ],
+            body: CreateUsernameBody(
+                username: "username",
+                password: "password",
+                name: "test"
+            )
         )
     )
-)
+}
+
+try await main()

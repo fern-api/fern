@@ -2,6 +2,10 @@ import License
 
 let client = SeedLicenseClient()
 
-try await client.get(
+private func main() async throws {
+    try await client.get(
 
-)
+    )
+}
+
+try await main()

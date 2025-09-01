@@ -2,6 +2,10 @@ import BytesUpload
 
 let client = SeedBytesUploadClient()
 
-try await client.service.upload(
-    request: 
-)
+private func main() async throws {
+    try await client.service.upload(
+        request: 
+    )
+}
+
+try await main()

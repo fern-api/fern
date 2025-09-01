@@ -2,11 +2,15 @@ import ClientSideParams
 
 let client = SeedClientSideParamsClient(token: "<token>")
 
-try await client.service.getResource(
-    resourceId: "resourceId",
-    request: .init(
+private func main() async throws {
+    try await client.service.getResource(
         resourceId: "resourceId",
-        includeMetadata: True,
-        format: "json"
+        request: .init(
+            resourceId: "resourceId",
+            includeMetadata: True,
+            format: "json"
+        )
     )
-)
+}
+
+try await main()

@@ -2,6 +2,10 @@ import Exhaustive
 
 let client = SeedExhaustiveClient(token: "<token>")
 
-try await client.endpoints.httpMethods.testDelete(
-    id: "id"
-)
+private func main() async throws {
+    try await client.endpoints.httpMethods.testDelete(
+        id: "id"
+    )
+}
+
+try await main()

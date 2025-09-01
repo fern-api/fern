@@ -5,6 +5,10 @@ let client = SeedBasicAuthClient(
     password: "<password>"
 )
 
-try await client.basicAuth.getWithBasicAuth(
+private func main() async throws {
+    try await client.basicAuth.getWithBasicAuth(
 
-)
+    )
+}
+
+try await main()

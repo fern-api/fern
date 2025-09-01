@@ -2,6 +2,10 @@ import Exhaustive
 
 let client = SeedExhaustiveClient(token: "<token>")
 
-try await client.endpoints.urls.noEndingSlash(
+private func main() async throws {
+    try await client.endpoints.urls.noEndingSlash(
 
-)
+    )
+}
+
+try await main()

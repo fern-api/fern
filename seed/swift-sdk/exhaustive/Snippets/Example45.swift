@@ -2,8 +2,12 @@ import Exhaustive
 
 let client = SeedExhaustiveClient(token: "<token>")
 
-try await client.noAuth.postWithNoAuth(
-    request: .object([
-        "key": .string("value")
-    ])
-)
+private func main() async throws {
+    try await client.noAuth.postWithNoAuth(
+        request: .object([
+            "key": .string("value")
+        ])
+    )
+}
+
+try await main()

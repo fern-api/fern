@@ -2,6 +2,10 @@ import Exhaustive
 
 let client = SeedExhaustiveClient(token: "<token>")
 
-try await client.noReqBody.getWithNoRequestBody(
+private func main() async throws {
+    try await client.noReqBody.getWithNoRequestBody(
 
-)
+    )
+}
+
+try await main()

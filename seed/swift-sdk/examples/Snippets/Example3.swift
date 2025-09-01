@@ -2,6 +2,10 @@ import Examples
 
 let client = SeedExamplesClient(token: "<token>")
 
-try await client.file.notification.service.getException(
-    notificationId: "notification-hsy129x"
-)
+private func main() async throws {
+    try await client.file.notification.service.getException(
+        notificationId: "notification-hsy129x"
+    )
+}
+
+try await main()

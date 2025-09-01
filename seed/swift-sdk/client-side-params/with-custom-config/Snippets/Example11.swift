@@ -2,11 +2,15 @@ import MyCustomModule
 
 let client = MyCustomClient(token: "<token>")
 
-try await client.service.getClient(
-    clientId: "clientId",
-    request: .init(
+private func main() async throws {
+    try await client.service.getClient(
         clientId: "clientId",
-        fields: "fields",
-        includeFields: True
+        request: .init(
+            clientId: "clientId",
+            fields: "fields",
+            includeFields: True
+        )
     )
-)
+}
+
+try await main()

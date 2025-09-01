@@ -2,7 +2,11 @@ import Exhaustive
 
 let client = SeedExhaustiveClient(token: "<token>")
 
-try await client.endpoints.put.add(
-    id: "id",
-    request: .init(id: "id")
-)
+private func main() async throws {
+    try await client.endpoints.put.add(
+        id: "id",
+        request: .init(id: "id")
+    )
+}
+
+try await main()

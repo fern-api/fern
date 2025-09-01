@@ -2,6 +2,10 @@ import Exhaustive
 
 let client = SeedExhaustiveClient(token: "<token>")
 
-try await client.endpoints.primitive.getAndReturnString(
-    request: "string"
-)
+private func main() async throws {
+    try await client.endpoints.primitive.getAndReturnString(
+        request: "string"
+    )
+}
+
+try await main()

@@ -2,8 +2,12 @@ import Exhaustive
 
 let client = SeedExhaustiveClient(token: "<token>")
 
-try await client.endpoints.httpMethods.testPost(
-    request: ObjectWithRequiredField(
-        string: "string"
+private func main() async throws {
+    try await client.endpoints.httpMethods.testPost(
+        request: ObjectWithRequiredField(
+            string: "string"
+        )
     )
-)
+}
+
+try await main()

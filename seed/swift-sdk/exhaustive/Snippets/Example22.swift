@@ -2,6 +2,10 @@ import Exhaustive
 
 let client = SeedExhaustiveClient(token: "<token>")
 
-try await client.endpoints.params.getWithPath(
-    param: "param"
-)
+private func main() async throws {
+    try await client.endpoints.params.getWithPath(
+        param: "param"
+    )
+}
+
+try await main()

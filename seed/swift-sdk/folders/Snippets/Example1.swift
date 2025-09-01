@@ -2,6 +2,10 @@ import Api
 
 let client = SeedApiClient()
 
-try await client.foo(
+private func main() async throws {
+    try await client.foo(
 
-)
+    )
+}
+
+try await main()
