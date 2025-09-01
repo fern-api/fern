@@ -146,6 +146,16 @@ export class EndpointSnippetGenerator {
                 }
                 // TODO(kafkas): Add when oauth is supported
                 return [];
+            case "inferred":
+                if (values.type !== "inferred") {
+                    this.context.errors.add({
+                        severity: Severity.Critical,
+                        message: this.context.newAuthMismatchError({ auth, values }).message
+                    });
+                    return [];
+                }
+                // TODO(kafkas): Add when inferred auth is supported
+                return [];
             default:
                 assertNever(auth);
         }
