@@ -16,6 +16,9 @@
     },
     {
       "path": "../../browser-compatible-base"
+    },
+    {
+      "path": "../codegen"
     }
   ]
 }
