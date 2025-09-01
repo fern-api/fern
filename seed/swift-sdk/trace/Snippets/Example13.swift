@@ -1,8 +1,8 @@
 import Trace
 
-let client = SeedTraceClient(token: "<token>")
-
 private func main() async throws {
+    let client = SeedTraceClient(token: "<token>")
+
     try await client.playlist.getPlaylists(
         serviceParam: 1,
         request: .init(

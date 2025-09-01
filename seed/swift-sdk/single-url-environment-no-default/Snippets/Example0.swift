@@ -1,11 +1,9 @@
 import SingleUrlEnvironmentNoDefault
 
-let client = SeedSingleUrlEnvironmentNoDefaultClient(token: "<token>")
-
 private func main() async throws {
-    try await client.dummy.getDummy(
+    let client = SeedSingleUrlEnvironmentNoDefaultClient(token: "<token>")
 
-    )
+    try await client.dummy.getDummy()
 }
 
 try await main()

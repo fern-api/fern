@@ -1,36 +1,34 @@
 import Trace
 
-let client = SeedTraceClient(token: "<token>")
-
 private func main() async throws {
-    try await client.problem.getDefaultStarterFiles(
-        request: .init(
-            inputParams: [
-                VariableTypeAndName(
-                    variableType: VariableType.integerType(
-                        .init(
+    let client = SeedTraceClient(token: "<token>")
 
-                        )
-                    ),
-                    name: "name"
+    try await client.problem.getDefaultStarterFiles(request: .init(
+        inputParams: [
+            VariableTypeAndName(
+                variableType: VariableType.integerType(
+                    .init(
+
+                    )
                 ),
-                VariableTypeAndName(
-                    variableType: VariableType.integerType(
-                        .init(
-
-                        )
-                    ),
-                    name: "name"
-                )
-            ],
-            outputType: VariableType.integerType(
-                .init(
-
-                )
+                name: "name"
             ),
-            methodName: "methodName"
-        )
-    )
+            VariableTypeAndName(
+                variableType: VariableType.integerType(
+                    .init(
+
+                    )
+                ),
+                name: "name"
+            )
+        ],
+        outputType: VariableType.integerType(
+            .init(
+
+            )
+        ),
+        methodName: "methodName"
+    ))
 }
 
 try await main()

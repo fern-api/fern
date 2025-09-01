@@ -1,8 +1,8 @@
 import PathParameters
 
-let client = SeedPathParametersClient()
-
 private func main() async throws {
+    let client = SeedPathParametersClient()
+
     try await client.user.updateUser(
         userId: "user_id",
         request: .init(

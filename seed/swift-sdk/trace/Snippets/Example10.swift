@@ -1,14 +1,12 @@
 import Trace
 
-let client = SeedTraceClient(token: "<token>")
-
 private func main() async throws {
-    try await client.homepage.setHomepageProblems(
-        request: [
-            "string",
-            "string"
-        ]
-    )
+    let client = SeedTraceClient(token: "<token>")
+
+    try await client.homepage.setHomepageProblems(request: [
+        "string",
+        "string"
+    ])
 }
 
 try await main()

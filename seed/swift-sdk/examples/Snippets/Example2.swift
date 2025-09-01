@@ -1,11 +1,9 @@
 import Examples
 
-let client = SeedExamplesClient(token: "<token>")
-
 private func main() async throws {
-    try await client.echo(
-        request: "primitive"
-    )
+    let client = SeedExamplesClient(token: "<token>")
+
+    try await client.echo(request: "primitive")
 }
 
 try await main()

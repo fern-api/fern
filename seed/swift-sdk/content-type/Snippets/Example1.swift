@@ -1,8 +1,8 @@
 import ContentTypes
 
-let client = SeedContentTypesClient()
-
 private func main() async throws {
+    let client = SeedContentTypesClient()
+
     try await client.service.patchComplex(
         id: "id",
         request: .init(

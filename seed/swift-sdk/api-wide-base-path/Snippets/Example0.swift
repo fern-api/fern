@@ -1,8 +1,8 @@
 import ApiWideBasePath
 
-let client = SeedApiWideBasePathClient()
-
 private func main() async throws {
+    let client = SeedApiWideBasePathClient()
+
     try await client.service.post(
         pathParam: "pathParam",
         serviceParam: "serviceParam",

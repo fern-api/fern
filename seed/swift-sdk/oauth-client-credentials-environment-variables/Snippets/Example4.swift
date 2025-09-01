@@ -1,11 +1,9 @@
 import OauthClientCredentialsEnvironmentVariables
 
-let client = SeedOauthClientCredentialsEnvironmentVariablesClient()
-
 private func main() async throws {
-    try await client.simple.getSomething(
+    let client = SeedOauthClientCredentialsEnvironmentVariablesClient()
 
-    )
+    try await client.simple.getSomething()
 }
 
 try await main()

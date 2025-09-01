@@ -1,8 +1,8 @@
 import Pagination
 
-let client = SeedPaginationClient(token: "<token>")
-
 private func main() async throws {
+    let client = SeedPaginationClient(token: "<token>")
+
     try await client.complex.search(
         index: "index",
         request: SearchRequest(

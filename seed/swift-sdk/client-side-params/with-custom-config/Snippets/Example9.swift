@@ -1,8 +1,8 @@
 import MyCustomModule
 
-let client = MyCustomClient(token: "<token>")
-
 private func main() async throws {
+    let client = MyCustomClient(token: "<token>")
+
     try await client.service.getConnection(
         connectionId: "connectionId",
         request: .init(

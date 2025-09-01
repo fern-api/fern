@@ -1,8 +1,8 @@
 import Enum
 
-let client = SeedEnumClient()
-
 private func main() async throws {
+    let client = SeedEnumClient()
+
     try await client.pathParam.send(
         operand: .greaterThan,
         operandOrColor: ColorOrOperand.color(

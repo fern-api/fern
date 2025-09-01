@@ -1,11 +1,9 @@
 import Api
 
-let client = SeedApiClient(token: "<token>")
-
 private func main() async throws {
-    try await client.uploadJsonDocument(
-        request: .init()
-    )
+    let client = SeedApiClient(token: "<token>")
+
+    try await client.uploadJsonDocument(request: .init())
 }
 
 try await main()

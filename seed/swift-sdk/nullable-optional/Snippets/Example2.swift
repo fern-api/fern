@@ -1,8 +1,8 @@
 import NullableOptional
 
-let client = SeedNullableOptionalClient()
-
 private func main() async throws {
+    let client = SeedNullableOptionalClient()
+
     try await client.nullableOptional.updateUser(
         userId: "userId",
         request: UpdateUserRequest(

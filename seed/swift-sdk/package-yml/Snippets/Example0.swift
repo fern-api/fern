@@ -1,8 +1,8 @@
 import PackageYml
 
-let client = SeedPackageYmlClient()
-
 private func main() async throws {
+    let client = SeedPackageYmlClient()
+
     try await client.echo(
         id: "id-ksfd9c1",
         request: EchoRequest(

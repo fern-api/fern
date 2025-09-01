@@ -1,115 +1,113 @@
 import Trace
 
-let client = SeedTraceClient(token: "<token>")
-
 private func main() async throws {
-    try await client.problem.createProblem(
-        request: CreateProblemRequest(
-            problemName: "problemName",
-            problemDescription: ProblemDescription(
-                boards: [
-                    ProblemDescriptionBoard.html(
-                        .init(
-                            html: 
-                        )
-                    ),
-                    ProblemDescriptionBoard.html(
-                        .init(
-                            html: 
-                        )
+    let client = SeedTraceClient(token: "<token>")
+
+    try await client.problem.createProblem(request: CreateProblemRequest(
+        problemName: "problemName",
+        problemDescription: ProblemDescription(
+            boards: [
+                ProblemDescriptionBoard.html(
+                    .init(
+                        html: 
                     )
-                ]
-            ),
-            files: [
-                .java: ProblemFiles(
-                    solutionFile: FileInfo(
+                ),
+                ProblemDescriptionBoard.html(
+                    .init(
+                        html: 
+                    )
+                )
+            ]
+        ),
+        files: [
+            .java: ProblemFiles(
+                solutionFile: FileInfo(
+                    filename: "filename",
+                    contents: "contents"
+                ),
+                readOnlyFiles: [
+                    FileInfo(
                         filename: "filename",
                         contents: "contents"
                     ),
-                    readOnlyFiles: [
-                        FileInfo(
-                            filename: "filename",
-                            contents: "contents"
+                    FileInfo(
+                        filename: "filename",
+                        contents: "contents"
+                    )
+                ]
+            )
+        ],
+        inputParams: [
+            VariableTypeAndName(
+                variableType: VariableType.integerType(
+                    .init(
+
+                    )
+                ),
+                name: "name"
+            ),
+            VariableTypeAndName(
+                variableType: VariableType.integerType(
+                    .init(
+
+                    )
+                ),
+                name: "name"
+            )
+        ],
+        outputType: VariableType.integerType(
+            .init(
+
+            )
+        ),
+        testcases: [
+            TestCaseWithExpectedResult(
+                testCase: TestCase(
+                    id: "id",
+                    params: [
+                        VariableValue.integerValue(
+                            .init(
+                                integerValue: 
+                            )
                         ),
-                        FileInfo(
-                            filename: "filename",
-                            contents: "contents"
+                        VariableValue.integerValue(
+                            .init(
+                                integerValue: 
+                            )
                         )
                     ]
-                )
-            ],
-            inputParams: [
-                VariableTypeAndName(
-                    variableType: VariableType.integerType(
-                        .init(
-
-                        )
-                    ),
-                    name: "name"
                 ),
-                VariableTypeAndName(
-                    variableType: VariableType.integerType(
-                        .init(
-
-                        )
-                    ),
-                    name: "name"
-                )
-            ],
-            outputType: VariableType.integerType(
-                .init(
-
+                expectedResult: VariableValue.integerValue(
+                    .init(
+                        integerValue: 
+                    )
                 )
             ),
-            testcases: [
-                TestCaseWithExpectedResult(
-                    testCase: TestCase(
-                        id: "id",
-                        params: [
-                            VariableValue.integerValue(
-                                .init(
-                                    integerValue: 
-                                )
-                            ),
-                            VariableValue.integerValue(
-                                .init(
-                                    integerValue: 
-                                )
+            TestCaseWithExpectedResult(
+                testCase: TestCase(
+                    id: "id",
+                    params: [
+                        VariableValue.integerValue(
+                            .init(
+                                integerValue: 
                             )
-                        ]
-                    ),
-                    expectedResult: VariableValue.integerValue(
-                        .init(
-                            integerValue: 
+                        ),
+                        VariableValue.integerValue(
+                            .init(
+                                integerValue: 
+                            )
                         )
-                    )
+                    ]
                 ),
-                TestCaseWithExpectedResult(
-                    testCase: TestCase(
-                        id: "id",
-                        params: [
-                            VariableValue.integerValue(
-                                .init(
-                                    integerValue: 
-                                )
-                            ),
-                            VariableValue.integerValue(
-                                .init(
-                                    integerValue: 
-                                )
-                            )
-                        ]
-                    ),
-                    expectedResult: VariableValue.integerValue(
-                        .init(
-                            integerValue: 
-                        )
+                expectedResult: VariableValue.integerValue(
+                    .init(
+                        integerValue: 
                     )
                 )
-            ],
-            methodName: "methodName"
-        )
-    )
+            )
+        ],
+        methodName: "methodName"
+    ))
 }
 
 try await main()
