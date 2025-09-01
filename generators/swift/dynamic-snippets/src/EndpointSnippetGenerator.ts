@@ -52,7 +52,9 @@ export class EndpointSnippetGenerator {
             swift.LineBreak.single(),
             this.generateRootClientInitializationStatement({ auth: endpoint.auth, values: snippetRequest.auth }),
             swift.LineBreak.single(),
-            this.generateEndpointMethodCallStatement({ endpoint, snippet: snippetRequest })
+            this.generateMainFunctionDeclarationWithEndpointSnippet({ endpoint, snippet: snippetRequest }),
+            swift.LineBreak.single(),
+            this.generateMainFunctionInvocationStatement()
         ];
         return fileComponents.map((c) => c.toString()).join("");
     }
@@ -161,21 +163,41 @@ export class EndpointSnippetGenerator {
         }
     }
 
-    private generateEndpointMethodCallStatement({
+    private generateMainFunctionDeclarationWithEndpointSnippet({
         endpoint,
         snippet
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }) {
+        return swift.Statement.functionDeclaration({
+            unsafeName: "main",
+            accessLevel: "private",
+            async: true,
+            throws: true,
+            body: swift.CodeBlock.withStatements([
+                swift.Statement.expressionStatement(
+                    swift.Expression.try(
+                        swift.Expression.await(
+                            swift.Expression.methodCall({
+                                target: swift.Expression.rawValue(CLIENT_CONST_NAME),
+                                methodName: this.getMethodName({ endpoint }),
+                                arguments_: this.getMethodArguments({ endpoint, snippet }),
+                                multiline: true
+                            })
+                        )
+                    )
+                )
+            ])
+        });
+    }
+
+    private generateMainFunctionInvocationStatement() {
         return swift.Statement.expressionStatement(
             swift.Expression.try(
                 swift.Expression.await(
-                    swift.Expression.methodCall({
-                        target: swift.Expression.rawValue(CLIENT_CONST_NAME),
-                        methodName: this.getMethodName({ endpoint }),
-                        arguments_: this.getMethodArguments({ endpoint, snippet }),
-                        multiline: true
+                    swift.Expression.functionCall({
+                        unsafeName: "main"
                     })
                 )
             )
