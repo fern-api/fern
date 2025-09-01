@@ -49,6 +49,11 @@ export interface ConvertOpenAPIOptions {
     respectForwardCompatibleEnums: boolean;
 
     /**
+     * If true, the converter will not inline request schemas.
+     */
+    forbidInlinedRequests: boolean;
+
+    /**
      * Overrides the auth schema that would be detected from the OpenAPI spec.
      */
     auth?: RawSchemas.ApiAuthSchema;
@@ -63,7 +68,8 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     onlyIncludeReferencedSchemas: false,
     inlinePathParameters: false,
     useBytesForBinaryResponse: false,
-    respectForwardCompatibleEnums: false
+    respectForwardCompatibleEnums: false,
+    forbidInlinedRequests: true,
 };
 
 export function getConvertOptions({
@@ -109,6 +115,10 @@ export function getConvertOptions({
         respectForwardCompatibleEnums:
             overrides?.respectForwardCompatibleEnums ??
             options?.respectForwardCompatibleEnums ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.respectForwardCompatibleEnums
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.respectForwardCompatibleEnums,
+        forbidInlinedRequests:
+            overrides?.forbidInlinedRequests ??
+            options?.forbidInlinedRequests ??
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.forbidInlinedRequests,
     };
 }

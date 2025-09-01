@@ -40,6 +40,8 @@ export interface ParseOpenAPIOptions {
     respectForwardCompatibleEnums: boolean;
     /* Whether or not to inline allOf schemas. */
     inlineAllOfSchemas: boolean;
+    /* Whether or not to forbid all inlining of requests. */
+    forbidInlinedRequests: boolean;
 
     /* The filter to apply to the OpenAPI document. */
     filter: generatorsYml.OpenApiFilterSchema | undefined;
@@ -91,7 +93,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     additionalPropertiesDefaultsTo: false,
     typeDatesAsStrings: true,
     preserveSingleSchemaOneOf: false,
-    inlineAllOfSchemas: false
+    inlineAllOfSchemas: false,
+    forbidInlinedRequests: true,
 };
 
 export function getParseOptions({
@@ -176,6 +179,10 @@ export function getParseOptions({
         inlineAllOfSchemas:
             overrides?.inlineAllOfSchemas ??
             options?.inlineAllOfSchemas ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.inlineAllOfSchemas
+            DEFAULT_PARSE_OPENAPI_SETTINGS.inlineAllOfSchemas,
+        forbidInlinedRequests:
+            overrides?.forbidInlinedRequests ??
+            options?.forbidInlinedRequests ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.forbidInlinedRequests,
     };
 }

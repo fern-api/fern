@@ -42,6 +42,7 @@ export class OpenApiIrConverterContext {
     public inlinePathParameters: boolean;
     public useBytesForBinaryResponse: boolean;
     public respectForwardCompatibleEnums: boolean;
+    public forbidInlinedRequests: boolean;
 
     private enableUniqueErrorsPerEndpoint: boolean;
     private defaultServerName: string | undefined = undefined;
@@ -90,6 +91,7 @@ export class OpenApiIrConverterContext {
         this.inlinePathParameters = options?.inlinePathParameters ?? false;
         this.useBytesForBinaryResponse = options?.useBytesForBinaryResponse ?? false;
         this.respectForwardCompatibleEnums = options?.respectForwardCompatibleEnums ?? false;
+        this.forbidInlinedRequests = options?.forbidInlinedRequests ?? false;
         this.referencedSchemaIds = options?.onlyIncludeReferencedSchemas ? new Set() : undefined;
         this.enableUniqueErrorsPerEndpoint = options?.enableUniqueErrorsPerEndpoint ?? false;
         this.builder = new FernDefinitionBuilderImpl(this.enableUniqueErrorsPerEndpoint);

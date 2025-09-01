@@ -434,11 +434,12 @@ function getRequest({
         const maybeSchemaId = request.schema.type === "reference" ? request.schema.schema : undefined;
         const resolvedSchema =
             request.schema.type === "reference" ? context.getSchema(request.schema.schema, namespace) : request.schema;
-        // the request body is referenced if it is not an object or if other parts of the spec
-        // refer to the same type
+        // the request body is referenced if it is (1) not an object or (2) if other parts of the spec
+        // refer to the same type or (3) if we forbade inlined requests in the parser configuration
         if (
             resolvedSchema?.type !== "object" ||
-            (maybeSchemaId != null && nonRequestReferencedSchemas.includes(maybeSchemaId))
+            (maybeSchemaId != null && nonRequestReferencedSchemas.includes(maybeSchemaId)) ||
+            context.forbidInlinedRequests
         ) {
             const requestTypeReference = buildTypeReference({
                 schema: request.schema,
