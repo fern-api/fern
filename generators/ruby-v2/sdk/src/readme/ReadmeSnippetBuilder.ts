@@ -123,111 +123,105 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return this.getEndpointsForFeature(featureId).filter(predicate).map(templateRenderer);
     }
     private renderEnvironmentsSnippet(endpoint: EndpointWithFilepath): string {
-        return this.writeCode(dedent`
-            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
-                option.WithBaseURL(${this.getBaseUrlOptionValue()}),
-            )
-        `);
-    }
+        return this.writeCode(dedent`require "${this.rootPackageClientName}"
 
-    private renderWithRawResponseHeadersSnippet(endpoint: EndpointWithFilepath): string {
-        return this.writeCode(dedent`
-            response, err := ${this.getWithRawResponseMethodCall(endpoint)}(...)
-            if err != nil {
-                return err
-            }
-            fmt.Printf("Got response headers: %v", response.Header)
-        `);
-    }
-
-    private renderRequestOptionsSnippet(endpoint: EndpointWithFilepath): string {
-        return this.writeCode(dedent`
-            // Specify default options applied on every request.
-            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
-                option.WithToken("<YOUR_API_KEY>"),
-                option.WithHTTPClient(
-                    &http.Client{
-                        Timeout: 5 * time.Second,
-                    },
-                ),
-            )
-
-            // Specify options for an individual request.
-            response, err := ${this.getMethodCall(endpoint)}(
-                ...,
-                option.WithToken("<YOUR_API_KEY>"),
+            ${this.rootPackageClientName} = ${this.rootPackageClientName}::Client.new(
+                base_url: ${this.getBaseUrlOptionValue()}
             )
         `);
     }
 
     private renderErrorsSnippet(endpoint: EndpointWithFilepath): string {
-        return this.writeCode(dedent`
-            response, err := ${this.getMethodCall(endpoint)}(...)
-            if err != nil {
-                var apiError *core.APIError
-                if errors.As(err, apiError) {
-                    // Do something with the API error ...
-                }
-                return err
-            }
+        return this.writeCode(dedent`require "${this.rootPackageClientName}"
+
+            response = ${this.getMethodCall(endpoint)}(...)
+            rescue => error
+            if error.is_a?(Core::APIError)
+                # Do something with the API error ...
+            end
+            raise error
+            end
+        `);
+    }
+
+    private renderRequestOptionsSnippet(endpoint: EndpointWithFilepath): string {
+        return this.writeCode(dedent`require "${this.rootPackageClientName}"
+
+            # Specify default options applied on every request.
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}.new(
+                token: "<YOUR_API_KEY>",
+                http_client: HTTP::Client.new(
+                    timeout: 5
+                )
+            )
+
+            # Specify options for an individual request.
+            response = ${this.getMethodCall(endpoint)}(
+                ...,
+                token: "<YOUR_API_KEY>"
+            )
+        `);
+    }
+
+    private renderWithRawResponseHeadersSnippet(endpoint: EndpointWithFilepath): string {
+        return this.writeCode(dedent`require "${this.rootPackageClientName}"
+
+            response = ${this.getWithRawResponseMethodCall(endpoint)}(...)
+            rescue => error
+                raise error
+            end
+
+            puts "Got response headers: #{response.headers}"
+
         `);
     }
 
     private renderRetriesSnippet(endpoint: EndpointWithFilepath): string {
-        return this.writeCode(dedent`
-            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
-                option.WithMaxAttempts(1),
+        return this.writeCode(dedent`require "${this.rootPackageClientName}"
+
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}.new(
+                max_retries: 1
             )
 
-            response, err := ${this.getMethodCall(endpoint)}(
+            response = client.foo.find(
                 ...,
-                option.WithMaxAttempts(1),
+                max_retries: 1
             )
+
         `);
     }
 
     private renderTimeoutsSnippet(endpoint: EndpointWithFilepath): string {
-        return this.writeCode(dedent`
-            ctx, cancel := context.WithTimeout(ctx, time.Second)
-            defer cancel()
+        return this.writeCode(dedent`require "${this.rootPackageClientName}"
 
-            response, err := ${this.getMethodCall(endpoint)}(ctx, ...)
+            response = ${this.rootPackageClientName}.${this.getMethodCall(endpoint)}(
+                ...,
+                timeout: 30  # 30 second timeout
+            )
         `);
     }
 
     private renderPaginationSnippet(endpoint: EndpointWithFilepath): string {
-        return this.writeCode(dedent`
-            // Loop over the items using the provided iterator.
-            ctx := context.TODO()
-            page, err := ${this.getMethodCall(endpoint)}(
-                ctx,
+        return this.writeCode(dedent`require "${this.rootPackageClientName}"
+
+            # Loop over the items using the provided iterator.
+                page = ${this.rootPackageClientName}.${this.getMethodCall(endpoint)}(
                 ...
             )
-            if err != nil {
-                return err
-            }
-            iter := page.Iterator()
-            for iter.Next(ctx) {
-                item := iter.Current()
-                fmt.Printf("Got item: %v", *item)
-            }
-            if err := iter.Err(); err != nil {
-                return err
-            }
+            page.each do |item|
+                puts "Got item: #{item}"
+            end
 
-            // Alternatively, iterate page-by-page.
-            for page != nil {
-                for _, item := range page.Results {
-                    fmt.Printf("Got item: %v", *item)
-                }
-                page, err = page.GetNextPage(ctx)
-                if errors.Is(err, core.ErrNoPages) {
-                    break
-                }
-                if err != nil {
-                    return err
-                }
-            }
+            # Alternatively, iterate page-by-page.
+            current_page = page
+            while current_page
+                current_page.results.each do |item|
+                    puts "Got item: #{item}"
+                end
+                current_page = current_page.next_page
+                break if current_page.nil?
+            end
+
         `);
     }
 
