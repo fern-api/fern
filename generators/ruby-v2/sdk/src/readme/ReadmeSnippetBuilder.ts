@@ -194,7 +194,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private renderTimeoutsSnippet(endpoint: EndpointWithFilepath): string {
         return this.writeCode(dedent`require "${this.rootPackageClientName}"
 
-            response = ${this.rootPackageClientName}.${this.getMethodCall(endpoint)}(
+            response = ${this.getMethodCall(endpoint)}(
                 ...,
                 timeout: 30  # 30 second timeout
             )
