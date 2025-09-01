@@ -41,6 +41,9 @@ client.service.create_big_entity({
     tag:'tag-12efs9dv',
     metadata:{},
     revenue:1000000
+  },
+  migration:{
+    name:'Migration 31 Aug'
   }
 });
 "
