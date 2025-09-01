@@ -11,7 +11,10 @@ tar zxf swiftly-$(uname -m).tar.gz && \
 hash -r
 
 # Install and use the specified Swift version
-swiftly install --use $SWIFT_VERSION
+swiftly install --use "$SWIFT_VERSION"
 
 # Verify the installation
 swift --version
+
+# Clean up temp files
+rm -f swiftly-$(uname -m).tar.gz swiftly
