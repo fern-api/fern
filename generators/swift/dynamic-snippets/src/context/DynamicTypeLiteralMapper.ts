@@ -1,8 +1,7 @@
 import { DiscriminatedUnionTypeInstance, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { swift } from "@fern-api/swift-codegen";
-import { camelCase } from "lodash-es";
+import { LiteralEnum, swift } from "@fern-api/swift-codegen";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
@@ -42,7 +41,9 @@ export class DynamicTypeLiteralMapper {
                 return this.convertList({ list: args.typeReference.value, value: args.value });
             case "literal": {
                 if (args.typeReference.value.type === "string") {
-                    return swift.Expression.enumCaseShorthand(camelCase(args.typeReference.value.value));
+                    return swift.Expression.enumCaseShorthand(
+                        LiteralEnum.generateEnumCaseLabel(args.typeReference.value.value)
+                    );
                 } else if (args.typeReference.value.type === "boolean") {
                     // TODO(kafkas): Boolean literals are not supported yet
                     return swift.Expression.nop();
