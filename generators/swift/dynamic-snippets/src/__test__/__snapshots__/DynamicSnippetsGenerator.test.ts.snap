@@ -6,16 +6,14 @@ exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = 
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    try await client.service.getMetadata(
-        request: .init(
-            shallow: False,
-            tag: [
-                "development",
-                "public"
-            ],
-            xAPIVersion: "0.0.1"
-        )
-    )
+    try await client.service.getMetadata(request: .init(
+        shallow: False,
+        tag: [
+            "development",
+            "public"
+        ],
+        xAPIVersion: "0.0.1"
+    ))
 }
 
 try await main()
@@ -28,15 +26,13 @@ exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    try await client.service.getMetadata(
-        request: .init(
-            shallow: False,
-            tag: [
-                "development"
-            ],
-            xAPIVersion: "0.0.1"
-        )
-    )
+    try await client.service.getMetadata(request: .init(
+        shallow: False,
+        tag: [
+            "development"
+        ],
+        xAPIVersion: "0.0.1"
+    ))
 }
 
 try await main()
@@ -49,53 +45,51 @@ exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    try await client.service.createBigEntity(
-        request: BigEntity(
-            castMember: CastMember.actor(
-                Actor(
-                    id: "john.doe",
-                    name: "John Doe"
-                )
-            ),
-            extendedMovie: ExtendedMovie(
-                cast: [
-                    "John Travolta",
-                    "Samuel L. Jackson",
-                    "Uma Thurman",
-                    "Bruce Willis"
-                ],
-                id: "movie-sda231x",
-                title: "Pulp Fiction",
-                from: "Quentin Tarantino",
-                rating: 8.5,
-                type: .movie,
-                tag: "tag-12efs9dv",
-                metadata: [
-                    "academyAward": .bool(True), 
-                    "releaseDate": .string("2023-12-08"), 
-                    "ratings": .object([
-                        "rottenTomatoes": .number(97), 
-                        "imdb": .number(7.6)
-                    ])
-                ],
-                revenue: 1000000
-            ),
-            eventInfo: EventInfo.metadata(
-                .init(
-                    id: "event-12345",
-                    data: [
-                        "key1": "val1", 
-                        "key2": "val2"
-                    ],
-                    jsonString: "abc"
-                )
-            ),
-            migration: Migration(
-                name: "Migration 31 Aug",
-                status: .running
+    try await client.service.createBigEntity(request: BigEntity(
+        castMember: CastMember.actor(
+            Actor(
+                id: "john.doe",
+                name: "John Doe"
             )
+        ),
+        extendedMovie: ExtendedMovie(
+            cast: [
+                "John Travolta",
+                "Samuel L. Jackson",
+                "Uma Thurman",
+                "Bruce Willis"
+            ],
+            id: "movie-sda231x",
+            title: "Pulp Fiction",
+            from: "Quentin Tarantino",
+            rating: 8.5,
+            type: .movie,
+            tag: "tag-12efs9dv",
+            metadata: [
+                "academyAward": .bool(True), 
+                "releaseDate": .string("2023-12-08"), 
+                "ratings": .object([
+                    "rottenTomatoes": .number(97), 
+                    "imdb": .number(7.6)
+                ])
+            ],
+            revenue: 1000000
+        ),
+        eventInfo: EventInfo.metadata(
+            .init(
+                id: "event-12345",
+                data: [
+                    "key1": "val1", 
+                    "key2": "val2"
+                ],
+                jsonString: "abc"
+            )
+        ),
+        migration: Migration(
+            name: "Migration 31 Aug",
+            status: .running
         )
-    )
+    ))
 }
 
 try await main()
@@ -121,30 +115,28 @@ exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    try await client.service.createMovie(
-        request: Movie(
-            id: "movie-c06a4ad7",
-            prequel: "movie-cv9b914f",
-            title: "The Boy and the Heron",
-            from: "Hayao Miyazaki",
-            rating: 8,
-            type: .movie,
-            tag: "development",
-            metadata: [
-                "actors": .array([
-                    .string("Christian Bale"),
-                    .string("Florence Pugh"),
-                    .string("Willem Dafoe")
-                ]), 
-                "releaseDate": .string("2023-12-08"), 
-                "ratings": .object([
-                    "rottenTomatoes": .number(97), 
-                    "imdb": .number(7.6)
-                ])
-            ],
-            revenue: 1000000
-        )
-    )
+    try await client.service.createMovie(request: Movie(
+        id: "movie-c06a4ad7",
+        prequel: "movie-cv9b914f",
+        title: "The Boy and the Heron",
+        from: "Hayao Miyazaki",
+        rating: 8,
+        type: .movie,
+        tag: "development",
+        metadata: [
+            "actors": .array([
+                .string("Christian Bale"),
+                .string("Florence Pugh"),
+                .string("Willem Dafoe")
+            ]), 
+            "releaseDate": .string("2023-12-08"), 
+            "ratings": .object([
+                "rottenTomatoes": .number(97), 
+                "imdb": .number(7.6)
+            ])
+        ],
+        revenue: 1000000
+    ))
 }
 
 try await main()
@@ -157,28 +149,26 @@ exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-opti
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    try await client.endpoints.object.getAndReturnWithOptionalField(
-        request: ObjectWithOptionalField(
-            string: "string",
-            integer: 1,
-            long: 1000000,
-            double: 1.1,
-            bool: True,
-            datetime: Date(timeIntervalSince1970: 1705311000),
-            date: Date(timeIntervalSince1970: 1673740800),
-            uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            base64: "SGVsbG8gd29ybGQh",
-            list: [
-                "list",
-                "list"
-            ],
-            set: ,
-            map: [
-                1: "map"
-            ],
-            bigint: 
-        )
-    )
+    try await client.endpoints.object.getAndReturnWithOptionalField(request: ObjectWithOptionalField(
+        string: "string",
+        integer: 1,
+        long: 1000000,
+        double: 1.1,
+        bool: True,
+        datetime: Date(timeIntervalSince1970: 1705311000),
+        date: Date(timeIntervalSince1970: 1673740800),
+        uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        base64: "SGVsbG8gd29ybGQh",
+        list: [
+            "list",
+            "list"
+        ],
+        set: ,
+        map: [
+            1: "map"
+        ],
+        bigint: 
+    ))
 }
 
 try await main()
@@ -220,19 +210,17 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (sim
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    try await client.endpoints.container.getAndReturnListOfObjects(
-        request: [
-            ObjectWithRequiredField(
-                string: "one"
-            ),
-            ObjectWithRequiredField(
-                string: "two"
-            ),
-            ObjectWithRequiredField(
-                string: "three"
-            )
-        ]
-    )
+    try await client.endpoints.container.getAndReturnListOfObjects(request: [
+        ObjectWithRequiredField(
+            string: "one"
+        ),
+        ObjectWithRequiredField(
+            string: "two"
+        ),
+        ObjectWithRequiredField(
+            string: "three"
+        )
+    ])
 }
 
 try await main()
@@ -245,13 +233,11 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    try await client.endpoints.container.getAndReturnListOfPrimitives(
-        request: [
-            "one",
-            "two",
-            "three"
-        ]
-    )
+    try await client.endpoints.container.getAndReturnListOfPrimitives(request: [
+        "one",
+        "two",
+        "three"
+    ])
 }
 
 try await main()
@@ -264,15 +250,13 @@ exports[`snippets (default) > file-upload > 'POST /' 1`] = `
 private func main() async throws {
     let client = AcmeClient()
 
-    try await client.service.post(
-        request: .init(
-            file: Data("Hello, world!".utf8),
-            fileList: [
-                Data("First".utf8),
-                Data("Second".utf8)
-            ]
-        )
-    )
+    try await client.service.post(request: .init(
+        file: Data("Hello, world!".utf8),
+        fileList: [
+            Data("First".utf8),
+            Data("Second".utf8)
+        ]
+    ))
 }
 
 try await main()
@@ -285,9 +269,7 @@ exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
 private func main() async throws {
     let client = AcmeClient()
 
-    try await client.service.justFile(
-        request: .init(file: Data("Hello, world!".utf8))
-    )
+    try await client.service.justFile(request: .init(file: Data("Hello, world!".utf8)))
 }
 
 try await main()
@@ -300,13 +282,11 @@ exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 
 private func main() async throws {
     let client = AcmeClient()
 
-    try await client.service.justFileWithQueryParams(
-        request: .init(
-            integer: 42,
-            maybeString: "exists",
-            file: Data("Hello, world!".utf8)
-        )
-    )
+    try await client.service.justFileWithQueryParams(request: .init(
+        integer: 42,
+        maybeString: "exists",
+        file: Data("Hello, world!".utf8)
+    ))
 }
 
 try await main()
@@ -319,9 +299,7 @@ exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    try await client.imdb.getMovie(
-        movieID: "movie_xyz"
-    )
+    try await client.imdb.getMovie(movieID: "movie_xyz")
 }
 
 try await main()
@@ -334,12 +312,10 @@ exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = 
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    try await client.imdb.createMovie(
-        request: CreateMovieRequest(
-            title: "The Matrix",
-            rating: 8.2
-        )
-    )
+    try await client.imdb.createMovie(request: CreateMovieRequest(
+        title: "The Matrix",
+        rating: 8.2
+    ))
 }
 
 try await main()
@@ -352,9 +328,7 @@ exports[`snippets (default) > multi-url-environment > 'Custom environment' 1`] =
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    try await client.s3.getPresignedURL(
-        request: .init(s3Key: "xyz")
-    )
+    try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
 }
 
 try await main()
@@ -367,9 +341,7 @@ exports[`snippets (default) > multi-url-environment > 'Invalid multi url environ
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    try await client.s3.getPresignedURL(
-        request: .init(s3Key: "xyz")
-    )
+    try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
 }
 
 try await main()
@@ -382,9 +354,7 @@ exports[`snippets (default) > multi-url-environment > 'Production environment' 1
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    try await client.s3.getPresignedURL(
-        request: .init(s3Key: "xyz")
-    )
+    try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
 }
 
 try await main()
@@ -397,9 +367,7 @@ exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] 
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    try await client.s3.getPresignedURL(
-        request: .init(s3Key: "xyz")
-    )
+    try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
 }
 
 try await main()
@@ -412,9 +380,7 @@ exports[`snippets (default) > multi-url-environment > 'Unrecognized environment'
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    try await client.s3.getPresignedURL(
-        request: .init(s3Key: "xyz")
-    )
+    try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
 }
 
 try await main()
@@ -427,21 +393,19 @@ exports[`snippets (default) > nullable > 'Body properties' 1`] = `
 private func main() async throws {
     let client = AcmeClient()
 
-    try await client.nullable.createUser(
-        request: .init(
-            username: "john.doe",
-            tags: [
-                "admin"
-            ],
-            metadata: Metadata(
-                createdAt: Date(timeIntervalSince1970: 315532800),
-                updatedAt: Date(timeIntervalSince1970: 315532800),
-                avatar: nil,
-                activated: nil
-            ),
-            avatar: nil
-        )
-    )
+    try await client.nullable.createUser(request: .init(
+        username: "john.doe",
+        tags: [
+            "admin"
+        ],
+        metadata: Metadata(
+            createdAt: Date(timeIntervalSince1970: 315532800),
+            updatedAt: Date(timeIntervalSince1970: 315532800),
+            avatar: nil,
+            activated: nil
+        ),
+        avatar: nil
+    ))
 }
 
 try await main()
@@ -466,18 +430,16 @@ exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
 private func main() async throws {
     let client = AcmeClient()
 
-    try await client.nullable.getUsers(
-        request: .init(
-            usernames: [
-                "john.doe",
-                "jane.doe"
-            ],
-            tags: [
-                nil
-            ],
-            extra: nil
-        )
-    )
+    try await client.nullable.getUsers(request: .init(
+        usernames: [
+            "john.doe",
+            "jane.doe"
+        ],
+        tags: [
+            nil
+        ],
+        extra: nil
+    ))
 }
 
 try await main()
@@ -490,9 +452,7 @@ exports[`snippets (default) > single-url-environment-default > 'Production envir
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    try await client.dummy.getDummy(
-
-    )
+    try await client.dummy.getDummy()
 }
 
 try await main()
@@ -505,9 +465,7 @@ exports[`snippets (default) > single-url-environment-default > 'Staging environm
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    try await client.dummy.getDummy(
-
-    )
+    try await client.dummy.getDummy()
 }
 
 try await main()
@@ -520,9 +478,7 @@ exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    try await client.dummy.getDummy(
-
-    )
+    try await client.dummy.getDummy()
 }
 
 try await main()
@@ -535,9 +491,7 @@ exports[`snippets (default) > single-url-environment-default > 'invalid baseURL 
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    try await client.dummy.getDummy(
-
-    )
+    try await client.dummy.getDummy()
 }
 
 try await main()
@@ -550,9 +504,7 @@ exports[`snippets (default) > single-url-environment-default > 'invalid environm
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    try await client.dummy.getDummy(
-
-    )
+    try await client.dummy.getDummy()
 }
 
 try await main()
