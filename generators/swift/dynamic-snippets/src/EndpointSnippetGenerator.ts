@@ -50,8 +50,6 @@ export class EndpointSnippetGenerator {
         const fileComponents: swift.FileComponent[] = [
             this.generateImportModuleStatement(),
             swift.LineBreak.single(),
-            this.generateRootClientInitializationStatement({ auth: endpoint.auth, values: snippetRequest.auth }),
-            swift.LineBreak.single(),
             this.generateMainFunctionDeclarationWithEndpointSnippet({ endpoint, snippet: snippetRequest }),
             swift.LineBreak.single(),
             this.generateMainFunctionInvocationStatement()
@@ -61,6 +59,37 @@ export class EndpointSnippetGenerator {
 
     private generateImportModuleStatement() {
         return swift.Statement.import(this.context.getModuleName());
+    }
+
+    private generateMainFunctionDeclarationWithEndpointSnippet({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }) {
+        return swift.Statement.functionDeclaration({
+            unsafeName: "main",
+            accessLevel: "private",
+            async: true,
+            throws: true,
+            body: swift.CodeBlock.withStatements([
+                this.generateRootClientInitializationStatement({ auth: endpoint.auth, values: snippet.auth }),
+                swift.LineBreak.single(),
+                swift.Statement.expressionStatement(
+                    swift.Expression.try(
+                        swift.Expression.await(
+                            swift.Expression.methodCall({
+                                target: swift.Expression.rawValue(CLIENT_CONST_NAME),
+                                methodName: this.getMethodName({ endpoint }),
+                                arguments_: this.getMethodArguments({ endpoint, snippet }),
+                                multiline: true
+                            })
+                        )
+                    )
+                )
+            ])
+        });
     }
 
     private generateRootClientInitializationStatement({
@@ -161,35 +190,6 @@ export class EndpointSnippetGenerator {
             default:
                 assertNever(auth);
         }
-    }
-
-    private generateMainFunctionDeclarationWithEndpointSnippet({
-        endpoint,
-        snippet
-    }: {
-        endpoint: FernIr.dynamic.Endpoint;
-        snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }) {
-        return swift.Statement.functionDeclaration({
-            unsafeName: "main",
-            accessLevel: "private",
-            async: true,
-            throws: true,
-            body: swift.CodeBlock.withStatements([
-                swift.Statement.expressionStatement(
-                    swift.Expression.try(
-                        swift.Expression.await(
-                            swift.Expression.methodCall({
-                                target: swift.Expression.rawValue(CLIENT_CONST_NAME),
-                                methodName: this.getMethodName({ endpoint }),
-                                arguments_: this.getMethodArguments({ endpoint, snippet }),
-                                multiline: true
-                            })
-                        )
-                    )
-                )
-            ])
-        });
     }
 
     private generateMainFunctionInvocationStatement() {

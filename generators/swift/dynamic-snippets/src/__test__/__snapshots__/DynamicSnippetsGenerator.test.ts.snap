@@ -3,9 +3,9 @@
 exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = `
 "import Acme
 
-let client = AcmeClient(token: "<YOUR_API_KEY>")
-
 private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
     try await client.service.getMetadata(
         request: .init(
             shallow: False,
@@ -25,9 +25,9 @@ try await main()
 exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `
 "import Acme
 
-let client = AcmeClient(token: "<YOUR_API_KEY>")
-
 private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
     try await client.service.getMetadata(
         request: .init(
             shallow: False,
@@ -46,9 +46,9 @@ try await main()
 exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 "import Acme
 
-let client = AcmeClient(token: "<YOUR_API_KEY>")
-
 private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
     try await client.service.createBigEntity(
         request: BigEntity(
             castMember: CastMember.actor(
@@ -118,9 +118,9 @@ exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`
 exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
 "import Acme
 
-let client = AcmeClient(token: "<YOUR_API_KEY>")
-
 private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
     try await client.service.createMovie(
         request: Movie(
             id: "movie-c06a4ad7",
@@ -154,9 +154,9 @@ try await main()
 exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
 "import Acme
 
-let client = AcmeClient(token: "<YOUR_API_KEY>")
-
 private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
     try await client.endpoints.object.getAndReturnWithOptionalField(
         request: ObjectWithOptionalField(
             string: "string",
@@ -217,9 +217,9 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inv
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
 "import Acme
 
-let client = AcmeClient(token: "<YOUR_API_KEY>")
-
 private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
     try await client.endpoints.container.getAndReturnListOfObjects(
         request: [
             ObjectWithRequiredField(
@@ -242,9 +242,9 @@ try await main()
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
 "import Acme
 
-let client = AcmeClient(token: "<YOUR_API_KEY>")
-
 private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
     try await client.endpoints.container.getAndReturnListOfPrimitives(
         request: [
             "one",
@@ -261,9 +261,9 @@ try await main()
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `
 "import Acme
 
-let client = AcmeClient()
-
 private func main() async throws {
+    let client = AcmeClient()
+
     try await client.service.post(
         request: .init(
             file: Data("Hello, world!".utf8),
@@ -282,9 +282,9 @@ try await main()
 exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
 "import Acme
 
-let client = AcmeClient()
-
 private func main() async throws {
+    let client = AcmeClient()
+
     try await client.service.justFile(
         request: .init(file: Data("Hello, world!".utf8))
     )
@@ -297,9 +297,9 @@ try await main()
 exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 1`] = `
 "import Acme
 
-let client = AcmeClient()
-
 private func main() async throws {
+    let client = AcmeClient()
+
     try await client.service.justFileWithQueryParams(
         request: .init(
             integer: 42,
@@ -316,9 +316,9 @@ try await main()
 exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 "import Acme
 
-let client = AcmeClient(token: "<YOUR_API_KEY>")
-
 private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
     try await client.imdb.getMovie(
         movieID: "movie_xyz"
     )
@@ -331,9 +331,9 @@ try await main()
 exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = `
 "import Acme
 
-let client = AcmeClient(token: "<YOUR_API_KEY>")
-
 private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
     try await client.imdb.createMovie(
         request: CreateMovieRequest(
             title: "The Matrix",
@@ -349,9 +349,9 @@ try await main()
 exports[`snippets (default) > multi-url-environment > 'Custom environment' 1`] = `
 "import Acme
 
-let client = AcmeClient(token: "<YOUR_API_KEY>")
-
 private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
     try await client.s3.getPresignedURL(
         request: .init(s3Key: "xyz")
     )
@@ -364,9 +364,9 @@ try await main()
 exports[`snippets (default) > multi-url-environment > 'Invalid multi url environment' 1`] = `
 "import Acme
 
-let client = AcmeClient(token: "<YOUR_API_KEY>")
-
 private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
     try await client.s3.getPresignedURL(
         request: .init(s3Key: "xyz")
     )
@@ -379,9 +379,9 @@ try await main()
 exports[`snippets (default) > multi-url-environment > 'Production environment' 1`] = `
 "import Acme
 
-let client = AcmeClient(token: "<YOUR_API_KEY>")
-
 private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
     try await client.s3.getPresignedURL(
         request: .init(s3Key: "xyz")
     )
@@ -394,9 +394,9 @@ try await main()
 exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] = `
 "import Acme
 
-let client = AcmeClient(token: "<YOUR_API_KEY>")
-
 private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
     try await client.s3.getPresignedURL(
         request: .init(s3Key: "xyz")
     )
@@ -409,9 +409,9 @@ try await main()
 exports[`snippets (default) > multi-url-environment > 'Unrecognized environment' 1`] = `
 "import Acme
 
-let client = AcmeClient(token: "<YOUR_API_KEY>")
-
 private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
     try await client.s3.getPresignedURL(
         request: .init(s3Key: "xyz")
     )
@@ -424,9 +424,9 @@ try await main()
 exports[`snippets (default) > nullable > 'Body properties' 1`] = `
 "import Acme
 
-let client = AcmeClient()
-
 private func main() async throws {
+    let client = AcmeClient()
+
     try await client.nullable.createUser(
         request: .init(
             username: "john.doe",
@@ -463,9 +463,9 @@ exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
 exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
 "import Acme
 
-let client = AcmeClient()
-
 private func main() async throws {
+    let client = AcmeClient()
+
     try await client.nullable.getUsers(
         request: .init(
             usernames: [
@@ -487,9 +487,9 @@ try await main()
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
 "import Acme
 
-let client = AcmeClient(token: "<YOUR_API_KEY>")
-
 private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
     try await client.dummy.getDummy(
 
     )
@@ -502,9 +502,9 @@ try await main()
 exports[`snippets (default) > single-url-environment-default > 'Staging environment' 1`] = `
 "import Acme
 
-let client = AcmeClient(token: "<YOUR_API_KEY>")
-
 private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
     try await client.dummy.getDummy(
 
     )
@@ -517,9 +517,9 @@ try await main()
 exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 1`] = `
 "import Acme
 
-let client = AcmeClient(token: "<YOUR_API_KEY>")
-
 private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
     try await client.dummy.getDummy(
 
     )
@@ -532,9 +532,9 @@ try await main()
 exports[`snippets (default) > single-url-environment-default > 'invalid baseURL and environment' 1`] = `
 "import Acme
 
-let client = AcmeClient(token: "<YOUR_API_KEY>")
-
 private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
     try await client.dummy.getDummy(
 
     )
@@ -547,9 +547,9 @@ try await main()
 exports[`snippets (default) > single-url-environment-default > 'invalid environment' 1`] = `
 "import Acme
 
-let client = AcmeClient(token: "<YOUR_API_KEY>")
-
 private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
     try await client.dummy.getDummy(
 
     )
