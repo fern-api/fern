@@ -84,10 +84,45 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     TypeName.INT, "maxRetries", Modifier.PRIVATE, Modifier.FINAL)
             .build();
 
+    private static MethodSpec createGetter(FieldSpec fieldSpec) {
+        return MethodSpec.methodBuilder(fieldSpec.name)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(fieldSpec.type)
+                .addStatement("return this.$L", fieldSpec.name)
+                .build();
+    }
+
+    private static Map<String, String> getPlatformHeadersEntries(
+            PlatformHeaders platformHeaders, GeneratorConfig generatorConfig) {
+        Map<String, String> entries = new HashMap<>();
+        if (generatorConfig.getPublish().isPresent()) {
+            entries.put(
+                    platformHeaders.getSdkName(),
+                    generatorConfig
+                            .getPublish()
+                            .get()
+                            .getRegistriesV2()
+                            .getMaven()
+                            .getCoordinate());
+            entries.put(
+                    platformHeaders.getSdkVersion(),
+                    generatorConfig.getPublish().get().getVersion());
+        }
+        if (platformHeaders.getUserAgent().isPresent()) {
+            entries.put(
+                    platformHeaders.getUserAgent().get().getHeader(),
+                    platformHeaders.getUserAgent().get().getValue());
+        }
+        entries.put(platformHeaders.getLanguage(), "JAVA");
+        return entries;
+    }
+
     private final ClassName builderClassName;
     private final FieldSpec environmentField;
     private final GeneratedJavaFile requestOptionsFile;
+
     private final ClientGeneratorContext clientGeneratorContext;
+
     private final FieldSpec apiVersionField;
 
     public ClientOptionsGenerator(
@@ -653,11 +688,31 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         }
 
         if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
-            fromMethod.addStatement(
-                    "if (clientOptions.$L != null) builder.$L = clientOptions.$L",
-                    apiVersionField.name,
-                    apiVersionField.name,
-                    apiVersionField.name);
+            ApiVersionScheme apiVersionScheme =
+                    clientGeneratorContext.getIr().getApiVersion().get();
+            if (apiVersionScheme.getHeader().isPresent()) {
+                HeaderApiVersionScheme header = apiVersionScheme.getHeader().get();
+                fromMethod.beginControlFlow("if (clientOptions.$L != null)");
+                if (header.getValue().getDefault().isPresent()) {
+                    fromMethod.addStatement(
+                            "builder.$L = $T.ofNullable(clientOptions.$L).orElse($T.$L)",
+                            apiVersionField.name,
+                            Optional.class,
+                            apiVersionField.name,
+                            clientGeneratorContext.getPoetClassNameFactory().getApiVersionClassName(),
+                            header.getValue()
+                                    .getDefault()
+                                    .get()
+                                    .getName()
+                                    .getName()
+                                    .getScreamingSnakeCase()
+                                    .getSafeName());
+                } else {
+                    fromMethod.addStatement(
+                            "builder.$L = clientOptions.$L", apiVersionField.name, apiVersionField.name);
+                }
+                fromMethod.endControlFlow();
+            }
         }
 
         fromMethod.addStatement("return builder");
@@ -744,38 +799,5 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             return builder.addStatement(returnString + ", " + variableArgs + ")", args)
                     .build();
         }
-    }
-
-    private static MethodSpec createGetter(FieldSpec fieldSpec) {
-        return MethodSpec.methodBuilder(fieldSpec.name)
-                .addModifiers(Modifier.PUBLIC)
-                .returns(fieldSpec.type)
-                .addStatement("return this.$L", fieldSpec.name)
-                .build();
-    }
-
-    private static Map<String, String> getPlatformHeadersEntries(
-            PlatformHeaders platformHeaders, GeneratorConfig generatorConfig) {
-        Map<String, String> entries = new HashMap<>();
-        if (generatorConfig.getPublish().isPresent()) {
-            entries.put(
-                    platformHeaders.getSdkName(),
-                    generatorConfig
-                            .getPublish()
-                            .get()
-                            .getRegistriesV2()
-                            .getMaven()
-                            .getCoordinate());
-            entries.put(
-                    platformHeaders.getSdkVersion(),
-                    generatorConfig.getPublish().get().getVersion());
-        }
-        if (platformHeaders.getUserAgent().isPresent()) {
-            entries.put(
-                    platformHeaders.getUserAgent().get().getHeader(),
-                    platformHeaders.getUserAgent().get().getValue());
-        }
-        entries.put(platformHeaders.getLanguage(), "JAVA");
-        return entries;
     }
 }
