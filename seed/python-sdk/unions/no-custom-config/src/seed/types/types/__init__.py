@@ -2,43 +2,121 @@
 
 # isort: skip_file
 
-from .bar import Bar
-from .foo import Foo
-from .foo_extended import FooExtended
-from .union import Union, Union_Bar, Union_Foo
-from .union_with_base_properties import (
-    UnionWithBaseProperties,
-    UnionWithBaseProperties_Foo,
-    UnionWithBaseProperties_Integer,
-    UnionWithBaseProperties_String,
-)
-from .union_with_discriminant import UnionWithDiscriminant, UnionWithDiscriminant_Bar, UnionWithDiscriminant_Foo
-from .union_with_duplicate_primitive import (
-    UnionWithDuplicatePrimitive,
-    UnionWithDuplicatePrimitive_Integer1,
-    UnionWithDuplicatePrimitive_Integer2,
-    UnionWithDuplicatePrimitive_String1,
-    UnionWithDuplicatePrimitive_String2,
-)
-from .union_with_duplicate_types import (
-    UnionWithDuplicateTypes,
-    UnionWithDuplicateTypes_Foo1,
-    UnionWithDuplicateTypes_Foo2,
-)
-from .union_with_literal import UnionWithLiteral, UnionWithLiteral_Fern
-from .union_with_multiple_no_properties import (
-    UnionWithMultipleNoProperties,
-    UnionWithMultipleNoProperties_Empty1,
-    UnionWithMultipleNoProperties_Empty2,
-    UnionWithMultipleNoProperties_Foo,
-)
-from .union_with_no_properties import UnionWithNoProperties, UnionWithNoProperties_Empty, UnionWithNoProperties_Foo
-from .union_with_optional_time import UnionWithOptionalTime, UnionWithOptionalTime_Date, UnionWithOptionalTime_Datetime
-from .union_with_primitive import UnionWithPrimitive, UnionWithPrimitive_Integer, UnionWithPrimitive_String
-from .union_with_single_element import UnionWithSingleElement, UnionWithSingleElement_Foo
-from .union_with_sub_types import UnionWithSubTypes, UnionWithSubTypes_Foo, UnionWithSubTypes_FooExtended
-from .union_with_time import UnionWithTime, UnionWithTime_Date, UnionWithTime_Datetime, UnionWithTime_Value
-from .union_without_key import UnionWithoutKey, UnionWithoutKey_Bar, UnionWithoutKey_Foo
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .bar import Bar
+    from .foo import Foo
+    from .foo_extended import FooExtended
+    from .union import Union, Union_Bar, Union_Foo
+    from .union_with_base_properties import (
+        UnionWithBaseProperties,
+        UnionWithBaseProperties_Foo,
+        UnionWithBaseProperties_Integer,
+        UnionWithBaseProperties_String,
+    )
+    from .union_with_discriminant import UnionWithDiscriminant, UnionWithDiscriminant_Bar, UnionWithDiscriminant_Foo
+    from .union_with_duplicate_primitive import (
+        UnionWithDuplicatePrimitive,
+        UnionWithDuplicatePrimitive_Integer1,
+        UnionWithDuplicatePrimitive_Integer2,
+        UnionWithDuplicatePrimitive_String1,
+        UnionWithDuplicatePrimitive_String2,
+    )
+    from .union_with_duplicate_types import (
+        UnionWithDuplicateTypes,
+        UnionWithDuplicateTypes_Foo1,
+        UnionWithDuplicateTypes_Foo2,
+    )
+    from .union_with_literal import UnionWithLiteral, UnionWithLiteral_Fern
+    from .union_with_multiple_no_properties import (
+        UnionWithMultipleNoProperties,
+        UnionWithMultipleNoProperties_Empty1,
+        UnionWithMultipleNoProperties_Empty2,
+        UnionWithMultipleNoProperties_Foo,
+    )
+    from .union_with_no_properties import UnionWithNoProperties, UnionWithNoProperties_Empty, UnionWithNoProperties_Foo
+    from .union_with_optional_time import (
+        UnionWithOptionalTime,
+        UnionWithOptionalTime_Date,
+        UnionWithOptionalTime_Datetime,
+    )
+    from .union_with_primitive import UnionWithPrimitive, UnionWithPrimitive_Integer, UnionWithPrimitive_String
+    from .union_with_single_element import UnionWithSingleElement, UnionWithSingleElement_Foo
+    from .union_with_sub_types import UnionWithSubTypes, UnionWithSubTypes_Foo, UnionWithSubTypes_FooExtended
+    from .union_with_time import UnionWithTime, UnionWithTime_Date, UnionWithTime_Datetime, UnionWithTime_Value
+    from .union_without_key import UnionWithoutKey, UnionWithoutKey_Bar, UnionWithoutKey_Foo
+_dynamic_imports: typing.Dict[str, str] = {
+    "Bar": ".bar",
+    "Foo": ".foo",
+    "FooExtended": ".foo_extended",
+    "Union": ".union",
+    "UnionWithBaseProperties": ".union_with_base_properties",
+    "UnionWithBaseProperties_Foo": ".union_with_base_properties",
+    "UnionWithBaseProperties_Integer": ".union_with_base_properties",
+    "UnionWithBaseProperties_String": ".union_with_base_properties",
+    "UnionWithDiscriminant": ".union_with_discriminant",
+    "UnionWithDiscriminant_Bar": ".union_with_discriminant",
+    "UnionWithDiscriminant_Foo": ".union_with_discriminant",
+    "UnionWithDuplicatePrimitive": ".union_with_duplicate_primitive",
+    "UnionWithDuplicatePrimitive_Integer1": ".union_with_duplicate_primitive",
+    "UnionWithDuplicatePrimitive_Integer2": ".union_with_duplicate_primitive",
+    "UnionWithDuplicatePrimitive_String1": ".union_with_duplicate_primitive",
+    "UnionWithDuplicatePrimitive_String2": ".union_with_duplicate_primitive",
+    "UnionWithDuplicateTypes": ".union_with_duplicate_types",
+    "UnionWithDuplicateTypes_Foo1": ".union_with_duplicate_types",
+    "UnionWithDuplicateTypes_Foo2": ".union_with_duplicate_types",
+    "UnionWithLiteral": ".union_with_literal",
+    "UnionWithLiteral_Fern": ".union_with_literal",
+    "UnionWithMultipleNoProperties": ".union_with_multiple_no_properties",
+    "UnionWithMultipleNoProperties_Empty1": ".union_with_multiple_no_properties",
+    "UnionWithMultipleNoProperties_Empty2": ".union_with_multiple_no_properties",
+    "UnionWithMultipleNoProperties_Foo": ".union_with_multiple_no_properties",
+    "UnionWithNoProperties": ".union_with_no_properties",
+    "UnionWithNoProperties_Empty": ".union_with_no_properties",
+    "UnionWithNoProperties_Foo": ".union_with_no_properties",
+    "UnionWithOptionalTime": ".union_with_optional_time",
+    "UnionWithOptionalTime_Date": ".union_with_optional_time",
+    "UnionWithOptionalTime_Datetime": ".union_with_optional_time",
+    "UnionWithPrimitive": ".union_with_primitive",
+    "UnionWithPrimitive_Integer": ".union_with_primitive",
+    "UnionWithPrimitive_String": ".union_with_primitive",
+    "UnionWithSingleElement": ".union_with_single_element",
+    "UnionWithSingleElement_Foo": ".union_with_single_element",
+    "UnionWithSubTypes": ".union_with_sub_types",
+    "UnionWithSubTypes_Foo": ".union_with_sub_types",
+    "UnionWithSubTypes_FooExtended": ".union_with_sub_types",
+    "UnionWithTime": ".union_with_time",
+    "UnionWithTime_Date": ".union_with_time",
+    "UnionWithTime_Datetime": ".union_with_time",
+    "UnionWithTime_Value": ".union_with_time",
+    "UnionWithoutKey": ".union_without_key",
+    "UnionWithoutKey_Bar": ".union_without_key",
+    "UnionWithoutKey_Foo": ".union_without_key",
+    "Union_Bar": ".union",
+    "Union_Foo": ".union",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "Bar",
