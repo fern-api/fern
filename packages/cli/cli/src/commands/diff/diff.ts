@@ -8,8 +8,9 @@ import semver from "semver";
 
 import { CliContext } from "../../cli-context/CliContext";
 
+export type Bump = "major" | "minor" | "patch";
 export interface Result {
-    bump: "major" | "minor" | "patch";
+    bump: Bump;
     nextVersion?: string;
     errors: string[];
 }

@@ -1,7 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { diffGeneratorVersions, mergeDiffResults, Result } from "../commands/diff/diff";
-
-type Bump = Result["bump"];
+import { type Bump, diffGeneratorVersions, mergeDiffResults } from "../commands/diff/diff";
 
 describe("mergeDiffResults tests", () => {
     it.each([
