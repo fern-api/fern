@@ -9,7 +9,7 @@ import {
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
-import { ContainerRunner } from "@fern-api/core-utils";
+import { ContainerRunner, haveSameNullishness, undefinedIfNullish, undefinedIfSomeNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
 import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
@@ -20,7 +20,6 @@ import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
-
 import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "../../init/src/utils/loadOpenApiFromUrl";
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
@@ -374,24 +373,21 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     default: false,
                     alias: "q",
                     description: "Whether to suppress output written to stderr"
+                })
+                .middleware((argv) => {
+                    if (!haveSameNullishness(argv.fromGeneratorVersion, argv.toGeneratorVersion)) {
+                        throw new Error(
+                            "Both --from-generator-version and --to-generator-version must be provided together, or neither should be provided"
+                        );
+                    }
                 }),
         async (argv) => {
-            const fromVersion = argv.fromVersion != null ? argv.fromVersion : undefined;
-            const generatorVersions =
-                argv.fromGeneratorVersion != null && argv.toGeneratorVersion != null
-                    ? {
-                          from: argv.fromGeneratorVersion,
-                          to: argv.toGeneratorVersion
-                      }
-                    : undefined;
-            if (
-                generatorVersions === undefined &&
-                (argv.fromGeneratorVersion != null || argv.toGeneratorVersion != null)
-            ) {
-                return cliContext.failWithoutThrowing(
-                    "Cannot specify --from-generator-version or --to-generator-version without specifying both."
-                );
-            }
+            const fromVersion = undefinedIfNullish(argv.fromVersion);
+            const generatorVersions = undefinedIfSomeNullish({
+                from: argv.fromGeneratorVersion,
+                to: argv.toGeneratorVersion
+            });
+
             const result = await diff({
                 context: cliContext,
                 from: argv.from,

@@ -12,6 +12,13 @@ export { isNonNullish } from "./isNonNullish";
 export { MediaType } from "./mediaType";
 export { mergeWithOverrides } from "./mergeWithOverrides";
 export { noop } from "./noop";
+export {
+    haveSameNullishness,
+    nullIfNullish,
+    nullIfSomeNullish,
+    undefinedIfNullish,
+    undefinedIfSomeNullish
+} from "./nullishUtils";
 export { type ObjectPropertiesVisitor, visitObject, visitObjectAsync } from "./ObjectPropertiesVisitor";
 export { type Entries, entries } from "./objects/entries";
 export { isPlainObject } from "./objects/isPlainObject";
