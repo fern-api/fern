@@ -29,6 +29,7 @@ runs:
   using: "composite"
   steps:
     - name: Generate input hash
+      if: inputs.cache-disabled != 'true'
       id: hash
       shell: bash
       run: |
@@ -43,6 +44,7 @@ runs:
         echo "hash=${HASH}" >> $GITHUB_OUTPUT
 
     - name: Check cache
+      if: inputs.cache-disabled != 'true'
       id: cache
       uses: actions/cache/restore@v4
       with:
@@ -94,7 +96,7 @@ runs:
         fi
 
     - name: Save cache
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.cache.outputs.cache-hit != 'true' && inputs.cache-disabled != 'true'
       uses: actions/cache/save@v4
       with:
         path: seed/${{ inputs.generator-name }}
