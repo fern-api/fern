@@ -94,7 +94,7 @@ export function mergeDiffResults(diffA: Result, diffB: Result): Result {
     };
 }
 
-function maxBump(bumpA: Result["bump"], bumpB: Result["bump"]): Result["bump"] {
+function maxBump(bumpA: Bump, bumpB: Bump): Bump {
     if (bumpA === "major" || bumpB === "major") {
         return "major";
     }
@@ -125,7 +125,7 @@ export function diffGeneratorVersions(generatorVersions: { from: string; to: str
     };
 }
 
-function bumpFromDiff(diff: semver.ReleaseType | null): Result["bump"] | undefined {
+function bumpFromDiff(diff: semver.ReleaseType | null): Bump | undefined {
     if (diff === null) {
         return undefined;
     }
