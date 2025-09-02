@@ -46,5 +46,6 @@ export class WebsocketTypeSchemaGenerator {
             omitUndefined: this.omitUndefined,
             skipResponseValidation: this.skipResponseValidation
         });
+        // Just a test to force a change for CI 
     }
 }
