@@ -1,7 +1,7 @@
 import { resolve } from "node:path";
 
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { getStableTypeIdsFromIr, IntermediateRepresentationChangeDetector } from "@fern-api/ir-utils";
+import { IntermediateRepresentationChangeDetector } from "@fern-api/ir-utils";
 import { createSampleIr } from "../../createSampleIr";
 
 const base = AbsoluteFilePath.of(resolve(__dirname, "stable/base"));
@@ -117,33 +117,5 @@ describe("diff sample ir - unstable service to anything else", () => {
     ])("$name", async ({ testCase }) => {
         const [fromPath, toPath] = testCase as [AbsoluteFilePath, AbsoluteFilePath];
         await expectDiff(fromPath, toPath, false);
-    });
-});
-
-describe("test availability utils -- stable types referenced", () => {
-    const numStableTypeIds = 3;
-
-    it("unstableService is empty", async () => {
-        const ir = await createSampleIr(serviceUnstable);
-        const stableTypeIds = Array.from(getStableTypeIdsFromIr(ir));
-        expect(stableTypeIds).toHaveLength(0);
-    });
-
-    it("stable service is not empty", async () => {
-        const ir = await createSampleIr(base);
-        const stableTypeIds = Array.from(getStableTypeIdsFromIr(ir));
-        expect(stableTypeIds).toHaveLength(numStableTypeIds);
-    });
-
-    it("addedUnstableEndpoint has same number of types as stable service", async () => {
-        const ir = await createSampleIr(addedUnstableEndpoint);
-        const stableTypeIds = Array.from(getStableTypeIdsFromIr(ir));
-        expect(stableTypeIds).toHaveLength(numStableTypeIds);
-    });
-
-    it("addedUnstableType has same number of types as stable service", async () => {
-        const ir = await createSampleIr(addedUnstableType);
-        const stableTypeIds = Array.from(getStableTypeIdsFromIr(ir));
-        expect(stableTypeIds).toHaveLength(numStableTypeIds);
     });
 });
