@@ -113,7 +113,7 @@ jobs:
   ruby-model:
     runs-on: Seed
     needs: changes
-    if: ${{ ((needs.changes.outputs.ruby == 'true' || needs.changes.outputs.seed == 'true') && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch' }}
+    if: ${{ ((needs.changes.outputs.ruby == 'true' || needs.changes.outputs.seed == 'true') && github.event.pull_request.draft == false) || github.event_name == 'pull_request' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
