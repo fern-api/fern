@@ -7,7 +7,7 @@
   version: 0.67.0
 
 - changelogEntry:
-    - summary: Ignore self-referential types that are optional<nullable<SELF>>
+    - summary: Ignore self-referential types that are `optional<nullable<SELF>>`
       type: fix
   irVersion: 59
   createdAt: "2025-08-28"
