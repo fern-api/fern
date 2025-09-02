@@ -62,13 +62,15 @@ describe("diff sample ir - stable versions", () => {
     });
 });
 
-describe("diff sample ir - unstable components to base", () => {
+describe("diff sample ir - unstable components", () => {
     it.each([
-        { testCase: [addedUnstableEndpoint, base], name: "removing unstable endpoint" },
-        { testCase: [addedUnstableType, base], name: "removing unstable type" }
+        { testCase: [addedUnstableEndpoint, base, false], name: "removing unstable endpoint" },
+        { testCase: [addedUnstableType, base, false], name: "removing unstable type" },
+        { testCase: [addedEndpoint, addedUnstableEndpoint, true], name: "migrating endpoint from stable to unstable" },
+        { testCase: [addedType, addedUnstableType, true], name: "migrating type from stable to unstable" }
     ])("$name", async ({ testCase }) => {
-        const [fromPath, toPath] = testCase as [AbsoluteFilePath, AbsoluteFilePath];
-        await expectDiff(fromPath, toPath, false);
+        const [fromPath, toPath, isBreaking] = testCase as [AbsoluteFilePath, AbsoluteFilePath, boolean];
+        await expectDiff(fromPath, toPath, isBreaking);
     });
 });
 
