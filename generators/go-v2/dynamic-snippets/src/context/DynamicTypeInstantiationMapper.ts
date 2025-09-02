@@ -33,9 +33,7 @@ export class DynamicTypeInstantiationMapper {
             });
         }
         if (args.value == null) {
-            return this.context.isOptional(args.typeReference)
-                ? go.TypeInstantiation.nil()
-                : go.TypeInstantiation.nop();
+            return go.TypeInstantiation.nop();
         }
         switch (args.typeReference.type) {
             case "list":
