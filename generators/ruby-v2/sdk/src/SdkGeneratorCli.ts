@@ -45,6 +45,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
         await this.generate(context);
         // Just a test to force a change for CI
+        // Pushing again
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
