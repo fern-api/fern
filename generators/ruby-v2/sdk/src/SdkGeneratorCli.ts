@@ -58,6 +58,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             if (!context.subPackageHasEndpoints(subpackage)) {
                 return;
             }
+            // Force a change to prove a point in CI
 
             const rootClient = new RootClientGenerator(context);
             context.project.addRawFiles(rootClient.generate());
