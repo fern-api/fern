@@ -138,6 +138,7 @@ export declare namespace SdkContextImpl {
         formDataSupport: "Node16" | "Node18";
         useDefaultRequestParameterValues: boolean;
         flattenRequestParameters: boolean;
+        exportAllRequestsAtRoot: boolean;
     }
 }
 
@@ -181,6 +182,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly omitUndefined: boolean;
     public readonly neverThrowErrors: boolean;
     public readonly flattenRequestParameters: boolean;
+    public readonly exportAllRequestsAtRoot: boolean;
     public readonly importsManager: ImportsManager;
     public readonly exportsManager: ExportsManager;
     public readonly relativePackagePath: string;
@@ -251,7 +253,8 @@ export class SdkContextImpl implements SdkContext {
         relativeTestPath,
         formDataSupport,
         useDefaultRequestParameterValues,
-        flattenRequestParameters
+        flattenRequestParameters,
+        exportAllRequestsAtRoot
     }: SdkContextImpl.Init) {
         this.logger = logger;
         this.ir = ir;
@@ -265,6 +268,7 @@ export class SdkContextImpl implements SdkContext {
         this.formDataSupport = formDataSupport;
         this.generateOAuthClients = generateOAuthClients;
         this.flattenRequestParameters = flattenRequestParameters;
+        this.exportAllRequestsAtRoot = exportAllRequestsAtRoot;
         this.namespaceExport = typeDeclarationReferencer.namespaceExport;
         this.rootClientVariableName = ROOT_CLIENT_VARIABLE_NAME;
         this.sdkInstanceReferenceForSnippet = ts.factory.createIdentifier(this.rootClientVariableName);
@@ -379,7 +383,7 @@ export class SdkContextImpl implements SdkContext {
             inlinePathParameters,
             enableInlineTypes,
             formDataSupport,
-            flattenRequestParameters
+            flattenRequestParameters,
         });
         this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextImpl({
             importsManager,
