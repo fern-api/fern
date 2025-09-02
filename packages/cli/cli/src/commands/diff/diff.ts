@@ -77,8 +77,6 @@ async function readIr({
     return parsed.value;
 }
 
-
-
 function resultFromIRChangeResults(results: IntermediateRepresentationChangeDetector.Result): Result {
     return {
         bump: results.bump,
@@ -86,7 +84,8 @@ function resultFromIRChangeResults(results: IntermediateRepresentationChangeDete
     };
 }
 
-function mergeDiffResults(diffA: Result, diffB: Result): Result {
+// export for testing
+export function mergeDiffResults(diffA: Result, diffB: Result): Result {
     return {
         bump: maxBump(diffA.bump, diffB.bump),
         errors: [...diffA.errors, ...diffB.errors]
@@ -103,7 +102,8 @@ function maxBump(bumpA: Result["bump"], bumpB: Result["bump"]): Result["bump"] {
     return "patch";
 }
 
-function diffGeneratorVersions(generatorVersions: { from: string; to: string } | undefined): Result {
+// export for testing
+export function diffGeneratorVersions(generatorVersions: { from: string; to: string } | undefined): Result {
     if (generatorVersions === null || generatorVersions === undefined) {
         return {
             bump: "patch",
