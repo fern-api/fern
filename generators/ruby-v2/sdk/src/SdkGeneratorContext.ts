@@ -178,7 +178,6 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         }
     }
 
-
     public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {
         const subpackage = this.ir.subpackages[subpackageId];
         if (subpackage == null) {
