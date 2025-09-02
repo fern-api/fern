@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Fern diff command can consider from and to generator versions.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-02"
+  version: 0.69.0
+
+- changelogEntry:
     - summary: Fern cli diff command recognizes availability.
       type: feat
   irVersion: 59
