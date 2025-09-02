@@ -2,7 +2,7 @@ import Foundation
 import SingleUrlEnvironmentDefault
 
 private func main() async throws {
-    let client = SeedSingleUrlEnvironmentDefaultClient(token: "<token>")
+    let client = SingleUrlEnvironmentDefaultClient(token: "<token>")
 
     try await client.dummy.getDummy()
 }

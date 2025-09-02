@@ -2,7 +2,7 @@ import Foundation
 import AliasExtends
 
 private func main() async throws {
-    let client = SeedAliasExtendsClient()
+    let client = AliasExtendsClient()
 
     try await client.extendedInlineRequestBody(request: .init(
         parent: "parent",

@@ -2,7 +2,7 @@ import Foundation
 import Api
 
 private func main() async throws {
-    let client = SeedApiClient()
+    let client = ApiClient()
 
     try await client.foo()
 }

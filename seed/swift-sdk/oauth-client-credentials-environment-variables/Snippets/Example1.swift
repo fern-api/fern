@@ -2,7 +2,7 @@ import Foundation
 import OauthClientCredentialsEnvironmentVariables
 
 private func main() async throws {
-    let client = SeedOauthClientCredentialsEnvironmentVariablesClient()
+    let client = OauthClientCredentialsEnvironmentVariablesClient()
 
     try await client.auth.refreshToken(request: .init(
         clientId: "client_id",

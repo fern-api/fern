@@ -2,7 +2,7 @@ import Foundation
 import BasicAuthEnvironmentVariables
 
 private func main() async throws {
-    let client = SeedBasicAuthEnvironmentVariablesClient(
+    let client = BasicAuthEnvironmentVariablesClient(
         username: "<username>",
         accessToken: "<password>"
     )

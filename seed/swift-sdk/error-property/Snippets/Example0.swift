@@ -2,7 +2,7 @@ import Foundation
 import ErrorProperty
 
 private func main() async throws {
-    let client = SeedErrorPropertyClient()
+    let client = ErrorPropertyClient()
 
     try await client.propertyBasedError.throwError()
 }

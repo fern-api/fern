@@ -2,7 +2,7 @@ import Foundation
 import HttpHead
 
 private func main() async throws {
-    let client = SeedHttpHeadClient()
+    let client = HttpHeadClient()
 
     try await client.user.list(request: .init(limit: 1))
 }

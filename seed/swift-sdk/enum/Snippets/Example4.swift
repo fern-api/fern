@@ -2,7 +2,7 @@ import Foundation
 import Enum
 
 private func main() async throws {
-    let client = SeedEnumClient()
+    let client = EnumClient()
 
     try await client.pathParam.send(
         operand: .greaterThan,

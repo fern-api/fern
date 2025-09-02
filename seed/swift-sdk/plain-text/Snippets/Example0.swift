@@ -2,7 +2,7 @@ import Foundation
 import PlainText
 
 private func main() async throws {
-    let client = SeedPlainTextClient()
+    let client = PlainTextClient()
 
     try await client.service.getText()
 }

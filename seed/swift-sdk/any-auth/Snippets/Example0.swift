@@ -2,7 +2,7 @@ import Foundation
 import AnyAuth
 
 private func main() async throws {
-    let client = SeedAnyAuthClient(token: "<token>")
+    let client = AnyAuthClient(token: "<token>")
 
     try await client.auth.getToken(request: .init(
         clientId: "client_id",

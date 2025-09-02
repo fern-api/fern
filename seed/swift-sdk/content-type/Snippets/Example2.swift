@@ -2,7 +2,7 @@ import Foundation
 import ContentTypes
 
 private func main() async throws {
-    let client = SeedContentTypesClient()
+    let client = ContentTypesClient()
 
     try await client.service.namedPatchWithMixed(
         id: "id",

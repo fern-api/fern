@@ -2,7 +2,7 @@ import Foundation
 import Nullable
 
 private func main() async throws {
-    let client = SeedNullableClient()
+    let client = NullableClient()
 
     try await client.nullable.createUser(request: .init(
         username: "username",

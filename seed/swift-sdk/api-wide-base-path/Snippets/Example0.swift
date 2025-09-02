@@ -2,7 +2,7 @@ import Foundation
 import ApiWideBasePath
 
 private func main() async throws {
-    let client = SeedApiWideBasePathClient()
+    let client = ApiWideBasePathClient()
 
     try await client.service.post(
         pathParam: "pathParam",

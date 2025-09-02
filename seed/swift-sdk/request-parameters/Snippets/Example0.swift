@@ -2,7 +2,7 @@ import Foundation
 import RequestParameters
 
 private func main() async throws {
-    let client = SeedRequestParametersClient()
+    let client = RequestParametersClient()
 
     try await client.user.createUsername(request: .init(
         tags: [

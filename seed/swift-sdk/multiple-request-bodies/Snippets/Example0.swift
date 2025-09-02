@@ -2,7 +2,7 @@ import Foundation
 import Api
 
 private func main() async throws {
-    let client = SeedApiClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
     try await client.uploadJsonDocument(request: .init())
 }

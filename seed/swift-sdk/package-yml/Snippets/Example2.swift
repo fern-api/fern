@@ -2,7 +2,7 @@ import Foundation
 import PackageYml
 
 private func main() async throws {
-    let client = SeedPackageYmlClient()
+    let client = PackageYmlClient()
 
     try await client.service.nop(
         id: "id-a2ijs82",

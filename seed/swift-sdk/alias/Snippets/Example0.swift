@@ -2,7 +2,7 @@ import Foundation
 import Alias
 
 private func main() async throws {
-    let client = SeedAliasClient()
+    let client = AliasClient()
 
     try await client.get(typeId: "typeId")
 }

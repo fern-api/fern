@@ -2,7 +2,7 @@ import Foundation
 import NoEnvironment
 
 private func main() async throws {
-    let client = SeedNoEnvironmentClient(token: "<token>")
+    let client = NoEnvironmentClient(token: "<token>")
 
     try await client.dummy.getDummy()
 }

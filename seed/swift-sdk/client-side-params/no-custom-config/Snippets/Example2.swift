@@ -2,7 +2,7 @@ import Foundation
 import ClientSideParams
 
 private func main() async throws {
-    let client = SeedClientSideParamsClient(token: "<token>")
+    let client = ClientSideParamsClient(token: "<token>")
 
     try await client.service.searchResources(request: .init(
         limit: 1,

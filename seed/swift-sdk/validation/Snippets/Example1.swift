@@ -2,7 +2,7 @@ import Foundation
 import Validation
 
 private func main() async throws {
-    let client = SeedValidationClient()
+    let client = ValidationClient()
 
     try await client.get(request: .init(
         decimal: 2.2,

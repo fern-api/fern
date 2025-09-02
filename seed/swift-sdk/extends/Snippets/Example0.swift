@@ -2,7 +2,7 @@ import Foundation
 import Extends
 
 private func main() async throws {
-    let client = SeedExtendsClient()
+    let client = ExtendsClient()
 
     try await client.extendedInlineRequestBody(request: .init(
         name: "name",

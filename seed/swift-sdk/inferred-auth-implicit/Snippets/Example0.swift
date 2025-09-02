@@ -2,7 +2,7 @@ import Foundation
 import InferredAuthImplicit
 
 private func main() async throws {
-    let client = SeedInferredAuthImplicitClient()
+    let client = InferredAuthImplicitClient()
 
     try await client.auth.getTokenWithClientCredentials(request: .init(
         xApiKey: "X-Api-Key",

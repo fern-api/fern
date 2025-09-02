@@ -2,7 +2,7 @@ import Foundation
 import OauthClientCredentials
 
 private func main() async throws {
-    let client = SeedOauthClientCredentialsClient()
+    let client = OauthClientCredentialsClient()
 
     try await client.nested.api.getSomething()
 }

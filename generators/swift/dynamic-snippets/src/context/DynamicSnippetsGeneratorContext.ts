@@ -50,11 +50,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getRootClientClassName(): string {
-        return this.customConfig?.["clientClassName"] ?? `${this.getBaseNamePrefix()}Client`;
-    }
-
-    private getBaseNamePrefix(): string {
-        return pascalCase(this.config.organization) + pascalCase(this.getApiName());
+        return this.customConfig?.["clientClassName"] ?? `${pascalCase(this.getApiName())}Client`;
     }
 
     private getApiName(): string {

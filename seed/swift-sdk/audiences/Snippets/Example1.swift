@@ -2,7 +2,7 @@ import Foundation
 import Audiences
 
 private func main() async throws {
-    let client = SeedAudiencesClient()
+    let client = AudiencesClient()
 
     try await client.folderD.service.getDirectThread()
 }

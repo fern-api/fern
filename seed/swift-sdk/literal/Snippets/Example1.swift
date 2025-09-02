@@ -2,7 +2,7 @@ import Foundation
 import Literal
 
 private func main() async throws {
-    let client = SeedLiteralClient()
+    let client = LiteralClient()
 
     try await client.headers.send(request: .init(
         endpointVersion: .value,

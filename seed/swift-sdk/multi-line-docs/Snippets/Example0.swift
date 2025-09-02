@@ -2,7 +2,7 @@ import Foundation
 import MultiLineDocs
 
 private func main() async throws {
-    let client = SeedMultiLineDocsClient()
+    let client = MultiLineDocsClient()
 
     try await client.user.getUser(userId: "userId")
 }

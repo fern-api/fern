@@ -2,7 +2,7 @@ import Foundation
 import Pagination
 
 private func main() async throws {
-    let client = SeedPaginationClient(token: "<token>")
+    let client = PaginationClient(token: "<token>")
 
     try await client.users.listWithCursorPagination(request: .init(
         page: 1,

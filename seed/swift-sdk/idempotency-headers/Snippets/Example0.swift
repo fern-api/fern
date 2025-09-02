@@ -2,7 +2,7 @@ import Foundation
 import IdempotencyHeaders
 
 private func main() async throws {
-    let client = SeedIdempotencyHeadersClient(token: "<token>")
+    let client = IdempotencyHeadersClient(token: "<token>")
 
     try await client.payment.create(request: .init(
         amount: 1,

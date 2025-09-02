@@ -2,7 +2,7 @@ import Foundation
 import Exhaustive
 
 private func main() async throws {
-    let client = SeedExhaustiveClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
     try await client.endpoints.container.getAndReturnSetOfPrimitives(request: )
 }

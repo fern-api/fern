@@ -2,7 +2,7 @@ import Foundation
 import NullableOptional
 
 private func main() async throws {
-    let client = SeedNullableOptionalClient()
+    let client = NullableOptionalClient()
 
     try await client.nullableOptional.createComplexProfile(request: ComplexProfile(
         id: "id",

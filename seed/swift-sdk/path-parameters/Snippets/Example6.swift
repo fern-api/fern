@@ -2,7 +2,7 @@ import Foundation
 import PathParameters
 
 private func main() async throws {
-    let client = SeedPathParametersClient()
+    let client = PathParametersClient()
 
     try await client.user.searchUsers(
         userId: "user_id",

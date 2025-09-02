@@ -2,7 +2,7 @@ import Foundation
 import UndiscriminatedUnions
 
 private func main() async throws {
-    let client = SeedUndiscriminatedUnionsClient()
+    let client = UndiscriminatedUnionsClient()
 
     try await client.union.updateMetadata(request: MetadataUnion.optionalStringToJsonDictionary(
         [

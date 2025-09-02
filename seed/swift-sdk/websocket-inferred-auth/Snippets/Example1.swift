@@ -2,7 +2,7 @@ import Foundation
 import WebsocketAuth
 
 private func main() async throws {
-    let client = SeedWebsocketAuthClient()
+    let client = WebsocketAuthClient()
 
     try await client.auth.refreshToken(request: .init(
         xApiKey: "X-Api-Key",

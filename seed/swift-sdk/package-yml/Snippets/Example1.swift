@@ -2,7 +2,7 @@ import Foundation
 import PackageYml
 
 private func main() async throws {
-    let client = SeedPackageYmlClient()
+    let client = PackageYmlClient()
 
     try await client.echo(
         id: "id",

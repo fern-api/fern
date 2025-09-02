@@ -2,7 +2,7 @@ import Foundation
 import Examples
 
 private func main() async throws {
-    let client = SeedExamplesClient(token: "<token>")
+    let client = ExamplesClient(token: "<token>")
 
     try await client.health.service.ping()
 }

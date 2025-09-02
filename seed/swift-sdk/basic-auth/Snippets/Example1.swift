@@ -2,7 +2,7 @@ import Foundation
 import BasicAuth
 
 private func main() async throws {
-    let client = SeedBasicAuthClient(
+    let client = BasicAuthClient(
         username: "<username>",
         password: "<password>"
     )

@@ -2,7 +2,7 @@ import Foundation
 import MultiUrlEnvironmentNoDefault
 
 private func main() async throws {
-    let client = SeedMultiUrlEnvironmentNoDefaultClient(token: "<token>")
+    let client = MultiUrlEnvironmentNoDefaultClient(token: "<token>")
 
     try await client.ec2.bootInstance(request: .init(size: "size"))
 }

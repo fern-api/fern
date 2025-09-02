@@ -2,7 +2,7 @@ import Foundation
 import Unions
 
 private func main() async throws {
-    let client = SeedUnionsClient()
+    let client = UnionsClient()
 
     try await client.union.update(request: Shape.circle(
         .init(

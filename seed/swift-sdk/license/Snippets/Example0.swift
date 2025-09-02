@@ -2,7 +2,7 @@ import Foundation
 import License
 
 private func main() async throws {
-    let client = SeedLicenseClient()
+    let client = LicenseClient()
 
     try await client.get()
 }

@@ -2,7 +2,7 @@ import Foundation
 import MixedCase
 
 private func main() async throws {
-    let client = SeedMixedCaseClient()
+    let client = MixedCaseClient()
 
     try await client.service.listResources(request: .init(
         pageLimit: 10,

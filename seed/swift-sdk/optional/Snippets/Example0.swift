@@ -2,7 +2,7 @@ import Foundation
 import ObjectsWithImports
 
 private func main() async throws {
-    let client = SeedObjectsWithImportsClient()
+    let client = ObjectsWithImportsClient()
 
     try await client.optional.sendOptionalBody(request: [
         "string": .object([

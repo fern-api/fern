@@ -2,7 +2,7 @@ import Foundation
 import QueryParameters
 
 private func main() async throws {
-    let client = SeedQueryParametersClient()
+    let client = QueryParametersClient()
 
     try await client.user.getUsername(request: .init(
         limit: 1,
