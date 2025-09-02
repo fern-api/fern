@@ -528,14 +528,7 @@ class ModuleFile {
         });
 
         const { sorted, cycles } = topologicalSortWithCycleDetection(filteredTypeDeclarations, dependsOn);
-        if (cycles.length > 0) {
-            const cycleDescriptions = cycles.map((cycle) =>
-                cycle.map((typeDeclaration) => typeDeclaration.name.typeId).join(" --> ")
-            );
-            cycleDescriptions.forEach((cycleDescription) => {
-                this.context.logger.warn(`Circular dependency detected: ${cycleDescription}`);
-            });
-        }
+
         sorted.forEach((typeDeclaration) => {
             const typeFilePath = join(
                 this.project.absolutePathToOutputDirectory,
