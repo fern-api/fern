@@ -3,7 +3,7 @@ name: Update Seed
 on:
   push:
     branches:
-      - main
+      - mallinson/turn-off-seed-caching # TODO: revert back to main, this is just for testing
     paths:
       - ".github/workflows/update-seed.yml"
       - "packages/seed/**"
