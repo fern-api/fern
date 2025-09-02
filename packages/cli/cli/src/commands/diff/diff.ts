@@ -17,23 +17,29 @@ export async function diff({
     context,
     from,
     to,
-    fromVersion
+    fromVersion,
+    generatorVersions
 }: {
     context: CliContext;
     from: string;
     to: string;
     fromVersion: string | undefined;
+    generatorVersions: { from: string; to: string } | undefined;
 }): Promise<Result> {
     const detector = new IntermediateRepresentationChangeDetector();
-    const change = await detector.check({
-        from: await readIr({ context, filepath: from, flagName: "from" }),
-        to: await readIr({ context, filepath: to, flagName: "to" })
-    });
-    const errors = change.errors.map((error) => error.message);
+    const irChange = resultFromIRChangeResults(
+        await detector.check({
+            from: await readIr({ context, filepath: from, flagName: "from" }),
+            to: await readIr({ context, filepath: to, flagName: "to" })
+        })
+    );
+    const generatorChange = diffGeneratorVersions(generatorVersions);
+    const change = mergeDiffResults(irChange, generatorChange);
+
     if (fromVersion == null) {
         return {
             bump: change.bump,
-            errors
+            errors: change.errors
         };
     }
     const nextVersion = semver.inc(fromVersion, change.bump);
@@ -44,7 +50,7 @@ export async function diff({
     return {
         bump: change.bump,
         nextVersion,
-        errors
+        errors: change.errors
     };
 }
 
@@ -69,4 +75,66 @@ async function readIr({
         throw new FernCliError();
     }
     return parsed.value;
+}
+
+
+
+function resultFromIRChangeResults(results: IntermediateRepresentationChangeDetector.Result): Result {
+    return {
+        bump: results.bump,
+        errors: results.errors.map((error) => error.message)
+    };
+}
+
+function mergeDiffResults(diffA: Result, diffB: Result): Result {
+    return {
+        bump: maxBump(diffA.bump, diffB.bump),
+        errors: [...diffA.errors, ...diffB.errors]
+    };
+}
+
+function maxBump(bumpA: Result["bump"], bumpB: Result["bump"]): Result["bump"] {
+    if (bumpA === "major" || bumpB === "major") {
+        return "major";
+    }
+    if (bumpA === "minor" || bumpB === "minor") {
+        return "minor";
+    }
+    return "patch";
+}
+
+function diffGeneratorVersions(generatorVersions: { from: string; to: string } | undefined): Result {
+    if (generatorVersions === null || generatorVersions === undefined) {
+        return {
+            bump: "patch",
+            errors: []
+        };
+    }
+    const { from, to } = generatorVersions;
+
+    const bump = bumpFromDiff(semver.diff(from, to)) || "patch";
+    let errors: string[] = [];
+    if (bump === "major") {
+        errors.push("Generator version changed by major version.");
+    }
+
+    return {
+        bump,
+        errors
+    };
+}
+
+function bumpFromDiff(diff: semver.ReleaseType | null): Result["bump"] | undefined {
+    if (diff === null) {
+        return undefined;
+    }
+
+    switch (diff) {
+        case "major":
+        case "minor":
+        case "patch":
+            return diff;
+        default:
+            return undefined;
+    }
 }

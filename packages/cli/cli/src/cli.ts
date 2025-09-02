@@ -361,6 +361,14 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     string: true,
                     description: "The previous version of the API (e.g. 1.1.0)"
                 })
+                .option("from-generator-version", {
+                    string: true,
+                    description: "The previous version of the generator (e.g. 1.1.0)"
+                })
+                .option("to-generator-version", {
+                    string: true,
+                    description: "The next version of the generator (e.g. 1.1.0)"
+                })
                 .option("quiet", {
                     boolean: true,
                     default: false,
@@ -369,11 +377,27 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
         async (argv) => {
             const fromVersion = argv.fromVersion != null ? argv.fromVersion : undefined;
+            const generatorVersions =
+                argv.fromGeneratorVersion != null && argv.toGeneratorVersion != null
+                    ? {
+                          from: argv.fromGeneratorVersion,
+                          to: argv.toGeneratorVersion
+                      }
+                    : undefined;
+            if (
+                generatorVersions === undefined &&
+                (argv.fromGeneratorVersion != null || argv.toGeneratorVersion != null)
+            ) {
+                return cliContext.failWithoutThrowing(
+                    "Cannot specify --from-generator-version or --to-generator-version without specifying both."
+                );
+            }
             const result = await diff({
                 context: cliContext,
                 from: argv.from,
                 to: argv.to,
-                fromVersion
+                fromVersion,
+                generatorVersions
             });
             if (fromVersion != null) {
                 // If the user specified the --from-version flag, we write the full
