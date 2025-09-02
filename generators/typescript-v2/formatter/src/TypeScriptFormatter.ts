@@ -16,6 +16,6 @@ export class TypeScriptFormatter extends AbstractFormatter {
             tabWidth: 4,
             printWidth: 120
         });
-        // Example to force a change for CI
+        // Example to force a change for CI 
     }
 }
