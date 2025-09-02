@@ -14,13 +14,6 @@ types:
       title: string
       rating: double
 
-  UpdateMovieRequest:
-    # Note that we don't need to mark this as unstable because it is only referenced by an unstable endpoint
-    # The diff tool automatically detects this and considers this type unstable
-    properties:
-      title: string
-      rating: double
-
 service:
   auth: false
   base-path: /movies
@@ -42,7 +35,12 @@ service:
       path: /{movieId}
       path-parameters:
         movieId: MovieId
-      request: UpdateMovieRequest
+      request:
+        name: UpdateMovieRequest
+        body:
+          properties:
+            title: string
+            rating: double
       response: Movie
 
     getMovie:

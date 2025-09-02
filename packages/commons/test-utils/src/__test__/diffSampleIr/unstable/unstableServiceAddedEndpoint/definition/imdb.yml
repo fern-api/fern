@@ -14,11 +14,6 @@ types:
       title: string
       rating: double
 
-  UpdateMovieRequest:
-    properties:
-      title: string
-      rating: double
-
 service:
   availability:
     status: in-development
@@ -40,7 +35,12 @@ service:
       path: /{movieId}
       path-parameters:
         movieId: MovieId
-      request: UpdateMovieRequest
+      request:
+        name: UpdateMovieRequest
+        body:
+          properties:
+            title: string
+            rating: double
       response: Movie
 
     getMovie:

@@ -52,7 +52,7 @@ describe("diff sample ir - stable versions", () => {
         { testCase: [base, addedRequiredTypeProperty, true], name: "adding required type property" },
         { testCase: [base, addedOptionalTypeProperty, false], name: "adding optional type property" },
         { testCase: [addedEndpoint, base, true], name: "removing endpoint" },
-        { testCase: [addedType, base, false], name: "removing unreferencedtype" },
+        { testCase: [addedType, base, true], name: "removing unreferencedtype" },
         { testCase: [addedHeader, base, true], name: "removing header" },
         { testCase: [addedRequiredTypeProperty, base, true], name: "removing required type property" },
         { testCase: [addedOptionalTypeProperty, base, true], name: "removing optional type property" }
@@ -74,48 +74,55 @@ describe("diff sample ir - unstable components to base", () => {
 
 describe("diff sample ir - unstable services to base", () => {
     it.each([
-        { testCase: [unstableAddedEndpoint, base], name: "removing endpoint from unstable service" },
-        { testCase: [unstableAddedType, base], name: "removing type from unstable service" },
-        { testCase: [unstableAddedHeader, base], name: "removing header from unstable service" },
+        { testCase: [unstableAddedEndpoint, base, false], name: "removing endpoint from unstable service" },
+        { testCase: [unstableAddedType, base, true], name: "removing type from unstable service" },
+        { testCase: [unstableAddedHeader, base, false], name: "removing header from unstable service" },
         {
-            testCase: [unstableAddedOptionalTypeProperty, base],
+            testCase: [unstableAddedOptionalTypeProperty, base, true],
             name: "removing optional type property from unstable service"
         },
         {
-            testCase: [unstableAddedRequiredTypeProperty, base],
+            testCase: [unstableAddedRequiredTypeProperty, base, true],
             name: "removing required type property from unstable service"
         }
     ])("$name", async ({ testCase }) => {
-        const [fromPath, toPath] = testCase as [AbsoluteFilePath, AbsoluteFilePath];
-        await expectDiff(fromPath, toPath, false);
+        const [fromPath, toPath, isBreaking] = testCase as [AbsoluteFilePath, AbsoluteFilePath, boolean];
+        await expectDiff(fromPath, toPath, isBreaking);
     });
 });
 
 describe("diff sample ir - unstable service to anything else", () => {
     it.each([
-        { testCase: [serviceUnstable, base], name: "unstable to base" },
-        { testCase: [serviceUnstable, base], name: "unstable to base" },
-        { testCase: [serviceUnstable, addedEndpoint], name: "unstable to addedEndpoint" },
-        { testCase: [serviceUnstable, addedType], name: "unstable to addedType" },
-        { testCase: [serviceUnstable, addedRequiredTypeProperty], name: "unstable to addedRequiredTypeProperty" },
-        { testCase: [serviceUnstable, addedOptionalTypeProperty], name: "unstable to addedOptionalTypeProperty" },
-        { testCase: [serviceUnstable, addedHeader], name: "unstable to addedHeader" },
-        { testCase: [serviceUnstable, addedUnstableEndpoint], name: "unstable to addedUnstableEndpoint" },
-        { testCase: [serviceUnstable, addedUnstableType], name: "unstable to addedUnstableType" },
-        { testCase: [serviceUnstable, serviceUnstable], name: "unstable to serviceUnstable" },
-        { testCase: [serviceUnstable, unstableAddedEndpoint], name: "unstable to unstableAddedEndpoint" },
-        { testCase: [serviceUnstable, unstableAddedType], name: "unstable to unstableAddedType" },
-        { testCase: [serviceUnstable, unstableAddedHeader], name: "unstable to unstableAddedHeader" },
+        { testCase: [serviceUnstable, base, false], name: "unstable to base" },
+        { testCase: [serviceUnstable, base, false], name: "unstable to base" },
+        { testCase: [serviceUnstable, addedEndpoint, false], name: "unstable to addedEndpoint" },
+        { testCase: [serviceUnstable, addedType, false], name: "unstable to addedType" },
+        { testCase: [serviceUnstable, addedRequiredTypeProperty, true], name: "unstable to addedRequiredTypeProperty" },
         {
-            testCase: [serviceUnstable, unstableAddedOptionalTypeProperty],
+            testCase: [serviceUnstable, addedOptionalTypeProperty, false],
+            name: "unstable to addedOptionalTypeProperty"
+        },
+        {
+            testCase: [serviceUnstable, addedOptionalTypeProperty, false],
+            name: "unstable to addedOptionalTypeProperty"
+        },
+        { testCase: [serviceUnstable, addedHeader, false], name: "unstable to addedHeader" },
+        { testCase: [serviceUnstable, addedUnstableEndpoint, false], name: "unstable to addedUnstableEndpoint" },
+        { testCase: [serviceUnstable, addedUnstableType, false], name: "unstable to addedUnstableType" },
+        { testCase: [serviceUnstable, serviceUnstable, false], name: "unstable to serviceUnstable" },
+        { testCase: [serviceUnstable, unstableAddedEndpoint, false], name: "unstable to unstableAddedEndpoint" },
+        { testCase: [serviceUnstable, unstableAddedType, false], name: "unstable to unstableAddedType" },
+        { testCase: [serviceUnstable, unstableAddedHeader, false], name: "unstable to unstableAddedHeader" },
+        {
+            testCase: [serviceUnstable, unstableAddedOptionalTypeProperty, false],
             name: "unstable to unstableAddedOptionalTypeProperty"
         },
         {
-            testCase: [serviceUnstable, unstableAddedRequiredTypeProperty],
+            testCase: [serviceUnstable, unstableAddedRequiredTypeProperty, true],
             name: "unstable to unstableAddedRequiredTypeProperty"
         }
     ])("$name", async ({ testCase }) => {
-        const [fromPath, toPath] = testCase as [AbsoluteFilePath, AbsoluteFilePath];
-        await expectDiff(fromPath, toPath, false);
+        const [fromPath, toPath, isBreaking] = testCase as [AbsoluteFilePath, AbsoluteFilePath, boolean];
+        await expectDiff(fromPath, toPath, isBreaking);
     });
 });
