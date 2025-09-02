@@ -24,7 +24,7 @@ importers:
                 version: 29.7.0
             msw:
                 specifier: ^2.8.4
-                version: 2.10.5(@types/node@18.19.123)(typescript@5.7.3)
+                version: 2.11.1(@types/node@18.19.123)(typescript@5.7.3)
             prettier:
                 specifier: ^3.4.2
                 version: 3.6.2
@@ -329,12 +329,6 @@ packages:
         resolution:
             {
                 integrity: sha512-yn7BklA5acgcBr+7w064fGV+SGIFySjCKpqjcWgBAIfrAkY+4GQTJJHQMeT3V/sgz23VTEVV8TtOmkvJAhFVfg==,
-            }
-
-    "@bundled-es-modules/tough-cookie@0.1.6":
-        resolution:
-            {
-                integrity: sha512-dvMHbL464C0zI+Yqxbz6kZ5TOEp7GLW+pry/RWndAR8MJQAXZ2rPmIs8tziTZjeIyhSNZgZbCePtfSbdWqStJw==,
             }
 
     "@inquirer/confirm@5.1.16":
@@ -1041,10 +1035,10 @@ packages:
             }
         engines: { node: ">=10" }
 
-    caniuse-lite@1.0.30001737:
+    caniuse-lite@1.0.30001739:
         resolution:
             {
-                integrity: sha512-BiloLiXtQNrY5UyF0+1nSJLXUENuhka2pzy2Fx5pGxqavdrxSCW4U6Pn/PoG3Efspi2frRbHpBV2XsrPE6EDlw==,
+                integrity: sha512-y+j60d6ulelrNSwpPyrHdl+9mJnQzHBr08xm48Qno0nSk4h3Qojh+ziv2qE6rXf4k3tadF4o1J/1tAbVm1NtnA==,
             }
 
     chalk@4.1.2:
@@ -1266,10 +1260,10 @@ packages:
             }
         engines: { node: ">= 0.4" }
 
-    electron-to-chromium@1.5.211:
+    electron-to-chromium@1.5.212:
         resolution:
             {
-                integrity: sha512-IGBvimJkotaLzFnwIVgW9/UD/AOJ2tByUmeOrtqBfACSbAw5b1G0XpvdaieKyc7ULmbwXVx+4e4Be8pOPBrYkw==,
+                integrity: sha512-gE7ErIzSW+d8jALWMcOIgf+IB6lpfsg6NwOhPVwKzDtN2qcBix47vlin4yzSregYDxTCXOUqAZjVY/Z3naS7ww==,
             }
 
     emittery@0.13.1:
@@ -2187,10 +2181,10 @@ packages:
                 integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==,
             }
 
-    msw@2.10.5:
+    msw@2.11.1:
         resolution:
             {
-                integrity: sha512-0EsQCrCI1HbhpBWd89DvmxY6plmvrM96b0sCIztnvcNHQbXn5vqwm1KlXslo6u4wN9LFGLC1WFjjgljcQhe40A==,
+                integrity: sha512-dGSRx0AJmQVQfpGXTsAAq4JFdwdhOBdJ6sJS/jnN0ac3s0NZB6daacHF1z5Pefx+IejmvuiLWw260RlyQOf3sQ==,
             }
         engines: { node: ">=18" }
         hasBin: true
@@ -2713,10 +2707,10 @@ packages:
             uglify-js:
                 optional: true
 
-    terser@5.43.1:
+    terser@5.44.0:
         resolution:
             {
-                integrity: sha512-+6erLbBm0+LROX2sPXlUYx/ux5PyE9K/a92Wrt6oA+WDAoFTdpHE5tCYCI5PNzq2y8df4rA+QgHLJuR4jNymsg==,
+                integrity: sha512-nIVck8DK+GM/0Frwd+nIhZ84pR/BX7rmXMfYwyg+Sri5oGVE99/E3KvXqpC2xHFxyqXyGHTKBSioxxplrO4I4w==,
             }
         engines: { node: ">=10" }
         hasBin: true
@@ -2727,6 +2721,19 @@ packages:
                 integrity: sha512-cAGWPIyOHU6zlmg88jwm7VRyXnMN7iV68OGAbYDk/Mh/xC/pzVPlQtY6ngoIH/5/tciuhGfvESU8GrHrcxD56w==,
             }
         engines: { node: ">=8" }
+
+    tldts-core@7.0.12:
+        resolution:
+            {
+                integrity: sha512-3K76aXywJFduGRsOYoY5JzINLs/WMlOkeDwPL+8OCPq2Rh39gkSDtWAxdJQlWjpun/xF/LHf29yqCi6VC/rHDA==,
+            }
+
+    tldts@7.0.12:
+        resolution:
+            {
+                integrity: sha512-M9ZQBPp6FyqhMcl233vHYyYRkxXOA1SKGlnq13S0mJdUhRSwr2w6I8rlchPL73wBwRlyIZpFvpu2VcdSMWLYXw==,
+            }
+        hasBin: true
 
     tmpl@1.0.5:
         resolution:
@@ -2747,6 +2754,13 @@ packages:
                 integrity: sha512-Loo5UUvLD9ScZ6jh8beX1T6sO1w2/MpCRpEP7V280GKMVUQ0Jzar2U3UJPsrdbziLEMMhu3Ujnq//rhiFuIeag==,
             }
         engines: { node: ">=6" }
+
+    tough-cookie@6.0.0:
+        resolution:
+            {
+                integrity: sha512-kXuRi1mtaKMrsLUxz3sQYvVl37B0Ns6MzfrtV5DvJceE9bPyspOqk9xxv7XbZWcfLWbFmm997vl83qUWVJA64w==,
+            }
+        engines: { node: ">=16" }
 
     tr46@3.0.0:
         resolution:
@@ -3247,11 +3261,6 @@ snapshots:
     "@bundled-es-modules/statuses@1.0.1":
         dependencies:
             statuses: 2.0.2
-
-    "@bundled-es-modules/tough-cookie@0.1.6":
-        dependencies:
-            "@types/tough-cookie": 4.0.5
-            tough-cookie: 4.1.4
 
     "@inquirer/confirm@5.1.16(@types/node@18.19.123)":
         dependencies:
@@ -3788,8 +3797,8 @@ snapshots:
 
     browserslist@4.25.4:
         dependencies:
-            caniuse-lite: 1.0.30001737
-            electron-to-chromium: 1.5.211
+            caniuse-lite: 1.0.30001739
+            electron-to-chromium: 1.5.212
             node-releases: 2.0.19
             update-browserslist-db: 1.1.3(browserslist@4.25.4)
 
@@ -3814,7 +3823,7 @@ snapshots:
 
     camelcase@6.3.0: {}
 
-    caniuse-lite@1.0.30001737: {}
+    caniuse-lite@1.0.30001739: {}
 
     chalk@4.1.2:
         dependencies:
@@ -3920,7 +3929,7 @@ snapshots:
             es-errors: 1.3.0
             gopd: 1.2.0
 
-    electron-to-chromium@1.5.211: {}
+    electron-to-chromium@1.5.212: {}
 
     emittery@0.13.1: {}
 
@@ -4639,11 +4648,10 @@ snapshots:
 
     ms@2.1.3: {}
 
-    msw@2.10.5(@types/node@18.19.123)(typescript@5.7.3):
+    msw@2.11.1(@types/node@18.19.123)(typescript@5.7.3):
         dependencies:
             "@bundled-es-modules/cookie": 2.0.1
             "@bundled-es-modules/statuses": 1.0.1
-            "@bundled-es-modules/tough-cookie": 0.1.6
             "@inquirer/confirm": 5.1.16(@types/node@18.19.123)
             "@mswjs/interceptors": 0.39.6
             "@open-draft/deferred-promise": 2.2.0
@@ -4657,6 +4665,7 @@ snapshots:
             path-to-regexp: 6.3.0
             picocolors: 1.1.1
             strict-event-emitter: 0.5.1
+            tough-cookie: 6.0.0
             type-fest: 4.41.0
             yargs: 17.7.2
         optionalDependencies:
@@ -4888,10 +4897,10 @@ snapshots:
             jest-worker: 27.5.1
             schema-utils: 4.3.2
             serialize-javascript: 6.0.2
-            terser: 5.43.1
+            terser: 5.44.0
             webpack: 5.101.3
 
-    terser@5.43.1:
+    terser@5.44.0:
         dependencies:
             "@jridgewell/source-map": 0.3.11
             acorn: 8.15.0
@@ -4903,6 +4912,12 @@ snapshots:
             "@istanbuljs/schema": 0.1.3
             glob: 7.2.3
             minimatch: 3.1.2
+
+    tldts-core@7.0.12: {}
+
+    tldts@7.0.12:
+        dependencies:
+            tldts-core: 7.0.12
 
     tmpl@1.0.5: {}
 
@@ -4916,6 +4931,10 @@ snapshots:
             punycode: 2.3.1
             universalify: 0.2.0
             url-parse: 1.5.10
+
+    tough-cookie@6.0.0:
+        dependencies:
+            tldts: 7.0.12
 
     tr46@3.0.0:
         dependencies:
