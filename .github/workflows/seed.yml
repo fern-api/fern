@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - ".github/workflows/seed.yml"
+      # - ".github/workflows/seed.yml"
       - "packages/seed/**"
       - "packages/ir-sdk/fern/apis/**"
       - "packages/cli/generation/ir-generator/**"
@@ -18,7 +18,7 @@ on:
     branches:
       - main
     paths:
-      - ".github/workflows/seed.yml"
+      # - ".github/workflows/seed.yml"
       - "packages/seed/**"
       - "packages/ir-sdk/fern/apis/**"
       - "packages/cli/generation/ir-generator/**"
@@ -56,7 +56,6 @@ jobs:
         with:
           filters: |
             seed:
-              - '.github/workflows/seed.yml'
               - 'packages/seed/**'
               - 'packages/ir-sdk/fern/apis/**'
               - 'packages/cli/generation/ir-generator/**'
