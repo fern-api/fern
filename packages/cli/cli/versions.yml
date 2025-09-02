@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Fern cli diff command recognizes availability.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-28"
+  version: 0.68.0
+
+- changelogEntry:
     - summary: Update ir migration versions for java generators
       type: feat
   irVersion: 59
