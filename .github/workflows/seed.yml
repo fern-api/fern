@@ -3,7 +3,7 @@ name: Seed Snapshot Tests
 on:
   push:
     branches:
-      - main
+      - mallinson/turn-off-seed-caching-clean-with-example
     paths:
       - ".github/workflows/seed.yml"
       - "packages/seed/**"
