@@ -1,4 +1,3 @@
-import semver from "semver";
 import { describe, expect, it } from "vitest";
 import { diffGeneratorVersions, mergeDiffResults, Result } from "../commands/diff/diff";
 
