@@ -35,7 +35,7 @@ export async function diff({
             to: await readIr({ context, filepath: to, flagName: "to" })
         })
     );
-    const generatorChange = diffGeneratorVersions(generatorVersions);
+    const generatorChange = diffGeneratorVersions(context, generatorVersions);
     const change = mergeDiffResults(irChange, generatorChange);
 
     if (fromVersion == null) {
@@ -105,7 +105,10 @@ function maxBump(bumpA: Bump, bumpB: Bump): Bump {
 }
 
 // export for testing
-export function diffGeneratorVersions(generatorVersions: { from: string; to: string } | undefined): Result {
+export function diffGeneratorVersions(
+    context: CliContext,
+    generatorVersions: { from: string; to: string } | undefined
+): Result {
     if (generatorVersions === undefined) {
         return {
             bump: "patch",
@@ -113,16 +116,22 @@ export function diffGeneratorVersions(generatorVersions: { from: string; to: str
         };
     }
     const { from, to } = generatorVersions;
-    const bump = bumpFromDiff(diffSemverOrThrow(from, to)) || "patch";
-    let errors: string[] = [];
-    if (bump === "major") {
-        errors.push("Generator version changed by major version.");
-    }
+    try {
+        const bump = bumpFromDiff(diffSemverOrThrow(from, to)) || "patch";
 
-    return {
-        bump,
-        errors
-    };
+        let errors: string[] = [];
+        if (bump === "major") {
+            errors.push("Generator version changed by major version.");
+        }
+
+        return {
+            bump,
+            errors
+        };
+    } catch (error) {
+        context.failWithoutThrowing(`Error diffing generator versions ${from} and ${to}: ${error}`);
+        throw new FernCliError();
+    }
 }
 
 function bumpFromDiff(diff: semver.ReleaseType | null): Bump | undefined {

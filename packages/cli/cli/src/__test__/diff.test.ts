@@ -1,7 +1,14 @@
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 import { type Bump, diffGeneratorVersions, mergeDiffResults } from "../commands/diff/diff";
+import { MockCliContext } from "./mockCliContext";
 
 describe("mergeDiffResults tests", () => {
+    let context: MockCliContext;
+
+    beforeAll(() => {
+        context = new MockCliContext();
+    });
+
     it.each([
         { bumpA: "major", bumpB: "major", expected: "major" },
         { bumpA: "major", bumpB: "minor", expected: "major" },
@@ -49,7 +56,7 @@ describe("mergeDiffResults tests", () => {
         { from: "1.0.0", to: "2.1.1", expected: "major" },
         { from: "1.0.0", to: "3.0.0", expected: "major" }
     ])("diffGeneratorVersions $from to $to -> $expected", ({ from, to, expected }) => {
-        const result = diffGeneratorVersions({ from, to });
+        const result = diffGeneratorVersions(context, { from, to });
         expect(result.bump).toBe(expected);
     });
 
@@ -57,8 +64,10 @@ describe("mergeDiffResults tests", () => {
         { from: "1.0.0", to: "0.0.0" },
         { from: "1.0.0", to: "0.1.0" },
         { from: "1.0.0", to: "0.0.1" },
-        { from: "2.0.0", to: "1.0.0" }
+        { from: "2.0.0", to: "1.0.0" },
+        { from: "1.0.0", to: "abcde" },
+        { from: "abcde", to: "1.0.0" }
     ])("diffGeneratorVersions $from to $to -> throws", ({ from, to }) => {
-        expect(() => diffGeneratorVersions({ from, to })).toThrow();
+        expect(() => diffGeneratorVersions(context, { from, to })).toThrow();
     });
 });
