@@ -1,3 +1,4 @@
+import Foundation
 import Validation
 
 private func main() async throws {

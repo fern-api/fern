@@ -1,3 +1,4 @@
+import Foundation
 import SingleUrlEnvironmentDefault
 
 private func main() async throws {

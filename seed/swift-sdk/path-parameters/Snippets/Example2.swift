@@ -1,3 +1,4 @@
+import Foundation
 import PathParameters
 
 private func main() async throws {

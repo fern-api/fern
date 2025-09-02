@@ -1,3 +1,4 @@
+import Foundation
 import Unions
 
 private func main() async throws {

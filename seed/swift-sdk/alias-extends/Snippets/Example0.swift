@@ -1,3 +1,4 @@
+import Foundation
 import AliasExtends
 
 private func main() async throws {

@@ -1,3 +1,4 @@
+import Foundation
 import UndiscriminatedUnions
 
 private func main() async throws {

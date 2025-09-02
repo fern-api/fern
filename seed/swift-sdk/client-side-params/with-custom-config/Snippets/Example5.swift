@@ -1,3 +1,4 @@
+import Foundation
 import MyCustomModule
 
 private func main() async throws {

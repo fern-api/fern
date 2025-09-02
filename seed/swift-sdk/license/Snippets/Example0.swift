@@ -1,3 +1,4 @@
+import Foundation
 import License
 
 private func main() async throws {

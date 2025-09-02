@@ -1,3 +1,4 @@
+import Foundation
 import BearerTokenEnvironmentVariable
 
 private func main() async throws {

@@ -1,3 +1,4 @@
+import Foundation
 import PackageYml
 
 private func main() async throws {

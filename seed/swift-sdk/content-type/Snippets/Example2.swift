@@ -1,3 +1,4 @@
+import Foundation
 import ContentTypes
 
 private func main() async throws {

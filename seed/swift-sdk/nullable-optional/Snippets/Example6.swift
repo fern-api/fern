@@ -1,3 +1,4 @@
+import Foundation
 import NullableOptional
 
 private func main() async throws {

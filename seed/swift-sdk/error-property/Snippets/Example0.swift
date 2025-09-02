@@ -1,3 +1,4 @@
+import Foundation
 import ErrorProperty
 
 private func main() async throws {

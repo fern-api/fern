@@ -1,3 +1,4 @@
+import Foundation
 import CustomAuth
 
 private func main() async throws {

@@ -1,3 +1,4 @@
+import Foundation
 import IdempotencyHeaders
 
 private func main() async throws {

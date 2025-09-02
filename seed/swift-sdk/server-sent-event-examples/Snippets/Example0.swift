@@ -1,3 +1,4 @@
+import Foundation
 import ServerSentEvents
 
 private func main() async throws {

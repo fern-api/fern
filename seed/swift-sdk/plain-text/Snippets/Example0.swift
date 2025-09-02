@@ -1,3 +1,4 @@
+import Foundation
 import PlainText
 
 private func main() async throws {

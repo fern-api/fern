@@ -1,3 +1,4 @@
+import Foundation
 import Enum
 
 private func main() async throws {

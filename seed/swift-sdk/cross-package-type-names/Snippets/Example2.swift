@@ -1,3 +1,4 @@
+import Foundation
 import CrossPackageTypeNames
 
 private func main() async throws {

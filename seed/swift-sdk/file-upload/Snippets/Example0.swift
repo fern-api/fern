@@ -1,3 +1,4 @@
+import Foundation
 import FileUpload
 
 private func main() async throws {

@@ -1,3 +1,4 @@
+import Foundation
 import MultiUrlEnvironment
 
 private func main() async throws {

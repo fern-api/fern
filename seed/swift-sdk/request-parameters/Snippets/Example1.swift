@@ -1,3 +1,4 @@
+import Foundation
 import RequestParameters
 
 private func main() async throws {

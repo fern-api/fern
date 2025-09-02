@@ -1,3 +1,4 @@
+import Foundation
 import NoEnvironment
 
 private func main() async throws {

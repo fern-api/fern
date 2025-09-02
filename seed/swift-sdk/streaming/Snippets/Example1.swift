@@ -1,3 +1,4 @@
+import Foundation
 import Streaming
 
 private func main() async throws {

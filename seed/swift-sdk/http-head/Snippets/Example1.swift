@@ -1,3 +1,4 @@
+import Foundation
 import HttpHead
 
 private func main() async throws {

@@ -1,3 +1,4 @@
+import Foundation
 import BytesUpload
 
 private func main() async throws {

@@ -1,3 +1,4 @@
+import Foundation
 import Version
 
 private func main() async throws {

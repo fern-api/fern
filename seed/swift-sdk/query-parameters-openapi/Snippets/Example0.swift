@@ -1,3 +1,4 @@
+import Foundation
 import Api
 
 private func main() async throws {

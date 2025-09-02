@@ -48,6 +48,7 @@ export class EndpointSnippetGenerator {
         options: Options;
     }) {
         const fileComponents: swift.FileComponent[] = [
+            this.generateImportFoundationStatement(),
             this.generateImportModuleStatement(),
             swift.LineBreak.single(),
             this.generateMainFunctionDeclarationWithEndpointSnippet({ endpoint, snippet: snippetRequest }),
@@ -55,6 +56,10 @@ export class EndpointSnippetGenerator {
             this.generateMainFunctionInvocationStatement()
         ];
         return fileComponents.map((c) => c.toString()).join("");
+    }
+
+    private generateImportFoundationStatement() {
+        return swift.Statement.import("Foundation");
     }
 
     private generateImportModuleStatement() {

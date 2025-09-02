@@ -1,3 +1,4 @@
+import Foundation
 import OauthClientCredentialsDefault
 
 private func main() async throws {

@@ -1,3 +1,4 @@
+import Foundation
 import ResponseProperty
 
 private func main() async throws {

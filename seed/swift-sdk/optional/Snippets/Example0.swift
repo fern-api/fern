@@ -1,3 +1,4 @@
+import Foundation
 import ObjectsWithImports
 
 private func main() async throws {

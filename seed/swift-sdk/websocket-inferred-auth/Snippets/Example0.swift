@@ -1,3 +1,4 @@
+import Foundation
 import WebsocketAuth
 
 private func main() async throws {

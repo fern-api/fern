@@ -1,3 +1,4 @@
+import Foundation
 import QueryParameters
 
 private func main() async throws {

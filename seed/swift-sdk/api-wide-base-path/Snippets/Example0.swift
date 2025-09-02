@@ -1,3 +1,4 @@
+import Foundation
 import ApiWideBasePath
 
 private func main() async throws {

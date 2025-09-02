@@ -1,3 +1,4 @@
+import Foundation
 import InferredAuthImplicit
 
 private func main() async throws {

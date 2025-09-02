@@ -1,3 +1,4 @@
+import Foundation
 import MixedCase
 
 private func main() async throws {

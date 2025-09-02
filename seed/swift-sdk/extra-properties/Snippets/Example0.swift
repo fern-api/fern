@@ -1,3 +1,4 @@
+import Foundation
 import ExtraProperties
 
 private func main() async throws {

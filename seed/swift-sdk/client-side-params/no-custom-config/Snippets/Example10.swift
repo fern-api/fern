@@ -1,3 +1,4 @@
+import Foundation
 import ClientSideParams
 
 private func main() async throws {

@@ -1,3 +1,4 @@
+import Foundation
 import AuthEnvironmentVariables
 
 private func main() async throws {
