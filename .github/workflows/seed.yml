@@ -27,6 +27,7 @@ on:
       - "generators/**"
       - "seed/**"
   workflow_call:
+  workflow_dispatch:
 
 # Cancel previous workflows on previous push
 concurrency:
