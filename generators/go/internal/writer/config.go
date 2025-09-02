@@ -16,4 +16,4 @@ func NewConfig(outputMode OutputMode) (*Config, error) {
 	return &Config{
 		Mode: outputMode,
 	}, nil
-}
+}// Just a test to force a change for CI

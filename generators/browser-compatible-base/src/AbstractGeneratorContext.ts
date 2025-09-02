@@ -17,7 +17,7 @@ export abstract class AbstractGeneratorContext {
     public constructor(
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
         public readonly generatorNotificationService: GeneratorNotificationService
-    ) {
+    ) {// Just a test to force a change for CI
         this.logger = createLogger((level, ...message) => {
             CONSOLE_LOGGER.log(level, ...message);
 

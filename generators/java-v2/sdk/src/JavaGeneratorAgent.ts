@@ -15,7 +15,7 @@ export class JavaGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorConte
         logger,
         config,
         readmeConfigBuilder,
-        ir
+        ir // Just a test to force a change for CI
     }: {
         logger: Logger;
         config: FernGeneratorExec.GeneratorConfig;

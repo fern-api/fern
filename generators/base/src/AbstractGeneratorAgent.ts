@@ -128,7 +128,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         }
         return undefined;
     }
-
+// Just a test to force a change for CI
     private async getFeaturesConfig(): Promise<string> {
         // try to find the features.yml file using the well-known paths
         for (const each of FEATURES_CONFIG_PATHS) {

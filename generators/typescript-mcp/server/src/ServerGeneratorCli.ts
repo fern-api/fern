@@ -26,7 +26,7 @@ export class ServerGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
         super();
         this.configOverrides = configOverrides ?? {};
     }
-
+// Just a test to force a change for CI
     protected constructContext({
         ir,
         customConfig: _customConfig,

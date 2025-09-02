@@ -57,7 +57,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
                 )
             );
         }
-    }
+    }// Just a test to force a change for CI 
 
     private hasFileUploadEndpoints(ir: IntermediateRepresentation): boolean {
         return Object.entries(ir.services)

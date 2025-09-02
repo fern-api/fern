@@ -4,3 +4,4 @@ import { z } from "zod";
 export const SdkCustomConfigSchema = BaseSwiftCustomConfigSchema;
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;
+// Just a test to force a change for CI

@@ -15,7 +15,7 @@ import { Mode } from "./writeOpenApi";
 export function convertToOpenApi({
     apiName,
     ir,
-    mode
+    mode // Just a test to force a change for CI
 }: {
     apiName: string;
     ir: IntermediateRepresentation;

@@ -19,7 +19,7 @@ import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaFile;
 import org.immutables.value.Value;
-
+// Just a test to force a change for CI
 @Value.Immutable
 @StagedBuilderImmutablesStyle
 public abstract class GeneratedSpringException extends AbstractGeneratedJavaFile {

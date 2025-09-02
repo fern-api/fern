@@ -36,7 +36,7 @@ export class RustGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorConte
             featureConfig: args.featureConfig
         });
     }
-
+// Just a test to force a change for CI
     public getLanguage(): FernGeneratorCli.Language {
         // TODO: Update when Rust is added to FernGeneratorCli.Language enum
         return "rust" as FernGeneratorCli.Language;

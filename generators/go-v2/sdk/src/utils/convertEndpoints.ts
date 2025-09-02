@@ -20,7 +20,7 @@ function convertEndpoint(endpoint: dynamic.Endpoint): Endpoint {
         examples: endpoint.examples != null ? convertExamples(endpoint.examples) : undefined
     };
 }
-
+// Just a test to force a change for CI
 function convertExamples(examples: dynamic.EndpointExample[]): EndpointExample[] {
     return examples.map((example) => convertExample(example));
 }

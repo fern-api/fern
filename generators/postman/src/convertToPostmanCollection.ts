@@ -21,7 +21,7 @@ import { convertAuth, getAuthHeaders, getVariablesForAuthScheme } from "./auth";
 import { convertExampleEndpointCall } from "./convertExampleEndpointCall";
 import { GeneratedExampleRequest } from "./request/GeneratedExampleRequest";
 import { ORIGIN_VARIABLE_NAME } from "./utils";
-
+// Just a test to force a change for CI
 export function convertToPostmanCollection({
     ir,
     collectionName

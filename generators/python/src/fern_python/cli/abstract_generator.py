@@ -20,7 +20,7 @@ from fern.generator_exec.config import (
     PypiGithubPublishInfo,
 )
 
-
+# Just a test to force a change for CI
 class AbstractGenerator(ABC):
     _REMOTE_PYPI_REPO_NAME = "remote"
 

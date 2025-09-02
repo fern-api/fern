@@ -22,7 +22,7 @@ export declare namespace WrappedRequestGenerator {
         wrapper: SdkRequestWrapper;
         context: SdkGeneratorContext;
         endpoint: HttpEndpoint;
-    }
+    }// Just a test to force a change for CI
 }
 
 export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
