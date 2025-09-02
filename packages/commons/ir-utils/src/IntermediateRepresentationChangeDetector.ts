@@ -30,7 +30,7 @@ import {
     TypeDeclaration,
     TypeReference
 } from "@fern-api/ir-sdk";
-import { getStableTypeIdsFromIr, isMarkedUnstable } from "./utils/availabilityUtils";
+import { isMarkedUnstable } from "./utils/availabilityUtils";
 
 export namespace IntermediateRepresentationChangeDetector {
     export type Result = {
@@ -107,9 +107,7 @@ export class IntermediateRepresentationChangeDetector {
         from: IntermediateRepresentation;
         to: IntermediateRepresentation;
     }): IntermediateRepresentationChangeDetector.Result {
-        const fromStableTypeIds = getStableTypeIdsFromIr(from);
         this.checkTypeBreakingChanges({
-            fromStableTypeIds,
             from: from.types,
             to: to.types
         });
@@ -130,21 +128,23 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private checkTypeBreakingChanges({
-        fromStableTypeIds,
         from,
         to
     }: {
-        fromStableTypeIds: Set<string>;
         from: Record<string, TypeDeclaration>;
         to: Record<string, TypeDeclaration>;
     }): void {
         for (const [typeId, fromType] of Object.entries(from)) {
-            if (isMarkedUnstable(fromType.availability) || !fromStableTypeIds.has(typeId)) {
+            if (isMarkedUnstable(fromType.availability)) {
                 continue;
             }
             const toType = to[typeId];
             if (!toType) {
                 this.errors.add(`Type "${typeId}" was removed.`);
+                continue;
+            }
+            if (isMarkedUnstable(toType.availability)) {
+                this.errors.add(`Type "${typeId}" was moved from stable to unstable availability status.`);
                 continue;
             }
             if (
@@ -235,6 +235,10 @@ export class IntermediateRepresentationChangeDetector {
                 this.errors.add(`Service "${serviceId}" was removed.`);
                 continue;
             }
+            if (isMarkedUnstable(toService.availability)) {
+                this.errors.add(`Service "${serviceId}" was moved from stable to unstable availability status.`);
+                continue;
+            }
             this.checkServiceBreakingChanges({
                 id: serviceId,
                 from: fromService,
@@ -260,14 +264,15 @@ export class IntermediateRepresentationChangeDetector {
                 this.errors.add(`Endpoint "${endpointId}" was removed.`);
                 continue;
             }
+            if (isMarkedUnstable(toEndpoint.availability)) {
+                this.errors.add(`Endpoint "${endpointId}" was moved from stable to unstable availability status.`);
+                continue;
+            }
             this.checkEndpointBreakingChanges({ id: endpointId, from: fromEndpoint, to: toEndpoint });
         }
     }
 
     private checkEndpointBreakingChanges({ id, from, to }: { id: string; from: HttpEndpoint; to: HttpEndpoint }): void {
-        if (isMarkedUnstable(from.availability)) {
-            return;
-        }
         this.checkHttpMethodsBreakingChanges({ id, from: from.method, to: to.method });
         this.checkHttpPathsBreakingChanges({ id, from: from.fullPath, to: to.fullPath });
         this.checkPathParametersBreakingChanges({ id, from: from.pathParameters, to: to.pathParameters });
