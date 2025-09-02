@@ -79,7 +79,10 @@ export class EndpointSnippetGenerator {
             async: true,
             throws: true,
             body: swift.CodeBlock.withStatements([
-                this.generateRootClientInitializationStatement({ auth: endpoint.auth, values: snippet.auth }),
+                this.generateRootClientInitializationStatement({
+                    auth: endpoint.auth,
+                    snippet: snippet
+                }),
                 swift.LineBreak.single(),
                 this.generateEndpointMethodCallStatement({ endpoint, snippet })
             ])
@@ -88,12 +91,12 @@ export class EndpointSnippetGenerator {
 
     private generateRootClientInitializationStatement({
         auth,
-        values
+        snippet
     }: {
         auth: FernIr.dynamic.Auth | undefined;
-        values: FernIr.dynamic.AuthValues | undefined;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
     }) {
-        const rootClientArgs = auth && values ? this.getRootClientAuthArgs({ auth, values }) : [];
+        const rootClientArgs = auth ? this.getRootClientAuthArgs({ auth, snippet }) : [];
         return swift.Statement.constantDeclaration({
             unsafeName: CLIENT_CONST_NAME,
             value: swift.Expression.classInitialization({
@@ -106,11 +109,38 @@ export class EndpointSnippetGenerator {
 
     private getRootClientAuthArgs({
         auth,
-        values
+        snippet
     }: {
         auth: FernIr.dynamic.Auth;
-        values: FernIr.dynamic.AuthValues;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): swift.FunctionArgument[] {
+        const args: swift.FunctionArgument[] = [];
+
+        if (snippet.baseURL != null && snippet.environment != null) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: "Cannot specify both baseUrl and environment options"
+            });
+        }
+        if (snippet.baseURL != null) {
+            if (this.context.ir.environments?.environments.type === "multipleBaseUrls") {
+                // TODO(kafkas): Not implemented yet
+            } else {
+                args.push(
+                    swift.functionArgument({
+                        label: "baseURL",
+                        value: swift.Expression.stringLiteral(snippet.baseURL)
+                    })
+                );
+            }
+        }
+
+        const values = snippet.auth;
+
+        if (values == null) {
+            return args;
+        }
+
         switch (auth.type) {
             case "basic":
                 if (values.type !== "basic") {
@@ -118,9 +148,9 @@ export class EndpointSnippetGenerator {
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
                     });
-                    return [];
+                    break;
                 }
-                return [
+                args.push(
                     swift.functionArgument({
                         label: auth.username.camelCase.unsafeName,
                         value: swift.Expression.stringLiteral(values.username)
@@ -129,30 +159,32 @@ export class EndpointSnippetGenerator {
                         label: auth.password.camelCase.unsafeName,
                         value: swift.Expression.stringLiteral(values.password)
                     })
-                ];
+                );
+                break;
             case "bearer":
                 if (values.type !== "bearer") {
                     this.context.errors.add({
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
                     });
-                    return [];
+                    return args;
                 }
-                return [
+                args.push(
                     swift.functionArgument({
                         label: auth.token.camelCase.unsafeName,
                         value: swift.Expression.stringLiteral(values.token)
                     })
-                ];
+                );
+                break;
             case "header":
                 if (values.type !== "header") {
                     this.context.errors.add({
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
                     });
-                    return [];
+                    return args;
                 }
-                return [
+                args.push(
                     swift.functionArgument({
                         label: auth.header.name.name.camelCase.unsafeName,
                         value: this.context.dynamicTypeLiteralMapper.convert({
@@ -160,30 +192,32 @@ export class EndpointSnippetGenerator {
                             value: values.value
                         })
                     })
-                ];
+                );
+                break;
             case "oauth":
                 if (values.type !== "oauth") {
                     this.context.errors.add({
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
                     });
-                    return [];
+                    return args;
                 }
                 // TODO(kafkas): Add when oauth is supported
-                return [];
+                return args;
             case "inferred":
                 if (values.type !== "inferred") {
                     this.context.errors.add({
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
                     });
-                    return [];
+                    return args;
                 }
                 // TODO(kafkas): Add when inferred auth is supported
-                return [];
+                return args;
             default:
                 assertNever(auth);
         }
+        return args;
     }
 
     private generateEndpointMethodCallStatement({

@@ -2,7 +2,10 @@ import Foundation
 import MyCustomModule
 
 private func main() async throws {
-    let client = MyCustomClient(token: "<token>")
+    let client = MyCustomClient(
+        baseURL: "https://api.fern.com",
+        token: "<token>"
+    )
 
     try await client.service.listConnections(request: .init(
         strategy: "strategy",

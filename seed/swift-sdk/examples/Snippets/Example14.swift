@@ -2,7 +2,10 @@ import Foundation
 import Examples
 
 private func main() async throws {
-    let client = ExamplesClient(token: "<token>")
+    let client = ExamplesClient(
+        baseURL: "https://api.fern.com",
+        token: "<token>"
+    )
 
     try await client.service.createMovie(request: Movie(
         id: "movie-c06a4ad7",

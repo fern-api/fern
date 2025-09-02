@@ -2,7 +2,10 @@ import Foundation
 import NoEnvironment
 
 private func main() async throws {
-    let client = NoEnvironmentClient(token: "<token>")
+    let client = NoEnvironmentClient(
+        baseURL: "https://api.fern.com",
+        token: "<token>"
+    )
 
     try await client.dummy.getDummy()
 }

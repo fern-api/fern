@@ -2,7 +2,10 @@ import Foundation
 import ClientSideParams
 
 private func main() async throws {
-    let client = ClientSideParamsClient(token: "<token>")
+    let client = ClientSideParamsClient(
+        baseURL: "https://api.fern.com",
+        token: "<token>"
+    )
 
     try await client.service.getUserById(
         userId: "userId",

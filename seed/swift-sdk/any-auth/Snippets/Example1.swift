@@ -2,7 +2,10 @@ import Foundation
 import AnyAuth
 
 private func main() async throws {
-    let client = AnyAuthClient(token: "<token>")
+    let client = AnyAuthClient(
+        baseURL: "https://api.fern.com",
+        token: "<token>"
+    )
 
     try await client.user.get()
 }
