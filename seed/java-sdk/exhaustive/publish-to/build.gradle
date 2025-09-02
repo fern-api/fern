@@ -122,9 +122,10 @@ sonatypeCentralUpload {
 }
 
 signing {
-    def signingKeyId = "$System.env.MAVEN_SIGNATURE_SECRET_KEY"
+    def signingKeyId = "$System.env.MAVEN_SIGNATURE_KID"
+    def signingKey = "$System.env.MAVEN_SIGNATURE_SECRET_KEY"
     def signingPassword = "$System.env.MAVEN_SIGNATURE_PASSWORD"
-    useInMemoryPgpKeys(signingKeyId, signingPassword)
+    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
     sign publishing.publications.maven
 }
 
