@@ -1,3 +1,4 @@
+import semver from "semver";
 import { describe, expect, it } from "vitest";
 import { diffGeneratorVersions, mergeDiffResults, Result } from "../commands/diff/diff";
 
@@ -53,5 +54,14 @@ describe("mergeDiffResults tests", () => {
     ])("diffGeneratorVersions $from to $to -> $expected", ({ from, to, expected }) => {
         const result = diffGeneratorVersions({ from, to });
         expect(result.bump).toBe(expected);
+    });
+
+    it.each([
+        { from: "1.0.0", to: "0.0.0" },
+        { from: "1.0.0", to: "0.1.0" },
+        { from: "1.0.0", to: "0.0.1" },
+        { from: "2.0.0", to: "1.0.0" }
+    ])("diffGeneratorVersions $from to $to -> throws", ({ from, to }) => {
+        expect(() => diffGeneratorVersions({ from, to })).toThrow();
     });
 });

@@ -23,6 +23,7 @@ export { PLATFORM, type Platform } from "./platform";
 export { removeSuffix } from "./removeSuffix";
 export { replaceEnvVariables } from "./replaceEnvVars";
 export { SymbolRegistry, type SymbolRegistryOptions } from "./SymbolRegistry";
+export { diffSemverOrThrow, parseSemverOrThrow } from "./semverUtils";
 export { type SetRequired } from "./setRequired";
 export { stripLeadingSlash } from "./stripLeadingSlash";
 export { titleCase } from "./titleCase";

@@ -1,3 +1,4 @@
+import { diffSemverOrThrow } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { IntermediateRepresentationChangeDetector } from "@fern-api/ir-utils";
@@ -104,15 +105,14 @@ function maxBump(bumpA: Result["bump"], bumpB: Result["bump"]): Result["bump"] {
 
 // export for testing
 export function diffGeneratorVersions(generatorVersions: { from: string; to: string } | undefined): Result {
-    if (generatorVersions === null || generatorVersions === undefined) {
+    if (generatorVersions === undefined) {
         return {
             bump: "patch",
             errors: []
         };
     }
     const { from, to } = generatorVersions;
-
-    const bump = bumpFromDiff(semver.diff(from, to)) || "patch";
+    const bump = bumpFromDiff(diffSemverOrThrow(from, to)) || "patch";
     let errors: string[] = [];
     if (bump === "major") {
         errors.push("Generator version changed by major version.");

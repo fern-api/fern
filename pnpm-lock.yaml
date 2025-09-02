@@ -7367,6 +7367,9 @@ importers:
 
   packages/commons/core-utils:
     dependencies:
+      '@types/semver':
+        specifier: ^7.5.8
+        version: 7.7.0
       ajv:
         specifier: ^8.17.1
         version: 8.17.1
@@ -7376,6 +7379,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      semver:
+        specifier: ^7.5.8
+        version: 7.7.2
       strip-ansi:
         specifier: ^7.1.0
         version: 7.1.0
