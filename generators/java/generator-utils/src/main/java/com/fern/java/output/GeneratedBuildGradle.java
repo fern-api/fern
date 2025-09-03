@@ -146,9 +146,10 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
                 writer.addNewLine();
 
                 writer.beginControlFlow("signing");
-                writer.addLine("def signingKeyId = \"$System.env." + MAVEN_SIGNING_KEY + "\"");
+                writer.addLine("def signingKeyId = \"$System.env." + MAVEN_SIGNING_KEY_ID + "\"");
+                writer.addLine("def signingKey = \"$System.env." + MAVEN_SIGNING_KEY + "\"");
                 writer.addLine("def signingPassword = \"$System.env." + MAVEN_SIGNING_PASSWORD + "\"");
-                writer.addLine("useInMemoryPgpKeys(signingKeyId, signingPassword)");
+                writer.addLine("useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)");
                 writer.addLine("sign publishing.publications.maven");
                 writer.endControlFlow();
 

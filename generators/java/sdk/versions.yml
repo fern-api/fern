@@ -1,3 +1,21 @@
+- version: 2.43.1
+  changelogEntry:
+    - summary: |
+        Fix Maven Central signing configuration to correctly use 3-parameter useInMemoryPgpKeys() method.
+        The signing block was incorrectly using MAVEN_SIGNATURE_SECRET_KEY as the key ID parameter
+        instead of MAVEN_SIGNATURE_KID, causing Sonatype Central validation failures during deployment.
+      type: fix
+  createdAt: "2025-09-02"
+  irVersion: 59
+
+- version: 2.43.0
+  changelogEntry:
+    - summary: |
+        Add support for the `apiName` and `disabledFeatures` readme config options.
+      type: feat
+  createdAt: "2025-08-29"
+  irVersion: 59
+
 - version: 2.42.1
   changelogEntry:
     - summary: |

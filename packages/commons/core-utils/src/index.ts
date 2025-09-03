@@ -12,6 +12,13 @@ export { isNonNullish } from "./isNonNullish";
 export { MediaType } from "./mediaType";
 export { mergeWithOverrides } from "./mergeWithOverrides";
 export { noop } from "./noop";
+export {
+    haveSameNullishness,
+    nullIfNullish,
+    nullIfSomeNullish,
+    undefinedIfNullish,
+    undefinedIfSomeNullish
+} from "./nullishUtils";
 export { type ObjectPropertiesVisitor, visitObject, visitObjectAsync } from "./ObjectPropertiesVisitor";
 export { type Entries, entries } from "./objects/entries";
 export { isPlainObject } from "./objects/isPlainObject";
@@ -23,6 +30,7 @@ export { PLATFORM, type Platform } from "./platform";
 export { removeSuffix } from "./removeSuffix";
 export { replaceEnvVariables } from "./replaceEnvVars";
 export { SymbolRegistry, type SymbolRegistryOptions } from "./SymbolRegistry";
+export { diffSemverOrThrow, parseSemverOrThrow } from "./semverUtils";
 export { type SetRequired } from "./setRequired";
 export { stripLeadingSlash } from "./stripLeadingSlash";
 export { titleCase } from "./titleCase";

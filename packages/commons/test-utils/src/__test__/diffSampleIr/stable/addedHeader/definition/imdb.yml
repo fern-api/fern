@@ -1,0 +1,55 @@
+types:
+  MovieId: string
+
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating:
+        type: double
+        docs: The rating scale is one to five stars
+
+  CreateMovieRequest:
+    properties:
+      title: string
+      rating: double
+
+service:
+  auth: false
+  base-path: /movies
+  headers:
+    x-service-header: string
+  endpoints:
+    createMovie:
+      docs: Add a movie to the database using the movies/*/... path.
+      method: POST
+      path: /create-movie
+      request:
+        name: CreateMovieRequestBody
+        body: CreateMovieRequest
+      response:
+        type: MovieId
+        status-code: 201
+
+    getMovie:
+      method: GET
+      path: /{movieId}
+      path-parameters:
+        movieId: MovieId
+      request:
+        name: GetMovieRequest
+      response: Movie
+      errors:
+        - MovieDoesNotExistError
+
+    listMovies:
+      method: GET
+      request:
+        name: ListMoviesRequest
+      path: /
+      response: list<Movie>
+
+errors:
+  MovieDoesNotExistError:
+    status-code: 404
+    type: MovieId
