@@ -542,14 +542,24 @@ export class DynamicTypeLiteralMapper {
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): boolean | undefined {
-        const bool =
-            as === "mapKey"
-                ? typeof value === "string"
-                    ? value === "true"
-                    : value === "false"
-                      ? false
-                      : value
-                : value;
+        const bool = (() => {
+            switch (as) {
+                case "mapKey": {
+                    if (value === "true") {
+                        return true;
+                    }
+                    if (value === "false") {
+                        return false;
+                    }
+                    return value;
+                }
+                case "mapValue":
+                case undefined:
+                    return value;
+                default:
+                    assertNever(as);
+            }
+        })();
         return this.context.getValueAsBoolean({ value: bool });
     }
 }
