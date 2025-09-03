@@ -166,7 +166,7 @@ fixtures:
         neverThrowErrors: true
       outputFolder: never-throw-errors
     - customConfig:
-        exportAllRequestsAtRoot: true
+        exportAllRequestsAtRoot: false
       outputFolder: export-all-requests-at-root
   error-property:
     - customConfig:
