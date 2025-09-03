@@ -3,9 +3,9 @@ name: Update Seed
 on:
   push:
     branches:
-      - main
+      - mallinson/ruby-v2-update-seed-workflow-with-examples
     paths:
-      - ".github/workflows/update-seed.yml"
+      # - ".github/workflows/update-seed.yml"
       - "packages/seed/**"
       - "packages/ir-sdk/fern/apis/**"
       - "packages/cli/generation/ir-generator/**"
@@ -47,7 +47,6 @@ jobs:
         with:
           filters: |
             seed:
-              - '.github/workflows/update-seed.yml'
               - 'packages/seed/**'
               - 'packages/ir-sdk/fern/apis/**'
               - 'packages/cli/generation/ir-generator/**'
