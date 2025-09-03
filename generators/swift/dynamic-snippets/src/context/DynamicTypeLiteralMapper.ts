@@ -492,7 +492,7 @@ export class DynamicTypeLiteralMapper {
                 const timestampSec = Math.round(timestampMs / 1000);
                 const roundedDateTime = new Date(timestampSec * 1000).toISOString();
                 // Remove fractional seconds (.000Z -> Z) for Swift compatibility
-                const dateTimeWithoutFractional = roundedDateTime.replace(/\.\d{3}Z$/, 'Z');
+                const dateTimeWithoutFractional = roundedDateTime.replace(/\.\d{3}Z$/, "Z");
                 return swift.Expression.dateLiteral(dateTimeWithoutFractional);
             }
             case "DATE_TIME": {
@@ -504,7 +504,7 @@ export class DynamicTypeLiteralMapper {
                 const timestampSec = Math.round(timestampMs / 1000);
                 const roundedDateTime = new Date(timestampSec * 1000).toISOString();
                 // Remove fractional seconds (.000Z -> Z) for Swift compatibility
-                const dateTimeWithoutFractional = roundedDateTime.replace(/\.\d{3}Z$/, 'Z');
+                const dateTimeWithoutFractional = roundedDateTime.replace(/\.\d{3}Z$/, "Z");
                 return swift.Expression.dateLiteral(dateTimeWithoutFractional);
             }
             case "UUID": {
