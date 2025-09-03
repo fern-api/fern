@@ -100,7 +100,11 @@ export class ExportsManager {
         });
     }
 
-    public addExportsForFilepath(filepath: ExportedFilePath, addExportTypeModifier?: boolean, customExportPaths?: string[]): void {
+    public addExportsForFilepath(
+        filepath: ExportedFilePath,
+        addExportTypeModifier?: boolean,
+        customExportPaths?: string[]
+    ): void {
         this.addExportsForDirectories(filepath.directories, addExportTypeModifier, customExportPaths);
         this.addExport(
             this.convertExportedFilePathToFilePath(filepath),
@@ -109,7 +113,11 @@ export class ExportsManager {
         );
     }
 
-    public addExportsForDirectories(directories: ExportedDirectory[], addExportTypeModifier?: boolean, customExportPaths?: string[]): void {
+    public addExportsForDirectories(
+        directories: ExportedDirectory[],
+        addExportTypeModifier?: boolean,
+        customExportPaths?: string[]
+    ): void {
         let directoryFilepath = this.packagePath;
         for (const part of directories) {
             const nextDirectoryPath = path.join(directoryFilepath, part.nameOnDisk);
@@ -139,20 +147,20 @@ export class ExportsManager {
             directoryFilepath = nextDirectoryPath;
         }
 
-		const lastPart = directories.at(-1)
-		if (customExportPaths && lastPart) {
-			for (const customExportPath of customExportPaths) {
-				const fullCustomExportPath = path.join(this.packagePath, customExportPath)
-				this.addExportDeclarationForDirectory({
-					directory: fullCustomExportPath,
-					moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
-						from: fullCustomExportPath,
-						to: directoryFilepath
-					}),
-					exportDeclaration: lastPart.exportDeclaration,
-					addExportTypeModifier
-				});
-			}
+        const lastPart = directories.at(-1);
+        if (customExportPaths && lastPart) {
+            for (const customExportPath of customExportPaths) {
+                const fullCustomExportPath = path.join(this.packagePath, customExportPath);
+                this.addExportDeclarationForDirectory({
+                    directory: fullCustomExportPath,
+                    moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
+                        from: fullCustomExportPath,
+                        to: directoryFilepath
+                    }),
+                    exportDeclaration: lastPart.exportDeclaration,
+                    addExportTypeModifier
+                });
+            }
         }
     }
 

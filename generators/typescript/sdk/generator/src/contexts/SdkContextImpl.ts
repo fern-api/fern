@@ -383,7 +383,7 @@ export class SdkContextImpl implements SdkContext {
             inlinePathParameters,
             enableInlineTypes,
             formDataSupport,
-            flattenRequestParameters,
+            flattenRequestParameters
         });
         this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextImpl({
             importsManager,
