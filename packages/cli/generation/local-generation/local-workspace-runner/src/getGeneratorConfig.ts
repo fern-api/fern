@@ -21,18 +21,13 @@ import { EnvironmentVariable } from "@fern-fern/generator-exec-sdk/api";
 const DEFAULT_OUTPUT_VERSION = "0.0.1";
 
 function extractLicenseInfo(generatorInvocation: GeneratorInvocation): FernGeneratorExec.LicenseConfig | undefined {
-    console.log("[LICENSE DEBUG] Starting extractLicenseInfo");
-    console.log("[LICENSE DEBUG] raw.github:", JSON.stringify(generatorInvocation.raw?.github, null, 2));
-    
     // Check if there's a license field in github config
     if (generatorInvocation.raw?.github != null && typeof generatorInvocation.raw.github === 'object' && 'license' in generatorInvocation.raw.github) {
         const githubConfig = generatorInvocation.raw.github as any;
-        console.log("[LICENSE DEBUG] Found github config with license:", githubConfig.license);
         
         if (githubConfig.license != null) {
             // Handle standard licenses
             if (typeof githubConfig.license === 'string') {
-                console.log("[LICENSE DEBUG] License is string type:", githubConfig.license);
                 if (githubConfig.license === 'MIT' || githubConfig.license === 'Apache-2.0') {
                     return FernGeneratorExec.LicenseConfig.basic({
                         id: githubConfig.license === 'MIT' ? FernGeneratorExec.LicenseId.Mit : FernGeneratorExec.LicenseId.Apache2
@@ -42,26 +37,20 @@ function extractLicenseInfo(generatorInvocation: GeneratorInvocation): FernGener
             // Handle custom license
             else if (typeof githubConfig.license === 'object' && 'custom' in githubConfig.license) {
                 const licensePath = githubConfig.license.custom;
-                console.log("[LICENSE DEBUG] Custom license path:", licensePath);
                 
                 try {
                     const absoluteLicensePath = path.isAbsolute(licensePath) ? licensePath : path.resolve(process.cwd(), licensePath);
-                    console.log("[LICENSE DEBUG] Absolute license path:", absoluteLicensePath);
-                    console.log("[LICENSE DEBUG] File exists:", fs.existsSync(absoluteLicensePath));
                     
                     const content = fs.readFileSync(absoluteLicensePath, 'utf-8');
-                    console.log("[LICENSE DEBUG] License file content (first 200 chars):", content.substring(0, 200));
                     
                     // Extract the first non-empty line as the license name
                     let firstLine = content.split('\n').find(line => line.trim().length > 0) || 'Custom License';
-                    console.log("[LICENSE DEBUG] First line extracted:", firstLine);
                     
                     // Remove leading # if present (markdown headers)
                     firstLine = firstLine.trim().replace(/^#+\s*/, '');
                     
                     // Remove trailing punctuation
                     firstLine = firstLine.replace(/[.:;]+$/, '').trim();
-                    console.log("[LICENSE DEBUG] Cleaned first line:", firstLine);
                     
                     // For now, return the custom license with the filename
                     // In the future, we may want to extend CustomLicense to include a name field
@@ -69,7 +58,6 @@ function extractLicenseInfo(generatorInvocation: GeneratorInvocation): FernGener
                         filename: path.basename(licensePath)
                     });
                 } catch (error) {
-                    console.warn(`[LICENSE DEBUG] Could not read license file: ${licensePath}`, error);
                     // Return custom license with just the filename
                     return FernGeneratorExec.LicenseConfig.custom({
                         filename: path.basename(licensePath)
@@ -77,8 +65,6 @@ function extractLicenseInfo(generatorInvocation: GeneratorInvocation): FernGener
                 }
             }
         }
-    } else {
-        console.log("[LICENSE DEBUG] No github license config found");
     }
     
     // Check raw configuration for metadata license as a fallback
@@ -192,19 +178,14 @@ export function getGeneratorConfig({
     // Extract license name and add it to customConfig if we have a custom license
     let enhancedCustomConfig = customConfig;
     const licenseInfo = extractLicenseInfo(generatorInvocation);
-    console.log("[LICENSE DEBUG] License info extracted:", JSON.stringify(licenseInfo, null, 2));
-    console.log("[LICENSE DEBUG] License info type:", licenseInfo?.type);
     
     if (licenseInfo != null && licenseInfo.type === 'custom') {
-        console.log("[LICENSE DEBUG] Processing custom license for config enhancement");
-        
         // Extract the license name from the file
         let licenseName: string | undefined;
         if (generatorInvocation.raw?.github != null && typeof generatorInvocation.raw.github === 'object' && 'license' in generatorInvocation.raw.github) {
             const githubConfig = generatorInvocation.raw.github as any;
             if (githubConfig.license != null && typeof githubConfig.license === 'object' && 'custom' in githubConfig.license) {
                 const licensePath = githubConfig.license.custom;
-                console.log("[LICENSE DEBUG] Extracting license name from:", licensePath);
                 
                 try {
                     const absoluteLicensePath = path.isAbsolute(licensePath) ? licensePath : path.resolve(process.cwd(), licensePath);
@@ -212,7 +193,6 @@ export function getGeneratorConfig({
                     
                     // Extract the first non-empty line as the license name
                     let firstLine = content.split('\n').find(line => line.trim().length > 0) || 'Custom License';
-                    console.log("[LICENSE DEBUG] First line for config:", firstLine);
                     
                     // Remove leading # if present (markdown headers)
                     firstLine = firstLine.trim().replace(/^#+\s*/, '');
@@ -221,9 +201,8 @@ export function getGeneratorConfig({
                     firstLine = firstLine.replace(/[.:;]+$/, '').trim();
                     
                     licenseName = firstLine;
-                    console.log("[LICENSE DEBUG] Final license name for config:", licenseName);
                 } catch (error) {
-                    console.warn(`[LICENSE DEBUG] Could not read license file for name extraction: ${licensePath}`, error);
+                    // Silently fall back to no license name
                 }
             }
         }
@@ -234,12 +213,7 @@ export function getGeneratorConfig({
                 ...(customConfig as any),
                 _fernLicenseName: licenseName
             };
-            console.log("[LICENSE DEBUG] Enhanced custom config with license name:", JSON.stringify(enhancedCustomConfig, null, 2));
-        } else {
-            console.log("[LICENSE DEBUG] No license name extracted, using original config");
         }
-    } else {
-        console.log("[LICENSE DEBUG] Not a custom license, using original config");
     }
     const { snippetPath, snippetTemplatePath, irPath, outputDirectory } = paths;
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({

@@ -79,7 +79,7 @@ publishing {
                 description = 'SDK with custom license'
                 licenses {
                     license {
-                        name = 'Custom License (LICENSE)'
+                        name = 'Apache License'
                     }
                 }
                 developers {

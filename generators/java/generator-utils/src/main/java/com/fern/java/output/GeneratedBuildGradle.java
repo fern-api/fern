@@ -281,62 +281,37 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
 
                     @Override
                     public String visitCustom(CustomLicense customLicense) {
-                        log.info("[LICENSE DEBUG] visitCustom called with filename: " + customLicense.getFilename());
                         
                         // First check if we have a license name passed from the CLI in custom config
-                        if (generatorConfig().isPresent()) {
-                            log.info("[LICENSE DEBUG] Generator config is present");
+                        if (generatorConfig().isPresent() && generatorConfig().get().getCustomConfig().isPresent()) {
+                            Object customConfig = generatorConfig().get().getCustomConfig().get();
                             
-                            if (generatorConfig().get().getCustomConfig().isPresent()) {
-                                Object customConfig = generatorConfig().get().getCustomConfig().get();
-                                log.info("[LICENSE DEBUG] Custom config class: " + customConfig.getClass().getName());
-                                log.info("[LICENSE DEBUG] Custom config toString: " + customConfig.toString());
-                                
-                                // Check if customConfig is a Map (which it usually is when coming from JSON)
-                                if (customConfig instanceof java.util.Map) {
-                                    @SuppressWarnings("unchecked")
-                                    java.util.Map<String, Object> configMap = (java.util.Map<String, Object>) customConfig;
-                                    Object licenseNameObj = configMap.get("_fernLicenseName");
-                                    if (licenseNameObj != null) {
-                                        String licenseName = licenseNameObj.toString();
-                                        log.info("[LICENSE DEBUG] Found _fernLicenseName from config map: " + licenseName);
-                                        return licenseName;
-                                    } else {
-                                        log.info("[LICENSE DEBUG] No _fernLicenseName key in config map. Keys: " + configMap.keySet());
-                                    }
-                                } else {
-                                    // Fallback to reflection for non-Map types
-                                    try {
-                                        // Use reflection to check for _fernLicenseName field
-                                        java.lang.reflect.Field fernLicenseNameField = customConfig.getClass().getDeclaredField("_fernLicenseName");
-                                        fernLicenseNameField.setAccessible(true);
-                                        Object value = fernLicenseNameField.get(customConfig);
-                                        log.info("[LICENSE DEBUG] Found _fernLicenseName field with value: " + value);
-                                        
-                                        if (value instanceof String && !((String) value).isEmpty()) {
-                                            log.info("[LICENSE DEBUG] Returning license name from config: " + value);
-                                            return (String) value;
-                                        }
-                                    } catch (NoSuchFieldException e) {
-                                        // Field doesn't exist, fall back to file extraction
-                                        log.info("[LICENSE DEBUG] No _fernLicenseName field in custom config");
-                                    } catch (Exception e) {
-                                        // Other reflection error, fall back to file extraction
-                                        log.warn("[LICENSE DEBUG] Could not extract license name from config: " + e.getMessage(), e);
-                                    }
+                            // Check if customConfig is a Map (which it usually is when coming from JSON)
+                            if (customConfig instanceof java.util.Map) {
+                                @SuppressWarnings("unchecked")
+                                java.util.Map<String, Object> configMap = (java.util.Map<String, Object>) customConfig;
+                                Object licenseNameObj = configMap.get("_fernLicenseName");
+                                if (licenseNameObj != null) {
+                                    String licenseName = licenseNameObj.toString();
+                                    return licenseName;
                                 }
                             } else {
-                                log.info("[LICENSE DEBUG] No custom config present");
+                                // Fallback to reflection for non-Map types
+                                try {
+                                    java.lang.reflect.Field fernLicenseNameField = customConfig.getClass().getDeclaredField("_fernLicenseName");
+                                    fernLicenseNameField.setAccessible(true);
+                                    Object value = fernLicenseNameField.get(customConfig);
+                                    if (value instanceof String && !((String) value).isEmpty()) {
+                                        return (String) value;
+                                    }
+                                } catch (Exception e) {
+                                    // Silently fall back to file extraction
+                                }
                             }
-                        } else {
-                            log.info("[LICENSE DEBUG] No generator config present");
                         }
                         
                         // Fallback to extracting from file
-                        log.info("[LICENSE DEBUG] Falling back to file extraction");
-                        String result = extractLicenseFromFile(customLicense.getFilename());
-                        log.info("[LICENSE DEBUG] File extraction result: " + result);
-                        return result;
+                        return extractLicenseFromFile(customLicense.getFilename());
                     }
 
                     @Override
