@@ -204,7 +204,7 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.Auth;
         values: FernIr.dynamic.AuthValues;
     }): python.NamedValue[] {
-        switch (auth.type as "basic" | "bearer" | "header" | "oauth" | "inferred") {
+        switch (auth.type as any) {
             case "basic":
                 if (values.type !== "basic") {
                     this.addAuthMismatchError(auth, values);

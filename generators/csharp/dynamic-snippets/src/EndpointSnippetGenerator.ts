@@ -285,7 +285,7 @@ export class EndpointSnippetGenerator {
             return [];
         }
 
-        switch (auth.type as "basic" | "bearer" | "header" | "oauth" | "inferred") {
+        switch (auth.type as any) {
             case "basic":
                 return values.type === "basic"
                     ? this.getConstructorBasicAuthArg({ auth: auth as FernIr.dynamic.BasicAuth, values })

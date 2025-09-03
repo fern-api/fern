@@ -19,7 +19,10 @@ import * as path from "path";
 
 const DEFAULT_OUTPUT_VERSION = "0.0.1";
 
-function extractLicenseInfo(generatorInvocation: GeneratorInvocation): FernGeneratorExec.LicenseConfig | undefined {
+function extractLicenseInfo(
+    generatorInvocation: GeneratorInvocation,
+    absolutePathToFernConfig?: AbsoluteFilePath
+): FernGeneratorExec.LicenseConfig | undefined {
     // Check if there's a license field in github config
     if (
         generatorInvocation.raw?.github != null &&
@@ -39,29 +42,9 @@ function extractLicenseInfo(generatorInvocation: GeneratorInvocation): FernGener
                     });
                 }
             } else if (typeof githubConfig.license === "object" && "custom" in githubConfig.license) {
-                const licensePath = githubConfig.license.custom;
-
-                try {
-                    const absoluteLicensePath = path.isAbsolute(licensePath)
-                        ? licensePath
-                        : path.resolve(process.cwd(), licensePath);
-
-                    const content = fs.readFileSync(absoluteLicensePath, "utf-8");
-
-                    let firstLine = content.split("\n").find((line) => line.trim().length > 0) || "Custom License";
-
-                    firstLine = firstLine.trim().replace(/^#+\s*/, "");
-
-                    firstLine = firstLine.replace(/[.:;]+$/, "").trim();
-
-                    return FernGeneratorExec.LicenseConfig.custom({
-                        filename: path.basename(licensePath)
-                    });
-                } catch (error) {
-                    return FernGeneratorExec.LicenseConfig.custom({
-                        filename: path.basename(licensePath)
-                    });
-                }
+                return FernGeneratorExec.LicenseConfig.custom({
+                    filename: path.basename(githubConfig.license.custom)
+                });
             }
         }
     }
@@ -93,6 +76,7 @@ export declare namespace getGeneratorConfig {
         generatorInvocation: generatorsYml.GeneratorInvocation;
         absolutePathToSnippet: AbsoluteFilePath | undefined;
         absolutePathToSnippetTemplates: AbsoluteFilePath | undefined;
+        absolutePathToFernConfig: AbsoluteFilePath | undefined;
         writeUnitTests: boolean;
         generateOauthClients: boolean;
         generatePaginatedClients: boolean;
@@ -168,13 +152,14 @@ export function getGeneratorConfig({
     outputVersion = DEFAULT_OUTPUT_VERSION,
     absolutePathToSnippet,
     absolutePathToSnippetTemplates,
+    absolutePathToFernConfig,
     writeUnitTests,
     generateOauthClients,
     generatePaginatedClients,
     paths
 }: getGeneratorConfig.Args): FernGeneratorExec.GeneratorConfig {
     let enhancedCustomConfig = customConfig;
-    const licenseInfo = extractLicenseInfo(generatorInvocation);
+    const licenseInfo = extractLicenseInfo(generatorInvocation, absolutePathToFernConfig);
 
     if (licenseInfo != null && licenseInfo.type === "custom") {
         let licenseName: string | undefined;
@@ -192,9 +177,14 @@ export function getGeneratorConfig({
                 const licensePath = githubConfig.license.custom;
 
                 try {
+                    // Use the directory of fern.config.json as base for relative paths
+                    const baseDir = absolutePathToFernConfig 
+                        ? path.dirname(absolutePathToFernConfig)
+                        : process.cwd();
+                    
                     const absoluteLicensePath = path.isAbsolute(licensePath)
                         ? licensePath
-                        : path.resolve(process.cwd(), licensePath);
+                        : path.resolve(baseDir, licensePath);
                     const content = fs.readFileSync(absoluteLicensePath, "utf-8");
 
                     let firstLine = content.split("\n").find((line) => line.trim().length > 0) || "Custom License";

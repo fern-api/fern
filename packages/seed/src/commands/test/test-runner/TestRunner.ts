@@ -146,13 +146,28 @@ export abstract class TestRunner {
                           ...(configuration?.customConfig as Record<string, unknown>)
                       }
                     : undefined;
-            console.log("customConfig", customConfig);
             const publishConfig = configuration?.publishConfig;
             const outputMode = configuration?.outputMode ?? this.generator.workspaceConfig.defaultOutputMode;
             const irVersion = this.generator.workspaceConfig.irVersion;
             const publishMetadata = configuration?.publishMetadata ?? undefined;
             const readme = configuration?.readmeConfig ?? undefined;
-            const license = configuration?.license ?? undefined;
+            let license = configuration?.license ?? undefined;
+            
+            // Convert relative license path to absolute for seed tests
+            if (license != null && typeof license === 'object' && 'custom' in license) {
+                const licenseObj = license as { custom: string };
+                const licensePath = licenseObj.custom;
+                
+                // Make the license path absolute
+                const absoluteLicensePath = path.isAbsolute(licensePath) 
+                    ? licensePath 
+                    : path.join(absolutePathToApiDefinition.toString(), licensePath);
+                
+                // Update license with absolute path
+                license = { custom: absoluteLicensePath };
+            }
+            
+            
             const fernWorkspace = await (
                 await convertGeneratorWorkspaceToFernWorkspace({
                     absolutePathToAPIDefinition: absolutePathToApiDefinition,

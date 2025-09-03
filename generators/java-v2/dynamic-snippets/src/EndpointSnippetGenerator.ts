@@ -239,7 +239,7 @@ export class EndpointSnippetGenerator {
             this.addError(this.context.newAuthMismatchError({ auth, values }).message);
             return [];
         }
-        switch (auth.type as "basic" | "bearer" | "header" | "oauth" | "inferred") {
+        switch (auth.type as any) {
             case "basic":
                 return values.type === "basic"
                     ? this.getRootClientBasicAuthArgs({ auth: auth as FernIr.dynamic.BasicAuth, values })
