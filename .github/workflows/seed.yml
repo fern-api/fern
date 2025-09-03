@@ -68,6 +68,7 @@ jobs:
               - 'seed/ruby-model/**'
             ruby-v2:
               - 'generators/ruby-v2/**'
+              - 'seed/ruby-sdk-v2/**'
             openapi:
               - 'generators/openapi/**'
               - 'seed/openapi/**'
