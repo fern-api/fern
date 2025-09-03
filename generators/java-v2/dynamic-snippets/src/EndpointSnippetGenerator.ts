@@ -239,20 +239,20 @@ export class EndpointSnippetGenerator {
             this.addError(this.context.newAuthMismatchError({ auth, values }).message);
             return [];
         }
-        switch (auth.type) {
+        switch (auth.type as any) {
             case "basic":
-                return values.type === "basic" ? this.getRootClientBasicAuthArgs({ auth, values }) : [];
+                return values.type === "basic" ? this.getRootClientBasicAuthArgs({ auth: auth as FernIr.dynamic.BasicAuth, values }) : [];
             case "bearer":
-                return values.type === "bearer" ? this.getRootClientBearerAuthArgs({ auth, values }) : [];
+                return values.type === "bearer" ? this.getRootClientBearerAuthArgs({ auth: auth as FernIr.dynamic.BearerAuth, values }) : [];
             case "header":
-                return values.type === "header" ? this.getRootClientHeaderAuthArgs({ auth, values }) : [];
+                return values.type === "header" ? this.getRootClientHeaderAuthArgs({ auth: auth as FernIr.dynamic.HeaderAuth, values }) : [];
             case "oauth":
-                return values.type === "oauth" ? this.getRootClientOAuthArgs({ auth, values }) : [];
+                return values.type === "oauth" ? this.getRootClientOAuthArgs({ auth: auth as FernIr.dynamic.OAuth, values }) : [];
             case "inferred":
                 this.addWarning("The Java SDK Generator does not support Inferred auth scheme yet");
                 return [];
             default:
-                assertNever(auth);
+                assertNever(auth as never);
         }
     }
 

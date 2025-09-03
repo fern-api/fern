@@ -156,13 +156,13 @@ export class EndpointSnippetGenerator {
             this.addError(this.context.newAuthMismatchError({ auth, values }).message);
             return [];
         }
-        switch (auth.type) {
+        switch (auth.type as any) {
             case "basic":
-                return values.type === "basic" ? this.getConstructorBasicAuthArgs({ auth, values }) : [];
+                return values.type === "basic" ? this.getConstructorBasicAuthArgs({ auth: auth as FernIr.dynamic.BasicAuth, values }) : [];
             case "bearer":
-                return values.type === "bearer" ? this.getConstructorBearerAuthArgs({ auth, values }) : [];
+                return values.type === "bearer" ? this.getConstructorBearerAuthArgs({ auth: auth as FernIr.dynamic.BearerAuth, values }) : [];
             case "header":
-                return values.type === "header" ? this.getConstructorHeaderAuthArgs({ auth, values }) : [];
+                return values.type === "header" ? this.getConstructorHeaderAuthArgs({ auth: auth as FernIr.dynamic.HeaderAuth, values }) : [];
             case "oauth":
                 this.addWarning("The PHP SDK doesn't support OAuth client credentials yet");
                 return [];
@@ -170,7 +170,7 @@ export class EndpointSnippetGenerator {
                 this.addWarning("The PHP SDK Generator does not support Inferred auth scheme yet");
                 return [];
             default:
-                assertNever(auth);
+                assertNever(auth as never);
         }
     }
 

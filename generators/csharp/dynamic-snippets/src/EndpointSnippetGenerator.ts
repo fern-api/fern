@@ -285,20 +285,20 @@ export class EndpointSnippetGenerator {
             return [];
         }
 
-        switch (auth.type) {
+        switch (auth.type as any) {
             case "basic":
-                return values.type === "basic" ? this.getConstructorBasicAuthArg({ auth, values }) : [];
+                return values.type === "basic" ? this.getConstructorBasicAuthArg({ auth: auth as FernIr.dynamic.BasicAuth, values }) : [];
             case "bearer":
-                return values.type === "bearer" ? this.getConstructorBearerAuthArgs({ auth, values }) : [];
+                return values.type === "bearer" ? this.getConstructorBearerAuthArgs({ auth: auth as FernIr.dynamic.BearerAuth, values }) : [];
             case "header":
-                return values.type === "header" ? this.getConstructorHeaderAuthArgs({ auth, values }) : [];
+                return values.type === "header" ? this.getConstructorHeaderAuthArgs({ auth: auth as FernIr.dynamic.HeaderAuth, values }) : [];
             case "oauth":
-                return values.type === "oauth" ? this.getConstructorOAuthArgs({ auth, values }) : [];
+                return values.type === "oauth" ? this.getConstructorOAuthArgs({ auth: auth as FernIr.dynamic.OAuth, values }) : [];
             case "inferred":
                 this.addWarning("The C# SDK Generator does not support Inferred auth scheme yet");
                 return [];
             default:
-                assertNever(auth);
+                assertNever(auth as never);
         }
     }
 

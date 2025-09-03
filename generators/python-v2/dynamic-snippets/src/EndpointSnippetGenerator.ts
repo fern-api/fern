@@ -204,40 +204,40 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.Auth;
         values: FernIr.dynamic.AuthValues;
     }): python.NamedValue[] {
-        switch (auth.type) {
+        switch (auth.type as any) {
             case "basic":
                 if (values.type !== "basic") {
                     this.addAuthMismatchError(auth, values);
                     return [];
                 }
-                return this.getConstructorBasicAuthArg({ auth, values });
+                return this.getConstructorBasicAuthArg({ auth: auth as FernIr.dynamic.BasicAuth, values });
             case "bearer":
                 if (values.type !== "bearer") {
                     this.addAuthMismatchError(auth, values);
                     return [];
                 }
-                return this.getConstructorBearerAuthArgs({ auth, values });
+                return this.getConstructorBearerAuthArgs({ auth: auth as FernIr.dynamic.BearerAuth, values });
             case "header":
                 if (values.type !== "header") {
                     this.addAuthMismatchError(auth, values);
                     return [];
                 }
-                return this.getConstructorHeaderAuthArgs({ auth, values });
+                return this.getConstructorHeaderAuthArgs({ auth: auth as FernIr.dynamic.HeaderAuth, values });
             case "oauth":
                 if (values.type !== "oauth") {
                     this.addAuthMismatchError(auth, values);
                     return [];
                 }
-                return this.getConstructorOAuthArgs({ auth, values });
+                return this.getConstructorOAuthArgs({ auth: auth as FernIr.dynamic.OAuth, values });
             case "inferred":
-                if (values.type !== "inferred") {
+                if ((values.type as any) !== "inferred") {
                     this.addAuthMismatchError(auth, values);
                     return [];
                 }
                 this.addWarning("The Python SDK Generator does not support Inferred auth scheme yet");
                 return [];
             default:
-                assertNever(auth);
+                assertNever(auth as never);
         }
     }
 

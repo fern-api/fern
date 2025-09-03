@@ -150,13 +150,13 @@ export class EndpointSnippetGenerator {
             this.addError(this.context.newAuthMismatchError({ auth, values }).message);
             return TypeInst.nop();
         }
-        switch (auth.type) {
+        switch (auth.type as any) {
             case "basic":
-                return values.type === "basic" ? this.getConstructorBasicAuthArg({ auth, values }) : TypeInst.nop();
+                return values.type === "basic" ? this.getConstructorBasicAuthArg({ auth: auth as FernIr.dynamic.BasicAuth, values }) : TypeInst.nop();
             case "bearer":
-                return values.type === "bearer" ? this.getConstructorBearerAuthArg({ auth, values }) : TypeInst.nop();
+                return values.type === "bearer" ? this.getConstructorBearerAuthArg({ auth: auth as FernIr.dynamic.BearerAuth, values }) : TypeInst.nop();
             case "header":
-                return values.type === "header" ? this.getConstructorHeaderAuthArg({ auth, values }) : TypeInst.nop();
+                return values.type === "header" ? this.getConstructorHeaderAuthArg({ auth: auth as FernIr.dynamic.HeaderAuth, values }) : TypeInst.nop();
             case "oauth":
                 this.addWarning("The Go SDK doesn't support OAuth client credentials yet");
                 return TypeInst.nop();
@@ -164,7 +164,7 @@ export class EndpointSnippetGenerator {
                 this.addWarning("The Go SDK Generator does not support Inferred auth scheme yet");
                 return TypeInst.nop();
             default:
-                assertNever(auth);
+                assertNever(auth as never);
         }
     }
 
