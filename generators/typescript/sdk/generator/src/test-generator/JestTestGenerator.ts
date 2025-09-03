@@ -7,7 +7,6 @@ import {
     ExampleRequestBody,
     ExampleResponse,
     ExampleTypeReference,
-    ExampleTypeReferenceShape,
     HttpEndpoint,
     HttpMethod,
     HttpService,
@@ -768,7 +767,7 @@ describe("${serviceName}", () => {
         const paginationBlock =
             endpoint.pagination !== undefined
                 ? code`
-				const expected = ${expected}
+                const expected = ${expected}
                 const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
                 expect(${expectedName}.${paginationPropertyName}).toEqual(${pageName}.data);
                 ${
@@ -780,7 +779,7 @@ describe("${serviceName}", () => {
                         `
                         : ""
                 }
-				`
+                `
                 : "";
 
         let testName = endpoint.name.originalName;
@@ -829,8 +828,8 @@ describe("${serviceName}", () => {
                         endpoint.pagination !== undefined
                             ? paginationBlock
                             : code`
-                        	const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
-                         	expect(response).toEqual(${expected});
+                            const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                            expect(response).toEqual(${expected});
                           `
                     }
                 `
@@ -1169,17 +1168,13 @@ function getExpectedResponseBody({
                 }
                 return code`${getTextOfTsNode(errorReference)}()`;
             }
-            const needsToJson = false; // doesTypeRequireToJsonForErrorBody({
-            //     body: value.body.shape,
-            //     context
-            // });
             const example = context.type.getGeneratedExample(value.body).build(context, {
                 isForSnippet: true
             });
             if (neverThrowErrors) {
                 return code`${getTextOfTsNode(example)}`;
             }
-            return code`new ${getTextOfTsNode(errorReference)}(${toJsonIfNeeded(code`${getTextOfTsNode(example)}`, needsToJson, context)})`;
+            return code`new ${getTextOfTsNode(errorReference)}(${getTextOfTsNode(example)})`;
         },
         _other: () => {
             throw new Error("Unsupported response type");
@@ -1194,41 +1189,6 @@ function getExpectedResponseBody({
         }`;
     }
     return result;
-}
-
-function toJsonIfNeeded(value: Code, needsToJson: boolean, context: SdkContext): Code {
-    if (needsToJson) {
-        const refToJson = context.jsonContext.getReferenceToToJson().getTypeNode({ isForSnippet: true });
-        return code`${getTextOfTsNode(refToJson)}(${value})`;
-    }
-    return value;
-}
-
-function doesTypeRequireToJsonForErrorBody({
-    body,
-    context
-}: {
-    body: ExampleTypeReferenceShape;
-    context: SdkContext;
-}): boolean {
-    return body._visit({
-        primitive: () => true,
-        container: (value) =>
-            value._visit({
-                list: () => false,
-                set: () => false,
-                optional: (value) =>
-                    value.optional ? doesTypeRequireToJsonForErrorBody({ body: value.optional.shape, context }) : true,
-                nullable: (value) =>
-                    value.nullable ? doesTypeRequireToJsonForErrorBody({ body: value.nullable.shape, context }) : true,
-                map: () => false,
-                literal: () => true,
-                _other: () => true
-            }),
-        unknown: () => true,
-        named: () => false,
-        _other: () => true
-    });
 }
 
 function getExampleErrorDeclarationOrThrow({
