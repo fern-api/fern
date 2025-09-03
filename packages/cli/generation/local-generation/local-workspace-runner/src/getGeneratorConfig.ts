@@ -178,10 +178,8 @@ export function getGeneratorConfig({
 
                 try {
                     // Use the directory of fern.config.json as base for relative paths
-                    const baseDir = absolutePathToFernConfig 
-                        ? path.dirname(absolutePathToFernConfig)
-                        : process.cwd();
-                    
+                    const baseDir = absolutePathToFernConfig ? path.dirname(absolutePathToFernConfig) : process.cwd();
+
                     const absoluteLicensePath = path.isAbsolute(licensePath)
                         ? licensePath
                         : path.resolve(baseDir, licensePath);

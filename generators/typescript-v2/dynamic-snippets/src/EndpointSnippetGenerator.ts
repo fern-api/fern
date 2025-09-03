@@ -210,40 +210,40 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.Auth;
         values: FernIr.dynamic.AuthValues;
     }): ts.ObjectField[] {
-        switch (auth.type as any) {
+        switch (auth.type) {
             case "basic":
                 if (values.type !== "basic") {
                     this.addAuthMismatchError(auth, values);
                     return [];
                 }
-                return this.getConstructorBasicAuthArg({ auth: auth as FernIr.dynamic.BasicAuth, values });
+                return this.getConstructorBasicAuthArg({ auth, values });
             case "bearer":
                 if (values.type !== "bearer") {
                     this.addAuthMismatchError(auth, values);
                     return [];
                 }
-                return this.getConstructorBearerAuthArgs({ auth: auth as FernIr.dynamic.BearerAuth, values });
+                return this.getConstructorBearerAuthArgs({ auth, values });
             case "header":
                 if (values.type !== "header") {
                     this.addAuthMismatchError(auth, values);
                     return [];
                 }
-                return this.getConstructorHeaderAuthArgs({ auth: auth as FernIr.dynamic.HeaderAuth, values });
+                return this.getConstructorHeaderAuthArgs({ auth, values });
             case "oauth":
                 if (values.type !== "oauth") {
                     this.addAuthMismatchError(auth, values);
                     return [];
                 }
-                return this.getConstructorOAuthArgs({ auth: auth as FernIr.dynamic.OAuth, values });
+                return this.getConstructorOAuthArgs({ auth, values });
             case "inferred":
-                if ((values.type as "basic" | "bearer" | "header" | "oauth" | "inferred") !== "inferred") {
+                if (values.type !== "inferred") {
                     this.addAuthMismatchError(auth, values);
                     return [];
                 }
                 this.addWarning("The TypeScript SDK v2 Generator does not support Inferred auth scheme yet");
                 return [];
             default:
-                assertNever(auth as never);
+                assertNever(auth);
         }
     }
 
