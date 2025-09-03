@@ -197,7 +197,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const useStatements = [
             new UseStatement({
                 path: this.packageName,
-                items: ["ClientError", "ClientConfig", this.getClientName(endpoint)]
+                items: ["ApiError", "ClientConfig", this.getClientName(endpoint)]
             })
         ];
 
@@ -209,7 +209,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             attributes: [rust.attribute({ name: "tokio::main" })],
             returnType: rust.Type.result(
                 rust.Type.reference(rust.reference({ name: "()" })),
-                rust.Type.reference(rust.reference({ name: "ClientError" }))
+                rust.Type.reference(rust.reference({ name: "ApiError" }))
             ),
             body: CodeBlock.fromStatements(this.buildErrorHandlingBody(endpoint))
         });
@@ -256,8 +256,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 body: [Statement.expression(Expression.raw('println!("Success: {:?}", response)'))]
             },
             {
-                pattern: "Err(ClientError::ApiError { status_code, body, .. })",
-                body: [Statement.expression(Expression.raw('println!("API Error {}: {:?}", status_code, body)'))]
+                pattern: "Err(ApiError::HTTP { status, message })",
+                body: [Statement.expression(Expression.raw('println!("API Error {}: {:?}", status, message)'))]
             },
             {
                 pattern: "Err(e)",
