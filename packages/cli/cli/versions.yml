@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Auto generate examples for HTTP endpoint error responses.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-03"
+  version: 0.70.0
+
+- changelogEntry:
     - summary: |
         Add custom license name extraction for Java SDK generation. The CLI now reads the first line 
         from custom LICENSE files and passes it to generators via the _fernLicenseName field in customConfig.
