@@ -37,11 +37,6 @@ export function parse({
     documents: Document[];
     options?: Partial<ParseOpenAPIOptions>;
 }): OpenApiIntermediateRepresentation {
-    console.log("DEBUG parse - Processing", documents.length, "documents");
-    documents.forEach((doc, i) => {
-        console.log(`DEBUG parse - Document ${i}: type=${doc.type}, namespace=${doc.namespace}`);
-    });
-    
     let ir: OpenApiIntermediateRepresentation = {
         apiVersion: undefined,
         title: undefined,
@@ -80,11 +75,7 @@ export function parse({
                     source,
                     namespace: document.namespace
                 });
-                console.log("DEBUG parse - Calling merge for OpenAPI document", documentIndex);
-                console.log("DEBUG parse - Current IR servers:", ir.servers.length);
-                console.log("DEBUG parse - New IR servers:", openapiIr.servers.length);
                 ir = merge(ir, openapiIr);
-                console.log("DEBUG parse - After merge, IR servers:", ir.servers.length);
                 documentIndex++;
                 break;
             }
@@ -126,10 +117,6 @@ export function parse({
                 assertNever(document);
         }
     }
-    console.log("DEBUG parse - Final IR servers:", ir.servers.length);
-    ir.servers.forEach((s, idx) => {
-        console.log(`DEBUG parse - Final server ${idx}: name="${s.name}", url="${s.url}", description="${s.description}"`);
-    });
     return ir;
 }
 
@@ -149,10 +136,6 @@ function mergeServersForMultipleBaseUrls(
     servers1: ServerInput[],
     servers2: ServerInput[]
 ): MergeServersResult {
-    console.log("\n=== DEBUG mergeServersForMultipleBaseUrls START ===");
-    console.log("Processing", servers1.length, "servers from source 1");
-    console.log("Processing", servers2.length, "servers from source 2");
-    
     // Build a map of environment name to servers from each source
     const environmentMap = new Map<string, EnvironmentServers>();
     
@@ -162,7 +145,10 @@ function mergeServersForMultipleBaseUrls(
         if (!environmentMap.has(envName)) {
             environmentMap.set(envName, {});
         }
-        environmentMap.get(envName)![0] = server;
+        const envServers = environmentMap.get(envName);
+        if (envServers) {
+            envServers[0] = server;
+        }
     }
     
     // Process servers from second source
@@ -171,7 +157,10 @@ function mergeServersForMultipleBaseUrls(
         if (!environmentMap.has(envName)) {
             environmentMap.set(envName, {});
         }
-        environmentMap.get(envName)![1] = server;
+        const envServers = environmentMap.get(envName);
+        if (envServers) {
+            envServers[1] = server;
+        }
     }
     
     // Analyze if we have a Multiple Base URLs scenario
@@ -197,20 +186,13 @@ function mergeServersForMultipleBaseUrls(
             }
             
             multipleBaseUrlEnvironments.set(envName, urlMap);
-            
-            console.log(`DEBUG - Environment "${envName}" has Multiple Base URLs:`);
-            for (const [apiName, url] of urlMap.entries()) {
-                console.log(`  ${apiName}: ${url}`);
-            }
         }
     }
     
     const hasMultipleBaseUrls = multipleBaseUrlEnvironments.size > 0;
-    console.log("DEBUG - Multiple Base URLs detected:", hasMultipleBaseUrls);
     
     if (!hasMultipleBaseUrls) {
         // No Multiple Base URLs scenario - return simple concatenation
-        console.log("DEBUG - Using simple server concatenation");
         return {
             servers: [...servers1, ...servers2],
             endpointServers: [],
@@ -232,7 +214,6 @@ function mergeServersForMultipleBaseUrls(
             const primaryServer = server1 || server2;
             
             if (!primaryServer) {
-                console.warn(`No server found for environment ${envName}`);
                 continue;
             }
             
@@ -265,22 +246,14 @@ function mergeServersForMultipleBaseUrls(
             }
         } else {
             // Single server for this environment - add both if they exist
-            if (servers[0]) result.push(servers[0]);
+            if (servers[0]) {
+                result.push(servers[0]);
+            }
             if (servers[1] && (!servers[0] || servers[0].url !== servers[1].url)) {
                 result.push(servers[1]);
             }
         }
     }
-    
-    console.log(`DEBUG - Final result: ${result.length} servers`);
-    result.forEach((server, idx) => {
-        if (server["x-fern-base-urls"]) {
-            console.log(`  Server[${idx}]: ${server.name} with Multiple Base URLs:`, server["x-fern-base-urls"]);
-        } else {
-            console.log(`  Server[${idx}]: ${server.name} -> ${server.url}`);
-        }
-    });
-    console.log("=== DEBUG mergeServersForMultipleBaseUrls END ===\n");
     
     return {
         servers: result,
@@ -355,7 +328,7 @@ function extractApiNameFromUrl(url: string): string {
         return firstPart ? firstPart.toLowerCase() : 'api';
     } catch {
         // If URL parsing fails, extract from string pattern
-        const match = url.match(/https?:\/\/([^.\/-]+)/);
+        const match = url.match(/https?:\/\/([^./-]+)/);
         return match && match[1] ? match[1].toLowerCase() : 'api';
     }
 }
@@ -364,20 +337,14 @@ function merge(
     ir1: OpenApiIntermediateRepresentation,
     ir2: OpenApiIntermediateRepresentation
 ): OpenApiIntermediateRepresentation {
-    console.log("\n### DEBUG merge function called ###");
-    console.log("ir1.servers count:", ir1.servers.length);
-    console.log("ir2.servers count:", ir2.servers.length);
-    
     // Merge servers with Multiple Base URLs support
     const mergeResult = mergeServersForMultipleBaseUrls(ir1.servers, ir2.servers);
-    console.log("Merged servers count:", mergeResult.servers.length);
     
     // Merge endpoints and potentially add endpoint servers
     let mergedEndpoints = [...ir1.endpoints, ...ir2.endpoints];
     
     // Add endpoint servers if Multiple Base URLs were detected
     if (mergeResult.hasMultipleBaseUrls && mergeResult.endpointServers.length > 0) {
-        console.log(`DEBUG merge - Adding ${mergeResult.endpointServers.length} servers to ${mergedEndpoints.length} endpoints`);
         // Add servers to all endpoints to trigger Multiple Base URLs
         mergedEndpoints = mergedEndpoints.map(endpoint => ({
             ...endpoint,
