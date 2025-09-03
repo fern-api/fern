@@ -5,7 +5,15 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.service.get_metadata({
-  shallow:false,
-  xApiVersion:'0.0.1'
+client.service.create_movie({
+  id:'id',
+  prequel:'prequel',
+  title:'title',
+  from:'from',
+  rating:1.1,
+  type:'movie',
+  tag:'tag',
+  book:'book',
+  metadata:{},
+  revenue:1000000
 });

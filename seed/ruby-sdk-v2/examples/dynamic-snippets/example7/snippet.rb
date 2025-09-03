@@ -5,4 +5,7 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.health.service.check();
+client.file.service.get_file({
+  filename:'filename',
+  xFileApiVersion:'X-File-API-Version'
+});

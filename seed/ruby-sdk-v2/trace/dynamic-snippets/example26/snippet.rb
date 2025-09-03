@@ -5,4 +5,4 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.sysprop.get_num_warm_instances();
+client.submission.stop_execution_session();

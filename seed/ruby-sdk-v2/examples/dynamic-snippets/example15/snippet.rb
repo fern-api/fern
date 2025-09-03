@@ -6,14 +6,13 @@ client = seed::Client.new(
 );
 
 client.service.create_movie({
-  id:'id',
-  prequel:'prequel',
-  title:'title',
-  from:'from',
-  rating:1.1,
+  id:'movie-c06a4ad7',
+  prequel:'movie-cv9b914f',
+  title:'The Boy and the Heron',
+  from:'Hayao Miyazaki',
+  rating:8,
   type:'movie',
-  tag:'tag',
-  book:'book',
+  tag:'tag-wf9as23d',
   metadata:{},
   revenue:1000000
 });

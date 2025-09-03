@@ -5,4 +5,4 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.submission.get_execution_sessions_state();
+client.submission.create_execution_session();
