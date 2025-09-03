@@ -148,7 +148,7 @@ function getParseAsyncOptions({
 function mergeServersForMultipleBaseUrls(
     servers1: any[],
     servers2: any[]
-): any[] {
+): MergeServersResult {
     console.log("\n=== DEBUG mergeServersForMultipleBaseUrls START ===");
     console.log("Processing", servers1.length, "servers from source 1");
     console.log("Processing", servers2.length, "servers from source 2");
@@ -211,7 +211,11 @@ function mergeServersForMultipleBaseUrls(
     if (!hasMultipleBaseUrls) {
         // No Multiple Base URLs scenario - return simple concatenation
         console.log("DEBUG - Using simple server concatenation");
-        return [...servers1, ...servers2];
+        return {
+            servers: [...servers1, ...servers2],
+            endpointServers: [],
+            hasMultipleBaseUrls: false
+        };
     }
     
     // Build the result with Multiple Base URLs structure
@@ -263,13 +267,6 @@ function mergeServersForMultipleBaseUrls(
         }
     }
     
-    // Store Multiple Base URLs metadata for downstream processing
-    if (endpointServers.length > 0) {
-        (globalThis as any).__fernEndpointServers = endpointServers;
-        (globalThis as any).__fernHasMultipleBaseUrls = true;
-        console.log(`DEBUG - Configured ${endpointServers.length} endpoint servers for Multiple Base URLs`);
-    }
-    
     console.log(`DEBUG - Final result: ${result.length} servers`);
     result.forEach((server, idx) => {
         if (server["x-fern-base-urls"]) {
@@ -280,11 +277,21 @@ function mergeServersForMultipleBaseUrls(
     });
     console.log("=== DEBUG mergeServersForMultipleBaseUrls END ===\n");
     
-    return result;
+    return {
+        servers: result,
+        endpointServers,
+        hasMultipleBaseUrls: endpointServers.length > 0
+    };
 }
 
 interface EnvironmentServers {
     [sourceIndex: number]: any;
+}
+
+interface MergeServersResult {
+    servers: any[];
+    endpointServers: any[];
+    hasMultipleBaseUrls: boolean;
 }
 
 function getEnvironmentName(server: any): string {
@@ -338,23 +345,20 @@ function merge(
     console.log("ir2.servers count:", ir2.servers.length);
     
     // Merge servers with Multiple Base URLs support
-    const mergedServers = mergeServersForMultipleBaseUrls(ir1.servers, ir2.servers);
-    console.log("Merged servers count:", mergedServers.length);
+    const mergeResult = mergeServersForMultipleBaseUrls(ir1.servers, ir2.servers);
+    console.log("Merged servers count:", mergeResult.servers.length);
     
     // Merge endpoints and potentially add endpoint servers
     let mergedEndpoints = [...ir1.endpoints, ...ir2.endpoints];
     
-    // Check if we stored endpoint servers (indicates Multiple Base URLs needed)
-    const endpointServers = (globalThis as any).__fernEndpointServers;
-    if (endpointServers && endpointServers.length > 0) {
-        console.log(`DEBUG merge - Adding ${endpointServers.length} servers to ${mergedEndpoints.length} endpoints`);
+    // Add endpoint servers if Multiple Base URLs were detected
+    if (mergeResult.hasMultipleBaseUrls && mergeResult.endpointServers.length > 0) {
+        console.log(`DEBUG merge - Adding ${mergeResult.endpointServers.length} servers to ${mergedEndpoints.length} endpoints`);
         // Add servers to all endpoints to trigger Multiple Base URLs
         mergedEndpoints = mergedEndpoints.map(endpoint => ({
             ...endpoint,
-            servers: endpointServers
+            servers: mergeResult.endpointServers
         }));
-        // Clean up global variable
-        delete (globalThis as any).__fernEndpointServers;
     }
     
     return {
@@ -362,7 +366,7 @@ function merge(
         title: ir1.title ?? ir2.title,
         description: ir1.description ?? ir2.description,
         basePath: ir1.basePath ?? ir2.basePath,
-        servers: mergedServers,
+        servers: mergeResult.servers,
         websocketServers: [...ir1.websocketServers, ...ir2.websocketServers],
         tags: {
             tagsById: {
