@@ -4,6 +4,9 @@ image: fernapi/fern-swift-sdk
 changelogLocation: ../../generators/swift/sdk/versions.yml
 
 buildScripts:
+  installScript:
+    commands:
+      - ./install-swift-toolchain.sh
   compileScript:
     commands:
       - swift build
@@ -23,7 +26,6 @@ test:
   local:
     workingDirectory: generators/swift
     buildCommand:
-      - chmod +x install-swift-toolchain.sh && ./install-swift-toolchain.sh
       - pnpm --filter @fern-api/swift-sdk dist:cli
     runCommand: node --enable-source-maps sdk/dist/cli.cjs {CONFIG_PATH}
 
