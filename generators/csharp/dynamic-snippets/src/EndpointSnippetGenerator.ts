@@ -674,6 +674,7 @@ export class EndpointSnippetGenerator {
         if (request.body != null) {
             args.push(this.getBodyRequestArg({ body: request.body, value: snippet.requestBody }));
         }
+
         this.context.errors.unscope();
 
         return args;
@@ -691,6 +692,9 @@ export class EndpointSnippetGenerator {
                 return this.getBytesBodyRequestArg({ value });
             }
             case "typeReference":
+                if (body.value.type === "optional" && value == undefined) {
+                    return csharp.TypeLiteral.null();
+                }
                 return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
             default:
                 assertNever(body);

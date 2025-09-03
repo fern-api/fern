@@ -1,8 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { csharp, escapeForCSharpString } from "@fern-api/csharp-codegen";
+import { isAmbiguousTypeName } from "@fern-api/csharp-codegen/src/csharp";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExampleUnionType, TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { generateFields } from "../generateFields";
@@ -225,7 +225,9 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                             writer.writeNode(memberType);
                             writer.write(")");
                         }
-                        writer.write(`${this.valuePropertyName}! : throw new Exception("`);
+                        writer.write(`${this.valuePropertyName}! : throw new `);
+                        writer.writeNode(csharp.System.Exception);
+                        writer.write('("');
                         writer.writeNode(this.classReference);
                         writer.write(
                             `.${this.discriminantPropertyName} is not '${escapeForCSharpString(type.discriminantValue.wireValue)}'")`

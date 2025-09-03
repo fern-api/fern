@@ -97,7 +97,7 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public getTestNamespace(): string {
-        return `${this.namespace}.Test`;
+        return csharp.canonicalizeNamespace(`${this.namespace}.Test`);
     }
 
     public getTestUtilsNamespace(): string {

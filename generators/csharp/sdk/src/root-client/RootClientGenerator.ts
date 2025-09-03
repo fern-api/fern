@@ -591,7 +591,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             ],
             isAsync: false,
             body: csharp.codeblock((writer) => {
-                writer.writeLine("return Environment.GetEnvironmentVariable(env) ?? throw new Exception(message);");
+                writer.writeLine(
+                    "return Environment.GetEnvironmentVariable(env) ?? throw new global::System.Exception(message);"
+                );
             }),
             type: csharp.MethodType.STATIC
         });

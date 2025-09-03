@@ -1,6 +1,7 @@
 import { csharp } from "..";
+import { isAmbiguousTypeName, resolveNamespace } from "../utils/canonicalization";
 import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
+import type { Writer } from "./core/Writer";
 
 export declare namespace ClassReference {
     interface Args {
@@ -60,46 +61,41 @@ export class ClassReference extends AstNode {
     }
 
     private writeInternal(writer: Writer, isAttribute: boolean): void {
+        const fqNamespace =
+            this.enclosingType != null
+                ? `${this.enclosingType.resolveNamespace()}.${this.enclosingType.name}`
+                : this.resolveNamespace();
+        const fqName = `${fqNamespace}.${this.name}`;
+        const globalFqName = `${this.global || writer.shouldUseFullyQualifiedNamespaces() ? "global::" : ""}${fqName}`;
+
         if (this.namespaceAlias != null) {
-            const alias = writer.addNamespaceAlias(this.namespaceAlias, this.namespace);
+            const alias = writer.addNamespaceAlias(this.namespaceAlias, this.resolveNamespace());
             writer.write(`${alias}.${this.name}`);
         } else {
-            if (writer.shouldUseFullyQualifiedNamespaces()) {
+            if (this.fullyQualified || writer.shouldUseFullyQualifiedNamespaces()) {
                 // explicitly express namespaces
                 writer.addReference(this);
-                if (this.enclosingType != null) {
-                    writer.write(`global::${this.enclosingType.namespace}.${this.enclosingType.name}.${this.name}`);
-                } else {
-                    writer.write(`global::${this.namespace}.${this.name}`);
-                }
+                writer.write(globalFqName);
             } else {
-                // use the original logic, relying on explictly declaring namespaces 'fully-qualified'
-                if (this.fullyQualified) {
+                // if the class needs to be partially qualified, or we're skipping imports,
+                // we need to at least partially qualify the type
+                if (this.qualifiedTypeNameRequired(writer, isAttribute) || writer.skipImports) {
+                    const typeQualification = this.getTypeQualification({
+                        classReferenceNamespace: this.resolveNamespace(),
+                        namespaceToBeWrittenTo: writer.getNamespace(),
+                        isAttribute
+                    });
+                    writer.write(`${typeQualification}${this.name}`);
+                } else if (isAmbiguousTypeName(this.name) && this.resolveNamespace() !== writer.getNamespace()) {
+                    // If the class is ambiguous and not in this specific namespace
+                    // we must to fully qualify the type
                     writer.addReference(this);
-                    if (this.enclosingType != null) {
-                        writer.write(
-                            `${this.global ? "global::" : ""}${this.enclosingType.namespace}.${this.enclosingType.name}.${this.name}`
-                        );
-                    } else {
-                        writer.write(`${this.global ? "global::" : ""}${this.namespace}.${this.name}`);
-                    }
-                } else if (this.qualifiedTypeNameRequired(writer, isAttribute)) {
-                    const typeQualification = this.getTypeQualification({
-                        classReferenceNamespace: this.namespace,
-                        namespaceToBeWrittenTo: writer.getNamespace(),
-                        isAttribute
-                    });
-                    writer.write(`${typeQualification}${this.name}`);
-                } else if (writer.skipImports) {
-                    const typeQualification = this.getTypeQualification({
-                        classReferenceNamespace: this.namespace,
-                        namespaceToBeWrittenTo: writer.getNamespace(),
-                        isAttribute
-                    });
-                    writer.write(`${typeQualification}${this.name}`);
+                    writer.write(globalFqName);
                 } else {
+                    // If the class is not ambiguous and is in this specific namespace,
+                    // we can use the short name
                     writer.addReference(this);
-                    writer.write(`${this.name}`);
+                    writer.write(this.name);
                 }
             }
         }
@@ -114,7 +110,6 @@ export class ClassReference extends AstNode {
             writer.write(">");
         }
     }
-
     /**
      * Computes the type qualification starting at the point where the namespace of the type
      * differs from the namespace being written to.
@@ -293,6 +288,10 @@ export class ClassReference extends AstNode {
             generics: this.generics,
             fullyQualified: true
         });
+    }
+
+    public resolveNamespace(): string {
+        return resolveNamespace(this.namespace);
     }
 }
 

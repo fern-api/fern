@@ -13,32 +13,6 @@ import { FilePropertyMapper } from "./FilePropertyMapper";
 
 const CLIENT_OPTIONS_CLASS_NAME = "ClientOptions";
 const REQUEST_OPTIONS_CLASS_NAME = "RequestOptions";
-const KNOWN_IDENTIFIERS = new Set([
-    "System",
-    "Task",
-    "Tasks",
-    "Threading",
-    "Linq",
-    "Net",
-    "Http",
-    "IO",
-    "Text",
-    "Json",
-    "Xml",
-    "Security",
-    "Collections",
-    "Data",
-    "Diagnostics",
-    "Globalization",
-    "Linq",
-    "Math",
-    "Reflection",
-    "Runtime",
-    "Security",
-    "Serialization",
-    "Threading",
-    "Xml"
-]);
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
@@ -143,14 +117,10 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         );
     }
 
-    public isUsingKnownIdentifier(name: string): boolean {
-        return KNOWN_IDENTIFIERS.has(name);
-    }
-
     public getRootClientClassReference(): csharp.ClassReference {
         const fullyQualified =
-            this.isUsingKnownIdentifier(this.getRootClientClassName()) ||
-            this.isUsingKnownIdentifier(this.getRootNamespace());
+            csharp.isKnownIdentifier(this.getRootClientClassName()) ||
+            csharp.isKnownIdentifier(this.getRootNamespace());
         return csharp.classReference({
             name: this.getRootClientClassName(),
             namespace: this.getRootNamespace(),

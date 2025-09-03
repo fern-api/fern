@@ -2,7 +2,6 @@ import { DiscriminatedUnionTypeInstance, NamedArgument, Severity } from "@fern-a
 import { assertNever } from "@fern-api/core-utils";
 import { csharp } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 
 export declare namespace DynamicTypeLiteralMapper {
@@ -221,6 +220,9 @@ export class DynamicTypeLiteralMapper {
                 if (named == null) {
                     return csharp.TypeLiteral.nop();
                 }
+                console.log(
+                    `samePropertiesAsObject : ${JSON.stringify({ named, value: discriminatedUnionTypeInstance.value }, null, 2)}`
+                );
                 return this.instantiateUnionWithBaseProperties({
                     classReference,
                     baseProperties,
@@ -233,6 +235,16 @@ export class DynamicTypeLiteralMapper {
                     return csharp.TypeLiteral.nop();
                 }
                 try {
+                    console.log(
+                        `singleProperty : ${JSON.stringify(
+                            {
+                                typeReference: unionVariant.typeReference,
+                                value: record[unionVariant.discriminantValue.wireValue]
+                            },
+                            null,
+                            2
+                        )}`
+                    );
                     this.context.errors.scope(unionVariant.discriminantValue.wireValue);
                     return this.instantiateUnionWithBaseProperties({
                         classReference,
@@ -313,10 +325,11 @@ export class DynamicTypeLiteralMapper {
         if (baseProperties.length === 0) {
             return csharp.TypeLiteral.reference(instantiation);
         }
+
         return csharp.TypeLiteral.reference(
             csharp.codeblock((writer) => {
                 writer.writeNode(instantiation);
-                writer.writeLine(" {");
+                writer.writeLine(" /* this? */{");
                 writer.indent();
                 for (const baseProperty of baseProperties) {
                     writer.write(baseProperty.name);
@@ -373,18 +386,29 @@ export class DynamicTypeLiteralMapper {
             parameters: object_.properties,
             values: this.context.getRecord(value) ?? {}
         });
+        if (this.context.getClassName(object_.declaration.name) === "Metadata") {
+            console.log(`GWS properties : ${JSON.stringify({ properties, value }, null, 2)}`);
+        }
+
         const fullyQualified =
-            this.context.isUsingKnownIdentifier(this.context.getClassName(object_.declaration.name)) ||
-            this.context.isUsingKnownIdentifier(this.context.getNamespace(object_.declaration.fernFilepath));
+            csharp.isKnownIdentifier(this.context.getClassName(object_.declaration.name)) ||
+            csharp.isKnownIdentifier(this.context.getNamespace(object_.declaration.fernFilepath));
+
         return csharp.TypeLiteral.class_({
             reference: csharp.classReference({
                 name: this.context.getClassName(object_.declaration.name),
                 namespace: this.context.getNamespace(object_.declaration.fernFilepath),
                 fullyQualified
             }),
+
             fields: properties.map((property) => {
                 this.context.errors.scope(property.name.wireValue);
                 try {
+                    if (this.context.getClassName(object_.declaration.name) === "Metadata") {
+                        console.log(
+                            `GWS property : ${this.context.getClassName(property.name.name)} == ${JSON.stringify(this.convert(property), null, 2)}`
+                        );
+                    }
                     return {
                         name: this.context.getClassName(property.name.name),
                         value: this.convert(property)

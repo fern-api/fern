@@ -162,3 +162,6 @@ export {
 } from "./ast";
 export { AstNode } from "./ast/core/AstNode";
 export { type ConstructorField } from "./ast/TypeLiteral";
+export * from "./utils/builtIn";
+export * from "./utils/canonicalization";
+export * from "./utils/generatorState";

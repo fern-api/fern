@@ -1,5 +1,5 @@
 import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-api/base-generator";
-import { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
+import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { access, mkdir, readFile, unlink, writeFile } from "fs/promises";
@@ -243,6 +243,10 @@ dotnet_diagnostic.IDE0005.severity = error
 
         // format the code cleanly using csharpier
         await this.csharpier(absolutePathToSrcDirectory);
+
+        // persist the state of the generator to allow subsequent tools to know what was generated
+        console.log(`Writing generator state to ${this.context.config.irFilepath + ".csharp-generator-state.json"}`);
+        await csharp.writeGeneratorState(this.context.config.irFilepath + ".csharp-generator-state.json");
     }
 
     private async createProject({
@@ -447,12 +451,13 @@ dotnet_diagnostic.IDE0005.severity = error
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,
-                variables: getTemplateVariables({
+                variables: {
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace,
+                    testNamespace: this.context.getTestNamespace(),
                     additionalProperties: this.context.generateNewAdditionalProperties()
-                })
+                }
             })
         );
     }
@@ -464,12 +469,12 @@ dotnet_diagnostic.IDE0005.severity = error
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,
-                variables: getTemplateVariables({
+                variables: {
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace,
                     additionalProperties: this.context.generateNewAdditionalProperties()
-                })
+                }
             })
         );
     }
@@ -490,12 +495,12 @@ dotnet_diagnostic.IDE0005.severity = error
                 RelativeFilePath.of(""),
                 replaceTemplate({
                     contents: customPagerContents,
-                    variables: getTemplateVariables({
+                    variables: {
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                         namespace: this.context.getCoreNamespace(),
                         additionalProperties: this.context.generateNewAdditionalProperties()
-                    })
+                    }
                 }).replaceAll("CustomPager", customPagerName)
             ),
             new File(
@@ -503,12 +508,12 @@ dotnet_diagnostic.IDE0005.severity = error
                 RelativeFilePath.of(""),
                 replaceTemplate({
                     contents: customPagerContextContents,
-                    variables: getTemplateVariables({
+                    variables: {
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                         namespace: this.context.getCoreNamespace(),
                         additionalProperties: this.context.generateNewAdditionalProperties()
-                    })
+                    }
                 }).replaceAll("CustomPager", customPagerName)
             )
         ];
@@ -521,12 +526,13 @@ dotnet_diagnostic.IDE0005.severity = error
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,
-                variables: getTemplateVariables({
+                variables: {
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace: this.context.getTestUtilsNamespace(),
+                    testNamespace: this.context.getTestNamespace(),
                     additionalProperties: this.context.generateNewAdditionalProperties()
-                })
+                }
             })
         );
     }
@@ -547,25 +553,6 @@ dotnet_diagnostic.IDE0005.severity = error
 
 function replaceTemplate({ contents, variables }: { contents: string; variables: Record<string, unknown> }): string {
     return template(contents)(variables);
-}
-
-function getTemplateVariables({
-    grpc,
-    idempotencyHeaders,
-    namespace,
-    additionalProperties
-}: {
-    grpc: boolean;
-    idempotencyHeaders: boolean;
-    namespace: string;
-    additionalProperties: boolean;
-}): Record<string, unknown> {
-    return {
-        grpc,
-        idempotencyHeaders,
-        namespace,
-        additionalProperties
-    };
 }
 
 function getAsIsFilepath(filename: string): string {

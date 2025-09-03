@@ -179,7 +179,7 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "long": {
-                writer.write(`${this.internalType.value}l`);
+                writer.write(`${this.internalType.value}L`);
                 break;
             }
             case "uint": {
@@ -234,6 +234,9 @@ export class TypeLiteral extends AstNode {
 
     private writeClass({ writer, class_: class_ }: { writer: Writer; class_: Class_ }): void {
         const fields = filterNopConstructorFields({ fields: class_.fields });
+        if (class_.reference.name === "Metadata") {
+            fields.forEach((field) => console.log(`GWS Field: ${field.name} ::: ${JSON.stringify(field.value)}`));
+        }
         writer.writeNode(
             new ClassInstantiation({
                 classReference: class_.reference,
