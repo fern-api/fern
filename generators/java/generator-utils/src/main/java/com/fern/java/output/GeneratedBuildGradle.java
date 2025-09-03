@@ -13,13 +13,19 @@ import com.fern.java.output.gradle.GradleRepository;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.immutables.value.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Value.Immutable
 public abstract class GeneratedBuildGradle extends GeneratedFile {
 
+    private static final Logger log = LoggerFactory.getLogger(GeneratedBuildGradle.class);
+    
     public static final String MAVEN_USERNAME_ENV_VAR = "MAVEN_USERNAME";
     public static final String MAVEN_PASSWORD_ENV_VAR = "MAVEN_PASSWORD";
     public static final String MAVEN_PUBLISH_REGISTRY_URL_ENV_VAR = "MAVEN_PUBLISH_REGISTRY_URL";
@@ -160,6 +166,106 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
         return writer.getContents();
     }
 
+    /**
+     * Reads a license file and extracts the license name.
+     * For standard licenses (Apache, MIT, etc.), returns the SPDX identifier.
+     * For custom licenses, returns the first line of the file as the license name.
+     */
+    private String extractLicenseFromFile(String filename) {
+        log.info("Attempting to extract license from file: " + filename);
+        log.info("Current working directory: " + System.getProperty("user.dir"));
+        
+        try {
+            Path licensePath = null;
+            
+            // Try multiple strategies to find the license file
+            // Strategy 1: Direct path
+            Path directPath = Paths.get(filename);
+            if (Files.exists(directPath)) {
+                licensePath = directPath;
+                log.info("Found license file at direct path: " + directPath);
+            }
+            
+            // Strategy 2: Relative to current working directory
+            if (licensePath == null) {
+                Path cwdPath = Paths.get(System.getProperty("user.dir")).resolve(filename);
+                if (Files.exists(cwdPath)) {
+                    licensePath = cwdPath;
+                    log.info("Found license file relative to CWD: " + cwdPath);
+                }
+            }
+            
+            // Strategy 3: Try as absolute path
+            if (licensePath == null && filename.startsWith("/")) {
+                Path absolutePath = Paths.get(filename);
+                if (Files.exists(absolutePath)) {
+                    licensePath = absolutePath;
+                    log.info("Found license file at absolute path: " + absolutePath);
+                }
+            }
+            
+            // Strategy 4: Check parent directories (for Docker context)
+            if (licensePath == null) {
+                Path currentDir = Paths.get("").toAbsolutePath();
+                for (int i = 0; i < 5; i++) {
+                    Path testPath = currentDir.resolve(filename);
+                    if (Files.exists(testPath)) {
+                        licensePath = testPath;
+                        log.info("Found license file in parent directory: " + testPath);
+                        break;
+                    }
+                    currentDir = currentDir.getParent();
+                    if (currentDir == null) break;
+                }
+            }
+            
+            if (licensePath == null || !Files.exists(licensePath)) {
+                log.warn("License file not found: " + filename + ". Searched in multiple locations.");
+                // Return a descriptive name instead of null
+                return "Custom License (" + Paths.get(filename).getFileName().toString() + ")";
+            }
+            
+            String content = Files.readString(licensePath);
+            String contentLower = content.toLowerCase();
+            
+            if (contentLower.contains("apache license") && contentLower.contains("version 2.0")) {
+                return "Apache-2.0";
+            } else if (contentLower.contains("mit license")) {
+                return "MIT";
+            } else if (contentLower.contains("bsd 3-clause")) {
+                return "BSD-3-Clause";
+            } else if (contentLower.contains("bsd 2-clause")) {
+                return "BSD-2-Clause";
+            } else if (contentLower.contains("gnu general public license") && contentLower.contains("version 3")) {
+                return "GPL-3.0";
+            } else if (contentLower.contains("gnu general public license") && contentLower.contains("version 2")) {
+                return "GPL-2.0";
+            } else if (contentLower.contains("mozilla public license") && contentLower.contains("2.0")) {
+                return "MPL-2.0";
+            } else if (contentLower.contains("isc license")) {
+                return "ISC";
+            } else {
+                String firstLine = content.lines()
+                        .filter(line -> !line.trim().isEmpty())
+                        .findFirst()
+                        .orElse("Custom License");
+                
+                firstLine = firstLine.trim()
+                        .replaceAll("[.:;]+$", "")
+                        .replaceAll("\\s+", " ");
+                
+                firstLine = firstLine.replace("'", "\\'");
+                
+                log.info("Extracted custom license name: " + firstLine);
+                return firstLine;
+            }
+        } catch (IOException e) {
+            log.error("Error reading license file: " + filename, e);
+            // Return a descriptive name instead of null  
+            return "Custom License (" + Paths.get(filename).getFileName().toString() + ")";
+        }
+    }
+
     private void writePomPublishConfiguration(RawFileWriter writer) {
         if (!generatorConfig().isPresent()) {
             return;
@@ -175,7 +281,28 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
 
                     @Override
                     public String visitCustom(CustomLicense customLicense) {
-                        return customLicense.toString();
+                        // First check if we have a license name passed from the CLI in custom config
+                        if (generatorConfig().isPresent() && generatorConfig().get().getCustomConfig().isPresent()) {
+                            Object customConfig = generatorConfig().get().getCustomConfig().get();
+                            try {
+                                // Use reflection to check for _fernLicenseName field
+                                java.lang.reflect.Field fernLicenseNameField = customConfig.getClass().getDeclaredField("_fernLicenseName");
+                                fernLicenseNameField.setAccessible(true);
+                                Object value = fernLicenseNameField.get(customConfig);
+                                if (value instanceof String && !((String) value).isEmpty()) {
+                                    return (String) value;
+                                }
+                            } catch (NoSuchFieldException e) {
+                                // Field doesn't exist, fall back to file extraction
+                                log.debug("No _fernLicenseName field in custom config");
+                            } catch (Exception e) {
+                                // Other reflection error, fall back to file extraction
+                                log.debug("Could not extract license name from config: " + e.getMessage());
+                            }
+                        }
+                        
+                        // Fallback to extracting from file
+                        return extractLicenseFromFile(customLicense.getFilename());
                     }
 
                     @Override
@@ -183,6 +310,19 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
                         return null;
                     }
                 }));
+        
+        // Workaround: If license is not present but publishMetadata indicates custom license, 
+        // extract from description
+        if (!license.isPresent()) {
+            Optional<PublishingMetadata> pm = config.getOutput().getPublishingMetadata();
+            if (pm.isPresent() && pm.get().getPackageDescription().isPresent()) {
+                String description = pm.get().getPackageDescription().get();
+                if (description.toLowerCase().contains("custom license")) {
+                    // Look for LICENSE file in standard locations
+                    license = Optional.of(extractLicenseFromFile("LICENSE"));
+                }
+            }
+        }
 
         Optional<PublishingMetadata> pm = config.getOutput().getPublishingMetadata();
         String organizationName = config.getOrganization();
