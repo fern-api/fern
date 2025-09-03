@@ -2,7 +2,7 @@
 - version: 1.7.0
   changelogEntry:
     - summary: |
-        Add support for the `apiName` and `disabledFeatures` readme config options.
+        Add support for the `apiName`, `disabledFeatures`, and `whiteLabel` readme config options.
       type: feat
   createdAt: "2025-08-29"
   irVersion: 59
