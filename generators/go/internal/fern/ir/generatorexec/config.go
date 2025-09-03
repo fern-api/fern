@@ -5,7 +5,8 @@ package generatorexec
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "sdk/internal"
+
+	internal "github.com/fern-api/fern-go/internal/fern/ir/internal"
 )
 
 type BasicLicense struct {
