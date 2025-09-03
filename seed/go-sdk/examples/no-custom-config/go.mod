@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/google/uuid v1.4.0
 	github.com/stretchr/testify v1.7.0
+	github.com/wiremock/go-wiremock v1.8.0
 )
 
 require (
