@@ -6,7 +6,21 @@
       type: fix
   irVersion: 59
   createdAt: "2025-09-03"
-  version: 0.68.1
+  version: 0.69.2
+
+- changelogEntry:
+    - summary: Example generation ignores headers that don't exist in the channel instead of failing hard.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-02"
+  version: 0.69.1
+
+- changelogEntry:
+    - summary: Fern diff command can consider from and to generator versions.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-02"
+  version: 0.69.0
 
 - changelogEntry:
     - summary: Fern cli diff command recognizes availability.

@@ -1648,6 +1648,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
@@ -1663,6 +1666,9 @@ importers:
       '@fern-api/ruby-base':
         specifier: workspace:*
         version: link:../base
+      '@fern-api/ruby-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../dynamic-snippets
       '@fern-api/ruby-model':
         specifier: workspace:*
         version: link:../model
@@ -6165,6 +6171,9 @@ importers:
       '@fern-api/python-dynamic-snippets':
         specifier: workspace:*
         version: link:../../../../../generators/python-v2/dynamic-snippets
+      '@fern-api/ruby-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../../../../../generators/ruby-v2/dynamic-snippets
       '@fern-api/sdk':
         specifier: 0.12.3
         version: 0.12.3
@@ -7367,6 +7376,9 @@ importers:
 
   packages/commons/core-utils:
     dependencies:
+      '@types/semver':
+        specifier: ^7.5.8
+        version: 7.7.0
       ajv:
         specifier: ^8.17.1
         version: 8.17.1
@@ -7376,6 +7388,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      semver:
+        specifier: ^7.5.8
+        version: 7.7.2
       strip-ansi:
         specifier: ^7.1.0
         version: 7.1.0
