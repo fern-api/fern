@@ -1,7 +1,7 @@
 - version: 2.43.3
   changelogEntry:
     - summary: |
-       Bugfix to make sure that the Java SDK compiles when header based versioning with defaults is enabled.
+        Bugfix to make sure that the Java SDK compiles when header based versioning with defaults is enabled.
       type: fix
   createdAt: "2025-09-03"
   irVersion: 59
