@@ -19,7 +19,8 @@ export async function getGeneratorInvocation({
     fixtureName,
     irVersion,
     publishMetadata,
-    readme
+    readme,
+    license
 }: {
     absolutePathToOutput: AbsoluteFilePath;
     docker: ParsedDockerName;
@@ -31,7 +32,19 @@ export async function getGeneratorInvocation({
     irVersion: string;
     publishMetadata: unknown;
     readme: generatorsYml.ReadmeSchema | undefined;
+    license?: unknown;
 }): Promise<generatorsYml.GeneratorInvocation> {
+    // Build the raw github config if we have a license
+    let raw: any = undefined;
+    if (license != null) {
+        raw = {
+            github: {
+                repository: "fern",
+                license: license
+            }
+        };
+    }
+    
     return {
         name: docker.name,
         version: docker.version,
@@ -49,7 +62,8 @@ export async function getGeneratorInvocation({
                 ? await FernFiddleSerialization.PublishingMetadata.parseOrThrow(publishMetadata)
                 : undefined,
         readme,
-        settings: undefined
+        settings: undefined,
+        raw
     };
 }
 

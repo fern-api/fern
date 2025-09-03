@@ -55,6 +55,7 @@ export declare namespace TestRunner {
         readme: generatorsYml.ReadmeSchema | undefined;
         shouldGenerateDynamicSnippetTests: boolean | undefined;
         inspect: boolean | undefined;
+        license?: unknown;
     }
 
     type TestResult = TestSuccess | TestFailure;
@@ -151,6 +152,7 @@ export abstract class TestRunner {
             const irVersion = this.generator.workspaceConfig.irVersion;
             const publishMetadata = configuration?.publishMetadata ?? undefined;
             const readme = configuration?.readmeConfig ?? undefined;
+            const license = configuration?.license ?? undefined;
             const fernWorkspace = await (
                 await convertGeneratorWorkspaceToFernWorkspace({
                     absolutePathToAPIDefinition: absolutePathToApiDefinition,
@@ -196,7 +198,8 @@ export abstract class TestRunner {
                     publishMetadata,
                     readme,
                     shouldGenerateDynamicSnippetTests: workspaceShouldGenerateDynamicSnippetTests(this.generator),
-                    inspect
+                    inspect,
+                    license
                 });
 
                 generationStopwatch.stop();

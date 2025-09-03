@@ -281,28 +281,64 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
 
                     @Override
                     public String visitCustom(CustomLicense customLicense) {
+                        log.info("[LICENSE DEBUG] visitCustom called with filename: " + customLicense.getFilename());
+                        
                         // First check if we have a license name passed from the CLI in custom config
-                        if (generatorConfig().isPresent() && generatorConfig().get().getCustomConfig().isPresent()) {
-                            Object customConfig = generatorConfig().get().getCustomConfig().get();
-                            try {
-                                // Use reflection to check for _fernLicenseName field
-                                java.lang.reflect.Field fernLicenseNameField = customConfig.getClass().getDeclaredField("_fernLicenseName");
-                                fernLicenseNameField.setAccessible(true);
-                                Object value = fernLicenseNameField.get(customConfig);
-                                if (value instanceof String && !((String) value).isEmpty()) {
-                                    return (String) value;
+                        if (generatorConfig().isPresent()) {
+                            log.info("[LICENSE DEBUG] Generator config is present");
+                            
+                            if (generatorConfig().get().getCustomConfig().isPresent()) {
+                                Object customConfig = generatorConfig().get().getCustomConfig().get();
+                                log.info("[LICENSE DEBUG] Custom config class: " + customConfig.getClass().getName());
+                                log.info("[LICENSE DEBUG] Custom config toString: " + customConfig.toString());
+                                
+                                // Log all fields in the custom config
+                                try {
+                                    java.lang.reflect.Field[] fields = customConfig.getClass().getDeclaredFields();
+                                    log.info("[LICENSE DEBUG] Custom config has " + fields.length + " fields:");
+                                    for (java.lang.reflect.Field field : fields) {
+                                        field.setAccessible(true);
+                                        try {
+                                            Object fieldValue = field.get(customConfig);
+                                            log.info("[LICENSE DEBUG]   Field: " + field.getName() + " = " + fieldValue);
+                                        } catch (Exception e) {
+                                            log.info("[LICENSE DEBUG]   Field: " + field.getName() + " (could not read)");
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    log.warn("[LICENSE DEBUG] Could not inspect custom config fields", e);
                                 }
-                            } catch (NoSuchFieldException e) {
-                                // Field doesn't exist, fall back to file extraction
-                                log.debug("No _fernLicenseName field in custom config");
-                            } catch (Exception e) {
-                                // Other reflection error, fall back to file extraction
-                                log.debug("Could not extract license name from config: " + e.getMessage());
+                                
+                                try {
+                                    // Use reflection to check for _fernLicenseName field
+                                    java.lang.reflect.Field fernLicenseNameField = customConfig.getClass().getDeclaredField("_fernLicenseName");
+                                    fernLicenseNameField.setAccessible(true);
+                                    Object value = fernLicenseNameField.get(customConfig);
+                                    log.info("[LICENSE DEBUG] Found _fernLicenseName field with value: " + value);
+                                    
+                                    if (value instanceof String && !((String) value).isEmpty()) {
+                                        log.info("[LICENSE DEBUG] Returning license name from config: " + value);
+                                        return (String) value;
+                                    }
+                                } catch (NoSuchFieldException e) {
+                                    // Field doesn't exist, fall back to file extraction
+                                    log.info("[LICENSE DEBUG] No _fernLicenseName field in custom config");
+                                } catch (Exception e) {
+                                    // Other reflection error, fall back to file extraction
+                                    log.warn("[LICENSE DEBUG] Could not extract license name from config: " + e.getMessage(), e);
+                                }
+                            } else {
+                                log.info("[LICENSE DEBUG] No custom config present");
                             }
+                        } else {
+                            log.info("[LICENSE DEBUG] No generator config present");
                         }
                         
                         // Fallback to extracting from file
-                        return extractLicenseFromFile(customLicense.getFilename());
+                        log.info("[LICENSE DEBUG] Falling back to file extraction");
+                        String result = extractLicenseFromFile(customLicense.getFilename());
+                        log.info("[LICENSE DEBUG] File extraction result: " + result);
+                        return result;
                     }
 
                     @Override
