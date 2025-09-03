@@ -20,14 +20,14 @@ func do() {
         context.TODO(),
         &fern.GetMetadataRequest{
             Shallow: fern.Bool(
-                true,
+                false,
             ),
             Tag: []*string{
                 fern.String(
-                    "tag",
+                    "development",
                 ),
             },
-            XApiVersion: "X-API-Version",
+            XApiVersion: "0.0.1",
         },
     )
 }
