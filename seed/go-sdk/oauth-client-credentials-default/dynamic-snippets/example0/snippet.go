@@ -12,6 +12,7 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
+        nil,
     )
     client.Auth.GetToken(
         context.TODO(),
