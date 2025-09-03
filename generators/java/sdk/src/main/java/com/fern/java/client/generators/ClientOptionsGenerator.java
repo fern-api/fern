@@ -16,6 +16,16 @@
 
 package com.fern.java.client.generators;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+
+import javax.lang.model.element.Modifier;
+
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.ir.model.ir.ApiVersionScheme;
 import com.fern.ir.model.ir.HeaderApiVersionScheme;
@@ -38,14 +48,7 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import javax.lang.model.element.Modifier;
+
 import okhttp3.OkHttpClient;
 
 public final class ClientOptionsGenerator extends AbstractFileGenerator {
@@ -692,26 +695,26 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     clientGeneratorContext.getIr().getApiVersion().get();
             if (apiVersionScheme.getHeader().isPresent()) {
                 HeaderApiVersionScheme header = apiVersionScheme.getHeader().get();
-                fromMethod.beginControlFlow("if (clientOptions.$L != null)");
-                if (header.getValue().getDefault().isPresent()) {
-                    fromMethod.addStatement(
-                            "builder.$L = $T.ofNullable(clientOptions.$L).orElse($T.$L)",
-                            apiVersionField.name,
-                            Optional.class,
-                            apiVersionField.name,
-                            clientGeneratorContext.getPoetClassNameFactory().getApiVersionClassName(),
-                            header.getValue()
-                                    .getDefault()
-                                    .get()
-                                    .getName()
-                                    .getName()
-                                    .getScreamingSnakeCase()
-                                    .getSafeName());
-                } else {
-                    fromMethod.addStatement(
-                            "builder.$L = clientOptions.$L", apiVersionField.name, apiVersionField.name);
-                }
+                fromMethod.beginControlFlow("if (clientOptions.$L != null)", apiVersionField.name);
+                fromMethod.addStatement(
+                            "builder.$L = $T.of(clientOptions.$L)", apiVersionField.name, Optional.class, apiVersionField.name);
                 fromMethod.endControlFlow();
+                if (header.getValue().getDefault().isPresent()) {
+                        fromMethod.beginControlFlow("else");
+                        fromMethod.addStatement(
+                                "builder.$L = $T.of($T.$L)",
+                                apiVersionField.name,
+                                Optional.class,
+                                clientGeneratorContext.getPoetClassNameFactory().getApiVersionClassName(),
+                                header.getValue()
+                                        .getDefault()
+                                        .get()
+                                        .getName()
+                                        .getName()
+                                        .getScreamingSnakeCase()
+                                        .getSafeName());
+                        fromMethod.endControlFlow();
+                }
             }
         }
 
