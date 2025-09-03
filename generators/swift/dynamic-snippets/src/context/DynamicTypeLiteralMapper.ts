@@ -488,14 +488,24 @@ export class DynamicTypeLiteralMapper {
                 if (date == null) {
                     return swift.Expression.nop();
                 }
-                return swift.Expression.dateLiteral(new Date(date).getTime() / 1000);
+                const timestampMs = new Date(date).getTime();
+                const timestampSec = Math.round(timestampMs / 1000);
+                const roundedDateTime = new Date(timestampSec * 1000).toISOString();
+                // Remove fractional seconds (.000Z -> Z) for Swift compatibility
+                const dateTimeWithoutFractional = roundedDateTime.replace(/\.\d{3}Z$/, 'Z');
+                return swift.Expression.dateLiteral(dateTimeWithoutFractional);
             }
             case "DATE_TIME": {
                 const dateTime = this.context.getValueAsString({ value });
                 if (dateTime == null) {
                     return swift.Expression.nop();
                 }
-                return swift.Expression.dateLiteral(new Date(dateTime).getTime() / 1000);
+                const timestampMs = new Date(dateTime).getTime();
+                const timestampSec = Math.round(timestampMs / 1000);
+                const roundedDateTime = new Date(timestampSec * 1000).toISOString();
+                // Remove fractional seconds (.000Z -> Z) for Swift compatibility
+                const dateTimeWithoutFractional = roundedDateTime.replace(/\.\d{3}Z$/, 'Z');
+                return swift.Expression.dateLiteral(dateTimeWithoutFractional);
             }
             case "UUID": {
                 const uuid = this.context.getValueAsString({ value });
