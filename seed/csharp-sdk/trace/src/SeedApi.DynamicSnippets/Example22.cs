@@ -13,8 +13,8 @@ public class Example22
             }
         );
 
-        await client.Submission.GetExecutionSessionAsync(
-            "sessionId"
+        await client.Problem.DeleteProblemAsync(
+            "problemId"
         );
     }
 
