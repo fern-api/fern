@@ -146,8 +146,8 @@ function getParseAsyncOptions({
 }
 
 function mergeServersForMultipleBaseUrls(
-    servers1: any[],
-    servers2: any[]
+    servers1: ServerInput[],
+    servers2: ServerInput[]
 ): MergeServersResult {
     console.log("\n=== DEBUG mergeServersForMultipleBaseUrls START ===");
     console.log("Processing", servers1.length, "servers from source 1");
@@ -219,8 +219,8 @@ function mergeServersForMultipleBaseUrls(
     }
     
     // Build the result with Multiple Base URLs structure
-    const result: any[] = [];
-    const endpointServers: any[] = [];
+    const result: EnhancedServer[] = [];
+    const endpointServers: EndpointServer[] = [];
     
     for (const [envName, servers] of environmentMap.entries()) {
         const urlMap = multipleBaseUrlEnvironments.get(envName);
@@ -231,12 +231,18 @@ function mergeServersForMultipleBaseUrls(
             const server2 = servers[1];
             const primaryServer = server1 || server2;
             
+            if (!primaryServer) {
+                console.warn(`No server found for environment ${envName}`);
+                continue;
+            }
+            
             // Create merged server with Multiple Base URLs extension
-            const mergedServer: any = {
+            const mergedServer: EnhancedServer = {
                 name: envName,
                 description: envName,
                 url: primaryServer.url,
-                audiences: primaryServer.audiences
+                audiences: primaryServer.audiences,
+                'x-fern-server-name': envName
             };
             
             // Add the Multiple Base URLs mapping as an extension
@@ -252,7 +258,6 @@ function mergeServersForMultipleBaseUrls(
             for (const [apiName, url] of urlMap.entries()) {
                 endpointServers.push({
                     name: `${envName}_${apiName}`,
-                    description: envName,
                     url: url,
                     audiences: primaryServer.audiences,
                     baseUrlId: apiName
@@ -284,17 +289,36 @@ function mergeServersForMultipleBaseUrls(
     };
 }
 
+interface ServerInput {
+    url: string;
+    description: string | undefined;
+    name: string | undefined;
+    audiences: string[] | undefined;
+    'x-fern-server-name'?: string;
+}
+
+interface EnhancedServer extends ServerInput {
+    'x-fern-base-urls'?: Record<string, string>;
+}
+
+interface EndpointServer {
+    name: string | undefined;
+    url: string | undefined;
+    audiences: string[] | undefined;
+    baseUrlId?: string;
+}
+
 interface EnvironmentServers {
-    [sourceIndex: number]: any;
+    [sourceIndex: number]: ServerInput;
 }
 
 interface MergeServersResult {
-    servers: any[];
-    endpointServers: any[];
+    servers: EnhancedServer[];
+    endpointServers: EndpointServer[];
     hasMultipleBaseUrls: boolean;
 }
 
-function getEnvironmentName(server: any): string {
+function getEnvironmentName(server: ServerInput): string {
     // Use description, name, or x-fern-server-name as environment identifier
     return String(
         server.description || 
