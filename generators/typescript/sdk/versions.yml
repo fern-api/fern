@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.9.5
+  changelogEntry:
+    - summary: Do not set a default `Content-Type` header when creating a HTTP response for wire test mocking.
+      type: fix
+    - summary: Generate wire tests for HTTP endpoint error examples.
+      type: feat
+  createdAt: "2025-09-03"
+  irVersion: 59
+
 - version: 2.9.4
   changelogEntry:
     - summary: |

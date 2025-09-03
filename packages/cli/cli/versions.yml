@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Auto generate examples for HTTP endpoint error responses.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-03"
+  version: 0.69.0
+
+- changelogEntry:
     - summary: Fern cli diff command recognizes availability.
       type: feat
   irVersion: 59
