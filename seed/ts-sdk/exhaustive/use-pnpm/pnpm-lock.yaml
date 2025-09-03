@@ -1206,10 +1206,10 @@ packages:
                 integrity: sha512-YpgQiITW3JXGntzdUmyUR1V812Hn8T1YVXhCu+wO3OpS4eU9l4YdD3qjyiKdV6mvV29zapkMeD390UVEf2lkUg==,
             }
 
-    dedent@1.6.0:
+    dedent@1.7.0:
         resolution:
             {
-                integrity: sha512-F1Z+5UCFpmQUzJa11agbyPVMbpgT/qA3/SKyJ1jyBgm7dUcUEa8v9JwDkerSQXfakBwFljIxhOJqGkjUwZ9FSA==,
+                integrity: sha512-HGFtf8yhuhGhqO07SV79tRp+br4MnbdjeVxotpn1QBl30pcLLCQjX5b2295ll0fv8RKDKsmWYrl05usHM9CewQ==,
             }
         peerDependencies:
             babel-plugin-macros: ^3.1.0
@@ -3909,7 +3909,7 @@ snapshots:
 
     decimal.js@10.6.0: {}
 
-    dedent@1.6.0: {}
+    dedent@1.7.0: {}
 
     deepmerge@4.3.1: {}
 
@@ -4233,7 +4233,7 @@ snapshots:
             "@types/node": 18.19.123
             chalk: 4.1.2
             co: 4.6.0
-            dedent: 1.6.0
+            dedent: 1.7.0
             is-generator-fn: 2.1.0
             jest-each: 29.7.0
             jest-matcher-utils: 29.7.0

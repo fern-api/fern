@@ -4,7 +4,6 @@
 
 import { mockServerPool } from "../../mock-server/MockServerPool";
 import * as SeedExamples from "../../../src/api/index";
-import { toJson } from "../../../src/core/json";
 import { SeedExamplesClient } from "../../../src/Client";
 
 describe("Service", () => {
@@ -26,6 +25,6 @@ describe("Service", () => {
             return await client.file.service.getFile("file.txt", {
                 "X-File-API-Version": "0.0.2",
             });
-        }).rejects.toThrow(new SeedExamples.NotFoundError(toJson("A file with that name was not found!")));
+        }).rejects.toThrow(new SeedExamples.NotFoundError("A file with that name was not found!"));
     });
 });
