@@ -75,7 +75,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false,
             packageManager: parsed?.packageManager ?? "yarn",
             flattenRequestParameters: parsed?.flattenRequestParameters ?? false,
-            exportAllRequestsAtRoot: parsed?.exportAllRequestsAtRoot ?? false,
+            exportAllRequestsAtRoot: parsed?.exportAllRequestsAtRoot ?? false
         };
 
         if (parsed?.noSerdeLayer === false && typeof parsed?.enableInlineTypes === "undefined") {
