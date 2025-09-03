@@ -498,7 +498,10 @@ exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 
 import Acme
 
 private func main() async throws {
-    let client = AcmeClient(token: "<YOUR_API_KEY>")
+    let client = AcmeClient(
+        baseURL: "http://localhost:8080",
+        token: "<YOUR_API_KEY>"
+    )
 
     try await client.dummy.getDummy()
 }
@@ -508,17 +511,13 @@ try await main()
 `;
 
 exports[`snippets (default) > single-url-environment-default > 'invalid baseURL and environment' 1`] = `
-"import Foundation
-import Acme
-
-private func main() async throws {
-    let client = AcmeClient(token: "<YOUR_API_KEY>")
-
-    try await client.dummy.getDummy()
-}
-
-try await main()
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Cannot specify both baseUrl and environment options"
+  }
+]"
 `;
 
 exports[`snippets (default) > single-url-environment-default > 'invalid environment' 1`] = `
