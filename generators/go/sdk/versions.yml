@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.7.0
+  changelogEntry:
+    - summary: |
+        Add support for the `apiName`, `disabledFeatures`, and `whiteLabel` readme config options.
+      type: feat
+  createdAt: "2025-08-29"
+  irVersion: 59
+
 - version: 1.6.7
   changelogEntry:
     - summary: |
