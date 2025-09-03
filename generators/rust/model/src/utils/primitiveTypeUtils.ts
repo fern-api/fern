@@ -210,7 +210,7 @@ export function getInnerTypeFromOptional(typeReference: TypeReference): TypeRefe
 export function typeSupportsHashAndEq(
     typeRef: TypeReference,
     context: ModelGeneratorContext,
-    analysisStack?: Set<string>
+    analysisStack: Set<string>
 ): boolean {
     return TypeReference._visit(typeRef, {
         primitive: () => true, // All primitives support Hash and Eq
@@ -237,7 +237,7 @@ export function typeSupportsHashAndEq(
 export function namedTypeSupportsHashAndEq(
     namedType: NamedType,
     context: ModelGeneratorContext,
-    analysisStack: Set<string> = new Set()
+    analysisStack: Set<string>
 ): boolean {
     const typeDeclaration = context.ir.types[namedType.typeId];
     if (!typeDeclaration) {
@@ -260,13 +260,25 @@ export function namedTypeSupportsHashAndEq(
         analysisStack.delete(namedType.typeId);
         return result;
     } else if (typeDeclaration.shape.type === "object") {
-        // Objects with only hashable fields support Hash/Eq
-        return typeDeclaration.shape.properties.every((property: ObjectProperty) =>
+        // Objects with only hashable fields support Hash/Eq (but prevent infinite recursion)
+        if (analysisStack.has(namedType.typeId)) {
+            return false; // Prevent infinite recursion
+        }
+        analysisStack.add(namedType.typeId);
+        const result = typeDeclaration.shape.properties.every((property: ObjectProperty) =>
             typeSupportsHashAndEq(property.valueType, context, analysisStack)
         );
+        analysisStack.delete(namedType.typeId);
+        return result;
     } else if (typeDeclaration.shape.type === "alias") {
-        // Aliases support Hash/Eq if their underlying type does
-        return typeSupportsHashAndEq(typeDeclaration.shape.aliasOf, context, analysisStack);
+        // Aliases support Hash/Eq if their underlying type does (but prevent infinite recursion)
+        if (analysisStack.has(namedType.typeId)) {
+            return false; // Prevent infinite recursion
+        }
+        analysisStack.add(namedType.typeId);
+        const result = typeSupportsHashAndEq(typeDeclaration.shape.aliasOf, context, analysisStack);
+        analysisStack.delete(namedType.typeId);
+        return result;
     }
 
     return false; // Other types (unions, etc.) - be conservative

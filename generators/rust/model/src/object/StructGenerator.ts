@@ -270,8 +270,10 @@ export class StructGenerator {
 
     private canDeriveHashAndEq(): boolean {
         // Check if all field types can support Hash and Eq derives
+        // Use shared stack for the entire struct's field analysis
+        const analysisStack = new Set<string>();
         return this.objectTypeDeclaration.properties.every((property) => {
-            return typeSupportsHashAndEq(property.valueType, this.context);
+            return typeSupportsHashAndEq(property.valueType, this.context, analysisStack);
         });
     }
 }
