@@ -7,7 +7,8 @@ module Seed
         extend Seed::Internal::Types::Enum
 
         NAME = "name"
-        VALUE = "value"end
+        VALUE = "value"
+      end
     end
   end
 end

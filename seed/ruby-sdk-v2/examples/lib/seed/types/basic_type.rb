@@ -6,6 +6,7 @@ module Seed
       extend Seed::Internal::Types::Enum
 
       PRIMITIVE = "primitive"
-      LITERAL = "literal"end
+      LITERAL = "literal"
+    end
   end
 end
