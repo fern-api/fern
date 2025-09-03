@@ -9,7 +9,7 @@ buildScripts:
       - ./install-swift-toolchain.sh
   compileScript:
     commands:
-      - swift build
+      - swift build -c release
 
 publish:
   preBuildCommands:
