@@ -170,57 +170,12 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
      * identifier. For custom licenses, returns the first line of the file as the license name.
      */
     private String extractLicenseFromFile(String filename) {
-        log.info("Attempting to extract license from file: " + filename);
-        log.info("Current working directory: " + System.getProperty("user.dir"));
-
         try {
-            Path licensePath = null;
+            Path licensePath = Paths.get(filename);
 
-            // Try multiple strategies to find the license file
-            // Strategy 1: Direct path
-            Path directPath = Paths.get(filename);
-            if (Files.exists(directPath)) {
-                licensePath = directPath;
-                log.info("Found license file at direct path: " + directPath);
-            }
-
-            // Strategy 2: Relative to current working directory
-            if (licensePath == null) {
-                Path cwdPath = Paths.get(System.getProperty("user.dir")).resolve(filename);
-                if (Files.exists(cwdPath)) {
-                    licensePath = cwdPath;
-                    log.info("Found license file relative to CWD: " + cwdPath);
-                }
-            }
-
-            // Strategy 3: Try as absolute path
-            if (licensePath == null && filename.startsWith("/")) {
-                Path absolutePath = Paths.get(filename);
-                if (Files.exists(absolutePath)) {
-                    licensePath = absolutePath;
-                    log.info("Found license file at absolute path: " + absolutePath);
-                }
-            }
-
-            // Strategy 4: Check parent directories (for Docker context)
-            if (licensePath == null) {
-                Path currentDir = Paths.get("").toAbsolutePath();
-                for (int i = 0; i < 5; i++) {
-                    Path testPath = currentDir.resolve(filename);
-                    if (Files.exists(testPath)) {
-                        licensePath = testPath;
-                        log.info("Found license file in parent directory: " + testPath);
-                        break;
-                    }
-                    currentDir = currentDir.getParent();
-                    if (currentDir == null) break;
-                }
-            }
-
-            if (licensePath == null || !Files.exists(licensePath)) {
-                log.warn("License file not found: " + filename + ". Searched in multiple locations.");
-                // Return a descriptive name instead of null
-                return "Custom License (" + Paths.get(filename).getFileName().toString() + ")";
+            if (!Files.exists(licensePath)) {
+                // Return a descriptive name if file not found
+                return "Custom License (" + licensePath.getFileName().toString() + ")";
             }
 
             String content = Files.readString(licensePath);
@@ -252,11 +207,9 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
 
                 firstLine = firstLine.replace("'", "\\'");
 
-                log.info("Extracted custom license name: " + firstLine);
                 return firstLine;
             }
         } catch (IOException e) {
-            log.error("Error reading license file: " + filename, e);
             // Return a descriptive name instead of null
             return "Custom License (" + Paths.get(filename).getFileName().toString() + ")";
         }

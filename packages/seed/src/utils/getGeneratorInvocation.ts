@@ -34,7 +34,6 @@ export async function getGeneratorInvocation({
     readme: generatorsYml.ReadmeSchema | undefined;
     license?: unknown;
 }): Promise<generatorsYml.GeneratorInvocation> {
-    // Build the raw github config if we have a license
     let raw: any = undefined;
     if (license != null) {
         raw = {

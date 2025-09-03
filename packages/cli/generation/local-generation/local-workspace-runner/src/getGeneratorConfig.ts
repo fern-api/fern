@@ -26,7 +26,6 @@ function extractLicenseInfo(generatorInvocation: GeneratorInvocation): FernGener
         const githubConfig = generatorInvocation.raw.github as any;
         
         if (githubConfig.license != null) {
-            // Handle standard licenses
             if (typeof githubConfig.license === 'string') {
                 if (githubConfig.license === 'MIT' || githubConfig.license === 'Apache-2.0') {
                     return FernGeneratorExec.LicenseConfig.basic({
@@ -34,7 +33,6 @@ function extractLicenseInfo(generatorInvocation: GeneratorInvocation): FernGener
                     });
                 }
             }
-            // Handle custom license
             else if (typeof githubConfig.license === 'object' && 'custom' in githubConfig.license) {
                 const licensePath = githubConfig.license.custom;
                 
@@ -43,22 +41,16 @@ function extractLicenseInfo(generatorInvocation: GeneratorInvocation): FernGener
                     
                     const content = fs.readFileSync(absoluteLicensePath, 'utf-8');
                     
-                    // Extract the first non-empty line as the license name
                     let firstLine = content.split('\n').find(line => line.trim().length > 0) || 'Custom License';
                     
-                    // Remove leading # if present (markdown headers)
                     firstLine = firstLine.trim().replace(/^#+\s*/, '');
                     
-                    // Remove trailing punctuation
                     firstLine = firstLine.replace(/[.:;]+$/, '').trim();
                     
-                    // For now, return the custom license with the filename
-                    // In the future, we may want to extend CustomLicense to include a name field
                     return FernGeneratorExec.LicenseConfig.custom({
                         filename: path.basename(licensePath)
                     });
                 } catch (error) {
-                    // Return custom license with just the filename
                     return FernGeneratorExec.LicenseConfig.custom({
                         filename: path.basename(licensePath)
                     });
@@ -67,7 +59,6 @@ function extractLicenseInfo(generatorInvocation: GeneratorInvocation): FernGener
         }
     }
     
-    // Check raw configuration for metadata license as a fallback
     if (generatorInvocation.raw?.metadata?.license != null) {
         const license = generatorInvocation.raw.metadata.license;
         if (typeof license === 'string') {
@@ -175,12 +166,10 @@ export function getGeneratorConfig({
     generatePaginatedClients,
     paths
 }: getGeneratorConfig.Args): FernGeneratorExec.GeneratorConfig {
-    // Extract license name and add it to customConfig if we have a custom license
     let enhancedCustomConfig = customConfig;
     const licenseInfo = extractLicenseInfo(generatorInvocation);
     
     if (licenseInfo != null && licenseInfo.type === 'custom') {
-        // Extract the license name from the file
         let licenseName: string | undefined;
         if (generatorInvocation.raw?.github != null && typeof generatorInvocation.raw.github === 'object' && 'license' in generatorInvocation.raw.github) {
             const githubConfig = generatorInvocation.raw.github as any;
@@ -191,13 +180,10 @@ export function getGeneratorConfig({
                     const absoluteLicensePath = path.isAbsolute(licensePath) ? licensePath : path.resolve(process.cwd(), licensePath);
                     const content = fs.readFileSync(absoluteLicensePath, 'utf-8');
                     
-                    // Extract the first non-empty line as the license name
                     let firstLine = content.split('\n').find(line => line.trim().length > 0) || 'Custom License';
                     
-                    // Remove leading # if present (markdown headers)
                     firstLine = firstLine.trim().replace(/^#+\s*/, '');
                     
-                    // Remove trailing punctuation
                     firstLine = firstLine.replace(/[.:;]+$/, '').trim();
                     
                     licenseName = firstLine;
@@ -207,7 +193,6 @@ export function getGeneratorConfig({
             }
         }
         
-        // Add the license name to custom config
         if (licenseName != null) {
             enhancedCustomConfig = {
                 ...(customConfig as any),
