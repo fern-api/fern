@@ -96,6 +96,17 @@ fixtures:
         publisher_name: "Fern"
         reference_url: "https://buildwithfern.com"
       outputFolder: signed_publish
+    - publishConfig:
+        type: maven
+        coordinate: com.fern:exhaustive
+        registryUrl: "definitelyMavenCentral"
+      publishMetadata:
+        package_description: SDK with custom license
+        publisher_email: "developers@example.com"
+        publisher_name: "Example Corp"
+      license:
+        custom: LICENSE
+      outputFolder: custom-license
   java-inline-types:
     - customConfig:
         enable-inline-types: true
