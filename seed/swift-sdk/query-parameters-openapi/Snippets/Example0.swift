@@ -8,7 +8,7 @@ private func main() async throws {
         limit: 1,
         id: "id",
         date: "date",
-        deadline: Date(timeIntervalSince1970: 1705311000),
+        deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         bytes: "bytes",
         user: User(
             name: "name",
@@ -26,7 +26,7 @@ private func main() async throws {
                 ]
             )
         ],
-        optionalDeadline: Date(timeIntervalSince1970: 1705311000),
+        optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         keyValue: [
             "keyValue": "keyValue"
         ],

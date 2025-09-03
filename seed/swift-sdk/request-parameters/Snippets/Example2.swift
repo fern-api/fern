@@ -7,8 +7,8 @@ private func main() async throws {
     try await client.user.getUsername(request: .init(
         limit: 1,
         id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-        date: Date(timeIntervalSince1970: 1673740800),
-        deadline: Date(timeIntervalSince1970: 1705311000),
+        date: try! Date("2023-01-15T00:00:00Z", strategy: .iso8601),
+        deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         bytes: "SGVsbG8gd29ybGQh",
         user: User(
             name: "name",
@@ -33,7 +33,7 @@ private func main() async throws {
                 ]
             )
         ],
-        optionalDeadline: Date(timeIntervalSince1970: 1705311000),
+        optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         keyValue: [
             "keyValue": "keyValue"
         ],

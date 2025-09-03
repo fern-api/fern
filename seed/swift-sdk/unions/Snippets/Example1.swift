@@ -7,8 +7,8 @@ private func main() async throws {
     try await client.bigunion.update(request: BigUnion.normalSweet(
         .init(
             id: "id",
-            createdAt: Date(timeIntervalSince1970: 1705311000),
-            archivedAt: Date(timeIntervalSince1970: 1705311000),
+            createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+            archivedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             value: "value"
         )
     ))

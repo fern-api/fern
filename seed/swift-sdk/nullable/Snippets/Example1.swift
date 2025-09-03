@@ -11,8 +11,8 @@ private func main() async throws {
             "tags"
         ],
         metadata: Metadata(
-            createdAt: Date(timeIntervalSince1970: 1705311000),
-            updatedAt: Date(timeIntervalSince1970: 1705311000),
+            createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+            updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             avatar: "avatar",
             activated: True,
             status: Status.active(

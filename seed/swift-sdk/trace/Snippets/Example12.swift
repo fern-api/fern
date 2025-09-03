@@ -11,8 +11,8 @@ private func main() async throws {
         serviceParam: 1,
         request: .init(
             serviceParam: 1,
-            datetime: Date(timeIntervalSince1970: 1705311000),
-            optionalDatetime: Date(timeIntervalSince1970: 1705311000),
+            datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+            optionalDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             body: PlaylistCreateRequest(
                 name: "name",
                 problems: [

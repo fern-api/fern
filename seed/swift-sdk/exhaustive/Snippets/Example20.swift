@@ -16,8 +16,8 @@ private func main() async throws {
                 long: 1000000,
                 double: 1.1,
                 bool: True,
-                datetime: Date(timeIntervalSince1970: 1705311000),
-                date: Date(timeIntervalSince1970: 1673740800),
+                datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                date: try! Date("2023-01-15T00:00:00Z", strategy: .iso8601),
                 uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                 base64: "SGVsbG8gd29ybGQh",
                 list: [
@@ -39,8 +39,8 @@ private func main() async throws {
                 long: 1000000,
                 double: 1.1,
                 bool: True,
-                datetime: Date(timeIntervalSince1970: 1705311000),
-                date: Date(timeIntervalSince1970: 1673740800),
+                datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                date: try! Date("2023-01-15T00:00:00Z", strategy: .iso8601),
                 uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                 base64: "SGVsbG8gd29ybGQh",
                 list: [

@@ -39,8 +39,8 @@ private func main() async throws {
                 username: "username",
                 email: "email",
                 phone: "phone",
-                createdAt: Date(timeIntervalSince1970: 1705311000),
-                updatedAt: Date(timeIntervalSince1970: 1705311000),
+                createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 address: Address(
                     street: "street",
                     city: "city",
@@ -58,8 +58,8 @@ private func main() async throws {
                 username: "username",
                 email: "email",
                 phone: "phone",
-                createdAt: Date(timeIntervalSince1970: 1705311000),
-                updatedAt: Date(timeIntervalSince1970: 1705311000),
+                createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 address: Address(
                     street: "street",
                     city: "city",
