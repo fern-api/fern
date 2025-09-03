@@ -1327,7 +1327,7 @@ await client.endpoints.params.getWithInlinePath({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.endpoints.GetWithInlinePath`
+**request:** `SeedExhaustive.GetWithInlinePath`
 
 </dd>
 </dl>
@@ -1393,7 +1393,7 @@ await client.endpoints.params.getWithQuery({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.endpoints.GetWithQuery`
+**request:** `SeedExhaustive.GetWithQuery`
 
 </dd>
 </dl>
@@ -1459,7 +1459,7 @@ await client.endpoints.params.getWithAllowMultipleQuery({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.endpoints.GetWithMultipleQuery`
+**request:** `SeedExhaustive.GetWithMultipleQuery`
 
 </dd>
 </dl>
@@ -1532,7 +1532,7 @@ await client.endpoints.params.getWithPathAndQuery("param", {
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.endpoints.GetWithPathAndQuery`
+**request:** `SeedExhaustive.GetWithPathAndQuery`
 
 </dd>
 </dl>
@@ -1598,7 +1598,7 @@ await client.endpoints.params.getWithInlinePathAndQuery({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.endpoints.GetWithInlinePathAndQuery`
+**request:** `SeedExhaustive.GetWithInlinePathAndQuery`
 
 </dd>
 </dl>
@@ -1735,7 +1735,7 @@ await client.endpoints.params.modifyWithInlinePath({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.endpoints.ModifyResourceAtInlinedPath`
+**request:** `SeedExhaustive.ModifyResourceAtInlinedPath`
 
 </dd>
 </dl>
@@ -2221,7 +2221,7 @@ await client.endpoints.put.add({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.endpoints.PutRequest`
+**request:** `SeedExhaustive.PutRequest`
 
 </dd>
 </dl>

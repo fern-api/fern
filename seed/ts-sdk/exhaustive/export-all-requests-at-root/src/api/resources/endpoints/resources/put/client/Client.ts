@@ -39,7 +39,7 @@ export class Put {
     }
 
     /**
-     * @param {SeedExhaustive.endpoints.PutRequest} request
+     * @param {SeedExhaustive.PutRequest} request
      * @param {Put.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -48,14 +48,14 @@ export class Put {
      *     })
      */
     public add(
-        request: SeedExhaustive.endpoints.PutRequest,
+        request: SeedExhaustive.PutRequest,
         requestOptions?: Put.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.endpoints.PutResponse> {
         return core.HttpResponsePromise.fromPromise(this.__add(request, requestOptions));
     }
 
     private async __add(
-        request: SeedExhaustive.endpoints.PutRequest,
+        request: SeedExhaustive.PutRequest,
         requestOptions?: Put.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.endpoints.PutResponse>> {
         const { id } = request;

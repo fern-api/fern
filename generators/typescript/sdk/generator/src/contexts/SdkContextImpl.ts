@@ -182,13 +182,13 @@ export class SdkContextImpl implements SdkContext {
     public readonly omitUndefined: boolean;
     public readonly neverThrowErrors: boolean;
     public readonly flattenRequestParameters: boolean;
-    public readonly exportAllRequestsAtRoot: boolean;
     public readonly importsManager: ImportsManager;
     public readonly exportsManager: ExportsManager;
     public readonly relativePackagePath: string;
     public readonly relativeTestPath: string;
     public readonly authProvider: AuthProviderContext;
     public readonly enableInlineTypes: boolean;
+    public readonly exportAllRequestsAtRoot: boolean;
 
     constructor({
         logger,
@@ -280,6 +280,7 @@ export class SdkContextImpl implements SdkContext {
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
         this.enableInlineTypes = enableInlineTypes;
+        this.exportAllRequestsAtRoot = exportAllRequestsAtRoot;
         this.externalDependencies = createExternalDependencies({
             dependencyManager,
             importsManager

@@ -439,7 +439,8 @@ export class SdkGenerator {
             exportsManager: this.exportsManager,
             formDataSupport: config.formDataSupport,
             omitFernHeaders: config.omitFernHeaders,
-            useDefaultRequestParameterValues: config.useDefaultRequestParameterValues
+            useDefaultRequestParameterValues: config.useDefaultRequestParameterValues,
+            exportAllRequestsAtRoot: config.exportAllRequestsAtRoot
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation,
