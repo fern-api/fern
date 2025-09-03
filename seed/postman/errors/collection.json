@@ -1,0 +1,898 @@
+{
+  "info": {
+    "name": "Errors",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Simple",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Foo Without Endpoint Error",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/foo1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "foo1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"bar\": \"bar\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo1"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bar\": \"bar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"bar\": \"bar\"\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Not Found Error",
+              "status": "Not Found Error",
+              "code": 404,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo1"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bar\": \"bar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"message\",\n    \"code\": 1\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Bad Request Error",
+              "status": "Bad Request Error",
+              "code": 400,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo1"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bar\": \"bar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"message\",\n    \"code\": 1\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Internal Server Error",
+              "status": "Internal Server Error",
+              "code": 500,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo1"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bar\": \"bar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"message\",\n    \"code\": 1\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Foo",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/foo2",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "foo2"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"bar\": \"bar\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo2",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo2"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bar\": \"bar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"bar\": \"bar\"\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Foo Too Much",
+              "status": "Foo Too Much",
+              "code": 429,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo2",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo2"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bar\": \"bar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"message\",\n    \"code\": 1\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Foo Too Little",
+              "status": "Foo Too Little",
+              "code": 500,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo2",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo2"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bar\": \"bar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"message\",\n    \"code\": 1\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Not Found Error",
+              "status": "Not Found Error",
+              "code": 404,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo2",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo2"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bar\": \"bar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"message\",\n    \"code\": 1\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Bad Request Error",
+              "status": "Bad Request Error",
+              "code": 400,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo2",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo2"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bar\": \"bar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"message\",\n    \"code\": 1\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Internal Server Error",
+              "status": "Internal Server Error",
+              "code": 500,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo2",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo2"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bar\": \"bar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"message\",\n    \"code\": 1\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Foo With Examples",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/foo3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "foo3"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"bar\": \"hello\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo3",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo3"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bar\": \"hello\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"bar\": \"hello\"\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Foo Too Much",
+              "status": "Foo Too Much",
+              "code": 429,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo3",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo3"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bar\": \"hello\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"Too much foo\",\n    \"code\": 1\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Foo Too Little",
+              "status": "Foo Too Little",
+              "code": 500,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo3",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo3"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bar\": \"hello\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"Too little foo\",\n    \"code\": 2\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo3",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo3"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bar\": \"bar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"bar\": \"bar\"\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Foo Too Much",
+              "status": "Foo Too Much",
+              "code": 429,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo3",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo3"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bar\": \"bar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"message\",\n    \"code\": 1\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Foo Too Little",
+              "status": "Foo Too Little",
+              "code": 500,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo3",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo3"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bar\": \"bar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"message\",\n    \"code\": 1\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Not Found Error",
+              "status": "Not Found Error",
+              "code": 404,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo3",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo3"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bar\": \"bar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"message\",\n    \"code\": 1\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Bad Request Error",
+              "status": "Bad Request Error",
+              "code": 400,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo3",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo3"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bar\": \"bar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"message\",\n    \"code\": 1\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Internal Server Error",
+              "status": "Internal Server Error",
+              "code": 500,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo3",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo3"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bar\": \"bar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"message\",\n    \"code\": 1\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
