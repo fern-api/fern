@@ -35,3 +35,5 @@ require_relative "seed/types/base_resource"
 require_relative "seed/types/memo"
 
 # Client Types
+require_relative "../README.md"
+require_relative "../reference.md"

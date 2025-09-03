@@ -29,3 +29,4 @@ require_relative "seed/internal/types/unknown"
 # API Types
 
 # Client Types
+require_relative "../reference.md"

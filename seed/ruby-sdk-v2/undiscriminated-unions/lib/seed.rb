@@ -35,3 +35,5 @@ require_relative "seed/union/types/key_type"
 # Client Types
 require_relative "seed/client"
 require_relative "seed/union/client"
+require_relative "../README.md"
+require_relative "../reference.md"

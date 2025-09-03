@@ -32,3 +32,5 @@ require_relative "seed/errors/types/unauthorized_request_error_body"
 # Client Types
 require_relative "seed/client"
 require_relative "seed/custom_auth/client"
+require_relative "../README.md"
+require_relative "../reference.md"

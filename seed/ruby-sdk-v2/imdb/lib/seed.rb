@@ -33,3 +33,5 @@ require_relative "seed/imdb/types/create_movie_request"
 # Client Types
 require_relative "seed/client"
 require_relative "seed/imdb/client"
+require_relative "../README.md"
+require_relative "../reference.md"

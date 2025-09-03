@@ -31,3 +31,4 @@ require_relative "seed/types/name"
 require_relative "seed/types/type"
 
 # Client Types
+require_relative "../reference.md"

@@ -32,3 +32,5 @@ require_relative "seed/unknown/types/my_object"
 # Client Types
 require_relative "seed/client"
 require_relative "seed/unknown/client"
+require_relative "../README.md"
+require_relative "../reference.md"

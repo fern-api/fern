@@ -33,3 +33,4 @@ require_relative "seed/level_1/types/types/address"
 require_relative "seed/level_1/types/types/person"
 
 # Client Types
+require_relative "../reference.md"
