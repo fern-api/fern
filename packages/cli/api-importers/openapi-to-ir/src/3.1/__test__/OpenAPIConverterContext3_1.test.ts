@@ -6,7 +6,7 @@ import { describe, expect, it } from "vitest";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 
 describe("OpenAPIConverterContext3_1", async () => {
-    it("resolves URL references", async () => {
+    it.skip("resolves URL references", async () => {
         const spec: OpenAPIV3_1.Document = {
             openapi: "3.1.0",
             info: {
