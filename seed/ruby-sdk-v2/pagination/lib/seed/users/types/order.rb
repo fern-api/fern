@@ -7,7 +7,8 @@ module Seed
         extend Seed::Internal::Types::Enum
 
         ASC = "asc"
-        DESC = "desc"end
+        DESC = "desc"
+      end
     end
   end
 end

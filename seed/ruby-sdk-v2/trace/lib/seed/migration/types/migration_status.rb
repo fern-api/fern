@@ -8,7 +8,8 @@ module Seed
 
         RUNNING = "RUNNING"
         FAILED = "FAILED"
-        FINISHED = "FINISHED"end
+        FINISHED = "FINISHED"
+      end
     end
   end
 end

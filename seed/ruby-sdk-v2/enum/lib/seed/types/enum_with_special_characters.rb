@@ -6,6 +6,7 @@ module Seed
       extend Seed::Internal::Types::Enum
 
       BLA = "$bla"
-      YO = "$yo"end
+      YO = "$yo"
+    end
   end
 end

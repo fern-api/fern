@@ -10,7 +10,8 @@ module Seed
           SUNNY = "SUNNY"
           CLOUDY = "CLOUDY"
           RAINING = "RAINING"
-          SNOWING = "SNOWING"end
+          SNOWING = "SNOWING"
+        end
       end
     end
   end

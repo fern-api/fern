@@ -10,6 +10,8 @@ module Seed
         field :state, -> { String }, optional: true, nullable: false
         field :zip_code, -> { String }, optional: false, nullable: false
         field :country, -> { String }, optional: true, nullable: false
+        field :building_id, -> { String }, optional: false, nullable: false
+        field :tenant_id, -> { String }, optional: false, nullable: false
       end
     end
   end

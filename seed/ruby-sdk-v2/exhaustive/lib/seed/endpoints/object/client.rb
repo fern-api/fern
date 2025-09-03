@@ -104,22 +104,6 @@ module Seed
 
           raise _response.body
         end
-
-        # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
-        def test_integer_overflow_edge_cases(request_options: {}, **params)
-          _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
-            method: "POST",
-            path: "/object/test-integer-overflow-edge-cases",
-            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params).to_h
-          )
-          _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return Seed::Types::Object_::Types::ObjectWithOptionalField.load(_response.body)
-          end
-
-          raise _response.body
-        end
       end
     end
   end

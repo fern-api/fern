@@ -7,7 +7,8 @@ module Seed
         extend Seed::Internal::Types::Enum
 
         STRING = "STRING"
-        NUMBER = "NUMBER"end
+        NUMBER = "NUMBER"
+      end
     end
   end
 end
