@@ -39,6 +39,7 @@ import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/gener
 import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
+import { listGenerators } from "./commands/list-generators/listGenerators";
 import { mockServer } from "./commands/mock/mockServer";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
@@ -192,6 +193,7 @@ async function tryRunCli(cliContext: CliContext) {
     addGenerateJsonschemaCommand(cli, cliContext);
     addWriteDocsDefinitionCommand(cli, cliContext);
     addExportCommand(cli, cliContext);
+    addListGeneratorsCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -1418,6 +1420,27 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
                 cliContext,
                 outputPath: resolve(cwd(), argv.outputPath)
+            });
+        }
+    );
+}
+
+function addListGeneratorsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "list-generators",
+        "List all available generators",
+        (yargs) =>
+            yargs.option("type", {
+                choices: ["sdk", "model", "server", "other"],
+                description: "Filter generators by type"
+            }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern list-generators"
+            });
+            await listGenerators({
+                cliContext,
+                typeFilter: argv.type
             });
         }
     );
