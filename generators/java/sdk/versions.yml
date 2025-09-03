@@ -1,3 +1,13 @@
+- version: 2.43.2
+  changelogEntry:
+    - summary: |
+        Fix custom license name extraction in build.gradle to display actual license names from LICENSE files
+        instead of toString() representations. The generator now reads the first line of custom LICENSE files
+        and displays it as the license name.
+      type: fix
+  createdAt: "2025-09-03"
+  irVersion: 59
+
 - version: 2.43.1
   changelogEntry:
     - summary: |

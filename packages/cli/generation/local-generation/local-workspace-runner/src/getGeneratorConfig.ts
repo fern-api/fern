@@ -1,9 +1,6 @@
 import { GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { isGithubSelfhosted } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import * as fs from "fs";
-import * as path from "path";
-
 import {
     GithubPublishInfo as FiddleGithubPublishInfo,
     MavenOutput,
@@ -17,36 +14,46 @@ import {
 } from "@fern-fern/fiddle-sdk/api";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EnvironmentVariable } from "@fern-fern/generator-exec-sdk/api";
+import * as fs from "fs";
+import * as path from "path";
 
 const DEFAULT_OUTPUT_VERSION = "0.0.1";
 
 function extractLicenseInfo(generatorInvocation: GeneratorInvocation): FernGeneratorExec.LicenseConfig | undefined {
     // Check if there's a license field in github config
-    if (generatorInvocation.raw?.github != null && typeof generatorInvocation.raw.github === 'object' && 'license' in generatorInvocation.raw.github) {
-        const githubConfig = generatorInvocation.raw.github as any;
-        
+    if (
+        generatorInvocation.raw?.github != null &&
+        typeof generatorInvocation.raw.github === "object" &&
+        "license" in generatorInvocation.raw.github
+    ) {
+        const githubConfig = generatorInvocation.raw.github as { license?: string | { custom: string } };
+
         if (githubConfig.license != null) {
-            if (typeof githubConfig.license === 'string') {
-                if (githubConfig.license === 'MIT' || githubConfig.license === 'Apache-2.0') {
+            if (typeof githubConfig.license === "string") {
+                if (githubConfig.license === "MIT" || githubConfig.license === "Apache-2.0") {
                     return FernGeneratorExec.LicenseConfig.basic({
-                        id: githubConfig.license === 'MIT' ? FernGeneratorExec.LicenseId.Mit : FernGeneratorExec.LicenseId.Apache2
+                        id:
+                            githubConfig.license === "MIT"
+                                ? FernGeneratorExec.LicenseId.Mit
+                                : FernGeneratorExec.LicenseId.Apache2
                     });
                 }
-            }
-            else if (typeof githubConfig.license === 'object' && 'custom' in githubConfig.license) {
+            } else if (typeof githubConfig.license === "object" && "custom" in githubConfig.license) {
                 const licensePath = githubConfig.license.custom;
-                
+
                 try {
-                    const absoluteLicensePath = path.isAbsolute(licensePath) ? licensePath : path.resolve(process.cwd(), licensePath);
-                    
-                    const content = fs.readFileSync(absoluteLicensePath, 'utf-8');
-                    
-                    let firstLine = content.split('\n').find(line => line.trim().length > 0) || 'Custom License';
-                    
-                    firstLine = firstLine.trim().replace(/^#+\s*/, '');
-                    
-                    firstLine = firstLine.replace(/[.:;]+$/, '').trim();
-                    
+                    const absoluteLicensePath = path.isAbsolute(licensePath)
+                        ? licensePath
+                        : path.resolve(process.cwd(), licensePath);
+
+                    const content = fs.readFileSync(absoluteLicensePath, "utf-8");
+
+                    let firstLine = content.split("\n").find((line) => line.trim().length > 0) || "Custom License";
+
+                    firstLine = firstLine.trim().replace(/^#+\s*/, "");
+
+                    firstLine = firstLine.replace(/[.:;]+$/, "").trim();
+
                     return FernGeneratorExec.LicenseConfig.custom({
                         filename: path.basename(licensePath)
                     });
@@ -58,22 +65,22 @@ function extractLicenseInfo(generatorInvocation: GeneratorInvocation): FernGener
             }
         }
     }
-    
+
     if (generatorInvocation.raw?.metadata?.license != null) {
         const license = generatorInvocation.raw.metadata.license;
-        if (typeof license === 'string') {
-            if (license === 'MIT' || license === 'Apache-2.0') {
+        if (typeof license === "string") {
+            if (license === "MIT" || license === "Apache-2.0") {
                 return FernGeneratorExec.LicenseConfig.basic({
-                    id: license === 'MIT' ? FernGeneratorExec.LicenseId.Mit : FernGeneratorExec.LicenseId.Apache2
+                    id: license === "MIT" ? FernGeneratorExec.LicenseId.Mit : FernGeneratorExec.LicenseId.Apache2
                 });
             }
-        } else if (typeof license === 'object' && 'custom' in license) {
+        } else if (typeof license === "object" && "custom" in license) {
             return FernGeneratorExec.LicenseConfig.custom({
                 filename: path.basename(license.custom)
             });
         }
     }
-    
+
     return undefined;
 }
 
@@ -168,34 +175,44 @@ export function getGeneratorConfig({
 }: getGeneratorConfig.Args): FernGeneratorExec.GeneratorConfig {
     let enhancedCustomConfig = customConfig;
     const licenseInfo = extractLicenseInfo(generatorInvocation);
-    
-    if (licenseInfo != null && licenseInfo.type === 'custom') {
+
+    if (licenseInfo != null && licenseInfo.type === "custom") {
         let licenseName: string | undefined;
-        if (generatorInvocation.raw?.github != null && typeof generatorInvocation.raw.github === 'object' && 'license' in generatorInvocation.raw.github) {
-            const githubConfig = generatorInvocation.raw.github as any;
-            if (githubConfig.license != null && typeof githubConfig.license === 'object' && 'custom' in githubConfig.license) {
+        if (
+            generatorInvocation.raw?.github != null &&
+            typeof generatorInvocation.raw.github === "object" &&
+            "license" in generatorInvocation.raw.github
+        ) {
+            const githubConfig = generatorInvocation.raw.github as { license?: string | { custom: string } };
+            if (
+                githubConfig.license != null &&
+                typeof githubConfig.license === "object" &&
+                "custom" in githubConfig.license
+            ) {
                 const licensePath = githubConfig.license.custom;
-                
+
                 try {
-                    const absoluteLicensePath = path.isAbsolute(licensePath) ? licensePath : path.resolve(process.cwd(), licensePath);
-                    const content = fs.readFileSync(absoluteLicensePath, 'utf-8');
-                    
-                    let firstLine = content.split('\n').find(line => line.trim().length > 0) || 'Custom License';
-                    
-                    firstLine = firstLine.trim().replace(/^#+\s*/, '');
-                    
-                    firstLine = firstLine.replace(/[.:;]+$/, '').trim();
-                    
+                    const absoluteLicensePath = path.isAbsolute(licensePath)
+                        ? licensePath
+                        : path.resolve(process.cwd(), licensePath);
+                    const content = fs.readFileSync(absoluteLicensePath, "utf-8");
+
+                    let firstLine = content.split("\n").find((line) => line.trim().length > 0) || "Custom License";
+
+                    firstLine = firstLine.trim().replace(/^#+\s*/, "");
+
+                    firstLine = firstLine.replace(/[.:;]+$/, "").trim();
+
                     licenseName = firstLine;
                 } catch (error) {
                     // Silently fall back to no license name
                 }
             }
         }
-        
+
         if (licenseName != null) {
             enhancedCustomConfig = {
-                ...(customConfig as any),
+                ...(customConfig as Record<string, unknown>),
                 _fernLicenseName: licenseName
             };
         }

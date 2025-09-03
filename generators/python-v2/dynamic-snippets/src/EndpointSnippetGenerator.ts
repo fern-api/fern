@@ -204,7 +204,7 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.Auth;
         values: FernIr.dynamic.AuthValues;
     }): python.NamedValue[] {
-        switch (auth.type as any) {
+        switch (auth.type as "basic" | "bearer" | "header" | "oauth" | "inferred") {
             case "basic":
                 if (values.type !== "basic") {
                     this.addAuthMismatchError(auth, values);
@@ -230,7 +230,7 @@ export class EndpointSnippetGenerator {
                 }
                 return this.getConstructorOAuthArgs({ auth: auth as FernIr.dynamic.OAuth, values });
             case "inferred":
-                if ((values.type as any) !== "inferred") {
+                if ((values.type as "basic" | "bearer" | "header" | "oauth" | "inferred") !== "inferred") {
                     this.addAuthMismatchError(auth, values);
                     return [];
                 }

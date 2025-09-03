@@ -43,7 +43,7 @@ export async function getGeneratorInvocation({
             }
         };
     }
-    
+
     return {
         name: docker.name,
         version: docker.version,
