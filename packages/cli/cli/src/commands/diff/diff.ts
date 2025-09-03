@@ -15,6 +15,11 @@ export interface Result {
     errors: string[];
 }
 
+interface InternalResult {
+    bump?: Bump;
+    errors: string[];
+}
+
 export async function diff({
     context,
     from,
@@ -36,24 +41,17 @@ export async function diff({
         })
     );
     const generatorChange = diffGeneratorVersions(context, generatorVersions);
-    const change = mergeDiffResults(irChange, generatorChange);
-
+    const { bump: bumpOrUndefined, errors } = mergeDiffResults(irChange, generatorChange);
+    const bump = bumpOrUndefined || "patch";
     if (fromVersion == null) {
-        return {
-            bump: change.bump,
-            errors: change.errors
-        };
+        return { bump, errors };
     }
-    const nextVersion = semver.inc(fromVersion, change.bump);
+    const nextVersion = semver.inc(fromVersion, bump);
     if (!nextVersion) {
         context.failWithoutThrowing(`Invalid current version: ${fromVersion}`);
         throw new FernCliError();
     }
-    return {
-        bump: change.bump,
-        nextVersion,
-        errors: change.errors
-    };
+    return { bump, nextVersion, errors };
 }
 
 async function readIr({
@@ -87,14 +85,23 @@ function resultFromIRChangeResults(results: IntermediateRepresentationChangeDete
 }
 
 // export for testing
-export function mergeDiffResults(diffA: Result, diffB: Result): Result {
+export function mergeDiffResults(diffA: InternalResult, diffB: InternalResult): InternalResult {
     return {
         bump: maxBump(diffA.bump, diffB.bump),
         errors: [...diffA.errors, ...diffB.errors]
     };
 }
 
-function maxBump(bumpA: Bump, bumpB: Bump): Bump {
+function maxBump(bumpA: Bump | undefined, bumpB: Bump | undefined): Bump | undefined {
+    if (bumpA === undefined && bumpB === undefined) {
+        return undefined;
+    }
+    if (bumpA === undefined) {
+        return bumpB;
+    }
+    if (bumpB === undefined) {
+        return bumpA;
+    }
     if (bumpA === "major" || bumpB === "major") {
         return "major";
     }
@@ -108,16 +115,16 @@ function maxBump(bumpA: Bump, bumpB: Bump): Bump {
 export function diffGeneratorVersions(
     context: CliContext,
     generatorVersions: { from: string; to: string } | undefined
-): Result {
+): InternalResult {
     if (generatorVersions === undefined) {
         return {
-            bump: "patch",
+            bump: undefined,
             errors: []
         };
     }
     const { from, to } = generatorVersions;
     try {
-        const bump = bumpFromDiff(diffSemverOrThrow(from, to)) || "patch";
+        const bump = bumpFromDiff(diffSemverOrThrow(from, to));
 
         let errors: string[] = [];
         if (bump === "major") {

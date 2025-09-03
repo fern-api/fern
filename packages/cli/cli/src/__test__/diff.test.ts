@@ -10,6 +10,13 @@ describe("mergeDiffResults tests", () => {
     });
 
     it.each([
+        { bumpA: undefined, bumpB: undefined, expected: undefined },
+        { bumpA: undefined, bumpB: "major", expected: "major" },
+        { bumpA: "major", bumpB: undefined, expected: "major" },
+        { bumpA: "minor", bumpB: undefined, expected: "minor" },
+        { bumpA: "patch", bumpB: undefined, expected: "patch" },
+        { bumpA: undefined, bumpB: "minor", expected: "minor" },
+        { bumpA: undefined, bumpB: "patch", expected: "patch" },
         { bumpA: "major", bumpB: "major", expected: "major" },
         { bumpA: "major", bumpB: "minor", expected: "major" },
         { bumpA: "major", bumpB: "patch", expected: "major" },
@@ -43,7 +50,7 @@ describe("mergeDiffResults tests", () => {
     });
 
     it.each([
-        { from: "1.0.0", to: "1.0.0", expected: "patch" },
+        { from: "1.0.0", to: "1.0.0", expected: undefined },
         { from: "1.0.0", to: "1.0.1", expected: "patch" },
         { from: "1.0.0", to: "1.0.2", expected: "patch" },
         { from: "1.0.0", to: "1.1.0", expected: "minor" },
