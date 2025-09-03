@@ -1,0 +1,37 @@
+Example Corporation Software Development Kit License Agreement
+
+Copyright (c) 2024 Example Corporation. All rights reserved.
+
+This Software Development Kit ("SDK") is proprietary to Example Corporation 
+and is protected by copyright and other intellectual property laws.
+
+LIMITED LICENSE GRANT
+Subject to the terms and conditions of this Agreement, Example Corporation 
+grants you a limited, non-exclusive, non-transferable, revocable license to 
+use this SDK solely for the development of applications that interoperate 
+with Example Corporation's services.
+
+RESTRICTIONS
+You may not:
+- Distribute, sublicense, or transfer the SDK to any third party
+- Modify, reverse engineer, or create derivative works of the SDK
+- Remove or alter any proprietary notices or labels on the SDK
+- Use the SDK for any unlawful purpose or in violation of any applicable laws
+
+NO WARRANTY
+THIS SDK IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+
+LIMITATION OF LIABILITY
+IN NO EVENT SHALL EXAMPLE CORPORATION BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE
+USE OR INABILITY TO USE THIS SDK.
+
+TERMINATION
+This license is effective until terminated. Example Corporation may terminate
+this license at any time if you fail to comply with any term of this Agreement.
+
+GOVERNING LAW
+This Agreement shall be governed by the laws of [Jurisdiction] without regard
+to its conflict of law provisions.
