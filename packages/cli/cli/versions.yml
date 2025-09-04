@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |
+        Add wrapper to avoid inline object type naming conflicts.
+        Specifically, we had this issue with nullable object types.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-04"
+  version: 0.70.3
+
+- changelogEntry:
     - summary: If no error examples are provided by user, autogenerate errors even for remote generation.
       type: fix
   irVersion: 59
