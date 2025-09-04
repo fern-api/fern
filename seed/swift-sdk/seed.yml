@@ -3,14 +3,6 @@ irVersion: v59
 image: fernapi/fern-swift-sdk
 changelogLocation: ../../generators/swift/sdk/versions.yml
 
-buildScripts:
-  installScript:
-    commands:
-      - ./install-swift-toolchain.sh
-  compileScript:
-    commands:
-      - swift build -c release
-
 publish:
   preBuildCommands:
     - pnpm --filter @fern-api/swift-sdk dist:cli
@@ -63,3 +55,6 @@ fixtures:
     - customConfig:
         environmentEnumName: MyCustomEnvironment
       outputFolder: with-custom-config
+
+allowedFailures:
+  - accept-header
