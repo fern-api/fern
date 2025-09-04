@@ -23,8 +23,8 @@ import {
 } from "./generators";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { convertIr } from "./utils/convertIr";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
+import { convertIr } from "./utils/convertIr";
 
 export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
