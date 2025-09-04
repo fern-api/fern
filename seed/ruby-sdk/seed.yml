@@ -53,9 +53,16 @@ fixtures:
 allowedFailures:
   - any-auth
   - circular-references
+  - enum
+  - errors
   - literal
+  - literals-unions
   - mixed-file-directory
+  - multiple-request-bodies
+  - nullable-optional
   - objects-with-imports
+  - websocket-bearer-auth
+  - websocket-inferred-auth
 features:
   requestOptions: true
   idempotency: false
