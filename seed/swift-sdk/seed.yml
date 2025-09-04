@@ -34,6 +34,11 @@ generatorType: SDK
 defaultOutputMode: github
 defaultCustomConfig: {}
 
+scripts:
+  - docker: swift:6.1.2
+    commands:
+      - swift build -c release
+
 fixtures:
   client-side-params:
     - customConfig:
