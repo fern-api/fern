@@ -237,26 +237,28 @@ export function convertHttpOperation({
     const availability = getFernAvailability(operation);
     const examples = getExamplesFromExtension(operationContext, operation, context);
     const serverName = getExtension<string>(operation, FernOpenAPIExtension.SERVER_NAME_V2);
-	return convertedRequests.map((request) => ({
-		summary: operation.summary,
-		internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),
-		idempotent,
-		audiences: getExtension<string[]>(operation, FernOpenAPIExtension.AUDIENCES) ?? [],
-		operationId:
-			operation.operationId != null && suffix != null
-				? operation.operationId + "_" + suffix
-				: operation.operationId,
-		tags: context.resolveTagsToTagIds(operation.tags),
-		namespace: context.namespace,
-		sdkName: createOperationSdkMethodName({ operationContext, request }),
-		pathParameters: convertedParameters.pathParameters,
-		queryParameters: convertedParameters.queryParameters,
-		headers: convertedParameters.headers,
-		requestNameOverride: requestNameOverride ?? undefined,
-		generatedRequestName: getGeneratedTypeName(
-			isMultipleRequests ? getDifferentiatedBreadcrumbs({ breadcrumbs: requestBreadcrumbs, request}) : requestBreadcrumbs,
-        	context.options.preserveSchemaIds
-		),
+    return convertedRequests.map((request) => ({
+        summary: operation.summary,
+        internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),
+        idempotent,
+        audiences: getExtension<string[]>(operation, FernOpenAPIExtension.AUDIENCES) ?? [],
+        operationId:
+            operation.operationId != null && suffix != null
+                ? operation.operationId + "_" + suffix
+                : operation.operationId,
+        tags: context.resolveTagsToTagIds(operation.tags),
+        namespace: context.namespace,
+        sdkName: createOperationSdkMethodName({ operationContext, request }),
+        pathParameters: convertedParameters.pathParameters,
+        queryParameters: convertedParameters.queryParameters,
+        headers: convertedParameters.headers,
+        requestNameOverride: requestNameOverride ?? undefined,
+        generatedRequestName: getGeneratedTypeName(
+            isMultipleRequests
+                ? getDifferentiatedBreadcrumbs({ breadcrumbs: requestBreadcrumbs, request })
+                : requestBreadcrumbs,
+            context.options.preserveSchemaIds
+        ),
         request,
         response: convertedResponse.value,
         errors: convertedResponse.errors,
@@ -278,13 +280,13 @@ export function convertHttpOperation({
 // Differentiates breadcrumbs using the media type; e.g.,
 // XYZRequest would become XYZRequestJson or XYZRequestOctetStream.
 function getDifferentiatedBreadcrumbs({
-	breadcrumbs,
-	request
+    breadcrumbs,
+    request
 }: {
-	breadcrumbs: string[];
-	request: RequestWithExample | undefined;
+    breadcrumbs: string[];
+    request: RequestWithExample | undefined;
 }): string[] {
-	return request ? [...breadcrumbs, request.type] : breadcrumbs;
+    return request ? [...breadcrumbs, request.type] : breadcrumbs;
 }
 
 function getRequestSdkMethodName({
