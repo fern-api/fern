@@ -13,7 +13,9 @@ public class Example26
             }
         );
 
-        await client.Sysprop.GetNumWarmInstancesAsync();
+        await client.Submission.StopExecutionSessionAsync(
+            "sessionId"
+        );
     }
 
 }
