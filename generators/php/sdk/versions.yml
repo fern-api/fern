@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.16.8
+  changelogEntry:
+    - summary: Fixed semver for changelog validation.
+      type: fix
+  createdAt: "2025-08-27"
+  irVersion: 58
+
 - version: 1.16.7
   changelogEntry:
     - summary: |

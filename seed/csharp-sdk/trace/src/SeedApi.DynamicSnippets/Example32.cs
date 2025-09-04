@@ -13,7 +13,9 @@ public class Example32
             }
         );
 
-        await client.V2.Problem.GetProblemsAsync();
+        await client.V2.Problem.GetLatestProblemAsync(
+            "problemId"
+        );
     }
 
 }

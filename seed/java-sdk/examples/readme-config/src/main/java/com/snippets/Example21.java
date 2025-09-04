@@ -16,7 +16,7 @@ public class Example21 {
             Optional.of(
                 RefreshTokenRequest
                     .builder()
-                    .ttl(1)
+                    .ttl(420)
                     .build()
             )
         );

@@ -166,31 +166,41 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             throw new Error("Example is not for an object");
         }
 
-        return example.properties.map((property) => {
-            const originalTypeForProperty = context.type.getGeneratedType(property.originalTypeDeclaration);
-            if (originalTypeForProperty.type === "union") {
-                const propertyKey = originalTypeForProperty.getSinglePropertyKey({
-                    name: property.name,
-                    type: TypeReference.named({
-                        ...property.originalTypeDeclaration,
-                        default: undefined,
-                        inline: undefined
-                    })
-                });
-                return ts.factory.createPropertyAssignment(
-                    getPropertyKey(propertyKey),
-                    context.type.getGeneratedExample(property.value).build(context, opts)
-                );
-            }
-            if (originalTypeForProperty.type !== "object") {
-                throw new Error("Property does not come from an object");
-            }
-            const key = originalTypeForProperty.getPropertyKey({ propertyWireKey: property.name.wireValue });
-            return ts.factory.createPropertyAssignment(
-                getPropertyKey(key),
-                context.type.getGeneratedExample(property.value).build(context, opts)
-            );
-        });
+        return example.properties
+            .map((property) => {
+                const originalTypeForProperty = context.type.getGeneratedType(property.originalTypeDeclaration);
+                if (originalTypeForProperty.type === "union") {
+                    const propertyKey = originalTypeForProperty.getSinglePropertyKey({
+                        name: property.name,
+                        type: TypeReference.named({
+                            ...property.originalTypeDeclaration,
+                            default: undefined,
+                            inline: undefined
+                        })
+                    });
+                    return ts.factory.createPropertyAssignment(
+                        getPropertyKey(propertyKey),
+                        context.type.getGeneratedExample(property.value).build(context, opts)
+                    );
+                }
+                if (originalTypeForProperty.type !== "object") {
+                    throw new Error("Property does not come from an object");
+                }
+                try {
+                    const key = originalTypeForProperty.getPropertyKey({ propertyWireKey: property.name.wireValue });
+                    return ts.factory.createPropertyAssignment(
+                        getPropertyKey(key),
+                        context.type.getGeneratedExample(property.value).build(context, opts)
+                    );
+                } catch (e) {
+                    context.logger.debug(
+                        `Failed to get property key for property with wire value '${property.name.wireValue}' in object example. ` +
+                            `This may indicate a mismatch between the example and the type definition.`
+                    );
+                    return undefined;
+                }
+            })
+            .filter((property) => property != null);
     }
 
     public getAllPropertiesIncludingExtensions(

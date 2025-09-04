@@ -57,6 +57,7 @@ export declare namespace generateIntermediateRepresentation {
         disabled: boolean;
         includeOptionalRequestPropertyExamples?: boolean;
         skipAutogenerationIfManualExamplesExist?: boolean;
+        skipErrorAutogenerationIfManualErrorExamplesExist?: boolean;
     }
 
     interface Args {

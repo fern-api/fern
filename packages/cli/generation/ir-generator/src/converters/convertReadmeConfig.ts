@@ -12,10 +12,11 @@ export function convertReadmeConfig({
     const readmeEndpointCache = new ReadmeEndpointCache(services);
     return {
         apiName: readme.apiName,
-        disabledFeatures: readme.disabledSections,
+        disabledFeatures: readme.disabledSections?.map((section) => section.toUpperCase()),
         apiReferenceLink: readme.apiReferenceLink,
         bannerLink: readme.bannerLink,
         introduction: readme.introduction,
+        whiteLabel: false,
         defaultEndpoint:
             readme.defaultEndpoint != null
                 ? readmeEndpointCache.getEndpointForReadmeOrThrow(readme.defaultEndpoint).id

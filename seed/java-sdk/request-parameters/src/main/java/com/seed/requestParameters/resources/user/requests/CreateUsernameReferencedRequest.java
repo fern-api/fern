@@ -118,7 +118,9 @@ public final class CreateUsernameReferencedRequest {
 
         @java.lang.Override
         public _FinalStage addAllTags(List<String> tags) {
-            this.tags.addAll(tags);
+            if (tags != null) {
+                this.tags.addAll(tags);
+            }
             return this;
         }
 

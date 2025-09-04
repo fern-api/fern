@@ -45,7 +45,8 @@ export class DockerTestRunner extends TestRunner {
         publishMetadata,
         readme,
         shouldGenerateDynamicSnippetTests,
-        inspect = false
+        inspect = false,
+        license
     }: TestRunner.DoRunArgs): Promise<void> {
         const generatorGroup: generatorsYml.GeneratorGroup = {
             groupName: "test",
@@ -62,7 +63,8 @@ export class DockerTestRunner extends TestRunner {
                     fixtureName: fixture,
                     irVersion,
                     publishMetadata,
-                    readme
+                    readme,
+                    license
                 })
             ]
         };

@@ -13,9 +13,18 @@ import com.seed.nullableOptional.core.RequestOptions;
 import com.seed.nullableOptional.core.SeedNullableOptionalApiException;
 import com.seed.nullableOptional.core.SeedNullableOptionalException;
 import com.seed.nullableOptional.core.SeedNullableOptionalHttpResponse;
+import com.seed.nullableOptional.resources.nullableoptional.requests.FilterByRoleRequest;
 import com.seed.nullableOptional.resources.nullableoptional.requests.ListUsersRequest;
+import com.seed.nullableOptional.resources.nullableoptional.requests.SearchRequest;
 import com.seed.nullableOptional.resources.nullableoptional.requests.SearchUsersRequest;
+import com.seed.nullableOptional.resources.nullableoptional.requests.UpdateComplexProfileRequest;
+import com.seed.nullableOptional.resources.nullableoptional.requests.UpdateTagsRequest;
+import com.seed.nullableOptional.resources.nullableoptional.types.ComplexProfile;
 import com.seed.nullableOptional.resources.nullableoptional.types.CreateUserRequest;
+import com.seed.nullableOptional.resources.nullableoptional.types.DeserializationTestRequest;
+import com.seed.nullableOptional.resources.nullableoptional.types.DeserializationTestResponse;
+import com.seed.nullableOptional.resources.nullableoptional.types.NotificationMethod;
+import com.seed.nullableOptional.resources.nullableoptional.types.SearchResult;
 import com.seed.nullableOptional.resources.nullableoptional.types.UpdateUserRequest;
 import com.seed.nullableOptional.resources.nullableoptional.types.UserResponse;
 import java.io.IOException;
@@ -301,6 +310,431 @@ public class RawNullableOptionalClient {
                 return new SeedNullableOptionalHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), new TypeReference<List<UserResponse>>() {}),
+                        response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedNullableOptionalApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedNullableOptionalException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Create a complex profile to test nullable enums and unions
+     */
+    public SeedNullableOptionalHttpResponse<ComplexProfile> createComplexProfile(ComplexProfile request) {
+        return createComplexProfile(request, null);
+    }
+
+    /**
+     * Create a complex profile to test nullable enums and unions
+     */
+    public SeedNullableOptionalHttpResponse<ComplexProfile> createComplexProfile(
+            ComplexProfile request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("api")
+                .addPathSegments("profiles/complex")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedNullableOptionalException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedNullableOptionalHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ComplexProfile.class), response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedNullableOptionalApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedNullableOptionalException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Get a complex profile by ID
+     */
+    public SeedNullableOptionalHttpResponse<ComplexProfile> getComplexProfile(String profileId) {
+        return getComplexProfile(profileId, null);
+    }
+
+    /**
+     * Get a complex profile by ID
+     */
+    public SeedNullableOptionalHttpResponse<ComplexProfile> getComplexProfile(
+            String profileId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("api")
+                .addPathSegments("profiles/complex")
+                .addPathSegment(profileId)
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedNullableOptionalHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ComplexProfile.class), response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedNullableOptionalApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedNullableOptionalException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Update complex profile to test nullable field updates
+     */
+    public SeedNullableOptionalHttpResponse<ComplexProfile> updateComplexProfile(String profileId) {
+        return updateComplexProfile(
+                profileId, UpdateComplexProfileRequest.builder().build());
+    }
+
+    /**
+     * Update complex profile to test nullable field updates
+     */
+    public SeedNullableOptionalHttpResponse<ComplexProfile> updateComplexProfile(
+            String profileId, UpdateComplexProfileRequest request) {
+        return updateComplexProfile(profileId, request, null);
+    }
+
+    /**
+     * Update complex profile to test nullable field updates
+     */
+    public SeedNullableOptionalHttpResponse<ComplexProfile> updateComplexProfile(
+            String profileId, UpdateComplexProfileRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("api")
+                .addPathSegments("profiles/complex")
+                .addPathSegment(profileId)
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedNullableOptionalException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("PATCH", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedNullableOptionalHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ComplexProfile.class), response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedNullableOptionalApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedNullableOptionalException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Test endpoint for validating null deserialization
+     */
+    public SeedNullableOptionalHttpResponse<DeserializationTestResponse> testDeserialization(
+            DeserializationTestRequest request) {
+        return testDeserialization(request, null);
+    }
+
+    /**
+     * Test endpoint for validating null deserialization
+     */
+    public SeedNullableOptionalHttpResponse<DeserializationTestResponse> testDeserialization(
+            DeserializationTestRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("api")
+                .addPathSegments("test/deserialization")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedNullableOptionalException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedNullableOptionalHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), DeserializationTestResponse.class),
+                        response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedNullableOptionalApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedNullableOptionalException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Filter users by role with nullable enum
+     */
+    public SeedNullableOptionalHttpResponse<List<UserResponse>> filterByRole(FilterByRoleRequest request) {
+        return filterByRole(request, null);
+    }
+
+    /**
+     * Filter users by role with nullable enum
+     */
+    public SeedNullableOptionalHttpResponse<List<UserResponse>> filterByRole(
+            FilterByRoleRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("api")
+                .addPathSegments("users/filter");
+        QueryStringMapper.addQueryParameter(httpUrl, "role", request.getRole(), false);
+        if (request.getStatus().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "status", request.getStatus().get(), false);
+        }
+        if (request.getSecondaryRole().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "secondaryRole", request.getSecondaryRole().get(), false);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedNullableOptionalHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(
+                                responseBody.string(), new TypeReference<List<UserResponse>>() {}),
+                        response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedNullableOptionalApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedNullableOptionalException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Get notification settings which may be null
+     */
+    public SeedNullableOptionalHttpResponse<NotificationMethod> getNotificationSettings(String userId) {
+        return getNotificationSettings(userId, null);
+    }
+
+    /**
+     * Get notification settings which may be null
+     */
+    public SeedNullableOptionalHttpResponse<NotificationMethod> getNotificationSettings(
+            String userId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("api")
+                .addPathSegments("users")
+                .addPathSegment(userId)
+                .addPathSegments("notifications")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedNullableOptionalHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(
+                                responseBody.string(), new TypeReference<NotificationMethod>() {}),
+                        response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedNullableOptionalApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedNullableOptionalException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Update tags to test array handling
+     */
+    public SeedNullableOptionalHttpResponse<List<String>> updateTags(String userId, UpdateTagsRequest request) {
+        return updateTags(userId, request, null);
+    }
+
+    /**
+     * Update tags to test array handling
+     */
+    public SeedNullableOptionalHttpResponse<List<String>> updateTags(
+            String userId, UpdateTagsRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("api")
+                .addPathSegments("users")
+                .addPathSegment(userId)
+                .addPathSegments("tags")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedNullableOptionalException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("PUT", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedNullableOptionalHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(
+                                responseBody.string(), new TypeReference<List<String>>() {}),
+                        response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedNullableOptionalApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedNullableOptionalException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Get search results with nullable unions
+     */
+    public SeedNullableOptionalHttpResponse<List<SearchResult>> getSearchResults(SearchRequest request) {
+        return getSearchResults(request, null);
+    }
+
+    /**
+     * Get search results with nullable unions
+     */
+    public SeedNullableOptionalHttpResponse<List<SearchResult>> getSearchResults(
+            SearchRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("api")
+                .addPathSegments("search")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedNullableOptionalException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedNullableOptionalHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(
+                                responseBody.string(), new TypeReference<List<SearchResult>>() {}),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

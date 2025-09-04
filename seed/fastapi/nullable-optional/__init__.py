@@ -2,6 +2,54 @@
 
 # isort: skip_file
 
-from .resources import Address, CreateUserRequest, UpdateUserRequest, UserProfile, UserResponse, nullable_optional
+from .resources import (
+    Address,
+    ComplexProfile,
+    CreateUserRequest,
+    DeserializationTestRequest,
+    DeserializationTestResponse,
+    Document,
+    EmailNotification,
+    NotificationMethod,
+    NullableUserId,
+    OptionalUserId,
+    Organization,
+    PushNotification,
+    SearchRequest,
+    SearchResult,
+    SmsNotification,
+    UpdateComplexProfileRequest,
+    UpdateTagsRequest,
+    UpdateUserRequest,
+    UserProfile,
+    UserResponse,
+    UserRole,
+    UserStatus,
+    nullable_optional,
+)
 
-__all__ = ["Address", "CreateUserRequest", "UpdateUserRequest", "UserProfile", "UserResponse", "nullable_optional"]
+__all__ = [
+    "Address",
+    "ComplexProfile",
+    "CreateUserRequest",
+    "DeserializationTestRequest",
+    "DeserializationTestResponse",
+    "Document",
+    "EmailNotification",
+    "NotificationMethod",
+    "NullableUserId",
+    "OptionalUserId",
+    "Organization",
+    "PushNotification",
+    "SearchRequest",
+    "SearchResult",
+    "SmsNotification",
+    "UpdateComplexProfileRequest",
+    "UpdateTagsRequest",
+    "UpdateUserRequest",
+    "UserProfile",
+    "UserResponse",
+    "UserRole",
+    "UserStatus",
+    "nullable_optional",
+]

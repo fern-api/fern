@@ -53,7 +53,8 @@ export class LocalTestRunner extends TestRunner {
             publishMetadata,
             readme,
             shouldGenerateDynamicSnippetTests,
-            inspect = false
+            inspect = false,
+            license
         } = args;
 
         const generatorGroup: generatorsYml.GeneratorGroup = {
@@ -72,7 +73,8 @@ export class LocalTestRunner extends TestRunner {
                     fixtureName: fixture,
                     irVersion,
                     publishMetadata,
-                    readme
+                    readme,
+                    license
                 })
             ]
         };

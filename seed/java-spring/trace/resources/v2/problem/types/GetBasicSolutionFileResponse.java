@@ -83,7 +83,9 @@ public final class GetBasicSolutionFileResponse {
     }
 
     public Builder putAllSolutionFileByLanguage(Map<Language, FileInfoV2> solutionFileByLanguage) {
-      this.solutionFileByLanguage.putAll(solutionFileByLanguage);
+      if (solutionFileByLanguage != null) {
+        this.solutionFileByLanguage.putAll(solutionFileByLanguage);
+      }
       return this;
     }
 

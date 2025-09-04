@@ -306,7 +306,9 @@ public final class MyRequest {
 
         @java.lang.Override
         public _FinalStage addAllListOfAliasObject(List<MyAliasObject> listOfAliasObject) {
-            this.listOfAliasObject.addAll(listOfAliasObject);
+            if (listOfAliasObject != null) {
+                this.listOfAliasObject.addAll(listOfAliasObject);
+            }
             return this;
         }
 
@@ -365,7 +367,9 @@ public final class MyRequest {
 
         @java.lang.Override
         public _FinalStage addAllListOfObjects(List<MyObject> listOfObjects) {
-            this.listOfObjects.addAll(listOfObjects);
+            if (listOfObjects != null) {
+                this.listOfObjects.addAll(listOfObjects);
+            }
             return this;
         }
 

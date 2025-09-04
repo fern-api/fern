@@ -2,67 +2,152 @@
 
 # isort: skip_file
 
-from .active_diamond import ActiveDiamond
-from .attractive_script import AttractiveScript
-from .big_union import (
-    ActiveDiamondBigUnion,
-    AttractiveScriptBigUnion,
-    BigUnion,
-    CircularCardBigUnion,
-    ColorfulCoverBigUnion,
-    DiligentDealBigUnion,
-    DisloyalValueBigUnion,
-    DistinctFailureBigUnion,
-    FalseMirrorBigUnion,
-    FrozenSleepBigUnion,
-    GaseousRoadBigUnion,
-    GruesomeCoachBigUnion,
-    HarmoniousPlayBigUnion,
-    HastyPainBigUnion,
-    HoarseMouseBigUnion,
-    JumboEndBigUnion,
-    LimpingStepBigUnion,
-    MistySnowBigUnion,
-    NormalSweetBigUnion,
-    PopularLimitBigUnion,
-    PotableBadBigUnion,
-    PracticalPrincipleBigUnion,
-    PrimaryBlockBigUnion,
-    RotatingRatioBigUnion,
-    ThankfulFactorBigUnion,
-    TotalWorkBigUnion,
-    TriangularRepairBigUnion,
-    UniqueStressBigUnion,
-    UnwillingSmokeBigUnion,
-    VibrantExcitementBigUnion,
-)
-from .circular_card import CircularCard
-from .colorful_cover import ColorfulCover
-from .diligent_deal import DiligentDeal
-from .disloyal_value import DisloyalValue
-from .distinct_failure import DistinctFailure
-from .false_mirror import FalseMirror
-from .frozen_sleep import FrozenSleep
-from .gaseous_road import GaseousRoad
-from .gruesome_coach import GruesomeCoach
-from .harmonious_play import HarmoniousPlay
-from .hasty_pain import HastyPain
-from .hoarse_mouse import HoarseMouse
-from .jumbo_end import JumboEnd
-from .limping_step import LimpingStep
-from .misty_snow import MistySnow
-from .normal_sweet import NormalSweet
-from .popular_limit import PopularLimit
-from .potable_bad import PotableBad
-from .practical_principle import PracticalPrinciple
-from .primary_block import PrimaryBlock
-from .rotating_ratio import RotatingRatio
-from .thankful_factor import ThankfulFactor
-from .total_work import TotalWork
-from .triangular_repair import TriangularRepair
-from .unique_stress import UniqueStress
-from .unwilling_smoke import UnwillingSmoke
-from .vibrant_excitement import VibrantExcitement
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .active_diamond import ActiveDiamond
+    from .attractive_script import AttractiveScript
+    from .big_union import (
+        ActiveDiamondBigUnion,
+        AttractiveScriptBigUnion,
+        BigUnion,
+        CircularCardBigUnion,
+        ColorfulCoverBigUnion,
+        DiligentDealBigUnion,
+        DisloyalValueBigUnion,
+        DistinctFailureBigUnion,
+        FalseMirrorBigUnion,
+        FrozenSleepBigUnion,
+        GaseousRoadBigUnion,
+        GruesomeCoachBigUnion,
+        HarmoniousPlayBigUnion,
+        HastyPainBigUnion,
+        HoarseMouseBigUnion,
+        JumboEndBigUnion,
+        LimpingStepBigUnion,
+        MistySnowBigUnion,
+        NormalSweetBigUnion,
+        PopularLimitBigUnion,
+        PotableBadBigUnion,
+        PracticalPrincipleBigUnion,
+        PrimaryBlockBigUnion,
+        RotatingRatioBigUnion,
+        ThankfulFactorBigUnion,
+        TotalWorkBigUnion,
+        TriangularRepairBigUnion,
+        UniqueStressBigUnion,
+        UnwillingSmokeBigUnion,
+        VibrantExcitementBigUnion,
+    )
+    from .circular_card import CircularCard
+    from .colorful_cover import ColorfulCover
+    from .diligent_deal import DiligentDeal
+    from .disloyal_value import DisloyalValue
+    from .distinct_failure import DistinctFailure
+    from .false_mirror import FalseMirror
+    from .frozen_sleep import FrozenSleep
+    from .gaseous_road import GaseousRoad
+    from .gruesome_coach import GruesomeCoach
+    from .harmonious_play import HarmoniousPlay
+    from .hasty_pain import HastyPain
+    from .hoarse_mouse import HoarseMouse
+    from .jumbo_end import JumboEnd
+    from .limping_step import LimpingStep
+    from .misty_snow import MistySnow
+    from .normal_sweet import NormalSweet
+    from .popular_limit import PopularLimit
+    from .potable_bad import PotableBad
+    from .practical_principle import PracticalPrinciple
+    from .primary_block import PrimaryBlock
+    from .rotating_ratio import RotatingRatio
+    from .thankful_factor import ThankfulFactor
+    from .total_work import TotalWork
+    from .triangular_repair import TriangularRepair
+    from .unique_stress import UniqueStress
+    from .unwilling_smoke import UnwillingSmoke
+    from .vibrant_excitement import VibrantExcitement
+_dynamic_imports: typing.Dict[str, str] = {
+    "ActiveDiamond": ".active_diamond",
+    "ActiveDiamondBigUnion": ".big_union",
+    "AttractiveScript": ".attractive_script",
+    "AttractiveScriptBigUnion": ".big_union",
+    "BigUnion": ".big_union",
+    "CircularCard": ".circular_card",
+    "CircularCardBigUnion": ".big_union",
+    "ColorfulCover": ".colorful_cover",
+    "ColorfulCoverBigUnion": ".big_union",
+    "DiligentDeal": ".diligent_deal",
+    "DiligentDealBigUnion": ".big_union",
+    "DisloyalValue": ".disloyal_value",
+    "DisloyalValueBigUnion": ".big_union",
+    "DistinctFailure": ".distinct_failure",
+    "DistinctFailureBigUnion": ".big_union",
+    "FalseMirror": ".false_mirror",
+    "FalseMirrorBigUnion": ".big_union",
+    "FrozenSleep": ".frozen_sleep",
+    "FrozenSleepBigUnion": ".big_union",
+    "GaseousRoad": ".gaseous_road",
+    "GaseousRoadBigUnion": ".big_union",
+    "GruesomeCoach": ".gruesome_coach",
+    "GruesomeCoachBigUnion": ".big_union",
+    "HarmoniousPlay": ".harmonious_play",
+    "HarmoniousPlayBigUnion": ".big_union",
+    "HastyPain": ".hasty_pain",
+    "HastyPainBigUnion": ".big_union",
+    "HoarseMouse": ".hoarse_mouse",
+    "HoarseMouseBigUnion": ".big_union",
+    "JumboEnd": ".jumbo_end",
+    "JumboEndBigUnion": ".big_union",
+    "LimpingStep": ".limping_step",
+    "LimpingStepBigUnion": ".big_union",
+    "MistySnow": ".misty_snow",
+    "MistySnowBigUnion": ".big_union",
+    "NormalSweet": ".normal_sweet",
+    "NormalSweetBigUnion": ".big_union",
+    "PopularLimit": ".popular_limit",
+    "PopularLimitBigUnion": ".big_union",
+    "PotableBad": ".potable_bad",
+    "PotableBadBigUnion": ".big_union",
+    "PracticalPrinciple": ".practical_principle",
+    "PracticalPrincipleBigUnion": ".big_union",
+    "PrimaryBlock": ".primary_block",
+    "PrimaryBlockBigUnion": ".big_union",
+    "RotatingRatio": ".rotating_ratio",
+    "RotatingRatioBigUnion": ".big_union",
+    "ThankfulFactor": ".thankful_factor",
+    "ThankfulFactorBigUnion": ".big_union",
+    "TotalWork": ".total_work",
+    "TotalWorkBigUnion": ".big_union",
+    "TriangularRepair": ".triangular_repair",
+    "TriangularRepairBigUnion": ".big_union",
+    "UniqueStress": ".unique_stress",
+    "UniqueStressBigUnion": ".big_union",
+    "UnwillingSmoke": ".unwilling_smoke",
+    "UnwillingSmokeBigUnion": ".big_union",
+    "VibrantExcitement": ".vibrant_excitement",
+    "VibrantExcitementBigUnion": ".big_union",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "ActiveDiamond",

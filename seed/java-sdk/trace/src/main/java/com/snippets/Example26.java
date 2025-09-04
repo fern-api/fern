@@ -10,6 +10,6 @@ public class Example26 {
             .url("https://api.fern.com")
             .build();
 
-        client.sysprop().getNumWarmInstances();
+        client.submission().stopExecutionSession("sessionId");
     }
 }

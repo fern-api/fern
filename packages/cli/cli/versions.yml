@@ -1,5 +1,131 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |
+        Add names to octet-stream requests and ensure they are named differently
+        than json requests on the same endpoint.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-04"
+  version: 0.70.4
+
+- changelogEntry:
+    - summary: |
+        Add wrapper to avoid inline object type naming conflicts.
+        Specifically, we had this issue with nullable object types.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-04"
+  version: 0.70.3
+
+- changelogEntry:
+    - summary: If no error examples are provided by user, autogenerate errors even for remote generation.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-04"
+  version: 0.70.2
+
+- changelogEntry:
+    - summary: Don't fail SDK generation if a single schema fails to parse. Instead, warn and coerce to unknown.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-03"
+  version: 0.70.1
+
+- changelogEntry:
+    - summary: Auto generate examples for HTTP endpoint error responses.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-03"
+  version: 0.70.0
+
+- changelogEntry:
+    - summary: |
+        Add custom license name extraction for Java SDK generation. The CLI now reads the first line
+        from custom LICENSE files and passes it to generators via the _fernLicenseName field in customConfig.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-03"
+  version: 0.69.2
+
+- changelogEntry:
+    - summary: Example generation ignores headers that don't exist in the channel instead of failing hard.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-02"
+  version: 0.69.1
+
+- changelogEntry:
+    - summary: Fern diff command can consider from and to generator versions.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-02"
+  version: 0.69.0
+
+- changelogEntry:
+    - summary: Fern cli diff command recognizes availability.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-28"
+  version: 0.68.0
+
+- changelogEntry:
+    - summary: Update ir migration versions for java generators
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-31"
+  version: 0.67.0
+
+- changelogEntry:
+    - summary: Ignore self-referential types that are `optional<nullable<SELF>>`
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-28"
+  version: 0.66.31
+
+- changelogEntry:
+    - summary: |
+        Alpha testing: add support for HTTP proxies
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-29"
+  version: 0.66.30-rc0
+
+- changelogEntry:
+    - summary: Skip OpenAPI 3.1 null type properties instead of failing
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-28"
+  version: 0.66.30
+
+- changelogEntry:
+    - summary: Update docs workspace validator to skip file type validation when running in selfhosted mode
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-27"
+  version: 0.66.29
+
+- changelogEntry:
+    - summary: Fix downloadFiles mode to respect organization's selfHostedSdKs flag for Java SDK generation
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-27"
+  version: 0.66.28
+
+- changelogEntry:
+    - summary: Fix readmeConfig.disabledSections type - change from set to list.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-26"
+  version: 0.66.27
+
+- changelogEntry:
+    - summary: Add whiteLabel setting to FernIr.ReadmeConfig based on org properties
+      type: chore
+  irVersion: 59
+  createdAt: "2025-08-26"
+  version: 0.66.26
+
+- changelogEntry:
     - summary: Handle object-style examples in OpenAPI spec
       type: chore
   irVersion: 59

@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -7,12 +7,12 @@ pub struct ContentTypeClient {
 }
 
 impl ContentTypeClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn post_json_patch_content_type(&self, request: &ObjectWithOptionalField, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn post_json_patch_content_type(&self, request: &ObjectWithOptionalField, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/foo/bar",
@@ -22,7 +22,7 @@ impl ContentTypeClient {
         ).await
     }
 
-    pub async fn post_json_patch_content_with_charset_type(&self, request: &ObjectWithOptionalField, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn post_json_patch_content_with_charset_type(&self, request: &ObjectWithOptionalField, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/foo/baz",

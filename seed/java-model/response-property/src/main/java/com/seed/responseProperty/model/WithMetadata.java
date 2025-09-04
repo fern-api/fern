@@ -72,7 +72,9 @@ public final class WithMetadata implements IWithMetadata {
         }
 
         public Builder putAllMetadata(Map<String, String> metadata) {
-            this.metadata.putAll(metadata);
+            if (metadata != null) {
+                this.metadata.putAll(metadata);
+            }
             return this;
         }
 

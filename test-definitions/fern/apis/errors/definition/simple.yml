@@ -1,0 +1,70 @@
+imports:
+  commons: ./commons.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    fooWithoutEndpointError:
+      method: POST
+      path: /foo1
+      request: FooRequest
+      response: FooResponse
+    foo:
+      method: POST
+      path: /foo2
+      request: FooRequest
+      response: FooResponse
+      errors:
+        - FooTooMuch
+        - FooTooLittle
+    fooWithExamples:
+      method: POST
+      path: /foo3
+      request: FooRequest
+      response: FooResponse
+      errors:
+        - FooTooMuch
+        - FooTooLittle
+      examples:
+        - request: $FooRequest.First
+          response:
+            body: $FooResponse.First
+        - request: $FooRequest.First
+          response:
+            error: FooTooMuch
+            body:
+              message: "Too much foo"
+              code: 1
+        - request: $FooRequest.First
+          response:
+            error: FooTooLittle
+            body:
+              message: "Too little foo"
+              code: 2
+
+errors:
+  FooTooMuch:
+    status-code: 429
+    type: commons.ErrorBody
+  FooTooLittle:
+    status-code: 500
+    type: commons.ErrorBody
+
+types:
+  FooRequest:
+    properties:
+      bar:
+        type: string
+    examples:
+      - name: First
+        value:
+          bar: hello
+  FooResponse:
+    properties:
+      bar:
+        type: string
+    examples:
+      - name: First
+        value:
+          bar: hello

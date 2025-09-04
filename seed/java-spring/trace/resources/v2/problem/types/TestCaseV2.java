@@ -171,7 +171,9 @@ public final class TestCaseV2 {
 
     @java.lang.Override
     public _FinalStage putAllArguments(Map<ParameterId, VariableValue> arguments) {
-      this.arguments.putAll(arguments);
+      if (arguments != null) {
+        this.arguments.putAll(arguments);
+      }
       return this;
     }
 

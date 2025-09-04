@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v59.4.0] - 2025-08-26
+
+- Fix: Pushing new version to fix ir migrations for java and python
+
+## [v59.3.0] - 2025-08-26
+
+- Fix: Change readmeConfig.disabledSections type from set to list.
+
+## [v59.2.0] - 2025-08-26
+
+- Feature: Add support for ReadmeConfig.whiteLabel.
+
 ## [v59.1.0] - 2025-08-25
 
 - Feature: Add support for readme config for API Name and disabled features list.

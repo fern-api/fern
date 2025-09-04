@@ -92,6 +92,19 @@
             }
         },
         {
+            "example_identifier": "27f18200",
+            "id": {
+                "method": "GET",
+                "path": "/file/{filename}",
+                "identifier_override": "endpoint_file/service.getFile"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            \"filename\",\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"X-File-API-Version\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            \"filename\",\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"X-File-API-Version\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "Example0",
             "id": {
                 "method": "GET",

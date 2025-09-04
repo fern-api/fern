@@ -220,6 +220,7 @@ export function convertHttpOperation({
             return [convertedRequest];
         }
     })();
+    const isMultipleRequests = convertedRequests.length > 1;
 
     const responseBreadcrumbs = [...baseBreadcrumbs, "Response"];
 
@@ -252,7 +253,12 @@ export function convertHttpOperation({
         queryParameters: convertedParameters.queryParameters,
         headers: convertedParameters.headers,
         requestNameOverride: requestNameOverride ?? undefined,
-        generatedRequestName: getGeneratedTypeName(requestBreadcrumbs, context.options.preserveSchemaIds),
+        generatedRequestName: getGeneratedTypeName(
+            isMultipleRequests
+                ? getDifferentiatedBreadcrumbs({ breadcrumbs: requestBreadcrumbs, request })
+                : requestBreadcrumbs,
+            context.options.preserveSchemaIds
+        ),
         request,
         response: convertedResponse.value,
         errors: convertedResponse.errors,
@@ -271,6 +277,18 @@ export function convertHttpOperation({
     }));
 }
 
+// Differentiates breadcrumbs using the media type; e.g.,
+// XYZRequest would become XYZRequestJson or XYZRequestOctetStream.
+function getDifferentiatedBreadcrumbs({
+    breadcrumbs,
+    request
+}: {
+    breadcrumbs: string[];
+    request: RequestWithExample | undefined;
+}): string[] {
+    return request ? [...breadcrumbs, request.type] : breadcrumbs;
+}
+
 function getRequestSdkMethodName({
     mediaTypeObject
 }: {
@@ -278,6 +296,7 @@ function getRequestSdkMethodName({
 }): string | undefined {
     return getExtension<string>(mediaTypeObject, FernOpenAPIExtension.SDK_METHOD_NAME);
 }
+
 function createOperationSdkMethodName({
     operationContext,
     request

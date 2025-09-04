@@ -36,10 +36,10 @@ jobs:
         run: |
           previous_commit=$(git log -n 2 --pretty=format:"%h" -- packages/cli/cli/versions.yml | tail -n 1)
           current_commit=$(git log -n 1 --pretty=format:"%h" -- packages/cli/cli/versions.yml)
-          
+
           # Get the previous version of the file using the specific commit that last changed it
           git show ${previous_commit}:packages/cli/cli/versions.yml > tmp_cli_previous_versions.yml
-          
+
           echo "Preview of the previous file (${previous_commit})"
           head tmp_cli_previous_versions.yml
 
@@ -67,16 +67,16 @@ jobs:
           fi
 
       - name: Create Release
-        uses: actions/create-release@v1
+        id: create_release
+        uses: softprops/action-gh-release@v2
         if: steps.get_version.outputs.HAS_NEW_VERSION
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.get_version.outputs.VERSION }}
-          release_name: ${{ steps.get_version.outputs.VERSION }}
+          name: ${{ steps.get_version.outputs.VERSION }}
           draft: false
           prerelease: ${{ steps.check_prerelease.outputs.IS_PRERELEASE }}
 
       - name: Display Release URL
         if: steps.get_version.outputs.HAS_NEW_VERSION
-        run: echo "Release created at ${{ steps.create_release.outputs.html_url }}"
+        run: echo "Release created at ${{ steps.create_release.outputs.url }}"
