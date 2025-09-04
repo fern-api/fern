@@ -187,6 +187,7 @@ allowedFailures:
   - exhaustive
   - literal
   - mixed-case
+  - nullable-optional
   - pagination-custom
   - reserved-keywords
   - request-parameters

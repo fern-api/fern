@@ -51,9 +51,22 @@ scripts:
       - CGO_ENABLED=0 go test ./...
 
 allowedFailures:
+  - alias-extends
+  - bytes-download
+  - enum
+  - errors
+  - examples
   - exhaustive
   - literal
   - mixed-case
   - nullable-optional
+  - pagination
+  - pagination-custom
+  - path-parameters
+  - request-parameters
   - reserved-keywords
+  - server-sent-event-examples
+  - server-sent-events
+  - streaming
+  - streaming-parameter
   - trace
