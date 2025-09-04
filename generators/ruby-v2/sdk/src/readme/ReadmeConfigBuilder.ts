@@ -21,13 +21,24 @@ export class ReadmeConfigBuilder {
             endpointSnippets
         });
         const snippetsByFeatureId = readmeSnippetBuilder.buildReadmeSnippetsByFeatureId();
+        const addendumsByFeatureId = readmeSnippetBuilder.buildReadmeAddendumsByFeatureId();
         const features: FernGeneratorCli.ReadmeFeature[] = [];
 
         for (const feature of featureConfig.features) {
+            // Note: The ENVIRONMENTS feature creates dynamic code in the addendum,
+            // so we need to set snippetsAreOptional to true and handle a bit differently.
             const snippetsForFeature = snippetsByFeatureId[feature.id];
-
-            if (snippetsForFeature == null || !snippetsForFeature.length) {
+            if (
+                (snippetsForFeature == null || !snippetsForFeature.length) &&
+                feature.id !== readmeSnippetBuilder.getEnvironmentFeatureIDName()
+            ) {
                 continue;
+            }
+
+            const addendumForFeature = addendumsByFeatureId[feature.id];
+
+            if (addendumForFeature != null) {
+                feature.addendum = addendumForFeature;
             }
 
             features.push({
@@ -35,7 +46,8 @@ export class ReadmeConfigBuilder {
                 advanced: feature.advanced,
                 description: feature.description,
                 snippets: snippetsForFeature,
-                snippetsAreOptional: false
+                addendum: feature.addendum,
+                snippetsAreOptional: readmeSnippetBuilder.getEnvironmentFeatureIDName() ? true : false
             });
         }
 

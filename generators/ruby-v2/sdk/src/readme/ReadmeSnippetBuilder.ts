@@ -16,7 +16,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CLIENT_VARIABLE_NAME = "client";
 
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
-    private static RESPONSE_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "RESPONSE_HEADERS";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {};
@@ -43,8 +42,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
                 : this.getDefaultEndpointId();
-        this.rootPackageName = this.context.getRootPackageName();
-        this.rootPackageClientName = this.getRootPackageClientName();
+        this.rootPackageName = this.context.getRootFolderName();
+        this.rootPackageClientName = this.context.getRootModule().name;
     }
 
     public buildReadmeSnippetsByFeatureId(): Record<FernGeneratorCli.FeatureId, string[]> {
@@ -66,15 +65,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 predicate?: (endpoint: EndpointWithFilepath) => boolean;
             }
         > = {
-            [ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID]: { renderer: this.renderEnvironmentsSnippet.bind(this) },
-            [ReadmeSnippetBuilder.RESPONSE_HEADERS_FEATURE_ID]: {
-                renderer: this.renderWithRawResponseHeadersSnippet.bind(this)
-            },
             [FernGeneratorCli.StructuredFeatureId.RequestOptions]: {
                 renderer: this.renderRequestOptionsSnippet.bind(this)
             },
             [FernGeneratorCli.StructuredFeatureId.Errors]: { renderer: this.renderErrorsSnippet.bind(this) },
-            [FernGeneratorCli.StructuredFeatureId.Retries]: { renderer: this.renderRetriesSnippet.bind(this) },
             [FernGeneratorCli.StructuredFeatureId.Timeouts]: { renderer: this.renderTimeoutsSnippet.bind(this) },
             ...(this.isPaginationEnabled
                 ? {
@@ -97,6 +91,19 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         }
 
         return snippetsByFeatureId;
+    }
+
+    public buildReadmeAddendumsByFeatureId(): Record<FernGeneratorCli.FeatureId, string> {
+        const addendums: Record<FernGeneratorCli.FeatureId, string | undefined> = {};
+        addendums[this.getEnvironmentFeatureIDName()] = this.buildEnvironmentsAddendum();
+
+        return Object.fromEntries(
+            Object.entries(addendums).filter(([_, value]) => value != null) as [FernGeneratorCli.FeatureId, string][]
+        );
+    }
+
+    public getEnvironmentFeatureIDName(): string {
+        return ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID;
     }
 
     private getPrerenderedSnippetsForFeature(
@@ -122,17 +129,38 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     ): string[] {
         return this.getEndpointsForFeature(featureId).filter(predicate).map(templateRenderer);
     }
-    private renderEnvironmentsSnippet(endpoint: EndpointWithFilepath): string {
-        return this.writeCode(dedent`require "${this.rootPackageClientName}"
 
-            ${this.rootPackageClientName} = ${this.rootPackageClientName}::Client.new(
-                base_url: ${this.getBaseUrlOptionValue()}
+    private buildEnvironmentsAddendum(): string {
+        let fullString: string = "";
+        const openMardownRubySnippet = "```ruby\n";
+        const closeMardownRubySnippet = "```\n";
+        // Not every SDK has environments configured, so we need to check for that.
+        if (this.getEnvironmentNameExample() !== undefined) {
+            fullString += "### Environments\n";
+            fullString += this.writeCode(dedent`${openMardownRubySnippet}require "${this.rootPackageName}"
+
+                ${this.rootPackageName} = ${this.rootPackageClientName}::Client.new(
+                    base_url: ${this.getEnvironmentNameExample()}
+                )
+            ${closeMardownRubySnippet}`);
+        } else {
+            fullString += "### Note: No environments configured for this specific SDK.\n";
+        }
+
+        fullString += "\n### Custom URL\n";
+
+        fullString += this.writeCode(dedent`${openMardownRubySnippet}require "${this.rootPackageName}"
+
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}::Client.new(
+                base_url: ${this.getEnvironmentURLExample()}
             )
-        `);
+        ${closeMardownRubySnippet}`);
+
+        return dedent`${fullString}`;
     }
 
     private renderErrorsSnippet(endpoint: EndpointWithFilepath): string {
-        return this.writeCode(dedent`require "${this.rootPackageClientName}"
+        return this.writeCode(dedent`require "${this.rootPackageName}"
 
             response = ${this.getMethodCall(endpoint)}(...)
             rescue => error
@@ -145,7 +173,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderRequestOptionsSnippet(endpoint: EndpointWithFilepath): string {
-        return this.writeCode(dedent`require "${this.rootPackageClientName}"
+        return this.writeCode(dedent`require "${this.rootPackageName}"
 
             # Specify default options applied on every request.
             ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}.new(
@@ -164,7 +192,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderWithRawResponseHeadersSnippet(endpoint: EndpointWithFilepath): string {
-        return this.writeCode(dedent`require "${this.rootPackageClientName}"
+        return this.writeCode(dedent`require "${this.rootPackageName}"
 
             response = ${this.getWithRawResponseMethodCall(endpoint)}(...)
             rescue => error
@@ -176,23 +204,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         `);
     }
 
-    private renderRetriesSnippet(endpoint: EndpointWithFilepath): string {
-        return this.writeCode(dedent`require "${this.rootPackageClientName}"
-
-            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}.new(
-                max_retries: 1
-            )
-
-            response = client.foo.find(
-                ...,
-                max_retries: 1
-            )
-
-        `);
-    }
-
     private renderTimeoutsSnippet(endpoint: EndpointWithFilepath): string {
-        return this.writeCode(dedent`require "${this.rootPackageClientName}"
+        return this.writeCode(dedent`require "${this.rootPackageName}"
 
             response = ${this.getMethodCall(endpoint)}(
                 ...,
@@ -202,7 +215,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderPaginationSnippet(endpoint: EndpointWithFilepath): string {
-        return this.writeCode(dedent`require "${this.rootPackageClientName}"
+        return this.writeCode(dedent`require "${this.rootPackageName}"
 
             # Loop over the items using the provided iterator.
                 page = ${this.rootPackageClientName}.${this.getMethodCall(endpoint)}(
@@ -311,11 +324,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         );
     }
 
-    private getBaseUrlOptionValue(): string {
-        return this.getEnvironmentBaseUrlReference() ?? '"https://example.com"';
+    private getEnvironmentURLExample(): string {
+        return '"https://example.com"';
     }
 
-    private getEnvironmentBaseUrlReference(): string | undefined {
+    private getEnvironmentNameExample(): string | undefined {
         const defaultEnvironmentId = this.getDefaultEnvironmentId();
 
         if (defaultEnvironmentId == null || this.context.ir.environments == null) {
@@ -329,11 +342,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             return undefined;
         }
 
-        return `${this.rootPackageName}.Environments.${defaultEnvironment.name.pascalCase.unsafeName}`;
+        return `${this.rootPackageClientName}::Environment::${defaultEnvironment.name.pascalCase.unsafeName}`;
     }
 
     private getRootPackageClientName(): string {
-        return "client";
+        return this.context.getRootFolderName();
     }
 
     private writeCode(s: string): string {

@@ -5,8 +5,7 @@ features:
 
   - id: ENVIRONMENTS
     description: |
-      You can choose between different environments by using the `base_url` option. You can configure any arbitrary base
-      URL, which is particularly useful in test environments.
+      This SDK allows you to configure different environments or custom URLs for API requests. You can either use the predefined environments or specify your own custom URL.
 
   - id: PAGINATION
     description: |
@@ -24,27 +23,6 @@ features:
 
       These request options can either be specified on the client so that they're applied on every request, 
       or for an individual request, like so:
-
-  - id: RESPONSE_HEADERS
-    advanced: true
-    description: |
-      You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
-      when you need to examine the response headers received from the API call.
-
-  - id: RETRIES
-    advanced: true
-    description: |
-      The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-      as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
-      retry limit (default: 2).
-
-      A request is deemed retryable when any of the following HTTP status codes is returned:
-
-      - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
-      - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-      - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
-
-      Use the `max_retries` option to configure this behavior for the entire client or an individual request:
 
   - id: TIMEOUTS
     advanced: true
