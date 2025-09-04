@@ -59,6 +59,7 @@ allowedFailures:
   - exhaustive
   - literal
   - mixed-case 
+  - nullable-optional
   - pagination
   - pagination-custom
   - path-parameters
