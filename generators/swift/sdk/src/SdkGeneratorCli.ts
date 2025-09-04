@@ -3,6 +3,7 @@ import { assertNever, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
+import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
 import {
     AliasGenerator,
     DiscriminatedUnionGenerator,
@@ -18,11 +19,12 @@ import {
     PackageSwiftGenerator,
     RootClientGenerator,
     SingleUrlEnvironmentGenerator,
-    SnippetJsonGenerator,
     SubClientGenerator
 } from "./generators";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { convertIr } from "./utils/convertIr";
+import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 
 export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -88,15 +90,47 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
     private async generateReadme(context: SdkGeneratorContext): Promise<void> {
         try {
-            const snippets = await new SnippetJsonGenerator({ context }).generate();
             const content = await context.generatorAgent.generateReadme({
                 context,
-                endpointSnippets: snippets.endpoints
+                endpointSnippets: this.generateSnippets(context)
             });
             context.project.addRootFiles(new File("README.md", RelativeFilePath.of(""), content));
         } catch (e) {
             context.logger.warn("Failed to generate README.md, this is OK", extractErrorMessage(e));
         }
+    }
+
+    private generateSnippets(context: SdkGeneratorContext) {
+        const endpointSnippets: FernGeneratorExec.Endpoint[] = [];
+        const dynamicIr = context.ir.dynamic;
+        if (!dynamicIr) {
+            throw new Error("Cannot generate dynamic snippets without dynamic IR");
+        }
+        const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
+            ir: convertIr(dynamicIr),
+            config: context.config
+        });
+        for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
+            const method = endpoint.location.method;
+            const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
+            for (const endpointExample of endpoint.examples ?? []) {
+                const generatedSnippet = dynamicSnippetsGenerator.generateSync(
+                    convertDynamicEndpointSnippetRequest(endpointExample)
+                );
+                endpointSnippets.push({
+                    exampleIdentifier: endpointExample.id,
+                    id: {
+                        method,
+                        path,
+                        identifierOverride: endpointId
+                    },
+                    snippet: FernGeneratorExec.EndpointSnippet.typescript({
+                        client: generatedSnippet.snippet
+                    })
+                });
+            }
+        }
+        return endpointSnippets;
     }
 
     private async generateSourceFiles(context: SdkGeneratorContext): Promise<void> {
