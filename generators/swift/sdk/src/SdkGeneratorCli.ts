@@ -70,7 +70,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         await this.generateSourceFiles(context);
-        // Generate root files including README.md last because they depend on the registered schema and request types
         await this.generateRootFiles(context);
         await context.project.persist();
     }
