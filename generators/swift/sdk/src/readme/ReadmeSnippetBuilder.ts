@@ -18,7 +18,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }) {
         super({ endpointSnippets });
         this.context = context;
-        this.snippetsById = Object.fromEntries(endpointSnippets.map((snippet) => [snippet.id.identifierOverride, snippet]));
+        this.snippetsById = Object.fromEntries(
+            endpointSnippets.map((snippet) => [snippet.id.identifierOverride, snippet])
+        );
     }
 
     public override getDefaultEndpointId(): EndpointId {
