@@ -336,7 +336,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             package_: context.ir.rootPackage,
             sdkGeneratorContext: context
         });
-        const { class: rootClientClass } = rootClientGenerator.generate();
+        const rootClientClass = rootClientGenerator.generate();
         context.project.addSourceFile({
             nameCandidateWithoutExtension: rootClientClass.name,
             directory: RelativeFilePath.of(""),
