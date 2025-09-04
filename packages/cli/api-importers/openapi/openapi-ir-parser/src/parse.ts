@@ -263,71 +263,65 @@ function merge(
     let mergedEndpoints = [...ir1.endpoints, ...ir2.endpoints];
     
     if (hasMultipleApis) {
-        // Create separate environment constants for each API
-        // e.g., PRODUCTION_FINTECH, PRODUCTION_PAYMENTS
+        // Group servers by environment to create MultipleBaseUrls structure
+        // e.g., PRD environment contains both fintech and payments URLs
         
-        // Extract unique API names from URLs
+        // Extract API names - using OpenAPI title if available, otherwise URL pattern
         const api1Name = extractApiNameFromServers(ir1.servers);
         const api2Name = extractApiNameFromServers(ir2.servers);
         
-        // Create servers for each API/environment combination
+        // Create a map of environment name to URLs
+        const environmentMap = new Map<string, {[apiName: string]: any}>();
+        
+        // Process servers from first API
         for (const server of ir1.servers) {
             const envName = getEnvironmentName(server);
-            const capitalizedApi1 = api1Name.toUpperCase();
-            mergedServers.push({
-                ...server,
-                name: `${envName}_${capitalizedApi1}`,
-                description: `${envName} ${capitalizedApi1}`
-            });
+            if (!environmentMap.has(envName)) {
+                environmentMap.set(envName, {});
+            }
+            const envUrls = environmentMap.get(envName)!;
+            envUrls[api1Name] = {
+                url: server.url,
+                audiences: server.audiences
+            };
         }
         
+        // Process servers from second API
         for (const server of ir2.servers) {
             const envName = getEnvironmentName(server);
-            const capitalizedApi2 = api2Name.toUpperCase();
+            if (!environmentMap.has(envName)) {
+                environmentMap.set(envName, {});
+            }
+            const envUrls = environmentMap.get(envName)!;
+            envUrls[api2Name] = {
+                url: server.url,
+                audiences: server.audiences
+            };
+        }
+        
+        // Create merged servers with MultipleBaseUrls structure
+        for (const [envName, urls] of environmentMap.entries()) {
             mergedServers.push({
-                ...server,
-                name: `${envName}_${capitalizedApi2}`,
-                description: `${envName} ${capitalizedApi2}`
+                name: envName,
+                description: `${envName} environment`,
+                urls: urls,
+                // Mark this as a multiple base URLs environment
+                __multipleBaseUrls: true
             });
         }
         
-        // Tag endpoints with their corresponding API servers
-        // This helps route requests to the correct base URL
-        const ir1EndpointsWithServers = ir1.endpoints.map(endpoint => {
-            const endpointServers = ir1.servers.map(server => {
-                const envName = getEnvironmentName(server);
-                const capitalizedApi1 = api1Name.toUpperCase();
-                return {
-                    name: `${envName}_${capitalizedApi1}`,
-                    url: server.url,
-                    description: `${envName} ${capitalizedApi1}`,
-                    audiences: server.audiences
-                };
-            });
-            return {
-                ...endpoint,
-                servers: endpointServers
-            };
-        });
+        // Tag endpoints with their API name for routing
+        const ir1EndpointsWithApiTag = ir1.endpoints.map(endpoint => ({
+            ...endpoint,
+            __apiName: api1Name
+        }));
         
-        const ir2EndpointsWithServers = ir2.endpoints.map(endpoint => {
-            const endpointServers = ir2.servers.map(server => {
-                const envName = getEnvironmentName(server);
-                const capitalizedApi2 = api2Name.toUpperCase();
-                return {
-                    name: `${envName}_${capitalizedApi2}`,
-                    url: server.url,
-                    description: `${envName} ${capitalizedApi2}`,
-                    audiences: server.audiences
-                };
-            });
-            return {
-                ...endpoint,
-                servers: endpointServers
-            };
-        });
+        const ir2EndpointsWithApiTag = ir2.endpoints.map(endpoint => ({
+            ...endpoint,
+            __apiName: api2Name
+        }));
         
-        mergedEndpoints = [...ir1EndpointsWithServers, ...ir2EndpointsWithServers];
+        mergedEndpoints = [...ir1EndpointsWithApiTag, ...ir2EndpointsWithApiTag];
     } else {
         // Simple case: just concatenate servers
         mergedServers = [...ir1.servers, ...ir2.servers];
