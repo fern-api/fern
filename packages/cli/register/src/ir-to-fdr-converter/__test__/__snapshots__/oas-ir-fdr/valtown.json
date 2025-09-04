@@ -96,9 +96,9 @@
         ]
       }
     },
-    "ResultSetLastInsertRowid": {
+    "ResultSetLastInsertRowidInner": {
       "description": "ROWID of the last inserted row.\n\nThis value is not specified if the SQL statement was not an INSERT or if the table was not a ROWID table.",
-      "name": "ResultSetLastInsertRowid",
+      "name": "ResultSetLastInsertRowidInner",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -186,7 +186,7 @@
                 "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "ResultSetLastInsertRowid"
+                  "value": "ResultSetLastInsertRowidInner"
                 }
               }
             }
@@ -284,9 +284,9 @@
         ]
       }
     },
-    "ExtendedValAuthor": {
+    "ExtendedValAuthorInner": {
       "description": "The user who created this val",
-      "name": "ExtendedValAuthor",
+      "name": "ExtendedValAuthorInner",
       "shape": {
         "type": "object",
         "extends": [],
@@ -427,7 +427,7 @@
               "type": "nullable",
               "itemType": {
                 "type": "id",
-                "value": "ExtendedValAuthor"
+                "value": "ExtendedValAuthorInner"
               }
             }
           },
@@ -557,9 +557,9 @@
         ]
       }
     },
-    "BasicValAuthor": {
+    "BasicValAuthorInner": {
       "description": "The user who created this val",
-      "name": "BasicValAuthor",
+      "name": "BasicValAuthorInner",
       "shape": {
         "type": "object",
         "extends": [],
@@ -700,7 +700,7 @@
               "type": "nullable",
               "itemType": {
                 "type": "id",
-                "value": "BasicValAuthor"
+                "value": "BasicValAuthorInner"
               }
             }
           }
@@ -873,9 +873,9 @@
         ]
       }
     },
-    "V1AliasUsernameValNameGetResponsesContentApplicationJsonSchemaAuthor": {
+    "V1AliasUsernameValNameGetResponsesContentApplicationJsonSchemaAuthorInner": {
       "description": "The user who created this val",
-      "name": "V1AliasUsernameValNameGetResponsesContentApplicationJsonSchemaAuthor",
+      "name": "V1AliasUsernameValNameGetResponsesContentApplicationJsonSchemaAuthorInner",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1016,7 +1016,7 @@
               "type": "nullable",
               "itemType": {
                 "type": "id",
-                "value": "V1AliasUsernameValNameGetResponsesContentApplicationJsonSchemaAuthor"
+                "value": "V1AliasUsernameValNameGetResponsesContentApplicationJsonSchemaAuthorInner"
               }
             }
           },
@@ -1076,9 +1076,9 @@
         ]
       }
     },
-    "V1MeGetResponsesContentApplicationJsonSchemaTier": {
+    "V1MeGetResponsesContentApplicationJsonSchemaTierInner": {
       "description": "Your account tier",
-      "name": "V1MeGetResponsesContentApplicationJsonSchemaTier",
+      "name": "V1MeGetResponsesContentApplicationJsonSchemaTierInner",
       "shape": {
         "type": "enum",
         "values": [
@@ -1170,7 +1170,7 @@
               "type": "nullable",
               "itemType": {
                 "type": "id",
-                "value": "V1MeGetResponsesContentApplicationJsonSchemaTier"
+                "value": "V1MeGetResponsesContentApplicationJsonSchemaTierInner"
               }
             }
           },
@@ -1281,9 +1281,9 @@
         ]
       }
     },
-    "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItemsValAuthor": {
+    "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItemsValAuthorInner": {
       "description": "The user who created this val",
-      "name": "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItemsValAuthor",
+      "name": "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItemsValAuthorInner",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1363,7 +1363,7 @@
               "type": "nullable",
               "itemType": {
                 "type": "id",
-                "value": "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItemsValAuthor"
+                "value": "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItemsValAuthorInner"
               }
             }
           }
@@ -1716,9 +1716,9 @@
         ]
       }
     },
-    "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf0Items": {
+    "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf0ItemsInner": {
       "description": "A value to be used as a parameter",
-      "name": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf0Items",
+      "name": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf0ItemsInner",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1759,16 +1759,16 @@
             "type": "nullable",
             "itemType": {
               "type": "id",
-              "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf0Items"
+              "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf0ItemsInner"
             }
           }
         }
       },
       "displayName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args0"
     },
-    "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf1": {
+    "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf1Inner": {
       "description": "A value to be used as a parameter",
-      "name": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf1",
+      "name": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf1Inner",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1815,7 +1815,7 @@
             "type": "nullable",
             "itemType": {
               "type": "id",
-              "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf1"
+              "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf1Inner"
             }
           }
         }
@@ -1902,9 +1902,9 @@
         ]
       }
     },
-    "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf0Items": {
+    "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf0ItemsInner": {
       "description": "A value to be used as a parameter",
-      "name": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf0Items",
+      "name": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf0ItemsInner",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1945,16 +1945,16 @@
             "type": "nullable",
             "itemType": {
               "type": "id",
-              "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf0Items"
+              "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf0ItemsInner"
             }
           }
         }
       },
       "displayName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args0"
     },
-    "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf1": {
+    "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf1Inner": {
       "description": "A value to be used as a parameter",
-      "name": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf1",
+      "name": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf1Inner",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -2001,7 +2001,7 @@
             "type": "nullable",
             "itemType": {
               "type": "id",
-              "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf1"
+              "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf1Inner"
             }
           }
         }
@@ -2105,8 +2105,8 @@
         ]
       }
     },
-    "V1EvalPostResponsesContentApplicationJsonSchema": {
-      "name": "V1EvalPostResponsesContentApplicationJsonSchema",
+    "V1EvalPostResponsesContentApplicationJsonSchemaInner": {
+      "name": "V1EvalPostResponsesContentApplicationJsonSchemaInner",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -2195,8 +2195,8 @@
         ]
       }
     },
-    "V1EvalCodeGetResponsesContentApplicationJsonSchema": {
-      "name": "V1EvalCodeGetResponsesContentApplicationJsonSchema",
+    "V1EvalCodeGetResponsesContentApplicationJsonSchemaInner": {
+      "name": "V1EvalCodeGetResponsesContentApplicationJsonSchemaInner",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -5675,7 +5675,7 @@
                 "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "V1EvalPostResponsesContentApplicationJsonSchema"
+                  "value": "V1EvalPostResponsesContentApplicationJsonSchemaInner"
                 }
               }
             },
@@ -5691,7 +5691,7 @@
                     "type": "nullable",
                     "itemType": {
                       "type": "id",
-                      "value": "V1EvalPostResponsesContentApplicationJsonSchema"
+                      "value": "V1EvalPostResponsesContentApplicationJsonSchemaInner"
                     }
                   }
                 },
@@ -5841,7 +5841,7 @@
                 "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "V1EvalCodeGetResponsesContentApplicationJsonSchema"
+                  "value": "V1EvalCodeGetResponsesContentApplicationJsonSchemaInner"
                 }
               }
             },
@@ -5857,7 +5857,7 @@
                     "type": "nullable",
                     "itemType": {
                       "type": "id",
-                      "value": "V1EvalCodeGetResponsesContentApplicationJsonSchema"
+                      "value": "V1EvalCodeGetResponsesContentApplicationJsonSchemaInner"
                     }
                   }
                 },

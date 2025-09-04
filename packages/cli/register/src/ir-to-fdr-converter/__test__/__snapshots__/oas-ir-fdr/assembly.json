@@ -1038,9 +1038,9 @@
         ]
       }
     },
-    "TranscriptContentSafetyLabels": {
+    "TranscriptContentSafetyLabelsInner": {
       "description": "An array of results for the Content Moderation model, if it was enabled during the transcription request.\nSee [Content moderation](https://www.assemblyai.com/docs/Models/content_moderation) for more information.\n",
-      "name": "TranscriptContentSafetyLabels",
+      "name": "TranscriptContentSafetyLabelsInner",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1066,9 +1066,9 @@
         ]
       }
     },
-    "TranscriptIabCategoriesResult": {
+    "TranscriptIabCategoriesResultInner": {
       "description": "An array of results for the Topic Detection model, if it was enabled during the transcription request.\nSee [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification) for more information.\n",
-      "name": "TranscriptIabCategoriesResult",
+      "name": "TranscriptIabCategoriesResultInner",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1619,7 +1619,7 @@
                 "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "TranscriptContentSafetyLabels"
+                  "value": "TranscriptContentSafetyLabelsInner"
                 }
               }
             }
@@ -1649,7 +1649,7 @@
                 "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "TranscriptIabCategoriesResult"
+                  "value": "TranscriptIabCategoriesResultInner"
                 }
               }
             }
@@ -2521,6 +2521,27 @@
         ]
       }
     },
+    "AutoHighlightsResultInner": {
+      "description": "An array of results for the Key Phrases model, if it was enabled during the transcription request.\nSee [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.\n",
+      "name": "AutoHighlightsResultInner",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "A temporally-sequential array of Key Phrases",
+            "key": "results",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "AutoHighlightResult"
+              }
+            }
+          }
+        ]
+      }
+    },
     "AutoHighlightsResult": {
       "description": "An array of results for the Key Phrases model, if it was enabled during the transcription request.\nSee [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.\n",
       "name": "AutoHighlightsResult",
@@ -2530,7 +2551,7 @@
           "type": "nullable",
           "itemType": {
             "type": "id",
-            "value": "AutoHighlightsResult"
+            "value": "AutoHighlightsResultInner"
           }
         }
       }

@@ -1,7 +1,7 @@
 {
   "types": {
-    "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema": {
-      "name": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema",
+    "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchemaInner": {
+      "name": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchemaInner",
       "shape": {
         "type": "object",
         "extends": [],
@@ -194,7 +194,7 @@
                 "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema"
+                  "value": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchemaInner"
                 }
               }
             }
@@ -212,7 +212,7 @@
                     "type": "nullable",
                     "itemType": {
                       "type": "id",
-                      "value": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema"
+                      "value": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchemaInner"
                     }
                   }
                 }

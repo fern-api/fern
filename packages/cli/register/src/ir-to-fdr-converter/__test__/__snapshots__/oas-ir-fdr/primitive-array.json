@@ -24,8 +24,8 @@
         ]
       }
     },
-    "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchema": {
-      "name": "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchema",
+    "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchemaInner": {
+      "name": "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchemaInner",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -305,7 +305,7 @@
                 "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchema"
+                  "value": "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchemaInner"
                 }
               }
             }
@@ -323,7 +323,7 @@
                     "type": "nullable",
                     "itemType": {
                       "type": "id",
-                      "value": "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchema"
+                      "value": "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchemaInner"
                     }
                   }
                 }

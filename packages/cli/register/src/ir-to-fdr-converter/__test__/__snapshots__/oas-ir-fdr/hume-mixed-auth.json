@@ -517,8 +517,8 @@
         ]
       }
     },
-    "MessagesSessionSettingsMetadata": {
-      "name": "MessagesSessionSettingsMetadata",
+    "MessagesSessionSettingsMetadataInner": {
+      "name": "MessagesSessionSettingsMetadataInner",
       "shape": {
         "type": "object",
         "extends": [],
@@ -633,7 +633,7 @@
                 "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "SessionSettingsMetadata"
+                  "value": "SessionSettingsMetadataInner"
                 }
               }
             }
@@ -1263,9 +1263,9 @@
         ]
       }
     },
-    "ChatMessageToolResult": {
+    "ChatMessageToolResultInner": {
       "description": "Function call response from client.",
-      "name": "ChatMessageToolResult",
+      "name": "ChatMessageToolResultInner",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1341,7 +1341,7 @@
                 "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "ChatMessageToolResult"
+                  "value": "ChatMessageToolResultInner"
                 }
               }
             }
@@ -1951,8 +1951,8 @@
         ]
       }
     },
-    "SessionSettingsMetadata": {
-      "name": "SessionSettingsMetadata",
+    "SessionSettingsMetadataInner": {
+      "name": "SessionSettingsMetadataInner",
       "shape": {
         "type": "object",
         "extends": [],

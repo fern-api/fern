@@ -780,8 +780,8 @@
         }
       }
     },
-    "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf0AccessListItems": {
-      "name": "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf0AccessListItems",
+    "EthGetBlockByHashResultInnerTransactionsOneOf1ItemsOneOf0AccessListItems": {
+      "name": "EthGetBlockByHashResultInnerTransactionsOneOf1ItemsOneOf0AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -818,8 +818,8 @@
         ]
       }
     },
-    "EthGetBlockByHashResultTransactionsOneOf1Items0": {
-      "name": "EthGetBlockByHashResultTransactionsOneOf1Items0",
+    "EthGetBlockByHashResultInnerTransactionsOneOf1Items0": {
+      "name": "EthGetBlockByHashResultInnerTransactionsOneOf1Items0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -989,7 +989,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf0AccessListItems"
+                "value": "EthGetBlockByHashResultInnerTransactionsOneOf1ItemsOneOf0AccessListItems"
               }
             }
           },
@@ -1053,8 +1053,8 @@
       },
       "displayName": "Signed 4844 Transaction"
     },
-    "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf1AccessListItems": {
-      "name": "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf1AccessListItems",
+    "EthGetBlockByHashResultInnerTransactionsOneOf1ItemsOneOf1AccessListItems": {
+      "name": "EthGetBlockByHashResultInnerTransactionsOneOf1ItemsOneOf1AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1091,8 +1091,8 @@
         ]
       }
     },
-    "EthGetBlockByHashResultTransactionsOneOf1Items1": {
-      "name": "EthGetBlockByHashResultTransactionsOneOf1Items1",
+    "EthGetBlockByHashResultInnerTransactionsOneOf1Items1": {
+      "name": "EthGetBlockByHashResultInnerTransactionsOneOf1Items1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1268,7 +1268,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf1AccessListItems"
+                "value": "EthGetBlockByHashResultInnerTransactionsOneOf1ItemsOneOf1AccessListItems"
               }
             }
           },
@@ -1332,8 +1332,8 @@
       },
       "displayName": "Signed 1559 Transaction"
     },
-    "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf2AccessListItems": {
-      "name": "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf2AccessListItems",
+    "EthGetBlockByHashResultInnerTransactionsOneOf1ItemsOneOf2AccessListItems": {
+      "name": "EthGetBlockByHashResultInnerTransactionsOneOf1ItemsOneOf2AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1370,8 +1370,8 @@
         ]
       }
     },
-    "EthGetBlockByHashResultTransactionsOneOf1Items2": {
-      "name": "EthGetBlockByHashResultTransactionsOneOf1Items2",
+    "EthGetBlockByHashResultInnerTransactionsOneOf1Items2": {
+      "name": "EthGetBlockByHashResultInnerTransactionsOneOf1Items2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1525,7 +1525,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf2AccessListItems"
+                "value": "EthGetBlockByHashResultInnerTransactionsOneOf1ItemsOneOf2AccessListItems"
               }
             }
           },
@@ -1589,8 +1589,8 @@
       },
       "displayName": "Signed 2930 Transaction"
     },
-    "EthGetBlockByHashResultTransactionsOneOf1Items3": {
-      "name": "EthGetBlockByHashResultTransactionsOneOf1Items3",
+    "EthGetBlockByHashResultInnerTransactionsOneOf1Items3": {
+      "name": "EthGetBlockByHashResultInnerTransactionsOneOf1Items3",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1785,62 +1785,62 @@
       },
       "displayName": "Signed Legacy Transaction"
     },
-    "EthGetBlockByHashResultTransactionsOneOf1Items": {
-      "name": "EthGetBlockByHashResultTransactionsOneOf1Items",
+    "EthGetBlockByHashResultInnerTransactionsOneOf1Items": {
+      "name": "EthGetBlockByHashResultInnerTransactionsOneOf1Items",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetBlockByHashResultTransactionsOneOf1Items0",
+            "typeName": "EthGetBlockByHashResultInnerTransactionsOneOf1Items0",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByHashResultTransactionsOneOf1Items0"
+              "value": "EthGetBlockByHashResultInnerTransactionsOneOf1Items0"
             },
             "displayName": "Signed 4844 Transaction"
           },
           {
-            "typeName": "EthGetBlockByHashResultTransactionsOneOf1Items1",
+            "typeName": "EthGetBlockByHashResultInnerTransactionsOneOf1Items1",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByHashResultTransactionsOneOf1Items1"
+              "value": "EthGetBlockByHashResultInnerTransactionsOneOf1Items1"
             },
             "displayName": "Signed 1559 Transaction"
           },
           {
-            "typeName": "EthGetBlockByHashResultTransactionsOneOf1Items2",
+            "typeName": "EthGetBlockByHashResultInnerTransactionsOneOf1Items2",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByHashResultTransactionsOneOf1Items2"
+              "value": "EthGetBlockByHashResultInnerTransactionsOneOf1Items2"
             },
             "displayName": "Signed 2930 Transaction"
           },
           {
-            "typeName": "EthGetBlockByHashResultTransactionsOneOf1Items3",
+            "typeName": "EthGetBlockByHashResultInnerTransactionsOneOf1Items3",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByHashResultTransactionsOneOf1Items3"
+              "value": "EthGetBlockByHashResultInnerTransactionsOneOf1Items3"
             },
             "displayName": "Signed Legacy Transaction"
           }
         ]
       }
     },
-    "EthGetBlockByHashResultTransactions1": {
-      "name": "EthGetBlockByHashResultTransactions1",
+    "EthGetBlockByHashResultInnerTransactions1": {
+      "name": "EthGetBlockByHashResultInnerTransactions1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "EthGetBlockByHashResultTransactionsOneOf1Items"
+            "value": "EthGetBlockByHashResultInnerTransactionsOneOf1Items"
           }
         }
       },
       "displayName": "Full transactions"
     },
-    "EthGetBlockByHashResultTransactions": {
-      "name": "EthGetBlockByHashResultTransactions",
+    "EthGetBlockByHashResultInnerTransactions": {
+      "name": "EthGetBlockByHashResultInnerTransactions",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1857,18 +1857,18 @@
             }
           },
           {
-            "typeName": "EthGetBlockByHashResultTransactions1",
+            "typeName": "EthGetBlockByHashResultInnerTransactions1",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByHashResultTransactions1"
+              "value": "EthGetBlockByHashResultInnerTransactions1"
             },
             "displayName": "Full transactions"
           }
         ]
       }
     },
-    "EthGetBlockByHashResultWithdrawalsItems": {
-      "name": "EthGetBlockByHashResultWithdrawalsItems",
+    "EthGetBlockByHashResultInnerWithdrawalsItems": {
+      "name": "EthGetBlockByHashResultInnerWithdrawalsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1916,8 +1916,8 @@
         ]
       }
     },
-    "EthGetBlockByHashResult": {
-      "name": "EthGetBlockByHashResult",
+    "EthGetBlockByHashResultInner": {
+      "name": "EthGetBlockByHashResultInner",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2164,7 +2164,7 @@
             "key": "transactions",
             "valueType": {
               "type": "id",
-              "value": "EthGetBlockByHashResultTransactions"
+              "value": "EthGetBlockByHashResultInnerTransactions"
             }
           },
           {
@@ -2175,7 +2175,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "EthGetBlockByHashResultWithdrawalsItems"
+                  "value": "EthGetBlockByHashResultInnerWithdrawalsItems"
                 }
               }
             }
@@ -2229,13 +2229,13 @@
           "type": "nullable",
           "itemType": {
             "type": "id",
-            "value": "EthGetBlockByHashResult"
+            "value": "EthGetBlockByHashResultInner"
           }
         }
       }
     },
-    "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf0AccessListItems": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf0AccessListItems",
+    "EthGetBlockByNumberResultInnerTransactionsOneOf1ItemsOneOf0AccessListItems": {
+      "name": "EthGetBlockByNumberResultInnerTransactionsOneOf1ItemsOneOf0AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2272,8 +2272,8 @@
         ]
       }
     },
-    "EthGetBlockByNumberResultTransactionsOneOf1Items0": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOf1Items0",
+    "EthGetBlockByNumberResultInnerTransactionsOneOf1Items0": {
+      "name": "EthGetBlockByNumberResultInnerTransactionsOneOf1Items0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2443,7 +2443,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf0AccessListItems"
+                "value": "EthGetBlockByNumberResultInnerTransactionsOneOf1ItemsOneOf0AccessListItems"
               }
             }
           },
@@ -2507,8 +2507,8 @@
       },
       "displayName": "Signed 4844 Transaction"
     },
-    "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf1AccessListItems": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf1AccessListItems",
+    "EthGetBlockByNumberResultInnerTransactionsOneOf1ItemsOneOf1AccessListItems": {
+      "name": "EthGetBlockByNumberResultInnerTransactionsOneOf1ItemsOneOf1AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2545,8 +2545,8 @@
         ]
       }
     },
-    "EthGetBlockByNumberResultTransactionsOneOf1Items1": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOf1Items1",
+    "EthGetBlockByNumberResultInnerTransactionsOneOf1Items1": {
+      "name": "EthGetBlockByNumberResultInnerTransactionsOneOf1Items1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2722,7 +2722,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf1AccessListItems"
+                "value": "EthGetBlockByNumberResultInnerTransactionsOneOf1ItemsOneOf1AccessListItems"
               }
             }
           },
@@ -2786,8 +2786,8 @@
       },
       "displayName": "Signed 1559 Transaction"
     },
-    "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf2AccessListItems": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf2AccessListItems",
+    "EthGetBlockByNumberResultInnerTransactionsOneOf1ItemsOneOf2AccessListItems": {
+      "name": "EthGetBlockByNumberResultInnerTransactionsOneOf1ItemsOneOf2AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2824,8 +2824,8 @@
         ]
       }
     },
-    "EthGetBlockByNumberResultTransactionsOneOf1Items2": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOf1Items2",
+    "EthGetBlockByNumberResultInnerTransactionsOneOf1Items2": {
+      "name": "EthGetBlockByNumberResultInnerTransactionsOneOf1Items2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2979,7 +2979,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf2AccessListItems"
+                "value": "EthGetBlockByNumberResultInnerTransactionsOneOf1ItemsOneOf2AccessListItems"
               }
             }
           },
@@ -3043,8 +3043,8 @@
       },
       "displayName": "Signed 2930 Transaction"
     },
-    "EthGetBlockByNumberResultTransactionsOneOf1Items3": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOf1Items3",
+    "EthGetBlockByNumberResultInnerTransactionsOneOf1Items3": {
+      "name": "EthGetBlockByNumberResultInnerTransactionsOneOf1Items3",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3239,62 +3239,62 @@
       },
       "displayName": "Signed Legacy Transaction"
     },
-    "EthGetBlockByNumberResultTransactionsOneOf1Items": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOf1Items",
+    "EthGetBlockByNumberResultInnerTransactionsOneOf1Items": {
+      "name": "EthGetBlockByNumberResultInnerTransactionsOneOf1Items",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetBlockByNumberResultTransactionsOneOf1Items0",
+            "typeName": "EthGetBlockByNumberResultInnerTransactionsOneOf1Items0",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByNumberResultTransactionsOneOf1Items0"
+              "value": "EthGetBlockByNumberResultInnerTransactionsOneOf1Items0"
             },
             "displayName": "Signed 4844 Transaction"
           },
           {
-            "typeName": "EthGetBlockByNumberResultTransactionsOneOf1Items1",
+            "typeName": "EthGetBlockByNumberResultInnerTransactionsOneOf1Items1",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByNumberResultTransactionsOneOf1Items1"
+              "value": "EthGetBlockByNumberResultInnerTransactionsOneOf1Items1"
             },
             "displayName": "Signed 1559 Transaction"
           },
           {
-            "typeName": "EthGetBlockByNumberResultTransactionsOneOf1Items2",
+            "typeName": "EthGetBlockByNumberResultInnerTransactionsOneOf1Items2",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByNumberResultTransactionsOneOf1Items2"
+              "value": "EthGetBlockByNumberResultInnerTransactionsOneOf1Items2"
             },
             "displayName": "Signed 2930 Transaction"
           },
           {
-            "typeName": "EthGetBlockByNumberResultTransactionsOneOf1Items3",
+            "typeName": "EthGetBlockByNumberResultInnerTransactionsOneOf1Items3",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByNumberResultTransactionsOneOf1Items3"
+              "value": "EthGetBlockByNumberResultInnerTransactionsOneOf1Items3"
             },
             "displayName": "Signed Legacy Transaction"
           }
         ]
       }
     },
-    "EthGetBlockByNumberResultTransactions1": {
-      "name": "EthGetBlockByNumberResultTransactions1",
+    "EthGetBlockByNumberResultInnerTransactions1": {
+      "name": "EthGetBlockByNumberResultInnerTransactions1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "EthGetBlockByNumberResultTransactionsOneOf1Items"
+            "value": "EthGetBlockByNumberResultInnerTransactionsOneOf1Items"
           }
         }
       },
       "displayName": "Full transactions"
     },
-    "EthGetBlockByNumberResultTransactions": {
-      "name": "EthGetBlockByNumberResultTransactions",
+    "EthGetBlockByNumberResultInnerTransactions": {
+      "name": "EthGetBlockByNumberResultInnerTransactions",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -3311,18 +3311,18 @@
             }
           },
           {
-            "typeName": "EthGetBlockByNumberResultTransactions1",
+            "typeName": "EthGetBlockByNumberResultInnerTransactions1",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByNumberResultTransactions1"
+              "value": "EthGetBlockByNumberResultInnerTransactions1"
             },
             "displayName": "Full transactions"
           }
         ]
       }
     },
-    "EthGetBlockByNumberResultWithdrawalsItems": {
-      "name": "EthGetBlockByNumberResultWithdrawalsItems",
+    "EthGetBlockByNumberResultInnerWithdrawalsItems": {
+      "name": "EthGetBlockByNumberResultInnerWithdrawalsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3370,8 +3370,8 @@
         ]
       }
     },
-    "EthGetBlockByNumberResult": {
-      "name": "EthGetBlockByNumberResult",
+    "EthGetBlockByNumberResultInner": {
+      "name": "EthGetBlockByNumberResultInner",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3618,7 +3618,7 @@
             "key": "transactions",
             "valueType": {
               "type": "id",
-              "value": "EthGetBlockByNumberResultTransactions"
+              "value": "EthGetBlockByNumberResultInnerTransactions"
             }
           },
           {
@@ -3629,7 +3629,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "EthGetBlockByNumberResultWithdrawalsItems"
+                  "value": "EthGetBlockByNumberResultInnerWithdrawalsItems"
                 }
               }
             }
@@ -3721,7 +3721,7 @@
           "type": "nullable",
           "itemType": {
             "type": "id",
-            "value": "EthGetBlockByNumberResult"
+            "value": "EthGetBlockByNumberResultInner"
           }
         }
       }
@@ -4075,8 +4075,8 @@
         ]
       }
     },
-    "EthGetLogsParamFilterAddress": {
-      "name": "EthGetLogsParamFilterAddress",
+    "EthGetLogsParamFilterAddressInner": {
+      "name": "EthGetLogsParamFilterAddressInner",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -4104,8 +4104,8 @@
         ]
       }
     },
-    "EthGetLogsParamFilterTopicsItems": {
-      "name": "EthGetLogsParamFilterTopicsItems",
+    "EthGetLogsParamFilterTopicsInnerItems": {
+      "name": "EthGetLogsParamFilterTopicsInnerItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -4173,7 +4173,7 @@
                 "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "EthGetLogsParamFilterAddress"
+                  "value": "EthGetLogsParamFilterAddressInner"
                 }
               }
             }
@@ -4188,7 +4188,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "EthGetLogsParamFilterTopicsItems"
+                    "value": "EthGetLogsParamFilterTopicsInnerItems"
                   }
                 }
               }
@@ -4619,8 +4619,8 @@
         }
       }
     },
-    "EthGetTransactionByBlockHashAndIndexResultOneOf0AccessListItems": {
-      "name": "EthGetTransactionByBlockHashAndIndexResultOneOf0AccessListItems",
+    "EthGetTransactionByBlockHashAndIndexResultInnerOneOf0AccessListItems": {
+      "name": "EthGetTransactionByBlockHashAndIndexResultInnerOneOf0AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4657,8 +4657,8 @@
         ]
       }
     },
-    "EthGetTransactionByBlockHashAndIndexResult0": {
-      "name": "EthGetTransactionByBlockHashAndIndexResult0",
+    "EthGetTransactionByBlockHashAndIndexResultInner0": {
+      "name": "EthGetTransactionByBlockHashAndIndexResultInner0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4828,7 +4828,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByBlockHashAndIndexResultOneOf0AccessListItems"
+                "value": "EthGetTransactionByBlockHashAndIndexResultInnerOneOf0AccessListItems"
               }
             }
           },
@@ -4892,8 +4892,8 @@
       },
       "displayName": "Signed 4844 Transaction"
     },
-    "EthGetTransactionByBlockHashAndIndexResultOneOf1AccessListItems": {
-      "name": "EthGetTransactionByBlockHashAndIndexResultOneOf1AccessListItems",
+    "EthGetTransactionByBlockHashAndIndexResultInnerOneOf1AccessListItems": {
+      "name": "EthGetTransactionByBlockHashAndIndexResultInnerOneOf1AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4930,8 +4930,8 @@
         ]
       }
     },
-    "EthGetTransactionByBlockHashAndIndexResult1": {
-      "name": "EthGetTransactionByBlockHashAndIndexResult1",
+    "EthGetTransactionByBlockHashAndIndexResultInner1": {
+      "name": "EthGetTransactionByBlockHashAndIndexResultInner1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5107,7 +5107,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByBlockHashAndIndexResultOneOf1AccessListItems"
+                "value": "EthGetTransactionByBlockHashAndIndexResultInnerOneOf1AccessListItems"
               }
             }
           },
@@ -5171,8 +5171,8 @@
       },
       "displayName": "Signed 1559 Transaction"
     },
-    "EthGetTransactionByBlockHashAndIndexResultOneOf2AccessListItems": {
-      "name": "EthGetTransactionByBlockHashAndIndexResultOneOf2AccessListItems",
+    "EthGetTransactionByBlockHashAndIndexResultInnerOneOf2AccessListItems": {
+      "name": "EthGetTransactionByBlockHashAndIndexResultInnerOneOf2AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5209,8 +5209,8 @@
         ]
       }
     },
-    "EthGetTransactionByBlockHashAndIndexResult2": {
-      "name": "EthGetTransactionByBlockHashAndIndexResult2",
+    "EthGetTransactionByBlockHashAndIndexResultInner2": {
+      "name": "EthGetTransactionByBlockHashAndIndexResultInner2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5364,7 +5364,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByBlockHashAndIndexResultOneOf2AccessListItems"
+                "value": "EthGetTransactionByBlockHashAndIndexResultInnerOneOf2AccessListItems"
               }
             }
           },
@@ -5428,8 +5428,8 @@
       },
       "displayName": "Signed 2930 Transaction"
     },
-    "EthGetTransactionByBlockHashAndIndexResult3": {
-      "name": "EthGetTransactionByBlockHashAndIndexResult3",
+    "EthGetTransactionByBlockHashAndIndexResultInner3": {
+      "name": "EthGetTransactionByBlockHashAndIndexResultInner3",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5624,40 +5624,40 @@
       },
       "displayName": "Signed Legacy Transaction"
     },
-    "EthGetTransactionByBlockHashAndIndexResult": {
-      "name": "EthGetTransactionByBlockHashAndIndexResult",
+    "EthGetTransactionByBlockHashAndIndexResultInner": {
+      "name": "EthGetTransactionByBlockHashAndIndexResultInner",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetTransactionByBlockHashAndIndexResult0",
+            "typeName": "EthGetTransactionByBlockHashAndIndexResultInner0",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByBlockHashAndIndexResult0"
+              "value": "EthGetTransactionByBlockHashAndIndexResultInner0"
             },
             "displayName": "Signed 4844 Transaction"
           },
           {
-            "typeName": "EthGetTransactionByBlockHashAndIndexResult1",
+            "typeName": "EthGetTransactionByBlockHashAndIndexResultInner1",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByBlockHashAndIndexResult1"
+              "value": "EthGetTransactionByBlockHashAndIndexResultInner1"
             },
             "displayName": "Signed 1559 Transaction"
           },
           {
-            "typeName": "EthGetTransactionByBlockHashAndIndexResult2",
+            "typeName": "EthGetTransactionByBlockHashAndIndexResultInner2",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByBlockHashAndIndexResult2"
+              "value": "EthGetTransactionByBlockHashAndIndexResultInner2"
             },
             "displayName": "Signed 2930 Transaction"
           },
           {
-            "typeName": "EthGetTransactionByBlockHashAndIndexResult3",
+            "typeName": "EthGetTransactionByBlockHashAndIndexResultInner3",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByBlockHashAndIndexResult3"
+              "value": "EthGetTransactionByBlockHashAndIndexResultInner3"
             },
             "displayName": "Signed Legacy Transaction"
           }
@@ -5698,13 +5698,13 @@
           "type": "nullable",
           "itemType": {
             "type": "id",
-            "value": "EthGetTransactionByBlockHashAndIndexResult"
+            "value": "EthGetTransactionByBlockHashAndIndexResultInner"
           }
         }
       }
     },
-    "EthGetTransactionByBlockNumberAndIndexResultOneOf0AccessListItems": {
-      "name": "EthGetTransactionByBlockNumberAndIndexResultOneOf0AccessListItems",
+    "EthGetTransactionByBlockNumberAndIndexResultInnerOneOf0AccessListItems": {
+      "name": "EthGetTransactionByBlockNumberAndIndexResultInnerOneOf0AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5741,8 +5741,8 @@
         ]
       }
     },
-    "EthGetTransactionByBlockNumberAndIndexResult0": {
-      "name": "EthGetTransactionByBlockNumberAndIndexResult0",
+    "EthGetTransactionByBlockNumberAndIndexResultInner0": {
+      "name": "EthGetTransactionByBlockNumberAndIndexResultInner0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5912,7 +5912,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByBlockNumberAndIndexResultOneOf0AccessListItems"
+                "value": "EthGetTransactionByBlockNumberAndIndexResultInnerOneOf0AccessListItems"
               }
             }
           },
@@ -5976,8 +5976,8 @@
       },
       "displayName": "Signed 4844 Transaction"
     },
-    "EthGetTransactionByBlockNumberAndIndexResultOneOf1AccessListItems": {
-      "name": "EthGetTransactionByBlockNumberAndIndexResultOneOf1AccessListItems",
+    "EthGetTransactionByBlockNumberAndIndexResultInnerOneOf1AccessListItems": {
+      "name": "EthGetTransactionByBlockNumberAndIndexResultInnerOneOf1AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6014,8 +6014,8 @@
         ]
       }
     },
-    "EthGetTransactionByBlockNumberAndIndexResult1": {
-      "name": "EthGetTransactionByBlockNumberAndIndexResult1",
+    "EthGetTransactionByBlockNumberAndIndexResultInner1": {
+      "name": "EthGetTransactionByBlockNumberAndIndexResultInner1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6191,7 +6191,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByBlockNumberAndIndexResultOneOf1AccessListItems"
+                "value": "EthGetTransactionByBlockNumberAndIndexResultInnerOneOf1AccessListItems"
               }
             }
           },
@@ -6255,8 +6255,8 @@
       },
       "displayName": "Signed 1559 Transaction"
     },
-    "EthGetTransactionByBlockNumberAndIndexResultOneOf2AccessListItems": {
-      "name": "EthGetTransactionByBlockNumberAndIndexResultOneOf2AccessListItems",
+    "EthGetTransactionByBlockNumberAndIndexResultInnerOneOf2AccessListItems": {
+      "name": "EthGetTransactionByBlockNumberAndIndexResultInnerOneOf2AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6293,8 +6293,8 @@
         ]
       }
     },
-    "EthGetTransactionByBlockNumberAndIndexResult2": {
-      "name": "EthGetTransactionByBlockNumberAndIndexResult2",
+    "EthGetTransactionByBlockNumberAndIndexResultInner2": {
+      "name": "EthGetTransactionByBlockNumberAndIndexResultInner2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6448,7 +6448,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByBlockNumberAndIndexResultOneOf2AccessListItems"
+                "value": "EthGetTransactionByBlockNumberAndIndexResultInnerOneOf2AccessListItems"
               }
             }
           },
@@ -6512,8 +6512,8 @@
       },
       "displayName": "Signed 2930 Transaction"
     },
-    "EthGetTransactionByBlockNumberAndIndexResult3": {
-      "name": "EthGetTransactionByBlockNumberAndIndexResult3",
+    "EthGetTransactionByBlockNumberAndIndexResultInner3": {
+      "name": "EthGetTransactionByBlockNumberAndIndexResultInner3",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6708,40 +6708,40 @@
       },
       "displayName": "Signed Legacy Transaction"
     },
-    "EthGetTransactionByBlockNumberAndIndexResult": {
-      "name": "EthGetTransactionByBlockNumberAndIndexResult",
+    "EthGetTransactionByBlockNumberAndIndexResultInner": {
+      "name": "EthGetTransactionByBlockNumberAndIndexResultInner",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetTransactionByBlockNumberAndIndexResult0",
+            "typeName": "EthGetTransactionByBlockNumberAndIndexResultInner0",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByBlockNumberAndIndexResult0"
+              "value": "EthGetTransactionByBlockNumberAndIndexResultInner0"
             },
             "displayName": "Signed 4844 Transaction"
           },
           {
-            "typeName": "EthGetTransactionByBlockNumberAndIndexResult1",
+            "typeName": "EthGetTransactionByBlockNumberAndIndexResultInner1",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByBlockNumberAndIndexResult1"
+              "value": "EthGetTransactionByBlockNumberAndIndexResultInner1"
             },
             "displayName": "Signed 1559 Transaction"
           },
           {
-            "typeName": "EthGetTransactionByBlockNumberAndIndexResult2",
+            "typeName": "EthGetTransactionByBlockNumberAndIndexResultInner2",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByBlockNumberAndIndexResult2"
+              "value": "EthGetTransactionByBlockNumberAndIndexResultInner2"
             },
             "displayName": "Signed 2930 Transaction"
           },
           {
-            "typeName": "EthGetTransactionByBlockNumberAndIndexResult3",
+            "typeName": "EthGetTransactionByBlockNumberAndIndexResultInner3",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByBlockNumberAndIndexResult3"
+              "value": "EthGetTransactionByBlockNumberAndIndexResultInner3"
             },
             "displayName": "Signed Legacy Transaction"
           }
@@ -6820,13 +6820,13 @@
           "type": "nullable",
           "itemType": {
             "type": "id",
-            "value": "EthGetTransactionByBlockNumberAndIndexResult"
+            "value": "EthGetTransactionByBlockNumberAndIndexResultInner"
           }
         }
       }
     },
-    "EthGetTransactionByHashResultOneOf0AccessListItems": {
-      "name": "EthGetTransactionByHashResultOneOf0AccessListItems",
+    "EthGetTransactionByHashResultInnerOneOf0AccessListItems": {
+      "name": "EthGetTransactionByHashResultInnerOneOf0AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6863,8 +6863,8 @@
         ]
       }
     },
-    "EthGetTransactionByHashResult0": {
-      "name": "EthGetTransactionByHashResult0",
+    "EthGetTransactionByHashResultInner0": {
+      "name": "EthGetTransactionByHashResultInner0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7034,7 +7034,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByHashResultOneOf0AccessListItems"
+                "value": "EthGetTransactionByHashResultInnerOneOf0AccessListItems"
               }
             }
           },
@@ -7098,8 +7098,8 @@
       },
       "displayName": "Signed 4844 Transaction"
     },
-    "EthGetTransactionByHashResultOneOf1AccessListItems": {
-      "name": "EthGetTransactionByHashResultOneOf1AccessListItems",
+    "EthGetTransactionByHashResultInnerOneOf1AccessListItems": {
+      "name": "EthGetTransactionByHashResultInnerOneOf1AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7136,8 +7136,8 @@
         ]
       }
     },
-    "EthGetTransactionByHashResult1": {
-      "name": "EthGetTransactionByHashResult1",
+    "EthGetTransactionByHashResultInner1": {
+      "name": "EthGetTransactionByHashResultInner1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7313,7 +7313,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByHashResultOneOf1AccessListItems"
+                "value": "EthGetTransactionByHashResultInnerOneOf1AccessListItems"
               }
             }
           },
@@ -7377,8 +7377,8 @@
       },
       "displayName": "Signed 1559 Transaction"
     },
-    "EthGetTransactionByHashResultOneOf2AccessListItems": {
-      "name": "EthGetTransactionByHashResultOneOf2AccessListItems",
+    "EthGetTransactionByHashResultInnerOneOf2AccessListItems": {
+      "name": "EthGetTransactionByHashResultInnerOneOf2AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7415,8 +7415,8 @@
         ]
       }
     },
-    "EthGetTransactionByHashResult2": {
-      "name": "EthGetTransactionByHashResult2",
+    "EthGetTransactionByHashResultInner2": {
+      "name": "EthGetTransactionByHashResultInner2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7570,7 +7570,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByHashResultOneOf2AccessListItems"
+                "value": "EthGetTransactionByHashResultInnerOneOf2AccessListItems"
               }
             }
           },
@@ -7634,8 +7634,8 @@
       },
       "displayName": "Signed 2930 Transaction"
     },
-    "EthGetTransactionByHashResult3": {
-      "name": "EthGetTransactionByHashResult3",
+    "EthGetTransactionByHashResultInner3": {
+      "name": "EthGetTransactionByHashResultInner3",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7830,40 +7830,40 @@
       },
       "displayName": "Signed Legacy Transaction"
     },
-    "EthGetTransactionByHashResult": {
-      "name": "EthGetTransactionByHashResult",
+    "EthGetTransactionByHashResultInner": {
+      "name": "EthGetTransactionByHashResultInner",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetTransactionByHashResult0",
+            "typeName": "EthGetTransactionByHashResultInner0",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByHashResult0"
+              "value": "EthGetTransactionByHashResultInner0"
             },
             "displayName": "Signed 4844 Transaction"
           },
           {
-            "typeName": "EthGetTransactionByHashResult1",
+            "typeName": "EthGetTransactionByHashResultInner1",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByHashResult1"
+              "value": "EthGetTransactionByHashResultInner1"
             },
             "displayName": "Signed 1559 Transaction"
           },
           {
-            "typeName": "EthGetTransactionByHashResult2",
+            "typeName": "EthGetTransactionByHashResultInner2",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByHashResult2"
+              "value": "EthGetTransactionByHashResultInner2"
             },
             "displayName": "Signed 2930 Transaction"
           },
           {
-            "typeName": "EthGetTransactionByHashResult3",
+            "typeName": "EthGetTransactionByHashResultInner3",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByHashResult3"
+              "value": "EthGetTransactionByHashResultInner3"
             },
             "displayName": "Signed Legacy Transaction"
           }
@@ -7891,7 +7891,7 @@
           "type": "nullable",
           "itemType": {
             "type": "id",
-            "value": "EthGetTransactionByHashResult"
+            "value": "EthGetTransactionByHashResultInner"
           }
         }
       }
@@ -7982,8 +7982,8 @@
         }
       }
     },
-    "EthGetTransactionReceiptResultLogsItems": {
-      "name": "EthGetTransactionReceiptResultLogsItems",
+    "EthGetTransactionReceiptResultInnerLogsItems": {
+      "name": "EthGetTransactionReceiptResultInnerLogsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8107,8 +8107,8 @@
         ]
       }
     },
-    "EthGetTransactionReceiptResult": {
-      "name": "EthGetTransactionReceiptResult",
+    "EthGetTransactionReceiptResultInner": {
+      "name": "EthGetTransactionReceiptResultInner",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8252,7 +8252,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionReceiptResultLogsItems"
+                "value": "EthGetTransactionReceiptResultInnerLogsItems"
               }
             }
           },
@@ -8343,7 +8343,7 @@
           "type": "nullable",
           "itemType": {
             "type": "id",
-            "value": "EthGetTransactionReceiptResult"
+            "value": "EthGetTransactionReceiptResultInner"
           }
         }
       }
@@ -9227,7 +9227,7 @@
               "type": "nullable",
               "itemType": {
                 "type": "id",
-                "value": "EthGetBlockByHashResult"
+                "value": "EthGetBlockByHashResultInner"
               }
             }
           },
@@ -9419,7 +9419,7 @@
               "type": "nullable",
               "itemType": {
                 "type": "id",
-                "value": "EthGetBlockByNumberResult"
+                "value": "EthGetBlockByNumberResultInner"
               }
             }
           },
@@ -10426,7 +10426,7 @@
               "type": "nullable",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByBlockHashAndIndexResult"
+                "value": "EthGetTransactionByBlockHashAndIndexResultInner"
               }
             }
           },
@@ -10577,7 +10577,7 @@
               "type": "nullable",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByBlockNumberAndIndexResult"
+                "value": "EthGetTransactionByBlockNumberAndIndexResultInner"
               }
             }
           },
@@ -10720,7 +10720,7 @@
               "type": "nullable",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByHashResult"
+                "value": "EthGetTransactionByHashResultInner"
               }
             }
           },
@@ -10980,7 +10980,7 @@
               "type": "nullable",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionReceiptResult"
+                "value": "EthGetTransactionReceiptResultInner"
               }
             }
           },

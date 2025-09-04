@@ -889,8 +889,8 @@
         ]
       }
     },
-    "ChatDocumentSource": {
-      "name": "ChatDocumentSource",
+    "ChatDocumentSourceInner": {
+      "name": "ChatDocumentSourceInner",
       "shape": {
         "type": "enum",
         "values": [
@@ -924,8 +924,8 @@
         ]
       }
     },
-    "ChatDocumentSourceMeta": {
-      "name": "ChatDocumentSourceMeta",
+    "ChatDocumentSourceMetaInner": {
+      "name": "ChatDocumentSourceMetaInner",
       "shape": {
         "type": "object",
         "extends": [],
@@ -980,7 +980,7 @@
                 "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "ChatDocumentSource"
+                  "value": "ChatDocumentSourceInner"
                 }
               }
             }
@@ -1002,7 +1002,7 @@
                 "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "ChatDocumentSourceMeta"
+                  "value": "ChatDocumentSourceMetaInner"
                 }
               }
             }
@@ -1067,8 +1067,8 @@
         ]
       }
     },
-    "ChatDocumentEmbeddingInstanceConfig": {
-      "name": "ChatDocumentEmbeddingInstanceConfig",
+    "ChatDocumentEmbeddingInstanceConfigInner": {
+      "name": "ChatDocumentEmbeddingInstanceConfigInner",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1089,7 +1089,7 @@
                 "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "ChatDocumentEmbeddingInstanceConfig"
+                  "value": "ChatDocumentEmbeddingInstanceConfigInner"
                 }
               }
             }
@@ -2749,8 +2749,8 @@
         ]
       }
     },
-    "DatasourceSyncRunRunOutput": {
-      "name": "DatasourceSyncRunRunOutput",
+    "DatasourceSyncRunRunOutputInner": {
+      "name": "DatasourceSyncRunRunOutputInner",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2796,7 +2796,7 @@
                 "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "DatasourceSyncRunRunOutput"
+                  "value": "DatasourceSyncRunRunOutputInner"
                 }
               }
             }
@@ -2873,8 +2873,8 @@
         ]
       }
     },
-    "DocumentCreateTaskInfo": {
-      "name": "DocumentCreateTaskInfo",
+    "DocumentCreateTaskInfoInner": {
+      "name": "DocumentCreateTaskInfoInner",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2911,7 +2911,7 @@
                 "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "DocumentCreateTaskInfo"
+                  "value": "DocumentCreateTaskInfoInner"
                 }
               }
             }
@@ -3803,8 +3803,8 @@
         }
       }
     },
-    "KratosWebhookCtx": {
-      "name": "KratosWebhookCtx",
+    "KratosWebhookCtxInner": {
+      "name": "KratosWebhookCtxInner",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3910,7 +3910,7 @@
                 "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "KratosWebhookCtx"
+                  "value": "KratosWebhookCtxInner"
                 }
               }
             }
@@ -4005,8 +4005,8 @@
         ]
       }
     },
-    "KratosWebhookResponseIdentity": {
-      "name": "KratosWebhookResponseIdentity",
+    "KratosWebhookResponseIdentityInner": {
+      "name": "KratosWebhookResponseIdentityInner",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -4066,7 +4066,7 @@
                 "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "KratosWebhookResponseIdentity"
+                  "value": "KratosWebhookResponseIdentityInner"
                 }
               }
             }
@@ -7679,9 +7679,9 @@
         ]
       }
     },
-    "TaskUpdateLlmModel": {
+    "TaskUpdateLlmModelInner": {
       "description": "The LLM model to use for the Task.",
-      "name": "TaskUpdateLlmModel",
+      "name": "TaskUpdateLlmModelInner",
       "shape": {
         "type": "enum",
         "values": [
@@ -7724,8 +7724,8 @@
         ]
       }
     },
-    "TaskUpdateOutputFormat": {
-      "name": "TaskUpdateOutputFormat",
+    "TaskUpdateOutputFormatInner": {
+      "name": "TaskUpdateOutputFormatInner",
       "shape": {
         "type": "enum",
         "values": [
@@ -7768,7 +7768,7 @@
                 "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "TaskUpdateLlmModel"
+                  "value": "TaskUpdateLlmModelInner"
                 }
               }
             }
@@ -7804,7 +7804,7 @@
                   },
                   "valueType": {
                     "type": "id",
-                    "value": "TaskUpdateOutputFormat"
+                    "value": "TaskUpdateOutputFormatInner"
                   }
                 }
               }
@@ -8080,8 +8080,8 @@
         ]
       }
     },
-    "OrgOrgIdIamMembersGetParametersTypeSchema": {
-      "name": "OrgOrgIdIamMembersGetParametersTypeSchema",
+    "OrgOrgIdIamMembersGetParametersTypeSchemaInner": {
+      "name": "OrgOrgIdIamMembersGetParametersTypeSchemaInner",
       "shape": {
         "type": "enum",
         "values": [
@@ -8706,8 +8706,8 @@
         ]
       }
     },
-    "OrgOrgIdProjectProjectIdIamMembersGetParametersTypeSchema": {
-      "name": "OrgOrgIdProjectProjectIdIamMembersGetParametersTypeSchema",
+    "OrgOrgIdProjectProjectIdIamMembersGetParametersTypeSchemaInner": {
+      "name": "OrgOrgIdProjectProjectIdIamMembersGetParametersTypeSchemaInner",
       "shape": {
         "type": "enum",
         "values": [
@@ -9147,8 +9147,8 @@
         ]
       }
     },
-    "OrgOrgIdProjectProjectIdCollectionCollectionIdIamMembersGetParametersTypeSchema": {
-      "name": "OrgOrgIdProjectProjectIdCollectionCollectionIdIamMembersGetParametersTypeSchema",
+    "OrgOrgIdProjectProjectIdCollectionCollectionIdIamMembersGetParametersTypeSchemaInner": {
+      "name": "OrgOrgIdProjectProjectIdCollectionCollectionIdIamMembersGetParametersTypeSchemaInner",
       "shape": {
         "type": "enum",
         "values": [
@@ -9348,8 +9348,8 @@
         ]
       }
     },
-    "OrgOrgIdProjectProjectIdDocumentGetParametersSourceSchema": {
-      "name": "OrgOrgIdProjectProjectIdDocumentGetParametersSourceSchema",
+    "OrgOrgIdProjectProjectIdDocumentGetParametersSourceSchemaInner": {
+      "name": "OrgOrgIdProjectProjectIdDocumentGetParametersSourceSchemaInner",
       "shape": {
         "type": "enum",
         "values": [
@@ -9599,8 +9599,8 @@
         ]
       }
     },
-    "OrgOrgIdProjectProjectIdDocumentDocumentIdIamMembersGetParametersTypeSchema": {
-      "name": "OrgOrgIdProjectProjectIdDocumentDocumentIdIamMembersGetParametersTypeSchema",
+    "OrgOrgIdProjectProjectIdDocumentDocumentIdIamMembersGetParametersTypeSchemaInner": {
+      "name": "OrgOrgIdProjectProjectIdDocumentDocumentIdIamMembersGetParametersTypeSchemaInner",
       "shape": {
         "type": "enum",
         "values": [
@@ -9944,8 +9944,8 @@
         ]
       }
     },
-    "ChatChatIdIamMembersGetParametersTypeSchema": {
-      "name": "ChatChatIdIamMembersGetParametersTypeSchema",
+    "ChatChatIdIamMembersGetParametersTypeSchemaInner": {
+      "name": "ChatChatIdIamMembersGetParametersTypeSchemaInner",
       "shape": {
         "type": "enum",
         "values": [
@@ -11618,8 +11618,8 @@
         ]
       }
     },
-    "OrgOrgIdProjectProjectIdTaskTaskIdIamMembersGetParametersTypeSchema": {
-      "name": "OrgOrgIdProjectProjectIdTaskTaskIdIamMembersGetParametersTypeSchema",
+    "OrgOrgIdProjectProjectIdTaskTaskIdIamMembersGetParametersTypeSchemaInner": {
+      "name": "OrgOrgIdProjectProjectIdTaskTaskIdIamMembersGetParametersTypeSchemaInner",
       "shape": {
         "type": "enum",
         "values": [
@@ -12018,7 +12018,7 @@
                   "type": "nullable",
                   "itemType": {
                     "type": "id",
-                    "value": "OrgOrgIdIamMembersGetParametersTypeSchema"
+                    "value": "OrgOrgIdIamMembersGetParametersTypeSchemaInner"
                   }
                 }
               }
@@ -16433,7 +16433,7 @@
                   "type": "nullable",
                   "itemType": {
                     "type": "id",
-                    "value": "OrgOrgIdProjectProjectIdIamMembersGetParametersTypeSchema"
+                    "value": "OrgOrgIdProjectProjectIdIamMembersGetParametersTypeSchemaInner"
                   }
                 }
               }
@@ -19443,7 +19443,7 @@
                   "type": "nullable",
                   "itemType": {
                     "type": "id",
-                    "value": "OrgOrgIdProjectProjectIdCollectionCollectionIdIamMembersGetParametersTypeSchema"
+                    "value": "OrgOrgIdProjectProjectIdCollectionCollectionIdIamMembersGetParametersTypeSchemaInner"
                   }
                 }
               }
@@ -20405,7 +20405,7 @@
                   "type": "nullable",
                   "itemType": {
                     "type": "id",
-                    "value": "OrgOrgIdProjectProjectIdDocumentGetParametersSourceSchema"
+                    "value": "OrgOrgIdProjectProjectIdDocumentGetParametersSourceSchemaInner"
                   }
                 }
               }
@@ -22550,7 +22550,7 @@
                   "type": "nullable",
                   "itemType": {
                     "type": "id",
-                    "value": "OrgOrgIdProjectProjectIdDocumentDocumentIdIamMembersGetParametersTypeSchema"
+                    "value": "OrgOrgIdProjectProjectIdDocumentDocumentIdIamMembersGetParametersTypeSchemaInner"
                   }
                 }
               }
@@ -24581,7 +24581,7 @@
                   "type": "nullable",
                   "itemType": {
                     "type": "id",
-                    "value": "ChatChatIdIamMembersGetParametersTypeSchema"
+                    "value": "ChatChatIdIamMembersGetParametersTypeSchemaInner"
                   }
                 }
               }
@@ -41921,7 +41921,7 @@
                   "type": "nullable",
                   "itemType": {
                     "type": "id",
-                    "value": "OrgOrgIdProjectProjectIdTaskTaskIdIamMembersGetParametersTypeSchema"
+                    "value": "OrgOrgIdProjectProjectIdTaskTaskIdIamMembersGetParametersTypeSchemaInner"
                   }
                 }
               }

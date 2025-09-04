@@ -2487,8 +2487,8 @@
         ]
       }
     },
-    "PlaceDetailsItems": {
-      "name": "PlaceDetailsItems",
+    "PlaceInnerDetailsItems": {
+      "name": "PlaceInnerDetailsItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -2519,6 +2519,64 @@
         ]
       }
     },
+    "PlaceInner": {
+      "name": "PlaceInner",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Type of the object",
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "Name of the place",
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Address"
+              }
+            }
+          },
+          {
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "PlaceInnerDetailsItems"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "Place": {
       "name": "Place",
       "shape": {
@@ -2527,7 +2585,7 @@
           "type": "nullable",
           "itemType": {
             "type": "id",
-            "value": "Place"
+            "value": "PlaceInner"
           }
         }
       }
@@ -2603,8 +2661,8 @@
         ]
       }
     },
-    "OceanBookingDetailIncoterm": {
-      "name": "OceanBookingDetailIncoterm",
+    "OceanBookingDetailInnerIncoterm": {
+      "name": "OceanBookingDetailInnerIncoterm",
       "shape": {
         "type": "enum",
         "values": [
@@ -2643,6 +2701,117 @@
           },
           {
             "value": "DPU"
+          }
+        ]
+      }
+    },
+    "OceanBookingDetailInner": {
+      "name": "OceanBookingDetailInner",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Type of the object",
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "is_lcl",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "container_counts",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ContainerCounts"
+              }
+            }
+          },
+          {
+            "key": "incoterm",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "OceanBookingDetailInnerIncoterm"
+              }
+            }
+          },
+          {
+            "key": "wants_pickup_service",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "wants_delivery_service",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "origin_port",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Place"
+              }
+            }
+          },
+          {
+            "key": "destination_port",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Place"
+              }
+            }
+          },
+          {
+            "key": "product_descriptions",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "BookingHsCode"
+                }
+              }
+            }
           }
         ]
       }
@@ -2655,13 +2824,13 @@
           "type": "nullable",
           "itemType": {
             "type": "id",
-            "value": "OceanBookingDetail"
+            "value": "OceanBookingDetailInner"
           }
         }
       }
     },
-    "AirBookingDetailIncoterm": {
-      "name": "AirBookingDetailIncoterm",
+    "AirBookingDetailInnerIncoterm": {
+      "name": "AirBookingDetailInnerIncoterm",
       "shape": {
         "type": "enum",
         "values": [
@@ -2704,6 +2873,95 @@
         ]
       }
     },
+    "AirBookingDetailInner": {
+      "name": "AirBookingDetailInner",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Type of the object",
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "incoterm",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "AirBookingDetailInnerIncoterm"
+              }
+            }
+          },
+          {
+            "key": "wants_pickup_service",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "wants_delivery_service",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "origin_port",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Place"
+              }
+            }
+          },
+          {
+            "key": "destination_port",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Place"
+              }
+            }
+          },
+          {
+            "key": "product_descriptions",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "BookingHsCode"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "AirBookingDetail": {
       "name": "AirBookingDetail",
       "shape": {
@@ -2712,13 +2970,13 @@
           "type": "nullable",
           "itemType": {
             "type": "id",
-            "value": "AirBookingDetail"
+            "value": "AirBookingDetailInner"
           }
         }
       }
     },
-    "TruckingBookingDetailPaymentTerms": {
-      "name": "TruckingBookingDetailPaymentTerms",
+    "TruckingBookingDetailInnerPaymentTerms": {
+      "name": "TruckingBookingDetailInnerPaymentTerms",
       "shape": {
         "type": "enum",
         "values": [
@@ -2731,6 +2989,62 @@
         ]
       }
     },
+    "TruckingBookingDetailInner": {
+      "name": "TruckingBookingDetailInner",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Type of the object",
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "is_ftl",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "payment_terms",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "TruckingBookingDetailInnerPaymentTerms"
+              }
+            }
+          },
+          {
+            "key": "description_of_products",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "TruckingBookingDetail": {
       "name": "TruckingBookingDetail",
       "shape": {
@@ -2739,7 +3053,7 @@
           "type": "nullable",
           "itemType": {
             "type": "id",
-            "value": "TruckingBookingDetail"
+            "value": "TruckingBookingDetailInner"
           }
         }
       }
@@ -6166,6 +6480,100 @@
         ]
       }
     },
+    "OceanShipmentDetailInner": {
+      "name": "OceanShipmentDetailInner",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Type of the object",
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "is_lcl",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "house_bill_number",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "master_bill_number",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "carrier_booking_number",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "the date-time at which the carrier confirms space release related to the shipping order",
+            "key": "confirmed_space_released_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "containers",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ContainerCollectionRef"
+              }
+            }
+          }
+        ]
+      }
+    },
     "OceanShipmentDetail": {
       "name": "OceanShipmentDetail",
       "shape": {
@@ -6174,9 +6582,75 @@
           "type": "nullable",
           "itemType": {
             "type": "id",
-            "value": "OceanShipmentDetail"
+            "value": "OceanShipmentDetailInner"
           }
         }
+      }
+    },
+    "AirShipmentDetailInner": {
+      "name": "AirShipmentDetailInner",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Type of the object",
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "house_airway_bill",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "master_airway_bill",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "chargeable_weight",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Weight"
+              }
+            }
+          },
+          {
+            "key": "chargeable_volume",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Volume"
+              }
+            }
+          }
+        ]
       }
     },
     "AirShipmentDetail": {
@@ -6187,7 +6661,7 @@
           "type": "nullable",
           "itemType": {
             "type": "id",
-            "value": "AirShipmentDetail"
+            "value": "AirShipmentDetailInner"
           }
         }
       }
@@ -7683,6 +8157,65 @@
         ]
       }
     },
+    "TerminalInner": {
+      "description": "Name and address of a specific terminal within a port or airport.  Possibly null",
+      "name": "TerminalInner",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Type of the object",
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "Name of the terminal",
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "Four digit alpha-numeric identifier assigned by U.S. Customs and Border Protection to bonded facilities;  available prior to shipment arrival at location tagged 'customs_entry'",
+            "key": "firms_code",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Address"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Terminal": {
       "description": "Name and address of a specific terminal within a port or airport.  Possibly null",
       "name": "Terminal",
@@ -7692,7 +8225,7 @@
           "type": "nullable",
           "itemType": {
             "type": "id",
-            "value": "Terminal"
+            "value": "TerminalInner"
           }
         }
       }
@@ -7754,6 +8287,63 @@
         ]
       }
     },
+    "AirShipmentLegInner": {
+      "name": "AirShipmentLegInner",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "iata_code",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "icao_code",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "flight_number",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "AirShipmentLeg": {
       "name": "AirShipmentLeg",
       "shape": {
@@ -7762,7 +8352,7 @@
           "type": "nullable",
           "itemType": {
             "type": "id",
-            "value": "AirShipmentLeg"
+            "value": "AirShipmentLegInner"
           }
         }
       }
@@ -7895,8 +8485,8 @@
         ]
       }
     },
-    "TruckingShipmentLegServiceType": {
-      "name": "TruckingShipmentLegServiceType",
+    "TruckingShipmentLegInnerServiceType": {
+      "name": "TruckingShipmentLegInnerServiceType",
       "shape": {
         "type": "enum",
         "values": [
@@ -7915,6 +8505,92 @@
         ]
       }
     },
+    "TruckingShipmentLegInner": {
+      "name": "TruckingShipmentLegInner",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "tracking_number",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "nullable",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "service_type",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "TruckingShipmentLegInnerServiceType"
+              }
+            }
+          },
+          {
+            "key": "pieces",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "nullable",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "scac_code",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "nullable",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "container_legs",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ContainerLegCollectionRef"
+              }
+            }
+          }
+        ]
+      }
+    },
     "TruckingShipmentLeg": {
       "name": "TruckingShipmentLeg",
       "shape": {
@@ -7923,9 +8599,40 @@
           "type": "nullable",
           "itemType": {
             "type": "id",
-            "value": "TruckingShipmentLeg"
+            "value": "TruckingShipmentLegInner"
           }
         }
+      }
+    },
+    "RailShipmentLegInner": {
+      "name": "RailShipmentLegInner",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "container_legs",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ContainerLegCollectionRef"
+              }
+            }
+          }
+        ]
       }
     },
     "RailShipmentLeg": {
@@ -7936,7 +8643,7 @@
           "type": "nullable",
           "itemType": {
             "type": "id",
-            "value": "RailShipmentLeg"
+            "value": "RailShipmentLegInner"
           }
         }
       }
