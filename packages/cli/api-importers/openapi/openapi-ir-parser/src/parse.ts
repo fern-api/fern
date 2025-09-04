@@ -144,12 +144,37 @@ interface ServerInput {
 
 function getEnvironmentName(server: ServerInput): string {
     // Use description, name, or x-fern-server-name as environment identifier
-    return String(
+    const rawName = String(
         server.description || 
         server.name || 
         server["x-fern-server-name"] || 
         "default"
     ).trim();
+    
+    // Normalize environment names for consistent matching
+    const normalized = rawName.toUpperCase();
+    
+    // Map common variations to standard names
+    if (normalized === 'PRODUCTION' || normalized === 'PRD' || normalized === 'PROD') {
+        return 'PRD';
+    }
+    if (normalized === 'SANDBOX' || normalized === 'SBX') {
+        return 'SBX';
+    }
+    if (normalized === 'STAGING' || normalized === 'STG') {
+        return 'STG';
+    }
+    if (normalized === 'PERFORMANCE' || normalized === 'PRF' || normalized === 'PERF') {
+        return 'PRF';
+    }
+    if (normalized === 'E2E' || normalized === 'E_2_E') {
+        return 'E2E';
+    }
+    if (normalized === 'QAL' || normalized === 'QUALITY') {
+        return 'QAL';
+    }
+    
+    return rawName;
 }
 
 function extractApiNameFromUrl(url: string): string {
@@ -186,6 +211,10 @@ function extractApiNameFromUrl(url: string): string {
 
 function detectMultipleBaseUrls(servers1: ServerInput[], servers2: ServerInput[]): boolean {
     // Check if we have the same environment names but different URLs
+    if (servers1.length === 0 || servers2.length === 0) {
+        return false;
+    }
+    
     if (servers1.length !== servers2.length) {
         return false;
     }
@@ -196,15 +225,21 @@ function detectMultipleBaseUrls(servers1: ServerInput[], servers2: ServerInput[]
         envMap.set(envName, server.url);
     }
     
+    let allMatch = true;
+    let allDifferent = true;
+    
     for (const server of servers2) {
         const envName = getEnvironmentName(server);
         const existingUrl = envMap.get(envName);
-        if (!existingUrl || existingUrl === server.url) {
-            return false; // Either no matching env or same URL
+        if (!existingUrl) {
+            allMatch = false; // No matching environment
+        } else if (existingUrl === server.url) {
+            allDifferent = false; // Same URL found
         }
     }
     
-    return true; // All environments match but with different URLs
+    // We want all environments to match AND all URLs to be different
+    return allMatch && allDifferent;
 }
 
 function extractApiNameFromServers(servers: ServerInput[]): string {
@@ -221,49 +256,78 @@ function merge(
     ir1: OpenApiIntermediateRepresentation,
     ir2: OpenApiIntermediateRepresentation
 ): OpenApiIntermediateRepresentation {
-    // Check if we have a Multiple Base URLs scenario (same environments, different URLs)
-    const hasMultipleBaseUrls = detectMultipleBaseUrls(ir1.servers, ir2.servers);
+    // Check if we have matching environments but different URLs (Multiple APIs scenario)
+    const hasMultipleApis = detectMultipleBaseUrls(ir1.servers, ir2.servers);
     
-    let mergedServers = ir1.servers;
+    let mergedServers: any[] = [];
     let mergedEndpoints = [...ir1.endpoints, ...ir2.endpoints];
     
-    if (hasMultipleBaseUrls) {
-        // For Multiple Base URLs, we need to:
-        // 1. Keep all environment names from the first spec
-        // 2. Add endpoint-level servers for each API to trigger Multiple Base URLs
+    if (hasMultipleApis) {
+        // Create separate environment constants for each API
+        // e.g., PRODUCTION_FINTECH, PRODUCTION_PAYMENTS
         
         // Extract unique API names from URLs
         const api1Name = extractApiNameFromServers(ir1.servers);
         const api2Name = extractApiNameFromServers(ir2.servers);
         
-        // Create endpoint-level servers for each API (using first URL as template)
-        const endpointServers = [
-            { 
-                name: api1Name, 
-                url: ir1.servers[0]?.url, 
-                description: api1Name,
-                audiences: ir1.servers[0]?.audiences || []
-            },
-            { 
-                name: api2Name, 
-                url: ir2.servers[0]?.url, 
-                description: api2Name,
-                audiences: ir2.servers[0]?.audiences || []
-            }
-        ];
+        // Create servers for each API/environment combination
+        for (const server of ir1.servers) {
+            const envName = getEnvironmentName(server);
+            const capitalizedApi1 = api1Name.toUpperCase();
+            mergedServers.push({
+                ...server,
+                name: `${envName}_${capitalizedApi1}`,
+                description: `${envName} ${capitalizedApi1}`
+            });
+        }
         
-        // Add the endpoint servers to ALL endpoints to trigger Multiple Base URLs
-        mergedEndpoints = mergedEndpoints.map(endpoint => ({
-            ...endpoint,
-            servers: endpointServers
-        }));
+        for (const server of ir2.servers) {
+            const envName = getEnvironmentName(server);
+            const capitalizedApi2 = api2Name.toUpperCase();
+            mergedServers.push({
+                ...server,
+                name: `${envName}_${capitalizedApi2}`,
+                description: `${envName} ${capitalizedApi2}`
+            });
+        }
         
-        // Keep ALL servers from ir1 (which has proper environment names)
-        // but annotate them with x-fern-server-name to ensure they're not skipped
-        mergedServers = ir1.servers.map(server => ({
-            ...server,
-            'x-fern-server-name': server.name || server.description || 'Default'
-        }));
+        // Tag endpoints with their corresponding API servers
+        // This helps route requests to the correct base URL
+        const ir1EndpointsWithServers = ir1.endpoints.map(endpoint => {
+            const endpointServers = ir1.servers.map(server => {
+                const envName = getEnvironmentName(server);
+                const capitalizedApi1 = api1Name.toUpperCase();
+                return {
+                    name: `${envName}_${capitalizedApi1}`,
+                    url: server.url,
+                    description: `${envName} ${capitalizedApi1}`,
+                    audiences: server.audiences
+                };
+            });
+            return {
+                ...endpoint,
+                servers: endpointServers
+            };
+        });
+        
+        const ir2EndpointsWithServers = ir2.endpoints.map(endpoint => {
+            const endpointServers = ir2.servers.map(server => {
+                const envName = getEnvironmentName(server);
+                const capitalizedApi2 = api2Name.toUpperCase();
+                return {
+                    name: `${envName}_${capitalizedApi2}`,
+                    url: server.url,
+                    description: `${envName} ${capitalizedApi2}`,
+                    audiences: server.audiences
+                };
+            });
+            return {
+                ...endpoint,
+                servers: endpointServers
+            };
+        });
+        
+        mergedEndpoints = [...ir1EndpointsWithServers, ...ir2EndpointsWithServers];
     } else {
         // Simple case: just concatenate servers
         mergedServers = [...ir1.servers, ...ir2.servers];
