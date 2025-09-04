@@ -2,7 +2,7 @@ import Foundation
 import ContentTypes
 
 private func main() async throws {
-    let client = ContentTypesClient()
+    let client = ContentTypesClient(baseURL: "https://api.fern.com")
 
     try await client.service.patchComplex(
         id: "id",

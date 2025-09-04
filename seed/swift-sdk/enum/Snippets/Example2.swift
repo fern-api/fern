@@ -2,7 +2,7 @@ import Foundation
 import Enum
 
 private func main() async throws {
-    let client = EnumClient()
+    let client = EnumClient(baseURL: "https://api.fern.com")
 
     try await client.inlinedRequest.send(request: .init(
         operand: .greaterThan,

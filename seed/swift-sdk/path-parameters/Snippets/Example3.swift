@@ -2,7 +2,7 @@ import Foundation
 import PathParameters
 
 private func main() async throws {
-    let client = PathParametersClient()
+    let client = PathParametersClient(baseURL: "https://api.fern.com")
 
     try await client.user.getUser(
         userId: "user_id",

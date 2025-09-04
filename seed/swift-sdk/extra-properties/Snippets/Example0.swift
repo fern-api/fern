@@ -2,7 +2,7 @@ import Foundation
 import ExtraProperties
 
 private func main() async throws {
-    let client = ExtraPropertiesClient()
+    let client = ExtraPropertiesClient(baseURL: "https://api.fern.com")
 
     try await client.user.createUser(request: .init(
         type: .createUserRequest,

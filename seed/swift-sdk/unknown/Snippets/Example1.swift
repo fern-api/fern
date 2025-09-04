@@ -2,7 +2,7 @@ import Foundation
 import UnknownAsAny
 
 private func main() async throws {
-    let client = UnknownAsAnyClient()
+    let client = UnknownAsAnyClient(baseURL: "https://api.fern.com")
 
     try await client.unknown.postObject(request: MyObject(
         unknown: .object([

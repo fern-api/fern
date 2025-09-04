@@ -2,7 +2,7 @@ import Foundation
 import Streaming
 
 private func main() async throws {
-    let client = StreamingClient()
+    let client = StreamingClient(baseURL: "https://api.fern.com")
 
     try await client.dummy.generateStream(request: .init(
         stream: ,

@@ -2,7 +2,7 @@ import Foundation
 import Extends
 
 private func main() async throws {
-    let client = ExtendsClient()
+    let client = ExtendsClient(baseURL: "https://api.fern.com")
 
     try await client.extendedInlineRequestBody(request: .init(
         name: "name",

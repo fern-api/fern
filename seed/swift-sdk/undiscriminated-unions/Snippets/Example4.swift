@@ -2,7 +2,7 @@ import Foundation
 import UndiscriminatedUnions
 
 private func main() async throws {
-    let client = UndiscriminatedUnionsClient()
+    let client = UndiscriminatedUnionsClient(baseURL: "https://api.fern.com")
 
     try await client.union.call(request: Request(
         union: MetadataUnion.optionalStringToJsonDictionary(

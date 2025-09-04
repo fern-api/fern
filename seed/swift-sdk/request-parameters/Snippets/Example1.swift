@@ -2,7 +2,7 @@ import Foundation
 import RequestParameters
 
 private func main() async throws {
-    let client = RequestParametersClient()
+    let client = RequestParametersClient(baseURL: "https://api.fern.com")
 
     try await client.user.createUsernameWithReferencedType(request: .init(
         tags: [

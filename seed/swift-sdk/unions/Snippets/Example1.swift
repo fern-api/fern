@@ -2,7 +2,7 @@ import Foundation
 import Unions
 
 private func main() async throws {
-    let client = UnionsClient()
+    let client = UnionsClient(baseURL: "https://api.fern.com")
 
     try await client.bigunion.update(request: BigUnion.normalSweet(
         .init(

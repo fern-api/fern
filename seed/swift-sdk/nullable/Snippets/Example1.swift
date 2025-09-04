@@ -2,7 +2,7 @@ import Foundation
 import Nullable
 
 private func main() async throws {
-    let client = NullableClient()
+    let client = NullableClient(baseURL: "https://api.fern.com")
 
     try await client.nullable.createUser(request: .init(
         username: "username",

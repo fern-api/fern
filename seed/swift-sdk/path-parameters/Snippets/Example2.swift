@@ -2,7 +2,7 @@ import Foundation
 import PathParameters
 
 private func main() async throws {
-    let client = PathParametersClient()
+    let client = PathParametersClient(baseURL: "https://api.fern.com")
 
     try await client.organizations.searchOrganizations(
         organizationId: "organization_id",

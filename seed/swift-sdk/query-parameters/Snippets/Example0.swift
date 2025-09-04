@@ -2,7 +2,7 @@ import Foundation
 import QueryParameters
 
 private func main() async throws {
-    let client = QueryParametersClient()
+    let client = QueryParametersClient(baseURL: "https://api.fern.com")
 
     try await client.user.getUsername(request: .init(
         limit: 1,

@@ -2,7 +2,7 @@ import Foundation
 import WebsocketAuth
 
 private func main() async throws {
-    let client = WebsocketAuthClient()
+    let client = WebsocketAuthClient(baseURL: "https://api.fern.com")
 
     try await client.auth.getTokenWithClientCredentials(request: .init(
         xApiKey: "X-Api-Key",

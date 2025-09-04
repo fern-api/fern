@@ -2,7 +2,7 @@ import Foundation
 import InferredAuthImplicit
 
 private func main() async throws {
-    let client = InferredAuthImplicitClient()
+    let client = InferredAuthImplicitClient(baseURL: "https://api.fern.com")
 
     try await client.auth.refreshToken(request: .init(
         xApiKey: "X-Api-Key",

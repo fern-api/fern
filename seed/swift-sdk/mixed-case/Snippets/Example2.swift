@@ -2,7 +2,7 @@ import Foundation
 import MixedCase
 
 private func main() async throws {
-    let client = MixedCaseClient()
+    let client = MixedCaseClient(baseURL: "https://api.fern.com")
 
     try await client.service.listResources(request: .init(
         pageLimit: 10,

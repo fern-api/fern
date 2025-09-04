@@ -2,7 +2,7 @@ import Foundation
 import Literal
 
 private func main() async throws {
-    let client = LiteralClient()
+    let client = LiteralClient(baseURL: "https://api.fern.com")
 
     try await client.inlined.send(request: .init(
         prompt: .youAreAHelpfulAssistant,
