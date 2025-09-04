@@ -5,7 +5,4 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.playlist.update_playlist({
-  name:'name',
-  problems:['problems', 'problems']
-});
+client.playlist.get_playlist();
