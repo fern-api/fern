@@ -2147,6 +2147,57 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
 
+  generators/swift/dynamic-snippets:
+    devDependencies:
+      '@esbuild-plugins/node-globals-polyfill':
+        specifier: ^0.2.3
+        version: 0.2.3(esbuild@0.25.9)
+      '@esbuild-plugins/node-modules-polyfill':
+        specifier: ^0.2.2
+        version: 0.2.2(esbuild@0.25.9)
+      '@fern-api/browser-compatible-base-generator':
+        specifier: workspace:*
+        version: link:../../browser-compatible-base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
+      '@fern-api/dynamic-ir-sdk':
+        specifier: 59.0.0
+        version: 59.0.0
+      '@fern-api/path-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/path-utils
+      '@fern-api/swift-codegen':
+        specifier: workspace:*
+        version: link:../codegen
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      string.prototype.replaceall:
+        specifier: ^1.0.10
+        version: 1.0.10
+      tsup:
+        specifier: ^8.5.0
+        version: 8.5.0(postcss@8.5.6)(tsx@4.20.5)(typescript@5.8.3)(yaml@2.3.3)
+      typescript:
+        specifier: 5.8.3
+        version: 5.8.3
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+
   generators/swift/model:
     dependencies:
       '@fern-api/base-generator':
@@ -6177,6 +6228,9 @@ importers:
       '@fern-api/sdk':
         specifier: 0.12.3
         version: 0.12.3
+      '@fern-api/swift-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../../../../../generators/swift/dynamic-snippets
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../../task-context
@@ -9247,6 +9301,9 @@ packages:
 
   '@fern-api/dynamic-ir-sdk@58.3.0':
     resolution: {integrity: sha512-2PPIKyMlxUVmhouWj9WadwE/6/Lt9kTG/WyQqRyNGGqnwjU2NJm+fvBDZ/O7tOPUXk6+GYJbtjVYGSBXnihWPw==}
+
+  '@fern-api/dynamic-ir-sdk@59.0.0':
+    resolution: {integrity: sha512-M3oJl2DdoXyoy+3n9TVXgOel3/RX7qkPkFtCb61sQCYalFFzxenQY5qg1ZwSUyd3x77c09RbA1EguSU/oMUsLQ==}
 
   '@fern-api/dynamic-ir-sdk@59.4.0':
     resolution: {integrity: sha512-7dD5ZK6rm2SiMmVGM3GKfejNd8qmV9WGFx3xTWbw7NnS7jmIS5Wn73f9+MRvawcBfd/TONYfw9SE3sbxh89mUw==}
@@ -15955,6 +16012,8 @@ snapshots:
       - typescript
 
   '@fern-api/dynamic-ir-sdk@58.3.0': {}
+
+  '@fern-api/dynamic-ir-sdk@59.0.0': {}
 
   '@fern-api/dynamic-ir-sdk@59.4.0': {}
 
