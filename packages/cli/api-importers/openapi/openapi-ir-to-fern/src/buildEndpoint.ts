@@ -598,6 +598,7 @@ function getRequest({
             value: {
                 body: "bytes",
                 "content-type": request.contentType ?? MediaType.APPLICATION_OCTET_STREAM,
+                "name": requestNameOverride ?? generatedRequestName,
                 "query-parameters": queryParameters,
                 ...(request.description ? { docs: request.description } : {})
             }
