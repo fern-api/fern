@@ -29,20 +29,20 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import ExtraProperties
 
-let client = ExtraPropertiesClient()
+private func main() async throws {
+    let client = ExtraPropertiesClient()
 
-try await client.user.createUser(
-    request: Requests.CreateUserRequest(
-        type: CreateUserRequest(),
-        version: V1(),
-        name: "string",
-        additionalProperties: [
-            "string": JSONValue.string("string")
-        ]
-    )
-)
+    try await client.user.createUser(request: .init(
+        type: .createUserRequest,
+        version: .v1,
+        name: "name"
+    ))
+}
+
+try await main()
 ```
 
 ## Contributing

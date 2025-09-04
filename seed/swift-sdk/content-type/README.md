@@ -29,19 +29,19 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import ContentTypes
 
-let client = ContentTypesClient()
+private func main() async throws {
+    let client = ContentTypesClient()
 
-try await client.service.patch(
-    request: Requests.PatchProxyRequest(
-        application: JSONValue.string("string"),
-        requireAuth: JSONValue.string("string"),
-        additionalProperties: [
-            "string": JSONValue.string("string")
-        ]
-    )
-)
+    try await client.service.patch(request: .init(
+        application: "application",
+        requireAuth: True
+    ))
+}
+
+try await main()
 ```
 
 ## Contributing

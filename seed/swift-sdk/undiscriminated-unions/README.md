@@ -29,13 +29,18 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import UndiscriminatedUnions
 
-let client = UndiscriminatedUnionsClient()
+private func main() async throws {
+    let client = UndiscriminatedUnionsClient()
 
-try await client.union.get(
-    request: MyUnion()
-)
+    try await client.union.get(request: MyUnion.string(
+        "string"
+    ))
+}
+
+try await main()
 ```
 
 ## Contributing

@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import HttpHead
 
-let client = HttpHeadClient()
+private func main() async throws {
+    let client = HttpHeadClient()
 
-try await client.user.head(
+    try await client.user.head()
+}
 
-)
+try await main()
 ```
 
 ## Contributing

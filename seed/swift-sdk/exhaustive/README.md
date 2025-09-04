@@ -29,13 +29,19 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
-import PublicObject
+import Foundation
+import Exhaustive
 
-let client = PublicObjectClient()
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
 
-try await client.service.get(
+    try await client.endpoints.container.getAndReturnListOfPrimitives(request: [
+        "string",
+        "string"
+    ])
+}
 
-)
+try await main()
 ```
 
 ## Contributing

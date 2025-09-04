@@ -30,17 +30,17 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import Api
+import QueryParameters
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = QueryParametersClient()
 
-    try await client.search(request: .init(
+    try await client.user.getUsername(request: .init(
         limit: 1,
-        id: "id",
-        date: "date",
+        id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        date: try! Date("2023-01-15T00:00:00Z", strategy: .iso8601),
         deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-        bytes: "bytes",
+        bytes: "SGVsbG8gd29ybGQh",
         user: User(
             name: "name",
             tags: [
@@ -49,6 +49,13 @@ private func main() async throws {
             ]
         ),
         userList: [
+            User(
+                name: "name",
+                tags: [
+                    "tags",
+                    "tags"
+                ]
+            ),
             User(
                 name: "name",
                 tags: [
@@ -90,23 +97,7 @@ private func main() async throws {
         ],
         filter: [
             "filter"
-        ],
-        neighbor: User(
-            name: "name",
-            tags: [
-                "tags",
-                "tags"
-            ]
-        ),
-        neighborRequired: SearchRequestNeighborRequired.user(
-            User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            )
-        )
+        ]
     ))
 }
 

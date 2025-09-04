@@ -24,6 +24,25 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import Foundation
+import Errors
+
+private func main() async throws {
+    let client = ErrorsClient()
+
+    try await client.simple.fooWithoutEndpointError(request: FooRequest(
+        bar: "bar"
+    ))
+}
+
+try await main()
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

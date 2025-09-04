@@ -29,16 +29,21 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import BasicAuth
 
-let client = BasicAuthClient(
-    username: "YOUR_USERNAME",
-    password: "YOUR_PASSWORD"
-)
+private func main() async throws {
+    let client = BasicAuthClient(
+        username: "<username>",
+        password: "<password>"
+    )
 
-try await client.basicAuth.postWithBasicAuth(
-    request: JSONValue.string("string")
-)
+    try await client.basicAuth.postWithBasicAuth(request: .object([
+        "key": .string("value")
+    ]))
+}
+
+try await main()
 ```
 
 ## Contributing

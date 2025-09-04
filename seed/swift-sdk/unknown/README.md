@@ -29,13 +29,18 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import UnknownAsAny
 
-let client = UnknownAsAnyClient()
+private func main() async throws {
+    let client = UnknownAsAnyClient()
 
-try await client.unknown.post(
-    request: JSONValue.string("string")
-)
+    try await client.unknown.post(request: .object([
+        "key": .string("value")
+    ]))
+}
+
+try await main()
 ```
 
 ## Contributing

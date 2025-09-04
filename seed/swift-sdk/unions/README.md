@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import Unions
 
-let client = UnionsClient()
+private func main() async throws {
+    let client = UnionsClient()
 
-try await client.bigunion.get(
-    id: "string"
-)
+    try await client.bigunion.get(id: "id")
+}
+
+try await main()
 ```
 
 ## Contributing

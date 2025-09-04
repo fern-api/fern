@@ -29,23 +29,25 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
-import ClientSideParams
+import Foundation
+import MyCustomModule
 
-let client = MyCustomClient(token: "YOUR_TOKEN")
+private func main() async throws {
+    let client = MyCustomClient(token: "<token>")
 
-try await client.service.searchResources(
-    limit: 123,
-    offset: 123,
-    request: Requests.SearchResourcesRequest(
-        query: "string",
+    try await client.service.searchResources(request: .init(
+        limit: 1,
+        offset: 1,
+        query: "query",
         filters: [
-            "string": JSONValue.string("string")
-        ],
-        additionalProperties: [
-            "string": JSONValue.string("string")
+            "filters": .object([
+                "key": .string("value")
+            ])
         ]
-    )
-)
+    ))
+}
+
+try await main()
 ```
 
 ## Contributing

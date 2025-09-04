@@ -29,18 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import MultiUrlEnvironment
 
-let client = MultiUrlEnvironmentClient(token: "YOUR_TOKEN")
+private func main() async throws {
+    let client = MultiUrlEnvironmentClient(token: "<token>")
 
-try await client.ec2.bootInstance(
-    request: Requests.BootInstanceRequest(
-        size: "string",
-        additionalProperties: [
-            "string": JSONValue.string("string")
-        ]
-    )
-)
+    try await client.ec2.bootInstance(request: .init(size: "size"))
+}
+
+try await main()
 ```
 
 ## Contributing

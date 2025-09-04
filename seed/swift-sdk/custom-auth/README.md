@@ -29,13 +29,18 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import CustomAuth
 
-let client = CustomAuthClient(customAuthScheme: "YOUR_TOKEN")
+private func main() async throws {
+    let client = CustomAuthClient(customAuthScheme: "<value>")
 
-try await client.customAuth.postWithCustomAuth(
-    request: JSONValue.string("string")
-)
+    try await client.customAuth.postWithCustomAuth(request: .object([
+        "key": .string("value")
+    ]))
+}
+
+try await main()
 ```
 
 ## Contributing

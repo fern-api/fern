@@ -29,13 +29,19 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import Api
 
-let client = ApiClient(token: "YOUR_TOKEN")
+private func main() async throws {
+    let client = ApiClient(token: "<token>")
 
-try await client.imdb.createMovie(
-    request: CreateMovieRequest()
-)
+    try await client.imdb.createMovie(request: CreateMovieRequest(
+        title: "title",
+        rating: 1.1
+    ))
+}
+
+try await main()
 ```
 
 ## Contributing

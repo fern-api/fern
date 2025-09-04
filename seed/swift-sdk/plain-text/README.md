@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import PlainText
 
-let client = PlainTextClient()
+private func main() async throws {
+    let client = PlainTextClient()
 
-try await client.service.getText(
+    try await client.service.getText()
+}
 
-)
+try await main()
 ```
 
 ## Contributing

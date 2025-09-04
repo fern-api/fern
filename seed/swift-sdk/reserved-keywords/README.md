@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import NurseryApi
 
-let client = NurseryApiClient()
+private func main() async throws {
+    let client = NurseryApiClient()
 
-try await client.package.test(
-    for: "string"
-)
+    try await client.package.test(request: .init(for: "for"))
+}
+
+try await main()
 ```
 
 ## Contributing

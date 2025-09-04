@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import BytesUpload
 
-let client = BytesUploadClient()
+private func main() async throws {
+    let client = BytesUploadClient()
 
-try await client.service.upload(
-    request: Data([1, 2, 3])
-)
+    try await client.service.upload(request: )
+}
+
+try await main()
 ```
 
 ## Contributing

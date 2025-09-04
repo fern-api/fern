@@ -29,13 +29,18 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import MixedFileDirectory
 
-let client = MixedFileDirectoryClient()
+private func main() async throws {
+    let client = MixedFileDirectoryClient()
 
-try await client.organization.create(
-    request: CreateOrganizationRequest()
-)
+    try await client.organization.create(request: CreateOrganizationRequest(
+        name: "name"
+    ))
+}
+
+try await main()
 ```
 
 ## Contributing

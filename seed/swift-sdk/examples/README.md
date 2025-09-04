@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import Examples
 
-let client = ExamplesClient(token: "YOUR_TOKEN")
+private func main() async throws {
+    let client = ExamplesClient(token: "<token>")
 
-try await client.echo(
-    request: "string"
-)
+    try await client.echo(request: "Hello world!\n\nwith\n\tnewlines")
+}
+
+try await main()
 ```
 
 ## Contributing

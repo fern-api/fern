@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import Variables
 
-let client = VariablesClient()
+private func main() async throws {
+    let client = VariablesClient()
 
-try await client.service.post(
-    endpointParam: "string"
-)
+    try await client.service.post(endpointParam: "endpointParam")
+}
+
+try await main()
 ```
 
 ## Contributing

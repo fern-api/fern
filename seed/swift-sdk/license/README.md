@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import License
 
-let client = LicenseClient()
+private func main() async throws {
+    let client = LicenseClient()
 
-try await client.get(
+    try await client.get()
+}
 
-)
+try await main()
 ```
 
 ## Contributing

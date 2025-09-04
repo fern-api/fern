@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import Api
 
-let client = ApiClient()
+private func main() async throws {
+    let client = ApiClient()
 
-try await client.getAccount(
-    accountId: "string"
-)
+    try await client.getAccount(accountId: "account_id")
+}
+
+try await main()
 ```
 
 ## Contributing

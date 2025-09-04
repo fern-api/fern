@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import ErrorProperty
 
-let client = ErrorPropertyClient()
+private func main() async throws {
+    let client = ErrorPropertyClient()
 
-try await client.propertyBasedError.throwError(
+    try await client.propertyBasedError.throwError()
+}
 
-)
+try await main()
 ```
 
 ## Contributing

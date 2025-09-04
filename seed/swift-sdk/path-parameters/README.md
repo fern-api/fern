@@ -29,14 +29,25 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import PathParameters
 
-let client = PathParametersClient()
+private func main() async throws {
+    let client = PathParametersClient()
 
-try await client.user.createUser(
-    tenantId: "string",
-    request: User()
-)
+    try await client.user.createUser(
+        tenantId: "tenant_id",
+        request: User(
+            name: "name",
+            tags: [
+                "tags",
+                "tags"
+            ]
+        )
+    )
+}
+
+try await main()
 ```
 
 ## Contributing

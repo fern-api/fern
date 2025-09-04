@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import Accept
 
-let client = AcceptClient(token: "YOUR_TOKEN")
+private func main() async throws {
+    let client = AcceptClient(token: "<token>")
 
-try await client.service.endpoint(
+    try await client.service.endpoint()
+}
 
-)
+try await main()
 ```
 
 ## Contributing

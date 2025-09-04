@@ -29,20 +29,20 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import Extends
 
-let client = ExtendsClient()
+private func main() async throws {
+    let client = ExtendsClient()
 
-try await client.extendedInlineRequestBody(
-    request: Requests.Inlined(
-        name: "string",
-        docs: "string",
-        unique: "string",
-        additionalProperties: [
-            "string": JSONValue.string("string")
-        ]
-    )
-)
+    try await client.extendedInlineRequestBody(request: .init(
+        name: "name",
+        docs: "docs",
+        unique: "unique"
+    ))
+}
+
+try await main()
 ```
 
 ## Contributing

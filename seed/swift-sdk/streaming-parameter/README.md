@@ -29,19 +29,19 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import Streaming
 
-let client = StreamingClient()
+private func main() async throws {
+    let client = StreamingClient()
 
-try await client.dummy.generate(
-    request: Requests.GenerateRequest(
-        stream: True,
-        numEvents: 123,
-        additionalProperties: [
-            "string": JSONValue.string("string")
-        ]
-    )
-)
+    try await client.dummy.generate(request: .init(
+        stream: False,
+        numEvents: 5
+    ))
+}
+
+try await main()
 ```
 
 ## Contributing

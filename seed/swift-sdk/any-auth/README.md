@@ -29,25 +29,22 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import AnyAuth
 
-let client = AnyAuthClient(
-    apiKey: "YOUR_TOKEN",
-    token: "YOUR_TOKEN"
-)
+private func main() async throws {
+    let client = AnyAuthClient(token: "<token>")
 
-try await client.auth.getToken(
-    request: Requests.GetTokenRequest(
-        clientId: "string",
-        clientSecret: "string",
-        audience: HttpsApiExampleCom(),
-        grantType: ClientCredentials(),
-        scope: "string",
-        additionalProperties: [
-            "string": JSONValue.string("string")
-        ]
-    )
-)
+    try await client.auth.getToken(request: .init(
+        clientId: "client_id",
+        clientSecret: "client_secret",
+        audience: .httpsApiExampleCom,
+        grantType: .clientCredentials,
+        scope: "scope"
+    ))
+}
+
+try await main()
 ```
 
 ## Contributing

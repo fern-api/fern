@@ -24,6 +24,23 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import Foundation
+import Api
+
+private func main() async throws {
+    let client = ApiClient(token: "<token>")
+
+    try await client.uploadJsonDocument(request: .init())
+}
+
+try await main()
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

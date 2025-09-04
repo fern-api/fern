@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import NoEnvironment
 
-let client = NoEnvironmentClient(token: "YOUR_TOKEN")
+private func main() async throws {
+    let client = NoEnvironmentClient(token: "<token>")
 
-try await client.dummy.getDummy(
+    try await client.dummy.getDummy()
+}
 
-)
+try await main()
 ```
 
 ## Contributing

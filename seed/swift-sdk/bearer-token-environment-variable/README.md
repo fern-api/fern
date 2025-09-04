@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import BearerTokenEnvironmentVariable
 
-let client = BearerTokenEnvironmentVariableClient(apiKey: "YOUR_TOKEN")
+private func main() async throws {
+    let client = BearerTokenEnvironmentVariableClient(apiKey: "<token>")
 
-try await client.service.getWithBearerToken(
+    try await client.service.getWithBearerToken()
+}
 
-)
+try await main()
 ```
 
 ## Contributing

@@ -29,14 +29,31 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import Pagination
 
-let client = PaginationClient(token: "YOUR_TOKEN")
+private func main() async throws {
+    let client = PaginationClient(token: "<token>")
 
-try await client.complex.search(
-    index: "string",
-    request: SearchRequest()
-)
+    try await client.complex.search(
+        index: "index",
+        request: SearchRequest(
+            pagination: StartingAfterPaging(
+                perPage: 1,
+                startingAfter: "starting_after"
+            ),
+            query: SearchRequestQuery.singleFilterSearchRequest(
+                SingleFilterSearchRequest(
+                    field: "field",
+                    operator: .equals,
+                    value: "value"
+                )
+            )
+        )
+    )
+}
+
+try await main()
 ```
 
 ## Contributing

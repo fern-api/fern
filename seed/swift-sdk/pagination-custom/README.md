@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import Pagination
 
-let client = PaginationClient(token: "YOUR_TOKEN")
+private func main() async throws {
+    let client = PaginationClient(token: "<token>")
 
-try await client.users.listUsernamesCustom(
-    startingAfter: "string"
-)
+    try await client.users.listUsernamesCustom(request: .init(startingAfter: "starting_after"))
+}
+
+try await main()
 ```
 
 ## Contributing

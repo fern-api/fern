@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import FileDownload
 
-let client = FileDownloadClient()
+private func main() async throws {
+    let client = FileDownloadClient()
 
-try await client.service.simple(
+    try await client.service.simple()
+}
 
-)
+try await main()
 ```
 
 ## Contributing

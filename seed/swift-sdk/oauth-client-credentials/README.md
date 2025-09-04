@@ -29,22 +29,22 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import OauthClientCredentials
 
-let client = OauthClientCredentialsClient()
+private func main() async throws {
+    let client = OauthClientCredentialsClient()
 
-try await client.auth.getTokenWithClientCredentials(
-    request: Requests.GetTokenRequest(
-        clientId: "string",
-        clientSecret: "string",
-        audience: HttpsApiExampleCom(),
-        grantType: ClientCredentials(),
-        scope: "string",
-        additionalProperties: [
-            "string": JSONValue.string("string")
-        ]
-    )
-)
+    try await client.auth.getTokenWithClientCredentials(request: .init(
+        clientId: "client_id",
+        clientSecret: "client_secret",
+        audience: .httpsApiExampleCom,
+        grantType: .clientCredentials,
+        scope: "scope"
+    ))
+}
+
+try await main()
 ```
 
 ## Contributing

@@ -29,23 +29,23 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import InferredAuthImplicit
 
-let client = InferredAuthImplicitClient()
+private func main() async throws {
+    let client = InferredAuthImplicitClient()
 
-try await client.auth.getTokenWithClientCredentials(
-    xApiKey: "string",
-    request: Requests.GetTokenRequest(
-        clientId: "string",
-        clientSecret: "string",
-        audience: HttpsApiExampleCom(),
-        grantType: ClientCredentials(),
-        scope: "string",
-        additionalProperties: [
-            "string": JSONValue.string("string")
-        ]
-    )
-)
+    try await client.auth.getTokenWithClientCredentials(request: .init(
+        xApiKey: "X-Api-Key",
+        clientId: "client_id",
+        clientSecret: "client_secret",
+        audience: .httpsApiExampleCom,
+        grantType: .clientCredentials,
+        scope: "scope"
+    ))
+}
+
+try await main()
 ```
 
 ## Contributing

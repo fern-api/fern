@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import ResponseProperty
 
-let client = ResponsePropertyClient()
+private func main() async throws {
+    let client = ResponsePropertyClient()
 
-try await client.service.getMovie(
-    request: "string"
-)
+    try await client.service.getMovie(request: "string")
+}
+
+try await main()
 ```
 
 ## Contributing

@@ -29,19 +29,19 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import IdempotencyHeaders
 
-let client = IdempotencyHeadersClient(token: "YOUR_TOKEN")
+private func main() async throws {
+    let client = IdempotencyHeadersClient(token: "<token>")
 
-try await client.payment.create(
-    request: Requests.CreatePaymentRequest(
-        amount: 123,
-        currency: Currency(),
-        additionalProperties: [
-            "string": JSONValue.string("string")
-        ]
-    )
-)
+    try await client.payment.create(request: .init(
+        amount: 1,
+        currency: .usd
+    ))
+}
+
+try await main()
 ```
 
 ## Contributing

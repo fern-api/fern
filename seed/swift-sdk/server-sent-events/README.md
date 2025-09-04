@@ -29,18 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import ServerSentEvents
 
-let client = ServerSentEventsClient()
+private func main() async throws {
+    let client = ServerSentEventsClient()
 
-try await client.completions.stream(
-    request: Requests.StreamCompletionRequest(
-        query: "string",
-        additionalProperties: [
-            "string": JSONValue.string("string")
-        ]
-    )
-)
+    try await client.completions.stream(request: .init(query: "query"))
+}
+
+try await main()
 ```
 
 ## Contributing

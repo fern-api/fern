@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import MixedCase
 
-let client = MixedCaseClient()
+private func main() async throws {
+    let client = MixedCaseClient()
 
-try await client.service.getResource(
-    resourceId: "string"
-)
+    try await client.service.getResource(resourceId: "rsc-xyz")
+}
+
+try await main()
 ```
 
 ## Contributing

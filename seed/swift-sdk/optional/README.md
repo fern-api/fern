@@ -29,15 +29,20 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import ObjectsWithImports
 
-let client = ObjectsWithImportsClient()
+private func main() async throws {
+    let client = ObjectsWithImportsClient()
 
-try await client.optional.sendOptionalBody(
-    request: [
-        "string": JSONValue.string("string")
-    ]
-)
+    try await client.optional.sendOptionalBody(request: [
+        "string": .object([
+            "key": .string("value")
+        ])
+    ])
+}
+
+try await main()
 ```
 
 ## Contributing

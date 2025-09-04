@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import Alias
 
-let client = AliasClient()
+private func main() async throws {
+    let client = AliasClient()
 
-try await client.get(
-    typeId: "string"
-)
+    try await client.get(typeId: "typeId")
+}
+
+try await main()
 ```
 
 ## Contributing

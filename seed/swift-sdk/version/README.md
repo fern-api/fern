@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import Version
 
-let client = VersionClient()
+private func main() async throws {
+    let client = VersionClient()
 
-try await client.user.getUser(
-    userId: "string"
-)
+    try await client.user.getUser(userId: "userId")
+}
+
+try await main()
 ```
 
 ## Contributing

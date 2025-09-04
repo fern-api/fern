@@ -29,19 +29,19 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import MultiLineDocs
 
-let client = MultiLineDocsClient()
+private func main() async throws {
+    let client = MultiLineDocsClient()
 
-try await client.user.createUser(
-    request: Requests.CreateUserRequest(
-        name: "string",
-        age: 123,
-        additionalProperties: [
-            "string": JSONValue.string("string")
-        ]
-    )
-)
+    try await client.user.createUser(request: .init(
+        name: "name",
+        age: 1
+    ))
+}
+
+try await main()
 ```
 
 ## Contributing

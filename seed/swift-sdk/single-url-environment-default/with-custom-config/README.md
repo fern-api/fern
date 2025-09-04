@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import SingleUrlEnvironmentDefault
 
-let client = SingleUrlEnvironmentDefaultClient(token: "YOUR_TOKEN")
+private func main() async throws {
+    let client = SingleUrlEnvironmentDefaultClient(token: "<token>")
 
-try await client.dummy.getDummy(
+    try await client.dummy.getDummy()
+}
 
-)
+try await main()
 ```
 
 ## Contributing

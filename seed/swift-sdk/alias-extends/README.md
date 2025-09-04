@@ -29,19 +29,19 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import AliasExtends
 
-let client = AliasExtendsClient()
+private func main() async throws {
+    let client = AliasExtendsClient()
 
-try await client.extendedInlineRequestBody(
-    request: Requests.InlinedChildRequest(
-        parent: "string",
-        child: "string",
-        additionalProperties: [
-            "string": JSONValue.string("string")
-        ]
-    )
-)
+    try await client.extendedInlineRequestBody(request: .init(
+        parent: "parent",
+        child: "child"
+    ))
+}
+
+try await main()
 ```
 
 ## Contributing

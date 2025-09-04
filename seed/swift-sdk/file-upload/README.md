@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import FileUpload
 
-let client = FileUploadClient()
+private func main() async throws {
+    let client = FileUploadClient()
 
-try await client.service.post(
-    request: "string"
-)
+    try await client.service.simple()
+}
+
+try await main()
 ```
 
 ## Contributing

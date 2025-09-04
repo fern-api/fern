@@ -29,16 +29,21 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import ApiWideBasePath
 
-let client = ApiWideBasePathClient()
+private func main() async throws {
+    let client = ApiWideBasePathClient()
 
-try await client.service.post(
-    pathParam: "string",
-    serviceParam: "string",
-    endpointParam: "string",
-    resourceParam: "string"
-)
+    try await client.service.post(
+        pathParam: "pathParam",
+        serviceParam: "serviceParam",
+        resourceParam: "resourceParam",
+        endpointParam: 1
+    )
+}
+
+try await main()
 ```
 
 ## Contributing

@@ -29,16 +29,22 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import Enum
 
-let client = EnumClient()
+private func main() async throws {
+    let client = EnumClient()
 
-try await client.headers.send(
-    operand: Operand(),
-    maybeOperand: Operand(),
-    operandOrColor: ColorOrOperand(),
-    maybeOperandOrColor: ColorOrOperand()
-)
+    try await client.headers.send(request: .init(
+        operand: .greaterThan,
+        maybeOperand: .greaterThan,
+        operandOrColor: ColorOrOperand.color(
+            .red
+        )
+    ))
+}
+
+try await main()
 ```
 
 ## Contributing

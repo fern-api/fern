@@ -29,20 +29,20 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import Literal
 
-let client = LiteralClient()
+private func main() async throws {
+    let client = LiteralClient()
 
-try await client.headers.send(
-    endpointVersion: JSONValue.string("string"),
-    async: JSONValue.string("string"),
-    request: Requests.SendLiteralsInHeadersRequest(
-        query: "string",
-        additionalProperties: [
-            "string": JSONValue.string("string")
-        ]
-    )
-)
+    try await client.headers.send(request: .init(
+        endpointVersion: .value,
+        async: ,
+        query: "What is the weather today"
+    ))
+}
+
+try await main()
 ```
 
 ## Contributing

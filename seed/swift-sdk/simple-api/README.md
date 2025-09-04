@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import SimpleApi
 
-let client = SimpleApiClient(token: "YOUR_TOKEN")
+private func main() async throws {
+    let client = SimpleApiClient(token: "<token>")
 
-try await client.user.get(
-    id: "string"
-)
+    try await client.user.get(id: "id")
+}
+
+try await main()
 ```
 
 ## Contributing

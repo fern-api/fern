@@ -29,13 +29,16 @@ dependencies: [
 Instantiate and use the client with the following:
 
 ```swift
+import Foundation
 import AuthEnvironmentVariables
 
-let client = AuthEnvironmentVariablesClient(apiKey: "YOUR_TOKEN")
+private func main() async throws {
+    let client = AuthEnvironmentVariablesClient(apiKey: "<value>")
 
-try await client.service.getWithApiKey(
+    try await client.service.getWithApiKey()
+}
 
-)
+try await main()
 ```
 
 ## Contributing
