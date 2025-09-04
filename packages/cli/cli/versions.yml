@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Don't fail SDK generation if a single schema fails to parse. Instead, warn and coerce to unknown.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-03"
+  version: 0.70.1
+
+- changelogEntry:
     - summary: Auto generate examples for HTTP endpoint error responses.
       type: feat
   irVersion: 59

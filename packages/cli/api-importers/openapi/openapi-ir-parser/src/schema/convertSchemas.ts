@@ -966,23 +966,21 @@ export function convertSchemaObject(
         });
     }
 
-    if (schema.type == null) {
-        const inferredValue = schema.example ?? schema.default;
-        return SchemaWithExample.unknown({
-            nameOverride,
-            generatedName,
-            title,
-            description,
-            availability,
-            namespace,
-            groupName,
-            example: inferredValue
-        });
+    if (schema.type != null) {
+        context.logger.warn(`Failed to parse an OpenAPI schema at the following location: ${breadcrumbs.join("->")}. Coercing to unknown.`);
     }
 
-    throw new Error(
-        `Failed to convert schema breadcrumbs=${JSON.stringify(breadcrumbs)} value=${JSON.stringify(schema)}`
-    );
+    const inferredValue = schema.example ?? schema.default;
+    return SchemaWithExample.unknown({
+        nameOverride,
+        generatedName,
+        title,
+        description,
+        availability,
+        namespace,
+        groupName,
+        example: inferredValue
+    });
 }
 
 function getBooleanFromDefault(defaultValue: unknown): boolean | undefined {
