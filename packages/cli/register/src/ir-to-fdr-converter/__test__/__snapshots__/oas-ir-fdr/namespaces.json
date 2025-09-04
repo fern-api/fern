@@ -483,10 +483,27 @@
       "websockets": [],
       "types": [],
       "subpackages": [
+        "subpackage_petsV1/petsV1",
         "subpackage_petsV1/pet",
         "subpackage_petsV1/store",
         "subpackage_petsV1/user"
       ]
+    },
+    "subpackage_petsV1/petsV1": {
+      "subpackageId": "subpackage_petsV1/petsV1",
+      "name": "petsV1",
+      "endpoints": [],
+      "webhooks": [],
+      "websockets": [],
+      "types": [
+        "Order",
+        "Category",
+        "User",
+        "Tag",
+        "Pet",
+        "ApiResponse"
+      ],
+      "subpackages": []
     },
     "subpackage_petsV1/pet": {
       "subpackageId": "subpackage_petsV1/pet",
@@ -3353,10 +3370,27 @@
       "websockets": [],
       "types": [],
       "subpackages": [
+        "subpackage_petsV2/petsV2",
         "subpackage_petsV2/pet",
         "subpackage_petsV2/store",
         "subpackage_petsV2/user"
       ]
+    },
+    "subpackage_petsV2/petsV2": {
+      "subpackageId": "subpackage_petsV2/petsV2",
+      "name": "petsV2",
+      "endpoints": [],
+      "webhooks": [],
+      "websockets": [],
+      "types": [
+        "Order",
+        "Category",
+        "User",
+        "Tag",
+        "Pet",
+        "ApiResponse"
+      ],
+      "subpackages": []
     },
     "subpackage_petsV2/pet": {
       "subpackageId": "subpackage_petsV2/pet",
@@ -6220,20 +6254,7 @@
     "endpoints": [],
     "webhooks": [],
     "websockets": [],
-    "types": [
-      "Order",
-      "Category",
-      "User",
-      "Tag",
-      "Pet",
-      "ApiResponse",
-      "Order",
-      "Category",
-      "User",
-      "Tag",
-      "Pet",
-      "ApiResponse"
-    ],
+    "types": [],
     "subpackages": [
       "subpackage_petsV1",
       "subpackage_petsV2"
