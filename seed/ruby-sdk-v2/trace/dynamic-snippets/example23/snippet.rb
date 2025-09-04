@@ -5,4 +5,11 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.submission.stop_execution_session();
+client.problem.get_default_starter_files({
+  inputParams:[{
+    name:'name'
+  }, {
+    name:'name'
+  }],
+  methodName:'methodName'
+});

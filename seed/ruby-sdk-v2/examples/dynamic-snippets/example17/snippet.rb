@@ -6,6 +6,6 @@ client = seed::Client.new(
 );
 
 client.service.get_metadata({
-  shallow:true,
-  xApiVersion:'X-API-Version'
+  shallow:false,
+  xApiVersion:'0.0.1'
 });
