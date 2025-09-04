@@ -1,10 +1,8 @@
 package com.snippets;
 
 import com.seed.examples.SeedExamplesClient;
-import com.seed.examples.resources.service.requests.GetMetadataRequest;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Optional;
+import com.seed.examples.resources.types.types.Movie;
+import java.util.HashMap;
 
 public class Example16 {
     public static void main(String[] args) {
@@ -14,16 +12,25 @@ public class Example16 {
             .url("https://api.fern.com")
             .build();
 
-        client.service().getMetadata(
-            GetMetadataRequest
+        client.service().createMovie(
+            Movie
                 .builder()
-                .xApiVersion("0.0.1")
-                .tag(
-                    new ArrayList<Optional<String>>(
-                        Arrays.asList("development")
-                    )
+                .id("id")
+                .title("title")
+                .from("from")
+                .rating(1.1)
+                .type("movie")
+                .tag("tag")
+                .metadata(
+                    new HashMap<String, Object>() {{
+                        put("metadata", new 
+                        HashMap<String, Object>() {{put("key", "value");
+                        }});
+                    }}
                 )
-                .shallow(false)
+                .revenue(1000000L)
+                .prequel("prequel")
+                .book("book")
                 .build()
         );
     }
