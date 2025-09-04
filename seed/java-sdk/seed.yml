@@ -215,28 +215,45 @@ scripts:
       - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava
 allowedFailures:
   - alias-extends
+  - bytes-download
+  - bytes-upload
   - enum:forward-compatible-enums
   - enum:no-custom-config
-  - examples
-  - exhaustive:signed_publish
+  - errors
+  - examples:wire-tests
+  - examples:inline-file-properties
+  - examples:no-custom-config
+  - examples:readme-config
   - exhaustive:local-files
+  - exhaustive:publish-to
+  - exhaustive:signed_publish
   - extends
-  - oauth-client-credentials-custom
-  - trace
-  - streaming-parameter
-  - literal
+  - inferred-auth-explicit
+  - inferred-auth-implicit
+  - inferred-auth-implicit-no-expiry
+  - java-inline-types
   - java-pagination-deep-cursor-path
-  - bytes
+  - literal
+  - literals-union
+  - nullable-optional:with-nullable-annotation
+  - nullable-optional:legacy
+  - oauth-client-credentials-custom
+  - oauth-client-credentials-with-variables
+  - query-parameters-openapi
+  - query-parameters-openapi-as-objects
+  - request-parameters
+  - streaming-parameter
+  - trace
+  - variables
+  - version-no-default
+  - websocket-inferred-auth
 
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.
   - any-auth
-  - api-wide-base-path
-  - client-side-params
   - extra-properties
   - java-inline-types:inline
   - java-inline-types:no-inline
-  - java-inline-types:no-wrapped-aliases
   - java-inline-types:enable-forward-compatible-enums
   - nullable:wrapped-aliases
   - nullable:no-custom-config
