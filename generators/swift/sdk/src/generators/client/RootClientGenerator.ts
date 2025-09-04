@@ -91,7 +91,7 @@ export class RootClientGenerator {
         });
     }
 
-    public generate(): swift.Class {
+    public generate() {
         return swift.class_({
             name: this.clientName,
             final: true,
