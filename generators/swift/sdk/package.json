@@ -41,6 +41,7 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/swift-base": "workspace:*",
     "@fern-api/swift-codegen": "workspace:*",
+    "@fern-api/swift-dynamic-snippets": "workspace:*",
     "@fern-api/swift-model": "workspace:*",
     "@fern-api/test-utils": "workspace:*",
     "@fern-fern/generator-cli-sdk": "0.0.41",
