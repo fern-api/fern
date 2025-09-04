@@ -40,26 +40,46 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
         return;
     }
 
-    const topLevelServersWithName: Record<string, string | RawSchemas.SingleBaseUrlEnvironmentSchema> = {};
+    const topLevelServersWithName: Record<string, string | RawSchemas.SingleBaseUrlEnvironmentSchema | RawSchemas.MultipleBaseUrlsEnvironmentSchema> = {};
     const topLevelSkippedServers = [];
     
-    // Check if we have API-specific server names (e.g., PRD_FINTECH, PRD_PAYMENTS)
-    const hasApiSuffixes = context.ir.servers.some(server => 
-        server.name?.includes('_') && /[A-Z]+$/.test(server.name)
+    // Check if we have grouped multi-API servers
+    const hasGroupedMultipleApis = context.ir.servers.some((server: any) => 
+        server.__multipleBaseUrls === true
     );
     
     for (const server of context.ir.servers) {
-        const environmentSchema = server.audiences
-            ? {
-                  url: server.url,
-                  audiences: server.audiences
-              }
-            : server.url;
-        if (server.name == null) {
-            topLevelSkippedServers.push(environmentSchema);
-            continue;
+        // Handle grouped multiple base URLs
+        if ((server as any).__multipleBaseUrls) {
+            const multiUrlEnvironment: RawSchemas.MultipleBaseUrlsEnvironmentSchema = {
+                urls: {}
+            };
+            
+            // Convert the urls object to the expected format
+            for (const [apiName, apiConfig] of Object.entries((server as any).urls)) {
+                const config = apiConfig as any;
+                multiUrlEnvironment.urls[apiName] = config.audiences
+                    ? { url: config.url, audiences: config.audiences }
+                    : config.url;
+            }
+            
+            if (server.name) {
+                topLevelServersWithName[server.name] = multiUrlEnvironment;
+            }
+        } else {
+            // Handle regular single URL servers
+            const environmentSchema = server.audiences
+                ? {
+                      url: server.url,
+                      audiences: server.audiences
+                  }
+                : server.url;
+            if (server.name == null) {
+                topLevelSkippedServers.push(environmentSchema);
+                continue;
+            }
+            topLevelServersWithName[server.name] = environmentSchema;
         }
-        topLevelServersWithName[server.name] = environmentSchema;
     }
 
     // Collect endpoint-level servers, grouping by name
@@ -174,7 +194,11 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
 
     // We now log an error for all skipped servers that we didn't have a name or construct a name for.
     const topLevelServerUrls = Object.values(topLevelServersWithName).map((schema) =>
-        typeof schema === "string" ? schema : schema.url
+        typeof schema === "string" 
+            ? schema 
+            : isRawMultipleBaseUrlsEnvironment(schema) 
+                ? Object.values(schema.urls)[0]
+                : schema.url
     );
     const filteredSkippedServers = topLevelSkippedServers.filter((server) => {
         const serverUrl = typeof server === "string" ? server : server.url;
@@ -188,9 +212,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
         );
     }
 
-    // Check if we have API-specific suffixes in server names
-    if (hasApiSuffixes) {
-        // Simply create environments from all the API-specific servers
+    // Check if we have grouped multiple APIs
+    if (hasGroupedMultipleApis) {
+        // Create environments from the grouped multi-API servers
         let firstEnvironment = true;
         for (const [name, schema] of Object.entries(topLevelServersWithName)) {
             context.builder.addEnvironment({
@@ -199,6 +223,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
             });
             if (firstEnvironment) {
                 context.builder.setDefaultEnvironment(name);
+                context.builder.setDefaultUrl("fintech"); // Default to first API
                 firstEnvironment = false;
             }
         }
@@ -211,11 +236,16 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
         for (const [name, schema] of Object.entries(topLevelServersWithName)) {
             if (firstEnvironment) {
                 if (hasWebsocketServersWithName) {
+                    const baseUrl = typeof schema === "string" 
+                        ? schema 
+                        : isRawMultipleBaseUrlsEnvironment(schema) 
+                            ? Object.values(schema.urls)[0] 
+                            : schema.url;
                     context.builder.addEnvironment({
                         name,
                         schema: {
                             urls: {
-                                ...{ [DEFAULT_URL_NAME]: typeof schema === "string" ? schema : schema.url },
+                                ...{ [DEFAULT_URL_NAME]: baseUrl ?? "" },
                                 ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
                             }
                         }
@@ -230,11 +260,16 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 firstEnvironment = false;
             } else {
                 if (hasWebsocketServersWithName) {
+                    const baseUrl = typeof schema === "string" 
+                        ? schema 
+                        : isRawMultipleBaseUrlsEnvironment(schema) 
+                            ? Object.values(schema.urls)[0] 
+                            : schema.url;
                     context.builder.addEnvironment({
                         name,
                         schema: {
                             urls: {
-                                ...{ [DEFAULT_URL_NAME]: typeof schema === "string" ? schema : schema.url },
+                                ...{ [DEFAULT_URL_NAME]: baseUrl ?? "" },
                                 ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
                             }
                         }
@@ -255,14 +290,19 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
             const environmentName = Object.keys(topLevelServersWithName)[0] as string;
             const topLevelServerSchema = Object.values(topLevelServersWithName)[0] as
                 | string
-                | RawSchemas.SingleBaseUrlEnvironmentSchema;
+                | RawSchemas.SingleBaseUrlEnvironmentSchema
+                | RawSchemas.MultipleBaseUrlsEnvironmentSchema;
             const topLevelServerUrl =
-                typeof topLevelServerSchema === "string" ? topLevelServerSchema : topLevelServerSchema.url;
+                typeof topLevelServerSchema === "string" 
+                    ? topLevelServerSchema 
+                    : isRawMultipleBaseUrlsEnvironment(topLevelServerSchema)
+                        ? Object.values(topLevelServerSchema.urls)[0]
+                        : topLevelServerSchema.url;
             context.builder.addEnvironment({
                 name: environmentName,
                 schema: {
                     urls: {
-                        ...{ [DEFAULT_URL_NAME]: topLevelServerUrl },
+                        ...{ [DEFAULT_URL_NAME]: topLevelServerUrl ?? "" },
                         ...extractUrlsFromEnvironmentSchema(endpointLevelServersWithName),
                         ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
                     }
@@ -295,7 +335,16 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 
                 // For each top-level environment
                 for (const [envName, envSchema] of Object.entries(topLevelServersWithName)) {
-                    const baseUrl = typeof envSchema === "string" ? envSchema : envSchema.url;
+                    const baseUrl = typeof envSchema === "string" 
+                        ? envSchema 
+                        : isRawMultipleBaseUrlsEnvironment(envSchema)
+                            ? Object.values(envSchema.urls)[0]
+                            : envSchema.url;
+                    
+                    if (!baseUrl) {
+                        continue; // Skip if no base URL
+                    }
+                    
                     const envSuffix = baseUrl.match(/[-]([a-z0-9]+)\./i)?.[1]?.toLowerCase() || 'production';
                     
                     // Build URLs object for this environment
