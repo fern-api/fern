@@ -24,7 +24,7 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "UploadDocumentRequest",
+      "generatedRequestName": "UploadDocumentRequestJson",
       "request": {
         "schema": {
           "allOf": [],
@@ -241,7 +241,7 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "UploadDocumentRequest",
+      "generatedRequestName": "UploadDocumentRequestOctetStream",
       "request": {
         "source": {
           "file": "../openapi.yml",
