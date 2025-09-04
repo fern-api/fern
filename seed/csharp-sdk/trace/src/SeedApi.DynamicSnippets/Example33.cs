@@ -13,8 +13,9 @@ public class Example33
             }
         );
 
-        await client.V2.Problem.GetLatestProblemAsync(
-            "problemId"
+        await client.V2.Problem.GetProblemVersionAsync(
+            "problemId",
+            1
         );
     }
 

@@ -13,7 +13,9 @@ public class Example24
             }
         );
 
-        await client.Submission.GetExecutionSessionsStateAsync();
+        await client.Submission.CreateExecutionSessionAsync(
+            Language.Java
+        );
     }
 
 }

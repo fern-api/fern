@@ -13,11 +13,7 @@ public class Example1
             }
         );
 
-        await client.CustomAuth.PostWithCustomAuthAsync(
-            new Dictionary<string, object>() {
-                ["key"] = "value",
-            }
-        );
+        await client.CustomAuth.GetWithCustomAuthAsync();
     }
 
 }
