@@ -370,7 +370,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
         const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
             context: this.context,
-            breadcrumbs: this.breadcrumbs,
+            breadcrumbs: [...this.breadcrumbs, "inner"],
             schemaOrReference: simplifiedSchema
         });
         const convertedSchema = schemaOrReferenceConverter.convert();
