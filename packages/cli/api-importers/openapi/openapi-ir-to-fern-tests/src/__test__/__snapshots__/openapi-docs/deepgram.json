@@ -14577,6 +14577,7 @@ channel:
                 "body": "bytes",
                 "content-type": "audio/*",
                 "docs": "Transcribe an audio file",
+                "name": "ListenRequest",
                 "query-parameters": {
                   "callback": {
                     "docs": "URL to which we'll make the callback request",
@@ -15281,6 +15282,7 @@ service:
       request:
         body: bytes
         content-type: audio/*
+        name: ListenRequest
         query-parameters:
           callback:
             type: optional<string>

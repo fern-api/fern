@@ -66,6 +66,7 @@
               "request": {
                 "body": "bytes",
                 "content-type": "application/pdf",
+                "name": "UploadDocumentRequestOctetStream",
                 "query-parameters": undefined,
               },
               "response": {
@@ -186,6 +187,7 @@ service:
       request:
         body: bytes
         content-type: application/pdf
+        name: UploadDocumentRequestOctetStream
       response:
         docs: Successful response
         type: UploadDocumentResponse

@@ -8516,6 +8516,7 @@ service:
               "request": {
                 "body": "bytes",
                 "content-type": "application/octet-stream",
+                "name": "PostInteractionsIdRecordingsRequest",
                 "query-parameters": undefined,
               },
               "response": {
@@ -8588,6 +8589,7 @@ service:
       request:
         body: bytes
         content-type: application/octet-stream
+        name: PostInteractionsIdRecordingsRequest
       response:
         docs: Returns the recording ID in the response.
         type: root.ResponseRecordingCreate
