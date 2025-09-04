@@ -4732,7 +4732,6 @@ Log.d("TAG", file.toString())
               "request": {
                 "body": "bytes",
                 "content-type": "application/octet-stream",
-                "name": "MultipartFileUploadPartRequest",
                 "query-parameters": undefined,
               },
               "source": {
@@ -5563,7 +5562,6 @@ service:
       request:
         body: bytes
         content-type: application/octet-stream
-        name: MultipartFileUploadPartRequest
       examples:
         - code-samples:
             - name: JS

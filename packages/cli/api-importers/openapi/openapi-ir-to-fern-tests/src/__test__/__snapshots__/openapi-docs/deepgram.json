@@ -15282,7 +15282,6 @@ service:
       request:
         body: bytes
         content-type: audio/*
-        name: ListenRequest
         query-parameters:
           callback:
             type: optional<string>
@@ -15464,6 +15463,7 @@ service:
           version:
             type: optional<ListenRequestVersionOrString>
             docs: Version of an AI model to use
+        name: ListenRequest
         docs: Transcribe an audio file
       response:
         docs: Successful transcription

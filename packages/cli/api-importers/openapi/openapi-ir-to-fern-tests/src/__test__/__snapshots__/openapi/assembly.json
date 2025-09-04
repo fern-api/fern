@@ -3536,7 +3536,6 @@ types:
               "request": {
                 "body": "bytes",
                 "content-type": "application/octet-stream",
-                "name": "FilesUploadRequest",
                 "query-parameters": undefined,
               },
               "response": {
@@ -3573,7 +3572,6 @@ service:
       request:
         body: bytes
         content-type: application/octet-stream
-        name: FilesUploadRequest
       response:
         docs: File uploaded successfully
         type: root.UploadedFile
