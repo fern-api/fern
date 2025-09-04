@@ -442,7 +442,8 @@ async function generateLanguageSpecificDynamicIRs({
                         smartCasing: generatorInvocation.smartCasing,
                         exampleGeneration: {
                             disabled: true,
-                            skipAutogenerationIfManualExamplesExist: true
+                            skipAutogenerationIfManualExamplesExist: true,
+                            skipErrorAutogenerationIfManualErrorExamplesExist: true
                         },
                         audiences: {
                             type: "all"
