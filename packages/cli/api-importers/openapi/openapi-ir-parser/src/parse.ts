@@ -132,135 +132,7 @@ function getParseAsyncOptions({
     };
 }
 
-function mergeServersForMultipleBaseUrls(
-    servers1: ServerInput[],
-    servers2: ServerInput[]
-): MergeServersResult {
-    // Build a map of environment name to servers from each source
-    const environmentMap = new Map<string, EnvironmentServers>();
-    
-    // Process servers from first source
-    for (const server of servers1) {
-        const envName = getEnvironmentName(server);
-        if (!environmentMap.has(envName)) {
-            environmentMap.set(envName, {});
-        }
-        const envServers = environmentMap.get(envName);
-        if (envServers) {
-            envServers[0] = server;
-        }
-    }
-    
-    // Process servers from second source
-    for (const server of servers2) {
-        const envName = getEnvironmentName(server);
-        if (!environmentMap.has(envName)) {
-            environmentMap.set(envName, {});
-        }
-        const envServers = environmentMap.get(envName);
-        if (envServers) {
-            envServers[1] = server;
-        }
-    }
-    
-    // Analyze if we have a Multiple Base URLs scenario
-    const multipleBaseUrlEnvironments = new Map<string, Map<string, string>>();
-    
-    for (const [envName, servers] of environmentMap.entries()) {
-        const server1 = servers[0];
-        const server2 = servers[1];
-        
-        if (server1 && server2 && server1.url !== server2.url) {
-            // Different URLs for the same environment - this is Multiple Base URLs
-            const urlMap = new Map<string, string>();
-            const api1Name = extractApiNameFromUrl(server1.url);
-            const api2Name = extractApiNameFromUrl(server2.url);
-            
-            // Ensure unique API names
-            if (api1Name === api2Name) {
-                urlMap.set(api1Name + "1", server1.url);
-                urlMap.set(api2Name + "2", server2.url);
-            } else {
-                urlMap.set(api1Name, server1.url);
-                urlMap.set(api2Name, server2.url);
-            }
-            
-            multipleBaseUrlEnvironments.set(envName, urlMap);
-        }
-    }
-    
-    const hasMultipleBaseUrls = multipleBaseUrlEnvironments.size > 0;
-    
-    if (!hasMultipleBaseUrls) {
-        // No Multiple Base URLs scenario - return simple concatenation
-        return {
-            servers: [...servers1, ...servers2],
-            endpointServers: [],
-            hasMultipleBaseUrls: false
-        };
-    }
-    
-    // Build the result with Multiple Base URLs structure
-    const result: EnhancedServer[] = [];
-    const endpointServers: EndpointServer[] = [];
-    
-    for (const [envName, servers] of environmentMap.entries()) {
-        const urlMap = multipleBaseUrlEnvironments.get(envName);
-        
-        if (urlMap && urlMap.size > 1) {
-            // This environment has Multiple Base URLs
-            const server1 = servers[0];
-            const server2 = servers[1];
-            const primaryServer = server1 || server2;
-            
-            if (!primaryServer) {
-                continue;
-            }
-            
-            // Create merged server with Multiple Base URLs extension
-            const mergedServer: EnhancedServer = {
-                name: envName,
-                description: envName,
-                url: primaryServer.url,
-                audiences: primaryServer.audiences,
-                'x-fern-server-name': envName
-            };
-            
-            // Add the Multiple Base URLs mapping as an extension
-            const baseUrls: Record<string, string> = {};
-            for (const [apiName, url] of urlMap.entries()) {
-                baseUrls[apiName] = url;
-            }
-            mergedServer["x-fern-base-urls"] = baseUrls;
-            
-            result.push(mergedServer);
-            
-            // Also create endpoint servers for each URL
-            for (const [apiName, url] of urlMap.entries()) {
-                endpointServers.push({
-                    name: `${envName}_${apiName}`,
-                    url: url,
-                    audiences: primaryServer.audiences,
-                    baseUrlId: apiName
-                });
-            }
-        } else {
-            // Single server for this environment - add both if they exist
-            if (servers[0]) {
-                result.push(servers[0]);
-            }
-            if (servers[1] && (!servers[0] || servers[0].url !== servers[1].url)) {
-                result.push(servers[1]);
-            }
-        }
-    }
-    
-    return {
-        servers: result,
-        endpointServers,
-        hasMultipleBaseUrls: endpointServers.length > 0
-    };
-}
+// Removed old mergeServersForMultipleBaseUrls function - using simpler approach
 
 interface ServerInput {
     url: string;
@@ -268,27 +140,6 @@ interface ServerInput {
     name: string | undefined;
     audiences: string[] | undefined;
     'x-fern-server-name'?: string;
-}
-
-interface EnhancedServer extends ServerInput {
-    'x-fern-base-urls'?: Record<string, string>;
-}
-
-interface EndpointServer {
-    name: string | undefined;
-    url: string | undefined;
-    audiences: string[] | undefined;
-    baseUrlId?: string;
-}
-
-interface EnvironmentServers {
-    [sourceIndex: number]: ServerInput;
-}
-
-interface MergeServersResult {
-    servers: EnhancedServer[];
-    endpointServers: EndpointServer[];
-    hasMultipleBaseUrls: boolean;
 }
 
 function getEnvironmentName(server: ServerInput): string {
@@ -333,23 +184,89 @@ function extractApiNameFromUrl(url: string): string {
     }
 }
 
+function detectMultipleBaseUrls(servers1: ServerInput[], servers2: ServerInput[]): boolean {
+    // Check if we have the same environment names but different URLs
+    if (servers1.length !== servers2.length) {
+        return false;
+    }
+    
+    const envMap = new Map<string, string>();
+    for (const server of servers1) {
+        const envName = getEnvironmentName(server);
+        envMap.set(envName, server.url);
+    }
+    
+    for (const server of servers2) {
+        const envName = getEnvironmentName(server);
+        const existingUrl = envMap.get(envName);
+        if (!existingUrl || existingUrl === server.url) {
+            return false; // Either no matching env or same URL
+        }
+    }
+    
+    return true; // All environments match but with different URLs
+}
+
+function extractApiNameFromServers(servers: ServerInput[]): string {
+    if (servers.length === 0 || !servers[0]) {
+        return 'api';
+    }
+    
+    // Extract common API name from the first server's URL
+    const firstUrl = servers[0].url;
+    return extractApiNameFromUrl(firstUrl);
+}
+
 function merge(
     ir1: OpenApiIntermediateRepresentation,
     ir2: OpenApiIntermediateRepresentation
 ): OpenApiIntermediateRepresentation {
-    // Merge servers with Multiple Base URLs support
-    const mergeResult = mergeServersForMultipleBaseUrls(ir1.servers, ir2.servers);
+    // Check if we have a Multiple Base URLs scenario (same environments, different URLs)
+    const hasMultipleBaseUrls = detectMultipleBaseUrls(ir1.servers, ir2.servers);
     
-    // Merge endpoints and potentially add endpoint servers
+    let mergedServers = ir1.servers;
     let mergedEndpoints = [...ir1.endpoints, ...ir2.endpoints];
     
-    // Add endpoint servers if Multiple Base URLs were detected
-    if (mergeResult.hasMultipleBaseUrls && mergeResult.endpointServers.length > 0) {
-        // Add servers to all endpoints to trigger Multiple Base URLs
+    if (hasMultipleBaseUrls) {
+        // For Multiple Base URLs, we need to:
+        // 1. Keep all environment names from the first spec
+        // 2. Add endpoint-level servers for each API to trigger Multiple Base URLs
+        
+        // Extract unique API names from URLs
+        const api1Name = extractApiNameFromServers(ir1.servers);
+        const api2Name = extractApiNameFromServers(ir2.servers);
+        
+        // Create endpoint-level servers for each API (using first URL as template)
+        const endpointServers = [
+            { 
+                name: api1Name, 
+                url: ir1.servers[0]?.url, 
+                description: api1Name,
+                audiences: ir1.servers[0]?.audiences || []
+            },
+            { 
+                name: api2Name, 
+                url: ir2.servers[0]?.url, 
+                description: api2Name,
+                audiences: ir2.servers[0]?.audiences || []
+            }
+        ];
+        
+        // Add the endpoint servers to ALL endpoints to trigger Multiple Base URLs
         mergedEndpoints = mergedEndpoints.map(endpoint => ({
             ...endpoint,
-            servers: mergeResult.endpointServers
+            servers: endpointServers
         }));
+        
+        // Keep ALL servers from ir1 (which has proper environment names)
+        // but annotate them with x-fern-server-name to ensure they're not skipped
+        mergedServers = ir1.servers.map(server => ({
+            ...server,
+            'x-fern-server-name': server.name || server.description || 'Default'
+        }));
+    } else {
+        // Simple case: just concatenate servers
+        mergedServers = [...ir1.servers, ...ir2.servers];
     }
     
     return {
@@ -357,7 +274,7 @@ function merge(
         title: ir1.title ?? ir2.title,
         description: ir1.description ?? ir2.description,
         basePath: ir1.basePath ?? ir2.basePath,
-        servers: mergeResult.servers,
+        servers: mergedServers,
         websocketServers: [...ir1.websocketServers, ...ir2.websocketServers],
         tags: {
             tagsById: {

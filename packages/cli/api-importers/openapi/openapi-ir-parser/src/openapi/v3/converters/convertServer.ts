@@ -43,11 +43,26 @@ function getServerName(server: OpenAPIV3.ServerObject): string | undefined {
         return name;
     }
 
-    if (server.description?.toLowerCase() === "production") {
-        return "Production";
-    }
-    if (server.description?.toLowerCase() === "sandbox") {
-        return "Sandbox";
+    // Use the description as the server name if it exists
+    // This handles common environment names like PRD, SBX, STG, etc.
+    if (server.description != null && server.description.trim() !== "") {
+        // Normalize common environment names
+        const desc = server.description.toLowerCase();
+        if (desc === "production" || desc === "prd") {
+            return "Production";
+        }
+        if (desc === "sandbox" || desc === "sbx") {
+            return "Sandbox";
+        }
+        if (desc === "staging" || desc === "stg") {
+            return "Staging";
+        }
+        if (desc === "development" || desc === "dev") {
+            return "Development";
+        }
+        
+        // Otherwise, use the description as-is
+        return server.description;
     }
 
     return undefined;
