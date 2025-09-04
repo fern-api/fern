@@ -212,7 +212,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         directory: context.requestsDirectory,
                         contents: [extension]
                     });
-                    context.project.addRequestStruct(`${requestsContainerSymbolName}.${struct.name}`, struct);
                 }
             });
         });
@@ -238,7 +237,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                 directory: context.schemasDirectory,
                                 contents: [enum_]
                             });
-                            context.project.addSchemaType(typeId, enum_);
                         } else if (literalType.type === "boolean") {
                             // TODO(kafkas): Implement boolean literals
                             const generator = new AliasGenerator({
@@ -253,7 +251,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                 directory: context.schemasDirectory,
                                 contents: [declaration]
                             });
-                            context.project.addSchemaType(typeId, declaration);
                         } else {
                             assertNever(literalType);
                         }
@@ -270,7 +267,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                             directory: context.schemasDirectory,
                             contents: [declaration]
                         });
-                        context.project.addSchemaType(typeId, declaration);
                     }
                 },
                 enum: (etd) => {
@@ -285,7 +281,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         directory: context.schemasDirectory,
                         contents: [enum_]
                     });
-                    context.project.addSchemaType(typeId, enum_);
                 },
                 object: (otd) => {
                     const generator = new ObjectGenerator({
@@ -301,7 +296,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         directory: context.schemasDirectory,
                         contents: [struct]
                     });
-                    context.project.addSchemaType(typeId, struct);
                 },
                 undiscriminatedUnion: (uutd) => {
                     const generator = new UndiscriminatedUnionGenerator({
@@ -316,7 +310,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         directory: context.schemasDirectory,
                         contents: [enum_]
                     });
-                    context.project.addSchemaType(typeId, enum_);
                 },
                 union: (utd) => {
                     const generator = new DiscriminatedUnionGenerator({
@@ -331,7 +324,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         directory: context.schemasDirectory,
                         contents: [enum_]
                     });
-                    context.project.addSchemaType(typeId, enum_);
                 },
                 _other: noop
             });

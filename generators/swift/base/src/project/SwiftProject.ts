@@ -14,12 +14,6 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     private readonly srcFiles: SwiftFile[] = [];
     private readonly srcFileNamesWithoutExtension = new Set<string>();
 
-    private readonly schemaTypesById: Map<
-        string,
-        swift.Struct | swift.EnumWithAssociatedValues | swift.EnumWithRawValues | swift.Statement
-    >;
-    private readonly requestStructsByEndpointIdAndRequestName: Map<string, swift.Struct>;
-
     public readonly symbolRegistry: ProjectSymbolRegistry;
 
     public constructor({
@@ -29,8 +23,6 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     }) {
         super(context);
         this.symbolRegistry = ProjectSymbolRegistry.create();
-        this.schemaTypesById = new Map();
-        this.requestStructsByEndpointIdAndRequestName = new Map();
     }
 
     private get srcDirectory(): RelativeFilePath {
@@ -92,27 +84,6 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         });
         this.srcFiles.push(file);
         return file;
-    }
-
-    public addSchemaType(
-        fullyQualifiedName: string,
-        symbol: swift.Struct | swift.EnumWithAssociatedValues | swift.EnumWithRawValues | swift.Statement
-    ): void {
-        this.schemaTypesById.set(fullyQualifiedName, symbol);
-    }
-
-    public addRequestStruct(fullyQualifiedName: string, struct: swift.Struct): void {
-        this.requestStructsByEndpointIdAndRequestName.set(fullyQualifiedName, struct);
-    }
-
-    public getSchemaType(
-        fullyQualifiedName: string
-    ): swift.Struct | swift.EnumWithAssociatedValues | swift.EnumWithRawValues | swift.Statement | undefined {
-        return this.schemaTypesById.get(fullyQualifiedName);
-    }
-
-    public getRequestType(fullyQualifiedName: string): swift.Struct | undefined {
-        return this.requestStructsByEndpointIdAndRequestName.get(fullyQualifiedName);
     }
 
     public async persist(): Promise<void> {
