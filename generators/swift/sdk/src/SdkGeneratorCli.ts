@@ -96,7 +96,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             });
             context.project.addRootFiles(new File("README.md", RelativeFilePath.of(""), content));
         } catch (e) {
-            context.logger.warn("Failed to generate README.md, this is OK", extractErrorMessage(e));
+            throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
         }
     }
 
