@@ -60,7 +60,7 @@ function getServerName(server: OpenAPIV3.ServerObject): string | undefined {
         if (desc === "development" || desc === "dev") {
             return "Development";
         }
-        
+
         // Otherwise, use the description as-is
         return server.description;
     }
