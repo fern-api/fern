@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Upgrade to irV59
+      type: internal
+  createdAt: "2025-08-31"
+  irVersion: 59
+  version: 1.8.2
+
+- changelogEntry:
+    - summary: |
         Fix nullable fields incorrectly requiring non-null values in staged builders when 
         use-nullable-annotation is enabled.
       type: fix

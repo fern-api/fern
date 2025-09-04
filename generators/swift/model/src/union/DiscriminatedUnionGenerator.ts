@@ -102,7 +102,7 @@ export class DiscriminatedUnionGenerator {
                 target: swift.Expression.reference("discriminant"),
                 cases: this.unionTypeDeclaration.types.map((singleUnionType) => {
                     return {
-                        pattern: swift.Expression.rawStringValue(singleUnionType.discriminantValue.wireValue),
+                        pattern: swift.Expression.stringLiteral(singleUnionType.discriminantValue.wireValue),
                         body: [
                             swift.Statement.selfAssignment(
                                 swift.Expression.contextualMethodCall({
@@ -148,7 +148,7 @@ export class DiscriminatedUnionGenerator {
                                             }),
                                             swift.functionArgument({
                                                 label: "debugDescription",
-                                                value: swift.Expression.rawStringValue(
+                                                value: swift.Expression.stringLiteral(
                                                     `Unknown shape discriminant value: \\(discriminant)`
                                                 )
                                             })
@@ -237,7 +237,7 @@ export class DiscriminatedUnionGenerator {
                     unsafeName: this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName,
                     rawName: this.unionTypeDeclaration.discriminant.wireValue,
                     type: swift.Type.string(),
-                    value: swift.Expression.rawStringValue(singleUnionType.discriminantValue.wireValue)
+                    value: swift.Expression.stringLiteral(singleUnionType.discriminantValue.wireValue)
                 });
                 dataPropertyDefinitions.push({
                     unsafeName: singleUnionType.shape.name.name.camelCase.unsafeName,
@@ -250,7 +250,7 @@ export class DiscriminatedUnionGenerator {
                     unsafeName: this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName,
                     rawName: this.unionTypeDeclaration.discriminant.wireValue,
                     type: swift.Type.string(),
-                    value: swift.Expression.rawStringValue(singleUnionType.discriminantValue.wireValue)
+                    value: swift.Expression.stringLiteral(singleUnionType.discriminantValue.wireValue)
                 });
                 dataPropertyDefinitions.push(
                     ...variantProperties.map((p) => ({

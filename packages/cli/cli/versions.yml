@@ -1,7 +1,50 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: Auto generate examples for HTTP endpoint error responses.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-03"
+  version: 0.70.0
 
 - changelogEntry:
-    - summary: Ignore self-referential types that are optional<nullable<SELF>>
+    - summary: |
+        Add custom license name extraction for Java SDK generation. The CLI now reads the first line 
+        from custom LICENSE files and passes it to generators via the _fernLicenseName field in customConfig.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-03"
+  version: 0.69.2
+
+- changelogEntry:
+    - summary: Example generation ignores headers that don't exist in the channel instead of failing hard.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-02"
+  version: 0.69.1
+
+- changelogEntry:
+    - summary: Fern diff command can consider from and to generator versions.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-02"
+  version: 0.69.0
+
+- changelogEntry:
+    - summary: Fern cli diff command recognizes availability.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-28"
+  version: 0.68.0
+
+- changelogEntry:
+    - summary: Update ir migration versions for java generators
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-31"
+  version: 0.67.0
+
+- changelogEntry:
+    - summary: Ignore self-referential types that are `optional<nullable<SELF>>`
       type: fix
   irVersion: 59
   createdAt: "2025-08-28"

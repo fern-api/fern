@@ -159,6 +159,7 @@ export async function writeFilesToDiskAndRunGenerator({
         organization,
         absolutePathToSnippet: absolutePathToTmpSnippetJSON,
         absolutePathToSnippetTemplates: absolutePathToTmpSnippetTemplatesJSON,
+        absolutePathToFernConfig,
         writeUnitTests,
         generateOauthClients,
         generatePaginatedClients,

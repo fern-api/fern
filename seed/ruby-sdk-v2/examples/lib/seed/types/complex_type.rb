@@ -7,6 +7,7 @@ module Seed
 
       OBJECT = "object"
       UNION = "union"
-      UNKNOWN = "unknown"end
+      UNKNOWN = "unknown"
+    end
   end
 end

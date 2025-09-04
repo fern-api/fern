@@ -10,6 +10,6 @@ public class Example10 {
             .url("https://api.fern.com")
             .build();
 
-        client.health().service().ping();
+        client.health().service().check("id");
     }
 }
