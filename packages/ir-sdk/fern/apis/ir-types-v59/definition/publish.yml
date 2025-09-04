@@ -1,0 +1,63 @@
+types: 
+  PublishingConfig: 
+    union: 
+      github: 
+        type: GithubPublish
+        docs: Publish via syncing to a GitHub repo and triggering GitHub workflows
+      direct: 
+        type: DirectPublish
+        docs: Publish directly from the generator
+      filesystem: 
+        type: Filesystem
+        docs: Do not publish anywhere but deposit files in the local filesystem
+  
+  Filesystem: 
+    properties: 
+      generateFullProject:
+        type: boolean
+        docs: If true, will generate the entire project (pyproject.toml, package.json, etc)
+      publishTarget: optional<PublishTarget>
+  
+  GithubPublish: 
+    properties: 
+      owner: string
+      repo: string
+      uri: optional<string>
+      token: optional<string>
+      target: PublishTarget
+  
+  DirectPublish: 
+    properties: 
+      target: PublishTarget
+  
+  PublishTarget: 
+    union: 
+      postman: PostmanPublishTarget
+      npm: NpmPublishTarget
+      maven: MavenPublishTarget
+      pypi: PypiPublishTarget
+  
+  PostmanPublishTarget: 
+    properties: 
+      apiKey: string
+      workspaceId: string
+      collectionId: optional<string>
+  
+  NpmPublishTarget:
+    properties:
+      version: optional<string>
+      packageName: optional<string>
+      tokenEnvironmentVariable: string
+  
+  MavenPublishTarget:
+    properties:
+      coordinate: optional<string>
+      version: optional<string>
+      usernameEnvironmentVariable: string
+      passwordEnvironmentVariable: string
+      mavenUrlEnvironmentVariable: string
+
+  PypiPublishTarget:
+    properties:
+      version: optional<string>
+      packageName: optional<string>

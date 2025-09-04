@@ -202,7 +202,8 @@ export function generateEndpointExample({
                     properties.push({
                         name: property.name,
                         originalTypeDeclaration: undefined,
-                        value: example
+                        value: example,
+                        propertyAccess: property.propertyAccess
                     });
                     jsonExample[property.name.wireValue] = propertyJsonExample;
                 }

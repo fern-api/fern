@@ -1471,7 +1471,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "895f556b",
+                "id": "8de5a7df",
                 "name": null,
                 "queryParameters": [],
                 "request": {
@@ -2258,7 +2258,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                     },
                   },
                 ],
-                "id": "f7a3d218",
+                "id": "920701a6",
                 "name": null,
                 "queryParameters": [
                   {
@@ -4166,7 +4166,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "18d1a65e",
+                "id": "5866b6f5",
                 "name": null,
                 "queryParameters": [
                   {

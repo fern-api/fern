@@ -32,7 +32,7 @@ import {
     convertTypeReferenceExample,
     getOriginalTypeDeclarationForPropertyFromExtensions
 } from "../type-declarations/convertExampleType";
-import { getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
+import { getPropertyAccess, getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
 import { getHeaderName, resolvePathParameterOrThrow } from "./convertHttpService";
 import { getQueryParameterName } from "./convertQueryParameter";
 
@@ -397,7 +397,8 @@ function convertExampleRequestBody({
                     fileContainingExample: file,
                     workspace
                 }),
-                originalTypeDeclaration: undefined
+                originalTypeDeclaration: undefined,
+                propertyAccess: getPropertyAccess({ property: inlinedRequestPropertyDeclaration })
             });
         } else {
             const originalTypeDeclaration = getOriginalTypeDeclarationForPropertyFromExtensions({
@@ -427,7 +428,8 @@ function convertExampleRequestBody({
                     fileContainingExample: file,
                     workspace
                 }),
-                originalTypeDeclaration: originalTypeDeclaration.typeName
+                originalTypeDeclaration: originalTypeDeclaration.typeName,
+                propertyAccess: getPropertyAccess({ property: originalTypeDeclaration.rawPropertyType })
             });
         }
     }

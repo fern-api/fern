@@ -1222,7 +1222,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_commons/types:Metadata"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -1479,7 +1480,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_commons/types:Metadata"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -1640,7 +1642,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_commons/types:Metadata"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -2310,7 +2313,8 @@
                                                     }
                                                 },
                                                 "displayName": null
-                                            }
+                                            },
+                                            "propertyAccess": null
                                         },
                                         {
                                             "name": {
@@ -2539,7 +2543,8 @@
                                                     }
                                                 },
                                                 "displayName": null
-                                            }
+                                            },
+                                            "propertyAccess": null
                                         },
                                         {
                                             "name": {
@@ -2700,7 +2705,8 @@
                                                     }
                                                 },
                                                 "displayName": null
-                                            }
+                                            },
+                                            "propertyAccess": null
                                         }
                                     ]
                                 }
@@ -4345,7 +4351,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Movie"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -4600,7 +4607,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Movie"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -4702,7 +4710,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Movie"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -4804,7 +4813,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Movie"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -4904,7 +4914,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Movie"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -5009,7 +5020,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Movie"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -5225,7 +5237,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Movie"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -5428,7 +5441,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Movie"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -5528,7 +5542,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Movie"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -6057,7 +6072,8 @@
                                                     }
                                                 },
                                                 "displayName": null
-                                            }
+                                            },
+                                            "propertyAccess": null
                                         },
                                         {
                                             "name": {
@@ -6159,7 +6175,8 @@
                                                     }
                                                 },
                                                 "displayName": null
-                                            }
+                                            },
+                                            "propertyAccess": null
                                         }
                                     ]
                                 }
@@ -6371,7 +6388,8 @@
                                                     }
                                                 },
                                                 "displayName": null
-                                            }
+                                            },
+                                            "propertyAccess": null
                                         },
                                         {
                                             "name": {
@@ -6473,7 +6491,8 @@
                                                     }
                                                 },
                                                 "displayName": null
-                                            }
+                                            },
+                                            "propertyAccess": null
                                         }
                                     ]
                                 }
@@ -6958,7 +6977,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Actress"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -7060,7 +7080,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Actress"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -8283,7 +8304,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Movie"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -8385,7 +8407,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Movie"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -8487,7 +8510,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Movie"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -8587,7 +8611,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Movie"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -8692,7 +8717,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Movie"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -8908,7 +8934,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Movie"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -9073,7 +9100,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:ExtendedMovie"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -9264,7 +9292,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Movie"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -9364,7 +9393,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Movie"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -9699,7 +9729,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Moment"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -9799,7 +9830,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Moment"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -9900,7 +9932,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Moment"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -10207,7 +10240,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:File"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -10309,7 +10343,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:File"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -10442,7 +10477,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:File"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -10544,7 +10580,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:File"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -11035,7 +11072,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Directory"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -11243,7 +11281,8 @@
                                                                                         }
                                                                                     },
                                                                                     "displayName": null
-                                                                                }
+                                                                                },
+                                                                                "propertyAccess": null
                                                                             },
                                                                             {
                                                                                 "name": {
@@ -11345,7 +11384,8 @@
                                                                                         }
                                                                                     },
                                                                                     "displayName": null
-                                                                                }
+                                                                                },
+                                                                                "propertyAccess": null
                                                                             }
                                                                         ]
                                                                     }
@@ -11583,7 +11623,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Directory"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -11791,7 +11832,8 @@
                                                                                         }
                                                                                     },
                                                                                     "displayName": null
-                                                                                }
+                                                                                },
+                                                                                "propertyAccess": null
                                                                             },
                                                                             {
                                                                                 "name": {
@@ -11999,7 +12041,8 @@
                                                                                                                                         }
                                                                                                                                     },
                                                                                                                                     "displayName": null
-                                                                                                                                }
+                                                                                                                                },
+                                                                                                                                "propertyAccess": null
                                                                                                                             },
                                                                                                                             {
                                                                                                                                 "name": {
@@ -12101,7 +12144,8 @@
                                                                                                                                         }
                                                                                                                                     },
                                                                                                                                     "displayName": null
-                                                                                                                                }
+                                                                                                                                },
+                                                                                                                                "propertyAccess": null
                                                                                                                             }
                                                                                                                         ]
                                                                                                                     }
@@ -12339,7 +12383,8 @@
                                                                                         }
                                                                                     },
                                                                                     "displayName": null
-                                                                                }
+                                                                                },
+                                                                                "propertyAccess": null
                                                                             }
                                                                         ]
                                                                     }
@@ -12592,7 +12637,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Directory"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -13099,7 +13145,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Node"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -13307,7 +13354,8 @@
                                                                                         }
                                                                                     },
                                                                                     "displayName": null
-                                                                                }
+                                                                                },
+                                                                                "propertyAccess": null
                                                                             }
                                                                         ]
                                                                     }
@@ -13488,7 +13536,8 @@
                                                                                         }
                                                                                     },
                                                                                     "displayName": null
-                                                                                }
+                                                                                },
+                                                                                "propertyAccess": null
                                                                             }
                                                                         ]
                                                                     }
@@ -13729,7 +13778,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Node"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -14043,7 +14093,8 @@
                                                                                                                                         }
                                                                                                                                     },
                                                                                                                                     "displayName": null
-                                                                                                                                }
+                                                                                                                                },
+                                                                                                                                "propertyAccess": null
                                                                                                                             }
                                                                                                                         ]
                                                                                                                     }
@@ -14224,7 +14275,8 @@
                                                                                                                                         }
                                                                                                                                     },
                                                                                                                                     "displayName": null
-                                                                                                                                }
+                                                                                                                                },
+                                                                                                                                "propertyAccess": null
                                                                                                                             }
                                                                                                                         ]
                                                                                                                     }
@@ -14465,7 +14517,8 @@
                                                                                         }
                                                                                     },
                                                                                     "displayName": null
-                                                                                }
+                                                                                },
+                                                                                "propertyAccess": null
                                                                             }
                                                                         ]
                                                                     }
@@ -14721,7 +14774,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Node"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -14873,7 +14927,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Node"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -15005,7 +15060,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Node"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -15447,7 +15503,8 @@
                                                                                         }
                                                                                     },
                                                                                     "displayName": null
-                                                                                }
+                                                                                },
+                                                                                "propertyAccess": null
                                                                             }
                                                                         ]
                                                                     }
@@ -15628,7 +15685,8 @@
                                                                                         }
                                                                                     },
                                                                                     "displayName": null
-                                                                                }
+                                                                                },
+                                                                                "propertyAccess": null
                                                                             }
                                                                         ]
                                                                     }
@@ -15869,7 +15927,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Tree"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -16733,7 +16792,8 @@
                                                     }
                                                 },
                                                 "displayName": null
-                                            }
+                                            },
+                                            "propertyAccess": null
                                         },
                                         {
                                             "name": {
@@ -16835,7 +16895,8 @@
                                                     }
                                                 },
                                                 "displayName": null
-                                            }
+                                            },
+                                            "propertyAccess": null
                                         },
                                         {
                                             "name": {
@@ -16937,7 +16998,8 @@
                                                     }
                                                 },
                                                 "displayName": null
-                                            }
+                                            },
+                                            "propertyAccess": null
                                         }
                                     ]
                                 }
@@ -17290,7 +17352,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:ExceptionInfo"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -17392,7 +17455,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:ExceptionInfo"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -17494,7 +17558,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:ExceptionInfo"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -18104,7 +18169,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Migration"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -18291,7 +18357,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Migration"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -18542,7 +18609,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Request"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -18865,7 +18933,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Response"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -19077,7 +19146,8 @@
                                                                             }
                                                                         },
                                                                         "displayName": null
-                                                                    }
+                                                                    },
+                                                                    "propertyAccess": null
                                                                 },
                                                                 {
                                                                     "name": {
@@ -19141,7 +19211,8 @@
                                                                             }
                                                                         },
                                                                         "displayName": null
-                                                                    }
+                                                                    },
+                                                                    "propertyAccess": null
                                                                 },
                                                                 {
                                                                     "name": {
@@ -19205,7 +19276,8 @@
                                                                             }
                                                                         },
                                                                         "displayName": null
-                                                                    }
+                                                                    },
+                                                                    "propertyAccess": null
                                                                 }
                                                             ]
                                                         }
@@ -19397,7 +19469,8 @@
                                                                             }
                                                                         },
                                                                         "displayName": null
-                                                                    }
+                                                                    },
+                                                                    "propertyAccess": null
                                                                 },
                                                                 {
                                                                     "name": {
@@ -19461,7 +19534,8 @@
                                                                             }
                                                                         },
                                                                         "displayName": null
-                                                                    }
+                                                                    },
+                                                                    "propertyAccess": null
                                                                 },
                                                                 {
                                                                     "name": {
@@ -19525,7 +19599,8 @@
                                                                             }
                                                                         },
                                                                         "displayName": null
-                                                                    }
+                                                                    },
+                                                                    "propertyAccess": null
                                                                 }
                                                             ]
                                                         }
@@ -19648,7 +19723,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Response"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -20634,7 +20710,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Entity"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -20736,7 +20813,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:Entity"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -22610,7 +22688,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_types:CronJob"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -23303,7 +23382,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "63e3dea6",
+                                "id": "503bf6c3",
                                 "url": "",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -23567,7 +23646,8 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": "primitive"
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -23631,7 +23711,8 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": "value"
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -23695,7 +23776,8 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": "label"
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         }
                                                     ]
                                                 },
@@ -24377,7 +24459,8 @@
                                                                                 }
                                                                             },
                                                                             "displayName": null
-                                                                        }
+                                                                        },
+                                                                        "propertyAccess": null
                                                                     },
                                                                     {
                                                                         "name": {
@@ -24479,7 +24562,8 @@
                                                                                 }
                                                                             },
                                                                             "displayName": null
-                                                                        }
+                                                                        },
+                                                                        "propertyAccess": null
                                                                     },
                                                                     {
                                                                         "name": {
@@ -24581,7 +24665,8 @@
                                                                                 }
                                                                             },
                                                                             "displayName": null
-                                                                        }
+                                                                        },
+                                                                        "propertyAccess": null
                                                                     }
                                                                 ]
                                                             }
@@ -24606,7 +24691,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "34890607",
+                                "id": "d7bcf43a",
                                 "url": "/file/notification/notificationId",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -24809,7 +24894,8 @@
                                                                                 }
                                                                             },
                                                                             "jsonExample": "exceptionType"
-                                                                        }
+                                                                        },
+                                                                        "propertyAccess": null
                                                                     },
                                                                     {
                                                                         "name": {
@@ -24911,7 +24997,8 @@
                                                                                 }
                                                                             },
                                                                             "jsonExample": "exceptionMessage"
-                                                                        }
+                                                                        },
+                                                                        "propertyAccess": null
                                                                     },
                                                                     {
                                                                         "name": {
@@ -25013,7 +25100,8 @@
                                                                                 }
                                                                             },
                                                                             "jsonExample": "exceptionStacktrace"
-                                                                        }
+                                                                        },
+                                                                        "propertyAccess": null
                                                                     }
                                                                 ]
                                                             }
@@ -25775,7 +25863,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "30714c35",
+                                "id": "7254a8d9",
                                 "url": "/file/filename",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -25966,7 +26054,8 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": "name"
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -26068,7 +26157,8 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": "contents"
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         }
                                                     ]
                                                 },
@@ -27713,7 +27803,8 @@
                                                                     }
                                                                 },
                                                                 "displayName": null
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -27968,7 +28059,8 @@
                                                                     }
                                                                 },
                                                                 "displayName": null
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -28070,7 +28162,8 @@
                                                                     }
                                                                 },
                                                                 "displayName": null
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -28172,7 +28265,8 @@
                                                                     }
                                                                 },
                                                                 "displayName": null
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -28272,7 +28366,8 @@
                                                                     }
                                                                 },
                                                                 "displayName": null
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -28377,7 +28472,8 @@
                                                                     }
                                                                 },
                                                                 "displayName": null
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -28593,7 +28689,8 @@
                                                                     }
                                                                 },
                                                                 "displayName": null
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -28796,7 +28893,8 @@
                                                                     }
                                                                 },
                                                                 "displayName": null
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -28896,7 +28994,8 @@
                                                                     }
                                                                 },
                                                                 "displayName": null
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         }
                                                     ]
                                                 }
@@ -28934,7 +29033,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "3c1db09a",
+                                "id": "4ec9710c",
                                 "url": "/movie/movieId",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -29238,7 +29337,8 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": "id"
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -29493,7 +29593,8 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": "prequel"
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -29595,7 +29696,8 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": "title"
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -29697,7 +29799,8 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": "from"
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -29797,7 +29900,8 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": 1.1
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -29902,7 +30006,8 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": "movie"
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -30118,7 +30223,8 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": "tag"
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -30240,7 +30346,8 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": "book"
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -30384,7 +30491,8 @@
                                                                         "key": "value"
                                                                     }
                                                                 }
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -30484,7 +30592,8 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": 1000000
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         }
                                                     ]
                                                 },
@@ -31144,7 +31253,8 @@
                                                             }
                                                         },
                                                         "displayName": null
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -31399,7 +31509,8 @@
                                                             }
                                                         },
                                                         "displayName": null
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -31501,7 +31612,8 @@
                                                             }
                                                         },
                                                         "displayName": null
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -31603,7 +31715,8 @@
                                                             }
                                                         },
                                                         "displayName": null
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -31703,7 +31816,8 @@
                                                             }
                                                         },
                                                         "displayName": null
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -31808,7 +31922,8 @@
                                                             }
                                                         },
                                                         "displayName": null
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -32024,7 +32139,8 @@
                                                             }
                                                         },
                                                         "displayName": null
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -32227,7 +32343,8 @@
                                                             }
                                                         },
                                                         "displayName": null
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -32327,7 +32444,8 @@
                                                             }
                                                         },
                                                         "displayName": null
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 }
                                             ]
                                         }
@@ -32456,7 +32574,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "c39b055d",
+                                "id": "8d775c5f",
                                 "url": "/movie",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -32647,7 +32765,8 @@
                                                             }
                                                         },
                                                         "jsonExample": "id"
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -32815,7 +32934,8 @@
                                                                 }
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -32917,7 +33037,8 @@
                                                             }
                                                         },
                                                         "jsonExample": "title"
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -33019,7 +33140,8 @@
                                                             }
                                                         },
                                                         "jsonExample": "from"
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -33119,7 +33241,8 @@
                                                             }
                                                         },
                                                         "jsonExample": 1.1
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -33224,7 +33347,8 @@
                                                             }
                                                         },
                                                         "jsonExample": "movie"
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -33440,7 +33564,8 @@
                                                             }
                                                         },
                                                         "jsonExample": "tag"
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -33550,7 +33675,8 @@
                                                                 }
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -33694,7 +33820,8 @@
                                                                 "key": "value"
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -33794,7 +33921,8 @@
                                                             }
                                                         },
                                                         "jsonExample": 1000000
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 }
                                             ]
                                         },
@@ -35148,7 +35276,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "a3eb3221",
+                                "id": "5c989d40",
                                 "url": "/big-entity",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -35330,7 +35458,8 @@
                                                                 }
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -35498,7 +35627,8 @@
                                                                 }
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -35666,7 +35796,8 @@
                                                                 }
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -35834,7 +35965,8 @@
                                                                 }
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -36041,7 +36173,8 @@
                                                                 }
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -36248,7 +36381,8 @@
                                                                 }
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -36455,7 +36589,8 @@
                                                                 }
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -36623,7 +36758,8 @@
                                                                 }
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -36791,7 +36927,8 @@
                                                                 }
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -36959,7 +37096,8 @@
                                                                 }
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -37127,7 +37265,8 @@
                                                                 }
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -37295,7 +37434,8 @@
                                                                 }
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -37463,7 +37603,8 @@
                                                                 }
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 }
                                             ]
                                         },
@@ -37645,7 +37786,8 @@
                                                                 "jsonExample": {
                                                                     "key": "value"
                                                                 }
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
@@ -37895,7 +38037,8 @@
                                                                                                         }
                                                                                                     },
                                                                                                     "jsonExample": "primitive"
-                                                                                                }
+                                                                                                },
+                                                                                                "propertyAccess": null
                                                                                             },
                                                                                             {
                                                                                                 "name": {
@@ -37959,7 +38102,8 @@
                                                                                                         }
                                                                                                     },
                                                                                                     "jsonExample": "value"
-                                                                                                }
+                                                                                                },
+                                                                                                "propertyAccess": null
                                                                                             },
                                                                                             {
                                                                                                 "name": {
@@ -38023,7 +38167,8 @@
                                                                                                         }
                                                                                                     },
                                                                                                     "jsonExample": "label"
-                                                                                                }
+                                                                                                },
+                                                                                                "propertyAccess": null
                                                                                             }
                                                                                         ]
                                                                                     },
@@ -38215,7 +38360,8 @@
                                                                                                         }
                                                                                                     },
                                                                                                     "jsonExample": "primitive"
-                                                                                                }
+                                                                                                },
+                                                                                                "propertyAccess": null
                                                                                             },
                                                                                             {
                                                                                                 "name": {
@@ -38279,7 +38425,8 @@
                                                                                                         }
                                                                                                     },
                                                                                                     "jsonExample": "value"
-                                                                                                }
+                                                                                                },
+                                                                                                "propertyAccess": null
                                                                                             },
                                                                                             {
                                                                                                 "name": {
@@ -38343,7 +38490,8 @@
                                                                                                         }
                                                                                                     },
                                                                                                     "jsonExample": "label"
-                                                                                                }
+                                                                                                },
+                                                                                                "propertyAccess": null
                                                                                             }
                                                                                         ]
                                                                                     },
@@ -38428,7 +38576,8 @@
                                                                         "label": "label"
                                                                     }
                                                                 ]
-                                                            }
+                                                            },
+                                                            "propertyAccess": null
                                                         }
                                                     ]
                                                 },
@@ -39054,7 +39203,8 @@
                                                                         }
                                                                     },
                                                                     "displayName": null
-                                                                }
+                                                                },
+                                                                "propertyAccess": null
                                                             }
                                                         ]
                                                     }

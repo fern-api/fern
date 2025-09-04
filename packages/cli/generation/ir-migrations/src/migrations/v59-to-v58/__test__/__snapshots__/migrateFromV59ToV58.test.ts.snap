@@ -1249,7 +1249,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "4c516301",
+                "id": "b7852473",
                 "name": null,
                 "queryParameters": [],
                 "request": {
@@ -2320,7 +2320,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "3365d90",
+                "id": "27066df1",
                 "name": null,
                 "queryParameters": [],
                 "request": {
@@ -6024,7 +6024,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "4c516301",
+                "id": "b7852473",
                 "name": null,
                 "queryParameters": [],
                 "request": {
@@ -7095,7 +7095,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "3365d90",
+                "id": "27066df1",
                 "name": null,
                 "queryParameters": [],
                 "request": {
