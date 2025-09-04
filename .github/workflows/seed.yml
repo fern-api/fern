@@ -49,6 +49,7 @@ jobs:
       go: ${{ steps.filter.outputs.go }}
       csharp: ${{ steps.filter.outputs.csharp }}
       php: ${{ steps.filter.outputs.php }}
+      swift: ${{ steps.filter.outputs.swift }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -103,6 +104,9 @@ jobs:
               - 'generators/php/**'
               - 'seed/php-sdk/**'
               - 'seed/php-model/**'
+            swift:
+              - 'generators/swift/**'
+              - 'seed/swift-sdk/**'
       - name: retry-on-failure
         if: failure() && steps.filter.outcome == 'failure' && fromJSON(github.run_attempt) < 3
         env:
@@ -467,3 +471,21 @@ jobs:
         with:
           generator-name: php-sdk
           generator-path: generators/php
+
+  swift-sdk:
+    runs-on: Seed
+    needs: changes
+    if: >-
+      ${{
+        ((needs.changes.outputs.swift == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: swift-sdk
+          generator-path: generators/swift
