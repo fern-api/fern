@@ -19,6 +19,7 @@ import {
     DependencyType,
     ExportedFilePath,
     getExampleEndpointCalls,
+    getExampleEndpointCallsForTests,
     getParameterNameForRootExamplePathParameter,
     getParameterNameForRootPathParameter,
     getTextOfTsNode,
@@ -630,7 +631,7 @@ describe("${serviceName}", () => {
         importStatement: Reference,
         baseOptions: Record<string, Code>
     ): Code[] {
-        const examples = getExampleEndpointCalls(endpoint);
+        const examples = getExampleEndpointCallsForTests(endpoint);
         if (examples.length === 0) {
             return [];
         }
@@ -887,7 +888,6 @@ describe("${serviceName}", () => {
             default:
                 assertNever(requestType);
         }
-
         const responseType = endpoint.response?.body?.type ?? "undefined";
         switch (responseType) {
             case "fileDownload":
