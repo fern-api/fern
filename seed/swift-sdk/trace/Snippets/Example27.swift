@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.v2.problem.getLightweightProblems()
+    try await client.submission.getExecutionSessionsState()
 }
 
 try await main()

@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.submission.getExecutionSession(sessionId: "sessionId")
+    try await client.problem.deleteProblem(problemId: "problemId")
 }
 
 try await main()

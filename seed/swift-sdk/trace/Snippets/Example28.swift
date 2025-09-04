@@ -7,7 +7,10 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.v2.problem.getProblems()
+    try await client.sysprop.setNumWarmInstances(
+        language: .java,
+        numWarmInstances: 1
+    )
 }
 
 try await main()

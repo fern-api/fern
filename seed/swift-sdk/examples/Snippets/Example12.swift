@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.service.getMovie(movieId: "movie-c06a4ad7")
+    try await client.health.service.ping()
 }
 
 try await main()

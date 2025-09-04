@@ -7,12 +7,21 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.service.getMetadata(request: .init(
-        shallow: False,
-        tag: [
-            "development"
+    try await client.service.createMovie(request: Movie(
+        id: "id",
+        prequel: "prequel",
+        title: "title",
+        from: "from",
+        rating: 1.1,
+        type: .movie,
+        tag: "tag",
+        book: "book",
+        metadata: [
+            "metadata": .object([
+                "key": .string("value")
+            ])
         ],
-        xApiVersion: "0.0.1"
+        revenue: 1000000
     ))
 }
 

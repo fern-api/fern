@@ -7,9 +7,9 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.playlist.deletePlaylist(
+    try await client.playlist.getPlaylist(
         serviceParam: 1,
-        playlistId: "playlist_id"
+        playlistId: "playlistId"
     )
 }
 

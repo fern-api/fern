@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.health.service.check(id: "id-3tey93i")
+    try await client.health.service.check(id: "id-2sdx82h")
 }
 
 try await main()

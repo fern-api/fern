@@ -7,16 +7,9 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.playlist.updatePlaylist(
+    try await client.playlist.getPlaylist(
         serviceParam: 1,
-        playlistId: "playlistId",
-        request: UpdatePlaylistRequest(
-            name: "name",
-            problems: [
-                "problems",
-                "problems"
-            ]
-        )
+        playlistId: "playlistId"
     )
 }
 

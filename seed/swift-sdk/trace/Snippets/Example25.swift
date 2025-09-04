@@ -7,10 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.sysprop.setNumWarmInstances(
-        language: .java,
-        numWarmInstances: 1
-    )
+    try await client.submission.getExecutionSession(sessionId: "sessionId")
 }
 
 try await main()

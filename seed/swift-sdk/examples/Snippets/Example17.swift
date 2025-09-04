@@ -8,11 +8,11 @@ private func main() async throws {
     )
 
     try await client.service.getMetadata(request: .init(
-        shallow: True,
+        shallow: False,
         tag: [
-            "tag"
+            "development"
         ],
-        xApiVersion: "X-API-Version"
+        xApiVersion: "0.0.1"
     ))
 }
 

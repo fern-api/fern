@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.v2.problem.getLatestProblem(problemId: "problemId")
+    try await client.sysprop.getNumWarmInstances()
 }
 
 try await main()

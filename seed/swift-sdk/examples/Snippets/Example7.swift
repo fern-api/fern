@@ -7,7 +7,13 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.health.service.check(id: "id-2sdx82h")
+    try await client.file.service.getFile(
+        filename: "filename",
+        request: .init(
+            filename: "filename",
+            xFileApiVersion: "X-File-API-Version"
+        )
+    )
 }
 
 try await main()
