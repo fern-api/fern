@@ -69,7 +69,7 @@ final class HTTPClient: Sendable {
                 throw ClientError.invalidResponse
             }
         }
-        
+
         if responseType == String.self {
             if let string = String(data: data, encoding: .utf8) as? T {
                 return string
@@ -137,8 +137,7 @@ final class HTTPClient: Sendable {
     ) -> URL {
         let endpointURL: String = "\(clientConfig.baseURL)\(path)"
         guard var components: URLComponents = URLComponents(string: endpointURL) else {
-            precondition(
-                false,
+            preconditionFailure(
                 "Invalid URL '\(endpointURL)' - this indicates an unexpected error in the SDK."
             )
         }
@@ -154,8 +153,7 @@ final class HTTPClient: Sendable {
                 })
         }
         guard let url = components.url else {
-            precondition(
-                false,
+            preconditionFailure(
                 "Failed to construct URL from components - this indicates an unexpected error in the SDK."
             )
         }
@@ -207,8 +205,7 @@ final class HTTPClient: Sendable {
                 // TODO(kafkas): Merge requestOptions.additionalBodyParameters into this
                 return try jsonEncoder.encode(encodableBody)
             } catch {
-                precondition(
-                    false,
+                preconditionFailure(
                     "Failed to encode request body: \(error) - this indicates an unexpected error in the SDK."
                 )
             }

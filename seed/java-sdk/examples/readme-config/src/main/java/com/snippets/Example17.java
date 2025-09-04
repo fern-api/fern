@@ -17,13 +17,13 @@ public class Example17 {
         client.service().getMetadata(
             GetMetadataRequest
                 .builder()
-                .xApiVersion("X-API-Version")
+                .xApiVersion("0.0.1")
                 .tag(
                     new ArrayList<Optional<String>>(
-                        Arrays.asList("tag")
+                        Arrays.asList("development")
                     )
                 )
-                .shallow(true)
+                .shallow(false)
                 .build()
         );
     }

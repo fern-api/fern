@@ -6,13 +6,23 @@ import { mockServerPool } from "../../mock-server/MockServerPool";
 import { SeedExamplesClient } from "../../../src/Client";
 
 describe("Service", () => {
-    test("check", async () => {
+    test("check (Example0)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
 
         server.mockEndpoint().get("/check/id-2sdx82h").respondWith().statusCode(200).build();
 
         const response = await client.health.service.check("id-2sdx82h");
+        expect(response).toEqual(undefined);
+    });
+
+    test("check (Example2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
+
+        server.mockEndpoint().get("/check/id-3tey93i").respondWith().statusCode(200).build();
+
+        const response = await client.health.service.check("id-3tey93i");
         expect(response).toEqual(undefined);
     });
 

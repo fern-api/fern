@@ -13,10 +13,10 @@ $client = new SeedClient(
 );
 $client->service->getMetadata(
     new GetMetadataRequest([
-        'shallow' => true,
+        'shallow' => false,
         'tag' => [
-            'tag',
+            'development',
         ],
-        'xApiVersion' => 'X-API-Version',
+        'xApiVersion' => '0.0.1',
     ]),
 );

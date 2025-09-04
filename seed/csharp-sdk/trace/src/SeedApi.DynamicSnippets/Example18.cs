@@ -13,90 +13,15 @@ public class Example18
             }
         );
 
-        await client.Problem.UpdateProblemAsync(
-            "problemId",
-            new CreateProblemRequest{
-                ProblemName = "problemName",
-                ProblemDescription = new ProblemDescription{
-                    Boards = new List<ProblemDescriptionBoard>(){
-                        new ProblemDescriptionBoard(
-
-                        ),
-                        new ProblemDescriptionBoard(
-
-                        ),
-                    }
-                },
-                Files = new Dictionary<Language, ProblemFiles>(){
-                    [Language.Java] = new ProblemFiles{
-                        SolutionFile = new FileInfo{
-                            Filename = "filename",
-                            Contents = "contents"
-                        },
-                        ReadOnlyFiles = new List<FileInfo>(){
-                            new FileInfo{
-                                Filename = "filename",
-                                Contents = "contents"
-                            },
-                            new FileInfo{
-                                Filename = "filename",
-                                Contents = "contents"
-                            },
-                        }
-                    },
-                },
-                InputParams = new List<VariableTypeAndName>(){
-                    new VariableTypeAndName{
-                        VariableType = new VariableType(
-                            new VariableType.IntegerType()
-                        ),
-                        Name = "name"
-                    },
-                    new VariableTypeAndName{
-                        VariableType = new VariableType(
-                            new VariableType.IntegerType()
-                        ),
-                        Name = "name"
-                    },
-                },
-                OutputType = new VariableType(
-                    new VariableType.IntegerType()
-                ),
-                Testcases = new List<TestCaseWithExpectedResult>(){
-                    new TestCaseWithExpectedResult{
-                        TestCase = new TestCase{
-                            Id = "id",
-                            Params = new List<VariableValue>(){
-                                new VariableValue(
-
-                                ),
-                                new VariableValue(
-
-                                ),
-                            }
-                        },
-                        ExpectedResult = new VariableValue(
-
-                        )
-                    },
-                    new TestCaseWithExpectedResult{
-                        TestCase = new TestCase{
-                            Id = "id",
-                            Params = new List<VariableValue>(){
-                                new VariableValue(
-
-                                ),
-                                new VariableValue(
-
-                                ),
-                            }
-                        },
-                        ExpectedResult = new VariableValue(
-
-                        )
-                    },
-                },
-                MethodName = "methodName"
+        await client.Playlist.UpdatePlaylistAsync(
+            1,
+            "playlistId",
+            new UpdatePlaylistRequest{
+                Name = "name",
+                Problems = new List<string>(){
+                    "problems",
+                    "problems",
+                }
             }
         );
     }

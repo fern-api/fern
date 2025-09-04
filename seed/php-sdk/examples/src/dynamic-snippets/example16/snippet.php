@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Service\Requests\GetMetadataRequest;
+use Seed\Types\Types\Movie;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,12 +11,21 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->service->getMetadata(
-    new GetMetadataRequest([
-        'shallow' => false,
-        'tag' => [
-            'development',
+$client->service->createMovie(
+    new Movie([
+        'id' => 'id',
+        'prequel' => 'prequel',
+        'title' => 'title',
+        'from' => 'from',
+        'rating' => 1.1,
+        'type' => 'movie',
+        'tag' => 'tag',
+        'book' => 'book',
+        'metadata' => [
+            'metadata' => [
+                'key' => "value",
+            ],
         ],
-        'xApiVersion' => '0.0.1',
+        'revenue' => 1000000,
     ]),
 );

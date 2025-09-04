@@ -135,11 +135,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
         });
         const convertedSchema = schemaConverter.convert();
         if (convertedSchema != null) {
-            this.addTypeToRootPackage(id);
-            this.addTypesToIr({
-                ...convertedSchema.inlinedTypes,
-                [id]: convertedSchema.convertedSchema
-            });
+            this.addSchemaOutputToIr(id, convertedSchema);
         }
     }
 

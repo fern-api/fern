@@ -1,5 +1,6 @@
 using global::System.Threading.Tasks;
 using SeedExamples;
+using SeedExamples.File;
 
 namespace Usage;
 
@@ -13,8 +14,11 @@ public class Example7
             }
         );
 
-        await client.Health.Service.CheckAsync(
-            "id-2sdx82h"
+        await client.File.Service.GetFileAsync(
+            "filename",
+            new GetFileRequest{
+                XFileApiVersion = "X-File-API-Version"
+            }
         );
     }
 

@@ -17,7 +17,8 @@ module Seed
           NOT_IMPLEMENTED = "NOT_IMPLEMENTED"
           BAD_GATEWAY = "BAD_GATEWAY"
           SERVICE_UNAVAILABLE = "SERVICE_UNAVAILABLE"
-          UNKNOWN = "Unknown"end
+          UNKNOWN = "Unknown"
+        end
       end
     end
   end

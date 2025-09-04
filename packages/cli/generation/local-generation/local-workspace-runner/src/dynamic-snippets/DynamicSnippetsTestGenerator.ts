@@ -11,6 +11,7 @@ import { DynamicSnippetsJavaTestGenerator } from "./java/DynamicSnippetsJavaTest
 import { DynamicSnippetsPhpTestGenerator } from "./php/DynamicSnippetsPhpTestGenerator";
 import { DynamicSnippetsPythonTestGenerator } from "./python/DynamicSnippetsPythonTestGenerator";
 import { DynamicSnippetsRubyTestGenerator } from "./ruby/DynamicSnippetsRubyTestGenerator";
+import { DynamicSnippetsSwiftTestGenerator } from "./swift/DynamicSnippetsSwiftTestGenerator";
 import { DynamicSnippetsTypeScriptTestGenerator } from "./typescript/DynamicSnippetsTypeScriptTestGenerator";
 
 interface DynamicSnippetsGenerator {
@@ -47,7 +48,7 @@ export class DynamicSnippetsTestGenerator {
         python: { generator: DynamicSnippetsPythonTestGenerator, unstable: true },
         ruby: { generator: DynamicSnippetsRubyTestGenerator },
         rust: undefined,
-        swift: undefined
+        swift: { generator: DynamicSnippetsSwiftTestGenerator }
     };
 
     constructor(

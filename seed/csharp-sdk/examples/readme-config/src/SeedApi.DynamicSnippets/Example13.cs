@@ -14,7 +14,7 @@ public class Example13
         );
 
         await client.Service.GetMovieAsync(
-            "movieId"
+            "movie-c06a4ad7"
         );
     }
 

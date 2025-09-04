@@ -15,11 +15,11 @@ public class Example17
 
         await client.Service.GetMetadataAsync(
             new GetMetadataRequest{
-                Shallow = true,
+                Shallow = false,
                 Tag = new List<string>(){
-                    "tag",
+                    "development",
                 },
-                XApiVersion = "X-API-Version"
+                XApiVersion = "0.0.1"
             }
         );
     }

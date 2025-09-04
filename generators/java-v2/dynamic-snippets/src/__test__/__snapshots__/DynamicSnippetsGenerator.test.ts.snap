@@ -62,10 +62,14 @@ exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 "package com.example.usage;
 
 import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.commons.types.EventInfo;
+import com.acme.acme.commons.types.Metadata;
 import com.acme.acme.types.Actor;
 import com.acme.acme.types.BigEntity;
 import com.acme.acme.types.CastMember;
 import com.acme.acme.types.ExtendedMovie;
+import com.acme.acme.types.Migration;
+import com.acme.acme.types.MigrationStatus;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -112,6 +116,28 @@ client.service().createBigEntity(
                     }}
                 )
                 .revenue(1000000L)
+                .build()
+        )
+        .eventInfo(
+            EventInfo.metadata(
+                Metadata
+                    .builder()
+                    .id("event-12345")
+                    .data(
+                        new HashMap<String, String>() {{
+                            put("key1", "val1");
+                            put("key2", "val2");
+                        }}
+                    )
+                    .jsonString("abc")
+                    .build()
+            )
+        )
+        .migration(
+            Migration
+                .builder()
+                .name("Migration 31 Aug")
+                .status(MigrationStatus.RUNNING)
                 .build()
         )
         .build()

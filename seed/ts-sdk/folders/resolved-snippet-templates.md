@@ -56,3 +56,16 @@ await client.folder.service.unknownRequest(
 ```
 
 
+```typescript
+import { SeedApiClient } from "@fern/folders";
+
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });        
+await client.folder.service.unknownRequest(
+	{
+		{"key":"value"}
+	}
+)
+
+```
+
+

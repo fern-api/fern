@@ -889,7 +889,11 @@ export class DocsDefinitionResolver {
                 generationLanguage: undefined,
                 keywords: undefined,
                 smartCasing: false,
-                exampleGeneration: { disabled: false, skipAutogenerationIfManualExamplesExist: true },
+                exampleGeneration: {
+                    disabled: false,
+                    skipAutogenerationIfManualExamplesExist: true,
+                    skipErrorAutogenerationIfManualErrorExamplesExist: true
+                },
                 readme: undefined,
                 version: undefined,
                 packageName: undefined,

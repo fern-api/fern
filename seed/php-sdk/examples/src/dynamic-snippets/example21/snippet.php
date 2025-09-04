@@ -13,6 +13,6 @@ $client = new SeedClient(
 );
 $client->service->refreshToken(
     new RefreshTokenRequest([
-        'ttl' => 1,
+        'ttl' => 420,
     ]),
 );

@@ -1,10 +1,6 @@
 package com.snippets;
 
 import com.seed.trace.SeedTraceClient;
-import com.seed.trace.resources.playlist.types.UpdatePlaylistRequest;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Optional;
 
 public class Example15 {
     public static void main(String[] args) {
@@ -14,20 +10,6 @@ public class Example15 {
             .url("https://api.fern.com")
             .build();
 
-        client.playlist().updatePlaylist(
-            1,
-            "playlistId",
-            Optional.of(
-                UpdatePlaylistRequest
-                    .builder()
-                    .name("name")
-                    .problems(
-                        new ArrayList<String>(
-                            Arrays.asList("problems", "problems")
-                        )
-                    )
-                    .build()
-            )
-        );
+        client.playlist().getPlaylist(1, "playlistId");
     }
 }

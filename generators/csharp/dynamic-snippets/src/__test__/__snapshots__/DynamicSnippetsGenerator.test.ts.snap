@@ -44,6 +44,7 @@ await client.Service.GetMetadataAsync(
 exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 "using Acme;
 using Acme.Types;
+using Acme.Commons.Types;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
@@ -77,6 +78,20 @@ await client.Service.CreateBigEntityAsync(
                 },
             },
             Revenue = 1000000l
+        },
+        EventInfo = new EventInfo(
+            new Metadata{
+                ID = "event-12345",
+                Data = new Dictionary<string, string>(){
+                    ["key1"] = "val1",
+                    ["key2"] = "val2",
+                },
+                JSONString = "abc"
+            }
+        ),
+        Migration = new Migration{
+            Name = "Migration 31 Aug",
+            Status = MigrationStatus.Running
         }
     }
 );

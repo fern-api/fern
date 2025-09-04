@@ -10,6 +10,7 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->problem->deleteProblem(
-    'problemId',
+$client->playlist->deletePlaylist(
+    1,
+    'playlist_id',
 );

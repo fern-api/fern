@@ -17,6 +17,6 @@ func do() {
     )
     client.Service.GetMovie(
         context.TODO(),
-        "movieId",
+        "movie-c06a4ad7",
     )
 }

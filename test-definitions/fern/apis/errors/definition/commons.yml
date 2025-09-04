@@ -1,0 +1,23 @@
+errors:
+  NotFoundError:
+    status-code: 404
+    type: ErrorBody
+    examples:
+      - name: First
+        value:
+          message: "Not found"
+          code: 1234
+  BadRequestError:
+    status-code: 400
+    type: ErrorBody
+  InternalServerError:
+    status-code: 500
+    type: ErrorBody
+
+types:
+  ErrorBody:
+    properties:
+      message:
+        type: string
+      code:
+        type: integer

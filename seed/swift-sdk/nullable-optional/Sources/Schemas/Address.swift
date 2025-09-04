@@ -7,6 +7,8 @@ public struct Address: Codable, Hashable, Sendable {
     public let state: String?
     public let zipCode: String
     public let country: JSONValue?
+    public let buildingId: NullableUserId
+    public let tenantId: OptionalUserId
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -16,6 +18,8 @@ public struct Address: Codable, Hashable, Sendable {
         state: String? = nil,
         zipCode: String,
         country: JSONValue? = nil,
+        buildingId: NullableUserId,
+        tenantId: OptionalUserId,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.street = street
@@ -23,6 +27,8 @@ public struct Address: Codable, Hashable, Sendable {
         self.state = state
         self.zipCode = zipCode
         self.country = country
+        self.buildingId = buildingId
+        self.tenantId = tenantId
         self.additionalProperties = additionalProperties
     }
 
@@ -33,6 +39,8 @@ public struct Address: Codable, Hashable, Sendable {
         self.state = try container.decodeIfPresent(String.self, forKey: .state)
         self.zipCode = try container.decode(String.self, forKey: .zipCode)
         self.country = try container.decodeIfPresent(JSONValue.self, forKey: .country)
+        self.buildingId = try container.decode(NullableUserId.self, forKey: .buildingId)
+        self.tenantId = try container.decode(OptionalUserId.self, forKey: .tenantId)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -44,6 +52,8 @@ public struct Address: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.state, forKey: .state)
         try container.encode(self.zipCode, forKey: .zipCode)
         try container.encodeIfPresent(self.country, forKey: .country)
+        try container.encode(self.buildingId, forKey: .buildingId)
+        try container.encode(self.tenantId, forKey: .tenantId)
     }
 
     /// Keys for encoding/decoding struct properties.
@@ -53,5 +63,7 @@ public struct Address: Codable, Hashable, Sendable {
         case state
         case zipCode
         case country
+        case buildingId
+        case tenantId
     }
 }

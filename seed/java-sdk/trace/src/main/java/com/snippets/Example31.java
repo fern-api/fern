@@ -10,6 +10,6 @@ public class Example31 {
             .url("https://api.fern.com")
             .build();
 
-        client.v2().problem().getLightweightProblems();
+        client.v2().problem().getProblems();
     }
 }

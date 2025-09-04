@@ -26148,6 +26148,172 @@
                                 },
                                 "docs": null
                             }
+                        },
+                        {
+                            "example": {
+                                "id": "9a92de62",
+                                "url": "/file/filename",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [
+                                    {
+                                        "name": {
+                                            "originalName": "filename",
+                                            "camelCase": {
+                                                "unsafeName": "filename",
+                                                "safeName": "filename"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "filename",
+                                                "safeName": "filename"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "FILENAME",
+                                                "safeName": "FILENAME"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Filename",
+                                                "safeName": "Filename"
+                                            }
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "filename"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "filename"
+                                        }
+                                    }
+                                ],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "X-File-API-Version",
+                                                "camelCase": {
+                                                    "unsafeName": "xFileAPIVersion",
+                                                    "safeName": "xFileAPIVersion"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "x_file_api_version",
+                                                    "safeName": "x_file_api_version"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "X_FILE_API_VERSION",
+                                                    "safeName": "X_FILE_API_VERSION"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "XFileAPIVersion",
+                                                    "safeName": "XFileAPIVersion"
+                                                }
+                                            },
+                                            "wireValue": "X-File-API-Version"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "X-File-API-Version"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "X-File-API-Version"
+                                        }
+                                    }
+                                ],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "error",
+                                    "body": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    },
+                                    "error": {
+                                        "name": {
+                                            "originalName": "NotFoundError",
+                                            "camelCase": {
+                                                "unsafeName": "notFoundError",
+                                                "safeName": "notFoundError"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "not_found_error",
+                                                "safeName": "not_found_error"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "NOT_FOUND_ERROR",
+                                                "safeName": "NOT_FOUND_ERROR"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "NotFoundError",
+                                                "safeName": "NotFoundError"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "types",
+                                                    "camelCase": {
+                                                        "unsafeName": "types",
+                                                        "safeName": "types"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "types",
+                                                        "safeName": "types"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "TYPES",
+                                                        "safeName": "TYPES"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Types",
+                                                        "safeName": "Types"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [],
+                                            "file": {
+                                                "originalName": "types",
+                                                "camelCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TYPES",
+                                                    "safeName": "TYPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Types",
+                                                    "safeName": "Types"
+                                                }
+                                            }
+                                        },
+                                        "errorId": "error_types:NotFoundError"
+                                    }
+                                },
+                                "docs": null
+                            }
                         }
                     ],
                     "pagination": null,

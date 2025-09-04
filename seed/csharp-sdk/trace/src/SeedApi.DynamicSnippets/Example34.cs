@@ -13,10 +13,7 @@ public class Example34
             }
         );
 
-        await client.V2.Problem.GetProblemVersionAsync(
-            "problemId",
-            1
-        );
+        await client.V2.Problem.GetLightweightProblemsAsync();
     }
 
 }

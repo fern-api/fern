@@ -14,7 +14,7 @@ public class Example8
         );
 
         await client.Health.Service.CheckAsync(
-            "id-3tey93i"
+            "id-2sdx82h"
         );
     }
 

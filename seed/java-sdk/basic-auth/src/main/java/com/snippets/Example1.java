@@ -1,7 +1,6 @@
 package com.snippets;
 
 import com.seed.basicAuth.SeedBasicAuthClient;
-import java.util.HashMap;
 
 public class Example1 {
     public static void main(String[] args) {
@@ -11,8 +10,6 @@ public class Example1 {
             .url("https://api.fern.com")
             .build();
 
-        client.basicAuth().postWithBasicAuth(new 
-        HashMap<String, Object>() {{put("key", "value");
-        }});
+        client.basicAuth().getWithBasicAuth();
     }
 }

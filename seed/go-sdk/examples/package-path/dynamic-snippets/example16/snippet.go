@@ -16,18 +16,26 @@ func do() {
             "<token>",
         ),
     )
-    client.Service.GetMetadata(
+    client.Service.CreateMovie(
         context.TODO(),
-        &pleaseinhere.GetMetadataRequest{
-            Shallow: pleaseinhere.Bool(
-                false,
+        &pleaseinhere.Movie{
+            Id: "id",
+            Prequel: pleaseinhere.String(
+                "prequel",
             ),
-            Tag: []*string{
-                pleaseinhere.String(
-                    "development",
-                ),
+            Title: "title",
+            From: "from",
+            Rating: 1.1,
+            Tag: "tag",
+            Book: pleaseinhere.String(
+                "book",
+            ),
+            Metadata: map[string]any{
+                "metadata": map[string]any{
+                    "key": "value",
+                },
             },
-            XApiVersion: "0.0.1",
+            Revenue: 1000000,
         },
     )
 }

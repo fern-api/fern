@@ -10,6 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->submission->getExecutionSession(
-    'sessionId',
+$client->problem->deleteProblem(
+    'problemId',
 );

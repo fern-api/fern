@@ -20,14 +20,14 @@ func do() {
         context.TODO(),
         &pleaseinhere.GetMetadataRequest{
             Shallow: pleaseinhere.Bool(
-                true,
+                false,
             ),
             Tag: []*string{
                 pleaseinhere.String(
-                    "tag",
+                    "development",
                 ),
             },
-            XApiVersion: "X-API-Version",
+            XApiVersion: "0.0.1",
         },
     )
 }

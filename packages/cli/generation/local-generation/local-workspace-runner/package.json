@@ -53,6 +53,7 @@
     "@fern-api/python-dynamic-snippets": "workspace:*",
     "@fern-api/ruby-dynamic-snippets": "workspace:*",
     "@fern-api/sdk": "0.12.3",
+    "@fern-api/swift-dynamic-snippets": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/typescript-dynamic-snippets": "workspace:*",
     "@fern-api/venus-api-sdk": "0.17.3-3-gf696595",

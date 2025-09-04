@@ -43,7 +43,10 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 
 // ToHeader maps the configured request options into a http.Header used
 // for the request(s).
-func (r *RequestOptions) ToHeader() http.Header { return r.cloneHeader() }
+func (r *RequestOptions) ToHeader() http.Header {
+	header := r.cloneHeader()
+	return header
+}
 
 func (r *RequestOptions) cloneHeader() http.Header {
 	headers := r.HTTPHeader.Clone()

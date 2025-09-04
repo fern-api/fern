@@ -1,7 +1,7 @@
 export * from "@fern-api/typescript-base";
 export { AsIsManager } from "./asIs/AsIsManager";
 export { generateInlineAliasModule, generateInlinePropertiesModule } from "./codegen-utils/generateInlineModule";
-export { getExampleEndpointCalls } from "./codegen-utils/getExampleEndpointCalls";
+export { getExampleEndpointCalls, getExampleEndpointCallsForTests } from "./codegen-utils/getExampleEndpointCalls";
 export {
     getParameterNameForPositionalPathParameter,
     getParameterNameForPropertyPathParameter,

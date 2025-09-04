@@ -13,7 +13,10 @@ public class Example28
             }
         );
 
-        await client.V2.Problem.GetProblemsAsync();
+        await client.Sysprop.SetNumWarmInstancesAsync(
+            Language.Java,
+            1
+        );
     }
 
 }

@@ -2522,6 +2522,64 @@
     "Place": {
       "name": "Place",
       "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Type of the object",
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "Name of the place",
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Address"
+              }
+            }
+          },
+          {
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "PlaceDetailsItems"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "PlaceWrapper": {
+      "name": "Place",
+      "shape": {
         "type": "alias",
         "value": {
           "type": "nullable",
@@ -2650,6 +2708,117 @@
     "OceanBookingDetail": {
       "name": "OceanBookingDetail",
       "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Type of the object",
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "is_lcl",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "container_counts",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ContainerCounts"
+              }
+            }
+          },
+          {
+            "key": "incoterm",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "OceanBookingDetailIncoterm"
+              }
+            }
+          },
+          {
+            "key": "wants_pickup_service",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "wants_delivery_service",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "origin_port",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Place"
+              }
+            }
+          },
+          {
+            "key": "destination_port",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Place"
+              }
+            }
+          },
+          {
+            "key": "product_descriptions",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "BookingHsCode"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "OceanBookingDetailWrapper": {
+      "name": "OceanBookingDetail",
+      "shape": {
         "type": "alias",
         "value": {
           "type": "nullable",
@@ -2707,6 +2876,95 @@
     "AirBookingDetail": {
       "name": "AirBookingDetail",
       "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Type of the object",
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "incoterm",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "AirBookingDetailIncoterm"
+              }
+            }
+          },
+          {
+            "key": "wants_pickup_service",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "wants_delivery_service",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "origin_port",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Place"
+              }
+            }
+          },
+          {
+            "key": "destination_port",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Place"
+              }
+            }
+          },
+          {
+            "key": "product_descriptions",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "BookingHsCode"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "AirBookingDetailWrapper": {
+      "name": "AirBookingDetail",
+      "shape": {
         "type": "alias",
         "value": {
           "type": "nullable",
@@ -2732,6 +2990,62 @@
       }
     },
     "TruckingBookingDetail": {
+      "name": "TruckingBookingDetail",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Type of the object",
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "is_ftl",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "payment_terms",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "TruckingBookingDetailPaymentTerms"
+              }
+            }
+          },
+          {
+            "key": "description_of_products",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "TruckingBookingDetailWrapper": {
       "name": "TruckingBookingDetail",
       "shape": {
         "type": "alias",
@@ -6169,6 +6483,100 @@
     "OceanShipmentDetail": {
       "name": "OceanShipmentDetail",
       "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Type of the object",
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "is_lcl",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "house_bill_number",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "master_bill_number",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "carrier_booking_number",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "the date-time at which the carrier confirms space release related to the shipping order",
+            "key": "confirmed_space_released_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "containers",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ContainerCollectionRef"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "OceanShipmentDetailWrapper": {
+      "name": "OceanShipmentDetail",
+      "shape": {
         "type": "alias",
         "value": {
           "type": "nullable",
@@ -6180,6 +6588,72 @@
       }
     },
     "AirShipmentDetail": {
+      "name": "AirShipmentDetail",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Type of the object",
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "house_airway_bill",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "master_airway_bill",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "chargeable_weight",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Weight"
+              }
+            }
+          },
+          {
+            "key": "chargeable_volume",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Volume"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "AirShipmentDetailWrapper": {
       "name": "AirShipmentDetail",
       "shape": {
         "type": "alias",
@@ -7687,6 +8161,65 @@
       "description": "Name and address of a specific terminal within a port or airport.  Possibly null",
       "name": "Terminal",
       "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Type of the object",
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "Name of the terminal",
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "Four digit alpha-numeric identifier assigned by U.S. Customs and Border Protection to bonded facilities;  available prior to shipment arrival at location tagged 'customs_entry'",
+            "key": "firms_code",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Address"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "TerminalWrapper": {
+      "description": "Name and address of a specific terminal within a port or airport.  Possibly null",
+      "name": "Terminal",
+      "shape": {
         "type": "alias",
         "value": {
           "type": "nullable",
@@ -7755,6 +8288,63 @@
       }
     },
     "AirShipmentLeg": {
+      "name": "AirShipmentLeg",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "iata_code",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "icao_code",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "flight_number",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "AirShipmentLegWrapper": {
       "name": "AirShipmentLeg",
       "shape": {
         "type": "alias",
@@ -7918,6 +8508,92 @@
     "TruckingShipmentLeg": {
       "name": "TruckingShipmentLeg",
       "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "tracking_number",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "nullable",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "service_type",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "TruckingShipmentLegServiceType"
+              }
+            }
+          },
+          {
+            "key": "pieces",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "nullable",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "scac_code",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "nullable",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "container_legs",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ContainerLegCollectionRef"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "TruckingShipmentLegWrapper": {
+      "name": "TruckingShipmentLeg",
+      "shape": {
         "type": "alias",
         "value": {
           "type": "nullable",
@@ -7929,6 +8605,37 @@
       }
     },
     "RailShipmentLeg": {
+      "name": "RailShipmentLeg",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "container_legs",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ContainerLegCollectionRef"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "RailShipmentLegWrapper": {
       "name": "RailShipmentLeg",
       "shape": {
         "type": "alias",
@@ -47771,11 +48478,11 @@
       "Airport",
       "Placeport",
       "Manufacturer",
-      "Place",
+      "PlaceWrapper",
       "BookingHsCode",
-      "OceanBookingDetail",
-      "AirBookingDetail",
-      "TruckingBookingDetail",
+      "OceanBookingDetailWrapper",
+      "AirBookingDetailWrapper",
+      "TruckingBookingDetailWrapper",
       "BookingLineItemCollectionRef",
       "Booking",
       "CreateBookingHsCode",
@@ -47809,8 +48516,8 @@
       "FreightType",
       "ShipmentStatus",
       "ContainerCollectionRef",
-      "OceanShipmentDetail",
-      "AirShipmentDetail",
+      "OceanShipmentDetailWrapper",
+      "AirShipmentDetailWrapper",
       "ShipmentDangerousGoods",
       "ProductProperty",
       "ProductClassification",
@@ -47822,13 +48529,13 @@
       "DocumentCollectionRef",
       "Shipment",
       "AdditionalDates",
-      "Terminal",
+      "TerminalWrapper",
       "ShipmentNode",
-      "AirShipmentLeg",
+      "AirShipmentLegWrapper",
       "ContainerLegCollectionRef",
       "OceanShipmentLeg",
-      "TruckingShipmentLeg",
-      "RailShipmentLeg",
+      "TruckingShipmentLegWrapper",
+      "RailShipmentLegWrapper",
       "ShipmentLeg",
       "ContainerRef",
       "LegRef",

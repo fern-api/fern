@@ -11374,6 +11374,70 @@
                   "type": "ok"
                 }
               }
+            },
+            {
+              "example": {
+                "id": "3f32ff7c",
+                "url": "/v0/evi/tts",
+                "endpointHeaders": [],
+                "endpointPathParameters": [],
+                "queryParameters": [],
+                "servicePathParameters": [],
+                "serviceHeaders": [],
+                "rootPathParameters": [],
+                "request": {
+                  "jsonExample": {
+                    "key": "value"
+                  },
+                  "shape": {
+                    "unknown": {
+                      "key": "value"
+                    },
+                    "type": "unknown"
+                  },
+                  "type": "reference"
+                },
+                "response": {
+                  "body": {
+                    "jsonExample": {
+                      "key": "value"
+                    },
+                    "shape": {
+                      "unknown": {
+                        "key": "value"
+                      },
+                      "type": "unknown"
+                    }
+                  },
+                  "error": {
+                    "name": {
+                      "originalName": "UnprocessableEntityError",
+                      "camelCase": {
+                        "unsafeName": "unprocessableEntityError",
+                        "safeName": "unprocessableEntityError"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "unprocessable_entity_error",
+                        "safeName": "unprocessable_entity_error"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
+                        "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "UnprocessableEntityError",
+                        "safeName": "UnprocessableEntityError"
+                      }
+                    },
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "errorId": "UnprocessableEntityError"
+                  },
+                  "type": "error"
+                }
+              }
             }
           ],
           "idempotent": false,
@@ -11711,6 +11775,110 @@
                   "type": "ok"
                 }
               }
+            },
+            {
+              "example": {
+                "id": "c352af23",
+                "url": "/v0/evi/twilio",
+                "endpointHeaders": [],
+                "endpointPathParameters": [],
+                "queryParameters": [
+                  {
+                    "name": {
+                      "name": {
+                        "originalName": "config_id",
+                        "camelCase": {
+                          "unsafeName": "configId",
+                          "safeName": "configId"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "config_id",
+                          "safeName": "config_id"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "CONFIG_ID",
+                          "safeName": "CONFIG_ID"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "ConfigId",
+                          "safeName": "ConfigId"
+                        }
+                      },
+                      "wireValue": "config_id"
+                    },
+                    "shape": {
+                      "type": "single"
+                    },
+                    "value": {
+                      "jsonExample": "config_id",
+                      "shape": {
+                        "primitive": {
+                          "string": {
+                            "original": "config_id"
+                          },
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    }
+                  }
+                ],
+                "servicePathParameters": [],
+                "serviceHeaders": [],
+                "rootPathParameters": [],
+                "request": {
+                  "jsonExample": {
+                    "key": "value"
+                  },
+                  "shape": {
+                    "unknown": {
+                      "key": "value"
+                    },
+                    "type": "unknown"
+                  },
+                  "type": "reference"
+                },
+                "response": {
+                  "body": {
+                    "jsonExample": {
+                      "key": "value"
+                    },
+                    "shape": {
+                      "unknown": {
+                        "key": "value"
+                      },
+                      "type": "unknown"
+                    }
+                  },
+                  "error": {
+                    "name": {
+                      "originalName": "UnprocessableEntityError",
+                      "camelCase": {
+                        "unsafeName": "unprocessableEntityError",
+                        "safeName": "unprocessableEntityError"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "unprocessable_entity_error",
+                        "safeName": "unprocessable_entity_error"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
+                        "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "UnprocessableEntityError",
+                        "safeName": "UnprocessableEntityError"
+                      }
+                    },
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "errorId": "UnprocessableEntityError"
+                  },
+                  "type": "error"
+                }
+              }
             }
           ],
           "idempotent": false,
@@ -11970,6 +12138,70 @@
                   "type": "ok"
                 }
               }
+            },
+            {
+              "example": {
+                "id": "3f32ff7c",
+                "url": "/v0/evi/voice",
+                "endpointHeaders": [],
+                "endpointPathParameters": [],
+                "queryParameters": [],
+                "servicePathParameters": [],
+                "serviceHeaders": [],
+                "rootPathParameters": [],
+                "request": {
+                  "jsonExample": {
+                    "key": "value"
+                  },
+                  "shape": {
+                    "unknown": {
+                      "key": "value"
+                    },
+                    "type": "unknown"
+                  },
+                  "type": "reference"
+                },
+                "response": {
+                  "body": {
+                    "jsonExample": {
+                      "key": "value"
+                    },
+                    "shape": {
+                      "unknown": {
+                        "key": "value"
+                      },
+                      "type": "unknown"
+                    }
+                  },
+                  "error": {
+                    "name": {
+                      "originalName": "UnprocessableEntityError",
+                      "camelCase": {
+                        "unsafeName": "unprocessableEntityError",
+                        "safeName": "unprocessableEntityError"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "unprocessable_entity_error",
+                        "safeName": "unprocessable_entity_error"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
+                        "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "UnprocessableEntityError",
+                        "safeName": "UnprocessableEntityError"
+                      }
+                    },
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "errorId": "UnprocessableEntityError"
+                  },
+                  "type": "error"
+                }
+              }
             }
           ],
           "idempotent": false,
@@ -12162,6 +12394,58 @@
                     "type": "body"
                   },
                   "type": "ok"
+                }
+              }
+            },
+            {
+              "example": {
+                "id": "d43f2951",
+                "url": "/v0/evi/voice-names",
+                "endpointHeaders": [],
+                "endpointPathParameters": [],
+                "queryParameters": [],
+                "servicePathParameters": [],
+                "serviceHeaders": [],
+                "rootPathParameters": [],
+                "response": {
+                  "body": {
+                    "jsonExample": {
+                      "key": "value"
+                    },
+                    "shape": {
+                      "unknown": {
+                        "key": "value"
+                      },
+                      "type": "unknown"
+                    }
+                  },
+                  "error": {
+                    "name": {
+                      "originalName": "UnprocessableEntityError",
+                      "camelCase": {
+                        "unsafeName": "unprocessableEntityError",
+                        "safeName": "unprocessableEntityError"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "unprocessable_entity_error",
+                        "safeName": "unprocessable_entity_error"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
+                        "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "UnprocessableEntityError",
+                        "safeName": "UnprocessableEntityError"
+                      }
+                    },
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "errorId": "UnprocessableEntityError"
+                  },
+                  "type": "error"
                 }
               }
             }

@@ -196,7 +196,46 @@
             }
         },
         {
+            "example_identifier": "a02dc709",
+            "id": {
+                "method": "GET",
+                "path": "/v2/playlist/{serviceParam}/{playlistId}",
+                "identifier_override": "endpoint_playlist.getPlaylist"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.playlist().getPlaylist(1, \"playlistId\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.playlist().getPlaylist(1, \"playlistId\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "560124c6",
+            "id": {
+                "method": "GET",
+                "path": "/v2/playlist/{serviceParam}/{playlistId}",
+                "identifier_override": "endpoint_playlist.getPlaylist"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.playlist().getPlaylist(1, \"playlistId\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.playlist().getPlaylist(1, \"playlistId\");\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "56f82548",
+            "id": {
+                "method": "PUT",
+                "path": "/v2/playlist/{serviceParam}/{playlistId}",
+                "identifier_override": "endpoint_playlist.updatePlaylist"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\nimport com.seed.trace.resources.playlist.types.UpdatePlaylistRequest;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.playlist().updatePlaylist(\n            1,\n            \"playlistId\",\n            Optional.of(\n                UpdatePlaylistRequest\n                    .builder()\n                    .name(\"name\")\n                    .problems(\n                        new ArrayList<String>(\n                            Arrays.asList(\"problems\", \"problems\")\n                        )\n                    )\n                    .build()\n            )\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\nimport com.seed.trace.resources.playlist.types.UpdatePlaylistRequest;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.playlist().updatePlaylist(\n            1,\n            \"playlistId\",\n            Optional.of(\n                UpdatePlaylistRequest\n                    .builder()\n                    .name(\"name\")\n                    .problems(\n                        new ArrayList<String>(\n                            Arrays.asList(\"problems\", \"problems\")\n                        )\n                    )\n                    .build()\n            )\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "5b59c751",
             "id": {
                 "method": "PUT",
                 "path": "/v2/playlist/{serviceParam}/{playlistId}",

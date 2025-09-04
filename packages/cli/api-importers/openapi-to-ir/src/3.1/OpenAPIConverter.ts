@@ -170,11 +170,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             });
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
-                this.addTypeToPackage(id);
-                this.addTypesToIr({
-                    ...convertedSchema.inlinedTypes,
-                    [id]: convertedSchema.convertedSchema
-                });
+                this.addSchemaOutputToIr(id, convertedSchema);
             }
         }
     }

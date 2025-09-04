@@ -2076,6 +2076,98 @@
               "description": null,
               "body": "{\n    \"playlist_id\": \"playlist_id\",\n    \"owner-id\": \"owner-id\",\n    \"name\": \"name\",\n    \"problems\": [\n        \"problems\",\n        \"problems\"\n    ]\n}",
               "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Playlist Id Not Found Error",
+              "status": "Playlist Id Not Found Error",
+              "code": 404,
+              "originalRequest": {
+                "description": "Returns a playlist",
+                "url": {
+                  "raw": "{{baseUrl}}/v2/playlist/:serviceParam/:playlistId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "playlist",
+                    ":serviceParam",
+                    ":playlistId"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "serviceParam",
+                      "description": null,
+                      "value": "1"
+                    },
+                    {
+                      "key": "playlistId",
+                      "description": null,
+                      "value": "playlistId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"type\": \"playlistId\",\n    \"value\": \"string\"\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Unauthorized Error",
+              "status": "Unauthorized Error",
+              "code": 401,
+              "originalRequest": {
+                "description": "Returns a playlist",
+                "url": {
+                  "raw": "{{baseUrl}}/v2/playlist/:serviceParam/:playlistId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "playlist",
+                    ":serviceParam",
+                    ":playlistId"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "serviceParam",
+                      "description": null,
+                      "value": "1"
+                    },
+                    {
+                      "key": "playlistId",
+                      "description": null,
+                      "value": "playlistId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
             }
           ]
         },
@@ -2181,6 +2273,60 @@
               },
               "description": null,
               "body": "{\n    \"playlist_id\": \"playlist_id\",\n    \"owner-id\": \"owner-id\",\n    \"name\": \"name\",\n    \"problems\": [\n        \"problems\",\n        \"problems\"\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Playlist Id Not Found Error",
+              "status": "Playlist Id Not Found Error",
+              "code": 404,
+              "originalRequest": {
+                "description": "Updates a playlist",
+                "url": {
+                  "raw": "{{baseUrl}}/v2/playlist/:serviceParam/:playlistId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "playlist",
+                    ":serviceParam",
+                    ":playlistId"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "serviceParam",
+                      "description": null,
+                      "value": "1"
+                    },
+                    {
+                      "key": "playlistId",
+                      "description": null,
+                      "value": "playlistId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"name\",\n    \"problems\": [\n        \"problems\",\n        \"problems\"\n    ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"type\": \"playlistId\",\n    \"value\": \"string\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]

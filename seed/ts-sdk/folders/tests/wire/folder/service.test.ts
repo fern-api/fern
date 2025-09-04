@@ -4,6 +4,7 @@
 
 import { mockServerPool } from "../../mock-server/MockServerPool";
 import { SeedApiClient } from "../../../src/Client";
+import * as SeedApi from "../../../src/api/index";
 
 describe("Service", () => {
     test("endpoint", async () => {
@@ -16,7 +17,7 @@ describe("Service", () => {
         expect(response).toEqual(undefined);
     });
 
-    test("unknownRequest", async () => {
+    test("unknownRequest (f7429229)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
@@ -27,5 +28,26 @@ describe("Service", () => {
             key: "value",
         });
         expect(response).toEqual(undefined);
+    });
+
+    test("unknownRequest (c2fbef78)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ environment: server.baseUrl });
+        const rawRequestBody = { key: "value" };
+        const rawResponseBody = "string";
+        server
+            .mockEndpoint()
+            .post("/service")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.folder.service.unknownRequest({
+                key: "value",
+            });
+        }).rejects.toThrow(new SeedApi.folder.NotFoundError("string"));
     });
 });

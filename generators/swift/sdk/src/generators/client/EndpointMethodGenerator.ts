@@ -180,7 +180,7 @@ export class EndpointMethodGenerator {
             // TODO(kafkas): Handle multi-url environments
             swift.functionArgument({
                 label: "path",
-                value: swift.Expression.rawStringValue(formatEndpointPathForSwift(endpoint))
+                value: swift.Expression.stringLiteral(formatEndpointPathForSwift(endpoint))
             })
         ];
 
@@ -199,7 +199,7 @@ export class EndpointMethodGenerator {
                     label: "headers",
                     value: swift.Expression.dictionaryLiteral({
                         entries: endpoint.headers.map((header) => [
-                            swift.Expression.rawStringValue(header.name.name.originalName),
+                            swift.Expression.stringLiteral(header.name.name.originalName),
                             swift.Expression.reference(header.name.name.camelCase.unsafeName)
                         ]),
                         multiline: true
@@ -214,7 +214,7 @@ export class EndpointMethodGenerator {
                     label: "queryParams",
                     value: swift.Expression.dictionaryLiteral({
                         entries: endpoint.queryParameters.map((queryParam) => {
-                            const key = swift.Expression.rawStringValue(queryParam.name.name.originalName);
+                            const key = swift.Expression.stringLiteral(queryParam.name.name.originalName);
                             const swiftType = this.sdkGeneratorContext.getSwiftTypeForTypeReference(
                                 queryParam.valueType
                             );

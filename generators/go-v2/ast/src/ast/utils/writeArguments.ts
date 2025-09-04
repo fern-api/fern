@@ -11,16 +11,23 @@ export function writeArguments({
     arguments_: UnnamedArgument[];
     multiline?: boolean;
 }): void {
-    const filteredArguments = filterNopArguments(arguments_);
-    if (filteredArguments.length === 0) {
+    const modifiedArguments = arguments_.map((argument) => {
+        // A nop argument (optional type reference) cannot be ommitted (like in a struct literal type instantation with omitempty)
+        // but must be replaced with nil
+        if (argument instanceof TypeInstantiation && TypeInstantiation.isNop(argument)) {
+            return TypeInstantiation.nil();
+        }
+        return argument;
+    });
+    if (modifiedArguments.length === 0) {
         writer.write("()");
         return;
     }
     if (multiline) {
-        writeMultiline({ writer, arguments_: filteredArguments });
+        writeMultiline({ writer, arguments_: modifiedArguments });
         return;
     }
-    writeCompact({ writer, arguments_: filteredArguments });
+    writeCompact({ writer, arguments_: modifiedArguments });
 }
 
 function writeMultiline({ writer, arguments_ }: { writer: Writer; arguments_: UnnamedArgument[] }): void {
@@ -43,10 +50,4 @@ function writeCompact({ writer, arguments_ }: { writer: Writer; arguments_: Unna
         argument.write(writer);
     });
     writer.write(")");
-}
-
-function filterNopArguments(arguments_: UnnamedArgument[]): UnnamedArgument[] {
-    return arguments_.filter(
-        (argument) => !(argument instanceof TypeInstantiation && TypeInstantiation.isNop(argument))
-    );
 }

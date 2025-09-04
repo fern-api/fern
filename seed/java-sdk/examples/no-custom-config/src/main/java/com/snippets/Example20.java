@@ -1,7 +1,6 @@
 package com.snippets;
 
 import com.seed.examples.SeedExamplesClient;
-import com.seed.examples.resources.types.types.RefreshTokenRequest;
 import java.util.Optional;
 
 public class Example20 {
@@ -12,13 +11,6 @@ public class Example20 {
             .url("https://api.fern.com")
             .build();
 
-        client.service().refreshToken(
-            Optional.of(
-                RefreshTokenRequest
-                    .builder()
-                    .ttl(420)
-                    .build()
-            )
-        );
+        client.service().refreshToken(Optional.of());
     }
 }

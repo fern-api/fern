@@ -1,4 +1,4 @@
 {
-  "ignores": [],
+  "ignores": ["@fern-api/api-workspace-commons"],
   "ignore-patterns": ["lib", "dist"]
 }

@@ -13,9 +13,8 @@ public class Example25
             }
         );
 
-        await client.Sysprop.SetNumWarmInstancesAsync(
-            Language.Java,
-            1
+        await client.Submission.GetExecutionSessionAsync(
+            "sessionId"
         );
     }
 

@@ -22,7 +22,9 @@ import (
 )
 
 func do() {
-    client := client.NewClient()
+    client := client.NewClient(
+        nil,
+    )
     client.Auth.GetTokenWithClientCredentials(
         context.TODO(),
         &fern.GetTokenRequest{

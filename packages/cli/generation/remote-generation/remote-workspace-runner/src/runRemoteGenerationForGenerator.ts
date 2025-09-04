@@ -76,7 +76,8 @@ export async function runRemoteGenerationForGenerator({
         smartCasing: generatorInvocation.smartCasing,
         exampleGeneration: {
             disabled: generatorInvocation.disableExamples,
-            skipAutogenerationIfManualExamplesExist: true
+            skipAutogenerationIfManualExamplesExist: true,
+            skipErrorAutogenerationIfManualErrorExamplesExist: false
         },
         audiences,
         readme,

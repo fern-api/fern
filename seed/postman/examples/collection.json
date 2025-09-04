@@ -299,6 +299,51 @@
                   "description": null,
                   "body": "{\n    \"name\": \"name\",\n    \"contents\": \"contents\"\n}",
                   "_postman_previewlanguage": "json"
+                },
+                {
+                  "name": "Not Found Error",
+                  "status": "Not Found Error",
+                  "code": 404,
+                  "originalRequest": {
+                    "description": "This endpoint returns a file by its name.",
+                    "url": {
+                      "raw": "{{baseUrl}}/file/:filename",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "file",
+                        ":filename"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "filename",
+                          "description": "This is a filename",
+                          "value": "filename"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "key": "X-File-API-Version",
+                        "description": null,
+                        "type": "text",
+                        "value": "\"X-File-API-Version\""
+                      },
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "\"string\"",
+                  "_postman_previewlanguage": "json"
                 }
               ]
             }

@@ -9,11 +9,11 @@ describe("Statement.switch", () => {
                 target: swift.Expression.reference("status"),
                 cases: [
                     {
-                        pattern: swift.Expression.rawStringValue("active"),
+                        pattern: swift.Expression.stringLiteral("active"),
                         body: [swift.Statement.expressionStatement(swift.Expression.reference("handleActive"))]
                     },
                     {
-                        pattern: swift.Expression.rawStringValue("inactive"),
+                        pattern: swift.Expression.stringLiteral("inactive"),
                         body: [swift.Statement.expressionStatement(swift.Expression.reference("handleInactive"))]
                     }
                 ]
@@ -84,7 +84,7 @@ describe("Statement.switch", () => {
                 target: swift.Expression.reference("operation"),
                 cases: [
                     {
-                        pattern: swift.Expression.rawStringValue("add"),
+                        pattern: swift.Expression.stringLiteral("add"),
                         body: [
                             swift.Statement.constantDeclaration({
                                 unsafeName: "result",

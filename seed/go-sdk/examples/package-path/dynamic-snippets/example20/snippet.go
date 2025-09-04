@@ -4,7 +4,6 @@ import (
     client "github.com/examples/fern/pleaseinhere/client"
     option "github.com/examples/fern/pleaseinhere/option"
     context "context"
-    pleaseinhere "github.com/examples/fern/pleaseinhere"
 )
 
 func do() {
@@ -18,8 +17,6 @@ func do() {
     )
     client.Service.RefreshToken(
         context.TODO(),
-        &pleaseinhere.RefreshTokenRequest{
-            Ttl: 420,
-        },
+        nil,
     )
 }
