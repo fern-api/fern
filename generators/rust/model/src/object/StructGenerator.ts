@@ -10,7 +10,6 @@ import {
     extractNamedTypesFromTypeReference,
     getInnerTypeFromOptional,
     isCollectionType,
-    isDateTimeOnlyType,
     isDateTimeType,
     isOptionalType,
     isUnknownType,
@@ -191,23 +190,11 @@ export class StructGenerator {
             attributes.push(Attribute.serde.rename(property.name.wireValue));
         }
 
-        // Add special serde handling for datetime fields
-        const isOptional = isOptionalType(property.valueType);
-        const innerType = isOptional ? getInnerTypeFromOptional(property.valueType) : property.valueType;
-
-        if (isDateTimeOnlyType(innerType)) {
-            // DateTime<Utc> fields need chrono serializers
-            if (isOptional) {
-                // Optional DateTime<Utc> needs ts_seconds_option
-                attributes.push(Attribute.serde.with("chrono::serde::ts_seconds_option"));
-            } else {
-                // Non-optional DateTime<Utc> needs ts_seconds
-                attributes.push(Attribute.serde.with("chrono::serde::ts_seconds"));
-            }
-        }
-        // Note: NaiveDate (date type) fields don't need any special serializer
+        // DateTime fields will use default RFC 3339 string serialization
+        // No special serde handling needed for datetime fields
 
         // Add skip_serializing_if for optional fields to omit null values
+        const isOptional = isOptionalType(property.valueType);
         if (isOptional) {
             attributes.push(Attribute.serde.skipSerializingIf('"Option::is_none"'));
         }
