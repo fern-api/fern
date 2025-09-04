@@ -2,6 +2,35 @@ import { isRawMultipleBaseUrlsEnvironment, RawSchemas } from "@fern-api/fern-def
 
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 
+interface ApiServerConfig {
+    url: string;
+    audiences?: string[];
+}
+
+interface SingleApiServer {
+    type?: 'single';
+    name?: string;
+    description?: string;
+    url: string;
+    audiences?: string[];
+}
+
+interface GroupedMultiApiServer {
+    type: 'grouped';
+    name?: string;
+    description?: string;
+    urls: Record<string, ApiServerConfig>;
+}
+
+type ServerType = SingleApiServer | GroupedMultiApiServer;
+
+function isGroupedMultiApiServer(server: unknown): server is GroupedMultiApiServer {
+    return typeof server === 'object' && 
+           server !== null && 
+           'type' in server && 
+           (server as any).type === 'grouped';
+}
+
 const DEFAULT_URL_NAME = "Base";
 const DEFAULT_ENVIRONMENT_NAME = "Default";
 
@@ -43,30 +72,27 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
     const topLevelServersWithName: Record<string, string | RawSchemas.SingleBaseUrlEnvironmentSchema | RawSchemas.MultipleBaseUrlsEnvironmentSchema> = {};
     const topLevelSkippedServers = [];
     
-    // Check if we have grouped multi-API servers
-    const hasGroupedMultipleApis = context.ir.servers.some((server: any) => 
-        server.__multipleBaseUrls === true
+    const hasGroupedMultipleApis = context.ir.servers.some(server => 
+        isGroupedMultiApiServer(server)
     );
     
-    for (const server of context.ir.servers) {
+    const servers = context.ir.servers as ServerType[];
+    
+    for (const server of servers) {
         // Handle grouped multiple base URLs
-        if ((server as any).__multipleBaseUrls) {
+        if (isGroupedMultiApiServer(server)) {
             const multiUrlEnvironment: RawSchemas.MultipleBaseUrlsEnvironmentSchema = {
                 urls: {}
             };
             
-            // Convert the urls object to the expected format
-            for (const [apiName, apiConfig] of Object.entries((server as any).urls)) {
-                const config = apiConfig as any;
-                multiUrlEnvironment.urls[apiName] = config.audiences
-                    ? { url: config.url, audiences: config.audiences }
-                    : config.url;
+            for (const [apiName, apiConfig] of Object.entries(server.urls)) {
+                multiUrlEnvironment.urls[apiName] = apiConfig.url;
             }
             
             if (server.name) {
                 topLevelServersWithName[server.name] = multiUrlEnvironment;
             }
-        } else {
+        } else if ('url' in server && server.url) {
             // Handle regular single URL servers
             const environmentSchema = server.audiences
                 ? {
@@ -82,16 +108,13 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
         }
     }
 
-    // Collect endpoint-level servers, grouping by name
     const endpointLevelServersByName: Record<string, Array<{url: string | undefined, audiences: string[] | undefined}>> = {};
     const endpointLevelServersWithName: Record<string, string | RawSchemas.SingleBaseUrlEnvironmentSchema> = {};
     const endpointLevelSkippedServers = [];
     
     for (const endpoint of context.ir.endpoints) {
         for (const server of endpoint.servers) {
-            // Handle servers without URLs (Multiple Base URLs pattern)
             if (server.url == null && server.name != null) {
-                // This is a server name without URL - indicates Multiple Base URLs
                 if (!endpointLevelServersByName[server.name]) {
                     endpointLevelServersByName[server.name] = [];
                 }
@@ -150,7 +173,6 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
     );
     const hasWebsocketServersWithName = Object.keys(websocketServersWithName).length > 0;
 
-    // If we don't have any top level or endpoint level servers, we're in the asyncapi only paradigm.
     if (
         !hasTopLevelServersWithName &&
         !hasEndpointLevelServersWithName &&
@@ -177,7 +199,6 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
         );
     }
 
-    // In this instance, we don't have any top level servers, so we'll just use the first one at the IR level.
     if (!hasTopLevelServersWithName) {
         const singleURL = context.ir.servers[0]?.url;
         const singleURLAudiences = context.ir.servers[0]?.audiences;
@@ -192,7 +213,6 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
         }
     }
 
-    // We now log an error for all skipped servers that we didn't have a name or construct a name for.
     const topLevelServerUrls = Object.values(topLevelServersWithName).map((schema) =>
         typeof schema === "string" 
             ? schema 
@@ -212,9 +232,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
         );
     }
 
-    // Check if we have grouped multiple APIs
     if (hasGroupedMultipleApis) {
-        // Create environments from the grouped multi-API servers
         let firstEnvironment = true;
         for (const [name, schema] of Object.entries(topLevelServersWithName)) {
             context.builder.addEnvironment({
@@ -223,7 +241,12 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
             });
             if (firstEnvironment) {
                 context.builder.setDefaultEnvironment(name);
-                context.builder.setDefaultUrl("fintech"); // Default to first API
+                if (isRawMultipleBaseUrlsEnvironment(schema)) {
+                    const firstApiName = Object.keys(schema.urls)[0];
+                    if (firstApiName) {
+                        context.builder.setDefaultUrl(firstApiName);
+                    }
+                }
                 firstEnvironment = false;
             }
         }
@@ -311,11 +334,8 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
             context.builder.setDefaultEnvironment(environmentName);
             context.builder.setDefaultUrl(DEFAULT_URL_NAME);
         } else {
-            // Multiple top-level servers with endpoint-level servers
-            // Group endpoint servers by API name and collect their URLs
             const apiToUrls = new Map<string, Map<string, string>>();
             
-            // Process all endpoint servers to find unique API names and their URLs
             for (const endpoint of context.ir.endpoints) {
                 for (const server of endpoint.servers) {
                     if (server.url != null && server.name != null) {
@@ -324,16 +344,17 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                         }
                         // Extract environment suffix from URL
                         const urlSuffix = server.url.match(/[-]([a-z0-9]+)\./i)?.[1]?.toLowerCase() || 'production';
-                        apiToUrls.get(server.name)!.set(urlSuffix, server.url);
+                        const urlMap = apiToUrls.get(server.name);
+                        if (urlMap) {
+                            urlMap.set(urlSuffix, server.url);
+                        }
                     }
                 }
             }
             
-            // If we have multiple APIs with URLs, create Multiple Base URLs environments
             if (apiToUrls.size > 0) {
                 let firstEnvironment = true;
                 
-                // For each top-level environment
                 for (const [envName, envSchema] of Object.entries(topLevelServersWithName)) {
                     const baseUrl = typeof envSchema === "string" 
                         ? envSchema 
@@ -347,14 +368,11 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                     
                     const envSuffix = baseUrl.match(/[-]([a-z0-9]+)\./i)?.[1]?.toLowerCase() || 'production';
                     
-                    // Build URLs object for this environment
                     const urls: Record<string, string> = {
                         [DEFAULT_URL_NAME]: baseUrl
                     };
                     
-                    // Add URL for each API in this environment
                     for (const [apiName, apiUrlMap] of apiToUrls.entries()) {
-                        // Find the URL for this environment
                         const apiUrl = apiUrlMap.get(envSuffix) || 
                                       apiUrlMap.get('production') || 
                                       apiUrlMap.values().next().value;
@@ -363,14 +381,12 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                         }
                     }
                     
-                    // Only create multi-URL environment if we have more than one URL
                     if (Object.keys(urls).length > 1) {
                         context.builder.addEnvironment({
                             name: envName,
                             schema: { urls }
                         });
                     } else {
-                        // Single URL environment
                         context.builder.addEnvironment({
                             name: envName,
                             schema: baseUrl
@@ -388,7 +404,6 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                     context.builder.setDefaultUrl(DEFAULT_URL_NAME);
                 }
             } else {
-                // No endpoint servers with URLs, just use top-level servers
                 let firstEnvironment = true;
                 for (const [name, schema] of Object.entries(topLevelServersWithName)) {
                     context.builder.addEnvironment({

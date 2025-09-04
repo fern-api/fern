@@ -1,5 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
-import { OpenApiIntermediateRepresentation, Source as OpenApiIrSource, Schemas } from "@fern-api/openapi-ir";
+import { 
+    OpenApiIntermediateRepresentation, 
+    Source as OpenApiIrSource, 
+    Schemas, 
+    Server, 
+    Endpoint 
+} from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 
@@ -132,8 +138,6 @@ function getParseAsyncOptions({
     };
 }
 
-// Removed old mergeServersForMultipleBaseUrls function - using simpler approach
-
 interface ServerInput {
     url: string;
     description: string | undefined;
@@ -142,8 +146,36 @@ interface ServerInput {
     'x-fern-server-name'?: string;
 }
 
+interface ApiServerConfig {
+    url: string;
+    audiences: string[] | undefined;
+}
+
+interface SingleApiServer extends Server {
+    type: 'single';
+}
+
+interface GroupedMultiApiServer {
+    type: 'grouped';
+    name: string;
+    description: string;
+    urls: Record<string, ApiServerConfig>;
+}
+
+type MergedServer = SingleApiServer | GroupedMultiApiServer;
+
+interface StandardEndpoint extends Endpoint {
+    type: 'standard';
+}
+
+interface MultiApiEndpoint extends Endpoint {
+    type: 'multi-api';
+    apiName: string;
+}
+
+type TypedEndpoint = StandardEndpoint | MultiApiEndpoint;
+
 function getEnvironmentName(server: ServerInput): string {
-    // Use description, name, or x-fern-server-name as environment identifier
     const rawName = String(
         server.description || 
         server.name || 
@@ -151,10 +183,10 @@ function getEnvironmentName(server: ServerInput): string {
         "default"
     ).trim();
     
-    // Normalize environment names for consistent matching
     const normalized = rawName.toUpperCase();
     
     // Map common variations to standard names
+    // TODO: Remove this once we have a more generic way to handle this
     if (normalized === 'PRODUCTION' || normalized === 'PRD' || normalized === 'PROD') {
         return 'PRD';
     }
@@ -182,14 +214,8 @@ function extractApiNameFromUrl(url: string): string {
         const urlObj = new URL(url);
         const hostname = urlObj.hostname;
         
-        // Extract the most significant part of the hostname
-        // Examples:
-        // fintech.api.example.com -> fintech
-        // payments-service.example.com -> payments  
-        // api.wallet.example.com -> wallet
         const parts = hostname.split('.');
         
-        // Look for the most descriptive part (not common terms like api, www, etc)
         const commonTerms = new Set(['api', 'www', 'service', 'services', 'example', 'com', 'org', 'net', 'io']);
         
         for (const part of parts) {
@@ -238,7 +264,6 @@ function detectMultipleBaseUrls(servers1: ServerInput[], servers2: ServerInput[]
         }
     }
     
-    // We want all environments to match AND all URLs to be different
     return allMatch && allDifferent;
 }
 
@@ -247,7 +272,6 @@ function extractApiNameFromServers(servers: ServerInput[]): string {
         return 'api';
     }
     
-    // Extract common API name from the first server's URL
     const firstUrl = servers[0].url;
     return extractApiNameFromUrl(firstUrl);
 }
@@ -256,22 +280,18 @@ function merge(
     ir1: OpenApiIntermediateRepresentation,
     ir2: OpenApiIntermediateRepresentation
 ): OpenApiIntermediateRepresentation {
-    // Check if we have matching environments but different URLs (Multiple APIs scenario)
     const hasMultipleApis = detectMultipleBaseUrls(ir1.servers, ir2.servers);
     
-    let mergedServers: any[] = [];
-    let mergedEndpoints = [...ir1.endpoints, ...ir2.endpoints];
+    let mergedServers: MergedServer[] = [];
+    let mergedEndpoints: TypedEndpoint[] = ir1.endpoints.map(e => ({ ...e, type: 'standard' as const })).concat(
+        ir2.endpoints.map(e => ({ ...e, type: 'standard' as const }))
+    );
     
     if (hasMultipleApis) {
-        // Group servers by environment to create MultipleBaseUrls structure
-        // e.g., PRD environment contains both fintech and payments URLs
-        
-        // Extract API names - using OpenAPI title if available, otherwise URL pattern
         const api1Name = extractApiNameFromServers(ir1.servers);
         const api2Name = extractApiNameFromServers(ir2.servers);
         
-        // Create a map of environment name to URLs
-        const environmentMap = new Map<string, {[apiName: string]: any}>();
+        const environmentMap = new Map<string, Record<string, ApiServerConfig>>();
         
         // Process servers from first API
         for (const server of ir1.servers) {
@@ -279,11 +299,13 @@ function merge(
             if (!environmentMap.has(envName)) {
                 environmentMap.set(envName, {});
             }
-            const envUrls = environmentMap.get(envName)!;
-            envUrls[api1Name] = {
-                url: server.url,
-                audiences: server.audiences
-            };
+            const envUrls = environmentMap.get(envName);
+            if (envUrls) {
+                envUrls[api1Name] = {
+                    url: server.url,
+                    audiences: server.audiences
+                };
+            }
         }
         
         // Process servers from second API
@@ -292,39 +314,43 @@ function merge(
             if (!environmentMap.has(envName)) {
                 environmentMap.set(envName, {});
             }
-            const envUrls = environmentMap.get(envName)!;
-            envUrls[api2Name] = {
-                url: server.url,
-                audiences: server.audiences
-            };
+            const envUrls = environmentMap.get(envName);
+            if (envUrls) {
+                envUrls[api2Name] = {
+                    url: server.url,
+                    audiences: server.audiences
+                };
+            }
         }
         
-        // Create merged servers with MultipleBaseUrls structure
         for (const [envName, urls] of environmentMap.entries()) {
-            mergedServers.push({
+            const groupedServer: GroupedMultiApiServer = {
+                type: 'grouped',
                 name: envName,
                 description: `${envName} environment`,
-                urls: urls,
-                // Mark this as a multiple base URLs environment
-                __multipleBaseUrls: true
-            });
+                urls: urls
+            };
+            mergedServers.push(groupedServer);
         }
         
         // Tag endpoints with their API name for routing
-        const ir1EndpointsWithApiTag = ir1.endpoints.map(endpoint => ({
+        const ir1EndpointsWithApiTag: MultiApiEndpoint[] = ir1.endpoints.map(endpoint => ({
             ...endpoint,
-            __apiName: api1Name
+            type: 'multi-api' as const,
+            apiName: api1Name
         }));
         
-        const ir2EndpointsWithApiTag = ir2.endpoints.map(endpoint => ({
+        const ir2EndpointsWithApiTag: MultiApiEndpoint[] = ir2.endpoints.map(endpoint => ({
             ...endpoint,
-            __apiName: api2Name
+            type: 'multi-api' as const,
+            apiName: api2Name
         }));
         
         mergedEndpoints = [...ir1EndpointsWithApiTag, ...ir2EndpointsWithApiTag];
     } else {
-        // Simple case: just concatenate servers
-        mergedServers = [...ir1.servers, ...ir2.servers];
+        mergedServers = ir1.servers.map(s => ({ ...s, type: 'single' as const })).concat(
+            ir2.servers.map(s => ({ ...s, type: 'single' as const }))
+        );
     }
     
     return {
@@ -332,7 +358,7 @@ function merge(
         title: ir1.title ?? ir2.title,
         description: ir1.description ?? ir2.description,
         basePath: ir1.basePath ?? ir2.basePath,
-        servers: mergedServers,
+        servers: mergedServers.map(s => s.type === 'single' ? s : s as any),
         websocketServers: [...ir1.websocketServers, ...ir2.websocketServers],
         tags: {
             tagsById: {
@@ -345,7 +371,14 @@ function merge(
                     : [...(ir1.tags.orderedTagIds ?? []), ...(ir2.tags.orderedTagIds ?? [])]
         },
         hasEndpointsMarkedInternal: ir1.hasEndpointsMarkedInternal || ir2.hasEndpointsMarkedInternal,
-        endpoints: mergedEndpoints,
+        endpoints: mergedEndpoints.map(e => {
+            if (e.type === 'multi-api') {
+                const { type, apiName, ...endpoint } = e;
+                return { ...endpoint, __apiName: apiName } as any;
+            }
+            const { type, ...endpoint } = e;
+            return endpoint;
+        }),
         webhooks: [...ir1.webhooks, ...ir2.webhooks],
         channels: {
             ...ir1.channels,
@@ -375,11 +408,9 @@ function mergeSchemaMaps(schemas1: Schemas, schemas2: Schemas): Schemas {
     schemas1.rootSchemas = { ...schemas1.rootSchemas, ...schemas2.rootSchemas };
 
     for (const [namespace, namespaceSchemas] of Object.entries(schemas2.namespacedSchemas)) {
-        // If both share the namespace, merge the schemas within that namespace
         if (schemas1.namespacedSchemas[namespace] != null) {
             schemas1.namespacedSchemas[namespace] = { ...schemas1.namespacedSchemas[namespace], ...namespaceSchemas };
         } else {
-            // Otherwise, just add the namespace to the schemas
             schemas1.namespacedSchemas[namespace] = namespaceSchemas;
         }
     }

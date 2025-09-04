@@ -1,0 +1,124 @@
+openapi: 3.0.0
+info:
+  title: Payments API
+  version: 1.0.0
+servers:
+  - url: https://payments.api.example.com
+    description: PRD
+    x-fern-server-name: PRD
+  - url: https://payments-sbx.api.example.com
+    description: SBX
+    x-fern-server-name: SBX
+  - url: https://payments-stg.api.example.com
+    description: STG
+    x-fern-server-name: STG
+  - url: https://payments-prf.api.example.com
+    description: PRF
+    x-fern-server-name: PRF
+  - url: https://payments-e2e.api.example.com
+    description: E2E
+    x-fern-server-name: E2E
+  - url: https://payments-qal.api.example.com
+    description: QAL
+    x-fern-server-name: QAL
+paths:
+  /transactions:
+    get:
+      summary: List transactions
+      operationId: listTransactions
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+  /transactions/{transactionId}:
+    get:
+      summary: Get transaction by ID
+      operationId: getTransaction
+      parameters:
+        - name: transactionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+  /payments:
+    post:
+      summary: Create a payment
+      operationId: createPayment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentResponse'
+components:
+  schemas:
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+        status:
+          type: string
+          enum: [pending, completed, failed]
+        timestamp:
+          type: string
+          format: date-time
+      required:
+        - id
+        - amount
+        - currency
+        - status
+        - timestamp
+    PaymentRequest:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+        recipient:
+          type: string
+        description:
+          type: string
+      required:
+        - amount
+        - currency
+        - recipient
+    PaymentResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum: [accepted, rejected]
+        message:
+          type: string
+      required:
+        - id
+        - status
