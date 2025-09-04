@@ -91,6 +91,38 @@
               "description": null,
               "body": "",
               "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Not Found Error",
+              "status": "Not Found Error",
+              "code": 404,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/container",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "container"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"key\": \"value\"\n}",
+              "_postman_previewlanguage": "json"
             }
           ]
         }
