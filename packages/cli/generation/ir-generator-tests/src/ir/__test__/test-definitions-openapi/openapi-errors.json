@@ -1,0 +1,2031 @@
+{
+    "selfHosted": false,
+    "fdrApiDefinitionId": null,
+    "apiVersion": null,
+    "apiName": {
+        "originalName": "api",
+        "camelCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "snakeCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        },
+        "pascalCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        }
+    },
+    "apiDisplayName": "Code Samples API",
+    "apiDocs": null,
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [],
+        "docs": null
+    },
+    "headers": [],
+    "idempotencyHeaders": [],
+    "types": {},
+    "errors": {
+        "error_:BadRequestError": {
+            "name": {
+                "name": {
+                    "originalName": "BadRequestError",
+                    "camelCase": {
+                        "unsafeName": "badRequestError",
+                        "safeName": "badRequestError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "bad_request_error",
+                        "safeName": "bad_request_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BAD_REQUEST_ERROR",
+                        "safeName": "BAD_REQUEST_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "BadRequestError",
+                        "safeName": "BadRequestError"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "errorId": "error_:BadRequestError"
+            },
+            "discriminantValue": {
+                "name": {
+                    "originalName": "BadRequestError",
+                    "camelCase": {
+                        "unsafeName": "badRequestError",
+                        "safeName": "badRequestError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "bad_request_error",
+                        "safeName": "bad_request_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BAD_REQUEST_ERROR",
+                        "safeName": "BAD_REQUEST_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "BadRequestError",
+                        "safeName": "BadRequestError"
+                    }
+                },
+                "wireValue": "BadRequestError"
+            },
+            "statusCode": 400,
+            "type": {
+                "_type": "unknown"
+            },
+            "examples": [],
+            "v2Examples": null,
+            "displayName": null,
+            "docs": "Invalid request URI. The message will vary depending on the cause."
+        },
+        "error_:UnauthorizedError": {
+            "name": {
+                "name": {
+                    "originalName": "UnauthorizedError",
+                    "camelCase": {
+                        "unsafeName": "unauthorizedError",
+                        "safeName": "unauthorizedError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "unauthorized_error",
+                        "safeName": "unauthorized_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNAUTHORIZED_ERROR",
+                        "safeName": "UNAUTHORIZED_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UnauthorizedError",
+                        "safeName": "UnauthorizedError"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "errorId": "error_:UnauthorizedError"
+            },
+            "discriminantValue": {
+                "name": {
+                    "originalName": "UnauthorizedError",
+                    "camelCase": {
+                        "unsafeName": "unauthorizedError",
+                        "safeName": "unauthorizedError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "unauthorized_error",
+                        "safeName": "unauthorized_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNAUTHORIZED_ERROR",
+                        "safeName": "UNAUTHORIZED_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UnauthorizedError",
+                        "safeName": "UnauthorizedError"
+                    }
+                },
+                "wireValue": "UnauthorizedError"
+            },
+            "statusCode": 401,
+            "type": {
+                "_type": "unknown"
+            },
+            "examples": [],
+            "v2Examples": null,
+            "displayName": null,
+            "docs": "Invalid token."
+        },
+        "error_:ForbiddenError": {
+            "name": {
+                "name": {
+                    "originalName": "ForbiddenError",
+                    "camelCase": {
+                        "unsafeName": "forbiddenError",
+                        "safeName": "forbiddenError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "forbidden_error",
+                        "safeName": "forbidden_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "FORBIDDEN_ERROR",
+                        "safeName": "FORBIDDEN_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ForbiddenError",
+                        "safeName": "ForbiddenError"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "errorId": "error_:ForbiddenError"
+            },
+            "discriminantValue": {
+                "name": {
+                    "originalName": "ForbiddenError",
+                    "camelCase": {
+                        "unsafeName": "forbiddenError",
+                        "safeName": "forbiddenError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "forbidden_error",
+                        "safeName": "forbidden_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "FORBIDDEN_ERROR",
+                        "safeName": "FORBIDDEN_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ForbiddenError",
+                        "safeName": "ForbiddenError"
+                    }
+                },
+                "wireValue": "ForbiddenError"
+            },
+            "statusCode": 403,
+            "type": {
+                "_type": "unknown"
+            },
+            "examples": [],
+            "v2Examples": null,
+            "displayName": null,
+            "docs": "Insufficient scope, expected: read:actions."
+        },
+        "error_:TooManyRequestsError": {
+            "name": {
+                "name": {
+                    "originalName": "TooManyRequestsError",
+                    "camelCase": {
+                        "unsafeName": "tooManyRequestsError",
+                        "safeName": "tooManyRequestsError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "too_many_requests_error",
+                        "safeName": "too_many_requests_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOO_MANY_REQUESTS_ERROR",
+                        "safeName": "TOO_MANY_REQUESTS_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TooManyRequestsError",
+                        "safeName": "TooManyRequestsError"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "errorId": "error_:TooManyRequestsError"
+            },
+            "discriminantValue": {
+                "name": {
+                    "originalName": "TooManyRequestsError",
+                    "camelCase": {
+                        "unsafeName": "tooManyRequestsError",
+                        "safeName": "tooManyRequestsError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "too_many_requests_error",
+                        "safeName": "too_many_requests_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOO_MANY_REQUESTS_ERROR",
+                        "safeName": "TOO_MANY_REQUESTS_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TooManyRequestsError",
+                        "safeName": "TooManyRequestsError"
+                    }
+                },
+                "wireValue": "TooManyRequestsError"
+            },
+            "statusCode": 429,
+            "type": {
+                "_type": "unknown"
+            },
+            "examples": [],
+            "v2Examples": null,
+            "displayName": null,
+            "docs": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+        }
+    },
+    "services": {
+        "service_": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_.getFoo",
+                    "name": {
+                        "originalName": "getFoo",
+                        "camelCase": {
+                            "unsafeName": "getFoo",
+                            "safeName": "getFoo"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_foo",
+                            "safeName": "get_foo"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_FOO",
+                            "safeName": "GET_FOO"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetFoo",
+                            "safeName": "GetFoo"
+                        }
+                    },
+                    "displayName": "getFoo",
+                    "auth": false,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "GET",
+                    "basePath": null,
+                    "path": {
+                        "head": "/foo",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "foo",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": null,
+                    "v2RequestBodies": null,
+                    "sdkRequest": null,
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "map",
+                                        "keyType": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
+                                        },
+                                        "valueType": {
+                                            "_type": "unknown"
+                                        }
+                                    }
+                                },
+                                "docs": "getFooResponse",
+                                "v2Examples": null
+                            }
+                        },
+                        "status-code": 200
+                    },
+                    "v2Responses": null,
+                    "errors": [
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "BadRequestError",
+                                    "camelCase": {
+                                        "unsafeName": "badRequestError",
+                                        "safeName": "badRequestError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "bad_request_error",
+                                        "safeName": "bad_request_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "BAD_REQUEST_ERROR",
+                                        "safeName": "BAD_REQUEST_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "BadRequestError",
+                                        "safeName": "BadRequestError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [],
+                                    "packagePath": [],
+                                    "file": null
+                                },
+                                "errorId": "error_:BadRequestError"
+                            },
+                            "docs": null
+                        },
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "UnauthorizedError",
+                                    "camelCase": {
+                                        "unsafeName": "unauthorizedError",
+                                        "safeName": "unauthorizedError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "unauthorized_error",
+                                        "safeName": "unauthorized_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "UNAUTHORIZED_ERROR",
+                                        "safeName": "UNAUTHORIZED_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "UnauthorizedError",
+                                        "safeName": "UnauthorizedError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [],
+                                    "packagePath": [],
+                                    "file": null
+                                },
+                                "errorId": "error_:UnauthorizedError"
+                            },
+                            "docs": null
+                        },
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "ForbiddenError",
+                                    "camelCase": {
+                                        "unsafeName": "forbiddenError",
+                                        "safeName": "forbiddenError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "forbidden_error",
+                                        "safeName": "forbidden_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "FORBIDDEN_ERROR",
+                                        "safeName": "FORBIDDEN_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ForbiddenError",
+                                        "safeName": "ForbiddenError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [],
+                                    "packagePath": [],
+                                    "file": null
+                                },
+                                "errorId": "error_:ForbiddenError"
+                            },
+                            "docs": null
+                        },
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "TooManyRequestsError",
+                                    "camelCase": {
+                                        "unsafeName": "tooManyRequestsError",
+                                        "safeName": "tooManyRequestsError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "too_many_requests_error",
+                                        "safeName": "too_many_requests_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "TOO_MANY_REQUESTS_ERROR",
+                                        "safeName": "TOO_MANY_REQUESTS_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "TooManyRequestsError",
+                                        "safeName": "TooManyRequestsError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [],
+                                    "packagePath": [],
+                                    "file": null
+                                },
+                                "errorId": "error_:TooManyRequestsError"
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "82a32050",
+                                "name": null,
+                                "url": "/foo",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "map",
+                                                    "map": [
+                                                        {
+                                                            "key": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "key"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "key"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "unknown",
+                                                                    "unknown": "value"
+                                                                },
+                                                                "jsonExample": "value"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "keyType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "STRING",
+                                                            "v2": {
+                                                                "type": "string",
+                                                                "default": null,
+                                                                "validation": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "valueType": {
+                                                        "_type": "unknown"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "key": "value"
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "ae765f47",
+                                "url": "/foo",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "map",
+                                                    "map": [
+                                                        {
+                                                            "key": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "string"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "string"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "unknown",
+                                                                    "unknown": {
+                                                                        "key": "value"
+                                                                    }
+                                                                },
+                                                                "jsonExample": {
+                                                                    "key": "value"
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                    "keyType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "STRING",
+                                                            "v2": {
+                                                                "type": "string",
+                                                                "default": null,
+                                                                "validation": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "valueType": {
+                                                        "_type": "unknown"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "string": {
+                                                    "key": "value"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        },
+                        {
+                            "example": {
+                                "id": "19e11cb8",
+                                "url": "/foo",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "error",
+                                    "body": {
+                                        "shape": {
+                                            "type": "unknown",
+                                            "unknown": {
+                                                "key": "value"
+                                            }
+                                        },
+                                        "jsonExample": {
+                                            "key": "value"
+                                        }
+                                    },
+                                    "error": {
+                                        "name": {
+                                            "originalName": "BadRequestError",
+                                            "camelCase": {
+                                                "unsafeName": "badRequestError",
+                                                "safeName": "badRequestError"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "bad_request_error",
+                                                "safeName": "bad_request_error"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "BAD_REQUEST_ERROR",
+                                                "safeName": "BAD_REQUEST_ERROR"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "BadRequestError",
+                                                "safeName": "BadRequestError"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [],
+                                            "packagePath": [],
+                                            "file": null
+                                        },
+                                        "errorId": "error_:BadRequestError"
+                                    }
+                                },
+                                "docs": null
+                            }
+                        },
+                        {
+                            "example": {
+                                "id": "e96ec960",
+                                "url": "/foo",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "error",
+                                    "body": {
+                                        "shape": {
+                                            "type": "unknown",
+                                            "unknown": {
+                                                "key": "value"
+                                            }
+                                        },
+                                        "jsonExample": {
+                                            "key": "value"
+                                        }
+                                    },
+                                    "error": {
+                                        "name": {
+                                            "originalName": "UnauthorizedError",
+                                            "camelCase": {
+                                                "unsafeName": "unauthorizedError",
+                                                "safeName": "unauthorizedError"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "unauthorized_error",
+                                                "safeName": "unauthorized_error"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "UNAUTHORIZED_ERROR",
+                                                "safeName": "UNAUTHORIZED_ERROR"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "UnauthorizedError",
+                                                "safeName": "UnauthorizedError"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [],
+                                            "packagePath": [],
+                                            "file": null
+                                        },
+                                        "errorId": "error_:UnauthorizedError"
+                                    }
+                                },
+                                "docs": null
+                            }
+                        },
+                        {
+                            "example": {
+                                "id": "8304cb04",
+                                "url": "/foo",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "error",
+                                    "body": {
+                                        "shape": {
+                                            "type": "unknown",
+                                            "unknown": {
+                                                "key": "value"
+                                            }
+                                        },
+                                        "jsonExample": {
+                                            "key": "value"
+                                        }
+                                    },
+                                    "error": {
+                                        "name": {
+                                            "originalName": "ForbiddenError",
+                                            "camelCase": {
+                                                "unsafeName": "forbiddenError",
+                                                "safeName": "forbiddenError"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "forbidden_error",
+                                                "safeName": "forbidden_error"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "FORBIDDEN_ERROR",
+                                                "safeName": "FORBIDDEN_ERROR"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "ForbiddenError",
+                                                "safeName": "ForbiddenError"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [],
+                                            "packagePath": [],
+                                            "file": null
+                                        },
+                                        "errorId": "error_:ForbiddenError"
+                                    }
+                                },
+                                "docs": null
+                            }
+                        },
+                        {
+                            "example": {
+                                "id": "3985fb10",
+                                "url": "/foo",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "error",
+                                    "body": {
+                                        "shape": {
+                                            "type": "unknown",
+                                            "unknown": {
+                                                "key": "value"
+                                            }
+                                        },
+                                        "jsonExample": {
+                                            "key": "value"
+                                        }
+                                    },
+                                    "error": {
+                                        "name": {
+                                            "originalName": "TooManyRequestsError",
+                                            "camelCase": {
+                                                "unsafeName": "tooManyRequestsError",
+                                                "safeName": "tooManyRequestsError"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "too_many_requests_error",
+                                                "safeName": "too_many_requests_error"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "TOO_MANY_REQUESTS_ERROR",
+                                                "safeName": "TOO_MANY_REQUESTS_ERROR"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "TooManyRequestsError",
+                                                "safeName": "TooManyRequestsError"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [],
+                                            "packagePath": [],
+                                            "file": null
+                                        },
+                                        "errorId": "error_:TooManyRequestsError"
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "availability": null,
+                    "docs": null
+                },
+                {
+                    "id": "endpoint_.create_foo",
+                    "name": {
+                        "originalName": "create_foo",
+                        "camelCase": {
+                            "unsafeName": "createFoo",
+                            "safeName": "createFoo"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "create_foo",
+                            "safeName": "create_foo"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CREATE_FOO",
+                            "safeName": "CREATE_FOO"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CreateFoo",
+                            "safeName": "CreateFoo"
+                        }
+                    },
+                    "displayName": "Create foo",
+                    "auth": false,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "POST",
+                    "basePath": null,
+                    "path": {
+                        "head": "/foo",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "foo",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "reference",
+                        "requestBodyType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "map",
+                                "keyType": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                },
+                                "valueType": {
+                                    "_type": "unknown"
+                                }
+                            }
+                        },
+                        "docs": null,
+                        "contentType": "application/json",
+                        "v2Examples": null
+                    },
+                    "v2RequestBodies": null,
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "justRequestBody",
+                            "value": {
+                                "type": "typeReference",
+                                "requestBodyType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "map",
+                                        "keyType": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
+                                        },
+                                        "valueType": {
+                                            "_type": "unknown"
+                                        }
+                                    }
+                                },
+                                "docs": null,
+                                "contentType": null,
+                                "v2Examples": null
+                            }
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
+                        "streamParameter": null
+                    },
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "map",
+                                        "keyType": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
+                                        },
+                                        "valueType": {
+                                            "_type": "unknown"
+                                        }
+                                    }
+                                },
+                                "docs": "Foo created.",
+                                "v2Examples": null
+                            }
+                        },
+                        "status-code": 201
+                    },
+                    "v2Responses": null,
+                    "errors": [
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "BadRequestError",
+                                    "camelCase": {
+                                        "unsafeName": "badRequestError",
+                                        "safeName": "badRequestError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "bad_request_error",
+                                        "safeName": "bad_request_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "BAD_REQUEST_ERROR",
+                                        "safeName": "BAD_REQUEST_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "BadRequestError",
+                                        "safeName": "BadRequestError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [],
+                                    "packagePath": [],
+                                    "file": null
+                                },
+                                "errorId": "error_:BadRequestError"
+                            },
+                            "docs": null
+                        },
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "UnauthorizedError",
+                                    "camelCase": {
+                                        "unsafeName": "unauthorizedError",
+                                        "safeName": "unauthorizedError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "unauthorized_error",
+                                        "safeName": "unauthorized_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "UNAUTHORIZED_ERROR",
+                                        "safeName": "UNAUTHORIZED_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "UnauthorizedError",
+                                        "safeName": "UnauthorizedError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [],
+                                    "packagePath": [],
+                                    "file": null
+                                },
+                                "errorId": "error_:UnauthorizedError"
+                            },
+                            "docs": null
+                        },
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "ForbiddenError",
+                                    "camelCase": {
+                                        "unsafeName": "forbiddenError",
+                                        "safeName": "forbiddenError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "forbidden_error",
+                                        "safeName": "forbidden_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "FORBIDDEN_ERROR",
+                                        "safeName": "FORBIDDEN_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ForbiddenError",
+                                        "safeName": "ForbiddenError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [],
+                                    "packagePath": [],
+                                    "file": null
+                                },
+                                "errorId": "error_:ForbiddenError"
+                            },
+                            "docs": null
+                        },
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "TooManyRequestsError",
+                                    "camelCase": {
+                                        "unsafeName": "tooManyRequestsError",
+                                        "safeName": "tooManyRequestsError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "too_many_requests_error",
+                                        "safeName": "too_many_requests_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "TOO_MANY_REQUESTS_ERROR",
+                                        "safeName": "TOO_MANY_REQUESTS_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "TooManyRequestsError",
+                                        "safeName": "TooManyRequestsError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [],
+                                    "packagePath": [],
+                                    "file": null
+                                },
+                                "errorId": "error_:TooManyRequestsError"
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "9e4bf0cf",
+                                "name": null,
+                                "url": "/foo",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "container",
+                                        "container": {
+                                            "type": "map",
+                                            "map": [
+                                                {
+                                                    "key": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "key"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "key"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "unknown",
+                                                            "unknown": "value"
+                                                        },
+                                                        "jsonExample": "value"
+                                                    }
+                                                }
+                                            ],
+                                            "keyType": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
+                                                    }
+                                                }
+                                            },
+                                            "valueType": {
+                                                "_type": "unknown"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "key": "value"
+                                    }
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "map",
+                                                    "map": [
+                                                        {
+                                                            "key": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "key"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "key"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "unknown",
+                                                                    "unknown": "value"
+                                                                },
+                                                                "jsonExample": "value"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "keyType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "STRING",
+                                                            "v2": {
+                                                                "type": "string",
+                                                                "default": null,
+                                                                "validation": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "valueType": {
+                                                        "_type": "unknown"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "key": "value"
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "e1f6ebd",
+                                "url": "/foo",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "container",
+                                        "container": {
+                                            "type": "map",
+                                            "map": [
+                                                {
+                                                    "key": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "string"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "string"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "unknown",
+                                                            "unknown": {
+                                                                "key": "value"
+                                                            }
+                                                        },
+                                                        "jsonExample": {
+                                                            "key": "value"
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "keyType": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
+                                                    }
+                                                }
+                                            },
+                                            "valueType": {
+                                                "_type": "unknown"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "string": {
+                                            "key": "value"
+                                        }
+                                    }
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "map",
+                                                    "map": [
+                                                        {
+                                                            "key": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "string"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "string"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "unknown",
+                                                                    "unknown": {
+                                                                        "key": "value"
+                                                                    }
+                                                                },
+                                                                "jsonExample": {
+                                                                    "key": "value"
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                    "keyType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "STRING",
+                                                            "v2": {
+                                                                "type": "string",
+                                                                "default": null,
+                                                                "validation": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "valueType": {
+                                                        "_type": "unknown"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "string": {
+                                                    "key": "value"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        },
+                        {
+                            "example": {
+                                "id": "2bc28ef2",
+                                "url": "/foo",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "container",
+                                        "container": {
+                                            "type": "map",
+                                            "map": [
+                                                {
+                                                    "key": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "string"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "string"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "unknown",
+                                                            "unknown": {
+                                                                "key": "value"
+                                                            }
+                                                        },
+                                                        "jsonExample": {
+                                                            "key": "value"
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "keyType": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
+                                                    }
+                                                }
+                                            },
+                                            "valueType": {
+                                                "_type": "unknown"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "string": {
+                                            "key": "value"
+                                        }
+                                    }
+                                },
+                                "response": {
+                                    "type": "error",
+                                    "body": {
+                                        "shape": {
+                                            "type": "unknown",
+                                            "unknown": {
+                                                "key": "value"
+                                            }
+                                        },
+                                        "jsonExample": {
+                                            "key": "value"
+                                        }
+                                    },
+                                    "error": {
+                                        "name": {
+                                            "originalName": "BadRequestError",
+                                            "camelCase": {
+                                                "unsafeName": "badRequestError",
+                                                "safeName": "badRequestError"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "bad_request_error",
+                                                "safeName": "bad_request_error"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "BAD_REQUEST_ERROR",
+                                                "safeName": "BAD_REQUEST_ERROR"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "BadRequestError",
+                                                "safeName": "BadRequestError"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [],
+                                            "packagePath": [],
+                                            "file": null
+                                        },
+                                        "errorId": "error_:BadRequestError"
+                                    }
+                                },
+                                "docs": null
+                            }
+                        },
+                        {
+                            "example": {
+                                "id": "c1ea454a",
+                                "url": "/foo",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "container",
+                                        "container": {
+                                            "type": "map",
+                                            "map": [
+                                                {
+                                                    "key": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "string"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "string"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "unknown",
+                                                            "unknown": {
+                                                                "key": "value"
+                                                            }
+                                                        },
+                                                        "jsonExample": {
+                                                            "key": "value"
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "keyType": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
+                                                    }
+                                                }
+                                            },
+                                            "valueType": {
+                                                "_type": "unknown"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "string": {
+                                            "key": "value"
+                                        }
+                                    }
+                                },
+                                "response": {
+                                    "type": "error",
+                                    "body": {
+                                        "shape": {
+                                            "type": "unknown",
+                                            "unknown": {
+                                                "key": "value"
+                                            }
+                                        },
+                                        "jsonExample": {
+                                            "key": "value"
+                                        }
+                                    },
+                                    "error": {
+                                        "name": {
+                                            "originalName": "UnauthorizedError",
+                                            "camelCase": {
+                                                "unsafeName": "unauthorizedError",
+                                                "safeName": "unauthorizedError"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "unauthorized_error",
+                                                "safeName": "unauthorized_error"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "UNAUTHORIZED_ERROR",
+                                                "safeName": "UNAUTHORIZED_ERROR"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "UnauthorizedError",
+                                                "safeName": "UnauthorizedError"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [],
+                                            "packagePath": [],
+                                            "file": null
+                                        },
+                                        "errorId": "error_:UnauthorizedError"
+                                    }
+                                },
+                                "docs": null
+                            }
+                        },
+                        {
+                            "example": {
+                                "id": "96efac0e",
+                                "url": "/foo",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "container",
+                                        "container": {
+                                            "type": "map",
+                                            "map": [
+                                                {
+                                                    "key": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "string"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "string"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "unknown",
+                                                            "unknown": {
+                                                                "key": "value"
+                                                            }
+                                                        },
+                                                        "jsonExample": {
+                                                            "key": "value"
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "keyType": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
+                                                    }
+                                                }
+                                            },
+                                            "valueType": {
+                                                "_type": "unknown"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "string": {
+                                            "key": "value"
+                                        }
+                                    }
+                                },
+                                "response": {
+                                    "type": "error",
+                                    "body": {
+                                        "shape": {
+                                            "type": "unknown",
+                                            "unknown": {
+                                                "key": "value"
+                                            }
+                                        },
+                                        "jsonExample": {
+                                            "key": "value"
+                                        }
+                                    },
+                                    "error": {
+                                        "name": {
+                                            "originalName": "ForbiddenError",
+                                            "camelCase": {
+                                                "unsafeName": "forbiddenError",
+                                                "safeName": "forbiddenError"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "forbidden_error",
+                                                "safeName": "forbidden_error"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "FORBIDDEN_ERROR",
+                                                "safeName": "FORBIDDEN_ERROR"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "ForbiddenError",
+                                                "safeName": "ForbiddenError"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [],
+                                            "packagePath": [],
+                                            "file": null
+                                        },
+                                        "errorId": "error_:ForbiddenError"
+                                    }
+                                },
+                                "docs": null
+                            }
+                        },
+                        {
+                            "example": {
+                                "id": "c61d9f9a",
+                                "url": "/foo",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "container",
+                                        "container": {
+                                            "type": "map",
+                                            "map": [
+                                                {
+                                                    "key": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "string"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "string"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "unknown",
+                                                            "unknown": {
+                                                                "key": "value"
+                                                            }
+                                                        },
+                                                        "jsonExample": {
+                                                            "key": "value"
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "keyType": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
+                                                    }
+                                                }
+                                            },
+                                            "valueType": {
+                                                "_type": "unknown"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "string": {
+                                            "key": "value"
+                                        }
+                                    }
+                                },
+                                "response": {
+                                    "type": "error",
+                                    "body": {
+                                        "shape": {
+                                            "type": "unknown",
+                                            "unknown": {
+                                                "key": "value"
+                                            }
+                                        },
+                                        "jsonExample": {
+                                            "key": "value"
+                                        }
+                                    },
+                                    "error": {
+                                        "name": {
+                                            "originalName": "TooManyRequestsError",
+                                            "camelCase": {
+                                                "unsafeName": "tooManyRequestsError",
+                                                "safeName": "tooManyRequestsError"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "too_many_requests_error",
+                                                "safeName": "too_many_requests_error"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "TOO_MANY_REQUESTS_ERROR",
+                                                "safeName": "TOO_MANY_REQUESTS_ERROR"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "TooManyRequestsError",
+                                                "safeName": "TooManyRequestsError"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [],
+                                            "packagePath": [],
+                                            "file": null
+                                        },
+                                        "errorId": "error_:TooManyRequestsError"
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "availability": null,
+                    "docs": null
+                }
+            ],
+            "audiences": null
+        }
+    },
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": null,
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "basePath": null,
+    "pathParameters": [],
+    "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
+    "webhookGroups": {},
+    "websocketChannels": {},
+    "readmeConfig": null,
+    "sourceConfig": null,
+    "publishConfig": null,
+    "dynamic": {
+        "version": "1.0.0",
+        "types": {},
+        "headers": [],
+        "endpoints": {
+            "endpoint_.getFoo": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "getFoo",
+                        "camelCase": {
+                            "unsafeName": "getFoo",
+                            "safeName": "getFoo"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_foo",
+                            "safeName": "get_foo"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_FOO",
+                            "safeName": "GET_FOO"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetFoo",
+                            "safeName": "GetFoo"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "location": {
+                    "method": "GET",
+                    "path": "/foo"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": null
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            },
+            "endpoint_.create_foo": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "create_foo",
+                        "camelCase": {
+                            "unsafeName": "createFoo",
+                            "safeName": "createFoo"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "create_foo",
+                            "safeName": "create_foo"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CREATE_FOO",
+                            "safeName": "CREATE_FOO"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CreateFoo",
+                            "safeName": "CreateFoo"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "location": {
+                    "method": "POST",
+                    "path": "/foo"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "map",
+                            "key": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "value": {
+                                "type": "unknown"
+                            }
+                        }
+                    }
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            }
+        },
+        "pathParameters": [],
+        "environments": null,
+        "generatorConfig": null
+    },
+    "audiences": null,
+    "subpackages": {},
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": [],
+            "file": null
+        },
+        "websocket": null,
+        "service": "service_",
+        "types": [],
+        "errors": [
+            "error_:BadRequestError",
+            "error_:UnauthorizedError",
+            "error_:ForbiddenError",
+            "error_:TooManyRequestsError"
+        ],
+        "subpackages": [],
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
+        "hasFileDownloadEndpoints": false,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
+        }
+    }
+}

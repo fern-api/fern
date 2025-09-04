@@ -397,6 +397,7 @@ Nort's
 npmjs
 ntropy
 nuint
+Nullishness
 numpy
 numpydoc
 nunit

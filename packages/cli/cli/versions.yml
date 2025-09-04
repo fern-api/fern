@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: If no error examples are provided by user, autogenerate errors even for remote generation.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-04"
+  version: 0.70.1
+
+- changelogEntry:
     - summary: Auto generate examples for HTTP endpoint error responses.
       type: feat
   irVersion: 59

@@ -5,6 +5,7 @@
       type: fix
   createdAt: "2025-09-03"
   irVersion: 59
+
 - version: 2.10.0
   changelogEntry:
     - summary: Do not set a default `Content-Type` header when creating a HTTP response for wire test mocking.
