@@ -1,0 +1,135 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "26d92036",
+            "id": {
+                "method": "GET",
+                "path": "/wallets",
+                "identifier_override": "endpoint_.listWallets"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.listWallets();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.listWallets();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "cdb676f",
+            "id": {
+                "method": "GET",
+                "path": "/wallets",
+                "identifier_override": "endpoint_.listWallets"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.listWallets();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.listWallets();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "a023ccc2",
+            "id": {
+                "method": "GET",
+                "path": "/wallets/{walletId}",
+                "identifier_override": "endpoint_.getWallet"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.getWallet(\"walletId\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.getWallet(\"walletId\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "cd09ec9e",
+            "id": {
+                "method": "GET",
+                "path": "/wallets/{walletId}",
+                "identifier_override": "endpoint_.getWallet"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.getWallet(\"walletId\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.getWallet(\"walletId\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "7cf2a35c",
+            "id": {
+                "method": "GET",
+                "path": "/transactions",
+                "identifier_override": "endpoint_.listTransactions"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.listTransactions();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.listTransactions();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "909944a7",
+            "id": {
+                "method": "GET",
+                "path": "/transactions",
+                "identifier_override": "endpoint_.listTransactions"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.listTransactions();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.listTransactions();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "a7d498f8",
+            "id": {
+                "method": "GET",
+                "path": "/transactions/{transactionId}",
+                "identifier_override": "endpoint_.getTransaction"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.getTransaction(\"transactionId\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.getTransaction(\"transactionId\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "dae0a098",
+            "id": {
+                "method": "GET",
+                "path": "/transactions/{transactionId}",
+                "identifier_override": "endpoint_.getTransaction"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.getTransaction(\"transactionId\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.getTransaction(\"transactionId\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "46337194",
+            "id": {
+                "method": "POST",
+                "path": "/payments",
+                "identifier_override": "endpoint_.createPayment"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.PaymentRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPayment(\n            PaymentRequest\n                .builder()\n                .amount(1.1)\n                .currency(\"currency\")\n                .recipient(\"recipient\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.PaymentRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPayment(\n            PaymentRequest\n                .builder()\n                .amount(1.1)\n                .currency(\"currency\")\n                .recipient(\"recipient\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "642d42b5",
+            "id": {
+                "method": "POST",
+                "path": "/payments",
+                "identifier_override": "endpoint_.createPayment"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.PaymentRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPayment(\n            PaymentRequest\n                .builder()\n                .amount(1.1)\n                .currency(\"currency\")\n                .recipient(\"recipient\")\n                .description(\"description\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.PaymentRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPayment(\n            PaymentRequest\n                .builder()\n                .amount(1.1)\n                .currency(\"currency\")\n                .recipient(\"recipient\")\n                .description(\"description\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}
