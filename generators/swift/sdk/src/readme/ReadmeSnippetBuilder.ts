@@ -7,7 +7,7 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly context: SdkGeneratorContext;
-    private readonly allEndpointSnippets: FernGeneratorExec.Endpoint[];
+    private readonly snippetsById: Record<string, FernGeneratorExec.Endpoint>;
 
     public constructor({
         context,
@@ -18,7 +18,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }) {
         super({ endpointSnippets });
         this.context = context;
-        this.allEndpointSnippets = endpointSnippets;
+        this.snippetsById = Object.fromEntries(endpointSnippets.map((snippet) => [snippet.id.identifierOverride, snippet]));
     }
 
     public override getDefaultEndpointId(): EndpointId {
@@ -51,10 +51,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getUsageSnippetForEndpoint(endpointId: string) {
-        const snippet = this.allEndpointSnippets.find(
-            (endpoint) => endpoint.id.identifierOverride === endpointId
-        )?.snippet;
-        return snippet;
+        return this.snippetsById[endpointId]?.snippet;
     }
 
     private getEndpointIdsForFeature(featureId: FeatureId): EndpointId[] | undefined {
