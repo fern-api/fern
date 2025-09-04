@@ -38,7 +38,7 @@ private func main() async throws {
     try await client.headers.send(request: .init(
         endpointVersion: .value,
         async: ,
-        query: "What is the weather today"
+        query: "query"
     ))
 }
 
