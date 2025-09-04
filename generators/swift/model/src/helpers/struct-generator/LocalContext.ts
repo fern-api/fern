@@ -1,6 +1,6 @@
 import { noop } from "@fern-api/core-utils";
 import { LocalTypeRegistry } from "@fern-api/swift-base";
-import { swift } from "@fern-api/swift-codegen";
+import { LiteralEnum, swift } from "@fern-api/swift-codegen";
 import { TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { LiteralEnumGenerator } from "../../literal";
@@ -63,7 +63,7 @@ export class LocalContext implements LocalTypeRegistry {
                                 literal._visit({
                                     string: (literalValue) => {
                                         const enumName = symbolRegistry.registerStringLiteralSymbolIfNotExists(
-                                            LiteralEnumGenerator.generateName(literalValue),
+                                            LiteralEnum.generateName(literalValue),
                                             literalValue
                                         );
                                         const literalEnumGenerator = new LiteralEnumGenerator({

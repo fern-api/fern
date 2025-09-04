@@ -14,9 +14,7 @@ pub struct User {
     pub phone_number: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub phone_verified: Option<bool>,
-    #[serde(with = "chrono::serde::ts_seconds")]
     pub created_at: chrono::DateTime<chrono::Utc>,
-    #[serde(with = "chrono::serde::ts_seconds")]
     pub updated_at: chrono::DateTime<chrono::Utc>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub identities: Option<Vec<Identity>>,
@@ -34,7 +32,6 @@ pub struct User {
     pub multifactor: Option<Vec<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub last_ip: Option<String>,
-    #[serde(with = "chrono::serde::ts_seconds_option")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub last_login: Option<chrono::DateTime<chrono::Utc>>,
     #[serde(skip_serializing_if = "Option::is_none")]

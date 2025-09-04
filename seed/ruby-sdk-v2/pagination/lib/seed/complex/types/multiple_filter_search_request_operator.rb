@@ -7,7 +7,8 @@ module Seed
         extend Seed::Internal::Types::Enum
 
         AND = "AND"
-        OR = "OR"end
+        OR = "OR"
+      end
     end
   end
 end

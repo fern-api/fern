@@ -13,9 +13,7 @@ public class Example12
             }
         );
 
-        await client.Service.GetMovieAsync(
-            "movie-c06a4ad7"
-        );
+        await client.Health.Service.PingAsync();
     }
 
 }

@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -7,12 +7,12 @@ pub struct ContainerClient {
 }
 
 impl ContainerClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn get_and_return_list_of_primitives(&self, request: &Vec<String>, options: Option<RequestOptions>) -> Result<Vec<String>, ClientError> {
+    pub async fn get_and_return_list_of_primitives(&self, request: &Vec<String>, options: Option<RequestOptions>) -> Result<Vec<String>, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/container/list-of-primitives",
@@ -22,7 +22,7 @@ impl ContainerClient {
         ).await
     }
 
-    pub async fn get_and_return_list_of_objects(&self, request: &Vec<ObjectWithRequiredField>, options: Option<RequestOptions>) -> Result<Vec<ObjectWithRequiredField>, ClientError> {
+    pub async fn get_and_return_list_of_objects(&self, request: &Vec<ObjectWithRequiredField>, options: Option<RequestOptions>) -> Result<Vec<ObjectWithRequiredField>, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/container/list-of-objects",
@@ -32,7 +32,7 @@ impl ContainerClient {
         ).await
     }
 
-    pub async fn get_and_return_set_of_primitives(&self, request: &std::collections::HashSet<String>, options: Option<RequestOptions>) -> Result<std::collections::HashSet<String>, ClientError> {
+    pub async fn get_and_return_set_of_primitives(&self, request: &std::collections::HashSet<String>, options: Option<RequestOptions>) -> Result<std::collections::HashSet<String>, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/container/set-of-primitives",
@@ -42,7 +42,7 @@ impl ContainerClient {
         ).await
     }
 
-    pub async fn get_and_return_set_of_objects(&self, request: &std::collections::HashSet<ObjectWithRequiredField>, options: Option<RequestOptions>) -> Result<std::collections::HashSet<ObjectWithRequiredField>, ClientError> {
+    pub async fn get_and_return_set_of_objects(&self, request: &std::collections::HashSet<ObjectWithRequiredField>, options: Option<RequestOptions>) -> Result<std::collections::HashSet<ObjectWithRequiredField>, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/container/set-of-objects",
@@ -52,7 +52,7 @@ impl ContainerClient {
         ).await
     }
 
-    pub async fn get_and_return_map_prim_to_prim(&self, request: &HashMap<String, String>, options: Option<RequestOptions>) -> Result<HashMap<String, String>, ClientError> {
+    pub async fn get_and_return_map_prim_to_prim(&self, request: &HashMap<String, String>, options: Option<RequestOptions>) -> Result<HashMap<String, String>, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/container/map-prim-to-prim",
@@ -62,7 +62,7 @@ impl ContainerClient {
         ).await
     }
 
-    pub async fn get_and_return_map_of_prim_to_object(&self, request: &HashMap<String, ObjectWithRequiredField>, options: Option<RequestOptions>) -> Result<HashMap<String, ObjectWithRequiredField>, ClientError> {
+    pub async fn get_and_return_map_of_prim_to_object(&self, request: &HashMap<String, ObjectWithRequiredField>, options: Option<RequestOptions>) -> Result<HashMap<String, ObjectWithRequiredField>, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/container/map-prim-to-object",
@@ -72,7 +72,7 @@ impl ContainerClient {
         ).await
     }
 
-    pub async fn get_and_return_optional(&self, request: &Option<ObjectWithRequiredField>, options: Option<RequestOptions>) -> Result<Option<ObjectWithRequiredField>, ClientError> {
+    pub async fn get_and_return_optional(&self, request: &Option<ObjectWithRequiredField>, options: Option<RequestOptions>) -> Result<Option<ObjectWithRequiredField>, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/container/opt-objects",

@@ -78,6 +78,7 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	commons "github.com/acme/acme-go/commons"
 	option "github.com/acme/acme-go/option"
 )
 
@@ -117,6 +118,22 @@ func do() {
 					},
 				},
 				Revenue: 1000000,
+			},
+			EventInfo: &commons.EventInfo{
+				Metadata: &commons.Metadata{
+					ID: "event-12345",
+					Data: map[string]string{
+						"key1": "val1",
+						"key2": "val2",
+					},
+					JSONString: acme.String(
+						"abc",
+					),
+				},
+			},
+			Migration: &acme.Migration{
+				Name:   "Migration 31 Aug",
+				Status: acme.MigrationStatusRunning,
 			},
 		},
 	)
@@ -825,6 +842,7 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	commons "github.com/acme/acme-go/commons"
 	option "github.com/acme/acme-go/option"
 )
 
@@ -864,6 +882,22 @@ func do() {
 					},
 				},
 				Revenue: 1000000,
+			},
+			EventInfo: &commons.EventInfo{
+				Metadata: &commons.Metadata{
+					ID: "event-12345",
+					Data: map[string]string{
+						"key1": "val1",
+						"key2": "val2",
+					},
+					JSONString: acme.String(
+						"abc",
+					),
+				},
+			},
+			Migration: &acme.Migration{
+				Name:   "Migration 31 Aug",
+				Status: acme.MigrationStatusRunning,
 			},
 		},
 	)

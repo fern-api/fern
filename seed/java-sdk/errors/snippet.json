@@ -1,0 +1,252 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "2410f9ff",
+            "id": {
+                "method": "POST",
+                "path": "/foo1",
+                "identifier_override": "endpoint_simple.fooWithoutEndpointError"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithoutEndpointError(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithoutEndpointError(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "91e10777",
+            "id": {
+                "method": "POST",
+                "path": "/foo1",
+                "identifier_override": "endpoint_simple.fooWithoutEndpointError"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithoutEndpointError(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithoutEndpointError(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "fb1f6bc1",
+            "id": {
+                "method": "POST",
+                "path": "/foo1",
+                "identifier_override": "endpoint_simple.fooWithoutEndpointError"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithoutEndpointError(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithoutEndpointError(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "d5eb8f1d",
+            "id": {
+                "method": "POST",
+                "path": "/foo1",
+                "identifier_override": "endpoint_simple.fooWithoutEndpointError"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithoutEndpointError(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithoutEndpointError(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "2410f9ff",
+            "id": {
+                "method": "POST",
+                "path": "/foo2",
+                "identifier_override": "endpoint_simple.foo"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().foo(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().foo(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "b3c4361f",
+            "id": {
+                "method": "POST",
+                "path": "/foo2",
+                "identifier_override": "endpoint_simple.foo"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().foo(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().foo(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "85e7d2ef",
+            "id": {
+                "method": "POST",
+                "path": "/foo2",
+                "identifier_override": "endpoint_simple.foo"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().foo(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().foo(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "91e10777",
+            "id": {
+                "method": "POST",
+                "path": "/foo2",
+                "identifier_override": "endpoint_simple.foo"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().foo(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().foo(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "fb1f6bc1",
+            "id": {
+                "method": "POST",
+                "path": "/foo2",
+                "identifier_override": "endpoint_simple.foo"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().foo(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().foo(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "d5eb8f1d",
+            "id": {
+                "method": "POST",
+                "path": "/foo2",
+                "identifier_override": "endpoint_simple.foo"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().foo(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().foo(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "200aeafb",
+            "id": {
+                "method": "POST",
+                "path": "/foo3",
+                "identifier_override": "endpoint_simple.fooWithExamples"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithExamples(\n            FooRequest\n                .builder()\n                .bar(\"hello\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithExamples(\n            FooRequest\n                .builder()\n                .bar(\"hello\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "2a092bdd",
+            "id": {
+                "method": "POST",
+                "path": "/foo3",
+                "identifier_override": "endpoint_simple.fooWithExamples"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithExamples(\n            FooRequest\n                .builder()\n                .bar(\"hello\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithExamples(\n            FooRequest\n                .builder()\n                .bar(\"hello\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "65d7c262",
+            "id": {
+                "method": "POST",
+                "path": "/foo3",
+                "identifier_override": "endpoint_simple.fooWithExamples"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithExamples(\n            FooRequest\n                .builder()\n                .bar(\"hello\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithExamples(\n            FooRequest\n                .builder()\n                .bar(\"hello\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "2410f9ff",
+            "id": {
+                "method": "POST",
+                "path": "/foo3",
+                "identifier_override": "endpoint_simple.fooWithExamples"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithExamples(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithExamples(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "b3c4361f",
+            "id": {
+                "method": "POST",
+                "path": "/foo3",
+                "identifier_override": "endpoint_simple.fooWithExamples"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithExamples(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithExamples(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "85e7d2ef",
+            "id": {
+                "method": "POST",
+                "path": "/foo3",
+                "identifier_override": "endpoint_simple.fooWithExamples"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithExamples(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithExamples(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "91e10777",
+            "id": {
+                "method": "POST",
+                "path": "/foo3",
+                "identifier_override": "endpoint_simple.fooWithExamples"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithExamples(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithExamples(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "fb1f6bc1",
+            "id": {
+                "method": "POST",
+                "path": "/foo3",
+                "identifier_override": "endpoint_simple.fooWithExamples"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithExamples(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithExamples(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "d5eb8f1d",
+            "id": {
+                "method": "POST",
+                "path": "/foo3",
+                "identifier_override": "endpoint_simple.fooWithExamples"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithExamples(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errors.SeedErrorsClient;\nimport com.seed.errors.resources.simple.types.FooRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorsClient client = SeedErrorsClient\n            .builder()\n            .build();\n\n        client.simple().fooWithExamples(\n            FooRequest\n                .builder()\n                .bar(\"bar\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

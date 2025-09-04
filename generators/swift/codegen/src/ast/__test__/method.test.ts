@@ -323,7 +323,7 @@ describe("Method", () => {
                 body: swift.CodeBlock.withStatements([
                     swift.Statement.constantDeclaration({
                         unsafeName: "name",
-                        value: swift.Expression.rawStringValue("John Appleseed")
+                        value: swift.Expression.stringLiteral("John Appleseed")
                     }),
                     swift.Statement.return(swift.Expression.rawValue("name"))
                 ])

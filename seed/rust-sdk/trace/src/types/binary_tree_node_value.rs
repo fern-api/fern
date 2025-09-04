@@ -1,7 +1,7 @@
 use crate::node_id::NodeId;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct BinaryTreeNodeValue {
     #[serde(rename = "nodeId")]
     pub node_id: NodeId,

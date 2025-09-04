@@ -1,7 +1,7 @@
 use crate::shape::Shape;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Type {
     pub decimal: f64,
     pub even: i32,

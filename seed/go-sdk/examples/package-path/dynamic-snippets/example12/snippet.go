@@ -15,8 +15,7 @@ func do() {
             "<token>",
         ),
     )
-    client.Service.GetMovie(
+    client.Health.Service.Ping(
         context.TODO(),
-        "movie-c06a4ad7",
     )
 }

@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError};
+use crate::{ClientConfig, ApiError};
 
 pub mod folder_a;
 pub mod folder_d;
@@ -11,7 +11,7 @@ pub struct AudiencesClient {
 }
 
 impl AudiencesClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
             folder_a: FolderAClient::new(config.clone())?,

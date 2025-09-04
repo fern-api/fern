@@ -1,0 +1,24 @@
+{
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src",
+    "types": ["vitest/globals"]
+  },
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../../packages/commons/path-utils"
+    },
+    {
+      "path": "../../browser-compatible-base"
+    },
+    {
+      "path": "../codegen"
+    }
+  ]
+}

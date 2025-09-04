@@ -27,6 +27,7 @@ on:
       - "generators/**"
       - "seed/**"
   workflow_call:
+  workflow_dispatch:
 
 # Cancel previous workflows on previous push
 concurrency:
@@ -39,7 +40,7 @@ jobs:
     outputs:
       seed: ${{ steps.filter.outputs.seed }}
       ruby: ${{ steps.filter.outputs.ruby }}
-      ruby-v2: ${{ steps.filter.outputs.ruby }}
+      ruby-v2: ${{ steps.filter.outputs.ruby-v2 }}
       openapi: ${{ steps.filter.outputs.openapi }}
       python: ${{ steps.filter.outputs.python }}
       postman: ${{ steps.filter.outputs.postman }}
@@ -48,6 +49,7 @@ jobs:
       go: ${{ steps.filter.outputs.go }}
       csharp: ${{ steps.filter.outputs.csharp }}
       php: ${{ steps.filter.outputs.php }}
+      swift: ${{ steps.filter.outputs.swift }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -67,6 +69,7 @@ jobs:
               - 'seed/ruby-model/**'
             ruby-v2:
               - 'generators/ruby-v2/**'
+              - 'seed/ruby-sdk-v2/**'
             openapi:
               - 'generators/openapi/**'
               - 'seed/openapi/**'
@@ -101,6 +104,9 @@ jobs:
               - 'generators/php/**'
               - 'seed/php-sdk/**'
               - 'seed/php-model/**'
+            swift:
+              - 'generators/swift/**'
+              - 'seed/swift-sdk/**'
       - name: retry-on-failure
         if: failure() && steps.filter.outcome == 'failure' && fromJSON(github.run_attempt) < 3
         env:
@@ -112,7 +118,7 @@ jobs:
   ruby-model:
     runs-on: Seed
     needs: changes
-    if: ${{ (needs.changes.outputs.ruby == 'true' || needs.changes.outputs.seed == 'true') && github.event.pull_request.draft == false }}
+    if: ${{ ((needs.changes.outputs.ruby == 'true' || needs.changes.outputs.seed == 'true') && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -128,8 +134,8 @@ jobs:
     needs: changes
     if: >-
       ${{
-        (needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false
+        ((needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
       - name: Checkout repo
@@ -146,8 +152,8 @@ jobs:
     needs: changes
     if: >-
       ${{
-        (needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false
+        ((needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
       - name: Checkout repo
@@ -164,8 +170,8 @@ jobs:
     needs: changes
     if: >-
       ${{
-        (needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false
+        ((needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
       - name: Checkout repo
@@ -182,8 +188,8 @@ jobs:
     needs: changes
     if: >-
       ${{
-        (needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false
+        ((needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
       - name: Checkout repo
@@ -200,8 +206,8 @@ jobs:
     needs: changes
     if: >-
       ${{
-        (needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false
+        ((needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
       - name: Checkout repo
@@ -218,8 +224,8 @@ jobs:
     needs: changes
     if: >-
       ${{
-        (needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false
+        ((needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
       - name: Checkout repo
@@ -236,8 +242,8 @@ jobs:
     needs: changes
     if: >-
       ${{
-        (needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false
+        ((needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
       - name: Checkout repo
@@ -254,8 +260,8 @@ jobs:
     needs: changes
     if: >-
       ${{
-        (needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false
+        ((needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
       - name: Checkout repo
@@ -272,8 +278,8 @@ jobs:
     needs: changes
     if: >-
       ${{
-        (needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false
+        ((needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
       - name: Checkout repo
@@ -290,8 +296,8 @@ jobs:
     needs: changes
     if: >-
       ${{
-        (needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false
+        ((needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
       - name: Checkout repo
@@ -308,9 +314,9 @@ jobs:
     needs: changes
     if: >-
       ${{
-        (needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true')
+        (((needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch')
         && github.repository == 'fern-api/fern'
-        && github.event.pull_request.draft == false
       }}
     steps:
       - name: Checkout repo
@@ -327,8 +333,8 @@ jobs:
     needs: changes
     if: >-
       ${{
-        (needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false
+        ((needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
       - name: Checkout repo
@@ -345,8 +351,8 @@ jobs:
     needs: changes
     if: >-
       ${{
-        (needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false
+        ((needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
       - name: Checkout repo
@@ -363,8 +369,8 @@ jobs:
     needs: changes
     if: >-
       ${{
-        (needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false
+        ((needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
       - name: Checkout repo
@@ -381,8 +387,8 @@ jobs:
     needs: changes
     if: >-
       ${{
-        (needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false
+        ((needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
       - name: Checkout repo
@@ -399,8 +405,8 @@ jobs:
     needs: changes
     if: >-
       ${{
-        (needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false
+        ((needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
       - name: Checkout repo
@@ -417,8 +423,8 @@ jobs:
     needs: changes
     if: >-
       ${{
-        (needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false
+        ((needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
       - name: Checkout repo
@@ -435,8 +441,8 @@ jobs:
     needs: changes
     if: >-
       ${{
-        (needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false
+        ((needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
       - name: Checkout repo
@@ -453,8 +459,8 @@ jobs:
     needs: changes
     if: >-
       ${{
-        (needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false
+        ((needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
       - name: Checkout repo
@@ -465,3 +471,21 @@ jobs:
         with:
           generator-name: php-sdk
           generator-path: generators/php
+
+  swift-sdk:
+    runs-on: Seed
+    needs: changes
+    if: >-
+      ${{
+        ((needs.changes.outputs.swift == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: swift-sdk
+          generator-path: generators/swift

@@ -415,6 +415,29 @@ export abstract class AbstractSpecConverter<
         this.ir.rootPackage.types.push(typeId);
     }
 
+    protected addSchemaOutputToIr(typeId: FernIr.TypeId, output: SchemaConverter.Output): void {
+        /**
+         * Adds a schema output to the IR, handling potential naming conflicts.
+         *
+         * When inlined types have the same ID as the main type, this method automatically
+         * postfixes the main type ID with "Wrapper" to avoid conflicts. The main type
+         * is added to the root package, and all types (main + inlined) are added to the IR.
+         *
+         * @param typeId - The identifier for the main type
+         * @param output - The schema converter output containing the main type and any inlined types
+         */
+        const { convertedSchema, inlinedTypes } = output;
+
+        const shouldPostfixId = Object.keys(inlinedTypes).some((inlineTypeId) => inlineTypeId === typeId);
+        const safeTypeId = shouldPostfixId ? `${typeId}Wrapper` : typeId;
+
+        this.addTypeToPackage(safeTypeId);
+        this.addTypesToIr({
+            ...inlinedTypes,
+            [safeTypeId]: convertedSchema
+        });
+    }
+
     protected addTypeToPackage(typeId: FernIr.TypeId): void {
         const group = this.context.getGroup({
             groupParts: [],
