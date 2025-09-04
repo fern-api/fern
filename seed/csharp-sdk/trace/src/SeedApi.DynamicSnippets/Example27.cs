@@ -13,7 +13,7 @@ public class Example27
             }
         );
 
-        await client.V2.Problem.GetLightweightProblemsAsync();
+        await client.Submission.GetExecutionSessionsStateAsync();
     }
 
 }
