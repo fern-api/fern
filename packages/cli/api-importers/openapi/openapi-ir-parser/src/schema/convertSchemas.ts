@@ -967,7 +967,9 @@ export function convertSchemaObject(
     }
 
     if (schema.type != null) {
-        context.logger.warn(`Failed to parse an OpenAPI schema at the following location: ${breadcrumbs.join("->")}. Coercing to unknown.`);
+        context.logger.warn(
+            `Failed to parse an OpenAPI schema at the following location: ${breadcrumbs.join("->")}. Coercing to unknown.`
+        );
     }
 
     const inferredValue = schema.example ?? schema.default;
