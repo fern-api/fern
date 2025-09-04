@@ -7,7 +7,7 @@ import { SeedErrorsClient } from "../../src/Client";
 import * as SeedErrors from "../../src/api/index";
 
 describe("Simple", () => {
-    test("fooWithoutEndpointError", async () => {
+    test("fooWithoutEndpointError (2410f9ff)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -29,7 +29,85 @@ describe("Simple", () => {
         });
     });
 
-    test("foo", async () => {
+    test("fooWithoutEndpointError (91e10777)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const rawRequestBody = { bar: "bar" };
+        const rawResponseBody = { message: "message", code: 1 };
+        server
+            .mockEndpoint()
+            .post("/foo1")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.simple.fooWithoutEndpointError({
+                bar: "bar",
+            });
+        }).rejects.toThrow(
+            new SeedErrors.NotFoundError({
+                message: "message",
+                code: 1,
+            }),
+        );
+    });
+
+    test("fooWithoutEndpointError (fb1f6bc1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const rawRequestBody = { bar: "bar" };
+        const rawResponseBody = { message: "message", code: 1 };
+        server
+            .mockEndpoint()
+            .post("/foo1")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.simple.fooWithoutEndpointError({
+                bar: "bar",
+            });
+        }).rejects.toThrow(
+            new SeedErrors.BadRequestError({
+                message: "message",
+                code: 1,
+            }),
+        );
+    });
+
+    test("fooWithoutEndpointError (d5eb8f1d)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const rawRequestBody = { bar: "bar" };
+        const rawResponseBody = { message: "message", code: 1 };
+        server
+            .mockEndpoint()
+            .post("/foo1")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(500)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.simple.fooWithoutEndpointError({
+                bar: "bar",
+            });
+        }).rejects.toThrow(
+            new SeedErrors.InternalServerError({
+                message: "message",
+                code: 1,
+            }),
+        );
+    });
+
+    test("foo (2410f9ff)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -49,6 +127,136 @@ describe("Simple", () => {
         expect(response).toEqual({
             bar: "bar",
         });
+    });
+
+    test("foo (b3c4361f)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const rawRequestBody = { bar: "bar" };
+        const rawResponseBody = { message: "message", code: 1 };
+        server
+            .mockEndpoint()
+            .post("/foo2")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(429)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.simple.foo({
+                bar: "bar",
+            });
+        }).rejects.toThrow(
+            new SeedErrors.FooTooMuch({
+                message: "message",
+                code: 1,
+            }),
+        );
+    });
+
+    test("foo (85e7d2ef)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const rawRequestBody = { bar: "bar" };
+        const rawResponseBody = { message: "message", code: 1 };
+        server
+            .mockEndpoint()
+            .post("/foo2")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(500)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.simple.foo({
+                bar: "bar",
+            });
+        }).rejects.toThrow(
+            new SeedErrors.FooTooLittle({
+                message: "message",
+                code: 1,
+            }),
+        );
+    });
+
+    test("foo (91e10777)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const rawRequestBody = { bar: "bar" };
+        const rawResponseBody = { message: "message", code: 1 };
+        server
+            .mockEndpoint()
+            .post("/foo2")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.simple.foo({
+                bar: "bar",
+            });
+        }).rejects.toThrow(
+            new SeedErrors.NotFoundError({
+                message: "message",
+                code: 1,
+            }),
+        );
+    });
+
+    test("foo (fb1f6bc1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const rawRequestBody = { bar: "bar" };
+        const rawResponseBody = { message: "message", code: 1 };
+        server
+            .mockEndpoint()
+            .post("/foo2")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.simple.foo({
+                bar: "bar",
+            });
+        }).rejects.toThrow(
+            new SeedErrors.BadRequestError({
+                message: "message",
+                code: 1,
+            }),
+        );
+    });
+
+    test("foo (d5eb8f1d)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const rawRequestBody = { bar: "bar" };
+        const rawResponseBody = { message: "message", code: 1 };
+        server
+            .mockEndpoint()
+            .post("/foo2")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(500)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.simple.foo({
+                bar: "bar",
+            });
+        }).rejects.toThrow(
+            new SeedErrors.InternalServerError({
+                message: "message",
+                code: 1,
+            }),
+        );
     });
 
     test("fooWithExamples (200aeafb)", async () => {
