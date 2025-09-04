@@ -593,17 +593,17 @@ function getRequest({
             value: convertedRequestValue
         };
     } else if (request.type === "octetStream") {
-    	const convertedRequestValue: RawSchemas.HttpRequestSchema = {
-			body: "bytes",
-			"content-type": request.contentType ?? MediaType.APPLICATION_OCTET_STREAM,
-         	"query-parameters": queryParameters,
+        const convertedRequestValue: RawSchemas.HttpRequestSchema = {
+            body: "bytes",
+            "content-type": request.contentType ?? MediaType.APPLICATION_OCTET_STREAM,
+            "query-parameters": queryParameters
         };
-		if (queryParameters != null) {
-			convertedRequestValue.name = requestNameOverride ?? generatedRequestName;
-		}
-		if (request.description != null) {
-			convertedRequestValue.docs = request.description;
-		}
+        if (queryParameters != null) {
+            convertedRequestValue.name = requestNameOverride ?? generatedRequestName;
+        }
+        if (request.description != null) {
+            convertedRequestValue.docs = request.description;
+        }
         return {
             schemaIdsToExclude: [],
             value: convertedRequestValue
