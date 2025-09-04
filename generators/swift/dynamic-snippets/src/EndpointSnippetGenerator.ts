@@ -96,7 +96,13 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.Auth | undefined;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }) {
-        const rootClientArgs = auth ? this.getRootClientAuthArgs({ auth, snippet }) : [];
+        const rootClientArgs: swift.FunctionArgument[] = [];
+        const baseUrlArg = this.getRootClientBaseURLArg({ snippet });
+        if (baseUrlArg != null) {
+            rootClientArgs.push(baseUrlArg);
+        }
+        const authArgs = auth ? this.getRootClientAuthArgs({ auth, snippet }) : [];
+        rootClientArgs.push(...authArgs);
         return swift.Statement.constantDeclaration({
             unsafeName: CLIENT_CONST_NAME,
             value: swift.Expression.classInitialization({
@@ -107,6 +113,28 @@ export class EndpointSnippetGenerator {
         });
     }
 
+    private getRootClientBaseURLArg({ snippet }: { snippet: FernIr.dynamic.EndpointSnippetRequest }) {
+        if (snippet.baseURL != null && snippet.environment != null) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: "Cannot specify both baseUrl and environment options"
+            });
+            return null;
+        }
+        if (snippet.baseURL != null) {
+            if (this.context.ir.environments?.environments.type === "multipleBaseUrls") {
+                // TODO(kafkas): Not implemented yet
+                return null;
+            } else {
+                return swift.functionArgument({
+                    label: "baseURL",
+                    value: swift.Expression.stringLiteral(snippet.baseURL)
+                });
+            }
+        }
+        return null;
+    }
+
     private getRootClientAuthArgs({
         auth,
         snippet
@@ -115,25 +143,6 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): swift.FunctionArgument[] {
         const args: swift.FunctionArgument[] = [];
-
-        if (snippet.baseURL != null && snippet.environment != null) {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: "Cannot specify both baseUrl and environment options"
-            });
-        }
-        if (snippet.baseURL != null) {
-            if (this.context.ir.environments?.environments.type === "multipleBaseUrls") {
-                // TODO(kafkas): Not implemented yet
-            } else {
-                args.push(
-                    swift.functionArgument({
-                        label: "baseURL",
-                        value: swift.Expression.stringLiteral(snippet.baseURL)
-                    })
-                );
-            }
-        }
 
         const values = snippet.auth;
 

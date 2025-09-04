@@ -409,7 +409,7 @@ exports[`snippets (default) > nullable > 'Body properties' 1`] = `
 import Acme
 
 private func main() async throws {
-    let client = AcmeClient()
+    let client = AcmeClient(baseURL: "https://api.example.com")
 
     try await client.nullable.createUser(request: .init(
         username: "john.doe",
@@ -447,7 +447,7 @@ exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
 import Acme
 
 private func main() async throws {
-    let client = AcmeClient()
+    let client = AcmeClient(baseURL: "https://api.example.com")
 
     try await client.nullable.getUsers(request: .init(
         usernames: [
