@@ -21,7 +21,7 @@ export class DynamicTypeMapper {
     public convert(args: DynamicTypeMapper.Args): swift.Type {
         switch (args.typeReference.type) {
             case "list":
-                return swift.Type.array(this.convert({ typeReference: args.typeReference }));
+                return swift.Type.array(this.convert({ typeReference: args.typeReference.value }));
             case "literal":
                 return this.convertLiteral({ literal: args.typeReference.value });
             case "map": {
