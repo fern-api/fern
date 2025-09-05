@@ -1331,6 +1331,32 @@ export class SubClientGenerator {
         return this.generateFormDataUpload(params).toString();
     }
 
+    private createRefPattern(pattern: string): string {
+        // Convert patterns to use ref to avoid moving values
+        return pattern
+            .replace("Some(value)", "Some(ref value)")
+            .replace("Some(Some(value))", "Some(Some(ref value))");
+    }
+
+    private addOptionalTextField(
+        statements: Statement[],
+        paramName: string,
+        valueExpr: Expression
+    ): void {
+        statements.push(
+            Statement.ifLet("Some(ref value)", Expression.reference(paramName), [
+                Statement.assignment(
+                    Expression.reference("form"),
+                    Expression.functionCall("crate::core::add_text_field", [
+                        Expression.reference("form"),
+                        Expression.stringLiteral(paramName),
+                        Expression.referenceOf(valueExpr)
+                    ])
+                )
+            ])
+        );
+    }
+
     private generateFormDataUpload(params: EndpointParameter[]): Expression {
         const statements: Statement[] = [];
 
@@ -1380,7 +1406,7 @@ export class SubClientGenerator {
                     );
                 }
             } else if (param.optional && param.typeRef) {
-                // Handle non-file optional parameters
+                // Handle non-file optional parameters with typeRef
                 const isNestedOptional = this.isOptionalContainerType(param.typeRef);
                 const pattern = isNestedOptional ? "Some(Some(value))" : "Some(value)";
                 const valueExpr = this.isComplexType(param.typeRef)
@@ -1402,7 +1428,7 @@ export class SubClientGenerator {
                       });
 
                 statements.push(
-                    Statement.ifLet(pattern, Expression.referenceOf(Expression.reference(param.name)), [
+                    Statement.ifLet(this.createRefPattern(pattern), Expression.reference(param.name), [
                         Statement.assignment(
                             Expression.reference("form"),
                             Expression.functionCall("crate::core::add_text_field", [
@@ -1415,8 +1441,32 @@ export class SubClientGenerator {
                 );
             } else if (param.optional) {
                 // Fallback for params without typeRef
-                statements.push(
-                    Statement.ifLet("Some(value)", Expression.referenceOf(Expression.reference(param.name)), [
+                this.addOptionalTextField(
+                    statements,
+                    param.name,
+                    Expression.methodCall({
+                        target: Expression.reference("value"),
+                        method: "to_string",
+                        args: []
+                    })
+                );
+            } else {
+                // Non-optional, non-file parameters - but check if it's actually an Option<T>
+                const isOptionType = param.type.toString().startsWith("Option<");
+                if (isOptionType) {
+                    // Handle Option<T> types that weren't caught by the optional check
+                    this.addOptionalTextField(
+                        statements,
+                        param.name,
+                        Expression.methodCall({
+                            target: Expression.reference("value"),
+                            method: "to_string",
+                            args: []
+                        })
+                    );
+                } else {
+                    // Truly non-optional parameters
+                    statements.push(
                         Statement.assignment(
                             Expression.reference("form"),
                             Expression.functionCall("crate::core::add_text_field", [
@@ -1424,33 +1474,15 @@ export class SubClientGenerator {
                                 Expression.stringLiteral(param.name),
                                 Expression.referenceOf(
                                     Expression.methodCall({
-                                        target: Expression.reference("value"),
+                                        target: Expression.reference(param.name),
                                         method: "to_string",
                                         args: []
                                     })
                                 )
                             ])
                         )
-                    ])
-                );
-            } else {
-                // Non-optional, non-file parameters
-                statements.push(
-                    Statement.assignment(
-                        Expression.reference("form"),
-                        Expression.functionCall("crate::core::add_text_field", [
-                            Expression.reference("form"),
-                            Expression.stringLiteral(param.name),
-                            Expression.referenceOf(
-                                Expression.methodCall({
-                                    target: Expression.reference(param.name),
-                                    method: "to_string",
-                                    args: []
-                                })
-                            )
-                        ])
-                    )
-                );
+                    );
+                }
             }
         }
 
