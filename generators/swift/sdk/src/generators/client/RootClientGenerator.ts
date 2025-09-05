@@ -212,7 +212,22 @@ export class RootClientGenerator {
                               arguments_: [
                                   swift.functionArgument({
                                       label: "token",
-                                      value: swift.Expression.reference(authSchemes.bearer.stringParam.unsafeName)
+                                      value: swift.Expression.contextualMethodCall({
+                                          methodName: visitDiscriminatedUnion(
+                                              { bearerTokenParamType },
+                                              "bearerTokenParamType"
+                                          )._visit({
+                                              string: () => "staticToken",
+                                              "async-provider": () => "provider"
+                                          }),
+                                          arguments_: [
+                                              swift.functionArgument({
+                                                  value: swift.Expression.reference(
+                                                      authSchemes.bearer.stringParam.unsafeName
+                                                  )
+                                              })
+                                          ]
+                                      })
                                   })
                               ]
                           })
@@ -499,6 +514,7 @@ export class RootClientGenerator {
                     asyncProviderParam: swift.functionParameter({
                         argumentLabel: scheme.token.camelCase.unsafeName,
                         unsafeName: scheme.token.camelCase.unsafeName,
+                        escaping: isAuthMandatory ? true : undefined,
                         type: isAuthMandatory
                             ? swift.Type.custom("ClientConfig.CredentialProvider")
                             : swift.Type.optional(swift.Type.custom("ClientConfig.CredentialProvider")),

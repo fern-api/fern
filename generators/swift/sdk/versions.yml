@@ -1,5 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.12.2
+  createdAt: "2025-09-05"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Request headers in endpoint methods are now restricted to String types only.
+  irVersion: 59
+
+- version: 0.12.1
+  createdAt: "2025-09-05"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Required bearer token param in root client convenience initializer is now correctly marked as `@escaping` and the relevant argument is now initialized properly.
+  irVersion: 59
+
 - version: 0.12.0
   createdAt: "2025-09-04"
   changelogEntry:
