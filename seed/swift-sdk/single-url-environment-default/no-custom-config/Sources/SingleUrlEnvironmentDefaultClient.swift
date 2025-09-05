@@ -24,7 +24,7 @@ public final class SingleUrlEnvironmentDefaultClient: Sendable {
         self.init(
             baseURL: baseURL,
             headerAuth: nil,
-            bearerAuth: .init(token: token),
+            bearerAuth: .init(token: .staticToken(token)),
             basicAuth: nil,
             headers: headers,
             timeout: timeout,
@@ -43,7 +43,7 @@ public final class SingleUrlEnvironmentDefaultClient: Sendable {
     /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
     public convenience init(
         baseURL: String = SingleUrlEnvironmentDefaultEnvironment.production.rawValue,
-        token: ClientConfig.CredentialProvider,
+        token: @escaping ClientConfig.CredentialProvider,
         headers: [String: String]? = nil,
         timeout: Int? = nil,
         maxRetries: Int? = nil,
@@ -52,7 +52,7 @@ public final class SingleUrlEnvironmentDefaultClient: Sendable {
         self.init(
             baseURL: baseURL,
             headerAuth: nil,
-            bearerAuth: .init(token: token),
+            bearerAuth: .init(token: .provider(token)),
             basicAuth: nil,
             headers: headers,
             timeout: timeout,
