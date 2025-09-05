@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "ad976fea",
+            "example_identifier": "9963cb8c",
             "id": {
                 "method": "POST",
                 "path": "/{id}/",
