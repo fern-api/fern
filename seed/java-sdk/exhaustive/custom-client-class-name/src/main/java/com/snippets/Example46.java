@@ -1,6 +1,7 @@
 package com.snippets;
 
 import com.seed.exhaustive.Best;
+import java.util.HashMap;
 
 public class Example46 {
     public static void main(String[] args) {
@@ -10,6 +11,8 @@ public class Example46 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().urls().withMixedCase();
+        client.noAuth().postWithNoAuth(new 
+        HashMap<String, Object>() {{put("key", "value");
+        }});
     }
 }

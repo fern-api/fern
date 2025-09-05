@@ -410,6 +410,36 @@ await client.playlist.getPlaylist(1, "playlistId");
 import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
+await client.playlist.getPlaylist(1, "playlistId");
+
+```
+
+
+```typescript
+import { SeedTraceClient } from "@fern/trace";
+
+const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
+await client.playlist.getPlaylist(1, "playlistId");
+
+```
+
+
+```typescript
+import { SeedTraceClient } from "@fern/trace";
+
+const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
+await client.playlist.updatePlaylist(1, "playlistId", {
+  name: "name",
+  problems: ["problems", "problems"],
+});
+
+```
+
+
+```typescript
+import { SeedTraceClient } from "@fern/trace";
+
+const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.playlist.updatePlaylist(1, "playlistId", {
   name: "name",
   problems: ["problems", "problems"],

@@ -2525,6 +2525,27 @@
       "description": "An array of results for the Key Phrases model, if it was enabled during the transcription request.\nSee [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.\n",
       "name": "AutoHighlightsResult",
       "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "A temporally-sequential array of Key Phrases",
+            "key": "results",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "AutoHighlightResult"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "AutoHighlightsResultWrapper": {
+      "description": "An array of results for the Key Phrases model, if it was enabled during the transcription request.\nSee [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.\n",
+      "name": "AutoHighlightsResult",
+      "shape": {
         "type": "alias",
         "value": {
           "type": "nullable",
@@ -8964,7 +8985,7 @@
       "ContentSafetyLabel",
       "ContentSafetyLabelResult",
       "SeverityScoreSummary",
-      "AutoHighlightsResult",
+      "AutoHighlightsResultWrapper",
       "AutoHighlightResult",
       "TranscriptWord",
       "TranscriptSentence",

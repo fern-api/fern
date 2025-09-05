@@ -9,13 +9,13 @@ service:
       method: POST
       request:
         name: RequestObject
-        body: 
+        body:
           properties:
             random:
               type: string
               availability: pre-release
       response: string
-    
+
 types:
   Object:
     properties:

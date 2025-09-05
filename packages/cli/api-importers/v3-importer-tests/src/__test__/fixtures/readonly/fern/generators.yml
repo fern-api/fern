@@ -1,5 +1,5 @@
 api:
   specs:
     - openapi: ../openapi.yml
-      settings: 
+      settings:
         respect-readonly-schemas: true

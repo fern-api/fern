@@ -18,7 +18,6 @@ const CLIENT_CONFIG = clientConfigGenerator.generate().fileContents;
 // Read AsIs files for testing
 const API_CLIENT_BUILDER = readAsIsFile("api_client_builder.rs");
 const HTTP_CLIENT = readAsIsFile("http_client.rs");
-const CLIENT_ERROR = readAsIsFile("client_error.rs");
 const REQUEST_OPTIONS = readAsIsFile("request_options.rs");
 
 describe("ClientConfig Auth Patterns", () => {
@@ -33,10 +32,6 @@ describe("ClientConfig Auth Patterns", () => {
 
         it("should match HttpClient from AsIs folder", async () => {
             await expect(HTTP_CLIENT).toMatchFileSnapshot("snapshots/http-client-api-key.rs");
-        });
-
-        it("should match ClientError from AsIs folder", async () => {
-            await expect(CLIENT_ERROR).toMatchFileSnapshot("snapshots/client-error-auth.rs");
         });
 
         it("should match RequestOptions from AsIs folder", async () => {

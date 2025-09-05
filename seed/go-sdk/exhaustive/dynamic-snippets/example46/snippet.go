@@ -15,7 +15,10 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Urls.WithMixedCase(
+    client.NoAuth.PostWithNoAuth(
         context.TODO(),
+        map[string]any{
+            "key": "value",
+        },
     )
 }

@@ -437,7 +437,9 @@ public final class GetUsersRequest {
 
         @java.lang.Override
         public _FinalStage putAllKeyValue(Map<String, String> keyValue) {
-            this.keyValue.putAll(keyValue);
+            if (keyValue != null) {
+                this.keyValue.putAll(keyValue);
+            }
             return this;
         }
 
@@ -464,7 +466,9 @@ public final class GetUsersRequest {
 
         @java.lang.Override
         public _FinalStage addAllUserList(List<User> userList) {
-            this.userList.addAll(userList);
+            if (userList != null) {
+                this.userList.addAll(userList);
+            }
             return this;
         }
 
@@ -490,7 +494,9 @@ public final class GetUsersRequest {
 
         @java.lang.Override
         public _FinalStage addAllFilter(List<String> filter) {
-            this.filter.addAll(filter);
+            if (filter != null) {
+                this.filter.addAll(filter);
+            }
             return this;
         }
 
@@ -516,7 +522,9 @@ public final class GetUsersRequest {
 
         @java.lang.Override
         public _FinalStage addAllExcludeUser(List<User> excludeUser) {
-            this.excludeUser.addAll(excludeUser);
+            if (excludeUser != null) {
+                this.excludeUser.addAll(excludeUser);
+            }
             return this;
         }
 

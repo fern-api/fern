@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 
 pub struct ServiceClient {
@@ -6,12 +6,12 @@ pub struct ServiceClient {
 }
 
 impl ServiceClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn download(&self, id: &String, options: Option<RequestOptions>) -> Result<Vec<u8>, ClientError> {
+    pub async fn download(&self, id: &String, options: Option<RequestOptions>) -> Result<Vec<u8>, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("download-content/{}", id),

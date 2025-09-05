@@ -47,6 +47,9 @@ export class ReadmeConfigBuilder {
             bannerLink: context.ir.readmeConfig?.bannerLink,
             introduction: context.ir.readmeConfig?.introduction,
             referenceMarkdownPath: "./reference.md",
+            apiName: context.ir.readmeConfig?.apiName,
+            disabledFeatures: context.ir.readmeConfig?.disabledFeatures,
+            whiteLabel: context.ir.readmeConfig?.whiteLabel,
             features
         };
     }

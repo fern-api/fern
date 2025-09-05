@@ -14,7 +14,11 @@ public class Example47
             }
         );
 
-        await client.Endpoints.Urls.NoEndingSlashAsync();
+        await client.NoAuth.PostWithNoAuthAsync(
+            new Dictionary<string, object>() {
+                ["key"] = "value",
+            }
+        );
     }
 
 }

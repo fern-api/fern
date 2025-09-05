@@ -7,14 +7,10 @@ public final class HeadersClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func send(endpointVersion: JSONValue, async: JSONValue, request: SendLiteralsInHeadersRequest, requestOptions: RequestOptions? = nil) async throws -> SendResponse {
+    public func send(request: Requests.SendLiteralsInHeadersRequest, requestOptions: RequestOptions? = nil) async throws -> SendResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/headers",
-            headers: [
-                "endpointVersion": endpointVersion, 
-                "async": async
-            ],
             body: request,
             requestOptions: requestOptions,
             responseType: SendResponse.self

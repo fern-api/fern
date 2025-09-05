@@ -42,7 +42,7 @@ paths:
       operationId: update-status2
       x-fern-webhook: true
       x-fern-audiences:
-      - private
+        - private
       x-fern-sdk-group-name: status2
       x-fern-sdk-method-name: update
       requestBody:
@@ -63,12 +63,12 @@ components:
       type: http
       scheme: bearer
   schemas:
-    Update: 
+    Update:
       type: object
       properties:
-        stream: 
+        stream:
           type: boolean
-        message: 
+        message:
           type: string
-      required: 
+      required:
         - message

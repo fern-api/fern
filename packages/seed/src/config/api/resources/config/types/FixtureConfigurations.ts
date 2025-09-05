@@ -14,4 +14,5 @@ export interface FixtureConfigurations {
     outputVersion?: string;
     /** Overrides the default output mode */
     outputMode?: FernSeedConfig.OutputMode;
+    license?: unknown;
 }

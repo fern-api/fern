@@ -13,7 +13,9 @@ public class Example10
             }
         );
 
-        await client.Health.Service.PingAsync();
+        await client.Health.Service.CheckAsync(
+            "id"
+        );
     }
 
 }

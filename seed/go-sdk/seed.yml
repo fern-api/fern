@@ -1,4 +1,4 @@
-irVersion: v58
+irVersion: v59
 displayName: Go SDK
 image: fernapi/fern-go-sdk
 changelogLocation: ../../generators/go/sdk/versions.yml
@@ -56,6 +56,9 @@ fixtures:
         clientName: Acme
         clientConstructorName: New
       readmeConfig:
+        apiName: "CustomName"
+        disabledSections:
+          - "contributing"
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /big-entity
@@ -76,14 +79,6 @@ fixtures:
   imdb:
     - outputFolder: no-custom-config
       customConfig: null
-    - outputFolder: flat-package-layout
-      customConfig:
-        packageLayout: flat
-    - outputFolder: flat-package-layout-with-custom-client-name
-      customConfig:
-        packageLayout: flat
-        clientName: Acme
-        clientConstructorName: New
     - outputFolder: package-path
       customConfig:
         packagePath: inhereplease
@@ -155,14 +150,6 @@ fixtures:
   package-yml:
     - outputFolder: no-custom-config
       customConfig: null
-    - outputFolder: flat-package-layout
-      customConfig:
-        packageLayout: flat
-    - outputFolder: flat-package-layout-with-custom-client-name
-      customConfig:
-        packageLayout: flat
-        clientName: Acme
-        clientConstructorName: New
   streaming:
     - outputFolder: .
       outputVersion: v2.0.0

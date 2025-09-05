@@ -560,6 +560,271 @@
                                 },
                                 "docs": null
                             }
+                        },
+                        {
+                            "example": {
+                                "id": "406789d1",
+                                "url": "/property-based-error",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "error",
+                                    "body": {
+                                        "shape": {
+                                            "type": "named",
+                                            "shape": {
+                                                "type": "object",
+                                                "properties": [
+                                                    {
+                                                        "name": {
+                                                            "name": {
+                                                                "originalName": "message",
+                                                                "camelCase": {
+                                                                    "unsafeName": "message",
+                                                                    "safeName": "message"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "message",
+                                                                    "safeName": "message"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "MESSAGE",
+                                                                    "safeName": "MESSAGE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Message",
+                                                                    "safeName": "Message"
+                                                                }
+                                                            },
+                                                            "wireValue": "message"
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "name": {
+                                                                "originalName": "PropertyBasedErrorTestBody",
+                                                                "camelCase": {
+                                                                    "unsafeName": "propertyBasedErrorTestBody",
+                                                                    "safeName": "propertyBasedErrorTestBody"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "property_based_error_test_body",
+                                                                    "safeName": "property_based_error_test_body"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "PROPERTY_BASED_ERROR_TEST_BODY",
+                                                                    "safeName": "PROPERTY_BASED_ERROR_TEST_BODY"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "PropertyBasedErrorTestBody",
+                                                                    "safeName": "PropertyBasedErrorTestBody"
+                                                                }
+                                                            },
+                                                            "fernFilepath": {
+                                                                "allParts": [
+                                                                    {
+                                                                        "originalName": "errors",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "errors",
+                                                                            "safeName": "errors"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "errors",
+                                                                            "safeName": "errors"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "ERRORS",
+                                                                            "safeName": "ERRORS"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Errors",
+                                                                            "safeName": "Errors"
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "packagePath": [],
+                                                                "file": {
+                                                                    "originalName": "errors",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "errors",
+                                                                        "safeName": "errors"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "errors",
+                                                                        "safeName": "errors"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "ERRORS",
+                                                                        "safeName": "ERRORS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Errors",
+                                                                        "safeName": "Errors"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "displayName": null,
+                                                            "typeId": "type_errors:PropertyBasedErrorTestBody"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "string",
+                                                                    "string": {
+                                                                        "original": "message"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "message"
+                                                        },
+                                                        "propertyAccess": null
+                                                    }
+                                                ]
+                                            },
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "PropertyBasedErrorTestBody",
+                                                    "camelCase": {
+                                                        "unsafeName": "propertyBasedErrorTestBody",
+                                                        "safeName": "propertyBasedErrorTestBody"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "property_based_error_test_body",
+                                                        "safeName": "property_based_error_test_body"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "PROPERTY_BASED_ERROR_TEST_BODY",
+                                                        "safeName": "PROPERTY_BASED_ERROR_TEST_BODY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "PropertyBasedErrorTestBody",
+                                                        "safeName": "PropertyBasedErrorTestBody"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [
+                                                        {
+                                                            "originalName": "errors",
+                                                            "camelCase": {
+                                                                "unsafeName": "errors",
+                                                                "safeName": "errors"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "errors",
+                                                                "safeName": "errors"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "ERRORS",
+                                                                "safeName": "ERRORS"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Errors",
+                                                                "safeName": "Errors"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "packagePath": [],
+                                                    "file": {
+                                                        "originalName": "errors",
+                                                        "camelCase": {
+                                                            "unsafeName": "errors",
+                                                            "safeName": "errors"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "errors",
+                                                            "safeName": "errors"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "ERRORS",
+                                                            "safeName": "ERRORS"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Errors",
+                                                            "safeName": "Errors"
+                                                        }
+                                                    }
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_errors:PropertyBasedErrorTestBody"
+                                            }
+                                        },
+                                        "jsonExample": {
+                                            "message": "message"
+                                        }
+                                    },
+                                    "error": {
+                                        "name": {
+                                            "originalName": "PropertyBasedErrorTest",
+                                            "camelCase": {
+                                                "unsafeName": "propertyBasedErrorTest",
+                                                "safeName": "propertyBasedErrorTest"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "property_based_error_test",
+                                                "safeName": "property_based_error_test"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "PROPERTY_BASED_ERROR_TEST",
+                                                "safeName": "PROPERTY_BASED_ERROR_TEST"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "PropertyBasedErrorTest",
+                                                "safeName": "PropertyBasedErrorTest"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "errors",
+                                                    "camelCase": {
+                                                        "unsafeName": "errors",
+                                                        "safeName": "errors"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "errors",
+                                                        "safeName": "errors"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "ERRORS",
+                                                        "safeName": "ERRORS"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Errors",
+                                                        "safeName": "Errors"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [],
+                                            "file": {
+                                                "originalName": "errors",
+                                                "camelCase": {
+                                                    "unsafeName": "errors",
+                                                    "safeName": "errors"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "errors",
+                                                    "safeName": "errors"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "ERRORS",
+                                                    "safeName": "ERRORS"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Errors",
+                                                    "safeName": "Errors"
+                                                }
+                                            }
+                                        },
+                                        "errorId": "error_errors:PropertyBasedErrorTest"
+                                    }
+                                },
+                                "docs": null
+                            }
                         }
                     ],
                     "pagination": null,

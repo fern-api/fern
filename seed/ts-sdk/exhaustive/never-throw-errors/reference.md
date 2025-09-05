@@ -1216,59 +1216,6 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">testIntegerOverflowEdgeCases</a>({ ...params }) -> core.APIResponse<SeedExhaustive.ObjectWithOptionalField, SeedExhaustive.endpoints.object.testIntegerOverflowEdgeCases.Error></code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.endpoints.object.testIntegerOverflowEdgeCases({
-    string: "boundary-test",
-    integer: 2147483647,
-    double: 1.7976931348623157e308,
-    bool: true,
-});
-```
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedExhaustive.ObjectWithOptionalField`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Object_.RequestOptions`
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-</dd>
-</dl>
-</details>
-
 ## Endpoints Params
 
 <details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithPath</a>(param) -> core.APIResponse<string, SeedExhaustive.endpoints.params.getWithPath.Error></code></summary>

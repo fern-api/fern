@@ -14,7 +14,11 @@ public class Example46
             }
         );
 
-        await client.Endpoints.Urls.WithMixedCaseAsync();
+        await client.NoAuth.PostWithNoAuthAsync(
+            new Dictionary<string, object>() {
+                ["key"] = "value",
+            }
+        );
     }
 
 }

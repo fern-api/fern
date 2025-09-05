@@ -11,6 +11,7 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
+        nil,
     )
     client.Nested.Api.GetSomething(
         context.TODO(),

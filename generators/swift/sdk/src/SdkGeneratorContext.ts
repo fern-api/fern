@@ -3,6 +3,7 @@ import { AbstractSwiftGeneratorContext } from "@fern-api/swift-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
+import { ReadmeConfigBuilder } from "./readme";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SwiftGeneratorAgent } from "./SwiftGeneratorAgent";
 
@@ -18,9 +19,20 @@ export class SdkGeneratorContext extends AbstractSwiftGeneratorContext<SdkCustom
         super(ir, config, customConfig, generatorNotificationService);
         this.generatorAgent = new SwiftGeneratorAgent({
             logger: this.logger,
-            config,
-            ir
+            config: this.config,
+            readmeConfigBuilder: new ReadmeConfigBuilder(),
+            ir: this.ir
         });
+    }
+
+    public getSPMDetails() {
+        return {
+            gitUrl: (this.ir.publishConfig?.type === "github" && this.ir.publishConfig?.repo) || null,
+            minVersion:
+                (this.ir.dynamic?.generatorConfig?.outputConfig.type === "publish" &&
+                    this.ir.dynamic?.generatorConfig?.outputConfig.value.version) ||
+                null
+        };
     }
 
     public isSelfHosted(): boolean {

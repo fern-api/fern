@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithPathAndQuery;
 
 public class Example25 {
     public static void main(String[] args) {
@@ -11,13 +11,11 @@ public class Example25 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().object().testIntegerOverflowEdgeCases(
-            ObjectWithOptionalField
+        client.endpoints().params().getWithPathAndQuery(
+            "param",
+            GetWithPathAndQuery
                 .builder()
-                .string("large-negative")
-                .integer(-1000000000000)
-                .double_(-1000000000000)
-                .bool(true)
+                .query("query")
                 .build()
         );
     }

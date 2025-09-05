@@ -60,6 +60,9 @@ jobs:
       - name: Format
         run: pnpm format:check
 
+      - name: Format YAML
+        run: pnpm format:yaml:check
+
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 
@@ -271,7 +274,7 @@ jobs:
       typescript: ${{ steps.filter.outputs.typescript }}
     steps:
       - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v2
+      - uses: dorny/paths-filter@v3
         id: filter
         with:
           filters: |

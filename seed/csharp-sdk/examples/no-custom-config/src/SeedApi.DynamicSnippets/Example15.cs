@@ -15,16 +15,23 @@ public class Example15
 
         await client.Service.CreateMovieAsync(
             new Movie{
-                Id = "id",
-                Prequel = "prequel",
-                Title = "title",
-                From = "from",
-                Rating = 1.1,
-                Tag = "tag",
-                Book = "book",
+                Id = "movie-c06a4ad7",
+                Prequel = "movie-cv9b914f",
+                Title = "The Boy and the Heron",
+                From = "Hayao Miyazaki",
+                Rating = 8,
+                Type = "movie",
+                Tag = "tag-wf9as23d",
                 Metadata = new Dictionary<string, object>(){
-                    ["metadata"] = new Dictionary<string, object>() {
-                        ["key"] = "value",
+                    ["actors"] = new List<object>() {
+                        "Christian Bale",
+                        "Florence Pugh",
+                        "Willem Dafoe",
+                    },
+                    ["releaseDate"] = "2023-12-08",
+                    ["ratings"] = new Dictionary<string, object>() {
+                        ["rottenTomatoes"] = 97,
+                        ["imdb"] = 7.6,
                     },
                 },
                 Revenue = 1000000l

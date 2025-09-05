@@ -11,5 +11,5 @@ $client = new SeedClient(
     ],
 );
 $client->health->service->check(
-    'id-3tey93i',
+    'id-2sdx82h',
 );

@@ -42,6 +42,7 @@ export class ReadmeConfigBuilder {
             apiReferenceLink: context.ir.readmeConfig?.apiReferenceLink,
             bannerLink: context.ir.readmeConfig?.bannerLink,
             introduction: context.ir.readmeConfig?.introduction,
+            referenceMarkdownPath: "./reference.md",
             features,
             requirements: []
         };

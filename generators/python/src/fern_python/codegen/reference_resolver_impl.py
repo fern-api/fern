@@ -100,7 +100,8 @@ class ReferenceResolverImpl(ReferenceResolver):
         # is deferred until after the current declaration (e.g. for circular references when defining Pydantic models).
         return (
             f'"{resolved_reference}"'
-            if reference.import_if_type_checking or reference.must_import_after_current_declaration
+            if (reference.import_if_type_checking or reference.must_import_after_current_declaration)
+            and not reference.has_been_dynamically_imported
             else resolved_reference
         )
 

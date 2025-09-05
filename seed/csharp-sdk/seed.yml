@@ -60,6 +60,9 @@ fixtures:
       outputFolder: no-custom-config
     - customConfig: null
       readmeConfig:
+        apiName: "CustomName"
+        disabledSections:
+          - "contributing"
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie
@@ -176,19 +179,12 @@ fixtures:
         client-class-name: System
       outputFolder: system-client
 allowedFailures:
+  - errors
   - imdb:exported-client-class-name
-  - literal
   - oauth-client-credentials-custom
   - pagination:no-custom-config
   - pagination:custom-pager
   - pagination:custom-pager-with-exception-handler
-
-  # these tests are generating code with numbers that overflow the size of members they are meant
-  # to fill.
-  - exhaustive:explicit-namespaces
-  - exhaustive:no-root-namespace-for-core-classes
-  - exhaustive:no-generate-error-types
-  - exhaustive:include-exception-handler
 
   ## COMPILE FAILURES
   - any-auth
@@ -203,11 +199,4 @@ allowedFailures:
 
   ## Dynamic snippets
   - auth-environment-variables # TODO: Add global headers to ExampleEndpointCall.
-  - csharp-grpc-proto # TODO: Add support for ReadOnlyMemory types.
   - trace
-
-  # TODO: Add support for well-known types.
-  - csharp-grpc-proto-exhaustive:no-custom-config
-  - csharp-grpc-proto-exhaustive:package-id
-  - csharp-grpc-proto-exhaustive:read-only-memory
-  - csharp-grpc-proto-exhaustive:include-exception-handler

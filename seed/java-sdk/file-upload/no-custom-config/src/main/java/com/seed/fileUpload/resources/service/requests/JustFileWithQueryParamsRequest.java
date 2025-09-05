@@ -228,7 +228,9 @@ public final class JustFileWithQueryParamsRequest {
 
         @java.lang.Override
         public _FinalStage addAllListOfStrings(List<String> listOfStrings) {
-            this.listOfStrings.addAll(listOfStrings);
+            if (listOfStrings != null) {
+                this.listOfStrings.addAll(listOfStrings);
+            }
             return this;
         }
 

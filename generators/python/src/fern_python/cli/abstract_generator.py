@@ -93,6 +93,7 @@ class AbstractGenerator(ABC):
             license_=generator_config.license,
             user_defined_toml=user_defined_toml,
             exclude_types_from_init_exports=exclude_types_from_init_exports,
+            lazy_imports=self.should_use_lazy_imports(generator_config=generator_config),
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper,
@@ -336,6 +337,13 @@ def test_client() -> None:
 
     @abstractmethod
     def should_format_files(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+    ) -> bool: ...
+
+    @abstractmethod
+    def should_use_lazy_imports(
         self,
         *,
         generator_config: GeneratorConfig,

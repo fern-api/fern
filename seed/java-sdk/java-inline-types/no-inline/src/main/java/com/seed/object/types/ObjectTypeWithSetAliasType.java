@@ -91,7 +91,9 @@ public final class ObjectTypeWithSetAliasType {
         }
 
         public Builder addAllProp(Set<AliasProperty> prop) {
-            this.prop.addAll(prop);
+            if (prop != null) {
+                this.prop.addAll(prop);
+            }
             return this;
         }
 

@@ -2,72 +2,158 @@
 
 # isort: skip_file
 
-from .binary_tree_node_and_tree_value import BinaryTreeNodeAndTreeValue
-from .binary_tree_node_value import BinaryTreeNodeValue
-from .binary_tree_value import BinaryTreeValue
-from .debug_key_value_pairs import DebugKeyValuePairs
-from .debug_map_value import DebugMapValue
-from .debug_variable_value import (
-    DebugVariableValue,
-    DebugVariableValue_BinaryTreeNodeValue,
-    DebugVariableValue_BooleanValue,
-    DebugVariableValue_CharValue,
-    DebugVariableValue_DoubleValue,
-    DebugVariableValue_DoublyLinkedListNodeValue,
-    DebugVariableValue_GenericValue,
-    DebugVariableValue_IntegerValue,
-    DebugVariableValue_ListValue,
-    DebugVariableValue_MapValue,
-    DebugVariableValue_NullValue,
-    DebugVariableValue_SinglyLinkedListNodeValue,
-    DebugVariableValue_StringValue,
-    DebugVariableValue_UndefinedValue,
-)
-from .doubly_linked_list_node_and_list_value import DoublyLinkedListNodeAndListValue
-from .doubly_linked_list_node_value import DoublyLinkedListNodeValue
-from .doubly_linked_list_value import DoublyLinkedListValue
-from .file_info import FileInfo
-from .generic_value import GenericValue
-from .key_value_pair import KeyValuePair
-from .language import Language
-from .list_type import ListType
-from .map_type import MapType
-from .map_value import MapValue
-from .node_id import NodeId
-from .problem_id import ProblemId
-from .singly_linked_list_node_and_list_value import SinglyLinkedListNodeAndListValue
-from .singly_linked_list_node_value import SinglyLinkedListNodeValue
-from .singly_linked_list_value import SinglyLinkedListValue
-from .test_case import TestCase
-from .test_case_with_expected_result import TestCaseWithExpectedResult
-from .user_id import UserId
-from .variable_type import (
-    VariableType,
-    VariableType_BinaryTreeType,
-    VariableType_BooleanType,
-    VariableType_CharType,
-    VariableType_DoubleType,
-    VariableType_DoublyLinkedListType,
-    VariableType_IntegerType,
-    VariableType_ListType,
-    VariableType_MapType,
-    VariableType_SinglyLinkedListType,
-    VariableType_StringType,
-)
-from .variable_value import (
-    VariableValue,
-    VariableValue_BinaryTreeValue,
-    VariableValue_BooleanValue,
-    VariableValue_CharValue,
-    VariableValue_DoubleValue,
-    VariableValue_DoublyLinkedListValue,
-    VariableValue_IntegerValue,
-    VariableValue_ListValue,
-    VariableValue_MapValue,
-    VariableValue_NullValue,
-    VariableValue_SinglyLinkedListValue,
-    VariableValue_StringValue,
-)
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .binary_tree_node_and_tree_value import BinaryTreeNodeAndTreeValue
+    from .binary_tree_node_value import BinaryTreeNodeValue
+    from .binary_tree_value import BinaryTreeValue
+    from .debug_key_value_pairs import DebugKeyValuePairs
+    from .debug_map_value import DebugMapValue
+    from .debug_variable_value import (
+        DebugVariableValue,
+        DebugVariableValue_BinaryTreeNodeValue,
+        DebugVariableValue_BooleanValue,
+        DebugVariableValue_CharValue,
+        DebugVariableValue_DoubleValue,
+        DebugVariableValue_DoublyLinkedListNodeValue,
+        DebugVariableValue_GenericValue,
+        DebugVariableValue_IntegerValue,
+        DebugVariableValue_ListValue,
+        DebugVariableValue_MapValue,
+        DebugVariableValue_NullValue,
+        DebugVariableValue_SinglyLinkedListNodeValue,
+        DebugVariableValue_StringValue,
+        DebugVariableValue_UndefinedValue,
+    )
+    from .doubly_linked_list_node_and_list_value import DoublyLinkedListNodeAndListValue
+    from .doubly_linked_list_node_value import DoublyLinkedListNodeValue
+    from .doubly_linked_list_value import DoublyLinkedListValue
+    from .file_info import FileInfo
+    from .generic_value import GenericValue
+    from .key_value_pair import KeyValuePair
+    from .language import Language
+    from .list_type import ListType
+    from .map_type import MapType
+    from .map_value import MapValue
+    from .node_id import NodeId
+    from .problem_id import ProblemId
+    from .singly_linked_list_node_and_list_value import SinglyLinkedListNodeAndListValue
+    from .singly_linked_list_node_value import SinglyLinkedListNodeValue
+    from .singly_linked_list_value import SinglyLinkedListValue
+    from .test_case import TestCase
+    from .test_case_with_expected_result import TestCaseWithExpectedResult
+    from .user_id import UserId
+    from .variable_type import (
+        VariableType,
+        VariableType_BinaryTreeType,
+        VariableType_BooleanType,
+        VariableType_CharType,
+        VariableType_DoubleType,
+        VariableType_DoublyLinkedListType,
+        VariableType_IntegerType,
+        VariableType_ListType,
+        VariableType_MapType,
+        VariableType_SinglyLinkedListType,
+        VariableType_StringType,
+    )
+    from .variable_value import (
+        VariableValue,
+        VariableValue_BinaryTreeValue,
+        VariableValue_BooleanValue,
+        VariableValue_CharValue,
+        VariableValue_DoubleValue,
+        VariableValue_DoublyLinkedListValue,
+        VariableValue_IntegerValue,
+        VariableValue_ListValue,
+        VariableValue_MapValue,
+        VariableValue_NullValue,
+        VariableValue_SinglyLinkedListValue,
+        VariableValue_StringValue,
+    )
+_dynamic_imports: typing.Dict[str, str] = {
+    "BinaryTreeNodeAndTreeValue": ".binary_tree_node_and_tree_value",
+    "BinaryTreeNodeValue": ".binary_tree_node_value",
+    "BinaryTreeValue": ".binary_tree_value",
+    "DebugKeyValuePairs": ".debug_key_value_pairs",
+    "DebugMapValue": ".debug_map_value",
+    "DebugVariableValue": ".debug_variable_value",
+    "DebugVariableValue_BinaryTreeNodeValue": ".debug_variable_value",
+    "DebugVariableValue_BooleanValue": ".debug_variable_value",
+    "DebugVariableValue_CharValue": ".debug_variable_value",
+    "DebugVariableValue_DoubleValue": ".debug_variable_value",
+    "DebugVariableValue_DoublyLinkedListNodeValue": ".debug_variable_value",
+    "DebugVariableValue_GenericValue": ".debug_variable_value",
+    "DebugVariableValue_IntegerValue": ".debug_variable_value",
+    "DebugVariableValue_ListValue": ".debug_variable_value",
+    "DebugVariableValue_MapValue": ".debug_variable_value",
+    "DebugVariableValue_NullValue": ".debug_variable_value",
+    "DebugVariableValue_SinglyLinkedListNodeValue": ".debug_variable_value",
+    "DebugVariableValue_StringValue": ".debug_variable_value",
+    "DebugVariableValue_UndefinedValue": ".debug_variable_value",
+    "DoublyLinkedListNodeAndListValue": ".doubly_linked_list_node_and_list_value",
+    "DoublyLinkedListNodeValue": ".doubly_linked_list_node_value",
+    "DoublyLinkedListValue": ".doubly_linked_list_value",
+    "FileInfo": ".file_info",
+    "GenericValue": ".generic_value",
+    "KeyValuePair": ".key_value_pair",
+    "Language": ".language",
+    "ListType": ".list_type",
+    "MapType": ".map_type",
+    "MapValue": ".map_value",
+    "NodeId": ".node_id",
+    "ProblemId": ".problem_id",
+    "SinglyLinkedListNodeAndListValue": ".singly_linked_list_node_and_list_value",
+    "SinglyLinkedListNodeValue": ".singly_linked_list_node_value",
+    "SinglyLinkedListValue": ".singly_linked_list_value",
+    "TestCase": ".test_case",
+    "TestCaseWithExpectedResult": ".test_case_with_expected_result",
+    "UserId": ".user_id",
+    "VariableType": ".variable_type",
+    "VariableType_BinaryTreeType": ".variable_type",
+    "VariableType_BooleanType": ".variable_type",
+    "VariableType_CharType": ".variable_type",
+    "VariableType_DoubleType": ".variable_type",
+    "VariableType_DoublyLinkedListType": ".variable_type",
+    "VariableType_IntegerType": ".variable_type",
+    "VariableType_ListType": ".variable_type",
+    "VariableType_MapType": ".variable_type",
+    "VariableType_SinglyLinkedListType": ".variable_type",
+    "VariableType_StringType": ".variable_type",
+    "VariableValue": ".variable_value",
+    "VariableValue_BinaryTreeValue": ".variable_value",
+    "VariableValue_BooleanValue": ".variable_value",
+    "VariableValue_CharValue": ".variable_value",
+    "VariableValue_DoubleValue": ".variable_value",
+    "VariableValue_DoublyLinkedListValue": ".variable_value",
+    "VariableValue_IntegerValue": ".variable_value",
+    "VariableValue_ListValue": ".variable_value",
+    "VariableValue_MapValue": ".variable_value",
+    "VariableValue_NullValue": ".variable_value",
+    "VariableValue_SinglyLinkedListValue": ".variable_value",
+    "VariableValue_StringValue": ".variable_value",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "BinaryTreeNodeAndTreeValue",

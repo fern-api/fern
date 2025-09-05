@@ -1,10 +1,10 @@
-imports: 
+imports:
   reviewers: ./reviewers.yml
   generators: ./generators.yml
   license: ./license.yml
   auth: ./fernDefinition/auth.yml
 
-types: 
+types:
   GeneratorGroupSchema:
     properties:
       audiences:
@@ -15,7 +15,7 @@ types:
         type: optional<generators.OutputMetadataSchema>
       reviewers:
         type: optional<reviewers.ReviewersSchema>
-  
+
   GeneratorInvocationSchema:
     properties:
       name: string
@@ -24,25 +24,25 @@ types:
       github: optional<GithubConfigurationSchema>
       config: unknown
       metadata: optional<GeneratorPublishMetadataSchema>
-      keywords: 
+      keywords:
         type: optional<list<string>>
         docs: Overrides the keywords that require safe name variants.
-      snippets: 
+      snippets:
         type: optional<GeneratorSnippetsSchema>
         docs: Configures snippets for a particular generator.
-      ir-version: 
+      ir-version:
         type: optional<string>
         docs: Overrides the version of the IR used by the generator.
-      smart-casing: 
+      smart-casing:
         type: optional<boolean>
         docs: Feature flag used to enable better IR naming.
-      api: 
+      api:
         type: optional<GeneratorAPISettingsSchema>
         docs: Override API import settings (this is applied across all specs)
-      disable-examples: 
+      disable-examples:
         type: optional<boolean>
         docs: Temporary way to unblock example serialization.
-      publish-metadata: 
+      publish-metadata:
         type: optional<GeneratorPublishMetadataSchema>
         docs: Deprecated, use `metadata` on the output block instead.
 
@@ -62,7 +62,7 @@ types:
       nuget: NugetOutputLocationSchema
       rubygems: RubyGemsOutputLocationSchema
       crates: CratesOutputLocationSchema
-  
+
   GithubConfigurationSchema:
     discriminated: false
     union:
@@ -70,9 +70,9 @@ types:
       - GithubCommitAndReleaseSchema
       - GithubPullRequestSchema
       - GithubPushSchema
-  
-  GithubSelfhostedSchema: 
-    properties: 
+
+  GithubSelfhostedSchema:
+    properties:
       uri: string
       token: string
 
@@ -81,7 +81,7 @@ types:
       path:
         type: string
         docs: The path to the generated snippets file.
-  
+
   GeneratorPublishMetadataSchema:
     properties:
       package-description: optional<string>
@@ -96,7 +96,7 @@ types:
       license: optional<license.GithubLicenseSchema>
       mode: optional<GithubCommitAndReleaseMode>
       # Add properties for commit and release configuration
-  
+
   GithubCommitAndReleaseMode:
     enum:
       - commit
@@ -118,7 +118,7 @@ types:
       mode: literal<"push">
       branch: optional<string>
       # Add properties for push configuration
-  
+
   NpmOutputLocationSchema:
     properties:
       url: optional<string>
@@ -160,11 +160,11 @@ types:
       api-key: string
       workspace-id: string
       collection-id: optional<string>
-  
+
   LocalFileSystemOutputLocationSchema:
     properties:
       path: string
-  
+
   NugetOutputLocationSchema:
     properties:
       url: optional<string>

@@ -14,7 +14,7 @@ final class HTTPClient: Sendable {
         method: HTTP.Method,
         path: String,
         contentType requestContentType: HTTP.ContentType = .applicationJson,
-        headers requestHeaders: [String: String] = [:],
+        headers requestHeaders: [String: String?] = [:],
         queryParams requestQueryParams: [String: QueryParameter?] = [:],
         body requestBody: (any Encodable)? = nil,
         requestOptions: RequestOptions? = nil
@@ -36,7 +36,7 @@ final class HTTPClient: Sendable {
         method: HTTP.Method,
         path: String,
         contentType requestContentType: HTTP.ContentType = .applicationJson,
-        headers requestHeaders: [String: String] = [:],
+        headers requestHeaders: [String: String?] = [:],
         queryParams requestQueryParams: [String: QueryParameter?] = [:],
         body requestBody: (any Encodable)? = nil,
         requestOptions: RequestOptions? = nil,
@@ -69,7 +69,7 @@ final class HTTPClient: Sendable {
                 throw ClientError.invalidResponse
             }
         }
-        
+
         if responseType == String.self {
             if let string = String(data: data, encoding: .utf8) as? T {
                 return string
@@ -89,7 +89,7 @@ final class HTTPClient: Sendable {
         method: HTTP.Method,
         path: String,
         requestContentType: HTTP.ContentType,
-        requestHeaders: [String: String],
+        requestHeaders: [String: String?],
         requestQueryParams: [String: QueryParameter?],
         requestBody: HTTP.RequestBody? = nil,
         requestOptions: RequestOptions? = nil
@@ -137,8 +137,7 @@ final class HTTPClient: Sendable {
     ) -> URL {
         let endpointURL: String = "\(clientConfig.baseURL)\(path)"
         guard var components: URLComponents = URLComponents(string: endpointURL) else {
-            precondition(
-                false,
+            preconditionFailure(
                 "Invalid URL '\(endpointURL)' - this indicates an unexpected error in the SDK."
             )
         }
@@ -154,8 +153,7 @@ final class HTTPClient: Sendable {
                 })
         }
         guard let url = components.url else {
-            precondition(
-                false,
+            preconditionFailure(
                 "Failed to construct URL from components - this indicates an unexpected error in the SDK."
             )
         }
@@ -164,7 +162,7 @@ final class HTTPClient: Sendable {
 
     private func buildRequestHeaders(
         requestContentType: HTTP.ContentType,
-        requestHeaders: [String: String],
+        requestHeaders: [String: String?],
         requestOptions: RequestOptions? = nil
     ) async throws -> [String: String] {
         var headers = clientConfig.headers ?? [:]
@@ -179,7 +177,9 @@ final class HTTPClient: Sendable {
             headers["Authorization"] = "Bearer \(bearerAuthToken)"
         }
         for (key, value) in requestHeaders {
-            headers[key] = value
+            if let value = value {
+                headers[key] = value
+            }
         }
         for (key, value) in requestOptions?.additionalHeaders ?? [:] {
             headers[key] = value
@@ -207,8 +207,7 @@ final class HTTPClient: Sendable {
                 // TODO(kafkas): Merge requestOptions.additionalBodyParameters into this
                 return try jsonEncoder.encode(encodableBody)
             } catch {
-                precondition(
-                    false,
+                preconditionFailure(
                     "Failed to encode request body: \(error) - this indicates an unexpected error in the SDK."
                 )
             }

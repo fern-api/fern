@@ -20,9 +20,7 @@
   "main": "lib/cli.js",
   "source": "src/cli.ts",
   "types": "lib/cli.d.ts",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -43,9 +41,10 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/swift-base": "workspace:*",
     "@fern-api/swift-codegen": "workspace:*",
+    "@fern-api/swift-dynamic-snippets": "workspace:*",
     "@fern-api/swift-model": "workspace:*",
     "@fern-api/test-utils": "workspace:*",
-    "@fern-fern/generator-cli-sdk": "0.0.33",
+    "@fern-fern/generator-cli-sdk": "0.0.41",
     "@fern-fern/generator-exec-sdk": "^0.0.1045",
     "@fern-fern/ir-sdk": "59.0.0",
     "@types/node": "18.15.3",
