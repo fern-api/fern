@@ -12,6 +12,9 @@ const SNIPPET_FUNC_NAME = "do";
 const CLIENT_VAR_NAME = "client";
 const TypeInst = go.TypeInstantiation;
 
+const WIREMOCK_BASE_URL = "wireMockBaseURL";
+const WIREMOCK_CLIENT_VAR_NAME = "wiremockClient";
+
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
     private formatter: AbstractFormatter | undefined;
@@ -65,18 +68,230 @@ export class EndpointSnippetGenerator {
         return go.codeblock((writer) => {
             writer.writeNode(
                 go.func({
-                    name: SNIPPET_FUNC_NAME,
-                    parameters: [],
+                    name: "Test" + this.context.getMethodName(endpoint.declaration.name) + "WithWireMock",
+                    parameters: [
+                        go.parameter({
+                            name: "t",
+                            type: go.Type.pointer(go.Type.reference(this.context.getTestingTypeReference()))
+                        })
+                    ],
                     return_: [],
                     body: go.codeblock((writer) => {
-                        writer.writeNode(this.constructClient({ endpoint, snippet }));
+                        for (const node of this.getTestSetup({ endpoint })) {
+                            writer.writeNode(node);
+                            writer.writeLine();
+                        }
                         writer.writeLine();
-                        writer.writeNode(this.callMethod({ endpoint, snippet }));
+                        writer.writeNode(this.constructWiremockTestClient({ endpoint, snippet }));
+                        writer.writeLine();
+                        writer.writeNode(this.callMethodAndAssert({ endpoint, snippet }));
                     })
                 })
             );
             writer.writeNewLineIfLastLineNot();
         });
+    }
+
+    private chainMethods(
+        baseFunc: go.FuncInvocation,
+        ...methods: Omit<go.MethodInvocation.Args, "on">[]
+    ): go.MethodInvocation {
+        if (methods.length === 0) {
+            throw new Error("Must have methods to chain");
+        }
+
+        let current: go.AstNode = baseFunc;
+        for (const method of methods) {
+            current = go.invokeMethod({
+                on: current,
+                method: method.method,
+                arguments_: method.arguments_,
+                multiline: method.multiline
+            });
+        }
+        return current as go.MethodInvocation;
+    }
+
+    private getTestSetup({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): go.AstNode[] {
+        return [
+            // Initialize context
+            go.codeblock((writer) => {
+                writer.write("ctx := ");
+                writer.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "Background",
+                            importPath: "context"
+                        }),
+                        arguments_: [],
+                        multiline: false
+                    })
+                );
+            }),
+
+            // Start WireMock container
+            go.codeblock((writer) => {
+                writer.write("container, containerErr := ");
+                writer.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "RunContainerAndStopOnCleanup",
+                            importPath: "github.com/wiremock/wiremock-testcontainers-go"
+                        }),
+                        arguments_: [
+                            go.codeblock("ctx"),
+                            go.codeblock("t"),
+                            go.invokeFunc({
+                                func: go.typeReference({
+                                    name: "WithImage",
+                                    importPath: "github.com/wiremock/wiremock-testcontainers-go"
+                                }),
+                                arguments_: [go.TypeInstantiation.string("docker.io/wiremock/wiremock:3.9.1")],
+                                multiline: false
+                            })
+                        ],
+                        multiline: true
+                    })
+                );
+            }),
+
+            // Check for container error
+            go.codeblock((writer) => {
+                writer.write("if containerErr != nil {");
+                writer.writeLine();
+                writer.write("    t.Fatal(containerErr)");
+                writer.writeLine();
+                writer.write("}");
+            }),
+
+            // Get WireMock URL from container
+            go.codeblock((writer) => {
+                writer.write(`${WIREMOCK_BASE_URL}, endpointErr := `);
+                writer.writeNode(
+                    go.invokeMethod({
+                        on: go.codeblock("container"),
+                        method: "Endpoint",
+                        arguments_: [go.codeblock("ctx"), go.TypeInstantiation.string("")],
+                        multiline: false
+                    })
+                );
+            }),
+
+            go.invokeFunc({
+                func: go.typeReference({
+                    name: "NoError",
+                    importPath: "github.com/stretchr/testify/require"
+                }),
+                arguments_: [
+                    go.codeblock("t"),
+                    go.codeblock("endpointErr"),
+                    go.TypeInstantiation.string("Failed to get WireMock container endpoint")
+                ],
+                multiline: false
+            }),
+
+            // Get WireMock client from container
+            go.codeblock((writer) => {
+                writer.write("wiremockClient := ");
+                writer.writeNode(
+                    go.selector({
+                        on: go.codeblock("container"),
+                        selector: go.codeblock("Client")
+                    })
+                );
+            }),
+
+            go.codeblock((writer) => {
+                writer.write("defer ");
+                writer.writeNode(
+                    go.invokeMethod({
+                        on: go.codeblock("wiremockClient"),
+                        method: "Reset",
+                        arguments_: [],
+                        multiline: false
+                    })
+                );
+            }),
+
+            // Create a mock response for the endpoint
+            go.codeblock((writer) => {
+                writer.write("stub := ");
+                const stubInitializer = go.invokeFunc({
+                    func: go.typeReference({
+                        name: endpoint.location.method.toLowerCase().replace(/^./, (c) => c.toUpperCase()),
+                        importPath: "github.com/wiremock/go-wiremock"
+                    }),
+                    arguments_: [
+                        go.invokeFunc({
+                            func: go.typeReference({
+                                name: "URLPathTemplate",
+                                importPath: "github.com/wiremock/go-wiremock"
+                            }),
+                            arguments_: [go.TypeInstantiation.string(endpoint.location.path)],
+                            multiline: false
+                        })
+                    ],
+                    multiline: false
+                });
+                const newResponseInitializer = go.invokeFunc({
+                    func: go.typeReference({
+                        name: "NewResponse",
+                        importPath: "github.com/wiremock/go-wiremock"
+                    }),
+                    arguments_: []
+                });
+                const withJsonBodyMethod = go.invokeMethod({
+                    on: newResponseInitializer,
+                    method: "WithJSONBody",
+                    arguments_: [go.codeblock("map[string]interface{}{}")]
+                });
+                const withStatusMethod = go.invokeMethod({
+                    on: withJsonBodyMethod,
+                    method: "WithStatus",
+                    arguments_: [
+                        go.typeReference({
+                            name: "StatusOK",
+                            importPath: "net/http"
+                        })
+                    ],
+                    multiline: false
+                });
+                const stubMethodInvocation = go.invokeMethod({
+                    on: stubInitializer,
+                    method: "WillReturnResponse",
+                    arguments_: [withStatusMethod]
+                });
+                // writer.writeNode(stubInitializer);
+                // writer.writeLine();
+                writer.writeNode(stubMethodInvocation);
+            }),
+
+            // Register the stub with WireMock
+            go.codeblock((writer) => {
+                writer.write("err := ");
+                writer.writeNode(
+                    go.invokeMethod({
+                        on: go.codeblock("wiremockClient"),
+                        method: "StubFor",
+                        arguments_: [go.codeblock("stub")],
+                        multiline: false
+                    })
+                );
+            }),
+
+            go.invokeFunc({
+                func: go.typeReference({
+                    name: "NoError",
+                    importPath: "github.com/stretchr/testify/require"
+                }),
+                arguments_: [
+                    go.codeblock("t"),
+                    go.codeblock("err"),
+                    go.TypeInstantiation.string("Failed to create WireMock stub")
+                ],
+                multiline: false
+            })
+        ];
     }
 
     private constructClient({
@@ -89,6 +304,19 @@ export class EndpointSnippetGenerator {
         return go.codeblock((writer) => {
             writer.write(`${CLIENT_VAR_NAME} := `);
             writer.writeNode(this.getRootClientFuncInvocation(this.getConstructorArgs({ endpoint, snippet })));
+        });
+    }
+
+    private constructWiremockTestClient({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): go.CodeBlock {
+        return go.codeblock((writer) => {
+            writer.write(`${CLIENT_VAR_NAME} := `);
+            writer.writeNode(this.getRootClientFuncInvocation(this.getWiremockTestConstructorArgs()));
         });
     }
 
@@ -106,12 +334,125 @@ export class EndpointSnippetGenerator {
         });
     }
 
-    private getConstructorArgs({
+    private callMethodAndAssert({
         endpoint,
         snippet
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): go.CodeBlock {
+        return go.codeblock((writer) => {
+            // Call the method and capture response and error
+            writer.write("_, invocationErr := ");
+            writer.writeNode(
+                go.invokeMethod({
+                    on: go.codeblock(CLIENT_VAR_NAME),
+                    method: this.getMethod({ endpoint }),
+                    arguments_: [
+                        this.context.getContextTodoFunctionInvocation(),
+                        ...this.getMethodArgs({ endpoint, snippet })
+                    ]
+                })
+            );
+            writer.writeLine();
+            writer.writeLine();
+
+            // Verify WireMock request was matched
+            writer.write("ok, countErr := ");
+            writer.writeNode(
+                go.invokeMethod({
+                    on: go.codeblock("wiremockClient"),
+                    method: "Verify",
+                    arguments_: [
+                        go.invokeMethod({
+                            on: go.codeblock("stub"),
+                            method: "Request",
+                            arguments_: [],
+                            multiline: false
+                        }),
+                        go.codeblock("1")
+                    ],
+                    multiline: false
+                })
+            );
+            writer.writeLine();
+
+            writer.writeNode(
+                go.invokeFunc({
+                    func: go.typeReference({
+                        name: "NoError",
+                        importPath: "github.com/stretchr/testify/require"
+                    }),
+                    arguments_: [
+                        go.codeblock("t"),
+                        go.codeblock("countErr"),
+                        go.TypeInstantiation.string("Failed to verify WireMock request was matched")
+                    ],
+                    multiline: false
+                })
+            );
+            writer.writeLine();
+
+            writer.writeNode(
+                go.invokeFunc({
+                    func: go.typeReference({
+                        name: "True",
+                        importPath: "github.com/stretchr/testify/require"
+                    }),
+                    arguments_: [
+                        go.codeblock("t"),
+                        go.codeblock("ok"),
+                        go.TypeInstantiation.string("WireMock request was not matched")
+                    ],
+                    multiline: false
+                })
+            );
+            writer.writeLine();
+
+            // Verify the call succeeded
+            writer.writeNode(
+                go.invokeFunc({
+                    func: go.typeReference({
+                        name: "NoError",
+                        importPath: "github.com/stretchr/testify/require"
+                    }),
+                    arguments_: [
+                        go.codeblock("t"),
+                        go.codeblock("invocationErr"),
+                        go.TypeInstantiation.string(`${this.getMethod({ endpoint })} call should succeed with WireMock`)
+                    ],
+                    multiline: false
+                })
+            );
+            writer.writeLine();
+
+            // Assert the response matches expected value
+            // writer.writeNode(
+            //     go.invokeFunc({
+            //         func: go.typeReference({
+            //             name: "Equal",
+            //             importPath: "github.com/stretchr/testify/assert"
+            //         }),
+            //         arguments_: [
+            //             go.codeblock("t"),
+            //             go.codeblock("response"),
+            //             go.TypeInstantiation.string("Expected response value"),
+            //             go.TypeInstantiation.string("Response should match mocked response")
+            //         ],
+            //         multiline: false
+            //     })
+            // );
+        });
+    }
+
+    private getConstructorArgs({
+        endpoint,
+        snippet,
+        wiremockTest = false
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+        wiremockTest?: boolean;
     }): go.AstNode[] {
         const args: go.AstNode[] = [];
         const baseUrlArg = this.getConstructorBaseUrlArg({
@@ -137,6 +478,22 @@ export class EndpointSnippetGenerator {
         }
         this.context.errors.unscope();
         return args;
+    }
+
+    private getWiremockTestConstructorArgs(): go.AstNode[] {
+        return [
+            go.codeblock((writer) => {
+                writer.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "WithBaseURL",
+                            importPath: this.context.getOptionImportPath()
+                        }),
+                        arguments_: [go.codeblock(`"http://" + ${WIREMOCK_BASE_URL}`)]
+                    })
+                );
+            })
+        ];
     }
 
     private getConstructorAuthArg({

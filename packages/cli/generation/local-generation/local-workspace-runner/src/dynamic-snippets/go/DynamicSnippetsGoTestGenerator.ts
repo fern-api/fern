@@ -38,9 +38,14 @@ export class DynamicSnippetsGoTestGenerator {
                     continue;
                 }
                 const response = await this.dynamicSnippetsGenerator.generate(convertedRequest);
+
                 const dynamicSnippetFilePath = this.getTestFilePath({ outputDir, idx });
                 await mkdir(path.dirname(dynamicSnippetFilePath), { recursive: true });
                 await writeFile(dynamicSnippetFilePath, response.snippet);
+
+                // const dynamicSnippetWiremockTestFilePath = this.getWiremockTestFilePath({ outputDir, idx });
+                // await mkdir(path.dirname(dynamicSnippetWiremockTestFilePath), { recursive: true });
+                // await writeFile(dynamicSnippetWiremockTestFilePath, response.snippet);
             } catch (error) {
                 this.context.logger.error(
                     `Failed to generate dynamic snippet for endpoint ${JSON.stringify(request.endpoint)}: ${error}`
@@ -54,6 +59,16 @@ export class DynamicSnippetsGoTestGenerator {
     }
 
     private getTestFilePath({ outputDir, idx }: { outputDir: AbsoluteFilePath; idx: number }): AbsoluteFilePath {
-        return join(outputDir, RelativeFilePath.of(`dynamic-snippets/example${idx}/snippet.go`));
+        return join(outputDir, RelativeFilePath.of(`dynamic-snippets/example${idx}/snippet_test.go`));
     }
+
+    // private getWiremockTestFilePath({
+    //     outputDir,
+    //     idx
+    // }: {
+    //     outputDir: AbsoluteFilePath;
+    //     idx: number;
+    // }): AbsoluteFilePath {
+    //     return join(outputDir, RelativeFilePath.of(`dynamic-snippets/example${idx}/snippet_test.go`));
+    // }
 }

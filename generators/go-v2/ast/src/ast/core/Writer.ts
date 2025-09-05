@@ -85,15 +85,12 @@ export class Writer extends AbstractWriter {
     /**
      * Creates a new valid alias from the given string. Removes all
      * characters not included in the Go identifier grammar.
-     *
-     * This also removes any trailing '-' elements so the alias is as
-     * terse as possible.
      */
     private getValidAlias(s: string): string {
         const split = s.split("-");
         if (split[0] == null) {
             return s;
         }
-        return split[0].replace(INVALID_GO_IDENTIFIER_TOKEN, "");
+        return split.map((part) => part.replace(INVALID_GO_IDENTIFIER_TOKEN, "")).join("");
     }
 }

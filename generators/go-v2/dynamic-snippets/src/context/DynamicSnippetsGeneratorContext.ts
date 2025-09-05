@@ -77,6 +77,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
     }
 
+    public getTestingTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: "T",
+            importPath: "testing"
+        });
+    }
+
     public getNewStringsReaderFunctionInvocation(s: string): go.FuncInvocation {
         return go.invokeFunc({
             func: go.typeReference({
