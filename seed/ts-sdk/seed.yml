@@ -379,6 +379,8 @@ allowedFailures:
   - enum
   - error-property
   - errors
+  - exhaustive:custom-package-json
+  - exhaustive:dev-dependencies
   - exhaustive:never-throw-errors
   - extends
   - file-download:file-download-response-headers
