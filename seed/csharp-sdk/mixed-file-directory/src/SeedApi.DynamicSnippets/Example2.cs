@@ -1,6 +1,6 @@
 using global::System.Threading.Tasks;
 using SeedMixedFileDirectory;
-using SeedMixedFileDirectory.User;
+using SeedMixedFileDirectory.User_;
 
 namespace Usage;
 

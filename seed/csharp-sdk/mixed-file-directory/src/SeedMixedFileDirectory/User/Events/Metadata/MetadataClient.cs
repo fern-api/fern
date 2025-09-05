@@ -3,8 +3,9 @@ using System.Text.Json;
 using System.Threading;
 using SeedMixedFileDirectory;
 using SeedMixedFileDirectory.Core;
+using SeedMixedFileDirectory.User_.Events;
 
-namespace SeedMixedFileDirectory.User.Events;
+namespace SeedMixedFileDirectory.User_.Events;
 
 public partial class MetadataClient
 {

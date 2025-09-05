@@ -8,7 +8,9 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
 
-[JsonConverter(typeof(TestCaseImplementationReference.JsonConverter))]
+[System.Text.Json.Serialization.JsonConverter(
+    typeof(TestCaseImplementationReference.JsonConverter)
+)]
 [Serializable]
 public record TestCaseImplementationReference
 {
@@ -64,7 +66,9 @@ public record TestCaseImplementationReference
     public string AsTemplateId() =>
         IsTemplateId
             ? (string)Value!
-            : throw new Exception("TestCaseImplementationReference.Type is not 'templateId'");
+            : throw new System.Exception(
+                "TestCaseImplementationReference.Type is not 'templateId'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.V2.V3.TestCaseImplementation"/> if <see cref="Type"/> is 'implementation', otherwise throws an exception.
@@ -73,7 +77,9 @@ public record TestCaseImplementationReference
     public SeedTrace.V2.V3.TestCaseImplementation AsImplementation() =>
         IsImplementation
             ? (SeedTrace.V2.V3.TestCaseImplementation)Value!
-            : throw new Exception("TestCaseImplementationReference.Type is not 'implementation'");
+            : throw new System.Exception(
+                "TestCaseImplementationReference.Type is not 'implementation'"
+            );
 
     public T Match<T>(
         Func<string, T> onTemplateId,
@@ -148,7 +154,8 @@ public record TestCaseImplementationReference
     ) => new(value);
 
     [Serializable]
-    internal sealed class JsonConverter : JsonConverter<TestCaseImplementationReference>
+    internal sealed class JsonConverter
+        : System.Text.Json.Serialization.JsonConverter<TestCaseImplementationReference>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(TestCaseImplementationReference).IsAssignableFrom(typeToConvert);
@@ -231,7 +238,8 @@ public record TestCaseImplementationReference
 
         public override string ToString() => Value;
 
-        public static implicit operator TemplateId(string value) => new(value);
+        public static implicit operator TestCaseImplementationReference.TemplateId(string value) =>
+            new(value);
     }
 
     /// <summary>
@@ -249,7 +257,7 @@ public record TestCaseImplementationReference
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Implementation(
+        public static implicit operator TestCaseImplementationReference.Implementation(
             SeedTrace.V2.V3.TestCaseImplementation value
         ) => new(value);
     }

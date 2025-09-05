@@ -69,7 +69,7 @@ public class TypeTest
               "twentyfive": "1994-01-01"
             }
             """;
-        var expectedObject = new Type
+        var expectedObject = new SeedObject.Type
         {
             One = 1,
             Two = 2,
@@ -116,7 +116,7 @@ public class TypeTest
             ),
             Twentyfive = new DateOnly(1994, 1, 1),
         };
-        var deserializedObject = JsonUtils.Deserialize<Type>(json);
+        var deserializedObject = JsonUtils.Deserialize<SeedObject.Type>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -180,7 +180,7 @@ public class TypeTest
               "twentyfive": "1994-01-01"
             }
             """;
-        var actualObj = new Type
+        var actualObj = new SeedObject.Type
         {
             One = 1,
             Two = 2,

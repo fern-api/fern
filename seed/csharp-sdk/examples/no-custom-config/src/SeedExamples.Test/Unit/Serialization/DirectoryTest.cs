@@ -3,7 +3,7 @@ using NUnit.Framework;
 using SeedExamples;
 using SeedExamples.Core;
 
-namespace SeedExamples.Test;
+namespace SeedExamples.Test_;
 
 [TestFixture]
 public class DirectoryTest
@@ -33,16 +33,16 @@ public class DirectoryTest
               ]
             }
             """;
-        var expectedObject = new Directory
+        var expectedObject = new SeedExamples.Directory
         {
             Name = "root",
             Files = new List<SeedExamples.File>()
             {
                 new SeedExamples.File { Name = "file.txt", Contents = "..." },
             },
-            Directories = new List<Directory>()
+            Directories = new List<SeedExamples.Directory>()
             {
-                new Directory
+                new SeedExamples.Directory
                 {
                     Name = "tmp",
                     Files = new List<SeedExamples.File>()
@@ -52,7 +52,7 @@ public class DirectoryTest
                 },
             },
         };
-        var deserializedObject = JsonUtils.Deserialize<Directory>(json);
+        var deserializedObject = JsonUtils.Deserialize<SeedExamples.Directory>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -81,16 +81,16 @@ public class DirectoryTest
               ]
             }
             """;
-        var actualObj = new Directory
+        var actualObj = new SeedExamples.Directory
         {
             Name = "root",
             Files = new List<SeedExamples.File>()
             {
                 new SeedExamples.File { Name = "file.txt", Contents = "..." },
             },
-            Directories = new List<Directory>()
+            Directories = new List<SeedExamples.Directory>()
             {
-                new Directory
+                new SeedExamples.Directory
                 {
                     Name = "tmp",
                     Files = new List<SeedExamples.File>()

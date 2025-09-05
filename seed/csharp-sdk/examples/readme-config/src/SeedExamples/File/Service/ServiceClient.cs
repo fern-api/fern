@@ -3,8 +3,9 @@ using System.Text.Json;
 using System.Threading;
 using SeedExamples;
 using SeedExamples.Core;
+using SeedExamples.File_;
 
-namespace SeedExamples.File;
+namespace SeedExamples.File_;
 
 public partial class ServiceClient
 {

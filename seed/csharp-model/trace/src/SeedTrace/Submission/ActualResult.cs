@@ -78,7 +78,7 @@ public record ActualResult
     public SeedTrace.VariableValue AsValue() =>
         IsValue
             ? (SeedTrace.VariableValue)Value!
-            : throw new Exception("ActualResult.Type is not 'value'");
+            : throw new System.Exception("ActualResult.Type is not 'value'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ExceptionInfo"/> if <see cref="Type"/> is 'exception', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record ActualResult
     public SeedTrace.ExceptionInfo AsException() =>
         IsException
             ? (SeedTrace.ExceptionInfo)Value!
-            : throw new Exception("ActualResult.Type is not 'exception'");
+            : throw new System.Exception("ActualResult.Type is not 'exception'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ExceptionV2"/> if <see cref="Type"/> is 'exceptionV2', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record ActualResult
     public SeedTrace.ExceptionV2 AsExceptionV2() =>
         IsExceptionV2
             ? (SeedTrace.ExceptionV2)Value!
-            : throw new Exception("ActualResult.Type is not 'exceptionV2'");
+            : throw new System.Exception("ActualResult.Type is not 'exceptionV2'");
 
     public T Match<T>(
         Func<SeedTrace.VariableValue, T> onValue,
@@ -275,7 +275,8 @@ public record ActualResult
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator ValueInner(SeedTrace.VariableValue value) => new(value);
+        public static implicit operator ActualResult.ValueInner(SeedTrace.VariableValue value) =>
+            new(value);
     }
 
     /// <summary>
@@ -293,7 +294,8 @@ public record ActualResult
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Exception(SeedTrace.ExceptionInfo value) => new(value);
+        public static implicit operator ActualResult.Exception(SeedTrace.ExceptionInfo value) =>
+            new(value);
     }
 
     /// <summary>
@@ -311,6 +313,7 @@ public record ActualResult
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator ExceptionV2(SeedTrace.ExceptionV2 value) => new(value);
+        public static implicit operator ActualResult.ExceptionV2(SeedTrace.ExceptionV2 value) =>
+            new(value);
     }
 }

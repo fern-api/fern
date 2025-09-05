@@ -37,11 +37,15 @@ public partial class ProblemClient
     ///                 Language.Java,
     ///                 new ProblemFiles
     ///                 {
-    ///                     SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
-    ///                     ReadOnlyFiles = new List&lt;FileInfo&gt;()
+    ///                     SolutionFile = new SeedTrace.FileInfo
     ///                     {
-    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
-    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
+    ///                         Filename = "filename",
+    ///                         Contents = "contents",
+    ///                     },
+    ///                     ReadOnlyFiles = new List&lt;SeedTrace.FileInfo&gt;()
+    ///                     {
+    ///                         new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
+    ///                         new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
     ///                     },
     ///                 }
     ///             },
@@ -158,11 +162,15 @@ public partial class ProblemClient
     ///                 Language.Java,
     ///                 new ProblemFiles
     ///                 {
-    ///                     SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
-    ///                     ReadOnlyFiles = new List&lt;FileInfo&gt;()
+    ///                     SolutionFile = new SeedTrace.FileInfo
     ///                     {
-    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
-    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
+    ///                         Filename = "filename",
+    ///                         Contents = "contents",
+    ///                     },
+    ///                     ReadOnlyFiles = new List&lt;SeedTrace.FileInfo&gt;()
+    ///                     {
+    ///                         new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
+    ///                         new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
     ///                     },
     ///                 }
     ///             },

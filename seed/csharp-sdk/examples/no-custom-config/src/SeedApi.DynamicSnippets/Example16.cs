@@ -28,7 +28,7 @@ public class Example16
                         ["key"] = "value",
                     },
                 },
-                Revenue = 1000000l
+                Revenue = 1000000L
             }
         );
     }

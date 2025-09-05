@@ -20,25 +20,25 @@ public class Example21
                 ProblemDescription = new ProblemDescription{
                     Boards = new List<ProblemDescriptionBoard>(){
                         new ProblemDescriptionBoard(
-
+                            new ProblemDescriptionBoard.Html("html")
                         ),
                         new ProblemDescriptionBoard(
-
+                            new ProblemDescriptionBoard.Html("html")
                         ),
                     }
                 },
                 Files = new Dictionary<Language, ProblemFiles>(){
                     [Language.Java] = new ProblemFiles{
-                        SolutionFile = new FileInfo{
+                        SolutionFile = new SeedTrace.FileInfo{
                             Filename = "filename",
                             Contents = "contents"
                         },
-                        ReadOnlyFiles = new List<FileInfo>(){
-                            new FileInfo{
+                        ReadOnlyFiles = new List<SeedTrace.FileInfo>(){
+                            new SeedTrace.FileInfo{
                                 Filename = "filename",
                                 Contents = "contents"
                             },
-                            new FileInfo{
+                            new SeedTrace.FileInfo{
                                 Filename = "filename",
                                 Contents = "contents"
                             },
@@ -68,15 +68,15 @@ public class Example21
                             Id = "id",
                             Params = new List<VariableValue>(){
                                 new VariableValue(
-
+                                    new VariableValue.IntegerValue()
                                 ),
                                 new VariableValue(
-
+                                    new VariableValue.IntegerValue()
                                 ),
                             }
                         },
                         ExpectedResult = new VariableValue(
-
+                            new VariableValue.IntegerValue()
                         )
                     },
                     new TestCaseWithExpectedResult{
@@ -84,15 +84,15 @@ public class Example21
                             Id = "id",
                             Params = new List<VariableValue>(){
                                 new VariableValue(
-
+                                    new VariableValue.IntegerValue()
                                 ),
                                 new VariableValue(
-
+                                    new VariableValue.IntegerValue()
                                 ),
                             }
                         },
                         ExpectedResult = new VariableValue(
-
+                            new VariableValue.IntegerValue()
                         )
                     },
                 },

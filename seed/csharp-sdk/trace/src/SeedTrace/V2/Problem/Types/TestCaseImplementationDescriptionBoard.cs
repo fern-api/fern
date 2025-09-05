@@ -8,7 +8,9 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2;
 
-[JsonConverter(typeof(TestCaseImplementationDescriptionBoard.JsonConverter))]
+[System.Text.Json.Serialization.JsonConverter(
+    typeof(TestCaseImplementationDescriptionBoard.JsonConverter)
+)]
 [Serializable]
 public record TestCaseImplementationDescriptionBoard
 {
@@ -66,7 +68,9 @@ public record TestCaseImplementationDescriptionBoard
     public string AsHtml() =>
         IsHtml
             ? (string)Value!
-            : throw new Exception("TestCaseImplementationDescriptionBoard.Type is not 'html'");
+            : throw new System.Exception(
+                "TestCaseImplementationDescriptionBoard.Type is not 'html'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'paramId', otherwise throws an exception.
@@ -75,7 +79,9 @@ public record TestCaseImplementationDescriptionBoard
     public string AsParamId() =>
         IsParamId
             ? (string)Value!
-            : throw new Exception("TestCaseImplementationDescriptionBoard.Type is not 'paramId'");
+            : throw new System.Exception(
+                "TestCaseImplementationDescriptionBoard.Type is not 'paramId'"
+            );
 
     public T Match<T>(
         Func<string, T> onHtml,
@@ -150,7 +156,8 @@ public record TestCaseImplementationDescriptionBoard
     ) => new(value);
 
     [Serializable]
-    internal sealed class JsonConverter : JsonConverter<TestCaseImplementationDescriptionBoard>
+    internal sealed class JsonConverter
+        : System.Text.Json.Serialization.JsonConverter<TestCaseImplementationDescriptionBoard>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(TestCaseImplementationDescriptionBoard).IsAssignableFrom(typeToConvert);
@@ -232,7 +239,8 @@ public record TestCaseImplementationDescriptionBoard
 
         public override string ToString() => Value;
 
-        public static implicit operator Html(string value) => new(value);
+        public static implicit operator TestCaseImplementationDescriptionBoard.Html(string value) =>
+            new(value);
     }
 
     /// <summary>
@@ -250,6 +258,8 @@ public record TestCaseImplementationDescriptionBoard
 
         public override string ToString() => Value;
 
-        public static implicit operator ParamId(string value) => new(value);
+        public static implicit operator TestCaseImplementationDescriptionBoard.ParamId(
+            string value
+        ) => new(value);
     }
 }

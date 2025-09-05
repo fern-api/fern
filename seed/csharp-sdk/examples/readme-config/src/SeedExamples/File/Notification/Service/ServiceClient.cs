@@ -4,7 +4,7 @@ using System.Threading;
 using SeedExamples;
 using SeedExamples.Core;
 
-namespace SeedExamples.File.Notification;
+namespace SeedExamples.File_.Notification;
 
 public partial class ServiceClient
 {
@@ -18,7 +18,7 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.File.Notification.Service.GetExceptionAsync("notification-hsy129x");
     /// </code></example>
-    public async Task<Exception> GetExceptionAsync(
+    public async Task<SeedExamples.Exception> GetExceptionAsync(
         string notificationId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -44,7 +44,7 @@ public partial class ServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Exception>(responseBody)!;
+                return JsonUtils.Deserialize<SeedExamples.Exception>(responseBody)!;
             }
             catch (JsonException e)
             {

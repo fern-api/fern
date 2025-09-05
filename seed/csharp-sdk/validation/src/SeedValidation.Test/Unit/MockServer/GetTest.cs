@@ -47,7 +47,7 @@ public class GetTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<Type>(mockResponse)).UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<SeedValidation.Type>(mockResponse)).UsingDefaults()
         );
     }
 }

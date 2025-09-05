@@ -179,7 +179,6 @@ fixtures:
         client-class-name: System
       outputFolder: system-client
 allowedFailures:
-  - errors
   - imdb:exported-client-class-name
   - oauth-client-credentials-custom
   - pagination:no-custom-config
@@ -188,8 +187,6 @@ allowedFailures:
 
   ## COMPILE FAILURES
   - any-auth
-  - examples:no-custom-config
-  - examples:readme-config
   - objects-with-imports
   - mixed-file-directory
 

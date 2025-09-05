@@ -9,7 +9,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
 
-[JsonConverter(typeof(CustomFiles.JsonConverter))]
+[System.Text.Json.Serialization.JsonConverter(typeof(CustomFiles.JsonConverter))]
 [Serializable]
 public record CustomFiles
 {
@@ -65,7 +65,7 @@ public record CustomFiles
     public SeedTrace.V2.V3.BasicCustomFiles AsBasic() =>
         IsBasic
             ? (SeedTrace.V2.V3.BasicCustomFiles)Value!
-            : throw new Exception("CustomFiles.Type is not 'basic'");
+            : throw new System.Exception("CustomFiles.Type is not 'basic'");
 
     /// <summary>
     /// Returns the value as a <see cref="Dictionary<Language, Files>"/> if <see cref="Type"/> is 'custom', otherwise throws an exception.
@@ -74,7 +74,7 @@ public record CustomFiles
     public Dictionary<Language, Files> AsCustom() =>
         IsCustom
             ? (Dictionary<Language, Files>)Value!
-            : throw new Exception("CustomFiles.Type is not 'custom'");
+            : throw new System.Exception("CustomFiles.Type is not 'custom'");
 
     public T Match<T>(
         Func<SeedTrace.V2.V3.BasicCustomFiles, T> onBasic,
@@ -145,7 +145,7 @@ public record CustomFiles
     public static implicit operator CustomFiles(CustomFiles.Custom value) => new(value);
 
     [Serializable]
-    internal sealed class JsonConverter : JsonConverter<CustomFiles>
+    internal sealed class JsonConverter : System.Text.Json.Serialization.JsonConverter<CustomFiles>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(CustomFiles).IsAssignableFrom(typeToConvert);
@@ -227,7 +227,8 @@ public record CustomFiles
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Basic(SeedTrace.V2.V3.BasicCustomFiles value) => new(value);
+        public static implicit operator CustomFiles.Basic(SeedTrace.V2.V3.BasicCustomFiles value) =>
+            new(value);
     }
 
     /// <summary>
@@ -246,6 +247,7 @@ public record CustomFiles
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Custom(Dictionary<Language, Files> value) => new(value);
+        public static implicit operator CustomFiles.Custom(Dictionary<Language, Files> value) =>
+            new(value);
     }
 }

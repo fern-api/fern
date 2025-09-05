@@ -2,7 +2,8 @@ using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedMixedFileDirectory.Core;
 using SeedMixedFileDirectory.Test.Unit.MockServer;
-using SeedMixedFileDirectory.User;
+using SeedMixedFileDirectory.User_;
+using SeedMixedFileDirectory.User_;
 
 namespace SeedMixedFileDirectory.Test.Unit.MockServer.User;
 

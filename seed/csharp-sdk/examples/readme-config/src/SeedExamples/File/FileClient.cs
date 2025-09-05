@@ -1,7 +1,8 @@
 using SeedExamples.Core;
-using SeedExamples.File.Notification;
+using SeedExamples.File_;
+using SeedExamples.File_.Notification;
 
-namespace SeedExamples.File;
+namespace SeedExamples.File_;
 
 public partial class FileClient
 {

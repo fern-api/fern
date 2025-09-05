@@ -35,7 +35,7 @@ public class EmptyResponseTest : BaseMockServerTest
 
         Assert.DoesNotThrowAsync(async () =>
             await Client.EmptyResponseAsync(
-                new Task
+                new SeedCsharpSystemCollision.Task
                 {
                     Name = "name",
                     User = new User

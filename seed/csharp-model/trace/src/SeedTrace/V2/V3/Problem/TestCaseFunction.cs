@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
 
-[JsonConverter(typeof(TestCaseFunction.JsonConverter))]
+[System.Text.Json.Serialization.JsonConverter(typeof(TestCaseFunction.JsonConverter))]
 [Serializable]
 public record TestCaseFunction
 {
@@ -64,7 +64,7 @@ public record TestCaseFunction
     public SeedTrace.V2.V3.TestCaseWithActualResultImplementation AsWithActualResult() =>
         IsWithActualResult
             ? (SeedTrace.V2.V3.TestCaseWithActualResultImplementation)Value!
-            : throw new Exception("TestCaseFunction.Type is not 'withActualResult'");
+            : throw new System.Exception("TestCaseFunction.Type is not 'withActualResult'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.V2.V3.VoidFunctionDefinition"/> if <see cref="Type"/> is 'custom', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record TestCaseFunction
     public SeedTrace.V2.V3.VoidFunctionDefinition AsCustom() =>
         IsCustom
             ? (SeedTrace.V2.V3.VoidFunctionDefinition)Value!
-            : throw new Exception("TestCaseFunction.Type is not 'custom'");
+            : throw new System.Exception("TestCaseFunction.Type is not 'custom'");
 
     public T Match<T>(
         Func<SeedTrace.V2.V3.TestCaseWithActualResultImplementation, T> onWithActualResult,
@@ -147,7 +147,8 @@ public record TestCaseFunction
     public static implicit operator TestCaseFunction(TestCaseFunction.Custom value) => new(value);
 
     [Serializable]
-    internal sealed class JsonConverter : JsonConverter<TestCaseFunction>
+    internal sealed class JsonConverter
+        : System.Text.Json.Serialization.JsonConverter<TestCaseFunction>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(TestCaseFunction).IsAssignableFrom(typeToConvert);
@@ -230,7 +231,7 @@ public record TestCaseFunction
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator WithActualResult(
+        public static implicit operator TestCaseFunction.WithActualResult(
             SeedTrace.V2.V3.TestCaseWithActualResultImplementation value
         ) => new(value);
     }
@@ -250,7 +251,8 @@ public record TestCaseFunction
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Custom(SeedTrace.V2.V3.VoidFunctionDefinition value) =>
-            new(value);
+        public static implicit operator TestCaseFunction.Custom(
+            SeedTrace.V2.V3.VoidFunctionDefinition value
+        ) => new(value);
     }
 }

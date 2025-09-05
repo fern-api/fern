@@ -3,9 +3,10 @@ using System.Text.Json;
 using System.Threading;
 using SeedMixedFileDirectory;
 using SeedMixedFileDirectory.Core;
-using SeedMixedFileDirectory.User.Events;
+using SeedMixedFileDirectory.User_;
+using SeedMixedFileDirectory.User_.Events;
 
-namespace SeedMixedFileDirectory.User;
+namespace SeedMixedFileDirectory.User_;
 
 public partial class EventsClient
 {

@@ -77,7 +77,7 @@ public class Example2
                 Filter = new List<string>(){
                     "filter",
                 },
-                LongParam = 1000000l,
+                LongParam = 1000000L,
                 BigIntParam = "1000000"
             }
         );

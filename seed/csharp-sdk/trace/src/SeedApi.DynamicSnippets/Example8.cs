@@ -24,7 +24,7 @@ public class Example8
                         Directory = "directory"
                     },
                     ReturnValue = new DebugVariableValue(
-
+                        new DebugVariableValue.IntegerValue()
                     ),
                     ExpressionLocation = new ExpressionLocation{
                         Start = 1,
@@ -39,14 +39,14 @@ public class Example8
                                 new Scope{
                                     Variables = new Dictionary<string, DebugVariableValue>(){
                                         ["variables"] = new DebugVariableValue(
-
+                                            new DebugVariableValue.IntegerValue()
                                         ),
                                     }
                                 },
                                 new Scope{
                                     Variables = new Dictionary<string, DebugVariableValue>(){
                                         ["variables"] = new DebugVariableValue(
-
+                                            new DebugVariableValue.IntegerValue()
                                         ),
                                     }
                                 },
@@ -63,7 +63,7 @@ public class Example8
                         Directory = "directory"
                     },
                     ReturnValue = new DebugVariableValue(
-
+                        new DebugVariableValue.IntegerValue()
                     ),
                     ExpressionLocation = new ExpressionLocation{
                         Start = 1,
@@ -78,14 +78,14 @@ public class Example8
                                 new Scope{
                                     Variables = new Dictionary<string, DebugVariableValue>(){
                                         ["variables"] = new DebugVariableValue(
-
+                                            new DebugVariableValue.IntegerValue()
                                         ),
                                     }
                                 },
                                 new Scope{
                                     Variables = new Dictionary<string, DebugVariableValue>(){
                                         ["variables"] = new DebugVariableValue(
-
+                                            new DebugVariableValue.IntegerValue()
                                         ),
                                     }
                                 },
