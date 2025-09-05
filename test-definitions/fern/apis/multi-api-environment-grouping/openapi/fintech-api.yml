@@ -1,0 +1,74 @@
+openapi: 3.0.0
+info:
+  title: Fintech API
+  version: 1.0.0
+servers:
+  - url: https://fintech.api.example.com
+    description: PRD
+    x-fern-server-name: PRD
+  - url: https://fintech-sbx.api.example.com
+    description: SBX
+    x-fern-server-name: SBX
+  - url: https://fintech-stg.api.example.com
+    description: STG
+    x-fern-server-name: STG
+  - url: https://fintech-prf.api.example.com
+    description: PRF
+    x-fern-server-name: PRF
+  - url: https://fintech-e2e.api.example.com
+    description: E2E
+    x-fern-server-name: E2E
+  - url: https://fintech-qal.api.example.com
+    description: QAL
+    x-fern-server-name: QAL
+paths:
+  /wallets:
+    get:
+      summary: List wallets
+      operationId: listWallets
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Wallet'
+  /wallets/{walletId}:
+    get:
+      summary: Get wallet by ID
+      operationId: getWallet
+      parameters:
+        - name: walletId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallet'
+components:
+  schemas:
+    Wallet:
+      type: object
+      properties:
+        id:
+          type: string
+        balance:
+          type: number
+          format: double
+        currency:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - balance
+        - currency
+        - createdAt
