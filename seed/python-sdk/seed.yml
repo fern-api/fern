@@ -345,13 +345,10 @@ allowedFailures:
   - examples:client-filename
   - examples:legacy-wire-tests
   - exhaustive:additional_init_exports
-  - exhaustive:pydantic-v1-wrapped
+  - exhaustive:deps_with_min_python_version
   - exhaustive:pydantic-v1-with-utils
   - oauth-client-credentials-custom
   - pagination-custom
-  - public-object
   - response-property
-  - simple-fhir
   - streaming-parameter
   - trace
-  - websocket:websocket-with_generated_clients
