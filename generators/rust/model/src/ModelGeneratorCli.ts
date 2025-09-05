@@ -88,9 +88,13 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         // Add module declarations for each type
         if (context.ir.types) {
             Object.values(context.ir.types).forEach((typeDeclaration) => {
-                const rawTypeName = typeDeclaration.name.name.snakeCase.unsafeName;
-                const escapedTypeName = context.escapeRustKeyword(rawTypeName);
-                writer.writeLine(`pub mod ${escapedTypeName};`);
+                // Use the full fernFilepath and type name for unique module names to prevent collisions
+                const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+                const typeName = typeDeclaration.name.name.snakeCase.safeName;
+                const fullPath = [...pathParts, typeName];
+                const moduleName = fullPath.join("_");
+                const escapedModuleName = context.escapeRustKeyword(moduleName);
+                writer.writeLine(`pub mod ${escapedModuleName};`);
             });
         }
 
@@ -99,9 +103,13 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         // Add public use statements for each type
         if (context.ir.types) {
             Object.values(context.ir.types).forEach((typeDeclaration) => {
-                const rawTypeName = typeDeclaration.name.name.snakeCase.unsafeName;
-                const escapedTypeName = context.escapeRustKeyword(rawTypeName);
-                writer.writeLine(`pub use ${escapedTypeName}::{*};`);
+                // Use the full fernFilepath and type name for unique module names to prevent collisions
+                const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+                const typeName = typeDeclaration.name.name.snakeCase.safeName;
+                const fullPath = [...pathParts, typeName];
+                const moduleName = fullPath.join("_");
+                const escapedModuleName = context.escapeRustKeyword(moduleName);
+                writer.writeLine(`pub use ${escapedModuleName}::{*};`);
             });
         }
 

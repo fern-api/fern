@@ -4,7 +4,7 @@ pub mod color_or_operand;
 pub mod enum_with_special_characters;
 pub mod enum_with_custom;
 pub mod special_enum;
-pub mod status;
+pub mod unknown_status;
 
 pub use operand::{*};
 pub use color::{*};
@@ -12,5 +12,5 @@ pub use color_or_operand::{*};
 pub use enum_with_special_characters::{*};
 pub use enum_with_custom::{*};
 pub use special_enum::{*};
-pub use status::{*};
+pub use unknown_status::{*};
 

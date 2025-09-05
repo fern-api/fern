@@ -1,8 +1,8 @@
-pub mod error_body;
-pub mod foo_request;
-pub mod foo_response;
+pub mod commons_error_body;
+pub mod simple_foo_request;
+pub mod simple_foo_response;
 
-pub use error_body::{*};
-pub use foo_request::{*};
-pub use foo_response::{*};
+pub use commons_error_body::{*};
+pub use simple_foo_request::{*};
+pub use simple_foo_response::{*};
 

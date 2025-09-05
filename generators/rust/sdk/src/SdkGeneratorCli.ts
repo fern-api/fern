@@ -275,7 +275,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const rawDeclarations: string[] = [];
 
         for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
-            const rawModuleName = typeDeclaration.name.name.snakeCase.unsafeName;
+            // Use the full fernFilepath and type name for unique module names to match the generated files
+            const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+            const typeName = typeDeclaration.name.name.snakeCase.safeName;
+            const fullPath = [...pathParts, typeName];
+            const rawModuleName = fullPath.join("_");
             const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
             moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
             useStatements.push(

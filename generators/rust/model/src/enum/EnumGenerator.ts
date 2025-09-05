@@ -23,7 +23,11 @@ export class EnumGenerator {
     }
 
     private getFilename(): string {
-        return this.typeDeclaration.name.name.snakeCase.unsafeName + ".rs";
+        // Use the full fernFilepath and type name to create unique filenames to prevent collisions
+        const pathParts = this.typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+        const typeName = this.typeDeclaration.name.name.snakeCase.safeName;
+        const fullPath = [...pathParts, typeName];
+        return `${fullPath.join("_")}.rs`;
     }
 
     private getFileDirectory(): RelativeFilePath {

@@ -36,7 +36,11 @@ export class UndiscriminatedUnionGenerator {
     }
 
     public generate(): RustFile {
-        const filename = `${this.typeDeclaration.name.name.snakeCase.unsafeName}.rs`;
+        // Use the full fernFilepath and type name to create unique filenames to prevent collisions
+        const pathParts = this.typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+        const typeName = this.typeDeclaration.name.name.snakeCase.safeName;
+        const fullPath = [...pathParts, typeName];
+        const filename = `${fullPath.join("_")}.rs`;
 
         const writer = new rust.Writer();
 
@@ -58,7 +62,8 @@ export class UndiscriminatedUnionGenerator {
         // Add imports for variant types FIRST
         const variantTypes = this.getVariantTypesUsedInUnion();
         variantTypes.forEach((typeName) => {
-            const moduleNameEscaped = this.context.escapeRustKeyword(typeName.snakeCase.unsafeName);
+            const modulePath = this.getModulePathForType(typeName.snakeCase.unsafeName);
+            const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
             writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
         });
 
@@ -312,5 +317,25 @@ export class UndiscriminatedUnionGenerator {
         return this.undiscriminatedUnionTypeDeclaration.members.every((member) => {
             return typeSupportsHashAndEq(member.type, this.context);
         });
+    }
+
+    /**
+     * Get the correct module path for a type using fernFilepath + type name
+     * to match the new unique filename generation scheme
+     */
+    private getModulePathForType(typeNameSnake: string): string {
+        // Find the type declaration in the context
+        for (const typeDeclaration of Object.values(this.context.ir.types)) {
+            if (typeDeclaration.name.name.snakeCase.unsafeName === typeNameSnake) {
+                // Use the same logic as filename generation: fernFilepath + type name
+                const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+                const typeName = typeDeclaration.name.name.snakeCase.safeName;
+                const fullPath = [...pathParts, typeName];
+                return fullPath.join("_");
+            }
+        }
+
+        // Fallback to old behavior if type not found
+        return typeNameSnake;
     }
 }
