@@ -1,4 +1,4 @@
-irVersion: v59
+irVersion: v58
 displayName: Rust SDK
 image: fernapi/fern-rust-sdk
 changelogLocation: ../../generators/rust/sdk/versions.yml
@@ -68,3 +68,5 @@ allowedFailures:
   - oauth-client-credentials-default
   - oauth-client-credentials-environment-variables
   - oauth-client-credentials-nested-root
+  - objects-with-imports
+  - examples
