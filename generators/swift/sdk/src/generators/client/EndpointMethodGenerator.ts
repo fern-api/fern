@@ -68,12 +68,15 @@ export class EndpointMethodGenerator {
 
         endpoint.headers.forEach((header) => {
             const swiftType = this.sdkGeneratorContext.getSwiftTypeForTypeReference(header.valueType);
+            if (swiftType.unwrappedType !== "string") {
+                return;
+            }
             params.push(
                 swift.functionParameter({
                     argumentLabel: header.name.name.camelCase.unsafeName,
                     unsafeName: header.name.name.camelCase.unsafeName,
-                    type: swiftType,
-                    defaultValue: swiftType.isOptional ? swift.Expression.rawValue("nil") : undefined,
+                    type: swift.Type.optional(swift.Type.string()),
+                    defaultValue: swift.Expression.rawValue("nil"),
                     docsContent: header.docs
                 })
             );
@@ -193,15 +196,22 @@ export class EndpointMethodGenerator {
             );
         }
 
-        if (endpoint.headers.length > 0) {
+        const validHeaders = endpoint.headers.filter(
+            (header) =>
+                this.sdkGeneratorContext.getSwiftTypeForTypeReference(header.valueType).unwrappedType === "string"
+        );
+
+        if (validHeaders.length > 0) {
             arguments_.push(
                 swift.functionArgument({
                     label: "headers",
                     value: swift.Expression.dictionaryLiteral({
-                        entries: endpoint.headers.map((header) => [
-                            swift.Expression.stringLiteral(header.name.name.originalName),
-                            swift.Expression.reference(header.name.name.camelCase.unsafeName)
-                        ]),
+                        entries: validHeaders.map((header) => {
+                            return [
+                                swift.Expression.stringLiteral(header.name.wireValue),
+                                swift.Expression.reference(header.name.name.camelCase.unsafeName)
+                            ];
+                        }),
                         multiline: true
                     })
                 })
