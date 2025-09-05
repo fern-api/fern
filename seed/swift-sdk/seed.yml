@@ -60,11 +60,9 @@ fixtures:
       outputFolder: with-custom-config
 
 allowedFailures:
-  - accept-header
   - api-wide-base-path
   - audiences
   - auth-environment-variables
-  - bearer-token-environment-variable
   - bytes-upload
   - circular-references
   - circular-references-advanced
@@ -76,7 +74,6 @@ allowedFailures:
   - examples
   - exhaustive
   - http-head
-  - idempotency-headers
   - inferred-auth-explicit
   - inferred-auth-implicit
   - inferred-auth-implicit-no-expiry
@@ -85,8 +82,6 @@ allowedFailures:
   - mixed-file-directory
   - multi-url-environment
   - multi-url-environment-no-default
-  - multiple-request-bodies
-  - no-environment
   - nullable
   - nullable-optional
   - pagination:no-custom-config
