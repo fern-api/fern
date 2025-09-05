@@ -31,11 +31,7 @@ import {
     convertTypeReferenceExample,
     getOriginalTypeDeclarationForPropertyFromExtensions
 } from "./type-declarations/convertExampleType";
-import {
-    getExtensionsAsList,
-    getPropertyAccess,
-    getPropertyName
-} from "./type-declarations/convertObjectTypeDeclaration";
+import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration";
 
 export function convertChannel({
     channel,
@@ -246,8 +242,7 @@ function convertExampleWebSocketMessageBody({
                     fileContainingExample: file,
                     workspace
                 }),
-                originalTypeDeclaration: undefined,
-                propertyAccess: getPropertyAccess({ property: inlinedRequestPropertyDeclaration })
+                originalTypeDeclaration: undefined
             });
         } else {
             const originalTypeDeclaration = getOriginalTypeDeclarationForPropertyFromExtensions({
@@ -277,8 +272,7 @@ function convertExampleWebSocketMessageBody({
                     fileContainingExample: file,
                     workspace
                 }),
-                originalTypeDeclaration: originalTypeDeclaration.typeName,
-                propertyAccess: getPropertyAccess({ property: originalTypeDeclaration.rawPropertyType })
+                originalTypeDeclaration: originalTypeDeclaration.typeName
             });
         }
     }

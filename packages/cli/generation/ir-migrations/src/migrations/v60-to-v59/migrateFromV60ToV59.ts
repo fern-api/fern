@@ -77,16 +77,10 @@ export const V60_TO_V59_MIGRATION: IrMigration<
                                                                   properties: reqBody.properties.map(
                                                                       (
                                                                           prop
-                                                                      ): IrVersions.V59.ExampleInlinedRequestBodyProperty => {
-                                                                          const migrationProp = {
-                                                                              ...prop,
-                                                                              value: updateExampleTypeReference(
-                                                                                  prop.value
-                                                                              )
-                                                                          };
-                                                                          delete migrationProp.propertyAccess;
-                                                                          return migrationProp;
-                                                                      }
+                                                                      ): IrVersions.V59.ExampleInlinedRequestBodyProperty => ({
+                                                                          ...prop,
+                                                                          value: updateExampleTypeReference(prop.value)
+                                                                      })
                                                                   )
                                                               }),
                                                           reference: (ref) =>
@@ -183,16 +177,12 @@ export const V60_TO_V59_MIGRATION: IrMigration<
                                                                                 properties: reqBody.properties.map(
                                                                                     (
                                                                                         prop
-                                                                                    ): IrVersions.V59.ExampleInlinedRequestBodyProperty => {
-                                                                                        const migrationProp = {
-                                                                                            ...prop,
-                                                                                            value: updateExampleTypeReference(
-                                                                                                prop.value
-                                                                                            )
-                                                                                        };
-                                                                                        delete migrationProp.propertyAccess;
-                                                                                        return migrationProp;
-                                                                                    }
+                                                                                    ): IrVersions.V59.ExampleInlinedRequestBodyProperty => ({
+                                                                                        ...prop,
+                                                                                        value: updateExampleTypeReference(
+                                                                                            prop.value
+                                                                                        )
+                                                                                    })
                                                                                 )
                                                                             }
                                                                         ),

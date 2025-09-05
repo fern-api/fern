@@ -6,7 +6,6 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
-import { ObjectPropertyAccess } from "../../types/types/ObjectPropertyAccess";
 import { DeclaredTypeName } from "../../types/types/DeclaredTypeName";
 
 export const ExampleInlinedRequestBodyProperty: core.serialization.ObjectSchema<
@@ -15,7 +14,6 @@ export const ExampleInlinedRequestBodyProperty: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     name: NameAndWireValue,
     value: core.serialization.lazyObject(() => serializers.ExampleTypeReference),
-    propertyAccess: ObjectPropertyAccess.optional(),
     originalTypeDeclaration: DeclaredTypeName.optional(),
 });
 
@@ -23,7 +21,6 @@ export declare namespace ExampleInlinedRequestBodyProperty {
     export interface Raw {
         name: NameAndWireValue.Raw;
         value: serializers.ExampleTypeReference.Raw;
-        propertyAccess?: ObjectPropertyAccess.Raw | null;
         originalTypeDeclaration?: DeclaredTypeName.Raw | null;
     }
 }
