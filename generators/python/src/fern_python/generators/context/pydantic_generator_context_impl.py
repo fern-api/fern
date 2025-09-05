@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Callable, Dict, List, Optional, Set
+from collections import defaultdict
+from typing import Any, Callable, Dict, List, Optional, Set, cast
 
 from ...external_dependencies.pydantic import PydanticVersionCompatibility
 from .pydantic_generator_context import PydanticGeneratorContext
@@ -51,31 +52,45 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         self._allow_leveraging_defaults = allow_leveraging_defaults
         self._reserved_names: Set[str] = reserved_names or set()
 
-        self._non_union_self_referencing_type_ids = set()
-        for id, type in self.ir.types.items():
-            if (
-                id in type.referenced_types
-                and type.shape.get_as_union().type != "union"
-                and type.shape.get_as_union().type != "undiscriminatedUnion"
-            ):
-                self._non_union_self_referencing_type_ids.add(id)
-
         self._types_with_non_union_self_referencing_dependencies: Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]] = (
-            dict()
+            defaultdict(OrderedSet)
         )
+        self._types_with_union_self_referencing_members: Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]] = (
+            defaultdict(OrderedSet)
+        )
+
         for id, type in self.ir.types.items():
             ordered_reference_types = OrderedSet(list(sorted(type.referenced_types)))
             for referenced_id in ordered_reference_types:
                 referenced_type = self.ir.types[referenced_id]
+                referenced_type_shape = referenced_type.shape.get_as_union()
                 if (
-                    referenced_type.shape.get_as_union().type != "union"
-                    and referenced_type.shape.get_as_union().type != "undiscriminatedUnion"
+                    # Maybe look at config for factory mode (union_utils)
+                    # *Probably* should only skip if we're in factory mode..?
+                    referenced_type_shape.type != "union" and referenced_type_shape.type != "undiscriminatedUnion"
                 ):
                     # This referenced type is self-referential
                     if referenced_id in referenced_type.referenced_types:
-                        if self._types_with_non_union_self_referencing_dependencies.get(id) is None:
-                            self._types_with_non_union_self_referencing_dependencies[id] = OrderedSet()
                         self._types_with_non_union_self_referencing_dependencies[id].add(referenced_id)
+                # TODO: exclude union_utils factory mode
+                # TODO: handle discriminated unions
+                elif referenced_type_shape.type == "undiscriminatedUnion":
+                    # For unions, apply the same logic but looking at the variants, and import more shallowly
+                    for member in referenced_type_shape.members:
+                        member_type_ids = self.get_type_names_in_type_reference(member.type)
+                        member_references = self.get_referenced_types_of_type_reference(member.type)
+                        if id in member_references:
+                            self._types_with_union_self_referencing_members[referenced_id].update(member_type_ids)
+
+    def _serialize_pydantic_model(self, model: Any) -> Dict[str, Any]:
+        """Serialize a Pydantic model to a dictionary based on version compatibility."""
+        if hasattr(model, "model_dump"):  # Pydantic v2
+            return cast(Dict[str, Any], model.model_dump())
+        elif hasattr(model, "dict"):  # Pydantic v1
+            return cast(Dict[str, Any], model.dict())
+        else:
+            # Fallback for non-Pydantic objects
+            return {"__str__": str(model)}
 
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
         return self._project_module_path + module_path
@@ -169,14 +184,16 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
     def does_circularly_reference_itself(self, type_id: ir_types.TypeId) -> bool:
         return self.does_type_reference_other_type(type_id, type_id)
 
-    def get_non_union_circular_references(self) -> Set[ir_types.TypeId]:
-        return self._non_union_self_referencing_type_ids
-
     # This map goes from every non union type to a list of referenced types that circularly reference themselves
     def get_non_union_self_referencing_dependencies_from_types(
         self,
     ) -> Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]]:
         return self._types_with_non_union_self_referencing_dependencies
+
+    def get_union_self_referencing_members_from_types(
+        self,
+    ) -> Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]]:
+        return self._types_with_union_self_referencing_members
 
     def do_types_reference_each_other(self, a: ir_types.TypeId, b: ir_types.TypeId) -> bool:
         return self.does_type_reference_other_type(a, b) and self.does_type_reference_other_type(b, a)
@@ -289,9 +306,8 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         return type_reference.visit(
             container=lambda ct: ct.visit(
                 list_=lambda list_tr: self.maybe_get_type_ids_for_type_reference(list_tr),
-                map_=lambda mt: (self.maybe_get_type_ids_for_type_reference(mt.key_type) or []).extend(
-                    self.maybe_get_type_ids_for_type_reference(mt.value_type) or []
-                ),
+                map_=lambda mt: (self.maybe_get_type_ids_for_type_reference(mt.key_type) or [])
+                + (self.maybe_get_type_ids_for_type_reference(mt.value_type) or []),
                 nullable=lambda nullable_tr: self.maybe_get_type_ids_for_type_reference(nullable_tr),
                 optional=lambda optional_tr: self.maybe_get_type_ids_for_type_reference(optional_tr),
                 set_=lambda set_tr: self.maybe_get_type_ids_for_type_reference(set_tr),
