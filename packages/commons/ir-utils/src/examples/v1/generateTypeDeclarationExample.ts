@@ -322,7 +322,8 @@ function generateObjectDeclarationExample({
         properties.push({
             name: property.name,
             originalTypeDeclaration: typeDeclaration.name,
-            value: example
+            value: example,
+            propertyAccess: property.propertyAccess
         });
         jsonExample[property.name.wireValue] = propertyJsonExample;
     }

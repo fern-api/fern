@@ -382,7 +382,6 @@ types:
     properties:
       name: commons.NameAndWireValue
       value: ExampleTypeReference
-      propertyAccess: optional<ObjectPropertyAccess>
       originalTypeDeclaration:
         docs: |
           This property may have been brought in via extension. originalTypeDeclaration
