@@ -14,7 +14,7 @@ final class HTTPClient: Sendable {
         method: HTTP.Method,
         path: String,
         contentType requestContentType: HTTP.ContentType = .applicationJson,
-        headers requestHeaders: [String: String] = [:],
+        headers requestHeaders: [String: String?] = [:],
         queryParams requestQueryParams: [String: QueryParameter?] = [:],
         body requestBody: (any Encodable)? = nil,
         requestOptions: RequestOptions? = nil
@@ -36,7 +36,7 @@ final class HTTPClient: Sendable {
         method: HTTP.Method,
         path: String,
         contentType requestContentType: HTTP.ContentType = .applicationJson,
-        headers requestHeaders: [String: String] = [:],
+        headers requestHeaders: [String: String?] = [:],
         queryParams requestQueryParams: [String: QueryParameter?] = [:],
         body requestBody: (any Encodable)? = nil,
         requestOptions: RequestOptions? = nil,
@@ -89,7 +89,7 @@ final class HTTPClient: Sendable {
         method: HTTP.Method,
         path: String,
         requestContentType: HTTP.ContentType,
-        requestHeaders: [String: String],
+        requestHeaders: [String: String?],
         requestQueryParams: [String: QueryParameter?],
         requestBody: HTTP.RequestBody? = nil,
         requestOptions: RequestOptions? = nil
@@ -162,7 +162,7 @@ final class HTTPClient: Sendable {
 
     private func buildRequestHeaders(
         requestContentType: HTTP.ContentType,
-        requestHeaders: [String: String],
+        requestHeaders: [String: String?],
         requestOptions: RequestOptions? = nil
     ) async throws -> [String: String] {
         var headers = clientConfig.headers ?? [:]
@@ -177,7 +177,9 @@ final class HTTPClient: Sendable {
             headers["Authorization"] = "Bearer \(bearerAuthToken)"
         }
         for (key, value) in requestHeaders {
-            headers[key] = value
+            if let value = value {
+                headers[key] = value
+            }
         }
         for (key, value) in requestOptions?.additionalHeaders ?? [:] {
             headers[key] = value
