@@ -25,9 +25,7 @@ client.service.patch({
 
 ## Environments
 
-This SDK allows you to configure different environments or custom URLs for API requests. You can either use the predefined environments or specify your own custom URL.
-
-### Note: No environments configured for this specific SDK.
+This SDK allows you to configure different custom URLs for API requests. You can specify your own custom URL.
 
 ### Custom URL
 ```ruby

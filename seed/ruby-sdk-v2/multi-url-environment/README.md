@@ -25,7 +25,6 @@ client.ec_2.boot_instance({
 ## Environments
 
 This SDK allows you to configure different environments or custom URLs for API requests. You can either use the predefined environments or specify your own custom URL.
-
 ### Environments
 ```ruby
 require "seed"
