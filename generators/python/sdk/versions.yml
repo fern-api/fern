@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.29.0
+- version: 4.28.1
   changelogEntry:
     - summary: |
         Union member self-referencing dependencies are now correctly imported and forward referenced.
