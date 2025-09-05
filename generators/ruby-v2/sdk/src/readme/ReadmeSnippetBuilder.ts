@@ -132,10 +132,25 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private buildEnvironmentsAddendum(): string {
         let fullString: string = "";
+
         const openMardownRubySnippet = "```ruby\n";
         const closeMardownRubySnippet = "```\n";
+        const hasEnvironments = this.getEnvironmentNameExample() !== undefined;
+
+        // Description
+        if (hasEnvironments === true) {
+            fullString +=
+                "This SDK allows you to configure different environments or custom URLs for API requests. You can either use the predefined environments or specify your own custom URL.";
+        } else {
+            fullString +=
+                "This SDK allows you to configure different custom URLs for API requests. You can specify your own custom URL.";
+        }
+
+        fullString += "\n";
+
+        // Add subsections
         // Not every SDK has environments configured, so we need to check for that.
-        if (this.getEnvironmentNameExample() !== undefined) {
+        if (hasEnvironments === true) {
             fullString += "### Environments\n";
             fullString += this.writeCode(dedent`${openMardownRubySnippet}require "${this.rootPackageName}"
 
@@ -143,8 +158,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                     base_url: ${this.getEnvironmentNameExample()}
                 )
             ${closeMardownRubySnippet}`);
-        } else {
-            fullString += "### Note: No environments configured for this specific SDK.\n";
         }
 
         fullString += "\n### Custom URL\n";
