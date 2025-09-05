@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 use crate::core::{File};
@@ -8,12 +8,12 @@ pub struct PrimitiveClient {
 }
 
 impl PrimitiveClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn get_and_return_string(&self, request: &String, options: Option<RequestOptions>) -> Result<String, ClientError> {
+    pub async fn get_and_return_string(&self, request: &String, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/primitive/string",
@@ -23,7 +23,7 @@ impl PrimitiveClient {
         ).await
     }
 
-    pub async fn get_and_return_int(&self, request: &i32, options: Option<RequestOptions>) -> Result<i32, ClientError> {
+    pub async fn get_and_return_int(&self, request: &i32, options: Option<RequestOptions>) -> Result<i32, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/primitive/integer",
@@ -33,7 +33,7 @@ impl PrimitiveClient {
         ).await
     }
 
-    pub async fn get_and_return_long(&self, request: &i64, options: Option<RequestOptions>) -> Result<i64, ClientError> {
+    pub async fn get_and_return_long(&self, request: &i64, options: Option<RequestOptions>) -> Result<i64, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/primitive/long",
@@ -43,7 +43,7 @@ impl PrimitiveClient {
         ).await
     }
 
-    pub async fn get_and_return_double(&self, request: &f64, options: Option<RequestOptions>) -> Result<f64, ClientError> {
+    pub async fn get_and_return_double(&self, request: &f64, options: Option<RequestOptions>) -> Result<f64, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/primitive/double",
@@ -53,7 +53,7 @@ impl PrimitiveClient {
         ).await
     }
 
-    pub async fn get_and_return_bool(&self, request: &bool, options: Option<RequestOptions>) -> Result<bool, ClientError> {
+    pub async fn get_and_return_bool(&self, request: &bool, options: Option<RequestOptions>) -> Result<bool, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/primitive/boolean",
@@ -63,7 +63,7 @@ impl PrimitiveClient {
         ).await
     }
 
-    pub async fn get_and_return_datetime(&self, request: &chrono::DateTime<chrono::Utc>, options: Option<RequestOptions>) -> Result<chrono::DateTime<chrono::Utc>, ClientError> {
+    pub async fn get_and_return_datetime(&self, request: &chrono::DateTime<chrono::Utc>, options: Option<RequestOptions>) -> Result<chrono::DateTime<chrono::Utc>, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/primitive/datetime",
@@ -73,7 +73,7 @@ impl PrimitiveClient {
         ).await
     }
 
-    pub async fn get_and_return_date(&self, request: &chrono::NaiveDate, options: Option<RequestOptions>) -> Result<chrono::NaiveDate, ClientError> {
+    pub async fn get_and_return_date(&self, request: &chrono::NaiveDate, options: Option<RequestOptions>) -> Result<chrono::NaiveDate, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/primitive/date",
@@ -83,7 +83,7 @@ impl PrimitiveClient {
         ).await
     }
 
-    pub async fn get_and_return_uuid(&self, request: &uuid::Uuid, options: Option<RequestOptions>) -> Result<uuid::Uuid, ClientError> {
+    pub async fn get_and_return_uuid(&self, request: &uuid::Uuid, options: Option<RequestOptions>) -> Result<uuid::Uuid, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/primitive/uuid",
@@ -93,7 +93,7 @@ impl PrimitiveClient {
         ).await
     }
 
-    pub async fn get_and_return_base_64(&self, request: &String, options: Option<RequestOptions>) -> Result<String, ClientError> {
+    pub async fn get_and_return_base_64(&self, request: &String, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/primitive/base64",

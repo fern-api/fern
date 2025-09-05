@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 use crate::core::{File};
@@ -8,12 +8,12 @@ pub struct BigunionClient {
 }
 
 impl BigunionClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn get(&self, id: &String, options: Option<RequestOptions>) -> Result<BigUnion, ClientError> {
+    pub async fn get(&self, id: &String, options: Option<RequestOptions>) -> Result<BigUnion, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("/{}", id),
@@ -23,7 +23,7 @@ impl BigunionClient {
         ).await
     }
 
-    pub async fn update(&self, request: &BigUnion, options: Option<RequestOptions>) -> Result<bool, ClientError> {
+    pub async fn update(&self, request: &BigUnion, options: Option<RequestOptions>) -> Result<bool, ApiError> {
         self.http_client.execute_request(
             Method::PATCH,
             "",
@@ -33,7 +33,7 @@ impl BigunionClient {
         ).await
     }
 
-    pub async fn update_many(&self, request: &Vec<BigUnion>, options: Option<RequestOptions>) -> Result<HashMap<String, bool>, ClientError> {
+    pub async fn update_many(&self, request: &Vec<BigUnion>, options: Option<RequestOptions>) -> Result<HashMap<String, bool>, ApiError> {
         self.http_client.execute_request(
             Method::PATCH,
             "/many",

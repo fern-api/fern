@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 use crate::core::{File};
@@ -8,12 +8,12 @@ pub struct ReferenceClient {
 }
 
 impl ReferenceClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn send(&self, request: &SendRequest, options: Option<RequestOptions>) -> Result<SendResponse, ClientError> {
+    pub async fn send(&self, request: &SendRequest, options: Option<RequestOptions>) -> Result<SendResponse, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "reference",

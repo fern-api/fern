@@ -1,3 +1,39 @@
+- version: 2.43.3
+  changelogEntry:
+    - summary: |
+        Bugfix to make sure that the Java SDK compiles when header based versioning with defaults is enabled.
+      type: fix
+  createdAt: "2025-09-03"
+  irVersion: 59
+
+- version: 2.43.2
+  changelogEntry:
+    - summary: |
+        Fix custom license name extraction in build.gradle to display actual license names from LICENSE files
+        instead of toString() representations. The generator now reads the first line of custom LICENSE files
+        and displays it as the license name.
+      type: fix
+  createdAt: "2025-09-03"
+  irVersion: 59
+
+- version: 2.43.1
+  changelogEntry:
+    - summary: |
+        Fix Maven Central signing configuration to correctly use 3-parameter useInMemoryPgpKeys() method.
+        The signing block was incorrectly using MAVEN_SIGNATURE_SECRET_KEY as the key ID parameter
+        instead of MAVEN_SIGNATURE_KID, causing Sonatype Central validation failures during deployment.
+      type: fix
+  createdAt: "2025-09-02"
+  irVersion: 59
+
+- version: 2.43.0
+  changelogEntry:
+    - summary: |
+        Add support for the `apiName` and `disabledFeatures` readme config options.
+      type: feat
+  createdAt: "2025-08-29"
+  irVersion: 59
+
 - version: 2.42.1
   changelogEntry:
     - summary: |

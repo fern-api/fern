@@ -41,6 +41,9 @@
       "path": "../../../../../generators/go-v2/dynamic-snippets"
     },
     {
+      "path": "../../../../../generators/ruby-v2/dynamic-snippets"
+    },
+    {
       "path": "../../../../commons/fs-utils"
     },
     {
@@ -72,6 +75,9 @@
     },
     {
       "path": "../../../../core"
+    },
+    {
+      "path": "../../../../../generators/swift/dynamic-snippets"
     }
   ]
 }

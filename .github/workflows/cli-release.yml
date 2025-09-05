@@ -67,16 +67,16 @@ jobs:
           fi
 
       - name: Create Release
-        uses: actions/create-release@v1
+        id: create_release
+        uses: softprops/action-gh-release@v2
         if: steps.get_version.outputs.HAS_NEW_VERSION
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.get_version.outputs.VERSION }}
-          release_name: ${{ steps.get_version.outputs.VERSION }}
+          name: ${{ steps.get_version.outputs.VERSION }}
           draft: false
           prerelease: ${{ steps.check_prerelease.outputs.IS_PRERELEASE }}
 
       - name: Display Release URL
         if: steps.get_version.outputs.HAS_NEW_VERSION
-        run: echo "Release created at ${{ steps.create_release.outputs.html_url }}"
+        run: echo "Release created at ${{ steps.create_release.outputs.url }}"

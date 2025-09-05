@@ -15,6 +15,7 @@ uuid = { version = "1.0", features = ["serde"] }
 num-bigint = { version = "0.4", features = ["serde"] }
 mime = "0.3"
 bytes = "1.0"
+percent-encoding = "2.3"
 {{EXTRA_DEPENDENCIES}}
 [dev-dependencies]
 tokio-test = "0.4"

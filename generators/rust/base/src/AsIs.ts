@@ -9,9 +9,9 @@ export const AsIsFileNames = {
     ApiClientBuilder: "api_client_builder.rs",
     HttpClient: "http_client.rs",
     RequestOptions: "request_options.rs",
-    ClientError: "client_error.rs",
     Pagination: "pagination.rs",
     BytesUtils: "bytes_utils.rs",
+    QueryParameterBuilder: "query_parameter_builder.rs",
     // File operations templates
     File: "file.rs",
     FormData: "form_data.rs",
@@ -53,9 +53,9 @@ function createAsIsFiles(): AsIsFileDefinitionsById {
             key === "ApiClientBuilder" ||
             key === "HttpClient" ||
             key === "RequestOptions" ||
-            key === "ClientError" ||
             key === "Pagination" ||
-            key === "BytesUtils";
+            key === "BytesUtils" ||
+            key === "QueryParameterBuilder";
 
         if (isProjectFile) {
             directory = RelativeFilePath.of("");

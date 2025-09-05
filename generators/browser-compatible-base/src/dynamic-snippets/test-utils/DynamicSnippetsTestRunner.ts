@@ -171,6 +171,19 @@ export class DynamicSnippetsTestRunner {
                                     }
                                 },
                                 revenue: 1000000
+                            },
+                            eventInfo: {
+                                type: "metadata",
+                                id: "event-12345",
+                                data: {
+                                    key1: "val1",
+                                    key2: "val2"
+                                },
+                                jsonString: "abc"
+                            },
+                            migration: {
+                                name: "Migration 31 Aug",
+                                status: "RUNNING"
                             }
                         }
                     }

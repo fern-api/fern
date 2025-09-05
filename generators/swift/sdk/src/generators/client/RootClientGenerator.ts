@@ -91,7 +91,7 @@ export class RootClientGenerator {
         });
     }
 
-    public generate(): swift.Class {
+    public generate() {
         return swift.class_({
             name: this.clientName,
             final: true,
@@ -154,7 +154,7 @@ export class RootClientGenerator {
                                       }),
                                       swift.functionArgument({
                                           label: "header",
-                                          value: swift.Expression.rawStringValue(authSchemes.header.wireValue)
+                                          value: swift.Expression.stringLiteral(authSchemes.header.wireValue)
                                       })
                                   ]
                               }),
@@ -169,7 +169,7 @@ export class RootClientGenerator {
                                   }),
                                   swift.functionArgument({
                                       label: "header",
-                                      value: swift.Expression.rawStringValue(authSchemes.header.wireValue)
+                                      value: swift.Expression.stringLiteral(authSchemes.header.wireValue)
                                   })
                               ],
                               multiline: true

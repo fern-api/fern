@@ -1,6 +1,7 @@
 package com.snippets;
 
 import com.seed.examples.SeedExamplesClient;
+import com.seed.examples.resources.file.service.requests.GetFileRequest;
 
 public class Example7 {
     public static void main(String[] args) {
@@ -10,6 +11,12 @@ public class Example7 {
             .url("https://api.fern.com")
             .build();
 
-        client.health().service().check("id-2sdx82h");
+        client.file().service().getFile(
+            "filename",
+            GetFileRequest
+                .builder()
+                .xFileApiVersion("X-File-API-Version")
+                .build()
+        );
     }
 }

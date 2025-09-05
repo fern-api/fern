@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 use crate::core::{File};
@@ -8,12 +8,12 @@ pub struct UnionClient {
 }
 
 impl UnionClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn get(&self, request: &MyUnion, options: Option<RequestOptions>) -> Result<MyUnion, ClientError> {
+    pub async fn get(&self, request: &MyUnion, options: Option<RequestOptions>) -> Result<MyUnion, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "",
@@ -23,7 +23,7 @@ impl UnionClient {
         ).await
     }
 
-    pub async fn get_metadata(&self, options: Option<RequestOptions>) -> Result<Metadata, ClientError> {
+    pub async fn get_metadata(&self, options: Option<RequestOptions>) -> Result<Metadata, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             "/metadata",
@@ -33,7 +33,7 @@ impl UnionClient {
         ).await
     }
 
-    pub async fn update_metadata(&self, request: &MetadataUnion, options: Option<RequestOptions>) -> Result<bool, ClientError> {
+    pub async fn update_metadata(&self, request: &MetadataUnion, options: Option<RequestOptions>) -> Result<bool, ApiError> {
         self.http_client.execute_request(
             Method::PUT,
             "/metadata",
@@ -43,7 +43,7 @@ impl UnionClient {
         ).await
     }
 
-    pub async fn call(&self, request: &Request, options: Option<RequestOptions>) -> Result<bool, ClientError> {
+    pub async fn call(&self, request: &Request, options: Option<RequestOptions>) -> Result<bool, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/call",
@@ -53,7 +53,7 @@ impl UnionClient {
         ).await
     }
 
-    pub async fn duplicate_types_union(&self, request: &UnionWithDuplicateTypes, options: Option<RequestOptions>) -> Result<UnionWithDuplicateTypes, ClientError> {
+    pub async fn duplicate_types_union(&self, request: &UnionWithDuplicateTypes, options: Option<RequestOptions>) -> Result<UnionWithDuplicateTypes, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/duplicate",
@@ -63,7 +63,7 @@ impl UnionClient {
         ).await
     }
 
-    pub async fn nested_unions(&self, request: &NestedUnionRoot, options: Option<RequestOptions>) -> Result<String, ClientError> {
+    pub async fn nested_unions(&self, request: &NestedUnionRoot, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/nested",

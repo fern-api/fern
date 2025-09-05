@@ -12,6 +12,19 @@
                 "sync_client": "package com.example.usage;\n\nimport com.seed.errorProperty.SeedErrorPropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorPropertyClient client = SeedErrorPropertyClient\n            .builder()\n            .build();\n\n        client.propertyBasedError().throwError();\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.errorProperty.SeedErrorPropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorPropertyClient client = SeedErrorPropertyClient\n            .builder()\n            .build();\n\n        client.propertyBasedError().throwError();\n    }\n}\n"
             }
+        },
+        {
+            "example_identifier": "8baa99fe",
+            "id": {
+                "method": "GET",
+                "path": "/property-based-error",
+                "identifier_override": "endpoint_property-based-error.ThrowError"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.errorProperty.SeedErrorPropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorPropertyClient client = SeedErrorPropertyClient\n            .builder()\n            .build();\n\n        client.propertyBasedError().throwError();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.errorProperty.SeedErrorPropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedErrorPropertyClient client = SeedErrorPropertyClient\n            .builder()\n            .build();\n\n        client.propertyBasedError().throwError();\n    }\n}\n"
+            }
         }
     ],
     "types": {}

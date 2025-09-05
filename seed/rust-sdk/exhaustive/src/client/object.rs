@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 use crate::core::{File};
@@ -8,12 +8,12 @@ pub struct ObjectClient {
 }
 
 impl ObjectClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn get_and_return_with_optional_field(&self, request: &ObjectWithOptionalField, options: Option<RequestOptions>) -> Result<ObjectWithOptionalField, ClientError> {
+    pub async fn get_and_return_with_optional_field(&self, request: &ObjectWithOptionalField, options: Option<RequestOptions>) -> Result<ObjectWithOptionalField, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/object/get-and-return-with-optional-field",
@@ -23,7 +23,7 @@ impl ObjectClient {
         ).await
     }
 
-    pub async fn get_and_return_with_required_field(&self, request: &ObjectWithRequiredField, options: Option<RequestOptions>) -> Result<ObjectWithRequiredField, ClientError> {
+    pub async fn get_and_return_with_required_field(&self, request: &ObjectWithRequiredField, options: Option<RequestOptions>) -> Result<ObjectWithRequiredField, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/object/get-and-return-with-required-field",
@@ -33,7 +33,7 @@ impl ObjectClient {
         ).await
     }
 
-    pub async fn get_and_return_with_map_of_map(&self, request: &ObjectWithMapOfMap, options: Option<RequestOptions>) -> Result<ObjectWithMapOfMap, ClientError> {
+    pub async fn get_and_return_with_map_of_map(&self, request: &ObjectWithMapOfMap, options: Option<RequestOptions>) -> Result<ObjectWithMapOfMap, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/object/get-and-return-with-map-of-map",
@@ -43,7 +43,7 @@ impl ObjectClient {
         ).await
     }
 
-    pub async fn get_and_return_nested_with_optional_field(&self, request: &NestedObjectWithOptionalField, options: Option<RequestOptions>) -> Result<NestedObjectWithOptionalField, ClientError> {
+    pub async fn get_and_return_nested_with_optional_field(&self, request: &NestedObjectWithOptionalField, options: Option<RequestOptions>) -> Result<NestedObjectWithOptionalField, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/object/get-and-return-nested-with-optional-field",
@@ -53,7 +53,7 @@ impl ObjectClient {
         ).await
     }
 
-    pub async fn get_and_return_nested_with_required_field(&self, string: &String, request: &NestedObjectWithRequiredField, options: Option<RequestOptions>) -> Result<NestedObjectWithRequiredField, ClientError> {
+    pub async fn get_and_return_nested_with_required_field(&self, string: &String, request: &NestedObjectWithRequiredField, options: Option<RequestOptions>) -> Result<NestedObjectWithRequiredField, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             &format!("/object/get-and-return-nested-with-required-field/{}", string),
@@ -63,7 +63,7 @@ impl ObjectClient {
         ).await
     }
 
-    pub async fn get_and_return_nested_with_required_field_as_list(&self, request: &Vec<NestedObjectWithRequiredField>, options: Option<RequestOptions>) -> Result<NestedObjectWithRequiredField, ClientError> {
+    pub async fn get_and_return_nested_with_required_field_as_list(&self, request: &Vec<NestedObjectWithRequiredField>, options: Option<RequestOptions>) -> Result<NestedObjectWithRequiredField, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/object/get-and-return-nested-with-required-field-list",

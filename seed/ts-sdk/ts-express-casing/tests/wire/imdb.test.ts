@@ -4,6 +4,7 @@
 
 import { mockServerPool } from "../mock-server/MockServerPool";
 import { SeedApiClient } from "../../src/Client";
+import * as SeedApi from "../../src/api/index";
 
 describe("Imdb", () => {
     test("create_movie", async () => {
@@ -28,7 +29,7 @@ describe("Imdb", () => {
         expect(response).toEqual("string");
     });
 
-    test("get_movie", async () => {
+    test("get_movie (b5fb3500)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ token: "test", environment: server.baseUrl });
 
@@ -41,5 +42,17 @@ describe("Imdb", () => {
             title: "title",
             rating: 1.1,
         });
+    });
+
+    test("get_movie (c0efa9d6)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = "string";
+        server.mockEndpoint().get("/movies/movie_id").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
+
+        await expect(async () => {
+            return await client.imdb.getMovie("movie_id");
+        }).rejects.toThrow(new SeedApi.MovieDoesNotExistError("string"));
     });
 });

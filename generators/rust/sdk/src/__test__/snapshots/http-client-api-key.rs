@@ -1,7 +1,7 @@
 use std::str::FromStr;
 use reqwest::{Client, Request, Response, Method, header::{HeaderName, HeaderValue}};
 use serde::de::DeserializeOwned;
-use crate::{ClientConfig, RequestOptions, ClientError};
+use crate::{ClientConfig, RequestOptions, ApiError};
 
 /// Internal HTTP client that handles requests with authentication and retries
 #[derive(Clone)]
@@ -11,12 +11,12 @@ pub struct HttpClient {
 }
 
 impl HttpClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let client = Client::builder()
             .timeout(config.timeout)
             .user_agent(&config.user_agent)
             .build()
-            .map_err(ClientError::HttpClientError)?;
+            .map_err(ApiError::Network)?;
             
         Ok(Self { client, config })
     }
@@ -29,7 +29,7 @@ impl HttpClient {
         body: Option<serde_json::Value>,
         query_params: Option<Vec<(String, String)>>,
         options: Option<RequestOptions>,
-    ) -> Result<T, ClientError>
+    ) -> Result<T, ApiError>
     where
         T: DeserializeOwned,
     {
@@ -50,7 +50,7 @@ impl HttpClient {
         }
         
         // Build the request
-        let mut req = request.build().map_err(ClientError::RequestError)?;
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
         
         // Apply authentication and headers
         self.apply_auth_headers(&mut req, &options)?;
@@ -69,7 +69,7 @@ impl HttpClient {
         body: Vec<u8>,
         query_params: Option<Vec<(String, String)>>,
         options: Option<RequestOptions>,
-    ) -> Result<T, ClientError>
+    ) -> Result<T, ApiError>
     where
         T: DeserializeOwned,
     {
@@ -88,7 +88,7 @@ impl HttpClient {
         request = request.body(body);
         
         // Build the request
-        let mut req = request.build().map_err(ClientError::RequestError)?;
+        let mut req = request.build().map_err(ApiError::RequestError)?;
         
         // Apply authentication and headers
         self.apply_auth_headers(&mut req, &options)?;
@@ -99,7 +99,7 @@ impl HttpClient {
         self.parse_response(response).await
     }
     
-    fn apply_auth_headers(&self, request: &mut Request, options: &Option<RequestOptions>) -> Result<(), ClientError> {
+    fn apply_auth_headers(&self, request: &mut Request, options: &Option<RequestOptions>) -> Result<(), ApiError> {
         let headers = request.headers_mut();
         
         // Apply API key (request options override config)
@@ -108,7 +108,7 @@ impl HttpClient {
             .or(self.config.api_key.as_ref());
             
         if let Some(key) = api_key {
-            headers.insert("api_key", key.parse().map_err(|_| ClientError::InvalidHeader)?);
+            headers.insert("api_key", key.parse().map_err(|_| ApiError::InvalidHeader)?);
         }
         
         // Apply bearer token (request options override config)
@@ -118,20 +118,20 @@ impl HttpClient {
             
         if let Some(token) = bearer_token {
             let auth_value = format!("Bearer {}", token);
-            headers.insert("Authorization", auth_value.parse().map_err(|_| ClientError::InvalidHeader)?);
+            headers.insert("Authorization", auth_value.parse().map_err(|_| ApiError::InvalidHeader)?);
         }
         
         Ok(())
     }
     
-    fn apply_custom_headers(&self, request: &mut Request, options: &Option<RequestOptions>) -> Result<(), ClientError> {
+    fn apply_custom_headers(&self, request: &mut Request, options: &Option<RequestOptions>) -> Result<(), ApiError> {
         let headers = request.headers_mut();
         
         // Apply config-level custom headers
         for (key, value) in &self.config.custom_headers {
             headers.insert(
-                HeaderName::from_str(key).map_err(|_| ClientError::InvalidHeader)?, 
-                HeaderValue::from_str(value).map_err(|_| ClientError::InvalidHeader)?
+                HeaderName::from_str(key).map_err(|_| ApiError::InvalidHeader)?, 
+                HeaderValue::from_str(value).map_err(|_| ApiError::InvalidHeader)?
             );
         }
         
@@ -139,8 +139,8 @@ impl HttpClient {
         if let Some(options) = options {
             for (key, value) in &options.additional_headers {
                 headers.insert(
-                    HeaderName::from_str(key).map_err(|_| ClientError::InvalidHeader)?, 
-                    HeaderValue::from_str(value).map_err(|_| ClientError::InvalidHeader)?
+                    HeaderName::from_str(key).map_err(|_| ApiError::InvalidHeader)?, 
+                    HeaderValue::from_str(value).map_err(|_| ApiError::InvalidHeader)?
                 );
             }
         }
@@ -148,7 +148,7 @@ impl HttpClient {
         Ok(())
     }
     
-    async fn execute_with_retries(&self, request: Request, options: &Option<RequestOptions>) -> Result<Response, ClientError> {
+    async fn execute_with_retries(&self, request: Request, options: &Option<RequestOptions>) -> Result<Response, ApiError> {
         let max_retries = options.as_ref()
             .and_then(|opts| opts.max_retries)
             .unwrap_or(self.config.max_retries);
@@ -157,30 +157,34 @@ impl HttpClient {
         
         for attempt in 0..=max_retries {
             let cloned_request = request.try_clone()
-                .ok_or(ClientError::RequestCloneError)?;
+                .ok_or(ApiError::RequestClone)?;
                 
             match self.client.execute(cloned_request).await {
                 Ok(response) if response.status().is_success() => return Ok(response),
-                Ok(response) => return Err(ClientError::HttpError(response.status())),
+                Ok(response) => {
+                    let status_code = response.status().as_u16();
+                    let body = response.text().await.ok();
+                    return Err(ApiError::from_response(status_code, body.as_deref()));
+                },
                 Err(e) if attempt < max_retries => {
                     last_error = Some(e);
                     // Exponential backoff
                     let delay = std::time::Duration::from_millis(100 * 2_u64.pow(attempt));
                     tokio::time::sleep(delay).await;
                 }
-                Err(e) => return Err(ClientError::RequestError(e)),
+                Err(e) => return Err(ApiError::Network(e)),
             }
         }
         
-        Err(ClientError::RequestError(last_error.unwrap()))
+        Err(ApiError::Network(last_error.unwrap()))
     }
     
-    async fn parse_response<T>(&self, response: Response) -> Result<T, ClientError>
+    async fn parse_response<T>(&self, response: Response) -> Result<T, ApiError>
     where
         T: DeserializeOwned,
     {
-        let text = response.text().await.map_err(ClientError::RequestError)?;
-        serde_json::from_str(&text).map_err(ClientError::JsonParseError)
+        let text = response.text().await.map_err(ApiError::Network)?;
+        serde_json::from_str(&text).map_err(ApiError::Serialization)
     }
 
     /// Execute a request that returns raw bytes for file downloads
@@ -191,7 +195,7 @@ impl HttpClient {
         body: Option<serde_json::Value>,
         query_params: Option<Vec<(String, String)>>,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<u8>, ClientError> {
+    ) -> Result<Vec<u8>, ApiError> {
         let url = format!(
             "{}/{}", 
             self.config.base_url.trim_end_matches('/'), 
@@ -210,7 +214,7 @@ impl HttpClient {
         }
         
         // Build the request
-        let mut req = request.build().map_err(ClientError::RequestError)?;
+        let mut req = request.build().map_err(ApiError::RequestError)?;
         
         // Apply authentication and headers
         self.apply_auth_headers(&mut req, &options)?;
@@ -219,7 +223,7 @@ impl HttpClient {
         // Execute with retries and download bytes
         let response = self.execute_with_retries(req, &options).await?;
         crate::core::download_file(response).await
-            .map_err(ClientError::RequestError)
+            .map_err(ApiError::RequestError)
     }
 
     /// Execute a multipart form request for file uploads
@@ -230,7 +234,7 @@ impl HttpClient {
         form: reqwest::multipart::Form,
         query_params: Option<Vec<(String, String)>>,
         options: Option<RequestOptions>,
-    ) -> Result<T, ClientError>
+    ) -> Result<T, ApiError>
     where
         T: DeserializeOwned,
     {
@@ -250,7 +254,7 @@ impl HttpClient {
         request = request.multipart(form);
         
         // Build the request
-        let mut req = request.build().map_err(ClientError::RequestError)?;
+        let mut req = request.build().map_err(ApiError::RequestError)?;
         
         // Apply authentication and headers
         self.apply_auth_headers(&mut req, &options)?;

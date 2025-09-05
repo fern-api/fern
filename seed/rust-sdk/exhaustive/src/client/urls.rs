@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 use crate::core::{File};
@@ -8,12 +8,12 @@ pub struct UrlsClient {
 }
 
 impl UrlsClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn with_mixed_case(&self, options: Option<RequestOptions>) -> Result<String, ClientError> {
+    pub async fn with_mixed_case(&self, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             "/urls/MixedCase",
@@ -23,7 +23,7 @@ impl UrlsClient {
         ).await
     }
 
-    pub async fn no_ending_slash(&self, options: Option<RequestOptions>) -> Result<String, ClientError> {
+    pub async fn no_ending_slash(&self, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             "/urls/no-ending-slash",
@@ -33,7 +33,7 @@ impl UrlsClient {
         ).await
     }
 
-    pub async fn with_ending_slash(&self, options: Option<RequestOptions>) -> Result<String, ClientError> {
+    pub async fn with_ending_slash(&self, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             "/urls/with-ending-slash/",
@@ -43,7 +43,7 @@ impl UrlsClient {
         ).await
     }
 
-    pub async fn with_underscores(&self, options: Option<RequestOptions>) -> Result<String, ClientError> {
+    pub async fn with_underscores(&self, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             "/urls/with_underscores",

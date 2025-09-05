@@ -13,7 +13,7 @@ public class Example31
             }
         );
 
-        await client.V2.Problem.GetLightweightProblemsAsync();
+        await client.V2.Problem.GetProblemsAsync();
     }
 
 }

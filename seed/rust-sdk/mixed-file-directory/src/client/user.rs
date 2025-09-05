@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 use crate::core::{File};
@@ -8,19 +8,19 @@ pub struct UserClient {
 }
 
 impl UserClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn list(&self, limit: Option<Option<i32>>, options: Option<RequestOptions>) -> Result<Vec<User>, ClientError> {
+    pub async fn list(&self, limit: Option<i32>, options: Option<RequestOptions>) -> Result<Vec<User>, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             "/users/",
             None,
             {
             let mut query_params = Vec::new();
-            if let Some(Some(value)) = limit {
+            if let Some(value) = limit {
                 query_params.push(("limit".to_string(), serde_json::to_string(&value).unwrap_or_default()));
             }
             Some(query_params)

@@ -19,20 +19,24 @@ func do() {
     client.Service.CreateMovie(
         context.TODO(),
         &pleaseinhere.Movie{
-            Id: "id",
+            Id: "movie-c06a4ad7",
             Prequel: pleaseinhere.String(
-                "prequel",
+                "movie-cv9b914f",
             ),
-            Title: "title",
-            From: "from",
-            Rating: 1.1,
-            Tag: "tag",
-            Book: pleaseinhere.String(
-                "book",
-            ),
+            Title: "The Boy and the Heron",
+            From: "Hayao Miyazaki",
+            Rating: 8,
+            Tag: "tag-wf9as23d",
             Metadata: map[string]any{
-                "metadata": map[string]any{
-                    "key": "value",
+                "actors": []any{
+                    "Christian Bale",
+                    "Florence Pugh",
+                    "Willem Dafoe",
+                },
+                "releaseDate": "2023-12-08",
+                "ratings": map[string]any{
+                    "rottenTomatoes": 97,
+                    "imdb": 7.6,
                 },
             },
             Revenue: 1000000,

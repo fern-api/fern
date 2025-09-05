@@ -13,13 +13,22 @@ public class Example16
             }
         );
 
-        await client.Service.GetMetadataAsync(
-            new GetMetadataRequest{
-                Shallow = false,
-                Tag = new List<string>(){
-                    "development",
+        await client.Service.CreateMovieAsync(
+            new Movie{
+                Id = "id",
+                Prequel = "prequel",
+                Title = "title",
+                From = "from",
+                Rating = 1.1,
+                Type = "movie",
+                Tag = "tag",
+                Book = "book",
+                Metadata = new Dictionary<string, object>(){
+                    ["metadata"] = new Dictionary<string, object>() {
+                        ["key"] = "value",
+                    },
                 },
-                XApiVersion = "0.0.1"
+                Revenue = 1000000l
             }
         );
     }
