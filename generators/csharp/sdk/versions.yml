@@ -2,7 +2,7 @@
 - version: 2.1.16
   changelogEntry:
     - type: fix
-      summary: | 
+      summary: |
         Enable type disambiguation and renaming during code generation
         Permits the `examples` test fixtures to compile sucessfully
   createdAt: "2025-09-05"
