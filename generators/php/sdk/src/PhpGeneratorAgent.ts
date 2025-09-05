@@ -15,7 +15,7 @@ export class PhpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContex
         logger,
         config,
         readmeConfigBuilder,
-        ir // example for test 
+        ir // example for test
     }: {
         logger: Logger;
         config: FernGeneratorExec.GeneratorConfig;
