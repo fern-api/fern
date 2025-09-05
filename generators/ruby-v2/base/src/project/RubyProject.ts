@@ -402,7 +402,7 @@ class CustomTestFile {
 
             # This test is run via command line: rake customtest
             describe "Custom Test" do
-                it "Defalt" do
+                it "Default" do
                     refute false
                 end
             end
