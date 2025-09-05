@@ -8,7 +8,7 @@ pub mod pagination;
 pub mod query_parameter_builder;
 pub mod types;
 
-pub use client::{InferredAuthImplicitNoExpiryClient, AuthClient, NestedClient, NestedNoAuthClient, SimpleClient};
+pub use client::{*};
 pub use error::{ApiError};
 pub use types::{*};
 pub use client_config::{*};

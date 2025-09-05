@@ -9,7 +9,7 @@ pub mod query_parameter_builder;
 pub mod environment;
 pub mod types;
 
-pub use client::{AudiencesClient, FolderAClient, ServiceClient, FolderDClient, FooClient};
+pub use client::{*};
 pub use error::{ApiError};
 pub use environment::{*};
 pub use types::{*};

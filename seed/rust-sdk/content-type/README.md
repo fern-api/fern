@@ -78,7 +78,7 @@ async fn main() {
         api_key: Some("your-api-key".to_string())
     };
     let client = ContentTypesClient::new(config).expect("Failed to build client");
-    let mut paginated_stream = client.service.named_patch_with_mixed().await?;
+    let mut paginated_stream = client.service.patch().await?;
     while let Some(item) = paginated_stream.next().await {
             match item {
                 Ok(data) => println!("Received item: {:?}", data),

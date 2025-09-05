@@ -1,8 +1,8 @@
 pub mod alias_type;
-pub mod child;
 pub mod parent;
+pub mod child;
 
 pub use alias_type::{*};
-pub use child::{*};
 pub use parent::{*};
+pub use child::{*};
 

@@ -8,7 +8,7 @@ pub mod pagination;
 pub mod query_parameter_builder;
 pub mod types;
 
-pub use client::{ExhaustiveClient, EndpointsClient, ContainerClient, ContentTypeClient, EnumClient, HttpMethodsClient, ObjectClient, ParamsClient, PrimitiveClient, PutClient, UnionClient, UrlsClient, InlinedRequestsClient, NoAuthClient, NoReqBodyClient, ReqWithHeadersClient};
+pub use client::{*};
 pub use error::{ApiError};
 pub use types::{*};
 pub use client_config::{*};

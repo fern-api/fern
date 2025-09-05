@@ -8,7 +8,7 @@ pub mod pagination;
 pub mod query_parameter_builder;
 pub mod types;
 
-pub use client::{CrossPackageTypeNamesClient, FolderAClient, ServiceClient, FolderDClient, FooClient};
+pub use client::{*};
 pub use error::{ApiError};
 pub use types::{*};
 pub use client_config::{*};
