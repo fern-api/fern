@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from ...core.serialization import FieldMetadata
 from ...v_2.problem.types.test_case_id import TestCaseId
 from .error_info import ErrorInfo
@@ -113,6 +113,10 @@ class CodeExecutionUpdate_GradedV2(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ...commons.types.key_value_pair import KeyValuePair  # noqa: E402, F401, I001
+from ...commons.types.map_value import MapValue  # noqa: E402, F401, I001
+
+
 class CodeExecutionUpdate_WorkspaceRan(UniversalBaseModel):
     type: typing.Literal["workspaceRan"] = "workspaceRan"
     submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")]
@@ -206,3 +210,5 @@ CodeExecutionUpdate = typing.Union[
     CodeExecutionUpdate_InvalidRequest,
     CodeExecutionUpdate_Finished,
 ]
+update_forward_refs(CodeExecutionUpdate_Graded)
+update_forward_refs(CodeExecutionUpdate_GradedV2)
