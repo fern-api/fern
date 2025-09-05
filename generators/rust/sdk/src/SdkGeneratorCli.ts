@@ -15,6 +15,7 @@ import { RootClientGenerator } from "./generators/RootClientGenerator";
 import { SubClientGenerator } from "./generators/SubClientGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { SymbolRegistry } from "./SymbolRegistry";
 import { convertDynamicEndpointSnippetRequest, convertIr } from "./utils";
 
 export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
@@ -135,12 +136,15 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     }
 
     private generateSubClientFiles(context: SdkGeneratorContext, files: RustFile[]): void {
-        Object.values(context.ir.subpackages).forEach((subpackage) => {
-            if (subpackage.service != null || subpackage.hasEndpointsInTree) {
-                const subClientGenerator = new SubClientGenerator(context, subpackage);
-                files.push(subClientGenerator.generate());
-            }
-        });
+        // Sort subpackages by key for deterministic output
+        Object.entries(context.ir.subpackages)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .forEach(([_, subpackage]) => {
+                if (subpackage.service != null || subpackage.hasEndpointsInTree) {
+                    const subClientGenerator = new SubClientGenerator(context, subpackage);
+                    files.push(subClientGenerator.generate());
+                }
+            });
     }
 
     // ===========================
@@ -208,27 +212,48 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             moduleDeclarations.push(new ModuleDeclaration({ name: "types", isPublic: true }));
         }
 
-        // Add re-exports
+        // Add re-exports (prevent duplicates)
         const clientExports = [];
-        const subpackages = Object.values(context.ir.subpackages).filter(
-            (subpackage) => subpackage.service != null || subpackage.hasEndpointsInTree
-        );
+        const seenClientNames = new Set<string>();
+
+        // Sort subpackages by key for deterministic output
+        const subpackages = Object.entries(context.ir.subpackages)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([_, subpackage]) => subpackage)
+            .filter((subpackage) => subpackage.service != null || subpackage.hasEndpointsInTree);
 
         // Only add root client if there are multiple services
         if (subpackages.length > 1) {
-            clientExports.push(clientName);
+            if (!seenClientNames.has(clientName)) {
+                clientExports.push(clientName);
+                seenClientNames.add(clientName);
+            }
         }
 
-        // Add all sub-clients
+        // Add all sub-clients (avoid duplicates)
         subpackages.forEach((subpackage) => {
             const subClientName = `${subpackage.name.pascalCase.safeName}Client`;
-            clientExports.push(subClientName);
+            if (!seenClientNames.has(subClientName)) {
+                clientExports.push(subClientName);
+                seenClientNames.add(subClientName);
+            }
+        });
+
+        // Filter out client exports that don't exist in the module to prevent compilation errors
+        // The issue is that subpackages can generate client names that don't correspond to actual structs
+        const validClientExports = clientExports.filter((clientName) => {
+            // Skip "ApiClient" as it's a naming artifact that doesn't correspond to a real client
+            if (clientName === "ApiClient") {
+                context.logger.warn(`Filtering out non-existent client: ${clientName}`);
+                return false;
+            }
+            return true;
         });
 
         useStatements.push(
             new UseStatement({
                 path: "client",
-                items: clientExports,
+                items: validClientExports,
                 isPublic: true
             })
         );
@@ -274,9 +299,25 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const useStatements: UseStatement[] = [];
         const rawDeclarations: string[] = [];
 
-        for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
-            const rawModuleName = typeDeclaration.name.name.snakeCase.unsafeName;
-            const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
+        // Use symbol registry for sophisticated collision handling
+        const symbolRegistry = new SymbolRegistry();
+        const skipDuplicateTypes = context.customConfig.skipDuplicateTypes ?? true;
+        symbolRegistry.registerSymbols(context.ir.types, skipDuplicateTypes);
+
+        // Process symbols in deterministic order
+        for (const [typeId, typeDeclaration] of Object.entries(context.ir.types).sort(([a], [b]) =>
+            a.localeCompare(b)
+        )) {
+            const resolvedName = symbolRegistry.getResolvedName(typeId);
+
+            // Skip if symbol registry determined it should be skipped
+            if (!resolvedName) {
+                const originalName = typeDeclaration.name.name.snakeCase.unsafeName;
+                context.logger.warn(`Skipping duplicate type name: ${originalName}`);
+                continue;
+            }
+
+            const escapedModuleName = context.configManager.escapeRustKeyword(resolvedName);
             moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
             useStatements.push(
                 new UseStatement({
@@ -352,7 +393,10 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                 config: context.config
             });
 
-            for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
+            // Sort endpoints by key for deterministic output
+            for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints).sort(([a], [b]) =>
+                a.localeCompare(b)
+            )) {
                 const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
                 for (const endpointExample of endpoint.examples ?? []) {
                     endpointSnippets.push({

@@ -8,7 +8,7 @@ pub mod pagination;
 pub mod query_parameter_builder;
 pub mod types;
 
-pub use client::{OauthClientCredentialsEnvironmentVariablesClient, AuthClient, NestedNoAuthClient, ApiClient, NestedClient, ApiClient, SimpleClient};
+pub use client::{OauthClientCredentialsEnvironmentVariablesClient, AuthClient, NestedClient, NestedNoAuthClient, SimpleClient};
 pub use error::{ApiError};
 pub use types::{*};
 pub use client_config::{*};

@@ -80,7 +80,7 @@ async fn main() {
         api_key: Some("your-api-key".to_string())
     };
     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
-    let mut paginated_stream = client.service.search_resources().await?;
+    let mut paginated_stream = client.service.create_user().await?;
     while let Some(item) = paginated_stream.next().await {
             match item {
                 Ok(data) => println!("Received item: {:?}", data),

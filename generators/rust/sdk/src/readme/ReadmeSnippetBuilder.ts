@@ -113,7 +113,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private buildEndpointsById(): Record<EndpointId, EndpointWithFilepath> {
         const endpoints: Record<EndpointId, EndpointWithFilepath> = {};
-        for (const service of Object.values(this.context.ir.services)) {
+        // Sort services by key for deterministic output
+        for (const service of Object.entries(this.context.ir.services)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([_, service]) => service)) {
             for (const endpoint of service.endpoints) {
                 endpoints[endpoint.id] = {
                     endpoint,
@@ -128,7 +131,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         endpointSnippets: FernGeneratorExec.Endpoint[]
     ): Record<EndpointId, string> {
         const snippets: Record<EndpointId, string> = {};
-        for (const endpointSnippet of Object.values(endpointSnippets)) {
+        // Sort by identifierOverride for deterministic output
+        for (const endpointSnippet of endpointSnippets.sort((a, b) => {
+            const aId = a.id.identifierOverride || "";
+            const bId = b.id.identifierOverride || "";
+            return aId.localeCompare(bId);
+        })) {
             if (endpointSnippet.id.identifierOverride == null) {
                 throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
             }
@@ -164,7 +172,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getPaginatedEndpoints(): EndpointWithFilepath[] {
         const paginatedEndpoints: EndpointWithFilepath[] = [];
-        for (const service of Object.values(this.context.ir.services)) {
+        // Sort services by key for deterministic output
+        for (const service of Object.entries(this.context.ir.services)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([_, service]) => service)) {
             for (const endpoint of service.endpoints) {
                 if (endpoint.pagination) {
                     paginatedEndpoints.push({

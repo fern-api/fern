@@ -55,10 +55,12 @@ export class ErrorGenerator {
     private buildAllVariants(): EnumVariant[] {
         const variants: EnumVariant[] = [];
 
-        // Add API-specific error variants
-        Object.values(this.context.ir.errors).forEach((errorDeclaration) => {
-            variants.push(this.buildApiErrorVariant(errorDeclaration));
-        });
+        // Add API-specific error variants (sorted for deterministic output)
+        Object.entries(this.context.ir.errors)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .forEach(([_, errorDeclaration]) => {
+                variants.push(this.buildApiErrorVariant(errorDeclaration));
+            });
 
         // Add standard variants
         variants.push(this.buildHttpErrorVariant());
@@ -186,10 +188,12 @@ export class ErrorGenerator {
     private buildMatchArms(): MatchArm[] {
         const arms: MatchArm[] = [];
 
-        // Add arms for each API error
-        Object.values(this.context.ir.errors).forEach((errorDeclaration) => {
-            arms.push(this.buildErrorMatchArm(errorDeclaration));
-        });
+        // Add arms for each API error (sorted for deterministic output)
+        Object.entries(this.context.ir.errors)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .forEach(([_, errorDeclaration]) => {
+                arms.push(this.buildErrorMatchArm(errorDeclaration));
+            });
 
         // Add default case
         arms.push(this.buildDefaultMatchArm());

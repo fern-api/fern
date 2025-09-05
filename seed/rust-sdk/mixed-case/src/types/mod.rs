@@ -1,12 +1,12 @@
-pub mod organization;
-pub mod user;
 pub mod nested_user;
-pub mod resource_status;
+pub mod organization;
 pub mod resource;
+pub mod resource_status;
+pub mod user;
 
-pub use organization::{*};
-pub use user::{*};
 pub use nested_user::{*};
-pub use resource_status::{*};
+pub use organization::{*};
 pub use resource::{*};
+pub use resource_status::{*};
+pub use user::{*};
 

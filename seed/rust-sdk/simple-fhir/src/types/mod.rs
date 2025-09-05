@@ -1,16 +1,16 @@
-pub mod memo;
-pub mod base_resource;
-pub mod resource_list;
 pub mod account;
+pub mod base_resource;
+pub mod memo;
 pub mod patient;
 pub mod practitioner;
+pub mod resource_list;
 pub mod script;
 
-pub use memo::{*};
-pub use base_resource::{*};
-pub use resource_list::{*};
 pub use account::{*};
+pub use base_resource::{*};
+pub use memo::{*};
 pub use patient::{*};
 pub use practitioner::{*};
+pub use resource_list::{*};
 pub use script::{*};
 

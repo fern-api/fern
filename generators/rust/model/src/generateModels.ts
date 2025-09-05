@@ -3,12 +3,28 @@ import { AliasGenerator } from "./alias";
 import { EnumGenerator } from "./enum";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { StructGenerator } from "./object";
+import { SymbolRegistry } from "./SymbolRegistry";
 import { UndiscriminatedUnionGenerator, UnionGenerator } from "./union";
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): RustFile[] {
     const files: RustFile[] = [];
 
-    for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
+    // Use symbol registry for sophisticated collision handling
+    const symbolRegistry = new SymbolRegistry();
+    const skipDuplicateTypes = context.customConfig.skipDuplicateTypes ?? true;
+    symbolRegistry.registerSymbols(context.ir.types, skipDuplicateTypes);
+
+    // Process symbols in deterministic order
+    for (const [typeId, typeDeclaration] of Object.entries(context.ir.types).sort(([a], [b]) => a.localeCompare(b))) {
+        const resolvedName = symbolRegistry.getResolvedName(typeId);
+
+        // Skip if symbol registry determined it should be skipped
+        if (!resolvedName) {
+            const originalName = typeDeclaration.name.name.snakeCase.unsafeName;
+            console.warn(`Skipping duplicate type name: ${originalName}`);
+            continue;
+        }
+
         const file = typeDeclaration.shape._visit<RustFile | undefined>({
             alias: (aliasTypeDeclaration) => {
                 return new AliasGenerator(typeDeclaration, aliasTypeDeclaration, context).generate();
