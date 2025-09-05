@@ -364,14 +364,11 @@ scripts:
           if grep -q '"test":' package.json; then yarn test; fi
         fi
 allowedFailures:
-  - api-wide-base-path
   - bytes-download
   - circular-references
   - cross-package-type-names
-  - java-inline-types:no-wrapped-aliases
   - idempotency-headers
   - imdb:noScripts
-  - literals-unions
   - nullable
   - oauth-client-credentials-custom
   - response-property
