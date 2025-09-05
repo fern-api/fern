@@ -92,7 +92,7 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): string[] {
-        // Get use statements
+        // Get use statement
         const useStatements = this.getUseStatements({ endpoint, snippet });
 
         // Create the main function body
