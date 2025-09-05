@@ -70,10 +70,12 @@ class PydanticGeneratorContext(ABC):
     def does_circularly_reference_itself(self, type_id: ir_types.TypeId) -> bool: ...
 
     @abstractmethod
-    def get_non_union_circular_references(self) -> Set[ir_types.TypeId]: ...
+    def get_non_union_self_referencing_dependencies_from_types(
+        self,
+    ) -> Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]]: ...
 
     @abstractmethod
-    def get_non_union_self_referencing_dependencies_from_types(
+    def get_union_self_referencing_members_from_types(
         self,
     ) -> Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]]: ...
 
