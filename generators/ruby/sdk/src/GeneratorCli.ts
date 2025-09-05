@@ -34,7 +34,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
     flattenedProperties: Map<TypeId, ObjectProperty[]> = new Map();
     classReferenceFactory: ClassReferenceFactory | undefined;
     locationGenerator: LocationGenerator | undefined;
-
+    // try again
     protected parseCustomConfig(customConfig: unknown): RubySdkCustomConfigConsumed {
         return parseCustomConfig(customConfig);
     }

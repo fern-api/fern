@@ -4,7 +4,7 @@ from fern_python.generators.pydantic_model.type_declaration_handler import (
 )
 from fern_python.snippet import SnippetWriter
 
-# another forced test
+
 def build_snippet_writer(
     *, context: PydanticGeneratorContext, improved_imports: bool = False, use_str_enums: bool = False
 ) -> SnippetWriter:
