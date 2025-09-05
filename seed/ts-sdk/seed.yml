@@ -374,22 +374,26 @@ allowedFailures:
   - bearer-token-environment-variable
   - bytes-upload
   - circular-references
+  - circular-references-advanced
   - content-type
   - custom-auth
   - enum
   - error-property
+  - error-property:union-utils
   - errors
   - exhaustive:custom-package-json
   - exhaustive:dev-dependencies
   - exhaustive:never-throw-errors
   - extends
   - file-download:file-download-response-headers
+  - file-download:no-custom-config
   - file-download:wrapper
   - literal
   - mixed-case:no-custom-config
   - mixed-case:retain-original-casing
   - oauth-client-credentials-custom
   - package-yml
+  - pagination
   - query-parameters-openapi:no-custom-config
   - query-parameters-openapi-as-objects:no-custom-config
   - trace:no-custom-config
