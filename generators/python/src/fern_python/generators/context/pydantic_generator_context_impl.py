@@ -64,16 +64,11 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             for referenced_id in ordered_reference_types:
                 referenced_type = self.ir.types[referenced_id]
                 referenced_type_shape = referenced_type.shape.get_as_union()
-                if (
-                    # Maybe look at config for factory mode (union_utils)
-                    # *Probably* should only skip if we're in factory mode..?
-                    referenced_type_shape.type != "union" and referenced_type_shape.type != "undiscriminatedUnion"
-                ):
+                if referenced_type_shape.type != "union" and referenced_type_shape.type != "undiscriminatedUnion":
                     # This referenced type is self-referential
                     if referenced_id in referenced_type.referenced_types:
                         self._types_with_non_union_self_referencing_dependencies[id].add(referenced_id)
-                # TODO: exclude union_utils factory mode
-                # TODO: handle discriminated unions
+                # TODO(tjb9dc): handle discriminated unions as well
                 elif referenced_type_shape.type == "undiscriminatedUnion":
                     # For unions, apply the same logic but looking at the variants, and import more shallowly
                     for member in referenced_type_shape.members:
