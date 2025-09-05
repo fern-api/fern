@@ -34,3 +34,4 @@ require_relative "seed/simple/types/foo_response"
 # Client Types
 require_relative "seed/client"
 require_relative "seed/simple/client"
+require_relative "../README.md"

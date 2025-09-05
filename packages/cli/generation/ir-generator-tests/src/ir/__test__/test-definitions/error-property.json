@@ -563,7 +563,7 @@
                         },
                         {
                             "example": {
-                                "id": "72e26a78",
+                                "id": "406789d1",
                                 "url": "/property-based-error",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -681,7 +681,8 @@
                                                                 }
                                                             },
                                                             "jsonExample": "message"
-                                                        }
+                                                        },
+                                                        "propertyAccess": null
                                                     }
                                                 ]
                                             },
