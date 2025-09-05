@@ -5,9 +5,7 @@ module Seed
     module Types
       module SubmissionTypeEnum
         extend Seed::Internal::Types::Enum
-
-        TEST = "TEST"
-      end
+        TEST = "TEST"end
     end
   end
 end

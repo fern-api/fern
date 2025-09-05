@@ -7,8 +7,7 @@ module Seed
         extend Seed::Internal::Types::Enum
 
         USD = "USD"
-        YEN = "YEN"
-      end
+        YEN = "YEN"end
     end
   end
 end

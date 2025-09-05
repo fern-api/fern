@@ -6,7 +6,6 @@ module Seed
       extend Seed::Internal::Types::Enum
 
       SAFE = "safe"
-      CUSTOM = "Custom"
-    end
+      CUSTOM = "Custom"end
   end
 end

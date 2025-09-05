@@ -7,8 +7,7 @@ module Seed
         extend Seed::Internal::Types::Enum
 
         ACTIVE = "ACTIVE"
-        INACTIVE = "INACTIVE"
-      end
+        INACTIVE = "INACTIVE"end
     end
   end
 end

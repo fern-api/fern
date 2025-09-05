@@ -695,7 +695,7 @@
                         },
                         {
                             "example": {
-                                "id": "47782628",
+                                "id": "3b27c39d",
                                 "url": "/custom-auth",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -813,7 +813,8 @@
                                                                 }
                                                             },
                                                             "jsonExample": "message"
-                                                        }
+                                                        },
+                                                        "propertyAccess": null
                                                     }
                                                 ]
                                             },
@@ -1256,7 +1257,7 @@
                         },
                         {
                             "example": {
-                                "id": "5ed1eedb",
+                                "id": "ccffdc34",
                                 "url": "/custom-auth",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1385,7 +1386,8 @@
                                                                 }
                                                             },
                                                             "jsonExample": "message"
-                                                        }
+                                                        },
+                                                        "propertyAccess": null
                                                     }
                                                 ]
                                             },

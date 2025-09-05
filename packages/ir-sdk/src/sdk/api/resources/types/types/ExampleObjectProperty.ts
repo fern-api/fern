@@ -7,6 +7,7 @@ import * as FernIr from "../../../index";
 export interface ExampleObjectProperty {
     name: FernIr.NameAndWireValue;
     value: FernIr.ExampleTypeReference;
+    propertyAccess: FernIr.ObjectPropertyAccess | undefined;
     /**
      * This property may have been brought in via extension. originalTypeDeclaration
      * is the name of the type that contains this property.

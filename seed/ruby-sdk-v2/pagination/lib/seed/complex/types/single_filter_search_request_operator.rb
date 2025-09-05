@@ -15,8 +15,7 @@ module Seed
         CONTAINS = "~"
         DOES_NOT_CONTAIN = "!~"
         STARTS_WITH = "^"
-        ENDS_WITH = "$"
-      end
+        ENDS_WITH = "$"end
     end
   end
 end
