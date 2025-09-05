@@ -65,9 +65,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 predicate?: (endpoint: EndpointWithFilepath) => boolean;
             }
         > = {
-            [FernGeneratorCli.StructuredFeatureId.RequestOptions]: {
-                renderer: this.renderRequestOptionsSnippet.bind(this)
-            },
             [FernGeneratorCli.StructuredFeatureId.Errors]: { renderer: this.renderErrorsSnippet.bind(this) },
             [FernGeneratorCli.StructuredFeatureId.Timeouts]: { renderer: this.renderTimeoutsSnippet.bind(this) },
             ...(this.isPaginationEnabled
