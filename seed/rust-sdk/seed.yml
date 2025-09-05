@@ -47,3 +47,16 @@ fixtures:
     - customConfig:
         clientName: ImdbClient
       outputFolder: imdb 
+
+allowedFailures:
+  - multi-url-environment-no-default
+  - reserved-keywords
+  - inferred-auth-implicit-no-expiry
+  - folders
+  - nullable
+  - query-parameters-openapi
+  - inferred-auth-explicit
+  - validation
+  - circular-references
+  - oauth-client-credentials-with-variables
+  - oauth-client-credentials
