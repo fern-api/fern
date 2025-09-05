@@ -88,7 +88,7 @@ impl HttpClient {
         request = request.body(body);
         
         // Build the request
-        let mut req = request.build().map_err(ApiError::RequestError)?;
+        let mut req = request.build().map_err(ApiError::Network)?;
         
         // Apply authentication and headers
         self.apply_auth_headers(&mut req, &options)?;
@@ -214,7 +214,7 @@ impl HttpClient {
         }
         
         // Build the request
-        let mut req = request.build().map_err(ApiError::RequestError)?;
+        let mut req = request.build().map_err(ApiError::Network)?;
         
         // Apply authentication and headers
         self.apply_auth_headers(&mut req, &options)?;
@@ -223,7 +223,7 @@ impl HttpClient {
         // Execute with retries and download bytes
         let response = self.execute_with_retries(req, &options).await?;
         crate::core::download_file(response).await
-            .map_err(ApiError::RequestError)
+            .map_err(ApiError::Network)
     }
 
     /// Execute a multipart form request for file uploads
@@ -254,7 +254,7 @@ impl HttpClient {
         request = request.multipart(form);
         
         // Build the request
-        let mut req = request.build().map_err(ApiError::RequestError)?;
+        let mut req = request.build().map_err(ApiError::Network)?;
         
         // Apply authentication and headers
         self.apply_auth_headers(&mut req, &options)?;
