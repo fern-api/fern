@@ -38,3 +38,4 @@ require_relative "seed/ast/types/container_value"
 require_relative "seed/ast/types/field_value"
 
 # Client Types
+require_relative "../reference.md"

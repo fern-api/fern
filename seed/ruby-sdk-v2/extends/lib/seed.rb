@@ -34,3 +34,4 @@ require_relative "seed/types/nested_type"
 
 # Client Types
 require_relative "../README.md"
+require_relative "../reference.md"
