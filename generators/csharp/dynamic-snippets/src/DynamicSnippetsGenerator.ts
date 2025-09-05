@@ -3,6 +3,7 @@ import {
     FernGeneratorExec,
     Options
 } from "@fern-api/browser-compatible-base-generator";
+import { GeneratorState, restoreGeneratorState } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 import { EndpointSnippetGenerator } from "./EndpointSnippetGenerator";
@@ -21,6 +22,10 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
         options?: Options;
     }) {
         super(new DynamicSnippetsGeneratorContext({ ir, config, options }));
+    }
+
+    public initializeGeneratorState(generatorState: GeneratorState): void {
+        restoreGeneratorState(generatorState);
     }
 
     public async generate(

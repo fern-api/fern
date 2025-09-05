@@ -25,6 +25,7 @@ export declare namespace WrappedRequestGenerator {
     }
 }
 
+/** Represents the request JSON object */
 export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private classReference: csharp.ClassReference;
     private wrapper: SdkRequestWrapper;
@@ -36,7 +37,9 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         super(context);
         this.wrapper = wrapper;
         this.serviceId = serviceId;
-        this.classReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
+        this.classReference = this.context
+            .getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName)
+            .canonicalize();
         this.endpoint = endpoint;
         this.exampleGenerator = new ExampleGenerator(context);
     }

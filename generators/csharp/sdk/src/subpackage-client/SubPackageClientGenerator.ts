@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { allNamespacesOf, csharp } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
@@ -30,7 +30,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
 
     constructor({ subpackage, context, serviceId, service }: SubClientGenerator.Args) {
         super(context);
-        this.classReference = this.context.getSubpackageClassReference(subpackage);
+        this.classReference = this.context.getSubpackageClassReference(subpackage).canonicalize();
         this.subpackage = subpackage;
         this.rawClient = new RawClient(context);
         this.service = service;
@@ -96,7 +96,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         return new CSharpFile({
             clazz: class_,
             directory: RelativeFilePath.of(this.context.getDirectoryForSubpackage(this.subpackage)),
-            allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            allNamespaceSegments: allNamespacesOf(this.classReference.namespace),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getNamespace(),
             customConfig: this.context.customConfig

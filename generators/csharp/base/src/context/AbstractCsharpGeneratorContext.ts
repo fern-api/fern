@@ -1,6 +1,11 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { BaseCsharpCustomConfigSchema, convertReadOnlyPrimitiveTypes, csharp } from "@fern-api/csharp-codegen";
+import {
+    BaseCsharpCustomConfigSchema,
+    canonicalizeNamespace,
+    convertReadOnlyPrimitiveTypes,
+    csharp
+} from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     FernFilepath,
@@ -97,7 +102,7 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public getTestNamespace(): string {
-        return `${this.namespace}.Test`;
+        return canonicalizeNamespace(`${this.namespace}.Test`);
     }
 
     public getTestUtilsNamespace(): string {

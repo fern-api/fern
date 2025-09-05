@@ -1,4 +1,5 @@
-import { AstNode, Writer } from "../csharp";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 import { XmlDocWriter } from "./core/XmlDocWriter";
 
 export declare namespace XmlDocBlock {

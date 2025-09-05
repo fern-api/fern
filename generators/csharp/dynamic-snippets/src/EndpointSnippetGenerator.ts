@@ -679,6 +679,11 @@ export class EndpointSnippetGenerator {
                 return this.getBytesBodyRequestArg({ value });
             }
             case "typeReference":
+                // if the body type is optional, but not provided, then we should use null
+                // (the generated body arg parameter is currently required)
+                if (body.value.type === "optional" && value == undefined) {
+                    return csharp.TypeLiteral.null();
+                }
                 return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
             default:
                 assertNever(body);

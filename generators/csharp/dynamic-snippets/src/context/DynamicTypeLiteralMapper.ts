@@ -1,6 +1,6 @@
 import { DiscriminatedUnionTypeInstance, NamedArgument, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { csharp } from "@fern-api/csharp-codegen";
+import { csharp, isKnownIdentifier } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
@@ -238,9 +238,18 @@ export class DynamicTypeLiteralMapper {
                         classReference,
                         baseProperties,
                         arguments_: [
-                            this.convert({
-                                typeReference: unionVariant.typeReference,
-                                value: record[unionVariant.discriminantValue.wireValue]
+                            csharp.instantiateClass({
+                                classReference: csharp.classReference({
+                                    name: this.context.getClassName(unionVariant.discriminantValue.name),
+                                    namespace: classReference.namespace,
+                                    enclosingType: classReference
+                                }),
+                                arguments_: [
+                                    this.convert({
+                                        typeReference: unionVariant.typeReference,
+                                        value: unionVariant.discriminantValue.wireValue
+                                    })
+                                ]
                             })
                         ]
                     });
@@ -256,8 +265,9 @@ export class DynamicTypeLiteralMapper {
                         // Unions with no properties require the discriminant property to be set.
                         csharp.instantiateClass({
                             classReference: csharp.classReference({
-                                name: `${this.context.getClassName(discriminatedUnion.declaration.name)}.${this.context.getClassName(discriminatedUnionTypeInstance.discriminantValue.name)}`,
-                                namespace: this.context.getNamespace(discriminatedUnion.declaration.fernFilepath)
+                                name: this.context.getClassName(discriminatedUnionTypeInstance.discriminantValue.name),
+                                namespace: classReference.namespace,
+                                enclosingType: classReference
                             }),
                             arguments_: []
                         })
@@ -373,9 +383,11 @@ export class DynamicTypeLiteralMapper {
             parameters: object_.properties,
             values: this.context.getRecord(value) ?? {}
         });
+        // if the declaration name or namespace is a known identifier, then we need to fully qualify the type.
         const fullyQualified =
-            this.context.isUsingKnownIdentifier(this.context.getClassName(object_.declaration.name)) ||
-            this.context.isUsingKnownIdentifier(this.context.getNamespace(object_.declaration.fernFilepath));
+            isKnownIdentifier(this.context.getClassName(object_.declaration.name)) ||
+            isKnownIdentifier(this.context.getNamespace(object_.declaration.fernFilepath));
+
         return csharp.TypeLiteral.class_({
             reference: csharp.classReference({
                 name: this.context.getClassName(object_.declaration.name),
