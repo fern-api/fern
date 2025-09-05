@@ -15,6 +15,8 @@ import {
     TypeId
 } from "@fern-fern/ir-sdk/api";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
+import { RubyGeneratorAgent } from "./RubyGeneratorAgent";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
@@ -24,6 +26,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public readonly project: RubyProject;
     public readonly endpointGenerator: EndpointGenerator;
     public readonly snippetGenerator: EndpointSnippetsGenerator;
+    public readonly generatorAgent: RubyGeneratorAgent;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -35,6 +38,12 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         this.project = new RubyProject({ context: this });
         this.endpointGenerator = new EndpointGenerator({ context: this });
         this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
+        this.generatorAgent = new RubyGeneratorAgent({
+            logger: this.logger,
+            config: this.config,
+            readmeConfigBuilder: new ReadmeConfigBuilder(),
+            ir
+        });
     }
 
     public getRootFolderPath(): RelativeFilePath {

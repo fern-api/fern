@@ -9,8 +9,7 @@ module Seed
         ACTIVE = "active"
         INACTIVE = "inactive"
         SUSPENDED = "suspended"
-        DELETED = "deleted"
-      end
+        DELETED = "deleted"end
     end
   end
 end

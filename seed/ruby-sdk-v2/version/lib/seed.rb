@@ -32,3 +32,4 @@ require_relative "seed/user/types/user"
 # Client Types
 require_relative "seed/client"
 require_relative "seed/user/client"
+require_relative "../README.md"

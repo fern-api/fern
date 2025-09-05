@@ -7,8 +7,7 @@ module Seed
         extend Seed::Internal::Types::Enum
 
         FOO = "FOO"
-        BAR = "BAR"
-      end
+        BAR = "BAR"end
     end
   end
 end

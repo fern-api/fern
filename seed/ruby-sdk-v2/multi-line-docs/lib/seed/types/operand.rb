@@ -7,7 +7,6 @@ module Seed
 
       GREATER_THAN = ">"
       EQUAL_TO = "="
-      LESS_THAN = "less_than"
-    end
+      LESS_THAN = "less_than"end
   end
 end

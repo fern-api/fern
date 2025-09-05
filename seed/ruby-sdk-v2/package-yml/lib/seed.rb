@@ -32,3 +32,4 @@ require_relative "seed/types/echo_request"
 # Client Types
 require_relative "seed/client"
 require_relative "seed/service/client"
+require_relative "../README.md"

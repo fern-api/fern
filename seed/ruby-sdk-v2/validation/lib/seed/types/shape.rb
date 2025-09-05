@@ -7,7 +7,6 @@ module Seed
 
       SQUARE = "SQUARE"
       CIRCLE = "CIRCLE"
-      TRIANGLE = "TRIANGLE"
-    end
+      TRIANGLE = "TRIANGLE"end
   end
 end
