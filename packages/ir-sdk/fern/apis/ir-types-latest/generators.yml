@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 default-group: local
 groups:
   local:
@@ -64,5 +65,6 @@ groups:
     generators:
       - name: fernapi/fern-go-model
         version: 0.9.3
+        config: {}
         github:
           repository: fern-api/ir-go
