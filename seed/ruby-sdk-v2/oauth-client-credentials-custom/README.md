@@ -61,32 +61,6 @@ raise error
 end
 ```
 
-## Request Options
-
-A variety of request options are included to adapt the behavior of the library, which includes configuring
-authorization tokens, or providing your own instrumented `HTTP::Client`.
-
-These request options can either be specified on the client so that they're applied on every request, 
-or for an individual request, like so:
-
-```ruby
-require "seed"
-
-# Specify default options applied on every request.
-client = Seed.new(
-    token: "<YOUR_API_KEY>",
-    http_client: HTTP::Client.new(
-        timeout: 5
-    )
-)
-
-# Specify options for an individual request.
-response = client.Auth.GetTokenWithClientCredentials(
-    ...,
-    token: "<YOUR_API_KEY>"
-)
-```
-
 ## Advanced
 
 ### Timeouts
