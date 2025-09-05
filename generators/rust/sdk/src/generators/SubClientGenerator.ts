@@ -41,7 +41,10 @@ export class SubClientGenerator {
     // =============================================================================
 
     public generate(): RustFile {
-        const filename = `${this.subpackage.name.snakeCase.safeName}.rs`;
+        // Use the full fernFilepath to create unique filenames to prevent collisions
+        // E.g., "nested-no-auth/api" becomes "nested_no_auth_api.rs"
+        const pathParts = this.subpackage.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+        const filename = `${pathParts.join("_")}.rs`;
         const endpoints = this.service?.endpoints || [];
 
         const rustClient = rust.client({
@@ -55,7 +58,6 @@ export class SubClientGenerator {
             useStatements: this.generateImports(),
             rawDeclarations: [rustClient.toString()]
         });
-
         return new RustFile({
             filename,
             directory: RelativeFilePath.of("src/client"),
@@ -68,7 +70,10 @@ export class SubClientGenerator {
     // =============================================================================
 
     private get subClientName(): string {
-        return this.subpackage.name.pascalCase.safeName + "Client";
+        // Use the full fernFilepath to create unique client names to prevent collisions
+        // E.g., "nested-no-auth/api" becomes "NestedNoAuthApiClient"
+        const pathParts = this.subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
+        return pathParts.join("") + "Client";
     }
 
     private generateImports(): UseStatement[] {

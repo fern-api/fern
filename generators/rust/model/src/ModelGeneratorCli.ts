@@ -85,28 +85,24 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
     private generateTypesModFile(context: ModelGeneratorContext): RustFile {
         const writer = new Writer();
 
-        // Add module declarations for each type (sorted for deterministic output)
+        // Add module declarations for each type
         if (context.ir.types) {
-            Object.entries(context.ir.types)
-                .sort(([a], [b]) => a.localeCompare(b))
-                .forEach(([_, typeDeclaration]) => {
-                    const rawTypeName = typeDeclaration.name.name.snakeCase.unsafeName;
-                    const escapedTypeName = context.escapeRustKeyword(rawTypeName);
-                    writer.writeLine(`pub mod ${escapedTypeName};`);
-                });
+            Object.values(context.ir.types).forEach((typeDeclaration) => {
+                const rawTypeName = typeDeclaration.name.name.snakeCase.unsafeName;
+                const escapedTypeName = context.escapeRustKeyword(rawTypeName);
+                writer.writeLine(`pub mod ${escapedTypeName};`);
+            });
         }
 
         writer.newLine();
 
-        // Add public use statements for each type (sorted for deterministic output)
+        // Add public use statements for each type
         if (context.ir.types) {
-            Object.entries(context.ir.types)
-                .sort(([a], [b]) => a.localeCompare(b))
-                .forEach(([_, typeDeclaration]) => {
-                    const rawTypeName = typeDeclaration.name.name.snakeCase.unsafeName;
-                    const escapedTypeName = context.escapeRustKeyword(rawTypeName);
-                    writer.writeLine(`pub use ${escapedTypeName}::{*};`);
-                });
+            Object.values(context.ir.types).forEach((typeDeclaration) => {
+                const rawTypeName = typeDeclaration.name.name.snakeCase.unsafeName;
+                const escapedTypeName = context.escapeRustKeyword(rawTypeName);
+                writer.writeLine(`pub use ${escapedTypeName}::{*};`);
+            });
         }
 
         writer.newLine();
@@ -123,18 +119,15 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
             return [];
         }
 
-        // Sort types by key for deterministic output
-        return Object.entries(context.ir.types)
-            .sort(([a], [b]) => a.localeCompare(b))
-            .map(([_, typeDeclaration]) => {
-                const moduleName = this.getTypeModuleName(typeDeclaration);
-                const content = this.generateTypeDeclaration(context, typeDeclaration);
-                return new RustFile({
-                    filename: `${moduleName}.rs`,
-                    directory: RelativeFilePath.of("src"),
-                    fileContents: content
-                });
+        return Object.values(context.ir.types).map((typeDeclaration) => {
+            const moduleName = this.getTypeModuleName(typeDeclaration);
+            const content = this.generateTypeDeclaration(context, typeDeclaration);
+            return new RustFile({
+                filename: `${moduleName}.rs`,
+                directory: RelativeFilePath.of("src"),
+                fileContents: content
             });
+        });
     }
 
     private generateTypeDeclaration(context: ModelGeneratorContext, typeDeclaration: TypeDeclaration): string {
