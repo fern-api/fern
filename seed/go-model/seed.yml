@@ -53,7 +53,7 @@ scripts:
 allowedFailures:
   - exhaustive
   - literal
-  - mixed-case 
+  - mixed-case
   - nullable-optional
   - reserved-keywords
   - streaming:.
