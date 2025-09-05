@@ -833,6 +833,7 @@ export class DocsDefinitionResolver {
                 this.taskContext,
                 this.markdownFilesToFullSlugs,
                 this.markdownFilesToNoIndex,
+                this.markdownFilesToTags,
                 this.#idgen,
                 hideChildren
             );
@@ -862,6 +863,7 @@ export class DocsDefinitionResolver {
                 this.taskContext,
                 this.markdownFilesToFullSlugs,
                 this.markdownFilesToNoIndex,
+                this.markdownFilesToTags,
                 this.#idgen,
                 hideChildren
             );
@@ -935,6 +937,7 @@ export class DocsDefinitionResolver {
             this.taskContext,
             this.markdownFilesToFullSlugs,
             this.markdownFilesToNoIndex,
+            this.markdownFilesToTags,
             this.#idgen,
             workspace,
             hideChildren
