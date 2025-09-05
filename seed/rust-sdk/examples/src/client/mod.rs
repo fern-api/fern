@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError};
+use crate::{ClientConfig, ApiError};
 
 pub mod file;
 pub mod health;
@@ -11,7 +11,7 @@ pub struct ExamplesClient {
 }
 
 impl ExamplesClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
             file: FileClient::new(config.clone())?,

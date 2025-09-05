@@ -1,11 +1,12 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
-import { rust, UseStatement } from "@fern-api/rust-codegen";
+import { Expression, rust, Statement, UseStatement } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference, isDateTimeType } from "@fern-api/rust-model";
 
 import {
     CursorPagination,
     HttpEndpoint,
+    HttpRequestBody,
     HttpService,
     OffsetPagination,
     Pagination,
@@ -23,6 +24,7 @@ interface EndpointParameter {
     type: rust.Type;
     isRef: boolean;
     optional: boolean;
+    typeRef?: TypeReference;
 }
 
 export class SubClientGenerator {
@@ -114,6 +116,14 @@ export class SubClientGenerator {
             );
         }
 
+        // Always include file operation imports since they're now available in every SDK
+        imports.push(
+            new UseStatement({
+                path: "crate::core",
+                items: ["File"]
+            })
+        );
+
         return imports;
     }
 
@@ -201,19 +211,94 @@ export class SubClientGenerator {
             rust.Type.reference(rust.reference({ name: "ApiError" }))
         );
 
+        // Generate different method bodies for bytes vs regular requests
+        const methodBody = this.generateMethodBody(endpoint, params, httpMethod, pathExpression, requestBody);
+
         return {
             name: endpoint.name.snakeCase.safeName,
             parameters,
             returnType: returnType.toString(),
             isAsync: true,
-            body: `self.http_client.execute_request(
+            body: methodBody
+        };
+    }
+
+    private generateMethodBody(
+        endpoint: HttpEndpoint,
+        params: EndpointParameter[],
+        httpMethod: string,
+        pathExpression: string,
+        requestBody: string
+    ): string {
+        if (endpoint.requestBody?.type === "bytes") {
+            return this.generateBytesRequestMethodBody(httpMethod, pathExpression, requestBody, endpoint);
+        } else if (endpoint.requestBody?.type === "fileUpload") {
+            return this.generateFileUploadRequestMethodBody(httpMethod, pathExpression, requestBody, endpoint);
+        } else if (endpoint.response?.body?.type === "fileDownload") {
+            return this.generateStreamingRequestMethodBody(httpMethod, pathExpression, requestBody, endpoint);
+        } else {
+            return this.generateRegularRequestMethodBody(httpMethod, pathExpression, requestBody, endpoint);
+        }
+    }
+
+    private generateBytesRequestMethodBody(
+        httpMethod: string,
+        pathExpression: string,
+        requestBody: string,
+        endpoint: HttpEndpoint
+    ): string {
+        return `self.http_client.execute_bytes_request(
             Method::${httpMethod},
             ${pathExpression},
             ${requestBody},
             ${this.buildQueryParameters(endpoint)},
             options,
-        ).await`
-        };
+        ).await`;
+    }
+
+    private generateRegularRequestMethodBody(
+        httpMethod: string,
+        pathExpression: string,
+        requestBody: string,
+        endpoint: HttpEndpoint
+    ): string {
+        return `self.http_client.execute_request(
+            Method::${httpMethod},
+            ${pathExpression},
+            ${requestBody},
+            ${this.buildQueryParameters(endpoint)},
+            options,
+        ).await`;
+    }
+
+    private generateStreamingRequestMethodBody(
+        httpMethod: string,
+        pathExpression: string,
+        requestBody: string,
+        endpoint: HttpEndpoint
+    ): string {
+        return `self.http_client.execute_bytes_download_request(
+            Method::${httpMethod},
+            ${pathExpression},
+            ${requestBody},
+            ${this.buildQueryParameters(endpoint)},
+            options,
+        ).await`;
+    }
+
+    private generateFileUploadRequestMethodBody(
+        httpMethod: string,
+        pathExpression: string,
+        requestBody: string,
+        endpoint: HttpEndpoint
+    ): string {
+        return `self.http_client.execute_multipart_request(
+            Method::${httpMethod},
+            ${pathExpression},
+            ${requestBody},
+            ${this.buildQueryParameters(endpoint)},
+            options,
+        ).await`;
     }
 
     private buildMethodParameters(params: EndpointParameter[]): string[] {
@@ -258,7 +343,8 @@ export class SubClientGenerator {
                         name: pathParam.name.snakeCase.safeName,
                         type: generateRustTypeForTypeReference(pathParam.valueType),
                         isRef: this.shouldPassByReference(pathParam.valueType),
-                        optional: false
+                        optional: false,
+                        typeRef: pathParam.valueType
                     });
                 }
             }
@@ -286,21 +372,67 @@ export class SubClientGenerator {
                     return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
                 },
                 reference: (reference) => generateRustTypeForTypeReference(reference.requestBodyType),
-                fileUpload: () => {
-                    return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
+                fileUpload: (fileUpload) => {
+                    // Add file upload properties as additional parameters
+                    fileUpload.properties.forEach((property) => {
+                        property._visit({
+                            file: (fileProperty) => {
+                                params.push({
+                                    name: fileProperty.key.name.snakeCase.safeName,
+                                    type: rust.Type.reference(rust.reference({ name: "File", module: "crate::core" })),
+                                    isRef: false,
+                                    optional: fileProperty.isOptional || false,
+                                    typeRef: undefined // File type, not a complex type reference
+                                });
+                            },
+                            bodyProperty: (bodyProperty) => {
+                                params.push({
+                                    name: bodyProperty.name.name.snakeCase.safeName,
+                                    type: generateRustTypeForTypeReference(bodyProperty.valueType),
+                                    isRef: this.shouldPassByReference(bodyProperty.valueType),
+                                    optional: true, // Body properties in file uploads are typically optional
+                                    typeRef: bodyProperty.valueType
+                                });
+                            },
+                            _other: () => {
+                                // Handle other property types if needed
+                            }
+                        });
+                    });
+
+                    return rust.Type.reference(rust.reference({ name: "File", module: "crate::core" }));
                 },
-                bytes: () => rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8)),
+                bytes: (bytesRequest) => {
+                    // Support multiple input types for file uploads
+                    return rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8));
+                },
                 _other: () => {
                     return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
                 }
             });
 
-            params.push({
-                name: "request",
-                type: requestBodyType,
-                isRef: true,
-                optional: false
-            });
+            // Use different parameter name and handling for different request types
+            const isBytes = endpoint.requestBody.type === "bytes";
+            const isFileUpload = endpoint.requestBody.type === "fileUpload";
+
+            // For fileUpload, properties are already added above, skip adding duplicate
+            if (!isFileUpload) {
+                let paramName = "request";
+                let isRef = true;
+
+                if (isBytes) {
+                    paramName = "file_data";
+                    isRef = false; // Don't pass bytes by reference
+                }
+
+                params.push({
+                    name: paramName,
+                    type: requestBodyType,
+                    isRef,
+                    optional: isBytes ? (endpoint.requestBody as HttpRequestBody.Bytes).isOptional || false : false,
+                    typeRef: undefined
+                });
+            }
         }
     }
 
@@ -551,9 +683,35 @@ export class SubClientGenerator {
     }
 
     private getRequestBody(endpoint: HttpEndpoint, params: EndpointParameter[]): string {
-        const requestBodyParam = params.find((param) => param.name === "request");
-        if (requestBodyParam && endpoint.requestBody) {
-            return "Some(serde_json::to_value(request).unwrap_or_default())";
+        if (endpoint.requestBody) {
+            return endpoint.requestBody._visit({
+                inlinedRequestBody: () => {
+                    const requestBodyParam = params.find((param) => param.name === "request");
+                    if (requestBodyParam) {
+                        return "Some(serde_json::to_value(request).unwrap_or_default())";
+                    }
+                    return "None";
+                },
+                reference: () => {
+                    const requestBodyParam = params.find((param) => param.name === "request");
+                    if (requestBodyParam) {
+                        return "Some(serde_json::to_value(request).unwrap_or_default())";
+                    }
+                    return "None";
+                },
+                fileUpload: () => {
+                    // For file upload endpoints, always generate a form even if all file params are optional
+                    return this.generateFileUploadFormData(endpoint, params);
+                },
+                bytes: (bytesRequest) => {
+                    const dataParam = params.find((param) => param.name === "file_data");
+                    if (dataParam) {
+                        return bytesRequest.isOptional ? "file_data.unwrap_or_default()" : "file_data";
+                    }
+                    return "Vec::new()";
+                },
+                _other: () => "None"
+            });
         }
         return "None";
     }
@@ -1162,5 +1320,167 @@ export class SubClientGenerator {
             });
         }
         return "per_page"; // Default fallback
+    }
+
+    // =============================================================================
+    // FILE UPLOAD FORM DATA GENERATION
+    // =============================================================================
+
+    private generateFileUploadFormData(endpoint: HttpEndpoint, params: EndpointParameter[]): string {
+        // For file upload endpoints, always generate a form even if all params are optional
+        return this.generateFormDataUpload(params).toString();
+    }
+
+    private createRefPattern(pattern: string): string {
+        // Convert patterns to use ref to avoid moving values
+        return pattern.replace("Some(value)", "Some(ref value)").replace("Some(Some(value))", "Some(Some(ref value))");
+    }
+
+    private addOptionalTextField(statements: Statement[], paramName: string, valueExpr: Expression): void {
+        statements.push(
+            Statement.ifLet("Some(ref value)", Expression.reference(paramName), [
+                Statement.assignment(
+                    Expression.reference("form"),
+                    Expression.functionCall("crate::core::add_text_field", [
+                        Expression.reference("form"),
+                        Expression.stringLiteral(paramName),
+                        Expression.referenceOf(valueExpr)
+                    ])
+                )
+            ])
+        );
+    }
+
+    private generateFormDataUpload(params: EndpointParameter[]): Expression {
+        const statements: Statement[] = [];
+
+        // Start with creating the form
+        statements.push(
+            Statement.let({
+                name: "form",
+                value: Expression.functionCall("crate::core::create_multipart_form", []),
+                mutable: true
+            })
+        );
+
+        // Add other parameters as text or file fields
+        for (const param of params) {
+            if (param.name === "options") {
+                continue;
+            }
+
+            // Check if this is a file parameter
+            const isFileParam = param.type.toString().includes("crate::core::File");
+
+            if (isFileParam) {
+                // Handle file parameters
+                if (param.optional) {
+                    statements.push(
+                        Statement.ifLet("Some(value)", Expression.reference(param.name), [
+                            Statement.assignment(
+                                Expression.reference("form"),
+                                Expression.functionCall("crate::core::add_file_field", [
+                                    Expression.reference("form"),
+                                    Expression.stringLiteral(param.name),
+                                    Expression.reference("value")
+                                ])
+                            )
+                        ])
+                    );
+                } else {
+                    statements.push(
+                        Statement.assignment(
+                            Expression.reference("form"),
+                            Expression.functionCall("crate::core::add_file_field", [
+                                Expression.reference("form"),
+                                Expression.stringLiteral(param.name),
+                                Expression.reference(param.name)
+                            ])
+                        )
+                    );
+                }
+            } else if (param.optional && param.typeRef) {
+                // Handle non-file optional parameters with typeRef
+                const isNestedOptional = this.isOptionalContainerType(param.typeRef);
+                const pattern = isNestedOptional ? "Some(Some(value))" : "Some(value)";
+                const valueExpr = this.isComplexType(param.typeRef)
+                    ? Expression.methodCall({
+                          target: Expression.methodCall({
+                              target: Expression.functionCall("serde_json::to_string", [
+                                  Expression.referenceOf(Expression.reference("value"))
+                              ]),
+                              method: "unwrap_or_default",
+                              args: []
+                          }),
+                          method: "as_str",
+                          args: []
+                      })
+                    : Expression.methodCall({
+                          target: Expression.reference("value"),
+                          method: "to_string",
+                          args: []
+                      });
+
+                statements.push(
+                    Statement.ifLet(this.createRefPattern(pattern), Expression.reference(param.name), [
+                        Statement.assignment(
+                            Expression.reference("form"),
+                            Expression.functionCall("crate::core::add_text_field", [
+                                Expression.reference("form"),
+                                Expression.stringLiteral(param.name),
+                                Expression.referenceOf(valueExpr)
+                            ])
+                        )
+                    ])
+                );
+            } else if (param.optional) {
+                // Fallback for params without typeRef
+                this.addOptionalTextField(
+                    statements,
+                    param.name,
+                    Expression.methodCall({
+                        target: Expression.reference("value"),
+                        method: "to_string",
+                        args: []
+                    })
+                );
+            } else {
+                // Non-optional, non-file parameters - but check if it's actually an Option<T>
+                const isOptionType = param.type.toString().startsWith("Option<");
+                if (isOptionType) {
+                    // Handle Option<T> types that weren't caught by the optional check
+                    this.addOptionalTextField(
+                        statements,
+                        param.name,
+                        Expression.methodCall({
+                            target: Expression.reference("value"),
+                            method: "to_string",
+                            args: []
+                        })
+                    );
+                } else {
+                    // Truly non-optional parameters
+                    statements.push(
+                        Statement.assignment(
+                            Expression.reference("form"),
+                            Expression.functionCall("crate::core::add_text_field", [
+                                Expression.reference("form"),
+                                Expression.stringLiteral(param.name),
+                                Expression.referenceOf(
+                                    Expression.methodCall({
+                                        target: Expression.reference(param.name),
+                                        method: "to_string",
+                                        args: []
+                                    })
+                                )
+                            ])
+                        )
+                    );
+                }
+            }
+        }
+
+        // Return the form variable as the result of the block
+        return Expression.block(statements, Expression.reference("form"));
     }
 }

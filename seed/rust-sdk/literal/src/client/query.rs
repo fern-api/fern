@@ -1,6 +1,7 @@
 use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
+use crate::core::{File};
 
 pub struct QueryClient {
     pub http_client: HttpClient,

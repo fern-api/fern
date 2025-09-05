@@ -67,6 +67,9 @@ export class ErrorGenerator {
         variants.push(this.buildConfigurationErrorVariant());
         variants.push(this.buildInvalidHeaderErrorVariant());
         variants.push(this.buildRequestCloneErrorVariant());
+        variants.push(this.buildFileUploadErrorVariant());
+        variants.push(this.buildInvalidFileDataErrorVariant());
+        variants.push(this.buildFileTooLargeErrorVariant());
 
         return variants;
     }
@@ -129,6 +132,29 @@ export class ErrorGenerator {
         return new EnumVariant({
             name: "RequestClone",
             attributes: [this.createErrorAttribute("Could not clone request for retry")]
+        });
+    }
+
+    private buildFileUploadErrorVariant(): EnumVariant {
+        return new EnumVariant({
+            name: "FileUploadError",
+            attributes: [this.createErrorAttribute("File upload error: {0}")],
+            data: [Type.reference(new Reference({ name: "std::io::Error" }))]
+        });
+    }
+
+    private buildInvalidFileDataErrorVariant(): EnumVariant {
+        return new EnumVariant({
+            name: "InvalidFileData",
+            attributes: [this.createErrorAttribute("Invalid file data")]
+        });
+    }
+
+    private buildFileTooLargeErrorVariant(): EnumVariant {
+        return new EnumVariant({
+            name: "FileTooLarge",
+            attributes: [this.createErrorAttribute("File too large: {0} bytes")],
+            data: [Type.primitive(PrimitiveType.U64)]
         });
     }
 

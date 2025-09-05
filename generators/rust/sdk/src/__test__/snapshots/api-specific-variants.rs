@@ -20,6 +20,12 @@ pub enum ApiError {
     InvalidHeader,
     #[error("Could not clone request for retry")]
     RequestClone,
+    #[error("File upload error: {0}")]
+    FileUploadError(std::io::Error),
+    #[error("Invalid file data")]
+    InvalidFileData,
+    #[error("File too large: {0} bytes")]
+    FileTooLarge(u64),
 }
 
 impl ApiError {

@@ -1,5 +1,6 @@
 use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
+use crate::core::{File};
 
 pub struct S3Client {
     pub http_client: HttpClient,

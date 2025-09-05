@@ -3,7 +3,7 @@ use crate::actress::Actress;
 use crate::stunt_double::StuntDouble;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]
 pub enum CastMember {
         Actor(Actor),
