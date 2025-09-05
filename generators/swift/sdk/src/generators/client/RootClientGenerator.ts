@@ -212,7 +212,22 @@ export class RootClientGenerator {
                               arguments_: [
                                   swift.functionArgument({
                                       label: "token",
-                                      value: swift.Expression.reference(authSchemes.bearer.stringParam.unsafeName)
+                                      value: swift.Expression.contextualMethodCall({
+                                          methodName: visitDiscriminatedUnion(
+                                              { bearerTokenParamType },
+                                              "bearerTokenParamType"
+                                          )._visit({
+                                              string: () => "staticToken",
+                                              "async-provider": () => "provider"
+                                          }),
+                                          arguments_: [
+                                              swift.functionArgument({
+                                                  value: swift.Expression.reference(
+                                                      authSchemes.bearer.stringParam.unsafeName
+                                                  )
+                                              })
+                                          ]
+                                      })
                                   })
                               ]
                           })
