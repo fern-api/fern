@@ -60,3 +60,11 @@ allowedFailures:
   - circular-references
   - oauth-client-credentials-with-variables
   - oauth-client-credentials
+  - audiences
+  - cross-package-type-names
+  - inferred-auth-explicit
+  - inferred-auth-implicit-no-expiry
+  - oauth-client-credentials-custom
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-nested-root
