@@ -75,8 +75,8 @@ export class EndpointMethodGenerator {
                 swift.functionParameter({
                     argumentLabel: header.name.name.camelCase.unsafeName,
                     unsafeName: header.name.name.camelCase.unsafeName,
-                    type: swift.Type.optional(swift.Type.string()),
-                    defaultValue: swift.Expression.rawValue("nil"),
+                    type: swiftType,
+                    defaultValue: swiftType.isOptional ? swift.Expression.rawValue("nil") : undefined,
                     docsContent: header.docs
                 })
             );
