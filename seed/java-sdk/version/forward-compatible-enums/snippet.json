@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "2331daa6",
+            "example_identifier": "dfffb646",
             "id": {
                 "method": "GET",
                 "path": "/users/{userId}",

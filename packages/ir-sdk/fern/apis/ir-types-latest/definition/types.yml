@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 imports:
   commons: commons.yml
   proto: proto.yml
@@ -383,6 +382,7 @@ types:
     properties:
       name: commons.NameAndWireValue
       value: ExampleTypeReference
+      propertyAccess: optional<ObjectPropertyAccess>
       originalTypeDeclaration:
         docs: |
           This property may have been brought in via extension. originalTypeDeclaration

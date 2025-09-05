@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "3b34f9f0",
+            "example_identifier": "ae8a929c",
             "id": {
                 "method": "POST",
                 "path": "/movies/create-movie",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "cedc5a8a",
+            "example_identifier": "76cc5edf",
             "id": {
                 "method": "GET",
                 "path": "/movies/{movieId}",

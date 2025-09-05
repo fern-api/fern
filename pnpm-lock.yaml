@@ -1651,9 +1651,15 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
+      '@fern-api/dynamic-ir-sdk':
+        specifier: ^58.2.0
+        version: 58.3.0
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../../packages/cli/logger
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
@@ -1672,6 +1678,9 @@ importers:
       '@fern-api/ruby-model':
         specifier: workspace:*
         version: link:../model
+      '@fern-fern/generator-cli-sdk':
+        specifier: 0.0.33
+        version: 0.0.33
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045
@@ -1684,6 +1693,9 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
+      dedent:
+        specifier: ^1.5.1
+        version: 1.6.0(babel-plugin-macros@3.1.0)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
