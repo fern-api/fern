@@ -410,7 +410,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_:Type"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -474,7 +475,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_:Type"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -751,7 +753,8 @@
                                                     }
                                                 },
                                                 "displayName": null
-                                            }
+                                            },
+                                            "propertyAccess": null
                                         },
                                         {
                                             "name": {
@@ -815,7 +818,8 @@
                                                     }
                                                 },
                                                 "displayName": null
-                                            }
+                                            },
+                                            "propertyAccess": null
                                         }
                                     ]
                                 }
