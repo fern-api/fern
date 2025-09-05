@@ -12,10 +12,57 @@
 <dd>
 
 ```go
-client.Echo(
+package example
+
+import (
+    testing "testing"
+    context "context"
+    wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
+    require "github.com/stretchr/testify/require"
+    gowiremock "github.com/wiremock/go-wiremock"
+    http "net/http"
+    client "github.com/examples/fern/client"
+    option "github.com/examples/fern/option"
+)
+
+func TestEchoWithWireMock(
+    t *testing.T,
+) {
+    ctx := context.Background()
+    container, containerErr := wiremocktestcontainersgo.RunContainerAndStopOnCleanup(
+        ctx,
+        t,
+        wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
+    )
+    if containerErr != nil {
+        t.Fatal(containerErr)
+    }
+    wireMockBaseURL, endpointErr := container.Endpoint(ctx, "")
+    require.NoError(t, endpointErr, "Failed to get WireMock container endpoint")
+    wiremockClient := container.Client
+    defer wiremockClient.Reset()
+    stub := gowiremock.Post(gowiremock.URLPathTemplate("/")).WillReturnResponse(
+        gowiremock.NewResponse().WithJSONBody(
+            map[string]interface{}{},
+        ).WithStatus(http.StatusOK),
+    )
+    err := wiremockClient.StubFor(stub)
+    require.NoError(t, err, "Failed to create WireMock stub")
+    
+    client := client.NewClient(
+        option.WithBaseURL(
+            "http://" + wireMockBaseURL,
+        ),
+    )
+    _, invocationErr := client.Echo(
         context.TODO(),
         "Hello world!\n\nwith\n\tnewlines",
     )
+    
+    ok, countErr := wiremockClient.Verify(stub.Request(), 1)
+    require.NoError(t, countErr, "Failed to verify WireMock request was matched")
+    require.True(t, ok, "WireMock request was not matched")
+    require.NoError(t, invocationErr, "Echo call should succeed with WireMock")
 }
 ```
 </dd>
@@ -56,10 +103,57 @@ client.Echo(
 <dd>
 
 ```go
-client.Echo(
+package example
+
+import (
+    testing "testing"
+    context "context"
+    wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
+    require "github.com/stretchr/testify/require"
+    gowiremock "github.com/wiremock/go-wiremock"
+    http "net/http"
+    client "github.com/examples/fern/client"
+    option "github.com/examples/fern/option"
+)
+
+func TestEchoWithWireMock(
+    t *testing.T,
+) {
+    ctx := context.Background()
+    container, containerErr := wiremocktestcontainersgo.RunContainerAndStopOnCleanup(
+        ctx,
+        t,
+        wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
+    )
+    if containerErr != nil {
+        t.Fatal(containerErr)
+    }
+    wireMockBaseURL, endpointErr := container.Endpoint(ctx, "")
+    require.NoError(t, endpointErr, "Failed to get WireMock container endpoint")
+    wiremockClient := container.Client
+    defer wiremockClient.Reset()
+    stub := gowiremock.Post(gowiremock.URLPathTemplate("/")).WillReturnResponse(
+        gowiremock.NewResponse().WithJSONBody(
+            map[string]interface{}{},
+        ).WithStatus(http.StatusOK),
+    )
+    err := wiremockClient.StubFor(stub)
+    require.NoError(t, err, "Failed to create WireMock stub")
+    
+    client := client.NewClient(
+        option.WithBaseURL(
+            "http://" + wireMockBaseURL,
+        ),
+    )
+    _, invocationErr := client.Echo(
         context.TODO(),
         "primitive",
     )
+    
+    ok, countErr := wiremockClient.Verify(stub.Request(), 1)
+    require.NoError(t, countErr, "Failed to verify WireMock request was matched")
+    require.True(t, ok, "WireMock request was not matched")
+    require.NoError(t, invocationErr, "Echo call should succeed with WireMock")
 }
 ```
 </dd>
@@ -101,10 +195,60 @@ client.Echo(
 <dd>
 
 ```go
-client.File.Notification.Service.GetException(
+package example
+
+import (
+    testing "testing"
+    context "context"
+    wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
+    require "github.com/stretchr/testify/require"
+    gowiremock "github.com/wiremock/go-wiremock"
+    http "net/http"
+    client "github.com/examples/fern/client"
+    option "github.com/examples/fern/option"
+)
+
+func TestGetExceptionWithWireMock(
+    t *testing.T,
+) {
+    ctx := context.Background()
+    container, containerErr := wiremocktestcontainersgo.RunContainerAndStopOnCleanup(
+        ctx,
+        t,
+        wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
+    )
+    if containerErr != nil {
+        t.Fatal(containerErr)
+    }
+    wireMockBaseURL, endpointErr := container.Endpoint(ctx, "")
+    require.NoError(t, endpointErr, "Failed to get WireMock container endpoint")
+    wiremockClient := container.Client
+    defer wiremockClient.Reset()
+    stub := gowiremock.Get(gowiremock.URLPathTemplate("/file/notification/{notificationId}")).WithPathParam(
+        "notificationId",
+        gowiremock.Matching(".+"),
+    ).WillReturnResponse(
+        gowiremock.NewResponse().WithJSONBody(
+            map[string]interface{}{},
+        ).WithStatus(http.StatusOK),
+    )
+    err := wiremockClient.StubFor(stub)
+    require.NoError(t, err, "Failed to create WireMock stub")
+    
+    client := client.NewClient(
+        option.WithBaseURL(
+            "http://" + wireMockBaseURL,
+        ),
+    )
+    _, invocationErr := client.File.Notification.Service.GetException(
         context.TODO(),
         "notification-hsy129x",
     )
+    
+    ok, countErr := wiremockClient.Verify(stub.Request(), 1)
+    require.NoError(t, countErr, "Failed to verify WireMock request was matched")
+    require.True(t, ok, "WireMock request was not matched")
+    require.NoError(t, invocationErr, "File.Notification.Service.GetException call should succeed with WireMock")
 }
 ```
 </dd>
@@ -160,13 +304,64 @@ This endpoint returns a file by its name.
 <dd>
 
 ```go
-client.File.Service.GetFile(
+package example
+
+import (
+    testing "testing"
+    context "context"
+    wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
+    require "github.com/stretchr/testify/require"
+    gowiremock "github.com/wiremock/go-wiremock"
+    http "net/http"
+    client "github.com/examples/fern/client"
+    option "github.com/examples/fern/option"
+    file "github.com/examples/fern/file"
+)
+
+func TestGetFileWithWireMock(
+    t *testing.T,
+) {
+    ctx := context.Background()
+    container, containerErr := wiremocktestcontainersgo.RunContainerAndStopOnCleanup(
+        ctx,
+        t,
+        wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
+    )
+    if containerErr != nil {
+        t.Fatal(containerErr)
+    }
+    wireMockBaseURL, endpointErr := container.Endpoint(ctx, "")
+    require.NoError(t, endpointErr, "Failed to get WireMock container endpoint")
+    wiremockClient := container.Client
+    defer wiremockClient.Reset()
+    stub := gowiremock.Get(gowiremock.URLPathTemplate("/file/{filename}")).WithPathParam(
+        "filename",
+        gowiremock.Matching(".+"),
+    ).WillReturnResponse(
+        gowiremock.NewResponse().WithJSONBody(
+            map[string]interface{}{},
+        ).WithStatus(http.StatusOK),
+    )
+    err := wiremockClient.StubFor(stub)
+    require.NoError(t, err, "Failed to create WireMock stub")
+    
+    client := client.NewClient(
+        option.WithBaseURL(
+            "http://" + wireMockBaseURL,
+        ),
+    )
+    _, invocationErr := client.File.Service.GetFile(
         context.TODO(),
         "file.txt",
         &file.GetFileRequest{
             XFileApiVersion: "0.0.2",
         },
     )
+    
+    ok, countErr := wiremockClient.Verify(stub.Request(), 1)
+    require.NoError(t, countErr, "Failed to verify WireMock request was matched")
+    require.True(t, ok, "WireMock request was not matched")
+    require.NoError(t, invocationErr, "File.Service.GetFile call should succeed with WireMock")
 }
 ```
 </dd>
@@ -222,10 +417,60 @@ This endpoint checks the health of a resource.
 <dd>
 
 ```go
-client.Health.Service.Check(
+package example
+
+import (
+    testing "testing"
+    context "context"
+    wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
+    require "github.com/stretchr/testify/require"
+    gowiremock "github.com/wiremock/go-wiremock"
+    http "net/http"
+    client "github.com/examples/fern/client"
+    option "github.com/examples/fern/option"
+)
+
+func TestCheckWithWireMock(
+    t *testing.T,
+) {
+    ctx := context.Background()
+    container, containerErr := wiremocktestcontainersgo.RunContainerAndStopOnCleanup(
+        ctx,
+        t,
+        wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
+    )
+    if containerErr != nil {
+        t.Fatal(containerErr)
+    }
+    wireMockBaseURL, endpointErr := container.Endpoint(ctx, "")
+    require.NoError(t, endpointErr, "Failed to get WireMock container endpoint")
+    wiremockClient := container.Client
+    defer wiremockClient.Reset()
+    stub := gowiremock.Get(gowiremock.URLPathTemplate("/check/{id}")).WithPathParam(
+        "id",
+        gowiremock.Matching(".+"),
+    ).WillReturnResponse(
+        gowiremock.NewResponse().WithJSONBody(
+            map[string]interface{}{},
+        ).WithStatus(http.StatusOK),
+    )
+    err := wiremockClient.StubFor(stub)
+    require.NoError(t, err, "Failed to create WireMock stub")
+    
+    client := client.NewClient(
+        option.WithBaseURL(
+            "http://" + wireMockBaseURL,
+        ),
+    )
+    _, invocationErr := client.Health.Service.Check(
         context.TODO(),
         "id-2sdx82h",
     )
+    
+    ok, countErr := wiremockClient.Verify(stub.Request(), 1)
+    require.NoError(t, countErr, "Failed to verify WireMock request was matched")
+    require.True(t, ok, "WireMock request was not matched")
+    require.NoError(t, invocationErr, "Health.Service.Check call should succeed with WireMock")
 }
 ```
 </dd>
@@ -280,9 +525,56 @@ This endpoint checks the health of the service.
 <dd>
 
 ```go
-client.Health.Service.Ping(
+package example
+
+import (
+    testing "testing"
+    context "context"
+    wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
+    require "github.com/stretchr/testify/require"
+    gowiremock "github.com/wiremock/go-wiremock"
+    http "net/http"
+    client "github.com/examples/fern/client"
+    option "github.com/examples/fern/option"
+)
+
+func TestPingWithWireMock(
+    t *testing.T,
+) {
+    ctx := context.Background()
+    container, containerErr := wiremocktestcontainersgo.RunContainerAndStopOnCleanup(
+        ctx,
+        t,
+        wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
+    )
+    if containerErr != nil {
+        t.Fatal(containerErr)
+    }
+    wireMockBaseURL, endpointErr := container.Endpoint(ctx, "")
+    require.NoError(t, endpointErr, "Failed to get WireMock container endpoint")
+    wiremockClient := container.Client
+    defer wiremockClient.Reset()
+    stub := gowiremock.Get(gowiremock.URLPathTemplate("/ping")).WillReturnResponse(
+        gowiremock.NewResponse().WithJSONBody(
+            map[string]interface{}{},
+        ).WithStatus(http.StatusOK),
+    )
+    err := wiremockClient.StubFor(stub)
+    require.NoError(t, err, "Failed to create WireMock stub")
+    
+    client := client.NewClient(
+        option.WithBaseURL(
+            "http://" + wireMockBaseURL,
+        ),
+    )
+    _, invocationErr := client.Health.Service.Ping(
         context.TODO(),
     )
+    
+    ok, countErr := wiremockClient.Verify(stub.Request(), 1)
+    require.NoError(t, countErr, "Failed to verify WireMock request was matched")
+    require.True(t, ok, "WireMock request was not matched")
+    require.NoError(t, invocationErr, "Health.Service.Ping call should succeed with WireMock")
 }
 ```
 </dd>
@@ -309,10 +601,60 @@ client.Health.Service.Ping(
 <dd>
 
 ```go
-client.Service.GetMovie(
+package example
+
+import (
+    testing "testing"
+    context "context"
+    wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
+    require "github.com/stretchr/testify/require"
+    gowiremock "github.com/wiremock/go-wiremock"
+    http "net/http"
+    client "github.com/examples/fern/client"
+    option "github.com/examples/fern/option"
+)
+
+func TestGetMovieWithWireMock(
+    t *testing.T,
+) {
+    ctx := context.Background()
+    container, containerErr := wiremocktestcontainersgo.RunContainerAndStopOnCleanup(
+        ctx,
+        t,
+        wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
+    )
+    if containerErr != nil {
+        t.Fatal(containerErr)
+    }
+    wireMockBaseURL, endpointErr := container.Endpoint(ctx, "")
+    require.NoError(t, endpointErr, "Failed to get WireMock container endpoint")
+    wiremockClient := container.Client
+    defer wiremockClient.Reset()
+    stub := gowiremock.Get(gowiremock.URLPathTemplate("/movie/{movieId}")).WithPathParam(
+        "movieId",
+        gowiremock.Matching(".+"),
+    ).WillReturnResponse(
+        gowiremock.NewResponse().WithJSONBody(
+            map[string]interface{}{},
+        ).WithStatus(http.StatusOK),
+    )
+    err := wiremockClient.StubFor(stub)
+    require.NoError(t, err, "Failed to create WireMock stub")
+    
+    client := client.NewClient(
+        option.WithBaseURL(
+            "http://" + wireMockBaseURL,
+        ),
+    )
+    _, invocationErr := client.Service.GetMovie(
         context.TODO(),
         "movie-c06a4ad7",
     )
+    
+    ok, countErr := wiremockClient.Verify(stub.Request(), 1)
+    require.NoError(t, countErr, "Failed to verify WireMock request was matched")
+    require.True(t, ok, "WireMock request was not matched")
+    require.NoError(t, invocationErr, "Service.GetMovie call should succeed with WireMock")
 }
 ```
 </dd>
@@ -353,7 +695,50 @@ client.Service.GetMovie(
 <dd>
 
 ```go
-client.Service.CreateMovie(
+package example
+
+import (
+    testing "testing"
+    context "context"
+    wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
+    require "github.com/stretchr/testify/require"
+    gowiremock "github.com/wiremock/go-wiremock"
+    http "net/http"
+    client "github.com/examples/fern/client"
+    option "github.com/examples/fern/option"
+    fern "github.com/examples/fern"
+)
+
+func TestCreateMovieWithWireMock(
+    t *testing.T,
+) {
+    ctx := context.Background()
+    container, containerErr := wiremocktestcontainersgo.RunContainerAndStopOnCleanup(
+        ctx,
+        t,
+        wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
+    )
+    if containerErr != nil {
+        t.Fatal(containerErr)
+    }
+    wireMockBaseURL, endpointErr := container.Endpoint(ctx, "")
+    require.NoError(t, endpointErr, "Failed to get WireMock container endpoint")
+    wiremockClient := container.Client
+    defer wiremockClient.Reset()
+    stub := gowiremock.Post(gowiremock.URLPathTemplate("/movie")).WillReturnResponse(
+        gowiremock.NewResponse().WithJSONBody(
+            map[string]interface{}{},
+        ).WithStatus(http.StatusOK),
+    )
+    err := wiremockClient.StubFor(stub)
+    require.NoError(t, err, "Failed to create WireMock stub")
+    
+    client := client.NewClient(
+        option.WithBaseURL(
+            "http://" + wireMockBaseURL,
+        ),
+    )
+    _, invocationErr := client.Service.CreateMovie(
         context.TODO(),
         &fern.Movie{
             Id: "movie-c06a4ad7",
@@ -379,6 +764,11 @@ client.Service.CreateMovie(
             Revenue: 1000000,
         },
     )
+    
+    ok, countErr := wiremockClient.Verify(stub.Request(), 1)
+    require.NoError(t, countErr, "Failed to verify WireMock request was matched")
+    require.True(t, ok, "WireMock request was not matched")
+    require.NoError(t, invocationErr, "Service.CreateMovie call should succeed with WireMock")
 }
 ```
 </dd>
@@ -419,7 +809,56 @@ client.Service.CreateMovie(
 <dd>
 
 ```go
-client.Service.GetMetadata(
+package example
+
+import (
+    testing "testing"
+    context "context"
+    wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
+    require "github.com/stretchr/testify/require"
+    gowiremock "github.com/wiremock/go-wiremock"
+    http "net/http"
+    client "github.com/examples/fern/client"
+    option "github.com/examples/fern/option"
+    fern "github.com/examples/fern"
+)
+
+func TestGetMetadataWithWireMock(
+    t *testing.T,
+) {
+    ctx := context.Background()
+    container, containerErr := wiremocktestcontainersgo.RunContainerAndStopOnCleanup(
+        ctx,
+        t,
+        wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
+    )
+    if containerErr != nil {
+        t.Fatal(containerErr)
+    }
+    wireMockBaseURL, endpointErr := container.Endpoint(ctx, "")
+    require.NoError(t, endpointErr, "Failed to get WireMock container endpoint")
+    wiremockClient := container.Client
+    defer wiremockClient.Reset()
+    stub := gowiremock.Get(gowiremock.URLPathTemplate("/metadata")).WithQueryParam(
+        "shallow",
+        gowiremock.Matching(".+"),
+    ).WithQueryParam(
+        "tag",
+        gowiremock.Matching(".+"),
+    ).WillReturnResponse(
+        gowiremock.NewResponse().WithJSONBody(
+            map[string]interface{}{},
+        ).WithStatus(http.StatusOK),
+    )
+    err := wiremockClient.StubFor(stub)
+    require.NoError(t, err, "Failed to create WireMock stub")
+    
+    client := client.NewClient(
+        option.WithBaseURL(
+            "http://" + wireMockBaseURL,
+        ),
+    )
+    _, invocationErr := client.Service.GetMetadata(
         context.TODO(),
         &fern.GetMetadataRequest{
             Shallow: fern.Bool(
@@ -433,6 +872,11 @@ client.Service.GetMetadata(
             XApiVersion: "0.0.1",
         },
     )
+    
+    ok, countErr := wiremockClient.Verify(stub.Request(), 1)
+    require.NoError(t, countErr, "Failed to verify WireMock request was matched")
+    require.True(t, ok, "WireMock request was not matched")
+    require.NoError(t, invocationErr, "Service.GetMetadata call should succeed with WireMock")
 }
 ```
 </dd>
@@ -489,7 +933,52 @@ client.Service.GetMetadata(
 <dd>
 
 ```go
-client.Service.CreateBigEntity(
+package example
+
+import (
+    testing "testing"
+    context "context"
+    wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
+    require "github.com/stretchr/testify/require"
+    gowiremock "github.com/wiremock/go-wiremock"
+    http "net/http"
+    client "github.com/examples/fern/client"
+    option "github.com/examples/fern/option"
+    fern "github.com/examples/fern"
+    commons "github.com/examples/fern/commons"
+    uuid "github.com/google/uuid"
+)
+
+func TestCreateBigEntityWithWireMock(
+    t *testing.T,
+) {
+    ctx := context.Background()
+    container, containerErr := wiremocktestcontainersgo.RunContainerAndStopOnCleanup(
+        ctx,
+        t,
+        wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
+    )
+    if containerErr != nil {
+        t.Fatal(containerErr)
+    }
+    wireMockBaseURL, endpointErr := container.Endpoint(ctx, "")
+    require.NoError(t, endpointErr, "Failed to get WireMock container endpoint")
+    wiremockClient := container.Client
+    defer wiremockClient.Reset()
+    stub := gowiremock.Post(gowiremock.URLPathTemplate("/big-entity")).WillReturnResponse(
+        gowiremock.NewResponse().WithJSONBody(
+            map[string]interface{}{},
+        ).WithStatus(http.StatusOK),
+    )
+    err := wiremockClient.StubFor(stub)
+    require.NoError(t, err, "Failed to create WireMock stub")
+    
+    client := client.NewClient(
+        option.WithBaseURL(
+            "http://" + wireMockBaseURL,
+        ),
+    )
+    _, invocationErr := client.Service.CreateBigEntity(
         context.TODO(),
         &fern.BigEntity{
             CastMember: &fern.CastMember{
@@ -727,6 +1216,11 @@ client.Service.CreateBigEntity(
             },
         },
     )
+    
+    ok, countErr := wiremockClient.Verify(stub.Request(), 1)
+    require.NoError(t, countErr, "Failed to verify WireMock request was matched")
+    require.True(t, ok, "WireMock request was not matched")
+    require.NoError(t, invocationErr, "Service.CreateBigEntity call should succeed with WireMock")
 }
 ```
 </dd>
@@ -767,9 +1261,56 @@ client.Service.CreateBigEntity(
 <dd>
 
 ```go
-client.Service.RefreshToken(
+package example
+
+import (
+    testing "testing"
+    context "context"
+    wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
+    require "github.com/stretchr/testify/require"
+    gowiremock "github.com/wiremock/go-wiremock"
+    http "net/http"
+    client "github.com/examples/fern/client"
+    option "github.com/examples/fern/option"
+)
+
+func TestRefreshTokenWithWireMock(
+    t *testing.T,
+) {
+    ctx := context.Background()
+    container, containerErr := wiremocktestcontainersgo.RunContainerAndStopOnCleanup(
+        ctx,
+        t,
+        wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
+    )
+    if containerErr != nil {
+        t.Fatal(containerErr)
+    }
+    wireMockBaseURL, endpointErr := container.Endpoint(ctx, "")
+    require.NoError(t, endpointErr, "Failed to get WireMock container endpoint")
+    wiremockClient := container.Client
+    defer wiremockClient.Reset()
+    stub := gowiremock.Post(gowiremock.URLPathTemplate("/refresh-token")).WillReturnResponse(
+        gowiremock.NewResponse().WithJSONBody(
+            map[string]interface{}{},
+        ).WithStatus(http.StatusOK),
+    )
+    err := wiremockClient.StubFor(stub)
+    require.NoError(t, err, "Failed to create WireMock stub")
+    
+    client := client.NewClient(
+        option.WithBaseURL(
+            "http://" + wireMockBaseURL,
+        ),
+    )
+    _, invocationErr := client.Service.RefreshToken(
         context.TODO(),
     )
+    
+    ok, countErr := wiremockClient.Verify(stub.Request(), 1)
+    require.NoError(t, countErr, "Failed to verify WireMock request was matched")
+    require.True(t, ok, "WireMock request was not matched")
+    require.NoError(t, invocationErr, "Service.RefreshToken call should succeed with WireMock")
 }
 ```
 </dd>

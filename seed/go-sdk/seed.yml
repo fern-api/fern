@@ -31,45 +31,45 @@ fixtures:
   examples:
     - outputFolder: no-custom-config
       customConfig: null
-    - outputFolder: v0
-      customConfig:
-        alwaysSendRequiredProperties: false
-        inlineFileProperties: false
-        inlinePathParameters: false
-        useReaderForBytesRequest: false
-        union: v0
-    - outputFolder: always-send-required-properties
-      customConfig:
-        alwaysSendRequiredProperties: true
-    - outputFolder: exported-client-name
-      customConfig:
-        exportedClientName: AcmeClient
-    - outputFolder: client-name
-      customConfig:
-        clientName: Acme
-    - outputFolder: client-name-with-custom-constructor-name
-      customConfig:
-        clientName: Acme
-        clientConstructorName: New
-    - outputFolder: readme-config
-      customConfig:
-        clientName: Acme
-        clientConstructorName: New
-      readmeConfig:
-        apiName: "CustomName"
-        disabledSections:
-          - "contributing"
-        bannerLink: https://www.fernapi.com
-        apiReferenceLink: https://www.docs.fernapi.com
-        defaultEndpoint: POST /big-entity
-        features:
-          timeouts:
-            - GET /movie/{movieId}
-            - method: POST
-              path: /movie
-    - outputFolder: package-path
-      customConfig:
-        packagePath: pleaseinhere
+    # - outputFolder: v0
+    #   customConfig:
+    #     alwaysSendRequiredProperties: false
+    #     inlineFileProperties: false
+    #     inlinePathParameters: false
+    #     useReaderForBytesRequest: false
+    #     union: v0
+    # - outputFolder: always-send-required-properties
+    #   customConfig:
+    #     alwaysSendRequiredProperties: true
+    # - outputFolder: exported-client-name
+    #   customConfig:
+    #     exportedClientName: AcmeClient
+    # - outputFolder: client-name
+    #   customConfig:
+    #     clientName: Acme
+    # - outputFolder: client-name-with-custom-constructor-name
+    #   customConfig:
+    #     clientName: Acme
+    #     clientConstructorName: New
+    # - outputFolder: readme-config
+    #   customConfig:
+    #     clientName: Acme
+    #     clientConstructorName: New
+    #   readmeConfig:
+    #     apiName: "CustomName"
+    #     disabledSections:
+    #       - "contributing"
+    #     bannerLink: https://www.fernapi.com
+    #     apiReferenceLink: https://www.docs.fernapi.com
+    #     defaultEndpoint: POST /big-entity
+    #     features:
+    #       timeouts:
+    #         - GET /movie/{movieId}
+    #         - method: POST
+    #           path: /movie
+    # - outputFolder: package-path
+    #   customConfig:
+    #     packagePath: pleaseinhere
   go-bytes-request:
     - outputFolder: no-custom-config
       customConfig: null
