@@ -47,7 +47,7 @@ export class ReadmeConfigBuilder {
                 description: feature.description,
                 snippets: snippetsForFeature,
                 addendum: feature.addendum,
-                snippetsAreOptional: readmeSnippetBuilder.getEnvironmentFeatureIDName() ? true : false
+                snippetsAreOptional: feature.id === readmeSnippetBuilder.getEnvironmentFeatureIDName() ? true : false
             });
         }
 
