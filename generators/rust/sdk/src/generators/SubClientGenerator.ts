@@ -1333,16 +1333,10 @@ export class SubClientGenerator {
 
     private createRefPattern(pattern: string): string {
         // Convert patterns to use ref to avoid moving values
-        return pattern
-            .replace("Some(value)", "Some(ref value)")
-            .replace("Some(Some(value))", "Some(Some(ref value))");
+        return pattern.replace("Some(value)", "Some(ref value)").replace("Some(Some(value))", "Some(Some(ref value))");
     }
 
-    private addOptionalTextField(
-        statements: Statement[],
-        paramName: string,
-        valueExpr: Expression
-    ): void {
+    private addOptionalTextField(statements: Statement[], paramName: string, valueExpr: Expression): void {
         statements.push(
             Statement.ifLet("Some(ref value)", Expression.reference(paramName), [
                 Statement.assignment(
