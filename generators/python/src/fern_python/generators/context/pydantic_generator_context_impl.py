@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from typing import Any, Callable, Dict, List, Optional, Set, cast
+from typing import Callable, Dict, List, Optional, Set
 
 from ...external_dependencies.pydantic import PydanticVersionCompatibility
 from .pydantic_generator_context import PydanticGeneratorContext
@@ -76,16 +76,6 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                         member_references = self.get_referenced_types_of_type_reference(member.type)
                         if id in member_references:
                             self._types_with_union_self_referencing_members[referenced_id].update(member_type_ids)
-
-    def _serialize_pydantic_model(self, model: Any) -> Dict[str, Any]:
-        """Serialize a Pydantic model to a dictionary based on version compatibility."""
-        if hasattr(model, "model_dump"):  # Pydantic v2
-            return cast(Dict[str, Any], model.model_dump())
-        elif hasattr(model, "dict"):  # Pydantic v1
-            return cast(Dict[str, Any], model.dict())
-        else:
-            # Fallback for non-Pydantic objects
-            return {"__str__": str(model)}
 
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
         return self._project_module_path + module_path
