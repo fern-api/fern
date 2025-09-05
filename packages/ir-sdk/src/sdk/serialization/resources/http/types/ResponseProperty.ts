@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { Name } from "../../commons/types/Name";
+import { PropertyPathItem } from "./PropertyPathItem";
 import { ObjectProperty } from "../../types/types/ObjectProperty";
 
 export const ResponseProperty: core.serialization.ObjectSchema<
@@ -13,12 +14,14 @@ export const ResponseProperty: core.serialization.ObjectSchema<
     FernIr.ResponseProperty
 > = core.serialization.objectWithoutOptionalProperties({
     propertyPath: core.serialization.list(Name).optional(),
+    propertyPathWithTypes: core.serialization.list(PropertyPathItem).optional(),
     property: ObjectProperty,
 });
 
 export declare namespace ResponseProperty {
     export interface Raw {
         propertyPath?: Name.Raw[] | null;
+        propertyPathWithTypes?: PropertyPathItem.Raw[] | null;
         property: ObjectProperty.Raw;
     }
 }

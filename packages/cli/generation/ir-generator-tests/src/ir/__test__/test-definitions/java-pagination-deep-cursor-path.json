@@ -3121,6 +3121,7 @@
                         },
                         "next": {
                             "propertyPath": [],
+                            "propertyPathWithTypes": [],
                             "property": {
                                 "name": {
                                     "name": {
@@ -3172,6 +3173,7 @@
                         },
                         "results": {
                             "propertyPath": [],
+                            "propertyPathWithTypes": [],
                             "property": {
                                 "name": {
                                     "name": {
@@ -4476,6 +4478,7 @@
                         },
                         "next": {
                             "propertyPath": [],
+                            "propertyPathWithTypes": [],
                             "property": {
                                 "name": {
                                     "name": {
@@ -4527,6 +4530,7 @@
                         },
                         "results": {
                             "propertyPath": [],
+                            "propertyPathWithTypes": [],
                             "property": {
                                 "name": {
                                     "name": {
@@ -5609,6 +5613,7 @@
                         },
                         "next": {
                             "propertyPath": [],
+                            "propertyPathWithTypes": [],
                             "property": {
                                 "name": {
                                     "name": {
@@ -5660,6 +5665,7 @@
                         },
                         "results": {
                             "propertyPath": [],
+                            "propertyPathWithTypes": [],
                             "property": {
                                 "name": {
                                     "name": {
