@@ -42,8 +42,8 @@ allowedFailures:
   - api-wide-base-path
   - audiences
   - auth-environment-variables
-  - basic-auth 
-  - basic-auth-environment
+  - basic-auth
+  - basic-auth-environment-variables
   - bearer-token-environment-variable
   - bytes-download
   - bytes-upload
