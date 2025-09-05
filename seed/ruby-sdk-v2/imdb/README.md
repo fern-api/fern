@@ -25,13 +25,13 @@ client.imdb.create_movie({
 
 ## Environments
 
-You can choose between different environments by using the `base_url` option. You can configure any arbitrary base
-URL, which is particularly useful in test environments.
+This SDK allows you to configure different custom URLs for API requests. You can specify your own custom URL.
 
+### Custom URL
 ```ruby
-require "client"
+require "seed"
 
-client = client::Client.new(
+client = Seed::Client.new(
     base_url: "https://example.com"
 )
 ```
@@ -42,7 +42,7 @@ Structured error types are returned from API calls that return non-success statu
 with the Ruby Core API, so you can access the error like so:
 
 ```ruby
-require "client"
+require "seed"
 
 response = client.Imdb.CreateMovie(...)
 rescue => error
@@ -62,10 +62,10 @@ These request options can either be specified on the client so that they're appl
 or for an individual request, like so:
 
 ```ruby
-require "client"
+require "seed"
 
 # Specify default options applied on every request.
-client = client.new(
+client = Seed.new(
     token: "<YOUR_API_KEY>",
     http_client: HTTP::Client.new(
         timeout: 5
@@ -81,55 +81,12 @@ response = client.Imdb.CreateMovie(
 
 ## Advanced
 
-### Response Headers
-
-You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
-when you need to examine the response headers received from the API call.
-
-```ruby
-require "client"
-
-response = client.Imdb.WithRawResponse.CreateMovie(...)
-rescue => error
-    raise error
-end
-
-puts "Got response headers: #{response.headers}"
-```
-
-### Retries
-
-The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
-retry limit (default: 2).
-
-A request is deemed retryable when any of the following HTTP status codes is returned:
-
-- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
-- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
-
-Use the `max_retries` option to configure this behavior for the entire client or an individual request:
-
-```ruby
-require "client"
-
-client = client.new(
-    max_retries: 1
-)
-
-response = client.foo.find(
-    ...,
-    max_retries: 1
-)
-```
-
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. Use the `timeout` option to configure this behavior.
 
 ```ruby
-require "client"
+require "seed"
 
 response = client.Imdb.CreateMovie(
     ...,

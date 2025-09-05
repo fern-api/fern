@@ -6,7 +6,6 @@ module Seed
       extend Seed::Internal::Types::Enum
 
       RED = "red"
-      BLUE = "blue"
-    end
+      BLUE = "blue"end
   end
 end

@@ -7,8 +7,7 @@ module Seed
         extend Seed::Internal::Types::Enum
 
         KNOWN = "Known"
-        UNKNOWN = "Unknown"
-      end
+        UNKNOWN = "Unknown"end
     end
   end
 end

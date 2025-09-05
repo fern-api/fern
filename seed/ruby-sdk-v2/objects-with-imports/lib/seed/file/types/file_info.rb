@@ -7,8 +7,7 @@ module Seed
         extend Seed::Internal::Types::Enum
 
         REGULAR = "REGULAR"
-        DIRECTORY = "DIRECTORY"
-      end
+        DIRECTORY = "DIRECTORY"end
     end
   end
 end
