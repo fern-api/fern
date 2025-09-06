@@ -2,14 +2,21 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class EnumGenerator {
     private readonly typeDeclaration: TypeDeclaration;
     private readonly enumTypeDeclaration: EnumTypeDeclaration;
+    private readonly context: ModelGeneratorContext;
 
-    public constructor(typeDeclaration: TypeDeclaration, enumTypeDeclaration: EnumTypeDeclaration) {
+    public constructor(
+        typeDeclaration: TypeDeclaration,
+        enumTypeDeclaration: EnumTypeDeclaration,
+        context: ModelGeneratorContext
+    ) {
         this.typeDeclaration = typeDeclaration;
         this.enumTypeDeclaration = enumTypeDeclaration;
+        this.context = context;
     }
 
     public generate(): RustFile {
@@ -23,11 +30,7 @@ export class EnumGenerator {
     }
 
     private getFilename(): string {
-        // Use the full fernFilepath and type name to create unique filenames to prevent collisions
-        const pathParts = this.typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-        const typeName = this.typeDeclaration.name.name.snakeCase.safeName;
-        const fullPath = [...pathParts, typeName];
-        return `${fullPath.join("_")}.rs`;
+        return this.context.getUniqueFilenameForType(this.typeDeclaration);
     }
 
     private getFileDirectory(): RelativeFilePath {

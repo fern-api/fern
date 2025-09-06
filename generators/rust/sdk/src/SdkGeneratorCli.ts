@@ -274,21 +274,27 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const useStatements: UseStatement[] = [];
         const rawDeclarations: string[] = [];
 
+        // Use a Set to track unique module names and prevent duplicates
+        const uniqueModuleNames = new Set<string>();
+
         for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
-            // Use the full fernFilepath and type name for unique module names to match the generated files
-            const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-            const typeName = typeDeclaration.name.name.snakeCase.safeName;
-            const fullPath = [...pathParts, typeName];
-            const rawModuleName = fullPath.join("_");
+            // Use centralized method to get unique filename and extract module name from it
+            const filename = context.getUniqueFilenameForType(typeDeclaration);
+            const rawModuleName = filename.replace(".rs", ""); // Remove .rs extension
             const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
-            moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
-            useStatements.push(
-                new UseStatement({
-                    path: escapedModuleName,
-                    items: ["*"],
-                    isPublic: true
-                })
-            );
+
+            // Only add if we haven't seen this module name before
+            if (!uniqueModuleNames.has(escapedModuleName)) {
+                uniqueModuleNames.add(escapedModuleName);
+                moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
+                useStatements.push(
+                    new UseStatement({
+                        path: escapedModuleName,
+                        items: ["*"],
+                        isPublic: true
+                    })
+                );
+            }
         }
 
         return new Module({

@@ -43,13 +43,7 @@ export class StructGenerator {
     }
 
     private getFilename(): string {
-        // Use the full fernFilepath and type name to create unique filenames to prevent collisions
-        // E.g., "folder-a/Response" becomes "folder_a_response.rs"
-        // E.g., "foo/ImportingType" becomes "foo_importing_type.rs"
-        const pathParts = this.typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-        const typeName = this.typeDeclaration.name.name.snakeCase.safeName;
-        const fullPath = [...pathParts, typeName];
-        return `${fullPath.join("_")}.rs`;
+        return this.context.getUniqueFilenameForType(this.typeDeclaration);
     }
 
     private getFileDirectory(): RelativeFilePath {
@@ -73,7 +67,7 @@ export class StructGenerator {
         // Add imports for custom named types referenced in fields FIRST
         const customTypes = this.getCustomTypesUsedInFields();
         customTypes.forEach((typeName) => {
-            const modulePath = this.getModulePathForType(typeName.snakeCase.unsafeName);
+            const modulePath = this.context.getModulePathForType(typeName.snakeCase.unsafeName);
             const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
             writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
         });
@@ -82,7 +76,7 @@ export class StructGenerator {
         if (this.objectTypeDeclaration.extends.length > 0) {
             this.objectTypeDeclaration.extends.forEach((parentType) => {
                 const parentTypeName = parentType.name.pascalCase.unsafeName;
-                const modulePath = this.getModulePathForType(parentType.name.snakeCase.unsafeName);
+                const modulePath = this.context.getModulePathForType(parentType.name.snakeCase.unsafeName);
                 const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
                 writer.writeLine(`use crate::${moduleNameEscaped}::${parentTypeName};`);
             });
@@ -261,26 +255,6 @@ export class StructGenerator {
         });
 
         return customTypeNames;
-    }
-
-    /**
-     * Get the correct module path for a type using fernFilepath + type name
-     * to match the new unique filename generation scheme
-     */
-    private getModulePathForType(typeNameSnake: string): string {
-        // Find the type declaration in the context
-        for (const typeDeclaration of Object.values(this.context.ir.types)) {
-            if (typeDeclaration.name.name.snakeCase.unsafeName === typeNameSnake) {
-                // Use the same logic as filename generation: fernFilepath + type name
-                const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-                const typeName = typeDeclaration.name.name.snakeCase.safeName;
-                const fullPath = [...pathParts, typeName];
-                return fullPath.join("_");
-            }
-        }
-
-        // Fallback to old behavior if type not found
-        return typeNameSnake;
     }
 
     private canDeriveHashAndEq(): boolean {
