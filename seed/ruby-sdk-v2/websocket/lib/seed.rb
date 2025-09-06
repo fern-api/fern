@@ -36,3 +36,4 @@ require_relative "seed/realtime/types/receive_event_2"
 require_relative "seed/realtime/types/receive_event_3"
 
 # Client Types
+require_relative "../reference.md"

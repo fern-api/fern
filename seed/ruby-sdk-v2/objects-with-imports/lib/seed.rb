@@ -35,3 +35,4 @@ require_relative "seed/file/types/file"
 require_relative "seed/file/directory/types/directory"
 
 # Client Types
+require_relative "../reference.md"
