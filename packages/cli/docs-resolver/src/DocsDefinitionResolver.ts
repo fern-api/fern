@@ -165,9 +165,9 @@ export class DocsDefinitionResolver {
 
         // create a map of markdown files to their noindex values
         this.markdownFilesToNoIndex = await this.getMarkdownFilesToNoIndex(this.parsedDocsConfig.pages);
-        
+
         // create a map of markdown files to their tags
-        this.markdownFilesToTags = await this.getMarkdownFilesToTags(this.parsedDocsConfig.pages)
+        this.markdownFilesToTags = await this.getMarkdownFilesToTags(this.parsedDocsConfig.pages);
 
         // replaces all instances of <Markdown src="path/to/file.md" /> with the content of the referenced markdown file
         // this should happen before we parse image paths, as the referenced markdown files may contain images.
@@ -357,7 +357,7 @@ export class DocsDefinitionResolver {
         }
         return mdxFilePathToNoIndex;
     }
-    
+
     /**
      * Creates a list of markdown files that have noindex:true specified in the frontmatter
      * @param pages - the pages to check
@@ -371,7 +371,10 @@ export class DocsDefinitionResolver {
             const frontmatter = matter(markdown);
             const tags = frontmatter.data.tags;
             if (typeof tags === "string") {
-                mdxFilePathToTags.set(this.resolveFilepath(relativePath), tags.split(",").map(item => item.trim()));
+                mdxFilePathToTags.set(
+                    this.resolveFilepath(relativePath),
+                    tags.split(",").map((item) => item.trim())
+                );
             } else if (Array.isArray(tags)) {
                 mdxFilePathToTags.set(this.resolveFilepath(relativePath), tags);
             }

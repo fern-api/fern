@@ -86,7 +86,7 @@ export async function convertMarkdown({
             "jsonld:breadcrumb": undefined,
             logo: undefined,
             keywords: undefined,
-            tags: [],
+            tags: []
         },
         content: transformedContent
     };
