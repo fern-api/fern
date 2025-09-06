@@ -32,7 +32,7 @@ describe("NoAuth", () => {
         });
     });
 
-    test("postWithNoAuth (7faa8b08)", async () => {
+    test("postWithNoAuth (4ca6cb0d)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
