@@ -1,5 +1,7 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 api:
-  - path: ../openapi1.yml
-  - path: ../asyncapi1.yml
-  - path: ../openapi2.yml
-  - path: ../asyncapi2.yml
+  specs:
+    - openapi: ../openapi1.yml
+    - asyncapi: ../asyncapi1.yml
+    - openapi: ../openapi2.yml
+    - asyncapi: ../asyncapi2.yml

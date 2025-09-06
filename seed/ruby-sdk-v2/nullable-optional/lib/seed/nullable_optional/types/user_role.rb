@@ -9,7 +9,8 @@ module Seed
         ADMIN = "ADMIN"
         USER = "USER"
         GUEST = "GUEST"
-        MODERATOR = "MODERATOR"end
+        MODERATOR = "MODERATOR"
+      end
     end
   end
 end

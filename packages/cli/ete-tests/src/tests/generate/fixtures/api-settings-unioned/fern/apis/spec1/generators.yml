@@ -1,2 +1,5 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 default-group: local
-openapi: ./openapi.json
+api:
+  specs:
+    - openapi: ./openapi.json

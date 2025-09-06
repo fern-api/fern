@@ -4,7 +4,7 @@ import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import { FernDefinition, FernWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
-import { mkdir, rmdir, writeFile } from "fs/promises";
+import { mkdir, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 
@@ -112,7 +112,7 @@ async function writeFernDefinition({
     };
 
     if (await doesPathExist(absolutePathToOutputDirectory)) {
-        await rmdir(absolutePathToOutputDirectory, { recursive: true });
+        await rm(absolutePathToOutputDirectory, { recursive: true });
     }
 
     // write api.yml
