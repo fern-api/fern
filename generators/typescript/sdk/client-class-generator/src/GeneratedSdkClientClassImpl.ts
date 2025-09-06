@@ -1308,7 +1308,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 },
                 {
                     name: "headers",
-                    type: "Record<string, string | core.Supplier<string | undefined> | undefined>",
+                    type: "Record<string, string | core.Supplier<string | null | undefined> | null | undefined>",
                     hasQuestionToken: true,
                     docs: ["Additional headers to include in the request."]
                 }
@@ -1680,7 +1680,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         properties.push({
             docs: ["Additional headers to include in requests."],
             name: "headers",
-            type: "Record<string, string | core.Supplier<string | undefined> | undefined>",
+            type: "Record<string, string | core.Supplier<string | null | undefined> | null | undefined>",
             hasQuestionToken: true
         });
 

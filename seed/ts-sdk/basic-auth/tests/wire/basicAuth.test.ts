@@ -90,6 +90,6 @@ describe("BasicAuth", () => {
             return await client.basicAuth.postWithBasicAuth({
                 key: "value",
             });
-        }).rejects.toThrow(SeedBasicAuth.BadRequest());
+        }).rejects.toThrow(new SeedBasicAuth.BadRequest());
     });
 });

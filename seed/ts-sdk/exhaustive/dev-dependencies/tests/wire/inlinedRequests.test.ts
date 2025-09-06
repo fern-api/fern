@@ -4,10 +4,9 @@
 
 import { mockServerPool } from "../mock-server/MockServerPool";
 import { FiddleClient } from "../../src/Client";
-import * as Fiddle from "../../src/api/index";
 
 describe("InlinedRequests", () => {
-    test("postWithObjectBodyandResponse (36a333c6)", async () => {
+    test("postWithObjectBodyandResponse", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = {
@@ -91,69 +90,6 @@ describe("InlinedRequests", () => {
                     1: "map",
                 },
                 bigint: "1000000",
-            },
-            ok: true,
-            headers: expect.any(Object),
-            rawResponse: expect.any(Object),
-        });
-    });
-
-    test("postWithObjectBodyandResponse (7586df6c)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new FiddleClient({ token: "test", environment: server.baseUrl });
-        const rawRequestBody = {
-            string: "string",
-            integer: 1,
-            NestedObject: {
-                string: "string",
-                integer: 1,
-                long: 1000000,
-                double: 1.1,
-                bool: true,
-                datetime: "2024-01-15T09:30:00Z",
-                date: "2023-01-15",
-                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                base64: "SGVsbG8gd29ybGQh",
-                list: ["list", "list"],
-                set: ["set"],
-                map: { "1": "map" },
-                bigint: "1000000",
-            },
-        };
-        const rawResponseBody = { message: "message" };
-        server
-            .mockEndpoint()
-            .post("/req-bodies/object")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(400)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.inlinedRequests.postWithObjectBodyandResponse({
-            string: "string",
-            integer: 1,
-            NestedObject: {
-                string: "string",
-                integer: 1,
-                long: 1000000,
-                double: 1.1,
-                bool: true,
-                datetime: "2024-01-15T09:30:00Z",
-                date: "2023-01-15",
-                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                base64: "SGVsbG8gd29ybGQh",
-                list: ["list", "list"],
-                set: ["set"],
-                map: {
-                    1: "map",
-                },
-                bigint: "1000000",
-            },
-        });
-        expect(response).toEqual({
-            body: {
-                message: "message",
             },
             ok: true,
             headers: expect.any(Object),

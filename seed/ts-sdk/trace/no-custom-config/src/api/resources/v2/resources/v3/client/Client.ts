@@ -15,7 +15,7 @@ export declare namespace V3 {
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
         /** Additional headers to include in requests. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 

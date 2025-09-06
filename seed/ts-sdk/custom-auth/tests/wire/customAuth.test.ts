@@ -90,6 +90,6 @@ describe("CustomAuth", () => {
             return await client.customAuth.postWithCustomAuth({
                 key: "value",
             });
-        }).rejects.toThrow(SeedCustomAuth.BadRequest());
+        }).rejects.toThrow(new SeedCustomAuth.BadRequest());
     });
 });
