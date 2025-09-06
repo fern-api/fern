@@ -373,7 +373,10 @@ export class DocsDefinitionResolver {
             if (typeof tags === "string") {
                 mdxFilePathToTags.set(
                     this.resolveFilepath(relativePath),
-tags.split(",").map((item) => item.trim()).filter((item) => item.length > 0)
+                    tags
+                        .split(",")
+                        .map((item) => item.trim())
+                        .filter((item) => item.length > 0)
                 );
             } else if (Array.isArray(tags)) {
                 mdxFilePathToTags.set(this.resolveFilepath(relativePath), tags);
