@@ -276,7 +276,7 @@ public record Status
 
         public override string ToString() => Value?.ToString();
 
-        public static implicit operator Archived(DateTime? value) => new(value);
+        public static implicit operator Status.Archived(DateTime? value) => new(value);
     }
 
     /// <summary>
@@ -294,6 +294,6 @@ public record Status
 
         public override string ToString() => Value?.ToString();
 
-        public static implicit operator SoftDeleted(DateTime? value) => new(value);
+        public static implicit operator Status.SoftDeleted(DateTime? value) => new(value);
     }
 }

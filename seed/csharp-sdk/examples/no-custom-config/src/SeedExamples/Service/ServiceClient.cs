@@ -216,8 +216,8 @@ public partial class ServiceClient
     ///             Revenue = 1000000,
     ///         },
     ///         Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
-    ///         Metadata = new Metadata(new Metadata.Html("metadata")),
-    ///         CommonMetadata = new Metadata
+    ///         Metadata = new SeedExamples.Metadata(new Metadata.Html("metadata")),
+    ///         CommonMetadata = new SeedExamples.Commons.Metadata
     ///         {
     ///             Id = "id",
     ///             Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },
@@ -225,7 +225,7 @@ public partial class ServiceClient
     ///         },
     ///         EventInfo = new EventInfo(
     ///             new EventInfo.Metadata(
-    ///                 new Metadata
+    ///                 new SeedExamples.Commons.Metadata
     ///                 {
     ///                     Id = "id",
     ///                     Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },
@@ -235,7 +235,7 @@ public partial class ServiceClient
     ///         ),
     ///         Data = new Data(new Data.String("data")),
     ///         Migration = new Migration { Name = "name", Status = MigrationStatus.Running },
-    ///         Exception = new Exception(
+    ///         Exception = new SeedExamples.Exception(
     ///             new Exception.Generic(
     ///                 new ExceptionInfo
     ///                 {
@@ -340,7 +340,7 @@ public partial class ServiceClient
     ///                 },
     ///             },
     ///         },
-    ///         Directory = new Directory
+    ///         Directory = new SeedExamples.Directory
     ///         {
     ///             Name = "name",
     ///             Files = new List&lt;SeedExamples.File&gt;()
@@ -348,9 +348,9 @@ public partial class ServiceClient
     ///                 new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                 new SeedExamples.File { Name = "name", Contents = "contents" },
     ///             },
-    ///             Directories = new List&lt;Directory&gt;()
+    ///             Directories = new List&lt;SeedExamples.Directory&gt;()
     ///             {
-    ///                 new Directory
+    ///                 new SeedExamples.Directory
     ///                 {
     ///                     Name = "name",
     ///                     Files = new List&lt;SeedExamples.File&gt;()
@@ -358,23 +358,23 @@ public partial class ServiceClient
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                     },
-    ///                     Directories = new List&lt;Directory&gt;()
+    ///                     Directories = new List&lt;SeedExamples.Directory&gt;()
     ///                     {
-    ///                         new Directory
+    ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
     ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;Directory&gt;() { },
+    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
     ///                         },
-    ///                         new Directory
+    ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
     ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;Directory&gt;() { },
+    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
     ///                         },
     ///                     },
     ///                 },
-    ///                 new Directory
+    ///                 new SeedExamples.Directory
     ///                 {
     ///                     Name = "name",
     ///                     Files = new List&lt;SeedExamples.File&gt;()
@@ -382,19 +382,19 @@ public partial class ServiceClient
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                     },
-    ///                     Directories = new List&lt;Directory&gt;()
+    ///                     Directories = new List&lt;SeedExamples.Directory&gt;()
     ///                     {
-    ///                         new Directory
+    ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
     ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;Directory&gt;() { },
+    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
     ///                         },
-    ///                         new Directory
+    ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
     ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;Directory&gt;() { },
+    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
     ///                         },
     ///                     },
     ///                 },

@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedExamples.Core;
 
-namespace SeedExamples.File;
+namespace SeedExamples.File_;
 
 [Serializable]
 public record GetFileRequest

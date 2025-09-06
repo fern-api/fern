@@ -7,7 +7,7 @@ using <%= namespace%>.Core;
 
 // ReSharper disable NullableWarningSuppressionIsUsed
 
-namespace <%= namespace%>.Test.Core.RawClientTests;
+namespace <%= testNamespace%>.Core.RawClientTests;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Self)]
@@ -95,7 +95,7 @@ public class AdditionalHeadersTests
             Assert.That(_server.LogEntries.Count, Is.EqualTo(1));
             var headers =
                 _server.LogEntries[0].RequestMessage.Headers
-                ?? throw new Exception("Headers are null");
+                ?? throw new global::System.Exception("Headers are null");
 
             Assert.That(headers, Contains.Key("client_multiple"));
             Assert.That(headers!["client_multiple"][0], Does.Contain("client_additional_headers1"));

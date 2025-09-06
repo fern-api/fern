@@ -12,7 +12,6 @@ import {
     ResponseProperty,
     ServiceId
 } from "@fern-fern/ir-sdk/api";
-
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
@@ -243,9 +242,18 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
                 writer.writeLine("{");
                 writer.indent();
+
+                // ensure that each response code is handled only once
+                const handled = new Set<number>();
                 for (const error of endpoint.errors) {
+                    const errorDeclaration = this.context.ir.errors[error.error.errorId];
+                    if (errorDeclaration == null || handled.has(errorDeclaration.statusCode)) {
+                        continue;
+                    }
+                    handled.add(errorDeclaration.statusCode);
                     this.writeErrorCase(error, writer);
                 }
+
                 writer.writeLine("}");
                 writer.dedent();
                 writer.writeLine("}");

@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using NUnit.Framework;
 using <%= namespace%>.Core;
 
-namespace <%= namespace%>.Test.Core.Json;
+namespace <%= testNamespace%>.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]

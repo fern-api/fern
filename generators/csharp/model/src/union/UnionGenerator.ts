@@ -225,7 +225,9 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                             writer.writeNode(memberType);
                             writer.write(")");
                         }
-                        writer.write(`${this.valuePropertyName}! : throw new Exception("`);
+                        writer.write(`${this.valuePropertyName}! : throw new `);
+                        writer.writeNode(csharp.System.Exception);
+                        writer.write('("');
                         writer.writeNode(this.classReference);
                         writer.write(
                             `.${this.discriminantPropertyName} is not '${escapeForCSharpString(type.discriminantValue.wireValue)}'")`

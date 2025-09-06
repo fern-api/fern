@@ -206,7 +206,7 @@ public record Test
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator And(bool value) => new(value);
+        public static implicit operator Test.And(bool value) => new(value);
     }
 
     /// <summary>
@@ -224,6 +224,6 @@ public record Test
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Or(bool value) => new(value);
+        public static implicit operator Test.Or(bool value) => new(value);
     }
 }

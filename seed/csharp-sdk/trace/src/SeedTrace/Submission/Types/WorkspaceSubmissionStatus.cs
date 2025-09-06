@@ -104,7 +104,9 @@ public record WorkspaceSubmissionStatus
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'stopped'.</exception>
     public object AsStopped() =>
-        IsStopped ? Value! : throw new Exception("WorkspaceSubmissionStatus.Type is not 'stopped'");
+        IsStopped
+            ? Value!
+            : throw new System.Exception("WorkspaceSubmissionStatus.Type is not 'stopped'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ErrorInfo"/> if <see cref="Type"/> is 'errored', otherwise throws an exception.
@@ -113,7 +115,7 @@ public record WorkspaceSubmissionStatus
     public SeedTrace.ErrorInfo AsErrored() =>
         IsErrored
             ? (SeedTrace.ErrorInfo)Value!
-            : throw new Exception("WorkspaceSubmissionStatus.Type is not 'errored'");
+            : throw new System.Exception("WorkspaceSubmissionStatus.Type is not 'errored'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.RunningSubmissionState"/> if <see cref="Type"/> is 'running', otherwise throws an exception.
@@ -122,7 +124,7 @@ public record WorkspaceSubmissionStatus
     public SeedTrace.RunningSubmissionState AsRunning() =>
         IsRunning
             ? (SeedTrace.RunningSubmissionState)Value!
-            : throw new Exception("WorkspaceSubmissionStatus.Type is not 'running'");
+            : throw new System.Exception("WorkspaceSubmissionStatus.Type is not 'running'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.WorkspaceRunDetails"/> if <see cref="Type"/> is 'ran', otherwise throws an exception.
@@ -131,7 +133,7 @@ public record WorkspaceSubmissionStatus
     public SeedTrace.WorkspaceRunDetails AsRan() =>
         IsRan
             ? (SeedTrace.WorkspaceRunDetails)Value!
-            : throw new Exception("WorkspaceSubmissionStatus.Type is not 'ran'");
+            : throw new System.Exception("WorkspaceSubmissionStatus.Type is not 'ran'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.WorkspaceRunDetails"/> if <see cref="Type"/> is 'traced', otherwise throws an exception.
@@ -140,7 +142,7 @@ public record WorkspaceSubmissionStatus
     public SeedTrace.WorkspaceRunDetails AsTraced() =>
         IsTraced
             ? (SeedTrace.WorkspaceRunDetails)Value!
-            : throw new Exception("WorkspaceSubmissionStatus.Type is not 'traced'");
+            : throw new System.Exception("WorkspaceSubmissionStatus.Type is not 'traced'");
 
     public T Match<T>(
         Func<object, T> onStopped,
@@ -391,7 +393,9 @@ public record WorkspaceSubmissionStatus
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Errored(SeedTrace.ErrorInfo value) => new(value);
+        public static implicit operator WorkspaceSubmissionStatus.Errored(
+            SeedTrace.ErrorInfo value
+        ) => new(value);
     }
 
     /// <summary>
@@ -409,8 +413,9 @@ public record WorkspaceSubmissionStatus
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Running(SeedTrace.RunningSubmissionState value) =>
-            new(value);
+        public static implicit operator WorkspaceSubmissionStatus.Running(
+            SeedTrace.RunningSubmissionState value
+        ) => new(value);
     }
 
     /// <summary>
@@ -428,7 +433,9 @@ public record WorkspaceSubmissionStatus
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Ran(SeedTrace.WorkspaceRunDetails value) => new(value);
+        public static implicit operator WorkspaceSubmissionStatus.Ran(
+            SeedTrace.WorkspaceRunDetails value
+        ) => new(value);
     }
 
     /// <summary>
@@ -446,6 +453,8 @@ public record WorkspaceSubmissionStatus
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Traced(SeedTrace.WorkspaceRunDetails value) => new(value);
+        public static implicit operator WorkspaceSubmissionStatus.Traced(
+            SeedTrace.WorkspaceRunDetails value
+        ) => new(value);
     }
 }

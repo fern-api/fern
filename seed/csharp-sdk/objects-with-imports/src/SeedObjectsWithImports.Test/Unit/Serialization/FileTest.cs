@@ -22,7 +22,7 @@ public class FileTest
         {
             Name = "file.txt",
             Contents = "...",
-            Info = FileInfo.Regular,
+            Info = SeedObjectsWithImports.FileInfo.Regular,
         };
         var deserializedObject = JsonUtils.Deserialize<SeedObjectsWithImports.File>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
@@ -42,7 +42,7 @@ public class FileTest
         {
             Name = "file.txt",
             Contents = "...",
-            Info = FileInfo.Regular,
+            Info = SeedObjectsWithImports.FileInfo.Regular,
         };
         var actualElement = JsonUtils.SerializeToElement(actualObj);
         var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
@@ -63,7 +63,7 @@ public class FileTest
         {
             Name = "another_file.txt",
             Contents = "...",
-            Info = FileInfo.Regular,
+            Info = SeedObjectsWithImports.FileInfo.Regular,
         };
         var deserializedObject = JsonUtils.Deserialize<SeedObjectsWithImports.File>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
@@ -83,7 +83,7 @@ public class FileTest
         {
             Name = "another_file.txt",
             Contents = "...",
-            Info = FileInfo.Regular,
+            Info = SeedObjectsWithImports.FileInfo.Regular,
         };
         var actualElement = JsonUtils.SerializeToElement(actualObj);
         var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);

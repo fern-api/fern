@@ -226,7 +226,7 @@ public record UnionWithOptionalTime
 
         public override string ToString() => Value?.ToString();
 
-        public static implicit operator Date(DateOnly? value) => new(value);
+        public static implicit operator UnionWithOptionalTime.Date(DateOnly? value) => new(value);
     }
 
     /// <summary>
@@ -244,6 +244,7 @@ public record UnionWithOptionalTime
 
         public override string ToString() => Value?.ToString();
 
-        public static implicit operator Datetime(DateTime? value) => new(value);
+        public static implicit operator UnionWithOptionalTime.Datetime(DateTime? value) =>
+            new(value);
     }
 }

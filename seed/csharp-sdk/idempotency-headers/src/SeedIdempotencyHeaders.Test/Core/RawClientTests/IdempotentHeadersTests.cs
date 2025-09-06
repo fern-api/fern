@@ -9,6 +9,7 @@ using SystemTask = global::System.Threading.Tasks.Task;
 using WireMockRequest = WireMock.RequestBuilders.Request;
 using WireMockResponse = WireMock.ResponseBuilders.Response;
 
+// namespace SeedIdempotencyHeaders.Test.Core.RawClientTests;
 namespace SeedIdempotencyHeaders.Test.Core.RawClientTests;
 
 [Serializable]

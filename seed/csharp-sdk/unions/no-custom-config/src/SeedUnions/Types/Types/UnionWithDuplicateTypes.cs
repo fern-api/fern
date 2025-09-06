@@ -222,7 +222,8 @@ public record UnionWithDuplicateTypes
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Foo1(SeedUnions.Foo value) => new(value);
+        public static implicit operator UnionWithDuplicateTypes.Foo1(SeedUnions.Foo value) =>
+            new(value);
     }
 
     /// <summary>
@@ -240,6 +241,7 @@ public record UnionWithDuplicateTypes
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Foo2(SeedUnions.Foo value) => new(value);
+        public static implicit operator UnionWithDuplicateTypes.Foo2(SeedUnions.Foo value) =>
+            new(value);
     }
 }

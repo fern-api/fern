@@ -126,10 +126,6 @@ public partial class SimpleClient
                         throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
                     case 400:
                         throw new BadRequestError(JsonUtils.Deserialize<ErrorBody>(responseBody));
-                    case 500:
-                        throw new InternalServerError(
-                            JsonUtils.Deserialize<ErrorBody>(responseBody)
-                        );
                 }
             }
             catch (JsonException)
@@ -193,10 +189,6 @@ public partial class SimpleClient
                         throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
                     case 400:
                         throw new BadRequestError(JsonUtils.Deserialize<ErrorBody>(responseBody));
-                    case 500:
-                        throw new InternalServerError(
-                            JsonUtils.Deserialize<ErrorBody>(responseBody)
-                        );
                 }
             }
             catch (JsonException)

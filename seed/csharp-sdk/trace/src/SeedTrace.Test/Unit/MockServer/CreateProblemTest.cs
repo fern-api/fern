@@ -3,7 +3,7 @@ using NUnit.Framework;
 using SeedTrace;
 using SeedTrace.Core;
 
-namespace SeedTrace.Test.Unit.MockServer;
+namespace SeedTrace.Test_.Unit.MockServer;
 
 [TestFixture]
 public class CreateProblemTest : BaseMockServerTest
@@ -145,15 +145,23 @@ public class CreateProblemTest : BaseMockServerTest
                         Language.Java,
                         new ProblemFiles
                         {
-                            SolutionFile = new FileInfo
+                            SolutionFile = new SeedTrace.FileInfo
                             {
                                 Filename = "filename",
                                 Contents = "contents",
                             },
-                            ReadOnlyFiles = new List<FileInfo>()
+                            ReadOnlyFiles = new List<SeedTrace.FileInfo>()
                             {
-                                new FileInfo { Filename = "filename", Contents = "contents" },
-                                new FileInfo { Filename = "filename", Contents = "contents" },
+                                new SeedTrace.FileInfo
+                                {
+                                    Filename = "filename",
+                                    Contents = "contents",
+                                },
+                                new SeedTrace.FileInfo
+                                {
+                                    Filename = "filename",
+                                    Contents = "contents",
+                                },
                             },
                         }
                     },

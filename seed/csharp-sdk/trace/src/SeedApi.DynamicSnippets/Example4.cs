@@ -19,7 +19,7 @@ public class Example4
             new WorkspaceSubmissionUpdate{
                 UpdateTime = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
                 UpdateInfo = new WorkspaceSubmissionUpdateInfo(
-
+                    new WorkspaceSubmissionUpdateInfo.Running()
                 )
             }
         );

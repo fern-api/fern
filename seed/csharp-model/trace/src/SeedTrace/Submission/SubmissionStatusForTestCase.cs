@@ -78,7 +78,7 @@ public record SubmissionStatusForTestCase
     public SeedTrace.TestCaseResultWithStdout AsGraded() =>
         IsGraded
             ? (SeedTrace.TestCaseResultWithStdout)Value!
-            : throw new Exception("SubmissionStatusForTestCase.Type is not 'graded'");
+            : throw new System.Exception("SubmissionStatusForTestCase.Type is not 'graded'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.TestCaseGrade"/> if <see cref="Type"/> is 'gradedV2', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record SubmissionStatusForTestCase
     public SeedTrace.TestCaseGrade AsGradedV2() =>
         IsGradedV2
             ? (SeedTrace.TestCaseGrade)Value!
-            : throw new Exception("SubmissionStatusForTestCase.Type is not 'gradedV2'");
+            : throw new System.Exception("SubmissionStatusForTestCase.Type is not 'gradedV2'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.TracedTestCase"/> if <see cref="Type"/> is 'traced', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record SubmissionStatusForTestCase
     public SeedTrace.TracedTestCase AsTraced() =>
         IsTraced
             ? (SeedTrace.TracedTestCase)Value!
-            : throw new Exception("SubmissionStatusForTestCase.Type is not 'traced'");
+            : throw new System.Exception("SubmissionStatusForTestCase.Type is not 'traced'");
 
     public T Match<T>(
         Func<SeedTrace.TestCaseResultWithStdout, T> onGraded,
@@ -280,8 +280,9 @@ public record SubmissionStatusForTestCase
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Graded(SeedTrace.TestCaseResultWithStdout value) =>
-            new(value);
+        public static implicit operator SubmissionStatusForTestCase.Graded(
+            SeedTrace.TestCaseResultWithStdout value
+        ) => new(value);
     }
 
     /// <summary>
@@ -299,7 +300,9 @@ public record SubmissionStatusForTestCase
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator GradedV2(SeedTrace.TestCaseGrade value) => new(value);
+        public static implicit operator SubmissionStatusForTestCase.GradedV2(
+            SeedTrace.TestCaseGrade value
+        ) => new(value);
     }
 
     /// <summary>
@@ -317,6 +320,8 @@ public record SubmissionStatusForTestCase
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Traced(SeedTrace.TracedTestCase value) => new(value);
+        public static implicit operator SubmissionStatusForTestCase.Traced(
+            SeedTrace.TracedTestCase value
+        ) => new(value);
     }
 }

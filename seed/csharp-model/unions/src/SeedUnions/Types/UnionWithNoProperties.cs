@@ -216,7 +216,8 @@ public record UnionWithNoProperties
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Foo(SeedUnions.Foo value) => new(value);
+        public static implicit operator UnionWithNoProperties.Foo(SeedUnions.Foo value) =>
+            new(value);
     }
 
     /// <summary>

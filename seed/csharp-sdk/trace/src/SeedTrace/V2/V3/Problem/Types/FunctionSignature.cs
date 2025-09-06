@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
 
-[JsonConverter(typeof(FunctionSignature.JsonConverter))]
+[System.Text.Json.Serialization.JsonConverter(typeof(FunctionSignature.JsonConverter))]
 [Serializable]
 public record FunctionSignature
 {
@@ -78,7 +78,7 @@ public record FunctionSignature
     public SeedTrace.V2.V3.VoidFunctionSignature AsVoid() =>
         IsVoid
             ? (SeedTrace.V2.V3.VoidFunctionSignature)Value!
-            : throw new Exception("FunctionSignature.Type is not 'void'");
+            : throw new System.Exception("FunctionSignature.Type is not 'void'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.V2.V3.NonVoidFunctionSignature"/> if <see cref="Type"/> is 'nonVoid', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record FunctionSignature
     public SeedTrace.V2.V3.NonVoidFunctionSignature AsNonVoid() =>
         IsNonVoid
             ? (SeedTrace.V2.V3.NonVoidFunctionSignature)Value!
-            : throw new Exception("FunctionSignature.Type is not 'nonVoid'");
+            : throw new System.Exception("FunctionSignature.Type is not 'nonVoid'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult"/> if <see cref="Type"/> is 'voidThatTakesActualResult', otherwise throws an exception.
@@ -96,7 +96,9 @@ public record FunctionSignature
     public SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult AsVoidThatTakesActualResult() =>
         IsVoidThatTakesActualResult
             ? (SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult)Value!
-            : throw new Exception("FunctionSignature.Type is not 'voidThatTakesActualResult'");
+            : throw new System.Exception(
+                "FunctionSignature.Type is not 'voidThatTakesActualResult'"
+            );
 
     public T Match<T>(
         Func<SeedTrace.V2.V3.VoidFunctionSignature, T> onVoid,
@@ -199,7 +201,8 @@ public record FunctionSignature
     ) => new(value);
 
     [Serializable]
-    internal sealed class JsonConverter : JsonConverter<FunctionSignature>
+    internal sealed class JsonConverter
+        : System.Text.Json.Serialization.JsonConverter<FunctionSignature>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(FunctionSignature).IsAssignableFrom(typeToConvert);
@@ -290,8 +293,9 @@ public record FunctionSignature
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Void(SeedTrace.V2.V3.VoidFunctionSignature value) =>
-            new(value);
+        public static implicit operator FunctionSignature.Void(
+            SeedTrace.V2.V3.VoidFunctionSignature value
+        ) => new(value);
     }
 
     /// <summary>
@@ -309,8 +313,9 @@ public record FunctionSignature
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator NonVoid(SeedTrace.V2.V3.NonVoidFunctionSignature value) =>
-            new(value);
+        public static implicit operator FunctionSignature.NonVoid(
+            SeedTrace.V2.V3.NonVoidFunctionSignature value
+        ) => new(value);
     }
 
     /// <summary>
@@ -330,7 +335,7 @@ public record FunctionSignature
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator VoidThatTakesActualResult(
+        public static implicit operator FunctionSignature.VoidThatTakesActualResult(
             SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult value
         ) => new(value);
     }

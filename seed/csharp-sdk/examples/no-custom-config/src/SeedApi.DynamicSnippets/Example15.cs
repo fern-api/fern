@@ -34,7 +34,7 @@ public class Example15
                         ["imdb"] = 7.6,
                     },
                 },
-                Revenue = 1000000l
+                Revenue = 1000000L
             }
         );
     }

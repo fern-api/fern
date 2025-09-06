@@ -276,7 +276,8 @@ public record FieldValue
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator PrimitiveValue(SeedApi.PrimitiveValue value) => new(value);
+        public static implicit operator FieldValue.PrimitiveValue(SeedApi.PrimitiveValue value) =>
+            new(value);
     }
 
     /// <summary>
@@ -294,7 +295,8 @@ public record FieldValue
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator ObjectValue(SeedApi.ObjectValue value) => new(value);
+        public static implicit operator FieldValue.ObjectValue(SeedApi.ObjectValue value) =>
+            new(value);
     }
 
     /// <summary>
@@ -312,6 +314,7 @@ public record FieldValue
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator ContainerValue(SeedApi.ContainerValue value) => new(value);
+        public static implicit operator FieldValue.ContainerValue(SeedApi.ContainerValue value) =>
+            new(value);
     }
 }

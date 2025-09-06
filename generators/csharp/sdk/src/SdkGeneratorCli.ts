@@ -106,9 +106,12 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        // before generating anything, generate the models first so that we
+        // can identify collisions or ambiguities in the generated code.
+        const models = generateModels({ context });
+
         await context.snippetGenerator.populateSnippetsCache();
 
-        const models = generateModels({ context });
         for (const file of models) {
             context.project.addSourceFiles(file);
         }

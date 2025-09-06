@@ -228,7 +228,8 @@ public record UnionWithDiscriminant
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Foo(SeedUnions.Foo value) => new(value);
+        public static implicit operator UnionWithDiscriminant.Foo(SeedUnions.Foo value) =>
+            new(value);
     }
 
     /// <summary>
@@ -246,6 +247,7 @@ public record UnionWithDiscriminant
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Bar(SeedUnions.Bar value) => new(value);
+        public static implicit operator UnionWithDiscriminant.Bar(SeedUnions.Bar value) =>
+            new(value);
     }
 }

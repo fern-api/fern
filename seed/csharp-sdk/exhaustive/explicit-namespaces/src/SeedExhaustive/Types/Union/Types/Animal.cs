@@ -224,7 +224,8 @@ public record Animal
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Dog(SeedExhaustive.Types.Union.Dog value) => new(value);
+        public static implicit operator Animal.Dog(SeedExhaustive.Types.Union.Dog value) =>
+            new(value);
     }
 
     /// <summary>
@@ -242,6 +243,7 @@ public record Animal
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Cat(SeedExhaustive.Types.Union.Cat value) => new(value);
+        public static implicit operator Animal.Cat(SeedExhaustive.Types.Union.Cat value) =>
+            new(value);
     }
 }

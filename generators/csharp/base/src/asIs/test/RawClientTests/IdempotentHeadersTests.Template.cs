@@ -10,7 +10,8 @@ using System.Net.Http;
 
 using <%= namespace%>.Core;
 
-namespace <%= namespace%>.Test.Core.RawClientTests;
+// namespace <%= namespace%>.Test.Core.RawClientTests;
+namespace <%= testNamespace%>.Core.RawClientTests;
 
 [Serializable]
 public partial class IdempotentRequestOptions : IIdempotentRequestOptions

@@ -39,14 +39,14 @@ public class Example19
                             ["key"] = "value",
                         },
                     },
-                    Revenue = 1000000l
+                    Revenue = 1000000L
                 },
                 Entity = new Entity{
                     Type = BasicType.Primitive,
                     Name = "name"
                 },
-                Metadata = new Metadata(
-
+                Metadata = new SeedExamples.Metadata(
+                    new SeedExamples.Metadata.Html("html")
                 ) {
                     Extra = new Dictionary<string, string>(){
                         ["extra"] = "extra",
@@ -55,7 +55,7 @@ public class Example19
                         "tags",
                     },
                 },
-                CommonMetadata = new Metadata{
+                CommonMetadata = new SeedExamples.Commons.Metadata{
                     Id = "id",
                     Data = new Dictionary<string, string>(){
                         ["data"] = "data",
@@ -63,7 +63,7 @@ public class Example19
                     JsonString = "jsonString"
                 },
                 EventInfo = new EventInfo(
-                    new Metadata{
+                    new SeedExamples.Commons.Metadata{
                         Id = "id",
                         Data = new Dictionary<string, string>(){
                             ["data"] = "data",
@@ -72,13 +72,13 @@ public class Example19
                     }
                 ),
                 Data = new Data(
-
+                    new Data.String("string")
                 ),
                 Migration = new Migration{
                     Name = "name",
                     Status = MigrationStatus.Running
                 },
-                Exception = new Exception(
+                Exception = new SeedExamples.Exception(
                     new ExceptionInfo{
                         ExceptionType = "exceptionType",
                         ExceptionMessage = "exceptionMessage",
@@ -86,7 +86,7 @@ public class Example19
                     }
                 ),
                 Test = new Test(
-
+                    new Test.And()
                 ),
                 Node = new Node{
                     Name = "name",
@@ -169,66 +169,66 @@ public class Example19
                         },
                     }
                 },
-                Directory = new Directory{
+                Directory = new SeedExamples.Directory{
                     Name = "name",
-                    Files = new List<File>(){
-                        new File{
+                    Files = new List<SeedExamples.File>(){
+                        new SeedExamples.File{
                             Name = "name",
                             Contents = "contents"
                         },
-                        new File{
+                        new SeedExamples.File{
                             Name = "name",
                             Contents = "contents"
                         },
                     },
-                    Directories = new List<Directory>(){
-                        new Directory{
+                    Directories = new List<SeedExamples.Directory>(){
+                        new SeedExamples.Directory{
                             Name = "name",
-                            Files = new List<File>(){
-                                new File{
+                            Files = new List<SeedExamples.File>(){
+                                new SeedExamples.File{
                                     Name = "name",
                                     Contents = "contents"
                                 },
-                                new File{
+                                new SeedExamples.File{
                                     Name = "name",
                                     Contents = "contents"
                                 },
                             },
-                            Directories = new List<Directory>(){
-                                new Directory{
+                            Directories = new List<SeedExamples.Directory>(){
+                                new SeedExamples.Directory{
                                     Name = "name",
-                                    Files = new List<File>(){},
-                                    Directories = new List<Directory>(){}
+                                    Files = new List<SeedExamples.File>(){},
+                                    Directories = new List<SeedExamples.Directory>(){}
                                 },
-                                new Directory{
+                                new SeedExamples.Directory{
                                     Name = "name",
-                                    Files = new List<File>(){},
-                                    Directories = new List<Directory>(){}
+                                    Files = new List<SeedExamples.File>(){},
+                                    Directories = new List<SeedExamples.Directory>(){}
                                 },
                             }
                         },
-                        new Directory{
+                        new SeedExamples.Directory{
                             Name = "name",
-                            Files = new List<File>(){
-                                new File{
+                            Files = new List<SeedExamples.File>(){
+                                new SeedExamples.File{
                                     Name = "name",
                                     Contents = "contents"
                                 },
-                                new File{
+                                new SeedExamples.File{
                                     Name = "name",
                                     Contents = "contents"
                                 },
                             },
-                            Directories = new List<Directory>(){
-                                new Directory{
+                            Directories = new List<SeedExamples.Directory>(){
+                                new SeedExamples.Directory{
                                     Name = "name",
-                                    Files = new List<File>(){},
-                                    Directories = new List<Directory>(){}
+                                    Files = new List<SeedExamples.File>(){},
+                                    Directories = new List<SeedExamples.Directory>(){}
                                 },
-                                new Directory{
+                                new SeedExamples.Directory{
                                     Name = "name",
-                                    Files = new List<File>(){},
-                                    Directories = new List<Directory>(){}
+                                    Files = new List<SeedExamples.File>(){},
+                                    Directories = new List<SeedExamples.Directory>(){}
                                 },
                             }
                         },

@@ -1509,7 +1509,8 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator NormalSweet(SeedUnions.NormalSweet value) => new(value);
+        public static implicit operator BigUnion.NormalSweet(SeedUnions.NormalSweet value) =>
+            new(value);
     }
 
     /// <summary>
@@ -1527,7 +1528,7 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator ThankfulFactor(SeedUnions.ThankfulFactor value) =>
+        public static implicit operator BigUnion.ThankfulFactor(SeedUnions.ThankfulFactor value) =>
             new(value);
     }
 
@@ -1546,7 +1547,7 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator JumboEnd(SeedUnions.JumboEnd value) => new(value);
+        public static implicit operator BigUnion.JumboEnd(SeedUnions.JumboEnd value) => new(value);
     }
 
     /// <summary>
@@ -1564,7 +1565,8 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator HastyPain(SeedUnions.HastyPain value) => new(value);
+        public static implicit operator BigUnion.HastyPain(SeedUnions.HastyPain value) =>
+            new(value);
     }
 
     /// <summary>
@@ -1582,7 +1584,8 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator MistySnow(SeedUnions.MistySnow value) => new(value);
+        public static implicit operator BigUnion.MistySnow(SeedUnions.MistySnow value) =>
+            new(value);
     }
 
     /// <summary>
@@ -1600,8 +1603,9 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator DistinctFailure(SeedUnions.DistinctFailure value) =>
-            new(value);
+        public static implicit operator BigUnion.DistinctFailure(
+            SeedUnions.DistinctFailure value
+        ) => new(value);
     }
 
     /// <summary>
@@ -1619,8 +1623,9 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator PracticalPrinciple(SeedUnions.PracticalPrinciple value) =>
-            new(value);
+        public static implicit operator BigUnion.PracticalPrinciple(
+            SeedUnions.PracticalPrinciple value
+        ) => new(value);
     }
 
     /// <summary>
@@ -1638,7 +1643,8 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator LimpingStep(SeedUnions.LimpingStep value) => new(value);
+        public static implicit operator BigUnion.LimpingStep(SeedUnions.LimpingStep value) =>
+            new(value);
     }
 
     /// <summary>
@@ -1656,8 +1662,9 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator VibrantExcitement(SeedUnions.VibrantExcitement value) =>
-            new(value);
+        public static implicit operator BigUnion.VibrantExcitement(
+            SeedUnions.VibrantExcitement value
+        ) => new(value);
     }
 
     /// <summary>
@@ -1675,7 +1682,8 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator ActiveDiamond(SeedUnions.ActiveDiamond value) => new(value);
+        public static implicit operator BigUnion.ActiveDiamond(SeedUnions.ActiveDiamond value) =>
+            new(value);
     }
 
     /// <summary>
@@ -1693,7 +1701,8 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator PopularLimit(SeedUnions.PopularLimit value) => new(value);
+        public static implicit operator BigUnion.PopularLimit(SeedUnions.PopularLimit value) =>
+            new(value);
     }
 
     /// <summary>
@@ -1711,7 +1720,8 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator FalseMirror(SeedUnions.FalseMirror value) => new(value);
+        public static implicit operator BigUnion.FalseMirror(SeedUnions.FalseMirror value) =>
+            new(value);
     }
 
     /// <summary>
@@ -1729,7 +1739,8 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator PrimaryBlock(SeedUnions.PrimaryBlock value) => new(value);
+        public static implicit operator BigUnion.PrimaryBlock(SeedUnions.PrimaryBlock value) =>
+            new(value);
     }
 
     /// <summary>
@@ -1747,7 +1758,8 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator RotatingRatio(SeedUnions.RotatingRatio value) => new(value);
+        public static implicit operator BigUnion.RotatingRatio(SeedUnions.RotatingRatio value) =>
+            new(value);
     }
 
     /// <summary>
@@ -1765,7 +1777,8 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator ColorfulCover(SeedUnions.ColorfulCover value) => new(value);
+        public static implicit operator BigUnion.ColorfulCover(SeedUnions.ColorfulCover value) =>
+            new(value);
     }
 
     /// <summary>
@@ -1783,7 +1796,8 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator DisloyalValue(SeedUnions.DisloyalValue value) => new(value);
+        public static implicit operator BigUnion.DisloyalValue(SeedUnions.DisloyalValue value) =>
+            new(value);
     }
 
     /// <summary>
@@ -1801,7 +1815,8 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator GruesomeCoach(SeedUnions.GruesomeCoach value) => new(value);
+        public static implicit operator BigUnion.GruesomeCoach(SeedUnions.GruesomeCoach value) =>
+            new(value);
     }
 
     /// <summary>
@@ -1819,7 +1834,8 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator TotalWork(SeedUnions.TotalWork value) => new(value);
+        public static implicit operator BigUnion.TotalWork(SeedUnions.TotalWork value) =>
+            new(value);
     }
 
     /// <summary>
@@ -1837,7 +1853,7 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator HarmoniousPlay(SeedUnions.HarmoniousPlay value) =>
+        public static implicit operator BigUnion.HarmoniousPlay(SeedUnions.HarmoniousPlay value) =>
             new(value);
     }
 
@@ -1856,7 +1872,8 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator UniqueStress(SeedUnions.UniqueStress value) => new(value);
+        public static implicit operator BigUnion.UniqueStress(SeedUnions.UniqueStress value) =>
+            new(value);
     }
 
     /// <summary>
@@ -1874,7 +1891,7 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator UnwillingSmoke(SeedUnions.UnwillingSmoke value) =>
+        public static implicit operator BigUnion.UnwillingSmoke(SeedUnions.UnwillingSmoke value) =>
             new(value);
     }
 
@@ -1893,7 +1910,8 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator FrozenSleep(SeedUnions.FrozenSleep value) => new(value);
+        public static implicit operator BigUnion.FrozenSleep(SeedUnions.FrozenSleep value) =>
+            new(value);
     }
 
     /// <summary>
@@ -1911,7 +1929,8 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator DiligentDeal(SeedUnions.DiligentDeal value) => new(value);
+        public static implicit operator BigUnion.DiligentDeal(SeedUnions.DiligentDeal value) =>
+            new(value);
     }
 
     /// <summary>
@@ -1929,8 +1948,9 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator AttractiveScript(SeedUnions.AttractiveScript value) =>
-            new(value);
+        public static implicit operator BigUnion.AttractiveScript(
+            SeedUnions.AttractiveScript value
+        ) => new(value);
     }
 
     /// <summary>
@@ -1948,7 +1968,8 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator HoarseMouse(SeedUnions.HoarseMouse value) => new(value);
+        public static implicit operator BigUnion.HoarseMouse(SeedUnions.HoarseMouse value) =>
+            new(value);
     }
 
     /// <summary>
@@ -1966,7 +1987,8 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator CircularCard(SeedUnions.CircularCard value) => new(value);
+        public static implicit operator BigUnion.CircularCard(SeedUnions.CircularCard value) =>
+            new(value);
     }
 
     /// <summary>
@@ -1984,7 +2006,8 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator PotableBad(SeedUnions.PotableBad value) => new(value);
+        public static implicit operator BigUnion.PotableBad(SeedUnions.PotableBad value) =>
+            new(value);
     }
 
     /// <summary>
@@ -2002,8 +2025,9 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator TriangularRepair(SeedUnions.TriangularRepair value) =>
-            new(value);
+        public static implicit operator BigUnion.TriangularRepair(
+            SeedUnions.TriangularRepair value
+        ) => new(value);
     }
 
     /// <summary>
@@ -2021,6 +2045,7 @@ public record BigUnion
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator GaseousRoad(SeedUnions.GaseousRoad value) => new(value);
+        public static implicit operator BigUnion.GaseousRoad(SeedUnions.GaseousRoad value) =>
+            new(value);
     }
 }

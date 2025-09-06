@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OneOf;
 using <%= namespace%>.Core;
 
-namespace <%= namespace%>.Test.Core.Json;
+namespace <%= testNamespace%>.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]
