@@ -371,7 +371,7 @@ export class DocsDefinitionResolver {
             const frontmatter = matter(markdown);
             const tags = frontmatter.data.tags;
             if (typeof tags === "string") {
-                mdxFilePathToTags.set(this.resolveFilepath(relativePath), tags.split(",").flatMap(item => item.trim()));
+                mdxFilePathToTags.set(this.resolveFilepath(relativePath), tags.split(",").map(item => item.trim()));
             } else if (Array.isArray(tags)) {
                 mdxFilePathToTags.set(this.resolveFilepath(relativePath), tags);
             }
