@@ -359,9 +359,9 @@ export class DocsDefinitionResolver {
     }
 
     /**
-     * Creates a list of markdown files that have noindex:true specified in the frontmatter
+     * Creates a map of markdown files to their tags specified in the frontmatter
      * @param pages - the pages to check
-     * @returns a map of markdown files to their noindex value
+     * @returns a map of markdown files to their tags
      */
     private async getMarkdownFilesToTags(
         pages: Record<RelativeFilePath, string>
