@@ -7,7 +7,7 @@ import { FiddleClient } from "../../src/Client";
 import * as Fiddle from "../../src/api/index";
 
 describe("InlinedRequests", () => {
-    test("postWithObjectBodyandResponse (36a333c6)", async () => {
+    test("postWithObjectBodyandResponse (5a1d0f30)", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = {
@@ -98,7 +98,7 @@ describe("InlinedRequests", () => {
         });
     });
 
-    test("postWithObjectBodyandResponse (7586df6c)", async () => {
+    test("postWithObjectBodyandResponse (c70fbba8)", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = {
