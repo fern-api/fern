@@ -1,0 +1,11 @@
+use crate::submission_test_submission_update_info::TestSubmissionUpdateInfo;
+use chrono::{DateTime, NaiveDate, Utc};
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct TestSubmissionUpdate {
+    #[serde(rename = "updateTime")]
+    pub update_time: chrono::DateTime<chrono::Utc>,
+    #[serde(rename = "updateInfo")]
+    pub update_info: TestSubmissionUpdateInfo,
+}

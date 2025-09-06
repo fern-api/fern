@@ -8,7 +8,7 @@ pub mod pagination;
 pub mod query_parameter_builder;
 pub mod environment;
 
-pub use client::{MultiUrlEnvironmentClient, Ec2Client, S3Client};
+pub use client::{*};
 pub use error::{ApiError};
 pub use environment::{*};
 pub use client_config::{*};

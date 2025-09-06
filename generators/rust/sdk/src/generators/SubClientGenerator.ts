@@ -41,7 +41,8 @@ export class SubClientGenerator {
     // =============================================================================
 
     public generate(): RustFile {
-        const filename = `${this.subpackage.name.snakeCase.safeName}.rs`;
+        // Use centralized method to create unique filenames to prevent collisions
+        const filename = this.context.getUniqueFilenameForSubpackage(this.subpackage);
         const endpoints = this.service?.endpoints || [];
 
         const rustClient = rust.client({
@@ -55,7 +56,6 @@ export class SubClientGenerator {
             useStatements: this.generateImports(),
             rawDeclarations: [rustClient.toString()]
         });
-
         return new RustFile({
             filename,
             directory: RelativeFilePath.of("src/client"),
@@ -68,7 +68,8 @@ export class SubClientGenerator {
     // =============================================================================
 
     private get subClientName(): string {
-        return this.subpackage.name.pascalCase.safeName + "Client";
+        // Use centralized method to create unique client names to prevent collisions
+        return this.context.getUniqueClientNameForSubpackage(this.subpackage);
     }
 
     private generateImports(): UseStatement[] {

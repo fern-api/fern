@@ -14,7 +14,7 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
                 return new AliasGenerator(typeDeclaration, aliasTypeDeclaration, context).generate();
             },
             enum: (enumTypeDeclaration) => {
-                return new EnumGenerator(typeDeclaration, enumTypeDeclaration).generate();
+                return new EnumGenerator(typeDeclaration, enumTypeDeclaration, context).generate();
             },
             object: (objectTypeDeclaration) => {
                 return new StructGenerator(typeDeclaration, objectTypeDeclaration, context).generate();

@@ -7,7 +7,7 @@ pub mod request_options;
 pub mod pagination;
 pub mod query_parameter_builder;
 
-pub use client::{DummyClient};
+pub use client::{*};
 pub use error::{ApiError};
 pub use client_config::{*};
 pub use api_client_builder::{*};

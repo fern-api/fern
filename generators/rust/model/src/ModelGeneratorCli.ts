@@ -85,25 +85,37 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
     private generateTypesModFile(context: ModelGeneratorContext): RustFile {
         const writer = new Writer();
 
-        // Add module declarations for each type
+        // Use a Set to track unique module names and prevent duplicates
+        const uniqueModuleNames = new Set<string>();
+        const moduleNames: string[] = [];
+
+        // Collect unique module names first using centralized method
         if (context.ir.types) {
             Object.values(context.ir.types).forEach((typeDeclaration) => {
-                const rawTypeName = typeDeclaration.name.name.snakeCase.unsafeName;
-                const escapedTypeName = context.escapeRustKeyword(rawTypeName);
-                writer.writeLine(`pub mod ${escapedTypeName};`);
+                // Use centralized method to get unique filename and extract module name from it
+                const filename = context.getUniqueFilenameForType(typeDeclaration);
+                const rawModuleName = filename.replace(".rs", ""); // Remove .rs extension
+                const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
+
+                // Only add if we haven't seen this module name before
+                if (!uniqueModuleNames.has(escapedModuleName)) {
+                    uniqueModuleNames.add(escapedModuleName);
+                    moduleNames.push(escapedModuleName);
+                }
             });
         }
+
+        // Add module declarations for each unique type
+        moduleNames.forEach((moduleName) => {
+            writer.writeLine(`pub mod ${moduleName};`);
+        });
 
         writer.newLine();
 
-        // Add public use statements for each type
-        if (context.ir.types) {
-            Object.values(context.ir.types).forEach((typeDeclaration) => {
-                const rawTypeName = typeDeclaration.name.name.snakeCase.unsafeName;
-                const escapedTypeName = context.escapeRustKeyword(rawTypeName);
-                writer.writeLine(`pub use ${escapedTypeName}::{*};`);
-            });
-        }
+        // Add public use statements for each unique type
+        moduleNames.forEach((moduleName) => {
+            writer.writeLine(`pub use ${moduleName}::{*};`);
+        });
 
         writer.newLine();
 
