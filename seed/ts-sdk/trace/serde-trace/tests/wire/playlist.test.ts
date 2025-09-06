@@ -133,7 +133,7 @@ describe("Playlist", () => {
 
         await expect(async () => {
             return await client.playlist.getPlaylist(1, "playlistId");
-        }).rejects.toThrow(SeedTrace.UnauthorizedError());
+        }).rejects.toThrow(new SeedTrace.UnauthorizedError());
     });
 
     test("updatePlaylist (56f82548)", async () => {
