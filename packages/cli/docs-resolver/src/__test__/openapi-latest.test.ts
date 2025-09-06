@@ -74,6 +74,7 @@ it.skip("converts to api reference latest node", async () => {
         context,
         new Map(),
         new Map(),
+        new Map(),
         NodeIdGenerator.init()
     ).get();
 
