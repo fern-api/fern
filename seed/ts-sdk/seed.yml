@@ -336,7 +336,7 @@ fixtures:
         shouldGenerateWebsocketClients: true
       outputFolder: websockets
 scripts:
-  - docker: fernapi/ts-seed
+  - docker: node:20-alpine
     commands:
       - |
         if grep -q '"packageManager": "pnpm' package.json; then
