@@ -13,7 +13,12 @@ import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.requests.PaymentRequest;
+import com.seed.api.requests.RefundRequest;
+import com.seed.api.types.Account;
+import com.seed.api.types.Balance;
 import com.seed.api.types.PaymentResponse;
+import com.seed.api.types.Refund;
+import com.seed.api.types.RefundResponse;
 import com.seed.api.types.Transaction;
 import com.seed.api.types.Wallet;
 import java.io.IOException;
@@ -138,12 +143,115 @@ public class AsyncRawSeedApiClient {
         return future;
     }
 
+    public CompletableFuture<SeedApiHttpResponse<Balance>> getWalletBalance(String walletId) {
+        return getWalletBalance(walletId, null);
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<Balance>> getWalletBalance(
+            String walletId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getFintechURL())
+                .newBuilder()
+                .addPathSegments("wallets")
+                .addPathSegment(walletId)
+                .addPathSegments("balance")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedApiHttpResponse<Balance>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedApiHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Balance.class), response));
+                        return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    future.completeExceptionally(new SeedApiApiException(
+                            "Error with status code " + response.code(),
+                            response.code(),
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<List<Account>>> listAccounts() {
+        return listAccounts(null);
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<List<Account>>> listAccounts(RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getFintechURL())
+                .newBuilder()
+                .addPathSegments("accounts")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedApiHttpResponse<List<Account>>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedApiHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(
+                                        responseBody.string(), new TypeReference<List<Account>>() {}),
+                                response));
+                        return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    future.completeExceptionally(new SeedApiApiException(
+                            "Error with status code " + response.code(),
+                            response.code(),
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
     public CompletableFuture<SeedApiHttpResponse<List<Transaction>>> listTransactions() {
         return listTransactions(null);
     }
 
     public CompletableFuture<SeedApiHttpResponse<List<Transaction>>> listTransactions(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getFintechURL())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getPaymentsURL())
                 .newBuilder()
                 .addPathSegments("transactions")
                 .build();
@@ -195,7 +303,7 @@ public class AsyncRawSeedApiClient {
 
     public CompletableFuture<SeedApiHttpResponse<Transaction>> getTransaction(
             String transactionId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getFintechURL())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getPaymentsURL())
                 .newBuilder()
                 .addPathSegments("transactions")
                 .addPathSegment(transactionId)
@@ -247,7 +355,7 @@ public class AsyncRawSeedApiClient {
 
     public CompletableFuture<SeedApiHttpResponse<PaymentResponse>> createPayment(
             PaymentRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getFintechURL())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getPaymentsURL())
                 .newBuilder()
                 .addPathSegments("payments")
                 .build();
@@ -277,6 +385,119 @@ public class AsyncRawSeedApiClient {
                     if (response.isSuccessful()) {
                         future.complete(new SeedApiHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PaymentResponse.class),
+                                response));
+                        return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    future.completeExceptionally(new SeedApiApiException(
+                            "Error with status code " + response.code(),
+                            response.code(),
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<RefundResponse>> refundPayment(
+            String paymentId, RefundRequest request) {
+        return refundPayment(paymentId, request, null);
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<RefundResponse>> refundPayment(
+            String paymentId, RefundRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getPaymentsURL())
+                .newBuilder()
+                .addPathSegments("payments")
+                .addPathSegment(paymentId)
+                .addPathSegments("refund")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedApiHttpResponse<RefundResponse>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedApiHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), RefundResponse.class),
+                                response));
+                        return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    future.completeExceptionally(new SeedApiApiException(
+                            "Error with status code " + response.code(),
+                            response.code(),
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<List<Refund>>> listRefunds() {
+        return listRefunds(null);
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<List<Refund>>> listRefunds(RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getPaymentsURL())
+                .newBuilder()
+                .addPathSegments("refunds")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedApiHttpResponse<List<Refund>>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedApiHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(
+                                        responseBody.string(), new TypeReference<List<Refund>>() {}),
                                 response));
                         return;
                     }

@@ -13,7 +13,12 @@ import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.requests.PaymentRequest;
+import com.seed.api.requests.RefundRequest;
+import com.seed.api.types.Account;
+import com.seed.api.types.Balance;
 import com.seed.api.types.PaymentResponse;
+import com.seed.api.types.Refund;
+import com.seed.api.types.RefundResponse;
 import com.seed.api.types.Transaction;
 import com.seed.api.types.Wallet;
 import java.io.IOException;
@@ -108,12 +113,88 @@ public class RawSeedApiClient {
         }
     }
 
+    public SeedApiHttpResponse<Balance> getWalletBalance(String walletId) {
+        return getWalletBalance(walletId, null);
+    }
+
+    public SeedApiHttpResponse<Balance> getWalletBalance(String walletId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getFintechURL())
+                .newBuilder()
+                .addPathSegments("wallets")
+                .addPathSegment(walletId)
+                .addPathSegments("balance")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedApiHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Balance.class), response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedApiApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedApiException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedApiHttpResponse<List<Account>> listAccounts() {
+        return listAccounts(null);
+    }
+
+    public SeedApiHttpResponse<List<Account>> listAccounts(RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getFintechURL())
+                .newBuilder()
+                .addPathSegments("accounts")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedApiHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(
+                                responseBody.string(), new TypeReference<List<Account>>() {}),
+                        response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedApiApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedApiException("Network error executing HTTP request", e);
+        }
+    }
+
     public SeedApiHttpResponse<List<Transaction>> listTransactions() {
         return listTransactions(null);
     }
 
     public SeedApiHttpResponse<List<Transaction>> listTransactions(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getFintechURL())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getPaymentsURL())
                 .newBuilder()
                 .addPathSegments("transactions")
                 .build();
@@ -151,7 +232,7 @@ public class RawSeedApiClient {
     }
 
     public SeedApiHttpResponse<Transaction> getTransaction(String transactionId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getFintechURL())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getPaymentsURL())
                 .newBuilder()
                 .addPathSegments("transactions")
                 .addPathSegment(transactionId)
@@ -188,7 +269,7 @@ public class RawSeedApiClient {
     }
 
     public SeedApiHttpResponse<PaymentResponse> createPayment(PaymentRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getFintechURL())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getPaymentsURL())
                 .newBuilder()
                 .addPathSegments("payments")
                 .build();
@@ -215,6 +296,91 @@ public class RawSeedApiClient {
             if (response.isSuccessful()) {
                 return new SeedApiHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PaymentResponse.class), response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedApiApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedApiException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedApiHttpResponse<RefundResponse> refundPayment(String paymentId, RefundRequest request) {
+        return refundPayment(paymentId, request, null);
+    }
+
+    public SeedApiHttpResponse<RefundResponse> refundPayment(
+            String paymentId, RefundRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getPaymentsURL())
+                .newBuilder()
+                .addPathSegments("payments")
+                .addPathSegment(paymentId)
+                .addPathSegments("refund")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedApiHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), RefundResponse.class), response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedApiApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedApiException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedApiHttpResponse<List<Refund>> listRefunds() {
+        return listRefunds(null);
+    }
+
+    public SeedApiHttpResponse<List<Refund>> listRefunds(RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getPaymentsURL())
+                .newBuilder()
+                .addPathSegments("refunds")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedApiHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(
+                                responseBody.string(), new TypeReference<List<Refund>>() {}),
+                        response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedApiApiException(

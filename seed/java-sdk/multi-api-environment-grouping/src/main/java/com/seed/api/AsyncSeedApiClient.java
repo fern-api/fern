@@ -6,7 +6,12 @@ package com.seed.api;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.requests.PaymentRequest;
+import com.seed.api.requests.RefundRequest;
+import com.seed.api.types.Account;
+import com.seed.api.types.Balance;
 import com.seed.api.types.PaymentResponse;
+import com.seed.api.types.Refund;
+import com.seed.api.types.RefundResponse;
 import com.seed.api.types.Transaction;
 import com.seed.api.types.Wallet;
 import java.util.List;
@@ -45,6 +50,22 @@ public class AsyncSeedApiClient {
         return this.rawClient.getWallet(walletId, requestOptions).thenApply(response -> response.body());
     }
 
+    public CompletableFuture<Balance> getWalletBalance(String walletId) {
+        return this.rawClient.getWalletBalance(walletId).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Balance> getWalletBalance(String walletId, RequestOptions requestOptions) {
+        return this.rawClient.getWalletBalance(walletId, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<List<Account>> listAccounts() {
+        return this.rawClient.listAccounts().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<List<Account>> listAccounts(RequestOptions requestOptions) {
+        return this.rawClient.listAccounts(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<List<Transaction>> listTransactions() {
         return this.rawClient.listTransactions().thenApply(response -> response.body());
     }
@@ -67,6 +88,23 @@ public class AsyncSeedApiClient {
 
     public CompletableFuture<PaymentResponse> createPayment(PaymentRequest request, RequestOptions requestOptions) {
         return this.rawClient.createPayment(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<RefundResponse> refundPayment(String paymentId, RefundRequest request) {
+        return this.rawClient.refundPayment(paymentId, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<RefundResponse> refundPayment(
+            String paymentId, RefundRequest request, RequestOptions requestOptions) {
+        return this.rawClient.refundPayment(paymentId, request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<List<Refund>> listRefunds() {
+        return this.rawClient.listRefunds().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<List<Refund>> listRefunds(RequestOptions requestOptions) {
+        return this.rawClient.listRefunds(requestOptions).thenApply(response -> response.body());
     }
 
     public static AsyncSeedApiClientBuilder builder() {

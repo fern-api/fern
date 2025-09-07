@@ -6,7 +6,12 @@ package com.seed.api;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.requests.PaymentRequest;
+import com.seed.api.requests.RefundRequest;
+import com.seed.api.types.Account;
+import com.seed.api.types.Balance;
 import com.seed.api.types.PaymentResponse;
+import com.seed.api.types.Refund;
+import com.seed.api.types.RefundResponse;
 import com.seed.api.types.Transaction;
 import com.seed.api.types.Wallet;
 import java.util.List;
@@ -44,6 +49,22 @@ public class SeedApiClient {
         return this.rawClient.getWallet(walletId, requestOptions).body();
     }
 
+    public Balance getWalletBalance(String walletId) {
+        return this.rawClient.getWalletBalance(walletId).body();
+    }
+
+    public Balance getWalletBalance(String walletId, RequestOptions requestOptions) {
+        return this.rawClient.getWalletBalance(walletId, requestOptions).body();
+    }
+
+    public List<Account> listAccounts() {
+        return this.rawClient.listAccounts().body();
+    }
+
+    public List<Account> listAccounts(RequestOptions requestOptions) {
+        return this.rawClient.listAccounts(requestOptions).body();
+    }
+
     public List<Transaction> listTransactions() {
         return this.rawClient.listTransactions().body();
     }
@@ -66,6 +87,22 @@ public class SeedApiClient {
 
     public PaymentResponse createPayment(PaymentRequest request, RequestOptions requestOptions) {
         return this.rawClient.createPayment(request, requestOptions).body();
+    }
+
+    public RefundResponse refundPayment(String paymentId, RefundRequest request) {
+        return this.rawClient.refundPayment(paymentId, request).body();
+    }
+
+    public RefundResponse refundPayment(String paymentId, RefundRequest request, RequestOptions requestOptions) {
+        return this.rawClient.refundPayment(paymentId, request, requestOptions).body();
+    }
+
+    public List<Refund> listRefunds() {
+        return this.rawClient.listRefunds().body();
+    }
+
+    public List<Refund> listRefunds(RequestOptions requestOptions) {
+        return this.rawClient.listRefunds(requestOptions).body();
     }
 
     public static SeedApiClientBuilder builder() {

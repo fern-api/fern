@@ -8,6 +8,6 @@ public class Example7 {
             .builder()
             .build();
 
-        client.getTransaction("transactionId");
+        client.listAccounts();
     }
 }

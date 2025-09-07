@@ -332,13 +332,15 @@ function merge(
         const ir1EndpointsWithApiTag: MultiApiEndpoint[] = ir1.endpoints.map((endpoint) => ({
             ...endpoint,
             type: "multi-api" as const,
-            apiName: api1Name
+            apiName: api1Name,
+            servers: [{ name: api1Name, url: undefined, audiences: undefined }]
         }));
 
         const ir2EndpointsWithApiTag: MultiApiEndpoint[] = ir2.endpoints.map((endpoint) => ({
             ...endpoint,
             type: "multi-api" as const,
-            apiName: api2Name
+            apiName: api2Name,
+            servers: [{ name: api2Name, url: undefined, audiences: undefined }]
         }));
 
         mergedEndpoints = [...ir1EndpointsWithApiTag, ...ir2EndpointsWithApiTag];
@@ -368,8 +370,8 @@ function merge(
         hasEndpointsMarkedInternal: ir1.hasEndpointsMarkedInternal || ir2.hasEndpointsMarkedInternal,
         endpoints: mergedEndpoints.map((e) => {
             if (e.type === "multi-api") {
-                const { type, apiName, ...endpoint } = e;
-                return { ...endpoint, __apiName: apiName } as any;
+                const { type, apiName, servers, ...endpoint } = e;
+                return { ...endpoint, __apiName: apiName, servers } as any;
             }
             const { type, ...endpoint } = e;
             return endpoint;

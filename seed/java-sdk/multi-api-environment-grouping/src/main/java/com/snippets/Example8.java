@@ -1,7 +1,6 @@
 package com.snippets;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.requests.PaymentRequest;
 
 public class Example8 {
     public static void main(String[] args) {
@@ -9,13 +8,6 @@ public class Example8 {
             .builder()
             .build();
 
-        client.createPayment(
-            PaymentRequest
-                .builder()
-                .amount(1.1)
-                .currency("currency")
-                .recipient("recipient")
-                .build()
-        );
+        client.listTransactions();
     }
 }

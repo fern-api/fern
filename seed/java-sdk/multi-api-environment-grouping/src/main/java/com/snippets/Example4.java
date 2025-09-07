@@ -8,6 +8,6 @@ public class Example4 {
             .builder()
             .build();
 
-        client.listTransactions();
+        client.getWalletBalance("walletId");
     }
 }

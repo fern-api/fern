@@ -69,6 +69,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaymentResponse'
+  /payments/{paymentId}/refund:
+    post:
+      summary: Refund a payment
+      operationId: refundPayment
+      parameters:
+        - name: paymentId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefundRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefundResponse'
+  /refunds:
+    get:
+      summary: List all refunds
+      operationId: listRefunds
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Refund'
 components:
   schemas:
     Transaction:
@@ -122,3 +158,50 @@ components:
       required:
         - id
         - status
+    RefundRequest:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+        reason:
+          type: string
+      required:
+        - amount
+    RefundResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum: [pending, completed, failed]
+        refundedAmount:
+          type: number
+          format: double
+      required:
+        - id
+        - status
+        - refundedAmount
+    Refund:
+      type: object
+      properties:
+        id:
+          type: string
+        paymentId:
+          type: string
+        amount:
+          type: number
+          format: double
+        status:
+          type: string
+          enum: [pending, completed, failed]
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - paymentId
+        - amount
+        - status
+        - createdAt
