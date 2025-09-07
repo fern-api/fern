@@ -1,10 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
 import {
+    Endpoint,
     OpenApiIntermediateRepresentation,
     Source as OpenApiIrSource,
     Schemas,
-    Server,
-    Endpoint
+    Server
 } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";

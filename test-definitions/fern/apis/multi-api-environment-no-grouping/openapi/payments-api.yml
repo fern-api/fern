@@ -27,14 +27,14 @@ paths:
       summary: List transactions
       operationId: listTransactions
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Transaction'
+                  $ref: "#/components/schemas/Transaction"
   /transactions/{transactionId}:
     get:
       summary: Get transaction by ID
@@ -46,12 +46,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Transaction'
+                $ref: "#/components/schemas/Transaction"
   /payments:
     post:
       summary: Create a payment
@@ -61,14 +61,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PaymentRequest'
+              $ref: "#/components/schemas/PaymentRequest"
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaymentResponse'
+                $ref: "#/components/schemas/PaymentResponse"
   /payments/{paymentId}/refund:
     post:
       summary: Refund a payment
@@ -84,27 +84,27 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RefundRequest'
+              $ref: "#/components/schemas/RefundRequest"
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RefundResponse'
+                $ref: "#/components/schemas/RefundResponse"
   /refunds:
     get:
       summary: List all refunds
       operationId: listRefunds
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Refund'
+                  $ref: "#/components/schemas/Refund"
 components:
   schemas:
     Transaction:

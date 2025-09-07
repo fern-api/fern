@@ -27,14 +27,14 @@ paths:
       summary: List wallets
       operationId: listWallets
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Wallet'
+                  $ref: "#/components/schemas/Wallet"
   /wallets/{walletId}:
     get:
       summary: Get wallet by ID
@@ -46,12 +46,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Wallet'
+                $ref: "#/components/schemas/Wallet"
   /wallets/{walletId}/balance:
     get:
       summary: Get wallet balance
@@ -63,25 +63,25 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Balance'
+                $ref: "#/components/schemas/Balance"
   /accounts:
     get:
       summary: List accounts
       operationId: listAccounts
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Account'
+                  $ref: "#/components/schemas/Account"
 components:
   schemas:
     Wallet:

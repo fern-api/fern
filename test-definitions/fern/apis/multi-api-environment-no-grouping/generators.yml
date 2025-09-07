@@ -8,7 +8,7 @@ groups:
           location: local-file-system
           path: ../../../../../../seed/sdk/java-sdk/multi-api-environment-no-grouping
       - name: fernapi/fern-java-model
-        version: latest  
+        version: latest
         output:
           location: local-file-system
           path: ../../../../../../seed/model/java-model/multi-api-environment-no-grouping
