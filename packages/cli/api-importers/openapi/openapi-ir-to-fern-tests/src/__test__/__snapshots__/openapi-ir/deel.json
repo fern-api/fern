@@ -3,11 +3,15 @@
   "servers": [
     {
       "url": "https://api.letsdeel.com/rest/v1",
-      "description": "Production server"
+      "description": "Production server",
+      "name": "Production server",
+      "type": "single"
     },
     {
       "url": "https://api-staging.letsdeel.com/rest/v1",
-      "description": "Demo server"
+      "description": "Demo server",
+      "name": "Demo server",
+      "type": "single"
     }
   ],
   "websocketServers": [],

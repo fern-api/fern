@@ -58323,28 +58323,28 @@
     }
   },
   "environments": {
-    "defaultEnvironment": "Default",
+    "defaultEnvironment": "DevRev API endpoint.",
     "environments": {
       "environments": [
         {
-          "id": "Default",
+          "id": "DevRev API endpoint.",
           "name": {
-            "originalName": "Default",
+            "originalName": "DevRev API endpoint.",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default"
+              "unsafeName": "devRevAPIEndpoint",
+              "safeName": "devRevAPIEndpoint"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default"
+              "unsafeName": "dev_rev_api_endpoint",
+              "safeName": "dev_rev_api_endpoint"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "DEV_REV_API_ENDPOINT",
+              "safeName": "DEV_REV_API_ENDPOINT"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "DevRevAPIEndpoint",
+              "safeName": "DevRevAPIEndpoint"
             }
           },
           "url": "https://api.devrev.ai"
@@ -94574,28 +94574,28 @@
     },
     "pathParameters": [],
     "environments": {
-      "defaultEnvironment": "Default",
+      "defaultEnvironment": "DevRev API endpoint.",
       "environments": {
         "environments": [
           {
-            "id": "Default",
+            "id": "DevRev API endpoint.",
             "name": {
-              "originalName": "Default",
+              "originalName": "DevRev API endpoint.",
               "camelCase": {
-                "unsafeName": "default",
-                "safeName": "default"
+                "unsafeName": "devRevAPIEndpoint",
+                "safeName": "devRevAPIEndpoint"
               },
               "snakeCase": {
-                "unsafeName": "default",
-                "safeName": "default"
+                "unsafeName": "dev_rev_api_endpoint",
+                "safeName": "dev_rev_api_endpoint"
               },
               "screamingSnakeCase": {
-                "unsafeName": "DEFAULT",
-                "safeName": "DEFAULT"
+                "unsafeName": "DEV_REV_API_ENDPOINT",
+                "safeName": "DEV_REV_API_ENDPOINT"
               },
               "pascalCase": {
-                "unsafeName": "Default",
-                "safeName": "Default"
+                "unsafeName": "DevRevAPIEndpoint",
+                "safeName": "DevRevAPIEndpoint"
               }
             },
             "url": "https://api.devrev.ai"

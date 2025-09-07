@@ -150,16 +150,12 @@
           "urls": {
             "Base": "http://dev.api.com",
             "Debug": "http://debug.api.com",
-            "websocket": "wss://api.async.com",
-            "websocket2": "wss://api2.async.com",
           },
         },
         "Prod": {
           "urls": {
             "Base": "http://prod.api.com",
             "Debug": "http://debug.api.com",
-            "websocket": "wss://api.async.com",
-            "websocket2": "wss://api2.async.com",
           },
         },
       },
@@ -178,14 +174,10 @@ environments:
     urls:
       Base: http://prod.api.com
       Debug: http://debug.api.com
-      websocket: wss://api.async.com
-      websocket2: wss://api2.async.com
   Dev:
     urls:
       Base: http://dev.api.com
       Debug: http://debug.api.com
-      websocket: wss://api.async.com
-      websocket2: wss://api2.async.com
 default-environment: Prod
 default-url: Base
 ",

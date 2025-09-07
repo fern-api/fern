@@ -1232,10 +1232,10 @@ types:
           "scheme": "bearer",
         },
       },
-      "default-environment": "Default",
+      "default-environment": "The subdomain of the client",
       "display-name": "End Users API",
       "environments": {
-        "Default": "https://example.ada.support/api",
+        "The subdomain of the client": "https://example.ada.support/api",
       },
       "error-discrimination": {
         "strategy": "status-code",
@@ -1248,8 +1248,8 @@ error-discrimination:
   strategy: status-code
 display-name: End Users API
 environments:
-  Default: https://example.ada.support/api
-default-environment: Default
+  The subdomain of the client: https://example.ada.support/api
+default-environment: The subdomain of the client
 auth-schemes:
   BearerAuthScheme:
     scheme: bearer

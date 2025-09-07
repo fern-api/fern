@@ -32450,10 +32450,11 @@ types:
           "scheme": "bearer",
         },
       },
-      "default-environment": "Default",
+      "default-environment": "Production server",
       "display-name": "Deel REST API",
       "environments": {
-        "Default": "https://api.letsdeel.com/rest/v1",
+        "Demo server": "https://api-staging.letsdeel.com/rest/v1",
+        "Production server": "https://api.letsdeel.com/rest/v1",
       },
       "error-discrimination": {
         "strategy": "status-code",
@@ -32466,8 +32467,9 @@ error-discrimination:
   strategy: status-code
 display-name: Deel REST API
 environments:
-  Default: https://api.letsdeel.com/rest/v1
-default-environment: Default
+  Production server: https://api.letsdeel.com/rest/v1
+  Demo server: https://api-staging.letsdeel.com/rest/v1
+default-environment: Production server
 auth-schemes:
   BearerAuthScheme:
     scheme: bearer

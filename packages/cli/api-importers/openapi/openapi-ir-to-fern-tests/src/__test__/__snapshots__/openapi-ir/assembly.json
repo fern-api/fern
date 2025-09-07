@@ -4,7 +4,9 @@
   "servers": [
     {
       "url": "https://api.assemblyai.com",
-      "description": "AssemblyAI API"
+      "description": "AssemblyAI API",
+      "name": "AssemblyAI API",
+      "type": "single"
     }
   ],
   "websocketServers": [

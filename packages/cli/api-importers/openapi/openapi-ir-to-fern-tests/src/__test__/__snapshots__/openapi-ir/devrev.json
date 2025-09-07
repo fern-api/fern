@@ -4,7 +4,9 @@
   "servers": [
     {
       "url": "https://api.devrev.ai",
-      "description": "DevRev API endpoint."
+      "description": "DevRev API endpoint.",
+      "name": "DevRev API endpoint.",
+      "type": "single"
     }
   ],
   "websocketServers": [],

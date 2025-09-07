@@ -7064,10 +7064,10 @@ service:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "default-environment": "Default",
+      "default-environment": "Production server",
       "display-name": "Upload API Reference",
       "environments": {
-        "Default": "https://upload.uploadcare.com",
+        "Production server": "https://upload.uploadcare.com",
       },
       "error-discrimination": {
         "strategy": "status-code",
@@ -7080,8 +7080,8 @@ error-discrimination:
   strategy: status-code
 display-name: Upload API Reference
 environments:
-  Default: https://upload.uploadcare.com
-default-environment: Default
+  Production server: https://upload.uploadcare.com
+default-environment: Production server
 ",
   },
 }

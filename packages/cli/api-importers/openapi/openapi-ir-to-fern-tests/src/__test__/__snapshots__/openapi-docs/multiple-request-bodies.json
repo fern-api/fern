@@ -204,10 +204,10 @@ service:
           "scheme": "bearer",
         },
       },
-      "default-environment": "Default",
+      "default-environment": "Production server",
       "display-name": "Sample API",
       "environments": {
-        "Default": "https://api.example.com/v1",
+        "Production server": "https://api.example.com/v1",
       },
       "error-discrimination": {
         "strategy": "status-code",
@@ -220,8 +220,8 @@ error-discrimination:
   strategy: status-code
 display-name: Sample API
 environments:
-  Default: https://api.example.com/v1
-default-environment: Default
+  Production server: https://api.example.com/v1
+default-environment: Production server
 auth-schemes:
   BearerAuthScheme:
     scheme: bearer

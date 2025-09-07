@@ -23910,10 +23910,10 @@ docs: >-
           "scheme": "bearer",
         },
       },
-      "default-environment": "Default",
+      "default-environment": "Production API",
       "display-name": "Hookdeck Admin REST API",
       "environments": {
-        "Default": "https://api.hookdeck.com/2023-01-01",
+        "Production API": "https://api.hookdeck.com/2023-01-01",
       },
       "error-discrimination": {
         "strategy": "status-code",
@@ -23926,8 +23926,8 @@ error-discrimination:
   strategy: status-code
 display-name: Hookdeck Admin REST API
 environments:
-  Default: https://api.hookdeck.com/2023-01-01
-default-environment: Default
+  Production API: https://api.hookdeck.com/2023-01-01
+default-environment: Production API
 auth-schemes:
   BearerAuthScheme:
     scheme: bearer

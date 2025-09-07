@@ -2,7 +2,8 @@
   "title": "Seam Connect",
   "servers": [
     {
-      "url": "https://connect.getseam.com"
+      "url": "https://connect.getseam.com",
+      "type": "single"
     }
   ],
   "websocketServers": [],

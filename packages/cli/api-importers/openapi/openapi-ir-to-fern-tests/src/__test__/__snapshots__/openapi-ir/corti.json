@@ -2,7 +2,8 @@
   "title": "Corti API",
   "servers": [
     {
-      "url": "https://api.beta-eu.corti.app/v2/"
+      "url": "https://api.beta-eu.corti.app/v2/",
+      "type": "single"
     }
   ],
   "websocketServers": [

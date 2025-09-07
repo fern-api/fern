@@ -2,7 +2,8 @@
   "title": "Speechify API:",
   "servers": [
     {
-      "url": "https://api.sws.speechify.com"
+      "url": "https://api.sws.speechify.com",
+      "type": "single"
     }
   ],
   "websocketServers": [],

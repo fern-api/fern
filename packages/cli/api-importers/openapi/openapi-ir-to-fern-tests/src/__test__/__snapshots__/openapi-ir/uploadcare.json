@@ -4,7 +4,9 @@
   "servers": [
     {
       "url": "https://upload.uploadcare.com",
-      "description": "Production server"
+      "description": "Production server",
+      "name": "Production server",
+      "type": "single"
     }
   ],
   "websocketServers": [],

@@ -1015,31 +1015,31 @@
     }
   },
   "environments": {
-    "defaultEnvironment": "Default",
+    "defaultEnvironment": "prod",
     "environments": {
       "environments": [
         {
-          "id": "Default",
+          "id": "prod",
           "name": {
-            "originalName": "Default",
+            "originalName": "prod",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default"
+              "unsafeName": "prod",
+              "safeName": "prod"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default"
+              "unsafeName": "prod",
+              "safeName": "prod"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "PROD",
+              "safeName": "PROD"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "Prod",
+              "safeName": "Prod"
             }
           },
-          "url": "https://alpha.testapi.com"
+          "url": "https://eta.testapi.com"
         }
       ],
       "type": "singleBaseUrl"
@@ -1688,31 +1688,31 @@
     },
     "pathParameters": [],
     "environments": {
-      "defaultEnvironment": "Default",
+      "defaultEnvironment": "prod",
       "environments": {
         "environments": [
           {
-            "id": "Default",
+            "id": "prod",
             "name": {
-              "originalName": "Default",
+              "originalName": "prod",
               "camelCase": {
-                "unsafeName": "default",
-                "safeName": "default"
+                "unsafeName": "prod",
+                "safeName": "prod"
               },
               "snakeCase": {
-                "unsafeName": "default",
-                "safeName": "default"
+                "unsafeName": "prod",
+                "safeName": "prod"
               },
               "screamingSnakeCase": {
-                "unsafeName": "DEFAULT",
-                "safeName": "DEFAULT"
+                "unsafeName": "PROD",
+                "safeName": "PROD"
               },
               "pascalCase": {
-                "unsafeName": "Default",
-                "safeName": "Default"
+                "unsafeName": "Prod",
+                "safeName": "Prod"
               }
             },
-            "url": "https://alpha.testapi.com"
+            "url": "https://eta.testapi.com"
           }
         ],
         "type": "singleBaseUrl"

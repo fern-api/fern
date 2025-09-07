@@ -3,7 +3,8 @@
   "description": "A simple API with an OAuth token endpoint accepting JSON input",
   "servers": [
     {
-      "url": "https://api.example.com/v1"
+      "url": "https://api.example.com/v1",
+      "type": "single"
     }
   ],
   "websocketServers": [],

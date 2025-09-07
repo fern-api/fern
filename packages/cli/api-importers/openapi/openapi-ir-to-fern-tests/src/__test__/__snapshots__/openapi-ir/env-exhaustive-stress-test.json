@@ -3,35 +3,51 @@
   "servers": [
     {
       "url": "https://alpha.spscommerce.com",
-      "description": "prod"
+      "description": "prod",
+      "name": "prod",
+      "type": "single"
     },
     {
       "url": "https://beta.spscommerce.com",
-      "description": "prod"
+      "description": "prod",
+      "name": "prod",
+      "type": "single"
     },
     {
       "url": "https://gamma.spscommerce.com",
-      "description": "prod"
+      "description": "prod",
+      "name": "prod",
+      "type": "single"
     },
     {
       "url": "https://delta.spscommerce.com",
-      "description": "prod"
+      "description": "prod",
+      "name": "prod",
+      "type": "single"
     },
     {
       "url": "https://mu.spscommerce.com",
-      "description": "prod"
+      "description": "prod",
+      "name": "prod",
+      "type": "single"
     },
     {
       "url": "https://omega.spscommerce.com",
-      "description": "prod"
+      "description": "prod",
+      "name": "prod",
+      "type": "single"
     },
     {
       "url": "https://zeta.spscommerce.com",
-      "description": "prod"
+      "description": "prod",
+      "name": "prod",
+      "type": "single"
     },
     {
       "url": "https://eta.spscommerce.com",
-      "description": "prod"
+      "description": "prod",
+      "name": "prod",
+      "type": "single"
     }
   ],
   "websocketServers": [],

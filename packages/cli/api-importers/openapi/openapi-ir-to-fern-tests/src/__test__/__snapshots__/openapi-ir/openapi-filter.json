@@ -4,15 +4,21 @@
   "servers": [
     {
       "url": "https://api.intercom.io",
-      "description": "The production API server"
+      "description": "The production API server",
+      "name": "The production API server",
+      "type": "single"
     },
     {
       "url": "https://api.eu.intercom.io",
-      "description": "The european API server"
+      "description": "The european API server",
+      "name": "The european API server",
+      "type": "single"
     },
     {
       "url": "https://api.au.intercom.io",
-      "description": "The australian API server"
+      "description": "The australian API server",
+      "name": "The australian API server",
+      "type": "single"
     }
   ],
   "websocketServers": [],

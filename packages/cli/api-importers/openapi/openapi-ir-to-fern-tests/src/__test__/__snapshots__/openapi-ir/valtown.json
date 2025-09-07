@@ -5,7 +5,8 @@
     {
       "url": "https://api.val.town",
       "description": "Production",
-      "name": "Production"
+      "name": "Production",
+      "type": "single"
     }
   ],
   "websocketServers": [],

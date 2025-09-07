@@ -11885,11 +11885,11 @@ docs: Transform text to speech
           "type": "string",
         },
       },
-      "default-environment": "Default",
+      "default-environment": "Deepgram Production API",
       "default-url": "Base",
       "display-name": "Deepgram API Specification",
       "environments": {
-        "Default": {
+        "Deepgram Production API": {
           "urls": {
             "Base": "https://api.deepgram.com",
             "agent": "wss://agent.deepgram.com",
@@ -11908,12 +11908,12 @@ error-discrimination:
   strategy: status-code
 display-name: Deepgram API Specification
 environments:
-  Default:
+  Deepgram Production API:
     urls:
       Base: https://api.deepgram.com
       public: wss://api.deepgram.com
       agent: wss://agent.deepgram.com
-default-environment: Default
+default-environment: Deepgram Production API
 default-url: Base
 auth-schemes:
   ApiKeyAuth:

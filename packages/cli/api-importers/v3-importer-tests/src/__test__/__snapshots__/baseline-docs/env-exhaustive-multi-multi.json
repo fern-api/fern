@@ -343,94 +343,6 @@
               "safeName": "Debug"
             }
           }
-        },
-        {
-          "id": "websocket",
-          "name": {
-            "originalName": "websocket",
-            "camelCase": {
-              "unsafeName": "websocket",
-              "safeName": "websocket"
-            },
-            "snakeCase": {
-              "unsafeName": "websocket",
-              "safeName": "websocket"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "WEBSOCKET",
-              "safeName": "WEBSOCKET"
-            },
-            "pascalCase": {
-              "unsafeName": "Websocket",
-              "safeName": "Websocket"
-            }
-          }
-        },
-        {
-          "id": "websocket2",
-          "name": {
-            "originalName": "websocket2",
-            "camelCase": {
-              "unsafeName": "websocket2",
-              "safeName": "websocket2"
-            },
-            "snakeCase": {
-              "unsafeName": "websocket2",
-              "safeName": "websocket2"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "WEBSOCKET2",
-              "safeName": "WEBSOCKET2"
-            },
-            "pascalCase": {
-              "unsafeName": "Websocket2",
-              "safeName": "Websocket2"
-            }
-          }
-        },
-        {
-          "id": "betawebsocket",
-          "name": {
-            "originalName": "betawebsocket",
-            "camelCase": {
-              "unsafeName": "betawebsocket",
-              "safeName": "betawebsocket"
-            },
-            "snakeCase": {
-              "unsafeName": "betawebsocket",
-              "safeName": "betawebsocket"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "BETAWEBSOCKET",
-              "safeName": "BETAWEBSOCKET"
-            },
-            "pascalCase": {
-              "unsafeName": "Betawebsocket",
-              "safeName": "Betawebsocket"
-            }
-          }
-        },
-        {
-          "id": "betawebsocket2",
-          "name": {
-            "originalName": "betawebsocket2",
-            "camelCase": {
-              "unsafeName": "betawebsocket2",
-              "safeName": "betawebsocket2"
-            },
-            "snakeCase": {
-              "unsafeName": "betawebsocket2",
-              "safeName": "betawebsocket2"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "BETAWEBSOCKET2",
-              "safeName": "BETAWEBSOCKET2"
-            },
-            "pascalCase": {
-              "unsafeName": "Betawebsocket2",
-              "safeName": "Betawebsocket2"
-            }
-          }
         }
       ],
       "environments": [
@@ -457,11 +369,7 @@
           },
           "urls": {
             "Base": "http://prod2.api.com",
-            "Debug": "http://debug2.api.com",
-            "websocket": "wss://api.async.com",
-            "websocket2": "wss://api2.async.com",
-            "betawebsocket": "wss://api.async2.com",
-            "betawebsocket2": "wss://api2.async2.com"
+            "Debug": "http://debug2.api.com"
           }
         },
         {
@@ -487,11 +395,7 @@
           },
           "urls": {
             "Base": "http://dev2.api.com",
-            "Debug": "http://debug2.api.com",
-            "websocket": "wss://api.async.com",
-            "websocket2": "wss://api2.async.com",
-            "betawebsocket": "wss://api.async2.com",
-            "betawebsocket2": "wss://api2.async2.com"
+            "Debug": "http://debug2.api.com"
           }
         }
       ],
@@ -1032,94 +936,6 @@
                 "safeName": "Debug"
               }
             }
-          },
-          {
-            "id": "websocket",
-            "name": {
-              "originalName": "websocket",
-              "camelCase": {
-                "unsafeName": "websocket",
-                "safeName": "websocket"
-              },
-              "snakeCase": {
-                "unsafeName": "websocket",
-                "safeName": "websocket"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "WEBSOCKET",
-                "safeName": "WEBSOCKET"
-              },
-              "pascalCase": {
-                "unsafeName": "Websocket",
-                "safeName": "Websocket"
-              }
-            }
-          },
-          {
-            "id": "websocket2",
-            "name": {
-              "originalName": "websocket2",
-              "camelCase": {
-                "unsafeName": "websocket2",
-                "safeName": "websocket2"
-              },
-              "snakeCase": {
-                "unsafeName": "websocket2",
-                "safeName": "websocket2"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "WEBSOCKET2",
-                "safeName": "WEBSOCKET2"
-              },
-              "pascalCase": {
-                "unsafeName": "Websocket2",
-                "safeName": "Websocket2"
-              }
-            }
-          },
-          {
-            "id": "betawebsocket",
-            "name": {
-              "originalName": "betawebsocket",
-              "camelCase": {
-                "unsafeName": "betawebsocket",
-                "safeName": "betawebsocket"
-              },
-              "snakeCase": {
-                "unsafeName": "betawebsocket",
-                "safeName": "betawebsocket"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "BETAWEBSOCKET",
-                "safeName": "BETAWEBSOCKET"
-              },
-              "pascalCase": {
-                "unsafeName": "Betawebsocket",
-                "safeName": "Betawebsocket"
-              }
-            }
-          },
-          {
-            "id": "betawebsocket2",
-            "name": {
-              "originalName": "betawebsocket2",
-              "camelCase": {
-                "unsafeName": "betawebsocket2",
-                "safeName": "betawebsocket2"
-              },
-              "snakeCase": {
-                "unsafeName": "betawebsocket2",
-                "safeName": "betawebsocket2"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "BETAWEBSOCKET2",
-                "safeName": "BETAWEBSOCKET2"
-              },
-              "pascalCase": {
-                "unsafeName": "Betawebsocket2",
-                "safeName": "Betawebsocket2"
-              }
-            }
           }
         ],
         "environments": [
@@ -1146,11 +962,7 @@
             },
             "urls": {
               "Base": "http://prod2.api.com",
-              "Debug": "http://debug2.api.com",
-              "websocket": "wss://api.async.com",
-              "websocket2": "wss://api2.async.com",
-              "betawebsocket": "wss://api.async2.com",
-              "betawebsocket2": "wss://api2.async2.com"
+              "Debug": "http://debug2.api.com"
             }
           },
           {
@@ -1176,11 +988,7 @@
             },
             "urls": {
               "Base": "http://dev2.api.com",
-              "Debug": "http://debug2.api.com",
-              "websocket": "wss://api.async.com",
-              "websocket2": "wss://api2.async.com",
-              "betawebsocket": "wss://api.async2.com",
-              "betawebsocket2": "wss://api2.async2.com"
+              "Debug": "http://debug2.api.com"
             }
           }
         ],

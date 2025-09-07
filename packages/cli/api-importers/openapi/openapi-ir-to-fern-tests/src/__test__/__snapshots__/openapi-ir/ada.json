@@ -4,7 +4,9 @@
   "servers": [
     {
       "url": "https://example.ada.support/api",
-      "description": "The subdomain of the client"
+      "description": "The subdomain of the client",
+      "name": "The subdomain of the client",
+      "type": "single"
     }
   ],
   "websocketServers": [],

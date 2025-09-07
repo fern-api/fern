@@ -2,7 +2,8 @@
   "title": "Aries Cloud Agent",
   "servers": [
     {
-      "url": "/"
+      "url": "/",
+      "type": "single"
     }
   ],
   "websocketServers": [],

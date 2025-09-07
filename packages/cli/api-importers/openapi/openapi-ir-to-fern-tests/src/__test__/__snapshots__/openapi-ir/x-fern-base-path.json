@@ -4,10 +4,12 @@
   "basePath": "/v1",
   "servers": [
     {
-      "url": "https://api.acme.com"
+      "url": "https://api.acme.com",
+      "type": "single"
     },
     {
-      "url": "https://api.acme.com"
+      "url": "https://api.acme.com",
+      "type": "single"
     }
   ],
   "websocketServers": [],

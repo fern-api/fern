@@ -46789,10 +46789,12 @@ docs: Everything about your Visitors
           "scheme": "bearer",
         },
       },
-      "default-environment": "Default",
+      "default-environment": "The production API server",
       "display-name": "Intercom API",
       "environments": {
-        "Default": "https://api.intercom.io",
+        "The australian API server": "https://api.au.intercom.io",
+        "The european API server": "https://api.eu.intercom.io",
+        "The production API server": "https://api.intercom.io",
       },
       "error-discrimination": {
         "strategy": "status-code",
@@ -46814,8 +46816,10 @@ error-discrimination:
   strategy: status-code
 display-name: Intercom API
 environments:
-  Default: https://api.intercom.io
-default-environment: Default
+  The production API server: https://api.intercom.io
+  The european API server: https://api.eu.intercom.io
+  The australian API server: https://api.au.intercom.io
+default-environment: The production API server
 imports:
   root: __package__.yml
 headers:

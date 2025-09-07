@@ -6565,28 +6565,28 @@
     }
   },
   "environments": {
-    "defaultEnvironment": "Default",
+    "defaultEnvironment": "The subdomain of the client",
     "environments": {
       "environments": [
         {
-          "id": "Default",
+          "id": "The subdomain of the client",
           "name": {
-            "originalName": "Default",
+            "originalName": "The subdomain of the client",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default"
+              "unsafeName": "theSubdomainOfTheClient",
+              "safeName": "theSubdomainOfTheClient"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default"
+              "unsafeName": "the_subdomain_of_the_client",
+              "safeName": "the_subdomain_of_the_client"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "THE_SUBDOMAIN_OF_THE_CLIENT",
+              "safeName": "THE_SUBDOMAIN_OF_THE_CLIENT"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "TheSubdomainOfTheClient",
+              "safeName": "TheSubdomainOfTheClient"
             }
           },
           "url": "https://example.ada.support/api"
@@ -9102,28 +9102,28 @@
     },
     "pathParameters": [],
     "environments": {
-      "defaultEnvironment": "Default",
+      "defaultEnvironment": "The subdomain of the client",
       "environments": {
         "environments": [
           {
-            "id": "Default",
+            "id": "The subdomain of the client",
             "name": {
-              "originalName": "Default",
+              "originalName": "The subdomain of the client",
               "camelCase": {
-                "unsafeName": "default",
-                "safeName": "default"
+                "unsafeName": "theSubdomainOfTheClient",
+                "safeName": "theSubdomainOfTheClient"
               },
               "snakeCase": {
-                "unsafeName": "default",
-                "safeName": "default"
+                "unsafeName": "the_subdomain_of_the_client",
+                "safeName": "the_subdomain_of_the_client"
               },
               "screamingSnakeCase": {
-                "unsafeName": "DEFAULT",
-                "safeName": "DEFAULT"
+                "unsafeName": "THE_SUBDOMAIN_OF_THE_CLIENT",
+                "safeName": "THE_SUBDOMAIN_OF_THE_CLIENT"
               },
               "pascalCase": {
-                "unsafeName": "Default",
-                "safeName": "Default"
+                "unsafeName": "TheSubdomainOfTheClient",
+                "safeName": "TheSubdomainOfTheClient"
               }
             },
             "url": "https://example.ada.support/api"

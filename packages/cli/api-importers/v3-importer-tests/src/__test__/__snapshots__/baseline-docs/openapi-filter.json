@@ -4656,31 +4656,77 @@
     }
   },
   "environments": {
-    "defaultEnvironment": "Default",
+    "defaultEnvironment": "The production API server",
     "environments": {
       "environments": [
         {
-          "id": "Default",
+          "id": "The production API server",
           "name": {
-            "originalName": "Default",
+            "originalName": "The production API server",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default"
+              "unsafeName": "theProductionAPIServer",
+              "safeName": "theProductionAPIServer"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default"
+              "unsafeName": "the_production_api_server",
+              "safeName": "the_production_api_server"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "THE_PRODUCTION_API_SERVER",
+              "safeName": "THE_PRODUCTION_API_SERVER"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "TheProductionAPIServer",
+              "safeName": "TheProductionAPIServer"
             }
           },
           "url": "https://api.intercom.io"
+        },
+        {
+          "id": "The european API server",
+          "name": {
+            "originalName": "The european API server",
+            "camelCase": {
+              "unsafeName": "theEuropeanAPIServer",
+              "safeName": "theEuropeanAPIServer"
+            },
+            "snakeCase": {
+              "unsafeName": "the_european_api_server",
+              "safeName": "the_european_api_server"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "THE_EUROPEAN_API_SERVER",
+              "safeName": "THE_EUROPEAN_API_SERVER"
+            },
+            "pascalCase": {
+              "unsafeName": "TheEuropeanAPIServer",
+              "safeName": "TheEuropeanAPIServer"
+            }
+          },
+          "url": "https://api.eu.intercom.io"
+        },
+        {
+          "id": "The australian API server",
+          "name": {
+            "originalName": "The australian API server",
+            "camelCase": {
+              "unsafeName": "theAustralianAPIServer",
+              "safeName": "theAustralianAPIServer"
+            },
+            "snakeCase": {
+              "unsafeName": "the_australian_api_server",
+              "safeName": "the_australian_api_server"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "THE_AUSTRALIAN_API_SERVER",
+              "safeName": "THE_AUSTRALIAN_API_SERVER"
+            },
+            "pascalCase": {
+              "unsafeName": "TheAustralianAPIServer",
+              "safeName": "TheAustralianAPIServer"
+            }
+          },
+          "url": "https://api.au.intercom.io"
         }
       ],
       "type": "singleBaseUrl"
@@ -6930,31 +6976,77 @@
     },
     "pathParameters": [],
     "environments": {
-      "defaultEnvironment": "Default",
+      "defaultEnvironment": "The production API server",
       "environments": {
         "environments": [
           {
-            "id": "Default",
+            "id": "The production API server",
             "name": {
-              "originalName": "Default",
+              "originalName": "The production API server",
               "camelCase": {
-                "unsafeName": "default",
-                "safeName": "default"
+                "unsafeName": "theProductionAPIServer",
+                "safeName": "theProductionAPIServer"
               },
               "snakeCase": {
-                "unsafeName": "default",
-                "safeName": "default"
+                "unsafeName": "the_production_api_server",
+                "safeName": "the_production_api_server"
               },
               "screamingSnakeCase": {
-                "unsafeName": "DEFAULT",
-                "safeName": "DEFAULT"
+                "unsafeName": "THE_PRODUCTION_API_SERVER",
+                "safeName": "THE_PRODUCTION_API_SERVER"
               },
               "pascalCase": {
-                "unsafeName": "Default",
-                "safeName": "Default"
+                "unsafeName": "TheProductionAPIServer",
+                "safeName": "TheProductionAPIServer"
               }
             },
             "url": "https://api.intercom.io"
+          },
+          {
+            "id": "The european API server",
+            "name": {
+              "originalName": "The european API server",
+              "camelCase": {
+                "unsafeName": "theEuropeanAPIServer",
+                "safeName": "theEuropeanAPIServer"
+              },
+              "snakeCase": {
+                "unsafeName": "the_european_api_server",
+                "safeName": "the_european_api_server"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "THE_EUROPEAN_API_SERVER",
+                "safeName": "THE_EUROPEAN_API_SERVER"
+              },
+              "pascalCase": {
+                "unsafeName": "TheEuropeanAPIServer",
+                "safeName": "TheEuropeanAPIServer"
+              }
+            },
+            "url": "https://api.eu.intercom.io"
+          },
+          {
+            "id": "The australian API server",
+            "name": {
+              "originalName": "The australian API server",
+              "camelCase": {
+                "unsafeName": "theAustralianAPIServer",
+                "safeName": "theAustralianAPIServer"
+              },
+              "snakeCase": {
+                "unsafeName": "the_australian_api_server",
+                "safeName": "the_australian_api_server"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "THE_AUSTRALIAN_API_SERVER",
+                "safeName": "THE_AUSTRALIAN_API_SERVER"
+              },
+              "pascalCase": {
+                "unsafeName": "TheAustralianAPIServer",
+                "safeName": "TheAustralianAPIServer"
+              }
+            },
+            "url": "https://api.au.intercom.io"
           }
         ],
         "type": "singleBaseUrl"

@@ -28835,7 +28835,7 @@
     }
   },
   "environments": {
-    "defaultEnvironment": "Default",
+    "defaultEnvironment": "AssemblyAI API",
     "environments": {
       "baseUrls": [
         {
@@ -28885,24 +28885,24 @@
       ],
       "environments": [
         {
-          "id": "Default",
+          "id": "AssemblyAI API",
           "name": {
-            "originalName": "Default",
+            "originalName": "AssemblyAI API",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default"
+              "unsafeName": "assemblyAiAPI",
+              "safeName": "assemblyAiAPI"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default"
+              "unsafeName": "assembly_ai_api",
+              "safeName": "assembly_ai_api"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "ASSEMBLY_AI_API",
+              "safeName": "ASSEMBLY_AI_API"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "AssemblyAiAPI",
+              "safeName": "AssemblyAiAPI"
             }
           },
           "urls": {
@@ -46996,7 +46996,7 @@
     },
     "pathParameters": [],
     "environments": {
-      "defaultEnvironment": "Default",
+      "defaultEnvironment": "AssemblyAI API",
       "environments": {
         "baseUrls": [
           {
@@ -47046,24 +47046,24 @@
         ],
         "environments": [
           {
-            "id": "Default",
+            "id": "AssemblyAI API",
             "name": {
-              "originalName": "Default",
+              "originalName": "AssemblyAI API",
               "camelCase": {
-                "unsafeName": "default",
-                "safeName": "default"
+                "unsafeName": "assemblyAiAPI",
+                "safeName": "assemblyAiAPI"
               },
               "snakeCase": {
-                "unsafeName": "default",
-                "safeName": "default"
+                "unsafeName": "assembly_ai_api",
+                "safeName": "assembly_ai_api"
               },
               "screamingSnakeCase": {
-                "unsafeName": "DEFAULT",
-                "safeName": "DEFAULT"
+                "unsafeName": "ASSEMBLY_AI_API",
+                "safeName": "ASSEMBLY_AI_API"
               },
               "pascalCase": {
-                "unsafeName": "Default",
-                "safeName": "Default"
+                "unsafeName": "AssemblyAiAPI",
+                "safeName": "AssemblyAiAPI"
               }
             },
             "urls": {

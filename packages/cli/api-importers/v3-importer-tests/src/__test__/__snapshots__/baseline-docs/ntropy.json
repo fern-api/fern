@@ -44073,28 +44073,28 @@
     }
   },
   "environments": {
-    "defaultEnvironment": "Default",
+    "defaultEnvironment": "Production server (uses live data).",
     "environments": {
       "environments": [
         {
-          "id": "Default",
+          "id": "Production server (uses live data).",
           "name": {
-            "originalName": "Default",
+            "originalName": "Production server (uses live data).",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default"
+              "unsafeName": "productionServerUsesLiveData",
+              "safeName": "productionServerUsesLiveData"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default"
+              "unsafeName": "production_server_uses_live_data",
+              "safeName": "production_server_uses_live_data"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "PRODUCTION_SERVER_USES_LIVE_DATA",
+              "safeName": "PRODUCTION_SERVER_USES_LIVE_DATA"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "ProductionServerUsesLiveData",
+              "safeName": "ProductionServerUsesLiveData"
             }
           },
           "url": "https://api.ntropy.com"
@@ -71535,28 +71535,28 @@
     },
     "pathParameters": [],
     "environments": {
-      "defaultEnvironment": "Default",
+      "defaultEnvironment": "Production server (uses live data).",
       "environments": {
         "environments": [
           {
-            "id": "Default",
+            "id": "Production server (uses live data).",
             "name": {
-              "originalName": "Default",
+              "originalName": "Production server (uses live data).",
               "camelCase": {
-                "unsafeName": "default",
-                "safeName": "default"
+                "unsafeName": "productionServerUsesLiveData",
+                "safeName": "productionServerUsesLiveData"
               },
               "snakeCase": {
-                "unsafeName": "default",
-                "safeName": "default"
+                "unsafeName": "production_server_uses_live_data",
+                "safeName": "production_server_uses_live_data"
               },
               "screamingSnakeCase": {
-                "unsafeName": "DEFAULT",
-                "safeName": "DEFAULT"
+                "unsafeName": "PRODUCTION_SERVER_USES_LIVE_DATA",
+                "safeName": "PRODUCTION_SERVER_USES_LIVE_DATA"
               },
               "pascalCase": {
-                "unsafeName": "Default",
-                "safeName": "Default"
+                "unsafeName": "ProductionServerUsesLiveData",
+                "safeName": "ProductionServerUsesLiveData"
               }
             },
             "url": "https://api.ntropy.com"

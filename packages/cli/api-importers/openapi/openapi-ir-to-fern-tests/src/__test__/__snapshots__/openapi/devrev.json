@@ -11967,10 +11967,10 @@ docs: DevRev work interactions.
           "type": "string",
         },
       },
-      "default-environment": "Default",
+      "default-environment": "DevRev API endpoint.",
       "display-name": "DevRev REST API",
       "environments": {
-        "Default": "https://api.devrev.ai",
+        "DevRev API endpoint.": "https://api.devrev.ai",
       },
       "error-discrimination": {
         "strategy": "status-code",
@@ -11983,8 +11983,8 @@ error-discrimination:
   strategy: status-code
 display-name: DevRev REST API
 environments:
-  Default: https://api.devrev.ai
-default-environment: Default
+  DevRev API endpoint.: https://api.devrev.ai
+default-environment: DevRev API endpoint.
 auth-schemes:
   auth-token:
     header: Authorization
