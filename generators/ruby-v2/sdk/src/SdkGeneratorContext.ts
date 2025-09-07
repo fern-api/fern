@@ -7,14 +7,14 @@ import { AbstractRubyGeneratorContext, AsIsFiles, RubyProject } from "@fern-api/
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     ExampleEndpointCall,
-    HttpService,
     HttpEndpoint,
+    HttpService,
     IntermediateRepresentation,
     Name,
     ServiceId,
+    StreamingResponse,
     Subpackage,
     SubpackageId,
-    StreamingResponse,
     TypeDeclaration,
     TypeId
 } from "@fern-fern/ir-sdk/api";
