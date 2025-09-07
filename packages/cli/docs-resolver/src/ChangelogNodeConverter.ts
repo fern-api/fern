@@ -30,6 +30,7 @@ export class ChangelogNodeConverter {
     public constructor(
         private markdownToFullSlug: Map<AbsoluteFilePath, string>,
         private markdownToNoIndex: Map<AbsoluteFilePath, boolean>,
+        private markdownToTags: Map<AbsoluteFilePath, string[]>,
         private changelogFiles: AbsoluteFilePath[] | undefined,
         private docsWorkspace: DocsWorkspace,
         private idgen: NodeIdGenerator
@@ -97,7 +98,8 @@ export class ChangelogNodeConverter {
                 authed: undefined,
                 viewers: undefined,
                 orphaned: undefined,
-                featureFlags: undefined
+                featureFlags: undefined,
+                tags: this.markdownToTags.get(item.absoluteFilepath)
             };
         });
 

@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Support tags for changelog entries.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-05"
+  version: 0.71.0
+
+- changelogEntry:
+    - summary: |
         Add names to octet-stream requests and ensure they are named differently
         than json requests on the same endpoint.
       type: fix
