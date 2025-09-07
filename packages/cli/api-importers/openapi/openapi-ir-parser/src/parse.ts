@@ -81,7 +81,7 @@ export function parse({
                     source,
                     namespace: document.namespace
                 });
-                ir = merge(ir, openapiIr);
+                ir = merge(ir, openapiIr, getParseOptions({ options: document.settings, overrides: options }));
                 documentIndex++;
                 break;
             }
@@ -273,9 +273,12 @@ function extractApiNameFromServers(servers: ServerInput[]): string {
 
 function merge(
     ir1: OpenApiIntermediateRepresentation,
-    ir2: OpenApiIntermediateRepresentation
+    ir2: OpenApiIntermediateRepresentation,
+    options?: ParseOpenAPIOptions
 ): OpenApiIntermediateRepresentation {
-    const hasMultipleApis = detectMultipleBaseUrls(ir1.servers, ir2.servers);
+    // Only perform multi-API environment grouping if the feature flag is enabled
+    const shouldGroupEnvironments = options?.groupMultiApiEnvironments === true;
+    const hasMultipleApis = shouldGroupEnvironments && detectMultipleBaseUrls(ir1.servers, ir2.servers);
 
     let mergedServers: MergedServer[] = [];
     let mergedEndpoints: TypedEndpoint[] = ir1.endpoints
