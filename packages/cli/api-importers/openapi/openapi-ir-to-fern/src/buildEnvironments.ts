@@ -25,7 +25,12 @@ interface GroupedMultiApiServer {
 type ServerType = SingleApiServer | GroupedMultiApiServer;
 
 function isGroupedMultiApiServer(server: unknown): server is GroupedMultiApiServer {
-    return typeof server === "object" && server !== null && "type" in server && (server as any).type === "grouped";
+    return (
+        typeof server === "object" &&
+        server !== null &&
+        "type" in server &&
+        (server as { type?: string }).type === "grouped"
+    );
 }
 
 const DEFAULT_URL_NAME = "Base";

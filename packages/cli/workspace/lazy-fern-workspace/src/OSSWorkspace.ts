@@ -103,7 +103,9 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 exampleGeneration: settings?.exampleGeneration ?? this.exampleGeneration,
                 useBytesForBinaryResponse: settings?.useBytesForBinaryResponse ?? this.useBytesForBinaryResponse,
                 inlineAllOfSchemas: settings?.inlineAllOfSchemas ?? this.inlineAllOfSchemas,
-                groupMultiApiEnvironments: settings?.groupMultiApiEnvironments ?? this.specs.some((spec) => spec.settings?.groupMultiApiEnvironments)
+                groupMultiApiEnvironments:
+                    settings?.groupMultiApiEnvironments ??
+                    this.specs.some((spec) => spec.settings?.groupMultiApiEnvironments)
             }
         });
     }

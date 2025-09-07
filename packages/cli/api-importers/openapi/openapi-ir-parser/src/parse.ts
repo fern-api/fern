@@ -358,7 +358,7 @@ function merge(
         title: ir1.title ?? ir2.title,
         description: ir1.description ?? ir2.description,
         basePath: ir1.basePath ?? ir2.basePath,
-        servers: mergedServers.map((s) => (s.type === "single" ? s : (s as any))),
+        servers: mergedServers.map((s) => (s.type === "single" ? s : (s as unknown as Server))),
         websocketServers: [...ir1.websocketServers, ...ir2.websocketServers],
         tags: {
             tagsById: {
@@ -374,7 +374,7 @@ function merge(
         endpoints: mergedEndpoints.map((e) => {
             if (e.type === "multi-api") {
                 const { type, apiName, servers, ...endpoint } = e;
-                return { ...endpoint, __apiName: apiName, servers } as any;
+                return { ...endpoint, __apiName: apiName, servers } as unknown as Endpoint;
             }
             const { type, ...endpoint } = e;
             return endpoint;
