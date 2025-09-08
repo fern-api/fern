@@ -39,6 +39,8 @@ jobs:
         with:
           filters: |
             seed:
+              - '.github/actions/cached-seed/action.yaml'
+              - '.github/actions/install/action.yaml'
               - '.github/workflows/seed.yml'
               - 'packages/seed/**'
               - 'packages/ir-sdk/fern/apis/**'
