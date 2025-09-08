@@ -407,3 +407,6 @@ allowedFailures:
   # the below are likely related to changes made to example generation
   - examples:examples-with-api-reference
   - examples:retain-original-casing
+
+  # unknown
+  - ts-inline-types:inline

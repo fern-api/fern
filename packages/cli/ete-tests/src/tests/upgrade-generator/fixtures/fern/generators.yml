@@ -1,6 +1,8 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 api:
-  path: ./openapi/openapi.json
-  origin: https://bump.sh/bump-examples/doc/train-travel-api.json
+  specs:
+    - openapi: ./openapi/openapi.json
+      origin: https://bump.sh/bump-examples/doc/train-travel-api.json
 groups:
   local:
     generators:
@@ -9,6 +11,7 @@ groups:
         output:
           location: local-file-system
           path: ../generated/sdks/java
+        config: {}
   python-sdk:
     generators:
       - name: fernapi/fern-python-sdk
@@ -31,4 +34,5 @@ groups:
     generators:
       - name: fernapi/fern-python-sdk
         version: 2.16.0
+        config: {}
 default-group: local

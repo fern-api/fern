@@ -38,7 +38,7 @@ describe("ir", () => {
                     );
                 }
                 // biome-ignore lint/suspicious/noMisplacedAssertion: allow
-                expect(
+                await expect(
                     JSON.stringify(await workspace.workspace.getDefinition({ context }), undefined, 2)
                 ).toMatchFileSnapshot(`__snapshots__/${fixture.name}.json`);
             },

@@ -23,7 +23,7 @@
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "test": "vitest run --passWithNoTests",
-    "test:update": "vitest run -u",
+    "test:update": "vitest run -u --passWithNoTests",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck"
   },
