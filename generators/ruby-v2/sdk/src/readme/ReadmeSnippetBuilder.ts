@@ -172,12 +172,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private renderErrorsSnippet(endpoint: EndpointWithFilepath): string {
         return this.writeCode(dedent`require "${this.rootPackageName}"
 
-            response = ${this.getMethodCall(endpoint)}(...)
-            rescue => error
-            if error.is_a?(Core::APIError)
+            begin
+                response = ${this.getMethodCall(endpoint)}(...)
+            rescue StandardError => error
                 # Do something with the API error ...
-            end
-            raise error
             end
         `);
     }
