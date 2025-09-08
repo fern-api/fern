@@ -2,4 +2,8 @@
 api:
   specs:
     - openapi: ../fintech-api.yml
+      settings:
+        group-multi-api-environments: true
     - openapi: ../payments-api.yml
+      settings:
+        group-multi-api-environments: true

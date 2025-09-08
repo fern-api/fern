@@ -55,6 +55,7 @@
               "source": {
                 "openapi": "../payments-api.yml",
               },
+              "url": "payments",
             },
             "getTransaction": {
               "auth": false,
@@ -90,6 +91,7 @@
               "source": {
                 "openapi": "../payments-api.yml",
               },
+              "url": "payments",
             },
             "getWallet": {
               "auth": false,
@@ -124,6 +126,7 @@
               "source": {
                 "openapi": "../fintech-api.yml",
               },
+              "url": "fintech",
             },
             "getWalletBalance": {
               "auth": false,
@@ -157,6 +160,7 @@
               "source": {
                 "openapi": "../fintech-api.yml",
               },
+              "url": "fintech",
             },
             "listAccounts": {
               "auth": false,
@@ -186,6 +190,7 @@
               "source": {
                 "openapi": "../fintech-api.yml",
               },
+              "url": "fintech",
             },
             "listRefunds": {
               "auth": false,
@@ -217,6 +222,7 @@
               "source": {
                 "openapi": "../payments-api.yml",
               },
+              "url": "payments",
             },
             "listTransactions": {
               "auth": false,
@@ -248,6 +254,7 @@
               "source": {
                 "openapi": "../payments-api.yml",
               },
+              "url": "payments",
             },
             "listWallets": {
               "auth": false,
@@ -278,6 +285,7 @@
               "source": {
                 "openapi": "../fintech-api.yml",
               },
+              "url": "fintech",
             },
             "refundPayment": {
               "auth": false,
@@ -327,6 +335,7 @@
               "source": {
                 "openapi": "../payments-api.yml",
               },
+              "url": "payments",
             },
           },
           "source": {
@@ -494,6 +503,7 @@
         docs: Successful response
         type: list<Wallet>
         status-code: 200
+      url: fintech
       examples:
         - response:
             body:
@@ -514,6 +524,7 @@
         docs: Successful response
         type: Wallet
         status-code: 200
+      url: fintech
       examples:
         - path-parameters:
             walletId: walletId
@@ -536,6 +547,7 @@
         docs: Successful response
         type: Balance
         status-code: 200
+      url: fintech
       examples:
         - path-parameters:
             walletId: walletId
@@ -555,6 +567,7 @@
         docs: Successful response
         type: list<Account>
         status-code: 200
+      url: fintech
       examples:
         - response:
             body:
@@ -572,6 +585,7 @@
         docs: Successful response
         type: list<Transaction>
         status-code: 200
+      url: payments
       examples:
         - response:
             body:
@@ -593,6 +607,7 @@
         docs: Successful response
         type: Transaction
         status-code: 200
+      url: payments
       examples:
         - path-parameters:
             transactionId: transactionId
@@ -623,6 +638,7 @@
         docs: Successful response
         type: PaymentResponse
         status-code: 200
+      url: payments
       examples:
         - request:
             amount: 1.1
@@ -653,6 +669,7 @@
         docs: Successful response
         type: RefundResponse
         status-code: 200
+      url: payments
       examples:
         - path-parameters:
             paymentId: paymentId
@@ -674,6 +691,7 @@
         docs: Successful response
         type: list<Refund>
         status-code: 200
+      url: payments
       examples:
         - response:
             body:
@@ -784,36 +802,84 @@ types:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "default-environment": "Default",
+      "default-environment": "PRD",
+      "default-url": "fintech",
       "display-name": "Fintech API",
       "environments": {
-        "Default": "https://payments.api.example.com",
-        "E2E": "https://payments-e2e.api.example.com",
-        "PRD": "https://payments.api.example.com",
-        "PRF": "https://payments-prf.api.example.com",
-        "QAL": "https://payments-qal.api.example.com",
-        "SBX": "https://payments-sbx.api.example.com",
-        "STG": "https://payments-stg.api.example.com",
+        "E2E": {
+          "urls": {
+            "fintech": "https://fintech-e2e.api.example.com",
+            "payments": "https://payments-e2e.api.example.com",
+          },
+        },
+        "PRD": {
+          "urls": {
+            "fintech": "https://fintech.api.example.com",
+            "payments": "https://payments.api.example.com",
+          },
+        },
+        "PRF": {
+          "urls": {
+            "fintech": "https://fintech-prf.api.example.com",
+            "payments": "https://payments-prf.api.example.com",
+          },
+        },
+        "QAL": {
+          "urls": {
+            "fintech": "https://fintech-qal.api.example.com",
+            "payments": "https://payments-qal.api.example.com",
+          },
+        },
+        "SBX": {
+          "urls": {
+            "fintech": "https://fintech-sbx.api.example.com",
+            "payments": "https://payments-sbx.api.example.com",
+          },
+        },
+        "STG": {
+          "urls": {
+            "fintech": "https://fintech-stg.api.example.com",
+            "payments": "https://payments-stg.api.example.com",
+          },
+        },
       },
       "error-discrimination": {
         "strategy": "status-code",
       },
       "name": "api",
     },
-    "defaultUrl": undefined,
+    "defaultUrl": "fintech",
     "rawContents": "name: api
 error-discrimination:
   strategy: status-code
 display-name: Fintech API
 environments:
-  Default: https://payments.api.example.com
-  PRD: https://payments.api.example.com
-  SBX: https://payments-sbx.api.example.com
-  STG: https://payments-stg.api.example.com
-  PRF: https://payments-prf.api.example.com
-  E2E: https://payments-e2e.api.example.com
-  QAL: https://payments-qal.api.example.com
-default-environment: Default
+  PRD:
+    urls:
+      fintech: https://fintech.api.example.com
+      payments: https://payments.api.example.com
+  SBX:
+    urls:
+      fintech: https://fintech-sbx.api.example.com
+      payments: https://payments-sbx.api.example.com
+  STG:
+    urls:
+      fintech: https://fintech-stg.api.example.com
+      payments: https://payments-stg.api.example.com
+  PRF:
+    urls:
+      fintech: https://fintech-prf.api.example.com
+      payments: https://payments-prf.api.example.com
+  E2E:
+    urls:
+      fintech: https://fintech-e2e.api.example.com
+      payments: https://payments-e2e.api.example.com
+  QAL:
+    urls:
+      fintech: https://fintech-qal.api.example.com
+      payments: https://payments-qal.api.example.com
+default-environment: PRD
+default-url: fintech
 ",
   },
 }

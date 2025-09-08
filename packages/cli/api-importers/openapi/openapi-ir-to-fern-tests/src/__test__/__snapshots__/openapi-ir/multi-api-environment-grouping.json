@@ -2,76 +2,82 @@
   "title": "Fintech API",
   "servers": [
     {
-      "url": "https://fintech.api.example.com",
-      "description": "PRD",
+      "type": "grouped",
       "name": "PRD",
-      "type": "single"
+      "description": "PRD environment",
+      "urls": {
+        "fintech": {
+          "url": "https://fintech.api.example.com"
+        },
+        "payments": {
+          "url": "https://payments.api.example.com"
+        }
+      }
     },
     {
-      "url": "https://fintech-sbx.api.example.com",
-      "description": "SBX",
+      "type": "grouped",
       "name": "SBX",
-      "type": "single"
+      "description": "SBX environment",
+      "urls": {
+        "fintech": {
+          "url": "https://fintech-sbx.api.example.com"
+        },
+        "payments": {
+          "url": "https://payments-sbx.api.example.com"
+        }
+      }
     },
     {
-      "url": "https://fintech-stg.api.example.com",
-      "description": "STG",
+      "type": "grouped",
       "name": "STG",
-      "type": "single"
+      "description": "STG environment",
+      "urls": {
+        "fintech": {
+          "url": "https://fintech-stg.api.example.com"
+        },
+        "payments": {
+          "url": "https://payments-stg.api.example.com"
+        }
+      }
     },
     {
-      "url": "https://fintech-prf.api.example.com",
-      "description": "PRF",
+      "type": "grouped",
       "name": "PRF",
-      "type": "single"
+      "description": "PRF environment",
+      "urls": {
+        "fintech": {
+          "url": "https://fintech-prf.api.example.com"
+        },
+        "payments": {
+          "url": "https://payments-prf.api.example.com"
+        }
+      }
     },
     {
-      "url": "https://fintech-e2e.api.example.com",
-      "description": "E2E",
+      "type": "grouped",
       "name": "E2E",
-      "type": "single"
+      "description": "E2E environment",
+      "urls": {
+        "fintech": {
+          "url": "https://fintech-e2e.api.example.com"
+        },
+        "payments": {
+          "url": "https://payments-e2e.api.example.com"
+        }
+      }
     },
     {
-      "url": "https://fintech-qal.api.example.com",
-      "description": "QAL",
+      "type": "grouped",
       "name": "QAL",
-      "type": "single"
-    },
-    {
-      "url": "https://payments.api.example.com",
-      "description": "PRD",
-      "name": "PRD",
-      "type": "single"
-    },
-    {
-      "url": "https://payments-sbx.api.example.com",
-      "description": "SBX",
-      "name": "SBX",
-      "type": "single"
-    },
-    {
-      "url": "https://payments-stg.api.example.com",
-      "description": "STG",
-      "name": "STG",
-      "type": "single"
-    },
-    {
-      "url": "https://payments-prf.api.example.com",
-      "description": "PRF",
-      "name": "PRF",
-      "type": "single"
-    },
-    {
-      "url": "https://payments-e2e.api.example.com",
-      "description": "E2E",
-      "name": "E2E",
-      "type": "single"
-    },
-    {
-      "url": "https://payments-qal.api.example.com",
-      "description": "QAL",
-      "name": "QAL",
-      "type": "single"
+      "description": "QAL environment",
+      "urls": {
+        "fintech": {
+          "url": "https://fintech-qal.api.example.com"
+        },
+        "payments": {
+          "url": "https://payments-qal.api.example.com"
+        }
+      }
     }
   ],
   "websocketServers": [],
@@ -114,7 +120,6 @@
         "type": "json"
       },
       "errors": {},
-      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/wallets",
@@ -171,7 +176,13 @@
       "source": {
         "file": "../fintech-api.yml",
         "type": "openapi"
-      }
+      },
+      "__apiName": "fintech",
+      "servers": [
+        {
+          "name": "fintech"
+        }
+      ]
     },
     {
       "summary": "Get wallet by ID",
@@ -218,7 +229,6 @@
         "type": "json"
       },
       "errors": {},
-      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/wallets/{walletId}",
@@ -281,7 +291,13 @@
       "source": {
         "file": "../fintech-api.yml",
         "type": "openapi"
-      }
+      },
+      "__apiName": "fintech",
+      "servers": [
+        {
+          "name": "fintech"
+        }
+      ]
     },
     {
       "summary": "Get wallet balance",
@@ -328,7 +344,6 @@
         "type": "json"
       },
       "errors": {},
-      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/wallets/{walletId}/balance",
@@ -384,7 +399,13 @@
       "source": {
         "file": "../fintech-api.yml",
         "type": "openapi"
-      }
+      },
+      "__apiName": "fintech",
+      "servers": [
+        {
+          "name": "fintech"
+        }
+      ]
     },
     {
       "summary": "List accounts",
@@ -420,7 +441,6 @@
         "type": "json"
       },
       "errors": {},
-      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/accounts",
@@ -467,7 +487,13 @@
       "source": {
         "file": "../fintech-api.yml",
         "type": "openapi"
-      }
+      },
+      "__apiName": "fintech",
+      "servers": [
+        {
+          "name": "fintech"
+        }
+      ]
     },
     {
       "summary": "List transactions",
@@ -503,7 +529,6 @@
         "type": "json"
       },
       "errors": {},
-      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/transactions",
@@ -564,7 +589,13 @@
       "source": {
         "file": "../payments-api.yml",
         "type": "openapi"
-      }
+      },
+      "__apiName": "payments",
+      "servers": [
+        {
+          "name": "payments"
+        }
+      ]
     },
     {
       "summary": "Get transaction by ID",
@@ -611,7 +642,6 @@
         "type": "json"
       },
       "errors": {},
-      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/transactions/{transactionId}",
@@ -678,7 +708,13 @@
       "source": {
         "file": "../payments-api.yml",
         "type": "openapi"
-      }
+      },
+      "__apiName": "payments",
+      "servers": [
+        {
+          "name": "payments"
+        }
+      ]
     },
     {
       "summary": "Create a payment",
@@ -728,7 +764,6 @@
         "type": "json"
       },
       "errors": {},
-      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/payments",
@@ -796,7 +831,13 @@
       "source": {
         "file": "../payments-api.yml",
         "type": "openapi"
-      }
+      },
+      "__apiName": "payments",
+      "servers": [
+        {
+          "name": "payments"
+        }
+      ]
     },
     {
       "summary": "Refund a payment",
@@ -862,7 +903,6 @@
         "type": "json"
       },
       "errors": {},
-      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/payments/{paymentId}/refund",
@@ -927,7 +967,13 @@
       "source": {
         "file": "../payments-api.yml",
         "type": "openapi"
-      }
+      },
+      "__apiName": "payments",
+      "servers": [
+        {
+          "name": "payments"
+        }
+      ]
     },
     {
       "summary": "List all refunds",
@@ -963,7 +1009,6 @@
         "type": "json"
       },
       "errors": {},
-      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/refunds",
@@ -1024,7 +1069,13 @@
       "source": {
         "file": "../payments-api.yml",
         "type": "openapi"
-      }
+      },
+      "__apiName": "payments",
+      "servers": [
+        {
+          "name": "payments"
+        }
+      ]
     }
   ],
   "webhooks": [],
