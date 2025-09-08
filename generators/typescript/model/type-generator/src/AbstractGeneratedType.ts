@@ -18,6 +18,15 @@ export declare namespace AbstractGeneratedType {
         enableInlineTypes: boolean;
         generateReadWriteOnlyTypes: boolean;
     }
+    export namespace getDocs {
+        export interface Args<Context> {
+            context: Context;
+            opts?: {
+                isForRequest?: boolean;
+                isForResponse?: boolean;
+            };
+        }
+    }
 }
 
 const EXAMPLE_PREFIX = "    ";
@@ -62,7 +71,7 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
         this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
     }
 
-    protected getDocs(context: Context): string | undefined {
+    protected getDocs({ context, opts }: AbstractGeneratedType.getDocs.Args<Context>): string | undefined {
         const groups: string[] = [];
         if (this.docs != null) {
             groups.push(this.docs);
@@ -71,7 +80,12 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
             const exampleStr =
                 "@example\n" +
                 getTextOfTsNode(
-                    this.buildExample(example.shape, context, { isForComment: true, isForTypeDeclarationComment: true })
+                    this.buildExample(example.shape, context, {
+                        isForComment: true,
+                        isForTypeDeclarationComment: true,
+                        isForRequest: opts?.isForRequest,
+                        isForResponse: opts?.isForResponse
+                    })
                 );
             groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));
         }

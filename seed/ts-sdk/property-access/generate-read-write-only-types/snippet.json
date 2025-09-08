@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPropertyAccessClient } from \"@fern/property-access\";\n\nconst client = new SeedPropertyAccessClient({ environment: \"YOUR_BASE_URL\" });\nawait client.createUser({\n    id: \"id\",\n    email: \"email\",\n    password: \"password\",\n    profile: {\n        name: \"name\",\n        verification: {\n            verified: \"verified\"\n        },\n        ssn: \"ssn\"\n    }\n});\n"
+                "client": "import { SeedPropertyAccessClient } from \"@fern/property-access\";\n\nconst client = new SeedPropertyAccessClient({ environment: \"YOUR_BASE_URL\" });\nawait client.createUser({\n    password: \"password\",\n    profile: {\n        name: \"name\",\n        verification: {},\n        ssn: \"ssn\"\n    }\n});\n"
             }
         }
     ],

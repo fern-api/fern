@@ -14,14 +14,10 @@
 
 ```typescript
 await client.createUser({
-    id: "id",
-    email: "email",
     password: "password",
     profile: {
         name: "name",
-        verification: {
-            verified: "verified",
-        },
+        verification: {},
         ssn: "ssn",
     },
 });

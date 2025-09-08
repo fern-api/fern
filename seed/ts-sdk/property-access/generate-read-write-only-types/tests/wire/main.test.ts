@@ -9,17 +9,11 @@ describe("SeedPropertyAccessClient", () => {
     test("createUser", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPropertyAccessClient({ environment: server.baseUrl });
-        const rawRequestBody = {
-            id: "id",
-            email: "email",
-            password: "password",
-            profile: { name: "name", verification: { verified: "verified" }, ssn: "ssn" },
-        };
+        const rawRequestBody = { password: "password", profile: { name: "name", verification: {}, ssn: "ssn" } };
         const rawResponseBody = {
             id: "id",
             email: "email",
-            password: "password",
-            profile: { name: "name", verification: { verified: "verified" }, ssn: "ssn" },
+            profile: { name: "name", verification: { verified: "verified" } },
         };
         server
             .mockEndpoint()
@@ -31,27 +25,21 @@ describe("SeedPropertyAccessClient", () => {
             .build();
 
         const response = await client.createUser({
-            id: "id",
-            email: "email",
             password: "password",
             profile: {
                 name: "name",
-                verification: {
-                    verified: "verified",
-                },
+                verification: {},
                 ssn: "ssn",
             },
         });
         expect(response).toEqual({
             id: "id",
             email: "email",
-            password: "password",
             profile: {
                 name: "name",
                 verification: {
                     verified: "verified",
                 },
-                ssn: "ssn",
             },
         });
     });

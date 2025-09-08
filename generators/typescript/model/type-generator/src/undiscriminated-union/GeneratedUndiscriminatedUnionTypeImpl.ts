@@ -102,7 +102,15 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
                     })
                 )
             };
-            maybeAddDocsStructure(requestType, this.getDocs(context));
+            maybeAddDocsStructure(
+                requestType,
+                this.getDocs({
+                    context,
+                    opts: {
+                        isForRequest: true
+                    }
+                })
+            );
             statements.push(requestType);
         }
         if (anyResponseVariantsNeeded) {
@@ -119,7 +127,15 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
                     })
                 )
             };
-            maybeAddDocsStructure(responseType, this.getDocs(context));
+            maybeAddDocsStructure(
+                responseType,
+                this.getDocs({
+                    context,
+                    opts: {
+                        isForResponse: true
+                    }
+                })
+            );
             statements.push(responseType);
         }
 
@@ -140,7 +156,7 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
                 })
             )
         };
-        maybeAddDocsStructure(alias, this.getDocs(context));
+        maybeAddDocsStructure(alias, this.getDocs({ context }));
         return alias;
     }
 

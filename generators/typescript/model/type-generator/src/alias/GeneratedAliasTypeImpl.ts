@@ -55,7 +55,7 @@ export class GeneratedAliasTypeImpl<Context extends BaseContext>
             type: getTextOfTsNode(context.type.getReferenceToInlineAliasType(this.shape, this.typeName).typeNode),
             isExported: true
         };
-        maybeAddDocsStructure(typeAlias, this.getDocs(context));
+        maybeAddDocsStructure(typeAlias, this.getDocs({ context }));
         return typeAlias;
     }
 

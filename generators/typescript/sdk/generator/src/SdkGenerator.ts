@@ -474,7 +474,8 @@ export class SdkGenerator {
             retainOriginalCasing: config.retainOriginalCasing,
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath,
-            neverThrowErrors: config.neverThrowErrors
+            neverThrowErrors: config.neverThrowErrors,
+            generateReadWriteOnlyTypes: config.generateReadWriteOnlyTypes
         });
         this.referenceConfigBuilder = new ReferenceConfigBuilder();
         this.generatorAgent = new TypeScriptGeneratorAgent({

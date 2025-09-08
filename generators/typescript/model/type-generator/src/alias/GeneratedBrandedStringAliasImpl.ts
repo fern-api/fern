@@ -83,7 +83,7 @@ export class GeneratedBrandedStringAliasImpl<Context extends BaseContext>
             ),
             isExported: true
         };
-        maybeAddDocsStructure(typeAlias, this.getDocs(context));
+        maybeAddDocsStructure(typeAlias, this.getDocs({ context }));
         return typeAlias;
     }
 

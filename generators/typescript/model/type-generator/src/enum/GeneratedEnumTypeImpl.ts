@@ -60,7 +60,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             )
         };
 
-        maybeAddDocsStructure(type, this.getDocs(context));
+        maybeAddDocsStructure(type, this.getDocs({ context }));
         return type;
     }
 

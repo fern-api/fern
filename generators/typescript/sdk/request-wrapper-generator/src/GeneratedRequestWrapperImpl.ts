@@ -326,7 +326,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             .map((example) => {
                 const generatedExample = this.generateExample(example);
                 const exampleStr =
-                    "@example\n" + getTextOfTsNode(generatedExample.build(context, { isForComment: true }));
+                    "@example\n" +
+                    getTextOfTsNode(generatedExample.build(context, { isForComment: true, isForRequest: true }));
                 return exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
             })
             .join("\n\n");

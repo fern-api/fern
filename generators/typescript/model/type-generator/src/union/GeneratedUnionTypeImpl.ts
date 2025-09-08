@@ -63,7 +63,7 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
             includeUtilsOnUnionMembers,
             includeOtherInUnionTypes,
             getReferenceToUnion: this.getReferenceToSelf.bind(this),
-            getDocs: (context: Context) => this.getDocs(context),
+            getDocs: (context: Context) => this.getDocs({ context }),
             discriminant: this.includeSerdeLayer
                 ? this.shape.discriminant.name.camelCase.unsafeName
                 : this.shape.discriminant.wireValue,

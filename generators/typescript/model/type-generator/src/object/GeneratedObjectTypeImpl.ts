@@ -1,4 +1,10 @@
-import { ExampleTypeShape, ObjectProperty, ObjectTypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+import {
+    ExampleTypeShape,
+    ObjectProperty,
+    ObjectPropertyAccess,
+    ObjectTypeDeclaration,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
 import {
     GetReferenceOpts,
     generateInlinePropertiesModule,
@@ -213,7 +219,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             isExported: true
         };
 
-        maybeAddDocsStructure(interfaceNode, this.getDocs(context));
+        maybeAddDocsStructure(interfaceNode, this.getDocs({ context }));
         const iExtends = [];
         for (const extension of this.shape.extends) {
             iExtends.push(getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode()));
@@ -263,7 +269,22 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             throw new Error("Example is not for an object");
         }
 
+        const filterOutReadonlyProps = this.generateReadWriteOnlyTypes && opts.isForRequest === true;
+        const filterOutWriteonlyProps = this.generateReadWriteOnlyTypes && opts.isForResponse === true;
+
         return example.properties
+            .filter((property) => {
+                if (typeof property.propertyAccess === "undefined") {
+                    return true;
+                }
+                if (filterOutReadonlyProps && property.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+                    return false;
+                }
+                if (filterOutWriteonlyProps && property.propertyAccess === ObjectPropertyAccess.WriteOnly) {
+                    return false;
+                }
+                return true;
+            })
             .map((property) => {
                 const originalTypeForProperty = context.type.getGeneratedType(property.originalTypeDeclaration);
                 if (originalTypeForProperty.type === "union") {
