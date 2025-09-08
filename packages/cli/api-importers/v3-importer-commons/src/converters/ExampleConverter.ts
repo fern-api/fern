@@ -446,22 +446,19 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
         if (lowerBound !== undefined && upperBound !== undefined) {
             if (number < lowerBound || number > upperBound) {
-                number = lowerBound + Math.random() * (upperBound - lowerBound);
+                number = lowerBound + (upperBound - lowerBound) / 2;
             }
         }
         // If only lower bound exists and number is below it, adjust upwards
         else if (lowerBound !== undefined && number < lowerBound) {
-            const effectiveUpper = lowerBound + Math.abs(lowerBound * 0.1);
-            number = lowerBound + Math.random() * (effectiveUpper - lowerBound);
+            number = lowerBound + Math.abs(lowerBound * 0.1);
         }
         // If only upper bound exists and number is above it, adjust downwards
         else if (upperBound !== undefined && number > upperBound) {
-            const effectiveLower = upperBound - Math.abs(upperBound * 0.1);
-            number = effectiveLower + Math.random() * (upperBound - effectiveLower);
+            number = upperBound - Math.abs(upperBound * 0.1);
         }
 
-        const rounded = Number(number.toPrecision(3));
-        return rounded;
+        return Number(Number(number).toPrecision(3));
     }
 
     private convertString(): ExampleConverter.Output {

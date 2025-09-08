@@ -67,7 +67,7 @@ describe("ExampleConverter", () => {
             const result = callAdjustNumberToConstraints(5, schemaObj);
 
             expect(result).toBeGreaterThanOrEqual(10);
-            expect(result).toBeLessThan(11); // Should be within 10% of lowerBound
+            expect(result).toBeLessThanOrEqual(11); // Should be lowerBound + 10% of lowerBound = 10 + 1 = 11
         });
 
         it("should handle maximum constraint", () => {
@@ -78,7 +78,7 @@ describe("ExampleConverter", () => {
             const result = callAdjustNumberToConstraints(150, schemaObj);
 
             expect(result).toBeLessThanOrEqual(100);
-            expect(result).toBeGreaterThan(90); // Should be within 10% of upperBound
+            expect(result).toBeGreaterThanOrEqual(90); // Should be upperBound - 10% of upperBound = 100 - 10 = 90
         });
 
         it("should handle both minimum and maximum constraints", () => {
@@ -114,7 +114,7 @@ describe("ExampleConverter", () => {
             const result = callAdjustNumberToConstraints(5, schemaObj);
 
             expect(result).toBeGreaterThan(10);
-            expect(result).toBeLessThan(11); // Should be within 10% of lowerBound
+            expect(result).toBeLessThanOrEqual(11); // Should be lowerBound + 10% of lowerBound
         });
 
         it("should handle exclusiveMinimum as number", () => {
@@ -125,7 +125,7 @@ describe("ExampleConverter", () => {
             const result = callAdjustNumberToConstraints(5, schemaObj);
 
             expect(result).toBeGreaterThan(10);
-            expect(result).toBeLessThan(11); // Should be within 10% of lowerBound
+            expect(result).toBeLessThanOrEqual(11); // Should be lowerBound + 10% of lowerBound
         });
 
         it("should handle exclusiveMaximum as boolean true", () => {
@@ -137,7 +137,7 @@ describe("ExampleConverter", () => {
             const result = callAdjustNumberToConstraints(150, schemaObj);
 
             expect(result).toBeLessThan(100);
-            expect(result).toBeGreaterThan(90); // Should be within 10% of upperBound
+            expect(result).toBeGreaterThanOrEqual(90); // Should be upperBound - 10% of upperBound
         });
 
         it("should handle exclusiveMaximum as number", () => {
@@ -148,7 +148,7 @@ describe("ExampleConverter", () => {
             const result = callAdjustNumberToConstraints(150, schemaObj);
 
             expect(result).toBeLessThan(100);
-            expect(result).toBeGreaterThan(90); // Should be within 10% of upperBound
+            expect(result).toBeGreaterThanOrEqual(90); // Should be upperBound - 10% of upperBound
         });
 
         it("should not adjust number when it's within bounds", () => {
@@ -180,18 +180,10 @@ describe("ExampleConverter", () => {
                 maximum: 100
             };
 
-            // Mock Math.random to return a predictable value
-            const originalRandom = Math.random;
-            Math.random = vi.fn().mockReturnValue(0.5);
-
-            try {
-                const result = callAdjustNumberToConstraints(5, schemaObj);
-                // Should be rounded to 3 significant digits
-                expect(result.toString()).toMatch(/^\d+\.?\d*$/);
-                expect(result.toString().length).toBeLessThanOrEqual(4); // 3 digits + potential decimal
-            } finally {
-                Math.random = originalRandom;
-            }
+            const result = callAdjustNumberToConstraints(5, schemaObj);
+            // Should be rounded to 3 significant digits
+            expect(result.toString()).toMatch(/^\d+\.?\d*$/);
+            expect(result.toString().length).toBeLessThanOrEqual(4); // 3 digits + potential decimal
         });
 
         it("should handle edge case with exclusiveMinimum boolean and no minimum", () => {
