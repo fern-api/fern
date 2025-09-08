@@ -86,7 +86,7 @@ runs:
       # Note: generators added here are currently generating non-deterministic results.
       # To get us to a passing state in CI, add them as exceptions here. This is not
       # a long-term solution.
-      if: inputs.validate-git-diff == 'true' && (inputs.generator-name != 'go-sdk' && inputs.generator-name != 'typescript-sdk' || inputs.generator-name != 'ruby-sdk-v2')
+      if: inputs.validate-git-diff == 'true' && !(inputs.generator-name == 'go-sdk || inputs.generator-name == 'typescript-sdk' || inputs.generator-name == 'ruby-sdk-v2')
       id: validate
       shell: bash
       run: |
