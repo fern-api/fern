@@ -30029,12 +30029,12 @@
                           "incoterm": "EXW",
                           "calculated_weight": {
                             "_object": "/quantity/weight",
-                            "value": 2300.4,
+                            "value": 2300,
                             "unit": "kg"
                           },
                           "calculated_volume": {
                             "_object": "/quantity/volume",
-                            "value": 472.62,
+                            "value": 473,
                             "unit": "cbm"
                           },
                           "pieces": 8372,
@@ -30097,12 +30097,12 @@
                             "master_airway_bill": "22831046871",
                             "chargeable_weight": {
                               "_object": "/quantity/weight",
-                              "value": 2300.4,
+                              "value": 2300,
                               "unit": "kg"
                             },
                             "chargeable_volume": {
                               "_object": "/quantity/volume",
-                              "value": 472.62,
+                              "value": 473,
                               "unit": "cbm"
                             }
                           },
@@ -30261,12 +30261,12 @@
                               "total_units": 523,
                               "total_weight": {
                                 "_object": "/quantity/weight",
-                                "value": 2300.4,
+                                "value": 2300,
                                 "unit": "kg"
                               },
                               "total_volume": {
                                 "_object": "/quantity/volume",
-                                "value": 472.62,
+                                "value": 473,
                                 "unit": "cbm"
                               },
                               "purchase_order_number": "PO002811",
@@ -30348,12 +30348,12 @@
                           "incoterm": "EXW",
                           "calculated_weight": {
                             "_object": "/quantity/weight",
-                            "value": 2300.4,
+                            "value": 2300,
                             "unit": "kg"
                           },
                           "calculated_volume": {
                             "_object": "/quantity/volume",
-                            "value": 472.62,
+                            "value": 473,
                             "unit": "cbm"
                           },
                           "pieces": 8372,
@@ -30416,12 +30416,12 @@
                             "master_airway_bill": "22831046871",
                             "chargeable_weight": {
                               "_object": "/quantity/weight",
-                              "value": 2300.4,
+                              "value": 2300,
                               "unit": "kg"
                             },
                             "chargeable_volume": {
                               "_object": "/quantity/volume",
-                              "value": 472.62,
+                              "value": 473,
                               "unit": "cbm"
                             }
                           },
@@ -30580,12 +30580,12 @@
                               "total_units": 523,
                               "total_weight": {
                                 "_object": "/quantity/weight",
-                                "value": 2300.4,
+                                "value": 2300,
                                 "unit": "kg"
                               },
                               "total_volume": {
                                 "_object": "/quantity/volume",
-                                "value": 472.62,
+                                "value": 473,
                                 "unit": "cbm"
                               },
                               "purchase_order_number": "PO002811",
@@ -30743,12 +30743,12 @@
                                 "total_units": 523,
                                 "total_weight": {
                                   "_object": "/quantity/weight",
-                                  "value": 2300.4,
+                                  "value": 2300,
                                   "unit": "kg"
                                 },
                                 "total_volume": {
                                   "_object": "/quantity/volume",
-                                  "value": 472.62,
+                                  "value": 473,
                                   "unit": "cbm"
                                 },
                                 "purchase_order_number": "PO002811",
@@ -30838,12 +30838,12 @@
                             "incoterm": "EXW",
                             "calculated_weight": {
                               "_object": "/quantity/weight",
-                              "value": 2300.4,
+                              "value": 2300,
                               "unit": "kg"
                             },
                             "calculated_volume": {
                               "_object": "/quantity/volume",
-                              "value": 472.62,
+                              "value": 473,
                               "unit": "cbm"
                             },
                             "pieces": 8372,
@@ -30906,12 +30906,12 @@
                               "master_airway_bill": "22831046871",
                               "chargeable_weight": {
                                 "_object": "/quantity/weight",
-                                "value": 2300.4,
+                                "value": 2300,
                                 "unit": "kg"
                               },
                               "chargeable_volume": {
                                 "_object": "/quantity/volume",
-                                "value": 472.62,
+                                "value": 473,
                                 "unit": "cbm"
                               }
                             },
@@ -31070,12 +31070,12 @@
                                 "total_units": 523,
                                 "total_weight": {
                                   "_object": "/quantity/weight",
-                                  "value": 2300.4,
+                                  "value": 2300,
                                   "unit": "kg"
                                 },
                                 "total_volume": {
                                   "_object": "/quantity/volume",
-                                  "value": 472.62,
+                                  "value": 473,
                                   "unit": "cbm"
                                 },
                                 "purchase_order_number": "PO002811",
@@ -31157,12 +31157,12 @@
                             "incoterm": "EXW",
                             "calculated_weight": {
                               "_object": "/quantity/weight",
-                              "value": 2300.4,
+                              "value": 2300,
                               "unit": "kg"
                             },
                             "calculated_volume": {
                               "_object": "/quantity/volume",
-                              "value": 472.62,
+                              "value": 473,
                               "unit": "cbm"
                             },
                             "pieces": 8372,
@@ -31225,12 +31225,12 @@
                               "master_airway_bill": "22831046871",
                               "chargeable_weight": {
                                 "_object": "/quantity/weight",
-                                "value": 2300.4,
+                                "value": 2300,
                                 "unit": "kg"
                               },
                               "chargeable_volume": {
                                 "_object": "/quantity/volume",
-                                "value": 472.62,
+                                "value": 473,
                                 "unit": "cbm"
                               }
                             },
@@ -31389,12 +31389,12 @@
                                 "total_units": 523,
                                 "total_weight": {
                                   "_object": "/quantity/weight",
-                                  "value": 2300.4,
+                                  "value": 2300,
                                   "unit": "kg"
                                 },
                                 "total_volume": {
                                   "_object": "/quantity/volume",
-                                  "value": 472.62,
+                                  "value": 473,
                                   "unit": "cbm"
                                 },
                                 "purchase_order_number": "PO002811",
@@ -31552,12 +31552,12 @@
                                   "total_units": 523,
                                   "total_weight": {
                                     "_object": "/quantity/weight",
-                                    "value": 2300.4,
+                                    "value": 2300,
                                     "unit": "kg"
                                   },
                                   "total_volume": {
                                     "_object": "/quantity/volume",
-                                    "value": 472.62,
+                                    "value": 473,
                                     "unit": "cbm"
                                   },
                                   "purchase_order_number": "PO002811",
@@ -31747,12 +31747,12 @@
                       "incoterm": "EXW",
                       "calculated_weight": {
                         "_object": "/quantity/weight",
-                        "value": 2300.4,
+                        "value": 2300,
                         "unit": "kg"
                       },
                       "calculated_volume": {
                         "_object": "/quantity/volume",
-                        "value": 472.62,
+                        "value": 473,
                         "unit": "cbm"
                       },
                       "pieces": 8372,
@@ -31815,12 +31815,12 @@
                         "master_airway_bill": "22831046871",
                         "chargeable_weight": {
                           "_object": "/quantity/weight",
-                          "value": 2300.4,
+                          "value": 2300,
                           "unit": "kg"
                         },
                         "chargeable_volume": {
                           "_object": "/quantity/volume",
-                          "value": 472.62,
+                          "value": 473,
                           "unit": "cbm"
                         }
                       },
@@ -31979,12 +31979,12 @@
                           "total_units": 523,
                           "total_weight": {
                             "_object": "/quantity/weight",
-                            "value": 2300.4,
+                            "value": 2300,
                             "unit": "kg"
                           },
                           "total_volume": {
                             "_object": "/quantity/volume",
-                            "value": 472.62,
+                            "value": 473,
                             "unit": "cbm"
                           },
                           "purchase_order_number": "PO002811",
@@ -32066,12 +32066,12 @@
                       "incoterm": "EXW",
                       "calculated_weight": {
                         "_object": "/quantity/weight",
-                        "value": 2300.4,
+                        "value": 2300,
                         "unit": "kg"
                       },
                       "calculated_volume": {
                         "_object": "/quantity/volume",
-                        "value": 472.62,
+                        "value": 473,
                         "unit": "cbm"
                       },
                       "pieces": 8372,
@@ -32134,12 +32134,12 @@
                         "master_airway_bill": "22831046871",
                         "chargeable_weight": {
                           "_object": "/quantity/weight",
-                          "value": 2300.4,
+                          "value": 2300,
                           "unit": "kg"
                         },
                         "chargeable_volume": {
                           "_object": "/quantity/volume",
-                          "value": 472.62,
+                          "value": 473,
                           "unit": "cbm"
                         }
                       },
@@ -32298,12 +32298,12 @@
                           "total_units": 523,
                           "total_weight": {
                             "_object": "/quantity/weight",
-                            "value": 2300.4,
+                            "value": 2300,
                             "unit": "kg"
                           },
                           "total_volume": {
                             "_object": "/quantity/volume",
-                            "value": 472.62,
+                            "value": 473,
                             "unit": "cbm"
                           },
                           "purchase_order_number": "PO002811",
@@ -32461,12 +32461,12 @@
                             "total_units": 523,
                             "total_weight": {
                               "_object": "/quantity/weight",
-                              "value": 2300.4,
+                              "value": 2300,
                               "unit": "kg"
                             },
                             "total_volume": {
                               "_object": "/quantity/volume",
-                              "value": 472.62,
+                              "value": 473,
                               "unit": "cbm"
                             },
                             "purchase_order_number": "PO002811",
@@ -32549,12 +32549,12 @@
                         "incoterm": "EXW",
                         "calculated_weight": {
                           "_object": "/quantity/weight",
-                          "value": 2300.4,
+                          "value": 2300,
                           "unit": "kg"
                         },
                         "calculated_volume": {
                           "_object": "/quantity/volume",
-                          "value": 472.62,
+                          "value": 473,
                           "unit": "cbm"
                         },
                         "pieces": 8372,
@@ -32617,12 +32617,12 @@
                           "master_airway_bill": "22831046871",
                           "chargeable_weight": {
                             "_object": "/quantity/weight",
-                            "value": 2300.4,
+                            "value": 2300,
                             "unit": "kg"
                           },
                           "chargeable_volume": {
                             "_object": "/quantity/volume",
-                            "value": 472.62,
+                            "value": 473,
                             "unit": "cbm"
                           }
                         },
@@ -32781,12 +32781,12 @@
                             "total_units": 523,
                             "total_weight": {
                               "_object": "/quantity/weight",
-                              "value": 2300.4,
+                              "value": 2300,
                               "unit": "kg"
                             },
                             "total_volume": {
                               "_object": "/quantity/volume",
-                              "value": 472.62,
+                              "value": 473,
                               "unit": "cbm"
                             },
                             "purchase_order_number": "PO002811",
@@ -32868,12 +32868,12 @@
                         "incoterm": "EXW",
                         "calculated_weight": {
                           "_object": "/quantity/weight",
-                          "value": 2300.4,
+                          "value": 2300,
                           "unit": "kg"
                         },
                         "calculated_volume": {
                           "_object": "/quantity/volume",
-                          "value": 472.62,
+                          "value": 473,
                           "unit": "cbm"
                         },
                         "pieces": 8372,
@@ -32936,12 +32936,12 @@
                           "master_airway_bill": "22831046871",
                           "chargeable_weight": {
                             "_object": "/quantity/weight",
-                            "value": 2300.4,
+                            "value": 2300,
                             "unit": "kg"
                           },
                           "chargeable_volume": {
                             "_object": "/quantity/volume",
-                            "value": 472.62,
+                            "value": 473,
                             "unit": "cbm"
                           }
                         },
@@ -33100,12 +33100,12 @@
                             "total_units": 523,
                             "total_weight": {
                               "_object": "/quantity/weight",
-                              "value": 2300.4,
+                              "value": 2300,
                               "unit": "kg"
                             },
                             "total_volume": {
                               "_object": "/quantity/volume",
-                              "value": 472.62,
+                              "value": 473,
                               "unit": "cbm"
                             },
                             "purchase_order_number": "PO002811",
@@ -33263,12 +33263,12 @@
                               "total_units": 523,
                               "total_weight": {
                                 "_object": "/quantity/weight",
-                                "value": 2300.4,
+                                "value": 2300,
                                 "unit": "kg"
                               },
                               "total_volume": {
                                 "_object": "/quantity/volume",
-                                "value": 472.62,
+                                "value": 473,
                                 "unit": "cbm"
                               },
                               "purchase_order_number": "PO002811",
