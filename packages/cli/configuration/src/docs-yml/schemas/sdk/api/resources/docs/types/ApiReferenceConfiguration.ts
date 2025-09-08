@@ -21,6 +21,7 @@ export interface ApiReferenceConfiguration extends FernDocsConfig.WithPermission
     icon?: string;
     slug?: string;
     hidden?: boolean;
+    availability?: FernDocsConfig.Availability;
     skipSlug?: boolean;
     /** If `alphabetized` is set to true, packages and endpoints will be sorted alphabetically, unless explicitly ordered in the `layout` object. */
     alphabetized?: boolean;

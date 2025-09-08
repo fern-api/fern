@@ -112,7 +112,8 @@ async function visitNavigationItem({
             );
         },
         viewers: noop,
-        orphaned: noop
+        orphaned: noop,
+        availability: noop,
     });
 
     if (navigationItemIsApi(navigationItem)) {

@@ -152,7 +152,8 @@ async function visitNavigationItem({
                 await visitor.permissions?.({ viewers }, [...nodePath, "viewers"]);
             }
         },
-        orphaned: noop
+        orphaned: noop,
+        availability: noop
     });
 
     if (navigationItemIsPage(navigationItem)) {

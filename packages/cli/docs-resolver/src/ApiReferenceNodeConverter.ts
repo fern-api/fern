@@ -118,7 +118,7 @@ export class ApiReferenceNodeConverter {
                 hidden: this.hideChildren
             }),
             children: this.#children,
-            availability: undefined,
+            availability: this.apiSection.availability,
             pointsTo,
             noindex: undefined,
             playground: this.#convertPlaygroundSettings(this.apiSection.playground),
