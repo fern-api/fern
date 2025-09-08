@@ -13,8 +13,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            generators/**
-            .github/**
+            generators
+            .github
 
       - name: Validate go-sdk versions.yml
         uses: ./.github/actions/validate-yml
