@@ -1,7 +1,7 @@
 import { FieldDescriptorProto, FieldDescriptorProto_Label } from "@bufbuild/protobuf/wkt";
 
 import { ContainerType, TypeId, TypeReference } from "@fern-api/ir-sdk";
-import { AbstractConverter, AbstractConverterContext } from "@fern-api/v3-importer-commons";
+import { AbstractConverter } from "@fern-api/v3-importer-commons";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { EnumOrMessageConverter } from "./EnumOrMessageConverter";

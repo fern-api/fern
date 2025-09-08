@@ -253,7 +253,11 @@ class PydanticModel:
     def set_root_type_unsafe_v1_or_v2_only(
         self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None
     ) -> None:
-        if self._version not in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2, PydanticVersionCompatibility.V2):
+        if self._version not in (
+            PydanticVersionCompatibility.V1,
+            PydanticVersionCompatibility.V1_ON_V2,
+            PydanticVersionCompatibility.V2,
+        ):
             raise RuntimeError("Overriding root types is only available in Pydantic v1, v1_on_v2, or v2")
         root_type_name = "root" if self._version == PydanticVersionCompatibility.V2 else "__root__"
         if self._v1_or_v2_root_type is not None:
@@ -466,7 +470,7 @@ class PydanticModel:
                         name="extra",
                         initializer=Pydantic(self._version).extra.ignore(),
                     )
-                ) 
+                )
 
         if len(config.class_vars) > 0:
             return config

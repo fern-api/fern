@@ -5,6 +5,7 @@ import {
     DocComment,
     EnumWithAssociatedValues,
     EnumWithRawValues,
+    Extension,
     FunctionArgument,
     FunctionParameter,
     Initializer,
@@ -35,6 +36,10 @@ export function enumWithAssociatedValues(args: EnumWithAssociatedValues.Args): E
 
 export function enumWithRawValues(args: EnumWithRawValues.Args): EnumWithRawValues {
     return new EnumWithRawValues(args);
+}
+
+export function extension(args: Extension.Args): Extension {
+    return new Extension(args);
 }
 
 export function functionArgument(args: FunctionArgument.Args): FunctionArgument {

@@ -15,9 +15,13 @@ public class Example17
             }
         );
 
-        await client.Endpoints.Object.GetAndReturnWithRequiredFieldAsync(
-            new ObjectWithRequiredField{
-                String = "string"
+        await client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(
+            new ObjectWithMapOfMap{
+                Map = new Dictionary<string, Dictionary<string, string>>(){
+                    ["map"] = new Dictionary<string, string>(){
+                        ["map"] = "map",
+                    },
+                }
             }
         );
     }

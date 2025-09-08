@@ -1,5 +1,4 @@
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
-import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -53,6 +52,7 @@ import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-e
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
 import { writeFile } from "fs/promises";
+import path from "path";
 import { Directory, Project, SourceFile, ts } from "ts-morph";
 import { v4 as uuidv4 } from "uuid";
 import { SdkContextImpl } from "./contexts/SdkContextImpl";
@@ -150,6 +150,8 @@ export declare namespace SdkGenerator {
         useDefaultRequestParameterValues: boolean;
         packageManager: "pnpm" | "yarn";
         generateReadWriteOnlyTypes: boolean;
+        flattenRequestParameters: boolean;
+        exportAllRequestsAtRoot: boolean;
     }
 }
 
@@ -222,6 +224,8 @@ export class SdkGenerator {
     private rootDirectoryPath: string;
     private defaultSrcDirectory: string;
     private defaultTestDirectory: string;
+    private defaultApiDirectory: string;
+    private defaultResourcesDirectory: string;
     private relativePackagePath: string;
     private relativeTestPath: string;
     private testDirectory: Directory;
@@ -239,6 +243,8 @@ export class SdkGenerator {
         this.rootDirectoryPath = "/";
         this.defaultSrcDirectory = "src";
         this.defaultTestDirectory = "tests";
+        this.defaultApiDirectory = "api";
+        this.defaultResourcesDirectory = "resources";
 
         this.context = context;
         this.namespaceExport = namespaceExport;
@@ -436,7 +442,8 @@ export class SdkGenerator {
             exportsManager: this.exportsManager,
             formDataSupport: config.formDataSupport,
             omitFernHeaders: config.omitFernHeaders,
-            useDefaultRequestParameterValues: config.useDefaultRequestParameterValues
+            useDefaultRequestParameterValues: config.useDefaultRequestParameterValues,
+            exportAllRequestsAtRoot: config.exportAllRequestsAtRoot
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation,
@@ -847,7 +854,10 @@ export class SdkGenerator {
                                 .getGeneratedRequestWrapper(packageId, endpoint.name)
                                 .writeToFile(context);
                         },
-                        addExportTypeModifier: true
+                        addExportTypeModifier: true,
+                        customExportPaths: this.config.exportAllRequestsAtRoot
+                            ? [path.join(this.defaultApiDirectory, this.defaultResourcesDirectory)]
+                            : undefined
                     });
                 }
             }
@@ -1416,13 +1426,16 @@ export class SdkGenerator {
         filepath,
         addExportTypeModifier,
         overwrite,
-        packagePath = this.relativePackagePath
+        packagePath = this.relativePackagePath,
+        customExportPaths: customExportPaths
     }: {
         run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => void;
         filepath: ExportedFilePath;
         addExportTypeModifier?: boolean;
         overwrite?: boolean;
         packagePath?: string;
+        // manually ensure there will be an export at these paths
+        customExportPaths?: string[];
     }) {
         filepath.rootDir = packagePath;
         const filepathStr = this.exportsManager.convertExportedFilePathToFilePath(filepath);
@@ -1440,7 +1453,7 @@ export class SdkGenerator {
             this.context.logger.debug(`Skipping ${filepathStr} (no content)`);
         } else {
             importsManager.writeImportsToSourceFile(sourceFile);
-            this.exportsManager.addExportsForFilepath(filepath, addExportTypeModifier);
+            this.exportsManager.addExportsForFilepath(filepath, addExportTypeModifier, customExportPaths);
 
             // this needs to be last.
             // https://github.com/dsherret/ts-morph/issues/189#issuecomment-414174283
@@ -1579,7 +1592,9 @@ export class SdkGenerator {
             relativeTestPath: this.relativeTestPath,
             formDataSupport: this.config.formDataSupport,
             useDefaultRequestParameterValues: this.config.useDefaultRequestParameterValues,
-            generateReadWriteOnlyTypes: this.config.generateReadWriteOnlyTypes
+            generateReadWriteOnlyTypes: this.config.generateReadWriteOnlyTypes,
+            flattenRequestParameters: this.config.flattenRequestParameters,
+            exportAllRequestsAtRoot: this.config.exportAllRequestsAtRoot
         });
     }
 

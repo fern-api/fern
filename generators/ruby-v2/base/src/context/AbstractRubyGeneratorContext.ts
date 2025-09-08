@@ -46,10 +46,30 @@ export abstract class AbstractRubyGeneratorContext<
         return this.customConfig.module ?? snakeCase(this.config.organization);
     }
 
+    public getRootPackageName(): string {
+        return this.ir.apiName.camelCase.safeName.toLowerCase();
+    }
+
+    public getVersionFromConfig(): string | undefined {
+        return this.config.output.mode._visit<string | undefined>({
+            publish: (generatorPublishConfig) => generatorPublishConfig.version || undefined,
+            downloadFiles: () => undefined,
+            github: (githubOutputMode) => githubOutputMode.version || undefined,
+            _other: () => undefined
+        });
+    }
+
     public getRootModule(): ruby.Module_ {
         return ruby.module({
             name: capitalize(this.getRootFolderName()),
             statements: []
+        });
+    }
+
+    public getModelClassReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: "Model",
+            modules: ["Internal", "Types"]
         });
     }
 
@@ -73,6 +93,8 @@ export abstract class AbstractRubyGeneratorContext<
     public abstract getCoreAsIsFiles(): string[];
 
     public abstract getLocationForTypeId(typeId: TypeId): RelativeFilePath;
+
+    public abstract getClassReferenceForTypeId(typeId: TypeId): ruby.ClassReference;
 
     public abstract getFileNameForTypeId(typeId: TypeId): string;
 

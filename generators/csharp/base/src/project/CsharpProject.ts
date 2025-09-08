@@ -2,7 +2,8 @@ import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-a
 import { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { access, mkdir, readFile, writeFile } from "fs/promises";
+import { access, mkdir, readFile, unlink, writeFile } from "fs/promises";
+
 import { template } from "lodash-es";
 import path from "path";
 
@@ -31,6 +32,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
     private publicCoreTestFiles: File[] = [];
     private testUtilFiles: File[] = [];
     private sourceFetcher: SourceFetcher;
+
     public readonly filepaths: CsharpProjectFilepaths;
 
     public constructor({
@@ -75,6 +77,59 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
 
     public addTestFiles(file: CSharpFile): void {
         this.testFiles.push(file);
+    }
+
+    private async dotnetFormat(
+        absolutePathToSrcDirectory: AbsoluteFilePath,
+        absolutePathToProjectDirectory: AbsoluteFilePath,
+        editorConfig: string
+    ): Promise<void> {
+        // write a temporary '.editorconfig' file to the absolutePathToSrcDirectory
+        // so we can use dotnet format to pre-format the project (ie, optimize namespace usage, scoping, etc)
+        const editorConfigPath = join(absolutePathToSrcDirectory, RelativeFilePath.of(".editorconfig"));
+        await writeFile(editorConfigPath, editorConfig);
+
+        // patch the csproj file to only target net8.0 (dotnet format gets weird with multiple target frameworks)
+        const csprojPath = join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`));
+        const csprojContents = (await readFile(csprojPath)).toString();
+
+        // write modified (temporary) csproj file
+        await writeFile(
+            csprojPath,
+            csprojContents
+                .replace(
+                    /<TargetFrameworks>.*<\/TargetFrameworks>/,
+                    `<TargetFrameworks>netstandard2.0</TargetFrameworks>`
+                )
+                .replace(/<ImplicitUsings>enable<\/ImplicitUsings>/, `<ImplicitUsings>disable</ImplicitUsings>`)
+                .replace(/<LangVersion>12<\/LangVersion>/, `<LangVersion>11</LangVersion>`)
+                .replace(/<\/Project>/, `<ItemGroup><Using Include="System" /></ItemGroup></Project>`)
+        );
+
+        // call dotnet format
+        await loggingExeca(this.context.logger, "dotnet", ["format", "--severity", "error"], {
+            doNotPipeOutput: false,
+            cwd: absolutePathToSrcDirectory
+        });
+
+        await writeFile(csprojPath, csprojContents);
+        // remove the temporary editorconfig file
+        await unlink(editorConfigPath);
+
+        await writeFile(csprojPath, csprojContents);
+    }
+
+    private async csharpier(absolutePathToSrcDirectory: AbsoluteFilePath): Promise<void> {
+        const csharpier = findDotnetToolPath("csharpier");
+        await loggingExeca(
+            this.context.logger,
+            csharpier,
+            ["format", ".", "--no-msbuild-check", "--skip-validation", "--compilation-errors-as-warnings"],
+            {
+                doNotPipeOutput: false,
+                cwd: absolutePathToSrcDirectory
+            }
+        );
     }
 
     public async persist(): Promise<void> {
@@ -161,16 +216,33 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         await this.createCoreTestDirectory({ absolutePathToTestProjectDirectory });
         await this.createPublicCoreDirectory({ absolutePathToProjectDirectory });
 
-        const csharpier = findDotnetToolPath("csharpier");
-        await loggingExeca(
-            this.context.logger,
-            csharpier,
-            ["format", ".", "--no-msbuild-check", "--skip-validation", "--compilation-errors-as-warnings"],
-            {
-                doNotPipeOutput: true,
-                cwd: absolutePathToSrcDirectory
-            }
-        );
+        if (this.context.shouldUseDotnetFormat()) {
+            // apply dotnet analyzer and formatter pass 1
+            await this.dotnetFormat(
+                absolutePathToSrcDirectory,
+                absolutePathToProjectDirectory,
+                `[*.cs]
+  dotnet_diagnostic.IDE0001.severity = error
+  dotnet_diagnostic.IDE0002.severity = error 
+  dotnet_diagnostic.IDE0003.severity = error 
+  dotnet_diagnostic.IDE0004.severity = error  
+  dotnet_diagnostic.IDE0007.severity = error
+  dotnet_diagnostic.IDE0017.severity = error
+  dotnet_diagnostic.IDE0018.severity = error
+  `
+            );
+            // apply dotnet analyzer and formatter pass 2
+            await this.dotnetFormat(
+                absolutePathToSrcDirectory,
+                absolutePathToProjectDirectory,
+                `[*.cs]
+dotnet_diagnostic.IDE0005.severity = error          
+          `
+            );
+        }
+
+        // format the code cleanly using csharpier
+        await this.csharpier(absolutePathToSrcDirectory);
     }
 
     private async createProject({

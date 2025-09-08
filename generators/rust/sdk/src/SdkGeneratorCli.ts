@@ -197,8 +197,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         moduleDeclarations.push(new ModuleDeclaration({ name: "api_client_builder", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "http_client", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "request_options", isPublic: true }));
-        moduleDeclarations.push(new ModuleDeclaration({ name: "client_error", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "pagination", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "query_parameter_builder", isPublic: true }));
 
         if (this.hasEnvironments(context)) {
             moduleDeclarations.push(new ModuleDeclaration({ name: "environment", isPublic: true }));
@@ -259,8 +259,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                 isPublic: true
             })
         );
-        useStatements.push(new UseStatement({ path: "client_error", items: ["*"], isPublic: true }));
         useStatements.push(new UseStatement({ path: "pagination", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "query_parameter_builder", items: ["*"], isPublic: true }));
 
         return new Module({
             moduleDeclarations,

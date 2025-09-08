@@ -1,5 +1,3 @@
-import { AbstractAstNode } from "@fern-api/browser-compatible-base-generator";
-
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { ClassReference } from "./ClassReference";

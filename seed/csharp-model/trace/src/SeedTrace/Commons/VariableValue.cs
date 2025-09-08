@@ -584,14 +584,14 @@ public record VariableValue
                 "booleanValue" => json.GetProperty("value").Deserialize<bool>(options),
                 "doubleValue" => json.GetProperty("value").Deserialize<double>(options),
                 "stringValue" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 "charValue" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 "mapValue" => json.Deserialize<SeedTrace.MapValue>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.MapValue"),
                 "listValue" => json.GetProperty("value")
                     .Deserialize<IEnumerable<VariableValue>>(options)
-                    ?? throw new JsonException("Failed to deserialize IEnumerable<VariableValue>"),
+                ?? throw new JsonException("Failed to deserialize IEnumerable<VariableValue>"),
                 "binaryTreeValue" => json.Deserialize<SeedTrace.BinaryTreeValue>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.BinaryTreeValue"),
                 "singlyLinkedListValue" => json.Deserialize<SeedTrace.SinglyLinkedListValue>(

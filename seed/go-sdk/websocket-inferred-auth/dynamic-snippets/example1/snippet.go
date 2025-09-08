@@ -1,0 +1,28 @@
+package example
+
+import (
+    client "github.com/websocket-inferred-auth/fern/client"
+    option "github.com/websocket-inferred-auth/fern/option"
+    context "context"
+    fern "github.com/websocket-inferred-auth/fern"
+)
+
+func do() {
+    client := client.NewClient(
+        option.WithBaseURL(
+            "https://api.fern.com",
+        ),
+    )
+    client.Auth.RefreshToken(
+        context.TODO(),
+        &fern.RefreshTokenRequest{
+            XApiKey: "X-Api-Key",
+            ClientId: "client_id",
+            ClientSecret: "client_secret",
+            RefreshToken: "refresh_token",
+            Scope: fern.String(
+                "scope",
+            ),
+        },
+    )
+}

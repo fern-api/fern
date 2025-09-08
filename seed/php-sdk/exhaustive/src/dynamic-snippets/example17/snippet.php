@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\Object\Types\ObjectWithRequiredField;
+use Seed\Types\Object\Types\ObjectWithMapOfMap;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,8 +11,12 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->object->getAndReturnWithRequiredField(
-    new ObjectWithRequiredField([
-        'string' => 'string',
+$client->endpoints->object->getAndReturnWithMapOfMap(
+    new ObjectWithMapOfMap([
+        'map' => [
+            'map' => [
+                'map' => 'map',
+            ],
+        ],
     ]),
 );

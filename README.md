@@ -91,7 +91,7 @@ Get started [here](https://github.com/fern-api/docs-starter).
 ## 🌿 Generators
 
 Generators are process that take your API Definition as input and output artifacts (SDKs,
-Postman Collections, Server boilerplate, etc.). To add a generator run `fern add <generator id>`
+Postman Collections, Server boilerplate, etc.). To add a generator, run `fern add <generator id>`.
 
 ### SDK Generators
 
@@ -104,6 +104,8 @@ Postman Collections, Server boilerplate, etc.). To add a generator run `fern add
 | `fernapi/fern-go-sdk`              | ![Go Generator Version](https://img.shields.io/docker/v/fernapi/fern-go-sdk)                      | [main.go](./generators/go/cmd/fern-go-sdk/main.go)                            |
 | `fernapi/fern-csharp-sdk`          | ![C# Generator Version](https://img.shields.io/docker/v/fernapi/fern-csharp-sdk)                  | [cli.ts](./generators/csharp/sdk/src/cli.ts)                                  |
 | `fernapi/fern-php-sdk`             | ![PHP Generator Version](https://img.shields.io/docker/v/fernapi/fern-php-sdk)                    | [cli.ts](./generators/php/sdk/src/cli.ts)                                     |
+| `fernapi/fern-swift-sdk`           | ![Swift Generator Version](https://img.shields.io/docker/v/fernapi/fern-swift-sdk)                | [cli.ts](./generators/swift/sdk/src/cli.ts)                                   |
+| `fernapi/fern-rust-sdk`            | ![Rust Generator Version](https://img.shields.io/docker/v/fernapi/fern-rust-sdk)                  | [cli.ts](./generators/rust/sdk/src/cli.ts)                                  |
 
 ### Server-side Generators
 

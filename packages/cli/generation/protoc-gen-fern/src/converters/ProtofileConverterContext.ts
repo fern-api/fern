@@ -5,7 +5,6 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 import { EnumOrMessageConverter } from "./message/EnumOrMessageConverter";
 import { CommentNode, PathStarterValues } from "./utils/CreateGlobalCommentsStore";
-import { SOURCE_CODE_INFO_PATH_STARTERS } from "./utils/PathFieldNumbers";
 
 export declare namespace ProtofileConverterContext {
     export interface Args extends Spec.Args<FileDescriptorProto> {

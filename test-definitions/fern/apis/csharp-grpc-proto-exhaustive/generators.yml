@@ -1,7 +1,9 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 api:
-  - path: openapi/openapi.yml
-  - proto:
-      root: proto
-      target: proto/data/v1/data.proto
-      overrides: overrides.yml
-      local-generation: true
+  specs:
+    - openapi: openapi/openapi.yml
+    - proto:
+        root: proto
+        target: proto/data/v1/data.proto
+        overrides: overrides.yml
+        local-generation: true

@@ -227,12 +227,12 @@ public record ProblemDescriptionBoard
             var value = discriminator switch
             {
                 "html" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 "variable" => json.GetProperty("value")
                     .Deserialize<SeedTrace.VariableValue>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.VariableValue"),
+                ?? throw new JsonException("Failed to deserialize SeedTrace.VariableValue"),
                 "testCaseId" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
             return new ProblemDescriptionBoard(discriminator, value);

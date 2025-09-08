@@ -23,7 +23,7 @@ public final class ApiClient: Sendable {
         self.init(
             baseURL: baseURL,
             headerAuth: nil,
-            bearerAuth: .init(token: token),
+            bearerAuth: .init(token: .staticToken(token)),
             basicAuth: nil,
             headers: headers,
             timeout: timeout,
@@ -42,7 +42,7 @@ public final class ApiClient: Sendable {
     /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
     public convenience init(
         baseURL: String = ApiEnvironment.default.rawValue,
-        token: ClientConfig.CredentialProvider,
+        token: @escaping ClientConfig.CredentialProvider,
         headers: [String: String]? = nil,
         timeout: Int? = nil,
         maxRetries: Int? = nil,
@@ -51,7 +51,7 @@ public final class ApiClient: Sendable {
         self.init(
             baseURL: baseURL,
             headerAuth: nil,
-            bearerAuth: .init(token: token),
+            bearerAuth: .init(token: .provider(token)),
             basicAuth: nil,
             headers: headers,
             timeout: timeout,
@@ -83,7 +83,7 @@ public final class ApiClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func uploadJsonDocument(request: UploadDocumentRequest, requestOptions: RequestOptions? = nil) async throws -> UploadDocumentResponse {
+    public func uploadJsonDocument(request: Requests.UploadDocumentRequest, requestOptions: RequestOptions? = nil) async throws -> UploadDocumentResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/documents/upload",

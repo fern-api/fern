@@ -13,9 +13,7 @@ public class Example29
             }
         );
 
-        await client.V2.Problem.GetLatestProblemAsync(
-            "problemId"
-        );
+        await client.Sysprop.GetNumWarmInstancesAsync();
     }
 
 }

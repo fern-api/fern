@@ -1,0 +1,10 @@
+# frozen_string_literal: true
+
+require_relative "seed_websocket_auth_client/auth/types/token_response"
+require_relative "seed_websocket_auth_client/realtime/types/send_event"
+require_relative "seed_websocket_auth_client/realtime/types/send_snake_case"
+require_relative "seed_websocket_auth_client/realtime/types/receive_event"
+require_relative "seed_websocket_auth_client/realtime/types/receive_snake_case"
+require_relative "seed_websocket_auth_client/realtime/types/send_event_2"
+require_relative "seed_websocket_auth_client/realtime/types/receive_event_2"
+require_relative "seed_websocket_auth_client/realtime/types/receive_event_3"

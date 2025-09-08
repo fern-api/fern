@@ -17,6 +17,6 @@
     { "path": "../../base" },
     { "path": "../ast" },
     { "path": "../base" },
-    { "path": "../model" },
+    { "path": "../model" }
   ]
 }

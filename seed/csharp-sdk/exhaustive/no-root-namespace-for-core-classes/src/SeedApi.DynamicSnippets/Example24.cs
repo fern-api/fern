@@ -1,7 +1,7 @@
 using global::System.Threading.Tasks;
 using SeedExhaustive;
 using SeedExhaustive.Core;
-using SeedExhaustive.Types;
+using SeedExhaustive.Endpoints;
 
 namespace Usage;
 
@@ -15,13 +15,10 @@ public class Example24
             }
         );
 
-        await client.Endpoints.Object.TestIntegerOverflowEdgeCasesAsync(
-            new ObjectWithOptionalField{
-                String = "just-under-boundary",
-                Integer = -2147483649,
-                Long = -2147483649l,
-                Double = -2,
-                Bool = true
+        await client.Endpoints.Params.GetWithQueryAsync(
+            new GetWithQuery{
+                Query = "query",
+                Number = 1
             }
         );
     }

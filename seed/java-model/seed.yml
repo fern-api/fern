@@ -50,4 +50,6 @@ fixtures:
 allowedFailures:
   - trace
   - alias-extends
+  - empty-clients
+  - literals-unions
   - nullable

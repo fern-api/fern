@@ -1,11 +1,13 @@
 import { z } from "zod";
 
-import { ModuleConfigSchema } from "./ModuleConfigSchema";
+import { moduleConfigSchema } from "./ModuleConfigSchema";
+import { relativePathSchema } from "./RelativePathSchema";
 
-export const BaseGoCustomConfigSchema = z.object({
-    module: ModuleConfigSchema.optional(),
+export const baseGoCustomConfigSchema = z.object({
+    module: moduleConfigSchema.optional(),
     packageName: z.string().optional(),
-    importPath: z.string().optional(),
+    packagePath: relativePathSchema.optional(),
+    importPath: relativePathSchema.optional(),
 
     alwaysSendRequiredProperties: z.boolean().optional(),
     clientConstructorName: z.string().optional(),
@@ -15,9 +17,9 @@ export const BaseGoCustomConfigSchema = z.object({
     includeLegacyClientOptions: z.boolean().optional(),
     inlinePathParameters: z.boolean().optional(),
     inlineFileProperties: z.boolean().optional(),
-    packageLayout: z.enum(["flat", "nested"]).optional(),
     union: z.enum(["v0", "v1"]).optional(),
-    useReaderForBytesRequest: z.boolean().optional()
+    useReaderForBytesRequest: z.boolean().optional(),
+    useDefaultRequestParameterValues: z.boolean().optional()
 });
 
-export type BaseGoCustomConfigSchema = z.infer<typeof BaseGoCustomConfigSchema>;
+export type BaseGoCustomConfigSchema = z.infer<typeof baseGoCustomConfigSchema>;

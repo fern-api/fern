@@ -1,7 +1,7 @@
 import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
-import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, StructureKind, ts } from "ts-morph";
+import { ModuleDeclarationStructure, PropertySignatureStructure, StructureKind, ts } from "ts-morph";
 
 export declare namespace UnknownErrorSingleUnionTypeGenerator {
     export interface Init {

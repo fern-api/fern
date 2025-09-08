@@ -2,10 +2,8 @@
 module Seed
   module Imdb
     class Client
-      # @option client [Seed::Internal::Http::RawClient]
-      #
       # @return [Seed::Imdb::Client]
-      def initialize(client)
+      def initialize(client:)
         @client = client
       end
 
@@ -13,9 +11,11 @@ module Seed
       #
       # @return [String]
       def create_movie(request_options: {}, **params)
-        _request = Seed::Internal::Http::JSONRequest.new(
-          method: POST,
-          path: "/movies/create-movie"
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          method: "POST",
+          path: "/movies/create-movie",
+          body: Seed::Imdb::Types::CreateMovieRequest.new(params).to_h,
         )
         _response = @client.send(_request)
         if _response.code >= "200" && _response.code < "300"
@@ -27,7 +27,11 @@ module Seed
 
       # @return [Seed::Imdb::Types::Movie]
       def get_movie(request_options: {}, **params)
-        _request = params
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          method: "GET",
+          path: "/movies/#{"
+        )
         _response = @client.send(_request)
         if _response.code >= "200" && _response.code < "300"
           return Seed::Imdb::Types::Movie.load(_response.body)

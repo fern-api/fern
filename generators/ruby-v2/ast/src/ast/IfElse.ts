@@ -68,5 +68,6 @@ export class IfElse extends AstNode {
             writer.dedent();
         }
         writer.write("end");
+        writer.writeNewLineIfLastLineNot();
     }
 }

@@ -14,7 +14,7 @@ export declare namespace Object_ {
         baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Additional headers to include in requests. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 
     export interface RequestOptions {
@@ -27,7 +27,7 @@ export declare namespace Object_ {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -44,11 +44,21 @@ export class Object_ {
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithOptionalField({
-     *         string: "test",
-     *         integer: 21991583578,
-     *         long: BigInt("9223372036854776000"),
-     *         double: 3.14,
-     *         bool: true
+     *         string: "string",
+     *         integer: 1,
+     *         long: BigInt("1000000"),
+     *         double: 1.1,
+     *         bool: true,
+     *         datetime: "2024-01-15T09:30:00Z",
+     *         date: "2023-01-15",
+     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         base64: "SGVsbG8gd29ybGQh",
+     *         list: ["list", "list"],
+     *         set: ["set"],
+     *         map: {
+     *             1: "map"
+     *         },
+     *         bigint: BigInt("1000000")
      *     })
      */
     public getAndReturnWithOptionalField(
@@ -62,7 +72,7 @@ export class Object_ {
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -137,7 +147,7 @@ export class Object_ {
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -216,7 +226,7 @@ export class Object_ {
         request: SeedExhaustive.types.ObjectWithMapOfMap,
         requestOptions?: Object_.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithMapOfMap>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -310,7 +320,7 @@ export class Object_ {
         request: SeedExhaustive.types.NestedObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithOptionalField>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -407,7 +417,7 @@ export class Object_ {
         request: SeedExhaustive.types.NestedObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithRequiredField>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -520,7 +530,7 @@ export class Object_ {
         request: SeedExhaustive.types.NestedObjectWithRequiredField[],
         requestOptions?: Object_.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithRequiredField>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -566,121 +576,6 @@ export class Object_ {
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
                     "Timeout exceeded when calling POST /object/get-and-return-nested-with-required-field-list.",
-                );
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
-    }
-
-    /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.object.testIntegerOverflowEdgeCases({
-     *         string: "boundary-test",
-     *         integer: 2147483647,
-     *         long: BigInt("9223372036854776000"),
-     *         double: 1.7976931348623157e+308,
-     *         bool: true
-     *     })
-     *
-     * @example
-     *     await client.endpoints.object.testIntegerOverflowEdgeCases({
-     *         string: "just-over-boundary",
-     *         integer: 2147483648,
-     *         long: BigInt("2147483648"),
-     *         double: 2,
-     *         bool: false
-     *     })
-     *
-     * @example
-     *     await client.endpoints.object.testIntegerOverflowEdgeCases({
-     *         string: "just-under-boundary",
-     *         integer: -2147483649,
-     *         long: BigInt("-2147483649"),
-     *         double: -2,
-     *         bool: true
-     *     })
-     *
-     * @example
-     *     await client.endpoints.object.testIntegerOverflowEdgeCases({
-     *         string: "large-positive",
-     *         integer: 1000000000000,
-     *         long: BigInt("1000000000000"),
-     *         double: 1000000000000,
-     *         bool: false
-     *     })
-     *
-     * @example
-     *     await client.endpoints.object.testIntegerOverflowEdgeCases({
-     *         string: "large-negative",
-     *         integer: -1000000000000,
-     *         long: BigInt("-1000000000000"),
-     *         double: -1000000000000,
-     *         bool: true
-     *     })
-     */
-    public testIntegerOverflowEdgeCases(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: Object_.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        return core.HttpResponsePromise.fromPromise(this.__testIntegerOverflowEdgeCases(request, requestOptions));
-    }
-
-    private async __testIntegerOverflowEdgeCases(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: Object_.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/object/test-integer-overflow-edge-cases",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return {
-                data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling POST /object/test-integer-overflow-edge-cases.",
                 );
             case "unknown":
                 throw new errors.SeedExhaustiveError({

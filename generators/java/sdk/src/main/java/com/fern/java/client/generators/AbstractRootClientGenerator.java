@@ -21,6 +21,7 @@ import com.fern.ir.model.auth.BasicAuthScheme;
 import com.fern.ir.model.auth.BearerAuthScheme;
 import com.fern.ir.model.auth.EnvironmentVariable;
 import com.fern.ir.model.auth.HeaderAuthScheme;
+import com.fern.ir.model.auth.InferredAuthScheme;
 import com.fern.ir.model.auth.OAuthClientCredentials;
 import com.fern.ir.model.auth.OAuthConfiguration;
 import com.fern.ir.model.auth.OAuthScheme;
@@ -50,6 +51,7 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import javax.lang.model.element.Modifier;
@@ -190,6 +192,14 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .initializer("$T.empty()", Optional.class)
                 .build());
 
+        clientBuilder.addField(FieldSpec.builder(
+                        ParameterizedTypeName.get(
+                                ClassName.get(Map.class), ClassName.get(String.class), ClassName.get(String.class)),
+                        "customHeaders")
+                .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                .initializer("new $T<>()", HashMap.class)
+                .build());
+
         FieldSpec.Builder environmentFieldBuilder = FieldSpec.builder(
                         generatedEnvironmentsClass.getClassName(), ENVIRONMENT_FIELD_NAME)
                 .addModifiers(Modifier.PRIVATE);
@@ -328,6 +338,22 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addStatement(isExtensible ? "return self()" : "return this")
                 .build());
 
+        clientBuilder.addMethod(MethodSpec.methodBuilder("addHeader")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Add a custom header to be sent with all requests.\n"
+                        + "For headers that need to be computed dynamically or conditionally, "
+                        + "use the setAdditional() method override instead.\n"
+                        + "\n"
+                        + "@param name The header name\n"
+                        + "@param value The header value\n"
+                        + "@return This builder for method chaining")
+                .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                .addParameter(String.class, "name")
+                .addParameter(String.class, "value")
+                .addStatement("this.customHeaders.put(name, value)")
+                .addStatement(isExtensible ? "return self()" : "return this")
+                .build());
+
         generatorContext.getIr().getVariables().stream()
                 .map(variableDeclaration -> {
                     String variableName =
@@ -376,6 +402,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addStatement("setHttpClient(builder)")
                 .addStatement("setTimeouts(builder)")
                 .addStatement("setRetries(builder)")
+                .beginControlFlow("for ($T.Entry<String, String> header : this.customHeaders.entrySet())", Map.class)
+                .addStatement("builder.addHeader(header.getKey(), header.getValue())")
+                .endControlFlow()
                 .addStatement("setAdditional(builder)")
                 .addStatement("return builder.build()");
 
@@ -664,6 +693,11 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         @Override
         public Void visitOauth(OAuthScheme oauth) {
             return oauth.getConfiguration().visit(new OAuthSchemeHandler());
+        }
+
+        @Override
+        public Void visitInferred(InferredAuthScheme inferred) {
+            throw new UnsupportedOperationException("Inferred auth schemes are not supported");
         }
 
         public class OAuthSchemeHandler implements OAuthConfiguration.Visitor<Void> {

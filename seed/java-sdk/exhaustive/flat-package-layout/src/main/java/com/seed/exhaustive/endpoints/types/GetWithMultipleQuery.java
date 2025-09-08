@@ -103,7 +103,9 @@ public final class GetWithMultipleQuery {
         }
 
         public Builder addAllQuery(List<String> query) {
-            this.query.addAll(query);
+            if (query != null) {
+                this.query.addAll(query);
+            }
             return this;
         }
 
@@ -125,7 +127,9 @@ public final class GetWithMultipleQuery {
         }
 
         public Builder addAllNumber(List<Integer> number) {
-            this.number.addAll(number);
+            if (number != null) {
+                this.number.addAll(number);
+            }
             return this;
         }
 

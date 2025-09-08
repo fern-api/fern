@@ -31,7 +31,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
     }
 
     public convert(): ObjectSchemaConverter.Output {
-        const hasAdditionalProperties =
+        let hasAdditionalProperties =
             typeof this.schema.additionalProperties === "boolean" && this.schema.additionalProperties;
 
         if (!this.schema.properties && !this.schema.allOf) {
@@ -70,24 +70,28 @@ export class ObjectSchemaConverter extends AbstractConverter<
             const breadcrumbs = [...this.breadcrumbs, "allOf", index.toString()];
             let allOfSchema: OpenAPIV3_1.SchemaObject;
             if (this.context.isReferenceObject(allOfSchemaOrReference)) {
-                if (!objectHasRequiredProperties) {
-                    this.addTypeReferenceToExtends({
-                        reference: allOfSchemaOrReference,
-                        breadcrumbs,
-                        extends_,
-                        referencedTypes
-                    });
-                    continue;
-                }
                 const maybeResolvedReference = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                     schemaOrReference: allOfSchemaOrReference,
                     breadcrumbs
                 });
                 if (maybeResolvedReference == null) {
+                    this.context.logger.debug?.(
+                        `[ObjectSchemaConverter] allOf[${index}] reference could not be resolved. Skipping: ${JSON.stringify(allOfSchemaOrReference)}`
+                    );
                     continue;
                 }
                 allOfSchema = maybeResolvedReference;
-                if (Object.keys(allOfSchema.properties ?? {}).every((key) => !this.schema.required?.includes(key))) {
+
+                // Check for additionalProperties before this is passed by for not having req. properties
+                if (typeof allOfSchema.additionalProperties === "boolean" && allOfSchema.additionalProperties) {
+                    hasAdditionalProperties = true;
+                }
+
+                // if the allOf schema has no properties that are required in the base schema, add the reference to the extends_
+                if (
+                    !objectHasRequiredProperties ||
+                    Object.keys(allOfSchema.properties ?? {}).every((key) => !this.schema.required?.includes(key))
+                ) {
                     this.addTypeReferenceToExtends({
                         reference: allOfSchemaOrReference,
                         breadcrumbs,
@@ -98,6 +102,10 @@ export class ObjectSchemaConverter extends AbstractConverter<
                 }
             } else {
                 allOfSchema = allOfSchemaOrReference;
+            }
+
+            if (typeof allOfSchema.additionalProperties === "boolean" && allOfSchema.additionalProperties) {
+                hasAdditionalProperties = true;
             }
 
             const {

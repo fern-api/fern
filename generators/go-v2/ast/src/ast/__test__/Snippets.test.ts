@@ -2,7 +2,6 @@ import { AstNode } from "../core/AstNode";
 import { GoFile } from "../core/GoFile";
 import { Field } from "../Field";
 import { File } from "../File";
-import { Func } from "../Func";
 import { GoTypeReference } from "../GoTypeReference";
 import { MultiNode } from "../MultiNode";
 import { Struct } from "../Struct";

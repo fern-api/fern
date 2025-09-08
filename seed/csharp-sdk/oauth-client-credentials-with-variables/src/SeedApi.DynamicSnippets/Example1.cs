@@ -19,6 +19,8 @@ public class Example1
                 ClientId = "client_id",
                 ClientSecret = "client_secret",
                 RefreshToken = "refresh_token",
+                Audience = "https://api.example.com",
+                GrantType = "refresh_token",
                 Scope = "scope"
             }
         );

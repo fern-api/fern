@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Literal, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union, cast
 
 import pydantic
 from fern_python.codegen.module_manager import ModuleExport
@@ -104,6 +104,11 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Whether or not to include legacy wire tests in the generated SDK.
     include_legacy_wire_tests: bool = False
 
+    # Whether to lazy import the generated classes based on usage.
+    # This is useful for large SDKs where the majority of the classes are not used.
+    # It also improves the performance of an initial import of the SDK, at the cost of some latency during first use.
+    lazy_imports: bool = True
+
     class Config:
         extra = pydantic.Extra.forbid
 
@@ -115,7 +120,7 @@ class SDKCustomConfig(pydantic.BaseModel):
         obj.use_typeddict_requests = use_typeddict_requests
         obj.pydantic_config.use_typeddict_requests = use_typeddict_requests
 
-        return obj
+        return cast(SDKCustomConfig, obj)
 
     @pydantic.model_validator(mode="after")
     def propagate_use_inheritance_for_extended_models(self) -> "SDKCustomConfig":

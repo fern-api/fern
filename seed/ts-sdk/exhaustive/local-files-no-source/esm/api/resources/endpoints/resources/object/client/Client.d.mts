@@ -10,7 +10,7 @@ export declare namespace Object_ {
         baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Additional headers to include in requests. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
     interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
@@ -22,7 +22,7 @@ export declare namespace Object_ {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 export declare class Object_ {
@@ -34,11 +34,21 @@ export declare class Object_ {
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithOptionalField({
-     *         string: "test",
-     *         integer: 21991583578,
-     *         long: 9223372036854776000,
-     *         double: 3.14,
-     *         bool: true
+     *         string: "string",
+     *         integer: 1,
+     *         long: 1000000,
+     *         double: 1.1,
+     *         bool: true,
+     *         datetime: "2024-01-15T09:30:00Z",
+     *         date: "2023-01-15",
+     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         base64: "SGVsbG8gd29ybGQh",
+     *         list: ["list", "list"],
+     *         set: ["set"],
+     *         map: {
+     *             1: "map"
+     *         },
+     *         bigint: "1000000"
      *     })
      */
     getAndReturnWithOptionalField(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: Object_.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
@@ -173,56 +183,5 @@ export declare class Object_ {
      */
     getAndReturnNestedWithRequiredFieldAsList(request: SeedExhaustive.types.NestedObjectWithRequiredField[], requestOptions?: Object_.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField>;
     private __getAndReturnNestedWithRequiredFieldAsList;
-    /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.object.testIntegerOverflowEdgeCases({
-     *         string: "boundary-test",
-     *         integer: 2147483647,
-     *         long: 9223372036854776000,
-     *         double: 1.7976931348623157e+308,
-     *         bool: true
-     *     })
-     *
-     * @example
-     *     await client.endpoints.object.testIntegerOverflowEdgeCases({
-     *         string: "just-over-boundary",
-     *         integer: 2147483648,
-     *         long: 2147483648,
-     *         double: 2,
-     *         bool: false
-     *     })
-     *
-     * @example
-     *     await client.endpoints.object.testIntegerOverflowEdgeCases({
-     *         string: "just-under-boundary",
-     *         integer: -2147483649,
-     *         long: -2147483649,
-     *         double: -2,
-     *         bool: true
-     *     })
-     *
-     * @example
-     *     await client.endpoints.object.testIntegerOverflowEdgeCases({
-     *         string: "large-positive",
-     *         integer: 1000000000000,
-     *         long: 1000000000000,
-     *         double: 1000000000000,
-     *         bool: false
-     *     })
-     *
-     * @example
-     *     await client.endpoints.object.testIntegerOverflowEdgeCases({
-     *         string: "large-negative",
-     *         integer: -1000000000000,
-     *         long: -1000000000000,
-     *         double: -1000000000000,
-     *         bool: true
-     *     })
-     */
-    testIntegerOverflowEdgeCases(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: Object_.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
-    private __testIntegerOverflowEdgeCases;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }

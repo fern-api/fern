@@ -183,7 +183,7 @@ public record TestCaseImplementationReference
             var value = discriminator switch
             {
                 "templateId" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 "implementation" => json.Deserialize<SeedTrace.V2.V3.TestCaseImplementation>(
                     options
                 )

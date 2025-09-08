@@ -1,4 +1,207 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Support tags for changelog entries.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-05"
+  version: 0.71.0
+
+- changelogEntry:
+    - summary: |
+        Add names to octet-stream requests and ensure they are named differently
+        than json requests on the same endpoint.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-04"
+  version: 0.70.4
+
+- changelogEntry:
+    - summary: |
+        Add wrapper to avoid inline object type naming conflicts.
+        Specifically, we had this issue with nullable object types.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-04"
+  version: 0.70.3
+
+- changelogEntry:
+    - summary: If no error examples are provided by user, autogenerate errors even for remote generation.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-04"
+  version: 0.70.2
+
+- changelogEntry:
+    - summary: Don't fail SDK generation if a single schema fails to parse. Instead, warn and coerce to unknown.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-03"
+  version: 0.70.1
+
+- changelogEntry:
+    - summary: Auto generate examples for HTTP endpoint error responses.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-03"
+  version: 0.70.0
+
+- changelogEntry:
+    - summary: |
+        Add custom license name extraction for Java SDK generation. The CLI now reads the first line
+        from custom LICENSE files and passes it to generators via the _fernLicenseName field in customConfig.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-03"
+  version: 0.69.2
+
+- changelogEntry:
+    - summary: Example generation ignores headers that don't exist in the channel instead of failing hard.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-02"
+  version: 0.69.1
+
+- changelogEntry:
+    - summary: Fern diff command can consider from and to generator versions.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-02"
+  version: 0.69.0
+
+- changelogEntry:
+    - summary: Fern cli diff command recognizes availability.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-28"
+  version: 0.68.0
+
+- changelogEntry:
+    - summary: Update ir migration versions for java generators
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-31"
+  version: 0.67.0
+
+- changelogEntry:
+    - summary: Ignore self-referential types that are `optional<nullable<SELF>>`
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-28"
+  version: 0.66.31
+
+- changelogEntry:
+    - summary: |
+        Alpha testing: add support for HTTP proxies
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-29"
+  version: 0.66.30-rc0
+
+- changelogEntry:
+    - summary: Skip OpenAPI 3.1 null type properties instead of failing
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-28"
+  version: 0.66.30
+
+- changelogEntry:
+    - summary: Update docs workspace validator to skip file type validation when running in selfhosted mode
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-27"
+  version: 0.66.29
+
+- changelogEntry:
+    - summary: Fix downloadFiles mode to respect organization's selfHostedSdKs flag for Java SDK generation
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-27"
+  version: 0.66.28
+
+- changelogEntry:
+    - summary: Fix readmeConfig.disabledSections type - change from set to list.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-26"
+  version: 0.66.27
+
+- changelogEntry:
+    - summary: Add whiteLabel setting to FernIr.ReadmeConfig based on org properties
+      type: chore
+  irVersion: 59
+  createdAt: "2025-08-26"
+  version: 0.66.26
+
+- changelogEntry:
+    - summary: Handle object-style examples in OpenAPI spec
+      type: chore
+  irVersion: 59
+  createdAt: "2025-08-25"
+  version: 0.66.25
+
+- changelogEntry:
+    - summary: Add support for readme config for API Name and disabled features list.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-25"
+  version: 0.66.24
+
+- changelogEntry:
+    - summary: Add support for `const` JSON schema keyword, which parses to a single-valued enum.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-22"
+  version: 0.66.23
+
+- changelogEntry:
+    - summary: Nested protobuf types have correct type ids in converted ir.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-22"
+  version: 0.66.22
+
+- changelogEntry:
+    - summary: |
+        Introduce an OpenAPI setting called `inline-all-of-schemas` which recursively
+        visits the scheme definitions of allOf schemas and inlines them into the child.
+
+        The benefit of doing this is that a child schema can modify whether or not a parent
+        property is required. Without this setting, Fern would ignore the child schema's
+        declaration of optional and prefer the parent schema's instead.
+
+        Add the following to your `generators.yml`:
+
+        ```yml generators.yml
+        api:
+          settings:
+            inline-all-of-schemas: true
+        ```
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-18"
+  version: 0.66.21
+
+- changelogEntry:
+    - summary: Add `kwargs` as a reserved word in python so that generated SDKs continue to compile.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-18"
+  version: 0.66.20
+
+- changelogEntry:
+    - summary: Handle multipart/mixed content types in endpoint responses.
+      type: chore
+  irVersion: 59
+  createdAt: "2025-08-18"
+  version: 0.66.19
+
+- changelogEntry:
+    - summary: Updated allOf scheme parsing to grab additionalProperties flag
+      type: chore
+  irVersion: 59
+  createdAt: "2025-08-18"
+  version: 0.66.18
 
 - changelogEntry:
     - summary: Support IR v59 in the Swift SDK generator.
@@ -175,7 +378,7 @@
 
 - changelogEntry:
     - summary: |
-        Escape $ signs when converting from OpenAPI -> Fern Definition (for enums), because the Fern Definition treats 
+        Escape $ signs when converting from OpenAPI -> Fern Definition (for enums), because the Fern Definition treats
         $ sign examples as references.
       type: feat
   irVersion: 58
@@ -216,8 +419,8 @@
 
 - changelogEntry:
     - summary: |
-        Fix snippet generation for local file system output mode. Snippets configured with `snippets.path` 
-        in generators.yml were not being generated when using `--local` flag due to missing Docker volume 
+        Fix snippet generation for local file system output mode. Snippets configured with `snippets.path`
+        in generators.yml were not being generated when using `--local` flag due to missing Docker volume
         mounting for the downloadFiles output mode.
       type: fix
   irVersion: 58
@@ -234,13 +437,13 @@
 
 - changelogEntry:
     - summary: |
-        Add support for snippet.json output as part of self hosted SDK generation. The following config in 
-        `generators.yml` will generate a `snippet.json` file in the relevant director: 
+        Add support for snippet.json output as part of self hosted SDK generation. The following config in
+        `generators.yml` will generate a `snippet.json` file in the relevant director:
         ```
-        groups: 
-          ts-sdk: 
+        groups:
+          ts-sdk:
             - name: fernapi/fern-typescript-sdk
-              snippets: 
+              snippets:
                 path: ../snippets.json
         ```
       type: feat
@@ -466,8 +669,8 @@
 
 - changelogEntry:
     - summary: |
-        The extension `x-fern-global-headers` now supports a type field that can point to 
-        arbitrary schemas. For example you can do the following to describe a header 
+        The extension `x-fern-global-headers` now supports a type field that can point to
+        arbitrary schemas. For example you can do the following to describe a header
         that is an enum.
 
         ```yml
@@ -532,7 +735,7 @@
 - changelogEntry:
     - summary: |
         Previously if the OpenAPI parser v3 was enabled where the CLI would skip parsing any additional Fern Definitions
-        along the OpenAPI spec. With the fix, you can use whatever combination of OpenAPI Spec(s) and Fern Definitions that 
+        along the OpenAPI spec. With the fix, you can use whatever combination of OpenAPI Spec(s) and Fern Definitions that
         you would like.
       type: fix
   irVersion: 58
@@ -669,8 +872,8 @@
 
 - changelogEntry:
     - summary: |
-        Added Server-Sent Events (SSE) support to Java stream implementation. The Java SDK generator now 
-        supports SSE streaming alongside existing JSON streaming, enabling real-time incremental responses 
+        Added Server-Sent Events (SSE) support to Java stream implementation. The Java SDK generator now
+        supports SSE streaming alongside existing JSON streaming, enabling real-time incremental responses
         for chat applications and live data feeds.
       type: feat
   irVersion: 58
@@ -687,8 +890,8 @@
 
 - changelogEntry:
     - summary: |
-        Global headers are now used to create endpoint examples. When building endpoint examples, global headers 
-        are automatically included in the headers section of each example. This ensures that all endpoints have consistent 
+        Global headers are now used to create endpoint examples. When building endpoint examples, global headers
+        are automatically included in the headers section of each example. This ensures that all endpoints have consistent
         header examples that match the global header configuration.
       type: fix
   irVersion: 58
@@ -777,7 +980,7 @@
 
 - changelogEntry:
     - summary: |
-        Respect additional properties in docs example generation by preserving them in generated examples instead of 
+        Respect additional properties in docs example generation by preserving them in generated examples instead of
         stripping unknown properties.
       type: fix
   irVersion: 58
@@ -834,8 +1037,8 @@
 
 - changelogEntry:
     - summary: |
-        The Readme importer now downloads MDX files from the source documentation. 
-        This allows for better handling of React components and dynamic content in the imported documentation. 
+        The Readme importer now downloads MDX files from the source documentation.
+        This allows for better handling of React components and dynamic content in the imported documentation.
         The importer will preserve the MDX syntax and structure while converting the content to a format compatible with Fern's documentation system.
       type: fix
   irVersion: 58
@@ -860,9 +1063,9 @@
 
 - changelogEntry:
     - summary: |
-        The OpenAPI v3 Parser now uniquely stores schemas across endpoint parameters to prevent overwriting. Previously, 
-        schemas with the same name across different parameters would overwrite each other, leading to potential data loss 
-        and incorrect type definitions. This fix ensures that each parameter's schema is properly preserved and referenced 
+        The OpenAPI v3 Parser now uniquely stores schemas across endpoint parameters to prevent overwriting. Previously,
+        schemas with the same name across different parameters would overwrite each other, leading to potential data loss
+        and incorrect type definitions. This fix ensures that each parameter's schema is properly preserved and referenced
         throughout the API specification.
       type: fix
   irVersion: 58
@@ -871,9 +1074,9 @@
 
 - changelogEntry:
     - summary: |
-        The AsyncAPI v3 importer now properly detects query parameters by analyzing the channel address specification. 
-        When a channel address contains a parameter reference in the format `={paramName}`, the importer will automatically 
-        identify it as a query parameter. This allows for more accurate parameter type detection and better handling of 
+        The AsyncAPI v3 importer now properly detects query parameters by analyzing the channel address specification.
+        When a channel address contains a parameter reference in the format `={paramName}`, the importer will automatically
+        identify it as a query parameter. This allows for more accurate parameter type detection and better handling of
         WebSocket channel parameters in AsyncAPI v3 specifications.
       type: fix
   irVersion: 58
@@ -882,8 +1085,8 @@
 
 - changelogEntry:
     - summary: |
-        The AsyncAPI importer now supports parameter references and computing location of the parameter based on the address. 
-        This allows for more flexible parameter definitions in AsyncAPI specifications, where parameters can be referenced from other 
+        The AsyncAPI importer now supports parameter references and computing location of the parameter based on the address.
+        This allows for more flexible parameter definitions in AsyncAPI specifications, where parameters can be referenced from other
         parts of the specification and their location can be dynamically determined based on the channel address.
       type: fix
   irVersion: 58
@@ -999,7 +1202,7 @@
 
 - changelogEntry:
     - summary: |
-        The v3 OpenAPI parser now appropriately creates inlined types for references to 
+        The v3 OpenAPI parser now appropriately creates inlined types for references to
         inlined schemas like `$ref: /components/schemas/MySchema/properties/foo`
       type: fix
     - summary: Bump all generators to IR v58.
@@ -1285,7 +1488,7 @@
         ```yaml
         - name: fernapi/fern-typescript-sdk
           version: 0.48.5
-          api: 
+          api:
             auth: bearer
         ```
 
@@ -1313,7 +1516,7 @@
 
 - changelogEntry:
     - summary: |
-        Remove `respect-readonly-schemas` for the legacy OpenAPI parser since it can block docs 
+        Remove `respect-readonly-schemas` for the legacy OpenAPI parser since it can block docs
         generation. Anyone who wants to enable this can turn it on in `generators.yml` or upgrade
         to the latest OpenAPI parser.
       type: fix
@@ -1420,8 +1623,8 @@
 
 - changelogEntry:
     - summary: |
-        Add logging of filepaths when markdown parsing fails to help with debugging. This includes logging the 
-        absolute filepath of the markdown file being parsed and any associated image paths that were 
+        Add logging of filepaths when markdown parsing fails to help with debugging. This includes logging the
+        absolute filepath of the markdown file being parsed and any associated image paths that were
         being processed when the error occurred.
       type: fix
   irVersion: 57
@@ -1437,8 +1640,8 @@
 
 - changelogEntry:
     - summary: |
-        Fix OpenRPC converter to use proper breadcrumbs when generating request and response schemas. 
-        This ensures that schemas with the same name but different contexts (such as parameters and results) 
+        Fix OpenRPC converter to use proper breadcrumbs when generating request and response schemas.
+        This ensures that schemas with the same name but different contexts (such as parameters and results)
         don't overwrite each other during conversion, maintaining the integrity of the API definition.
       type: fix
   irVersion: 57
@@ -1446,8 +1649,8 @@
 
 - changelogEntry:
     - summary: |
-        Add support for preserving `maxLines` and `focus` attributes when using `<Code>` components in docs. 
-        These attributes are now properly carried over to the generated code blocks, allowing you to control 
+        Add support for preserving `maxLines` and `focus` attributes when using `<Code>` components in docs.
+        These attributes are now properly carried over to the generated code blocks, allowing you to control
         the display of referenced code snippets with features like line limits and syntax highlighting focus.
       type: fix
   irVersion: 57
@@ -1455,7 +1658,7 @@
 
 - changelogEntry:
     - summary: |
-        Fix docs preview server by properly killing the Next.js process on exit and setting 
+        Fix docs preview server by properly killing the Next.js process on exit and setting
         a memory limit (--max-old-space-size=2048) to prevent out-of-memory errors during development.
       type: fix
   irVersion: 57
@@ -1514,7 +1717,7 @@
 
 - changelogEntry:
     - summary: |
-        Fix a bug where the broken link checker would incorrectly flag links to llms.txt and llms-full.txt files as broken. 
+        Fix a bug where the broken link checker would incorrectly flag links to llms.txt and llms-full.txt files as broken.
         The checker now properly recognizes these file paths as valid.
       type: fix
   irVersion: 57
@@ -1602,7 +1805,7 @@
 
 - changelogEntry:
     - summary: |
-        Fixed an issue where local generation could produce invalid build files (like pyproject.toml) when 
+        Fixed an issue where local generation could produce invalid build files (like pyproject.toml) when
         GitHub configuration was missing a repository URL. The CLI now ensures a repository URL is always set when possible.
       type: fix
   irVersion: 57
@@ -1610,7 +1813,7 @@
 
 - changelogEntry:
     - summary: |
-        Added support for using Podman as a container runner with `fern generate --runner podman`. 
+        Added support for using Podman as a container runner with `fern generate --runner podman`.
         This allows users to run generators locally using Podman instead of Docker.
       type: fix
   irVersion: 57
@@ -1758,10 +1961,10 @@
 
 - changelogEntry:
     - summary: |
-        Add support for environment and auth overrides from generators.yml in the OpenAPI parser. When importing OpenAPI specifications, 
-        the parser now checks for environment and auth configurations in the generators.yml file and uses these settings to override 
-        the environments and authentication schemes defined in the OpenAPI document. This enhancement provides more flexibility in 
-        customizing imported APIs without modifying the original OpenAPI specification, allowing for environment-specific configurations 
+        Add support for environment and auth overrides from generators.yml in the OpenAPI parser. When importing OpenAPI specifications,
+        the parser now checks for environment and auth configurations in the generators.yml file and uses these settings to override
+        the environments and authentication schemes defined in the OpenAPI document. This enhancement provides more flexibility in
+        customizing imported APIs without modifying the original OpenAPI specification, allowing for environment-specific configurations
         and standardized authentication schemes across different API versions.
       type: feat
   irVersion: 57
@@ -1769,8 +1972,8 @@
 
 - changelogEntry:
     - summary: |
-        Add support for auth descriptions in generated documentation. Auth schemes can now include descriptive text that explains authentication requirements, 
-        which is properly displayed in the generated documentation. This enhancement improves API usability by providing clearer guidance on authentication 
+        Add support for auth descriptions in generated documentation. Auth schemes can now include descriptive text that explains authentication requirements,
+        which is properly displayed in the generated documentation. This enhancement improves API usability by providing clearer guidance on authentication
         methods directly within the documentation.
       type: feat
   irVersion: 57
@@ -1792,9 +1995,9 @@
 
 - changelogEntry:
     - summary: |
-        Add support for custom parameters in OpenRPC through the `x-fern-parameters` extension. This extension allows OpenRPC 
-        definitions to specify path parameters, query parameters, and headers that aren't natively supported in the OpenRPC 
-        specification. Parameters defined with this extension are properly converted to the Fern IR format and included in 
+        Add support for custom parameters in OpenRPC through the `x-fern-parameters` extension. This extension allows OpenRPC
+        definitions to specify path parameters, query parameters, and headers that aren't natively supported in the OpenRPC
+        specification. Parameters defined with this extension are properly converted to the Fern IR format and included in
         endpoint definitions, enabling more complete API representations when importing from OpenRPC sources.
       type: feat
   irVersion: 57
@@ -1810,9 +2013,9 @@
 
 - changelogEntry:
     - summary: |
-        Fix OpenAPI parser to avoid recreating endpoint headers that clash with auth headers. Previously, the parser would 
-        generate duplicate header definitions when an endpoint used the same header that was already defined as an auth header. 
-        This could lead to conflicts in the generated SDKs. The parser now properly checks for existing auth headers and 
+        Fix OpenAPI parser to avoid recreating endpoint headers that clash with auth headers. Previously, the parser would
+        generate duplicate header definitions when an endpoint used the same header that was already defined as an auth header.
+        This could lead to conflicts in the generated SDKs. The parser now properly checks for existing auth headers and
         avoids creating duplicates, resulting in cleaner and more consistent API definitions.
       type: feat
   irVersion: 57
@@ -1841,9 +2044,9 @@
 
 - changelogEntry:
     - summary: |
-        Add support for local SDK generation with a Fern token. When a valid Fern token is provided, 
-        users can now generate complete SDKs locally using Docker, without requiring remote generation. 
-        This enhancement improves the development workflow by allowing for faster iteration and testing 
+        Add support for local SDK generation with a Fern token. When a valid Fern token is provided,
+        users can now generate complete SDKs locally using Docker, without requiring remote generation.
+        This enhancement improves the development workflow by allowing for faster iteration and testing
         of SDK changes in local environments.
       type: fix
   irVersion: 57
@@ -1851,8 +2054,8 @@
 
 - changelogEntry:
     - summary: |
-        Enhance OpenAPI -> IR conversion to properly handle default values in schemas. The converter now correctly extracts 
-        and preserves default values from OpenAPI schemas, ensuring they are properly represented in the generated SDKs. 
+        Enhance OpenAPI -> IR conversion to properly handle default values in schemas. The converter now correctly extracts
+        and preserves default values from OpenAPI schemas, ensuring they are properly represented in the generated SDKs.
         This improvement allows API providers to specify meaningful defaults that will be respected in client implementations.
       type: fix
   irVersion: 57
@@ -1860,8 +2063,8 @@
 
 - changelogEntry:
     - summary: |
-        Improve OpenRPC importer to generate more unique schema IDs for request parameters by combining method name, 
-        "Param" keyword, and parameter name. This prevents naming conflicts when different methods have parameters 
+        Improve OpenRPC importer to generate more unique schema IDs for request parameters by combining method name,
+        "Param" keyword, and parameter name. This prevents naming conflicts when different methods have parameters
         with the same name, resulting in more reliable and consistent type generation in the SDKs.
       type: fix
   irVersion: 57
@@ -1876,7 +2079,7 @@
 
 - changelogEntry:
     - summary: |
-        Enhance OpenAPI -> IR parser to better handle inlined oneOf schemas. The parser now uses the schema ID when 
+        Enhance OpenAPI -> IR parser to better handle inlined oneOf schemas. The parser now uses the schema ID when
         generating names for oneOf variants, resulting in more predictable and consistent type names in the generated SDKs.
       type: feat
   irVersion: 57
@@ -1892,8 +2095,8 @@
 
 - changelogEntry:
     - summary: |
-        Add support for schema conversion in OpenRPC importer. The importer now properly converts schemas defined in the 
-        OpenRPC document's components section into Fern types, enabling full type definitions for request and response 
+        Add support for schema conversion in OpenRPC importer. The importer now properly converts schemas defined in the
+        OpenRPC document's components section into Fern types, enabling full type definitions for request and response
         objects. This enhancement allows for more complete and accurate SDK generation from OpenRPC specifications.
       type: feat
   irVersion: 57
@@ -1916,10 +2119,10 @@
 
 - changelogEntry:
     - summary: |
-        Enhance OpenAPI security scheme handling in the parser to support both global and endpoint-level security requirements. 
-        The parser now properly converts security schemes from OpenAPI's `securitySchemes` component into appropriate authentication 
-        headers, supporting bearer tokens, basic auth, and custom API key headers. Global security requirements defined at the 
-        document level are applied to all endpoints, while endpoint-specific security requirements override or supplement the 
+        Enhance OpenAPI security scheme handling in the parser to support both global and endpoint-level security requirements.
+        The parser now properly converts security schemes from OpenAPI's `securitySchemes` component into appropriate authentication
+        headers, supporting bearer tokens, basic auth, and custom API key headers. Global security requirements defined at the
+        document level are applied to all endpoints, while endpoint-specific security requirements override or supplement the
         global configuration, ensuring accurate authentication representation in generated SDKs.
       type: feat
   irVersion: 57
@@ -1927,9 +2130,9 @@
 
 - changelogEntry:
     - summary: |
-        Enhance example generation to consider default values when generating examples for primitive types. 
-        When a string primitive type has a default value specified, the example generator now uses this 
-        default value instead of a generic example. This produces more realistic and contextually 
+        Enhance example generation to consider default values when generating examples for primitive types.
+        When a string primitive type has a default value specified, the example generator now uses this
+        default value instead of a generic example. This produces more realistic and contextually
         appropriate examples in generated SDKs and documentation.
       type: feat
   irVersion: 57
@@ -1970,8 +2173,8 @@
 
 - changelogEntry:
     - summary: |
-        Improve OpenRPC request example generation by not wrapping request payloads in JSON-RPC 2.0 format. 
-        This ensures generated request examples match the expected format for the API's method parameters 
+        Improve OpenRPC request example generation by not wrapping request payloads in JSON-RPC 2.0 format.
+        This ensures generated request examples match the expected format for the API's method parameters
         without the additional JSON-RPC envelope.
       type: feat
   irVersion: 57
@@ -1979,9 +2182,9 @@
 
 - changelogEntry:
     - summary: |
-        Improve OpenAPI response handling for 204 status codes by respecting schema definitions. 
-        When a 204 (No Content) response includes a schema, the importer now properly processes 
-        and preserves this schema information, ensuring accurate API documentation and SDK generation 
+        Improve OpenAPI response handling for 204 status codes by respecting schema definitions.
+        When a 204 (No Content) response includes a schema, the importer now properly processes
+        and preserves this schema information, ensuring accurate API documentation and SDK generation
         even for endpoints that don't return content in successful responses.
       type: feat
   irVersion: 57
@@ -1999,7 +2202,7 @@
 
 - changelogEntry:
     - summary: |
-        Improve OpenRPC response example generation by wrapping example payloads in JSON-RPC 2.0 format with metadata 
+        Improve OpenRPC response example generation by wrapping example payloads in JSON-RPC 2.0 format with metadata
         (jsonrpc version and request id). This ensures generated examples match the actual JSON-RPC response format.
       type: feat
   irVersion: 57
@@ -2007,8 +2210,8 @@
 
 - changelogEntry:
     - summary: |
-        Improve server handling in OpenAPI imports by exploding servers with enum variables into multiple servers, 
-        one for each enum value. For example, a server with URL "https://{region}.example.com" where region 
+        Improve server handling in OpenAPI imports by exploding servers with enum variables into multiple servers,
+        one for each enum value. For example, a server with URL "https://{region}.example.com" where region
         is an enum ["us", "eu"] will be exploded into two servers: "https://us.example.com" and "https://eu.example.com".
       type: feat
   irVersion: 57
@@ -2079,7 +2282,7 @@
 
 - changelogEntry:
     - summary: |
-        Fix an issue in the OpenAPI importer where discriminated unions with literal discriminant values in the variants would render the discriminant property twice. 
+        Fix an issue in the OpenAPI importer where discriminated unions with literal discriminant values in the variants would render the discriminant property twice.
         The importer now correctly checks if union variants contain the discriminant property as a literal value and handles them appropriately.
       type: fix
   irVersion: 57
@@ -2115,7 +2318,7 @@
 
 - changelogEntry:
     - summary: |
-        Fix an issue in the OpenAPI parser where array references were not being properly resolved. The parser now correctly resolves references 
+        Fix an issue in the OpenAPI parser where array references were not being properly resolved. The parser now correctly resolves references
         within array schemas, ensuring that arrays of referenced types are properly handled throughout the API definition.
       type: fix
   irVersion: 57
@@ -2123,7 +2326,7 @@
 
 - changelogEntry:
     - summary: |
-        Improve the ReadMe migrator to respect the original navigation structure when creating the file hierarchy. Previously, nested navigation groups were 
+        Improve the ReadMe migrator to respect the original navigation structure when creating the file hierarchy. Previously, nested navigation groups were
         flattened, but now the file structure will mirror the navigation hierarchy, preserving the original organization of documentation.
       type: fix
   irVersion: 57
@@ -5325,8 +5528,7 @@
   irVersion: 53
   version: 0.39.9
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feature, csharp): Generate well-known types\
+    - summary: "## What's Changed\r\n* (feature, csharp): Generate well-known types\
         \ by @amckinney in https://github.com/fern-api/fern/pull/4319\r\n* fix: fix\
         \ seed, move unit test to right CoreUtility by @RohinBhargava in https://github.com/fern-api/fern/pull/4324\r\
         \n* fix(openapi): generate examples with latest schemas by @dsinghvi in https://github.com/fern-api/fern/pull/4329\r\
@@ -5336,8 +5538,7 @@
   irVersion: 53
   version: 0.39.7
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix (ir): upgrade pydantic generator by @dsinghvi\
+    - summary: "## What's Changed\r\n* fix (ir): upgrade pydantic generator by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/4320\r\n* fix(ir): autogenerate ir\
         \ sdks on version bump by @dsinghvi in https://github.com/fern-api/fern/pull/4321\r\
         \n* fix(python): upgrade ir sdk to handle null unknown types by @dsinghvi in\
@@ -5350,8 +5551,7 @@
   irVersion: 53
   version: 0.39.6
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): add docs for webhook inlining by @dsinghvi\
+    - summary: "## What's Changed\r\n* (fix): add docs for webhook inlining by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/4314\r\n* (chore): add any-auth test\
         \ definition by @dsinghvi in https://github.com/fern-api/fern/pull/4297\r\n\
         * (docs): hide a page from sidebar nav and search by @dannysheridan in https://github.com/fern-api/fern/pull/4312\r\
@@ -5364,8 +5564,7 @@
   irVersion: 53
   version: 0.39.5
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): update ete test snapshots by @dsinghvi\
+    - summary: "## What's Changed\r\n* (fix): update ete test snapshots by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/4311\r\n* bump Python generator versions\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/4308\r\n* fix:\
         \ add in asyncapi tagging with namespaces by @armandobelardo in https://github.com/fern-api/fern/pull/4313\r\
@@ -5375,8 +5574,7 @@
   irVersion: 53
   version: 0.39.4
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, docs): docs now respect ir base path by\
+    - summary: "## What's Changed\r\n* (fix, docs): docs now respect ir base path by\
         \ @dsinghvi in https://github.com/fern-api/fern/pull/4310\r\n\r\n\r\n**Full\
         \ Changelog**: https://github.com/fern-api/fern/compare/0.39.2...0.39.3"
       type: chore
@@ -5384,8 +5582,7 @@
   irVersion: 53
   version: 0.39.3
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feat: allow namespacing an API from generators.yml\
+    - summary: "## What's Changed\r\n* feat: allow namespacing an API from generators.yml\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/4290\r\n* fix:\
         \ unions with utils re-force update refs by @armandobelardo in https://github.com/fern-api/fern/pull/4296\r\
         \n* (feature, csharp): Generate gRPC core utilities by @amckinney in https://github.com/fern-api/fern/pull/4298\r\
@@ -5408,8 +5605,7 @@
   irVersion: 53
   version: 0.39.2
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* chore: update fern logo by @dannysheridan in\
+    - summary: "## What's Changed\r\n* chore: update fern logo by @dannysheridan in\
         \ https://github.com/fern-api/fern/pull/4295\r\n* fix (mock server): make date\
         \ comparison against true dates as opposed to string comp by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/4278\r\n\r\n\r\n**Full Changelog**:\
@@ -5419,8 +5615,7 @@
   irVersion: 53
   version: 0.39.1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feat, docs): add docs on `api.yml` and environment\
+    - summary: "## What's Changed\r\n* (feat, docs): add docs on `api.yml` and environment\
         \ audiences by @dsinghvi in https://github.com/fern-api/fern/pull/4292\r\n*\
         \ (fix): ir generation respects disable examples by @dsinghvi in https://github.com/fern-api/fern/pull/4293\r\
         \n* (fix, python): check autogenerated examples before indexing by @dsinghvi\
@@ -5431,8 +5626,7 @@
   irVersion: 53
   version: 0.38.1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): retrigger typescript sdk publishing by\
+    - summary: "## What's Changed\r\n* (fix): retrigger typescript sdk publishing by\
         \ @dsinghvi in https://github.com/fern-api/fern/pull/4289\r\n\r\n\r\n**Full\
         \ Changelog**: https://github.com/fern-api/fern/compare/0.38.0-rc1...0.38.0"
       type: chore
@@ -5440,8 +5634,7 @@
   irVersion: 53
   version: 0.38.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feat, typescript): support `hasNextPage`  property\
+    - summary: "## What's Changed\r\n* (feat, typescript): support `hasNextPage`  property\
         \ for offset pagination by @dsinghvi in https://github.com/fern-api/fern/pull/4288\r\
         \n* (feature, cli): Upload source files to S3 by @amckinney in https://github.com/fern-api/fern/pull/4286\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.38.0-rc0...0.38.0-rc1"
@@ -5450,8 +5643,7 @@
   irVersion: 53
   version: 0.38.0-rc1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feat, python): move to ruff for formatting by\
+    - summary: "## What's Changed\r\n* (feat, python): move to ruff for formatting by\
         \ @dsinghvi in https://github.com/fern-api/fern/pull/4219\r\n* improvement:\
         \ improve discriminated union object naming by @armandobelardo in https://github.com/fern-api/fern/pull/4243\r\
         \n* (feature): Add encoding and source nodes by @amckinney in https://github.com/fern-api/fern/pull/4240\r\
@@ -5503,8 +5695,7 @@
   irVersion: 53
   version: 0.38.0-rc0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix, python: make circular references more robust\
+    - summary: "## What's Changed\r\n* fix, python: make circular references more robust\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/4216\r\n* improvement:\
         \ allow naming for asyncapi messages to pull message name by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/4228\r\n* c#, fix: class names +\
@@ -5519,8 +5710,7 @@
   irVersion: 53
   version: 0.37.16
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* improvement: respect returning nested properties\
+    - summary: "## What's Changed\r\n* improvement: respect returning nested properties\
         \ in python by @armandobelardo in https://github.com/fern-api/fern/pull/4236\r\
         \n* (feature): Add support for `.proto` inputs by @amckinney in https://github.com/fern-api/fern/pull/4223\r\
         \n* custom segment write key by @abarrell in https://github.com/fern-api/fern/pull/4238\r\
@@ -5530,8 +5720,7 @@
   irVersion: 53
   version: 0.37.15
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: address TS UT fetcher flakiness by @RohinBhargava\
+    - summary: "## What's Changed\r\n* fix: address TS UT fetcher flakiness by @RohinBhargava\
         \ in https://github.com/fern-api/fern/pull/4226\r\n* chore: bump ir sdk to new\
         \ Python generator by @armandobelardo in https://github.com/fern-api/fern/pull/4214\r\
         \n* feat: hide TOC on docs home page by @zachkirsch in https://github.com/fern-api/fern/pull/4230\r\
@@ -5547,8 +5736,7 @@
   irVersion: 53
   version: 0.37.14
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: address TS UT fetcher flakiness by @RohinBhargava\
+    - summary: "## What's Changed\r\n* fix: address TS UT fetcher flakiness by @RohinBhargava\
         \ in https://github.com/fern-api/fern/pull/4226\r\n* chore: bump ir sdk to new\
         \ Python generator by @armandobelardo in https://github.com/fern-api/fern/pull/4214\r\
         \n* feat: hide TOC on docs home page by @zachkirsch in https://github.com/fern-api/fern/pull/4230\r\
@@ -5562,8 +5750,7 @@
   irVersion: 53
   version: 0.37.14-rc0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): reload docs preview server on specs outside\
+    - summary: "## What's Changed\r\n* (fix): reload docs preview server on specs outside\
         \ of the fern folder by @dsinghvi in https://github.com/fern-api/fern/pull/4227\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.37.12...0.37.13"
       type: chore
@@ -5571,8 +5758,7 @@
   irVersion: 53
   version: 0.37.13
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* update cli to use default language by @abarrell\
+    - summary: "## What's Changed\r\n* update cli to use default language by @abarrell\
         \ in https://github.com/fern-api/fern/pull/4218\r\n* (fix, openapi parser):\
         \ generated fern definitions respect OpenAPI tag casing by @dsinghvi in https://github.com/fern-api/fern/pull/4225\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.37.11...0.37.12"
@@ -5581,8 +5767,7 @@
   irVersion: 53
   version: 0.37.12
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* Fix issue where misconfigured directory could\
+    - summary: "## What's Changed\r\n* Fix issue where misconfigured directory could\
         \ cause unhelpful error message by @abarrell in https://github.com/fern-api/fern/pull/4206\r\
         \n\r\n## New Contributors\r\n* @abarrell made their first contribution in https://github.com/fern-api/fern/pull/4206\r\
         \n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.37.10...0.37.11"
@@ -5591,8 +5776,7 @@
   irVersion: 53
   version: 0.37.11
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: if audience is filtering and no audiences\
+    - summary: "## What's Changed\r\n* fix: if audience is filtering and no audiences\
         \ exist on environments, add all environments by @RohinBhargava in https://github.com/fern-api/fern/pull/4220\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.37.9...0.37.10"
       type: chore
@@ -5600,8 +5784,7 @@
   irVersion: 53
   version: 0.37.10
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): support base properties when filtering\
+    - summary: "## What's Changed\r\n* (fix): support base properties when filtering\
         \ for audiences by @dsinghvi in https://github.com/fern-api/fern/pull/4221\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.37.8...0.37.9"
       type: chore
@@ -5609,8 +5792,7 @@
   irVersion: 53
   version: 0.37.9
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feat): cli caches api dependencies by @dsinghvi\
+    - summary: "## What's Changed\r\n* (feat): cli caches api dependencies by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/4201\r\n\r\n\r\n**Full Changelog**:\
         \ https://github.com/fern-api/fern/compare/0.37.7...0.37.8"
       type: chore
@@ -5618,8 +5800,7 @@
   irVersion: 53
   version: 0.37.8
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: python readme generation regression by @armandobelardo\
+    - summary: "## What's Changed\r\n* fix: python readme generation regression by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/4193\r\n* fix, python: allow extending\
         \ alias types by @armandobelardo in https://github.com/fern-api/fern/pull/4190\r\
         \n* (internal): setup flamegraph generation for python generator by @dsinghvi\
@@ -5651,8 +5832,7 @@
   irVersion: 53
   version: 0.37.7
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: add literal properties back to typeddict\
+    - summary: "## What's Changed\r\n* fix: add literal properties back to typeddict\
         \ snippets by @armandobelardo in https://github.com/fern-api/fern/pull/4173\r\
         \n* (fix, typescript): wire `noScripts` into a PersistedProject and introduce\
         \ a test by @dsinghvi in https://github.com/fern-api/fern/pull/4185\r\n* (feat,\
@@ -5666,8 +5846,7 @@
   irVersion: 53
   version: 0.37.6
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* chore, ts: generate union v2 templates by @armandobelardo\
+    - summary: "## What's Changed\r\n* chore, ts: generate union v2 templates by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/4169\r\n* (feature, csharp): Add\
         \ customizable exception class names by @amckinney in https://github.com/fern-api/fern/pull/4181\r\
         \n* (fix, typescript): introduce no scripts option by @dsinghvi in https://github.com/fern-api/fern/pull/4179\r\
@@ -5677,8 +5856,7 @@
   irVersion: 53
   version: 0.37.5
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, docs): validate api workspaces as in addition\
+    - summary: "## What's Changed\r\n* (fix, docs): validate api workspaces as in addition\
         \ to docs workspaces by @dsinghvi in https://github.com/fern-api/fern/pull/4178\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.37.3...0.37.4"
       type: chore
@@ -5686,8 +5864,7 @@
   irVersion: 53
   version: 0.37.4
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): handle loggable fern cli error by @dsinghvi\
+    - summary: "## What's Changed\r\n* (fix): handle loggable fern cli error by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/4175\r\n* (fix): add tests for alias\
         \ extends by @dsinghvi in https://github.com/fern-api/fern/pull/4176\r\n* (fix):\
         \ docs preview server falls back to previous bundle by @dsinghvi in https://github.com/fern-api/fern/pull/4177\r\
@@ -5697,8 +5874,7 @@
   irVersion: 53
   version: 0.37.3
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feature, csharp): Add RequestOptions by @amckinney\
+    - summary: "## What's Changed\r\n* (feature, csharp): Add RequestOptions by @amckinney\
         \ in https://github.com/fern-api/fern/pull/4166\r\n* c#, improvement: error\
         \ parsing  by @dcb6 in https://github.com/fern-api/fern/pull/4168\r\n* (fix):\
         \ introduce extended properties into the IR by @dsinghvi in https://github.com/fern-api/fern/pull/4171\r\
@@ -5713,8 +5889,7 @@
   irVersion: 53
   version: 0.37.2
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* make @dcb6 codeowner for java + csharp by @dcb6\
+    - summary: "## What's Changed\r\n* make @dcb6 codeowner for java + csharp by @dcb6\
         \ in https://github.com/fern-api/fern/pull/4163\r\n* (beta, typescript): feature\
         \ flag test generation that actually works by @dsinghvi in https://github.com/fern-api/fern/pull/4164\r\
         \n* fix: add images from frontmatter as well by @RohinBhargava in https://github.com/fern-api/fern/pull/4156\r\
@@ -5725,8 +5900,7 @@
   irVersion: 53
   version: 0.37.1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* chore: bump typescript version and changelog\
+    - summary: "## What's Changed\r\n* chore: bump typescript version and changelog\
         \ by @RohinBhargava in https://github.com/fern-api/fern/pull/4143\r\n* feat:\
         \ introduce typeddicts for request objects by @armandobelardo in https://github.com/fern-api/fern/pull/4113\r\
         \n* fix, python: get api error through external import by @armandobelardo in\
@@ -5752,8 +5926,7 @@
   irVersion: 53
   version: 0.37.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* improvement, python: export the root client from\
+    - summary: "## What's Changed\r\n* improvement, python: export the root client from\
         \ the root init file by @armandobelardo in https://github.com/fern-api/fern/pull/4111\r\
         \n* (feat): support multi url environments in C# by @dsinghvi in https://github.com/fern-api/fern/pull/4120\r\
         \n* (fix, csharp): MultiUrl environments now compile by @dsinghvi in https://github.com/fern-api/fern/pull/4121\r\
@@ -5779,8 +5952,7 @@
   irVersion: 52
   version: 0.36.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* java, fix: match java local config to publish\
+    - summary: "## What's Changed\r\n* java, fix: match java local config to publish\
         \ config by @dcb6 in https://github.com/fern-api/fern/pull/4127\r\n* follow\
         \ up: release java sdk 1.0.5 by @dcb6 in https://github.com/fern-api/fern/pull/4129\r\
         \n* fix: Add Stream Wrappers for use with various environments by @RohinBhargava\
@@ -5794,8 +5966,7 @@
   irVersion: 52
   version: 0.36.0-rc1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* improvement, python: export the root client from\
+    - summary: "## What's Changed\r\n* improvement, python: export the root client from\
         \ the root init file by @armandobelardo in https://github.com/fern-api/fern/pull/4111\r\
         \n* (feat): support multi url environments in C# by @dsinghvi in https://github.com/fern-api/fern/pull/4120\r\
         \n* (fix, csharp): MultiUrl environments now compile by @dsinghvi in https://github.com/fern-api/fern/pull/4121\r\
@@ -5810,8 +5981,7 @@
   irVersion: 52
   version: 0.36.0-rc0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feat): support `default-url`  and  url override\
+    - summary: "## What's Changed\r\n* (feat): support `default-url`  and  url override\
         \ on imports by @dsinghvi in https://github.com/fern-api/fern/pull/4116\r\n\
         * (fix, openapi): set unauthed appropriately in openapi parser by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/4117\r\n\r\n\r\n**Full Changelog**:\
@@ -5821,8 +5991,7 @@
   irVersion: 52
   version: 0.35.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feat): support `default-url`  and  url override\
+    - summary: "## What's Changed\r\n* (feat): support `default-url`  and  url override\
         \ on imports by @dsinghvi in https://github.com/fern-api/fern/pull/4116\r\n\r\
         \n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.34.0...0.35.0-rc0"
       type: chore
@@ -5830,8 +5999,7 @@
   irVersion: 52
   version: 0.35.0-rc0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (chore): add SEO frontmatter section by @chdeskur\
+    - summary: "## What's Changed\r\n* (chore): add SEO frontmatter section by @chdeskur\
         \ in https://github.com/fern-api/fern/pull/4101\r\n* fix: update typing of `expected_types`\
         \ to tuple to satisfy mypy by @armandobelardo in https://github.com/fern-api/fern/pull/4100\r\
         \n* (chore): document nuget api key by @chdeskur in https://github.com/fern-api/fern/pull/4103\r\
@@ -5854,8 +6022,7 @@
   irVersion: 52
   version: 0.34.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (chore): add SEO frontmatter section by @chdeskur\
+    - summary: "## What's Changed\r\n* (chore): add SEO frontmatter section by @chdeskur\
         \ in https://github.com/fern-api/fern/pull/4101\r\n* fix: update typing of `expected_types`\
         \ to tuple to satisfy mypy by @armandobelardo in https://github.com/fern-api/fern/pull/4100\r\
         \n* (chore): document nuget api key by @chdeskur in https://github.com/fern-api/fern/pull/4103\r\
@@ -5868,8 +6035,7 @@
   irVersion: 51
   version: 0.33.6-rc0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, go): Fix error handling for property-name\
+    - summary: "## What's Changed\r\n* (fix, go): Fix error handling for property-name\
         \ error discrimination by @amckinney in https://github.com/fern-api/fern/pull/4098\r\
         \n* improvement: support pydantic v2 outright by @armandobelardo in https://github.com/fern-api/fern/pull/3805\r\
         \n* fix: int64 format is correctly parsed to long by @armandobelardo in https://github.com/fern-api/fern/pull/4099\r\
@@ -5883,8 +6049,7 @@
   irVersion: 51
   version: 0.33.5
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* adding readme alternative page by @chdeskur in\
+    - summary: "## What's Changed\r\n* adding readme alternative page by @chdeskur in\
         \ https://github.com/fern-api/fern/pull/4091\r\n* fix: the ruby SDK now returns\
         \ the parsed json instead of openstruct if no JSON serializer is specified by\
         \ @armandobelardo in https://github.com/fern-api/fern/pull/4092\r\n* (fix):\
@@ -5896,8 +6061,7 @@
   irVersion: 51
   version: 0.33.4
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feat, csharp: Unit Test Generation + IR Bump\
+    - summary: "## What's Changed\r\n* feat, csharp: Unit Test Generation + IR Bump\
         \  by @dcb6 in https://github.com/fern-api/fern/pull/4047\r\n* (fix): remove\
         \ `jest-specific-snapshot` by @dsinghvi in https://github.com/fern-api/fern/pull/4088\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.33.2...0.33.3"
@@ -5906,8 +6070,7 @@
   irVersion: 51
   version: 0.33.3
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix, python: only check the oauth expiry if there\
+    - summary: "## What's Changed\r\n* fix, python: only check the oauth expiry if there\
         \ is a specified field by @armandobelardo in https://github.com/fern-api/fern/pull/4077\r\
         \n* fix: python now requires an environment be specified if a default is not\
         \ provided by @armandobelardo in https://github.com/fern-api/fern/pull/4078\r\
@@ -5929,8 +6092,7 @@
   irVersion: 51
   version: 0.33.2
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix, python: only check the oauth expiry if there\
+    - summary: "## What's Changed\r\n* fix, python: only check the oauth expiry if there\
         \ is a specified field by @armandobelardo in https://github.com/fern-api/fern/pull/4077\r\
         \n* fix: python now requires an environment be specified if a default is not\
         \ provided by @armandobelardo in https://github.com/fern-api/fern/pull/4078\r\
@@ -5943,8 +6105,7 @@
   irVersion: 51
   version: 0.33.2-rc0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* :improvement: update seed's script runner to\
+    - summary: "## What's Changed\r\n* :improvement: update seed's script runner to\
         \ fail if any of the commands exit 1 by @armandobelardo in https://github.com/fern-api/fern/pull/4075\r\
         \n* (fix, openapi): Deduplicate API version scheme header by @amckinney in https://github.com/fern-api/fern/pull/4076\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.33.0...0.33.1"
@@ -5953,8 +6114,7 @@
   irVersion: 51
   version: 0.33.1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: python sdk serializes bytes within JSON\
+    - summary: "## What's Changed\r\n* fix: python sdk serializes bytes within JSON\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/4070\r\n* (fix,\
         \ typescript): multipart form upload on Node 19+ by @dsinghvi in https://github.com/fern-api/fern/pull/4056\r\
         \n* (feat): `ir` now adds a `TypeReference` for container types that makes it\
@@ -5968,8 +6128,7 @@
   irVersion: 51
   version: 0.33.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, openapi): Resolve 'refs' specified in overrides\
+    - summary: "## What's Changed\r\n* (fix, openapi): Resolve 'refs' specified in overrides\
         \ by @amckinney in https://github.com/fern-api/fern/pull/4049\r\n* Initial Swift\
         \ Codegen by @armandobelardo in https://github.com/fern-api/fern/pull/4035\r\
         \n* (fix): Swift generator and template by @amckinney in https://github.com/fern-api/fern/pull/4050\r\
@@ -5994,8 +6153,7 @@
   irVersion: 50
   version: 0.32.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: ignore data urls in parseImagePaths by @abvthecity\
+    - summary: "## What's Changed\r\n* fix: ignore data urls in parseImagePaths by @abvthecity\
         \ in https://github.com/fern-api/fern/pull/4053\r\n\r\n\r\n**Full Changelog**:\
         \ https://github.com/fern-api/fern/compare/0.31.25-rc0...0.31.25-rc1"
       type: chore
@@ -6003,8 +6161,7 @@
   irVersion: 50
   version: 0.31.25-rc1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, openapi): Resolve 'refs' specified in overrides\
+    - summary: "## What's Changed\r\n* (fix, openapi): Resolve 'refs' specified in overrides\
         \ by @amckinney in https://github.com/fern-api/fern/pull/4049\r\n* Initial Swift\
         \ Codegen by @armandobelardo in https://github.com/fern-api/fern/pull/4035\r\
         \n* (fix): Swift generator and template by @amckinney in https://github.com/fern-api/fern/pull/4050\r\
@@ -6020,8 +6177,7 @@
   irVersion: 50
   version: 0.31.24
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feature, typescript): Add setObjectProperty\
+    - summary: "## What's Changed\r\n* (feature, typescript): Add setObjectProperty\
         \ core utility by @amckinney in https://github.com/fern-api/fern/pull/4032\r\
         \n* c#, fix: increase supported union size + handle double optionals by @dcb6\
         \ in https://github.com/fern-api/fern/pull/4033\r\n* (fix): Handle circular\
@@ -6040,8 +6196,7 @@
   irVersion: 50
   version: 0.31.23
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feature, typescript): Add setObjectProperty\
+    - summary: "## What's Changed\r\n* (feature, typescript): Add setObjectProperty\
         \ core utility by @amckinney in https://github.com/fern-api/fern/pull/4032\r\
         \n* c#, fix: increase supported union size + handle double optionals by @dcb6\
         \ in https://github.com/fern-api/fern/pull/4033\r\n* (fix): Handle circular\
@@ -6056,8 +6211,7 @@
   irVersion: 50
   version: 0.31.23-rc0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* Revert \"Revert \"feat: landing page in docs\"\
+    - summary: "## What's Changed\r\n* Revert \"Revert \"feat: landing page in docs\"\
         \" by @abvthecity in https://github.com/fern-api/fern/pull/4023\r\n* Fix core-utilities\
         \ typescript tests by @williamluer in https://github.com/fern-api/fern/pull/4022\r\
         \n* experimental: scan files to include react in mdx by @abvthecity in https://github.com/fern-api/fern/pull/4015\r\
@@ -6078,8 +6232,7 @@
   irVersion: 50
   version: 0.31.22
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* Fix core-utilities typescript tests by @williamluer\
+    - summary: "## What's Changed\r\n* Fix core-utilities typescript tests by @williamluer\
         \ in https://github.com/fern-api/fern/pull/4022\r\n* experimental: scan files\
         \ to include react in mdx by @abvthecity in https://github.com/fern-api/fern/pull/4015\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.31.22-rc0...0.31.22-rc1"
@@ -6088,8 +6241,7 @@
   irVersion: 50
   version: 0.31.22-rc1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feat, typescript): make `zurg` completely synchronous\
+    - summary: "## What's Changed\r\n* (feat, typescript): make `zurg` completely synchronous\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/4024\r\n* (chore): add\
         \ xml type by @chdeskur in https://github.com/fern-api/fern/pull/4025\r\n* fix:\
         \ (regression) parseDocsConfiguration accidentally calls loadAllPages with absolutePathToDocsConfig\
@@ -6101,8 +6253,7 @@
   irVersion: 50
   version: 0.31.22-rc2
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* Revert \"Revert \"feat: landing page in docs\"\
+    - summary: "## What's Changed\r\n* Revert \"Revert \"feat: landing page in docs\"\
         \" by @abvthecity in https://github.com/fern-api/fern/pull/4023\r\n\r\n\r\n\
         **Full Changelog**: https://github.com/fern-api/fern/compare/0.31.21...0.31.22-rc0"
       type: chore
@@ -6110,8 +6261,7 @@
   irVersion: 50
   version: 0.31.22-rc0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (chore, typescript): Release 0.28.0-rc0 by @amckinney\
+    - summary: "## What's Changed\r\n* (chore, typescript): Release 0.28.0-rc0 by @amckinney\
         \ in https://github.com/fern-api/fern/pull/4019\r\n* Revert \"feat: landing\
         \ page in docs\" by @dsinghvi in https://github.com/fern-api/fern/pull/4021\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.31.20...0.31.21"
@@ -6120,8 +6270,7 @@
   irVersion: 50
   version: 0.31.21
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feature, typescript): Add offset pagination\
+    - summary: "## What's Changed\r\n* (feature, typescript): Add offset pagination\
         \ by @amckinney in https://github.com/fern-api/fern/pull/4008\r\n* (fix, internal):\
         \ `template/codegen` repo plays nicely with mrlint by @dsinghvi in https://github.com/fern-api/fern/pull/4018\r\
         \n* (fix): CI is green by @amckinney in https://github.com/fern-api/fern/pull/4017\r\
@@ -6131,8 +6280,7 @@
   irVersion: 50
   version: 0.31.20
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): Pagination works with imported type references\
+    - summary: "## What's Changed\r\n* (fix): Pagination works with imported type references\
         \ by @amckinney in https://github.com/fern-api/fern/pull/4014\r\n* Template\
         \ for creating a new SDK generator by @mikemilla in https://github.com/fern-api/fern/pull/4010\r\
         \n\r\n## New Contributors\r\n* @mikemilla made their first contribution in https://github.com/fern-api/fern/pull/4010\r\
@@ -6142,8 +6290,7 @@
   irVersion: 50
   version: 0.31.19
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feat: landing page in docs by @abvthecity in\
+    - summary: "## What's Changed\r\n* feat: landing page in docs by @abvthecity in\
         \ https://github.com/fern-api/fern/pull/3999\r\n* (feature, typescript): Add\
         \ support for alpha/beta dist tags by @amckinney in https://github.com/fern-api/fern/pull/4000\r\
         \n* fix: allowed text encodings by @abvthecity in https://github.com/fern-api/fern/pull/4005\r\
@@ -6159,8 +6306,7 @@
   irVersion: 50
   version: 0.31.18
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (chore): Replace CircleCI with GitHub workflows\
+    - summary: "## What's Changed\r\n* (chore): Replace CircleCI with GitHub workflows\
         \ by @amckinney in https://github.com/fern-api/fern/pull/3991\r\n* (fix): Update\
         \ NPM token environment variable by @amckinney in https://github.com/fern-api/fern/pull/3992\r\
         \n* (fix): Update git-version.sh script by @amckinney in https://github.com/fern-api/fern/pull/3993\r\
@@ -6172,8 +6318,7 @@
   irVersion: 50
   version: 0.31.17
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): Add POSTHOG_API_KEY to live-test job by\
+    - summary: "## What's Changed\r\n* (fix): Add POSTHOG_API_KEY to live-test job by\
         \ @amckinney in https://github.com/fern-api/fern/pull/3998\r\n\r\n**Full Changelog**:\
         \ https://github.com/fern-api/fern/compare/0.31.17-rc1...0.31.17-rc2"
       type: chore
@@ -6189,8 +6334,7 @@
   irVersion: 50
   version: 0.31.17-rc1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (chore): Replace CircleCI with GitHub workflows\
+    - summary: "## What's Changed\r\n* (chore): Replace CircleCI with GitHub workflows\
         \ by @amckinney in https://github.com/fern-api/fern/pull/3991\r\n* (fix): Update\
         \ NPM token environment variable by @amckinney in https://github.com/fern-api/fern/pull/3992\r\
         \n* (fix): Update git-version.sh script by @amckinney in https://github.com/fern-api/fern/pull/3993\r\
@@ -6200,8 +6344,7 @@
   irVersion: 50
   version: 0.31.17-rc0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (chore): update availability.mdx by @chdeskur\
+    - summary: "## What's Changed\r\n* (chore): update availability.mdx by @chdeskur\
         \ in https://github.com/fern-api/fern/pull/3989\r\n* (fix, openapi): Fix allOf\
         \ object filtering by @amckinney in https://github.com/fern-api/fern/pull/3990\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.31.14...0.31.16"
@@ -6210,8 +6353,7 @@
   irVersion: 50
   version: 0.31.16
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (chore): update availability.mdx by @chdeskur\
+    - summary: "## What's Changed\r\n* (chore): update availability.mdx by @chdeskur\
         \ in https://github.com/fern-api/fern/pull/3989\r\n* (fix, openapi): Fix allOf\
         \ object filtering by @amckinney in https://github.com/fern-api/fern/pull/3990\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.31.14...0.31.15"
@@ -6220,8 +6362,7 @@
   irVersion: 50
   version: 0.31.15
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, go): Don't send 'null' for nil request\
+    - summary: "## What's Changed\r\n* (fix, go): Don't send 'null' for nil request\
         \ body by @amckinney in https://github.com/fern-api/fern/pull/3987\r\n* (fix):\
         \ fern generate --preview doesn't check for env variables by @dsinghvi in https://github.com/fern-api/fern/pull/3988\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.31.13...0.31.14"
@@ -6230,8 +6371,7 @@
   irVersion: 50
   version: 0.31.14
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): allow ISO-8859-1 encoded files by @dsinghvi\
+    - summary: "## What's Changed\r\n* (fix): allow ISO-8859-1 encoded files by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/3986\r\n\r\n\r\n**Full Changelog**:\
         \ https://github.com/fern-api/fern/compare/0.31.12...0.31.13"
       type: chore
@@ -6239,8 +6379,7 @@
   irVersion: 50
   version: 0.31.13
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, cli): Remove default value checks for boolean,\
+    - summary: "## What's Changed\r\n* (fix, cli): Remove default value checks for boolean,\
         \ long, and bigint by @amckinney in https://github.com/fern-api/fern/pull/3985\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.31.11...0.31.12"
       type: chore
@@ -6248,8 +6387,7 @@
   irVersion: 50
   version: 0.31.12
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: ruby snippets for dates have correct quotes\
+    - summary: "## What's Changed\r\n* fix: ruby snippets for dates have correct quotes\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/3983\r\n* improvement:\
         \ python respects ir50, inserts defaults by @armandobelardo in https://github.com/fern-api/fern/pull/3982\r\
         \n* (fix, openapi): Prefer security schemes in order by @amckinney in https://github.com/fern-api/fern/pull/3984\r\
@@ -6259,8 +6397,7 @@
   irVersion: 50
   version: 0.31.11
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* improvement: add advanced section to python readme\
+    - summary: "## What's Changed\r\n* improvement: add advanced section to python readme\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/3970\r\n* (feat):\
         \ customize status code for typescript express generator  by @dsinghvi in https://github.com/fern-api/fern/pull/3971\r\
         \n* fix, python: allow offsets to start at 0 by @armandobelardo in https://github.com/fern-api/fern/pull/3972\r\
@@ -6279,8 +6416,7 @@
   irVersion: 50
   version: 0.31.10
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* improvement: python async snippets now leverage\
+    - summary: "## What's Changed\r\n* improvement: python async snippets now leverage\
         \ asyncio run by @armandobelardo in https://github.com/fern-api/fern/pull/3961\r\
         \n* improvement: allow adding extra dependencies to Ruby SDK by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/3960\r\n* fix: Mark CSS files as\
@@ -6292,8 +6428,7 @@
   irVersion: 49
   version: 0.31.9
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: generator upgrade cli upgrades in place\
+    - summary: "## What's Changed\r\n* fix: generator upgrade cli upgrades in place\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/3951\r\n* feat:\
         \ add reviewers blocks to generators.yml by @armandobelardo in https://github.com/fern-api/fern/pull/3952\r\
         \n* Use all FormData headers and don't stringify stream.Readable by @williamluer\
@@ -6309,8 +6444,7 @@
   irVersion: 49
   version: 0.31.8
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: validate files to be uploaded by @trevorblades\
+    - summary: "## What's Changed\r\n* fix: validate files to be uploaded by @trevorblades\
         \ in https://github.com/fern-api/fern/pull/3917\r\n* fix: python list allowlist\
         \ is now case insensitive by @armandobelardo in https://github.com/fern-api/fern/pull/3950\r\
         \n* improvement: add x-fern-base-path to asyncapi extensions by @armandobelardo\
@@ -6321,8 +6455,7 @@
   irVersion: 49
   version: 0.31.7
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (improvement, typescript): support overriding\
+    - summary: "## What's Changed\r\n* (improvement, typescript): support overriding\
         \ global headers by @dsinghvi in https://github.com/fern-api/fern/pull/3945\r\
         \n* feat, python: introduce `reference.md` generation by @armandobelardo in\
         \ https://github.com/fern-api/fern/pull/3946\r\n* (fix, csharp): json serialize\
@@ -6335,8 +6468,7 @@
   irVersion: 49
   version: 0.31.6
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: api update command now works with unioned\
+    - summary: "## What's Changed\r\n* fix: api update command now works with unioned\
         \ + nested APIs by @armandobelardo in https://github.com/fern-api/fern/pull/3944\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.31.4...0.31.5"
       type: chore
@@ -6344,8 +6476,7 @@
   irVersion: 49
   version: 0.31.5
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feat, typescript): support automatic cursor\
+    - summary: "## What's Changed\r\n* (feat, typescript): support automatic cursor\
         \ based pagination by @dsinghvi in https://github.com/fern-api/fern/pull/3941\r\
         \n* (fix, typescript): auto pagination handles optional results arrays by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/3942\r\n* (fix, openapi):  `x-fern-global-headers`\
@@ -6356,8 +6487,7 @@
   irVersion: 49
   version: 0.31.4
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: the python sdk sends additional properties\
+    - summary: "## What's Changed\r\n* fix: the python sdk sends additional properties\
         \ to the correct request\u2026 by @armandobelardo in https://github.com/fern-api/fern/pull/3936\r\
         \n* java, improvement: improve java exception naming by @dcb6 in https://github.com/fern-api/fern/pull/3938\r\
         \n* Bump golang.org/x/tools from 0.21.0 to 0.22.0 in /generators/go by @dependabot\
@@ -6369,8 +6499,7 @@
   irVersion: 49
   version: 0.31.3
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): openapi parser gets boolean values safely\
+    - summary: "## What's Changed\r\n* (fix): openapi parser gets boolean values safely\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/3937\r\n\r\n\r\n**Full\
         \ Changelog**: https://github.com/fern-api/fern/compare/0.31.1...0.31.2"
       type: chore
@@ -6378,8 +6507,7 @@
   irVersion: 49
   version: 0.31.2
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: ruby RC respects header prefixes again by\
+    - summary: "## What's Changed\r\n* fix: ruby RC respects header prefixes again by\
         \ @armandobelardo in https://github.com/fern-api/fern/pull/3927\r\n* (feat,\
         \ cli): add support for `--mode pull-request` in the CLI when running `fern\
         \ generate` by @dsinghvi in https://github.com/fern-api/fern/pull/3928\r\n*\
@@ -6410,8 +6538,7 @@
   irVersion: 49
   version: 0.31.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): set  when uploading a mock server definition\
+    - summary: "## What's Changed\r\n* (fix): set  when uploading a mock server definition\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/3926\r\n\r\n\r\n**Full\
         \ Changelog**: https://github.com/fern-api/fern/compare/0.31.0-rc4...0.31.0-rc5"
       type: chore
@@ -6419,8 +6546,7 @@
   irVersion: 49
   version: 0.31.0-rc5
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feat, IR): support streaming code generation\
+    - summary: "## What's Changed\r\n* (feat, IR): support streaming code generation\
         \ with the parameter by @dsinghvi in https://github.com/fern-api/fern/pull/3914\r\
         \n* (feat): update frontmatter docs by @chdeskur in https://github.com/fern-api/fern/pull/3916\r\
         \n* (fix, cli): examples don't print out where the missing property is by @dsinghvi\
@@ -6432,8 +6558,7 @@
   irVersion: 49
   version: 0.31.0-rc4
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, python): SDK doesn't leak `JSONDecodeError`\
+    - summary: "## What's Changed\r\n* (fix, python): SDK doesn't leak `JSONDecodeError`\
         \ to users by @dsinghvi in https://github.com/fern-api/fern/pull/3908\r\n* (fix,\
         \ python): python sdk generator handles stream termination like `[[DONE]]` by\
         \ @dsinghvi in https://github.com/fern-api/fern/pull/3909\r\n* (feature, readme):\
@@ -6451,8 +6576,7 @@
   irVersion: 48
   version: 0.31.0-rc3
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, csharp): concatenate `baseURL` and endpoint\
+    - summary: "## What's Changed\r\n* (fix, csharp): concatenate `baseURL` and endpoint\
         \ path together by @dsinghvi in https://github.com/fern-api/fern/pull/3906\r\
         \n* (fix, cli): literal examples are generated correctly in the IR by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/3907\r\n\r\n\r\n**Full Changelog**:\
@@ -6462,8 +6586,7 @@
   irVersion: 48
   version: 0.31.0-rc2
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix, ruby: leverage a types module by @armandobelardo\
+    - summary: "## What's Changed\r\n* fix, ruby: leverage a types module by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/3893\r\n* (fix, typescript): generate\
         \ streaming endpoint snippets by @dsinghvi in https://github.com/fern-api/fern/pull/3895\r\
         \n* fix: new ruby generator config matches class reference and class decl\u2026\
@@ -6487,8 +6610,7 @@
   irVersion: 48
   version: 0.31.0-rc1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, csharp): revert to .NET 6+ compatibility\
+    - summary: "## What's Changed\r\n* (fix, csharp): revert to .NET 6+ compatibility\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/3882\r\n* (fix, ts):\
         \ Fix environment import in snippets by @amckinney in https://github.com/fern-api/fern/pull/3885\r\
         \n* (feat, internal): setup csharp seed scripts by @dsinghvi in https://github.com/fern-api/fern/pull/3884\r\
@@ -6508,8 +6630,7 @@
   irVersion: 48
   version: 0.31.0-rc0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (chore, python): Upgrade to IRv46 by @amckinney\
+    - summary: "## What's Changed\r\n* (chore, python): Upgrade to IRv46 by @amckinney\
         \ in https://github.com/fern-api/fern/pull/3880\r\n* feat: add basepath to preview\
         \ generation by @abvthecity in https://github.com/fern-api/fern/pull/3877\r\n\
         \r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.30.9...0.30.10"
@@ -6518,8 +6639,7 @@
   irVersion: 48
   version: 0.30.10
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: bold text on \u201Ccomparison with openapi\u201D\
+    - summary: "## What's Changed\r\n* fix: bold text on \u201Ccomparison with openapi\u201D\
         \ docs by @zachkirsch in https://github.com/fern-api/fern/pull/3876\r\n* (fix,\
         \ typescript): snippet templates include client import by @dsinghvi in https://github.com/fern-api/fern/pull/3878\r\
         \n* (fix, ts): Update README.md snippets to call nested methods by @amckinney\
@@ -6568,8 +6688,7 @@
   irVersion: 48
   version: 0.30.8
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: merge and filter children within non-visited\
+    - summary: "## What's Changed\r\n* fix: merge and filter children within non-visited\
         \ subpackage by @abvthecity in https://github.com/fern-api/fern/pull/3854\r\n\
         * (fix, docs): Update OAuth section by @amckinney in https://github.com/fern-api/fern/pull/3856\r\
         \n* build(deps): bump idna from 3.6 to 3.7 in /generators/python by @dependabot\
@@ -6590,8 +6709,7 @@
   irVersion: 48
   version: 0.30.8-rc7
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feat: api navigation reorder by @abvthecity in\
+    - summary: "## What's Changed\r\n* feat: api navigation reorder by @abvthecity in\
         \ https://github.com/fern-api/fern/pull/3841\r\n* (fix, webhooks): support audiences\
         \ for webhooks and payload properties by @dsinghvi in https://github.com/fern-api/fern/pull/3851\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.30.8-rc2...0.30.8-rc6"
@@ -6612,8 +6730,7 @@
   irVersion: 47
   version: 0.30.8-rc4
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): handle code samples without accompanying\
+    - summary: "## What's Changed\r\n* (fix): handle code samples without accompanying\
         \ examples by @dsinghvi in https://github.com/fern-api/fern/pull/3849\r\n* (fix,\
         \ ts): Add environment property to snippets by @amckinney in https://github.com/fern-api/fern/pull/3850\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.30.8-rc1...0.30.8-rc3"
@@ -6647,8 +6764,7 @@
   irVersion: 46
   version: 0.30.8-rc0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: after parsing the paths, replace the image\
+    - summary: "## What's Changed\r\n* fix: after parsing the paths, replace the image\
         \ paths with file ids by @abvthecity in https://github.com/fern-api/fern/pull/3847\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.30.6...0.30.7"
       type: chore
@@ -6656,8 +6772,7 @@
   irVersion: 46
   version: 0.30.7
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feature, openapi): Add better support for OpenAPI\
+    - summary: "## What's Changed\r\n* (feature, openapi): Add better support for OpenAPI\
         \ webhooks by @amckinney in https://github.com/fern-api/fern/pull/3846\r\n\r\
         \n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.30.5...0.30.6"
       type: chore
@@ -6665,8 +6780,7 @@
   irVersion: 46
   version: 0.30.6
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, go): Handle deepObject query parameter\
+    - summary: "## What's Changed\r\n* (fix, go): Handle deepObject query parameter\
         \ arrays by @amckinney in https://github.com/fern-api/fern/pull/3836\r\n* [FER-1986]\
         \ Fix two DiscriminatedUnion bugs in dynamic Typescript snippets by @ppod1991\
         \ in https://github.com/fern-api/fern/pull/3833\r\n* added custom package json\
@@ -6694,8 +6808,7 @@
   irVersion: 46
   version: 0.30.5
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: pagination is 1-based not 0 by @armandobelardo\
+    - summary: "## What's Changed\r\n* fix: pagination is 1-based not 0 by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/3835\r\n* (fix, openapi): fall back\
         \ to default status code if none provided by @dsinghvi in https://github.com/fern-api/fern/pull/3834\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.30.3...0.30.4"
@@ -6704,8 +6817,7 @@
   irVersion: 46
   version: 0.30.4
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feature, ts): Add generator-cli client to generate\
+    - summary: "## What's Changed\r\n* (feature, ts): Add generator-cli client to generate\
         \ README.md by @amckinney in https://github.com/fern-api/fern/pull/3817\r\n\
         * (fix, python): Unions with single element and/or no properties by @amckinney\
         \ in https://github.com/fern-api/fern/pull/3822\r\n* (fix, openapi): Handle\
@@ -6716,8 +6828,7 @@
   irVersion: 46
   version: 0.30.3
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): snippet templates for discriminated unions\
+    - summary: "## What's Changed\r\n* (fix): snippet templates for discriminated unions\
         \ specify `template_inputs` by @dsinghvi in https://github.com/fern-api/fern/pull/3808\r\
         \n* fix python seed by @dsinghvi in https://github.com/fern-api/fern/pull/3809\r\
         \n* (feature): Write ReameConfig in IR by @amckinney in https://github.com/fern-api/fern/pull/3786\r\
@@ -6737,8 +6848,7 @@
   irVersion: 46
   version: 0.30.2
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix, python: update timeout parameter docs by\
+    - summary: "## What's Changed\r\n* fix, python: update timeout parameter docs by\
         \ @armandobelardo in https://github.com/fern-api/fern/pull/3771\r\n* fix, python:\
         \ mypy variance check by @armandobelardo in https://github.com/fern-api/fern/pull/3772\r\
         \n* java: make sure oauth gated properly by @dcb6 in https://github.com/fern-api/fern/pull/3757\r\
@@ -6776,8 +6886,7 @@
   irVersion: 46
   version: 0.30.1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix, python: update timeout parameter docs by\
+    - summary: "## What's Changed\r\n* fix, python: update timeout parameter docs by\
         \ @armandobelardo in https://github.com/fern-api/fern/pull/3771\r\n* fix, python:\
         \ mypy variance check by @armandobelardo in https://github.com/fern-api/fern/pull/3772\r\
         \n* java: make sure oauth gated properly by @dcb6 in https://github.com/fern-api/fern/pull/3757\r\
@@ -6808,8 +6917,7 @@
   irVersion: 46
   version: 0.30.1-rc1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: address a number of papercuts in the mock\
+    - summary: "## What's Changed\r\n* fix: address a number of papercuts in the mock\
         \ server and python unit tests by @armandobelardo in https://github.com/fern-api/fern/pull/3749\r\
         \n* (fix, ts): Simplify OAuth error handling by @amckinney in https://github.com/fern-api/fern/pull/3752\r\
         \n* docs: add java examples by @dcb6 in https://github.com/fern-api/fern/pull/3755\r\
@@ -6835,8 +6943,7 @@
   irVersion: 46
   version: 0.30.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: address a number of papercuts in the mock\
+    - summary: "## What's Changed\r\n* fix: address a number of papercuts in the mock\
         \ server and python unit tests by @armandobelardo in https://github.com/fern-api/fern/pull/3749\r\
         \n* (fix, ts): Simplify OAuth error handling by @amckinney in https://github.com/fern-api/fern/pull/3752\r\
         \n* docs: add java examples by @dcb6 in https://github.com/fern-api/fern/pull/3755\r\
@@ -6867,8 +6974,7 @@
   irVersion: 45
   version: 0.29.6
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, ts): Throw an error upon OAuth refresh\
+    - summary: "## What's Changed\r\n* (fix, ts): Throw an error upon OAuth refresh\
         \ failure by @amckinney in https://github.com/fern-api/fern/pull/3737\r\n* (fix,\
         \ openapi): Preserve descriptions in anyOf by @amckinney in https://github.com/fern-api/fern/pull/3748\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.29.4...0.29.5"
@@ -6877,8 +6983,7 @@
   irVersion: 45
   version: 0.29.5
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, typescript): disable integration test generation\
+    - summary: "## What's Changed\r\n* (fix, typescript): disable integration test generation\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/3731\r\n* (fix, typescript):\
         \ generated GitHub workflows do not assume `fern` present by @dsinghvi in https://github.com/fern-api/fern/pull/3732\r\
         \n* fix, python: add type annotations to test vars by @armandobelardo in https://github.com/fern-api/fern/pull/3733\r\
@@ -6902,8 +7007,7 @@
   irVersion: 45
   version: 0.29.4
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): write mock definition by @dsinghvi in\
+    - summary: "## What's Changed\r\n* (fix): write mock definition by @dsinghvi in\
         \ https://github.com/fern-api/fern/pull/3730\r\n\r\n\r\n**Full Changelog**:\
         \ https://github.com/fern-api/fern/compare/0.29.2...0.29.3"
       type: chore
@@ -6911,8 +7015,7 @@
   irVersion: 45
   version: 0.29.3
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* docs: fix broken links and anchor text by @atwooddc\
+    - summary: "## What's Changed\r\n* docs: fix broken links and anchor text by @atwooddc\
         \ in https://github.com/fern-api/fern/pull/3718\r\n* docs: nested tabs auto\
         \ pagination page bug by @atwooddc in https://github.com/fern-api/fern/pull/3717\r\
         \n* (fix, internal): do deploys of fern docs to dev by @dsinghvi in https://github.com/fern-api/fern/pull/3529\r\
@@ -6937,8 +7040,7 @@
   irVersion: 45
   version: 0.29.2
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix, python: do not manually specify custom license\
+    - summary: "## What's Changed\r\n* fix, python: do not manually specify custom license\
         \ file by @armandobelardo in https://github.com/fern-api/fern/pull/3697\r\n\
         * build(deps): bump github.com/fern-api/generator-exec-go from 0.0.817 to 0.0.823\
         \ in /generators/go by @dependabot in https://github.com/fern-api/fern/pull/3653\r\
@@ -6969,8 +7071,7 @@
   irVersion: 45
   version: 0.29.1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feat, csharp): generate `Environments.cs` and\
+    - summary: "## What's Changed\r\n* (feat, csharp): generate `Environments.cs` and\
         \ populate default `BaseURL` by @dsinghvi in https://github.com/fern-api/fern/pull/3677\r\
         \n* (fix, csharp): package in LICENSE in `.csproj` by @dsinghvi in https://github.com/fern-api/fern/pull/3678\r\
         \n* (fix, python): re-add python unit tests by @armandobelardo in https://github.com/fern-api/fern/pull/3609\r\
@@ -7001,8 +7102,7 @@
   irVersion: 45
   version: 0.29.1-rc0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, python): fix naming conflicts with inlined\
+    - summary: "## What's Changed\r\n* (fix, python): fix naming conflicts with inlined\
         \ body parameters by @armandobelardo in https://github.com/fern-api/fern/pull/3673\r\
         \n* (fix, python): correct snippets for optional referenced requests when\u2026\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/3676\r\n* fix,\
@@ -7016,8 +7116,7 @@
   irVersion: 45
   version: 0.29.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feature): Add support for default values and\
+    - summary: "## What's Changed\r\n* (feature): Add support for default values and\
         \ validation rules by @amckinney in https://github.com/fern-api/fern/pull/3640\r\
         \n* improvement: add in config to enrich pypi metadata by @armandobelardo in\
         \ https://github.com/fern-api/fern/pull/3660\r\n* (fix, csharp): `.csproj` generation\
@@ -7038,8 +7137,7 @@
   irVersion: 45
   version: 0.28.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feature): Add support for default values and\
+    - summary: "## What's Changed\r\n* (feature): Add support for default values and\
         \ validation rules by @amckinney in https://github.com/fern-api/fern/pull/3640\r\
         \n* improvement: add in config to enrich pypi metadata by @armandobelardo in\
         \ https://github.com/fern-api/fern/pull/3660\r\n* (fix, csharp): `.csproj` generation\
@@ -7050,16 +7148,14 @@
   irVersion: 45
   version: 0.27.1-rc0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n- (feature): support local preview of docs via\
+    - summary: "## What's Changed\r\n- (feature): support local preview of docs via\
         \ `fern docs dev`\r\n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.26.11...0.27.0"
       type: chore
   createdAt: "2024-05-20"
   irVersion: 45
   version: 0.27.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feat, docs): document local previews by @dsinghvi\
+    - summary: "## What's Changed\r\n* (feat, docs): document local previews by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/3649\r\n* chore: add identifier override\
         \ to further specify snippets by @armandobelardo in https://github.com/fern-api/fern/pull/3642\r\
         \n* fixed broken internal links on docs site by @atwooddc in https://github.com/fern-api/fern/pull/3656\r\
@@ -7074,8 +7170,7 @@
   irVersion: 45
   version: 0.26.11
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): `fern docs preview` -> `fern docs dev`\
+    - summary: "## What's Changed\r\n* (fix): `fern docs preview` -> `fern docs dev`\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/3647\r\n* (fix): docs\
         \ preview server is fault tolerant to invalid `docs.yml` files by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/3648\r\n\r\n\r\n**Full Changelog**:\
@@ -7085,8 +7180,7 @@
   irVersion: 45
   version: 0.26.10
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): improve local preview responsiveness by\
+    - summary: "## What's Changed\r\n* (fix): improve local preview responsiveness by\
         \ @dsinghvi in https://github.com/fern-api/fern/pull/3646\r\n\r\n\r\n**Full\
         \ Changelog**: https://github.com/fern-api/fern/compare/0.26.10-rc1...0.26.10-rc2"
       type: chore
@@ -7094,8 +7188,7 @@
   irVersion: 45
   version: 0.26.10-rc2
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* chore: document auto-pagination configuration\
+    - summary: "## What's Changed\r\n* chore: document auto-pagination configuration\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/3644\r\n* Tidy\
         \ up python generator docs by @fabubaker in https://github.com/fern-api/fern/pull/3645\r\
         \n* (feat, local preview): setup dynamic local preview by @dsinghvi in https://github.com/fern-api/fern/pull/3634\r\
@@ -7108,8 +7201,7 @@
   irVersion: 45
   version: 0.26.10-rc1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* chore: clean up some nuget references by @armandobelardo\
+    - summary: "## What's Changed\r\n* chore: clean up some nuget references by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/3627\r\n* (fix, ts): OAuth provides\
         \ an optional token by @amckinney in https://github.com/fern-api/fern/pull/3633\r\
         \n* improvement, java: stop generating extra semicolon by @dcb6 in https://github.com/fern-api/fern/pull/3631\r\
@@ -7129,8 +7221,7 @@
   irVersion: 45
   version: 0.26.10-rc0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, ts): Client credentials are optional with\
+    - summary: "## What's Changed\r\n* (fix, ts): Client credentials are optional with\
         \ env vars by @amckinney in https://github.com/fern-api/fern/pull/3617\r\n*\
         \ fix: upload images in changelogs by @abvthecity in https://github.com/fern-api/fern/pull/3623\r\
         \n* fix: batch image and file upload by @abvthecity in https://github.com/fern-api/fern/pull/3624\r\
@@ -7149,8 +7240,7 @@
   irVersion: 44
   version: 0.26.9-rc2
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: batch image and file upload by @abvthecity\
+    - summary: "## What's Changed\r\n* fix: batch image and file upload by @abvthecity\
         \ in https://github.com/fern-api/fern/pull/3624\r\n\r\n\r\n**Full Changelog**:\
         \ https://github.com/fern-api/fern/compare/0.26.9-rc0...0.26.9-rc1"
       type: chore
@@ -7158,8 +7248,7 @@
   irVersion: 44
   version: 0.26.9-rc1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, ts): Client credentials are optional with\
+    - summary: "## What's Changed\r\n* (fix, ts): Client credentials are optional with\
         \ env vars by @amckinney in https://github.com/fern-api/fern/pull/3617\r\n*\
         \ fix: upload images in changelogs by @abvthecity in https://github.com/fern-api/fern/pull/3623\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.26.8...0.26.9\r\
@@ -7169,8 +7258,7 @@
   irVersion: 44
   version: 0.26.9-rc0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, openapi): Fix nameOverride resolution by\
+    - summary: "## What's Changed\r\n* (fix, openapi): Fix nameOverride resolution by\
         \ @amckinney in https://github.com/fern-api/fern/pull/3622\r\n* (docs): Add\
         \ OAuth SDK docs by @amckinney in https://github.com/fern-api/fern/pull/3615\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.26.7...0.26.8"
@@ -7179,8 +7267,7 @@
   irVersion: 44
   version: 0.26.8
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* [WIP] Upgrade Java Generator to IR 42 by @dcb6\
+    - summary: "## What's Changed\r\n* [WIP] Upgrade Java Generator to IR 42 by @dcb6\
         \ in https://github.com/fern-api/fern/pull/3608\r\n* (improvement, fern): Add\
         \ better error for invalid generators.yml by @amckinney in https://github.com/fern-api/fern/pull/3521\r\
         \n* fix: fern-aware pydantic models now effectively 'exclude_optional' in\u2026\
@@ -7193,8 +7280,7 @@
   irVersion: 44
   version: 0.26.7
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, openapi): Consolidate enums into discriminants\
+    - summary: "## What's Changed\r\n* (fix, openapi): Consolidate enums into discriminants\
         \ by @amckinney in https://github.com/fern-api/fern/pull/3607\r\n* (feature,\
         \ ts): Support oauth client credentials flow by @amckinney in https://github.com/fern-api/fern/pull/3578\r\
         \n* (fix, openapi): OpenAPI importer now parses list examples that are specific\
@@ -7219,8 +7305,7 @@
   irVersion: 44
   version: 0.26.5
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (docs) Add intro section by @dannysheridan in\
+    - summary: "## What's Changed\r\n* (docs) Add intro section by @dannysheridan in\
         \ https://github.com/fern-api/fern/pull/3547\r\n* (chore, fastapi, ruby sdk)\
         \ release versions by @dannysheridan in https://github.com/fern-api/fern/pull/3587\r\
         \n* (chore, pydantic): Release 0.9.0 by @dannysheridan in https://github.com/fern-api/fern/pull/3586\r\
@@ -7252,8 +7337,7 @@
   irVersion: 44
   version: 0.26.4
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: upgrade gen version now pulls image correctly\
+    - summary: "## What's Changed\r\n* fix: upgrade gen version now pulls image correctly\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/3584\r\n\r\n\r\
         \n**Full Changelog**: https://github.com/fern-api/fern/compare/0.26.2...0.26.3"
       type: chore
@@ -7261,8 +7345,7 @@
   irVersion: 43
   version: 0.26.3
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feat, cli: add `fern generator upgrade` command\
+    - summary: "## What's Changed\r\n* feat, cli: add `fern generator upgrade` command\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/3535\r\n* (fix,\
         \ internal): typescript generators depend on latest ir by @dsinghvi in https://github.com/fern-api/fern/pull/3583\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.26.1...0.26.2"
@@ -7271,8 +7354,7 @@
   irVersion: 43
   version: 0.26.2
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feat, docs): send status code to fdr by @dsinghvi\
+    - summary: "## What's Changed\r\n* (feat, docs): send status code to fdr by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/3582\r\n\r\n\r\n**Full Changelog**:\
         \ https://github.com/fern-api/fern/compare/0.26.0...0.26.1"
       type: chore
@@ -7280,8 +7362,7 @@
   irVersion: 43
   version: 0.26.1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feat, definition): support response status codes\
+    - summary: "## What's Changed\r\n* (feat, definition): support response status codes\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/3580\r\n\r\n\r\n**Full\
         \ Changelog**: https://github.com/fern-api/fern/compare/0.25.0...0.26.0"
       type: chore
@@ -7289,8 +7370,7 @@
   irVersion: 43
   version: 0.26.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feat: add origin and ability to update API spec\
+    - summary: "## What's Changed\r\n* feat: add origin and ability to update API spec\
         \ via CLI by @armandobelardo in https://github.com/fern-api/fern/pull/3533\r\
         \n* internal: add in tags and labels for docker images for use in upgrade\u2026\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/3542\r\n* Bump\
@@ -7342,8 +7422,7 @@
   irVersion: 42
   version: 0.25.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (express): Release 0.12.0-rc2 by @amckinney in\
+    - summary: "## What's Changed\r\n* (express): Release 0.12.0-rc2 by @amckinney in\
         \ https://github.com/fern-api/fern/pull/3555\r\n* fix, java: do not require\
         \ non-auth headers if auth is mandatory by @armandobelardo in https://github.com/fern-api/fern/pull/3549\r\
         \n* (fix): OpenAPI converter only adds unique error examples by @dsinghvi in\
@@ -7354,8 +7433,7 @@
   irVersion: 41
   version: 0.25.0-rc3
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feat: add origin and ability to update API spec\
+    - summary: "## What's Changed\r\n* feat: add origin and ability to update API spec\
         \ via CLI by @armandobelardo in https://github.com/fern-api/fern/pull/3533\r\
         \n* internal: add in tags and labels for docker images for use in upgrade\u2026\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/3542\r\n* Bump\
@@ -7379,8 +7457,7 @@
   irVersion: 41
   version: 0.25.0-rc2
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feat: add origin and ability to update API spec\
+    - summary: "## What's Changed\r\n* feat: add origin and ability to update API spec\
         \ via CLI by @armandobelardo in https://github.com/fern-api/fern/pull/3533\r\
         \n* internal: add in tags and labels for docker images for use in upgrade\u2026\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/3542\r\n* Bump\
@@ -7402,8 +7479,7 @@
   irVersion: 41
   version: 0.25.0-rc1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feat: add origin and ability to update API spec\
+    - summary: "## What's Changed\r\n* feat: add origin and ability to update API spec\
         \ via CLI by @armandobelardo in https://github.com/fern-api/fern/pull/3533\r\
         \n* internal: add in tags and labels for docker images for use in upgrade\u2026\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/3542\r\n* Bump\
@@ -7424,8 +7500,7 @@
   irVersion: 41
   version: 0.25.0-rc0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): remove `api.yml` not found error when\
+    - summary: "## What's Changed\r\n* (fix): remove `api.yml` not found error when\
         \ the openapi folder is present by @dsinghvi in https://github.com/fern-api/fern/pull/3519\r\
         \n* add example snippet syntax by @abvthecity in https://github.com/fern-api/fern/pull/3523\r\
         \n* (fix, internal):  fix preview docs and move props to left side in docs by\
@@ -7439,8 +7514,7 @@
   irVersion: 40
   version: 0.24.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: The vanilla pydantic base model now respects\
+    - summary: "## What's Changed\r\n* fix: The vanilla pydantic base model now respects\
         \ the by @armandobelardo in https://github.com/fern-api/fern/pull/3504\r\n*\
         \ (fix): support parsing path parameters in asyncapi v2 by @dsinghvi in https://github.com/fern-api/fern/pull/3505\r\
         \n* (internal, test): Stop testing IR generation snapshots by @dsinghvi in https://github.com/fern-api/fern/pull/3508\r\
@@ -7465,8 +7539,7 @@
   irVersion: 40
   version: 0.23.7
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* docs: Add services to entities with `availability`\
+    - summary: "## What's Changed\r\n* docs: Add services to entities with `availability`\
         \ by @jackfischer in https://github.com/fern-api/fern/pull/3500\r\n* fix typo\
         \ in docs by @rnz269 in https://github.com/fern-api/fern/pull/3502\r\n* fix:\
         \ filter allOf schemas to look for objects instead of malformed bl\u2026 by\
@@ -7478,8 +7551,7 @@
   irVersion: 40
   version: 0.23.6
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): literal descriptions from OpenAPI by @dsinghvi\
+    - summary: "## What's Changed\r\n* (fix): literal descriptions from OpenAPI by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/3501\r\n\r\n\r\n**Full Changelog**:\
         \ https://github.com/fern-api/fern/compare/0.23.4...0.23.5"
       type: chore
@@ -7487,8 +7559,7 @@
   irVersion: 40
   version: 0.23.5
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* improvements, python: update docstrings to match\
+    - summary: "## What's Changed\r\n* improvements, python: update docstrings to match\
         \ numpydoc convention by @armandobelardo in https://github.com/fern-api/fern/pull/3487\r\
         \n* feat, python: introduce flag to inline request params in function sig\u2026\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/3491\r\n* (fix,\
@@ -7508,8 +7579,7 @@
   irVersion: 40
   version: 0.23.4
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): send file arrays to fdr by @dsinghvi in\
+    - summary: "## What's Changed\r\n* (fix): send file arrays to fdr by @dsinghvi in\
         \ https://github.com/fern-api/fern/pull/3492\r\n\r\n\r\n**Full Changelog**:\
         \ https://github.com/fern-api/fern/compare/0.23.2...0.23.3"
       type: chore
@@ -7517,8 +7587,7 @@
   irVersion: 40
   version: 0.23.3
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* improvement: throw a better error when an invalid\
+    - summary: "## What's Changed\r\n* improvement: throw a better error when an invalid\
         \ version is used by @armandobelardo in https://github.com/fern-api/fern/pull/3477\r\
         \n* (fix, go): Discriminated unions always include discriminant by @amckinney\
         \ in https://github.com/fern-api/fern/pull/3479\r\n* (internal, feat): add \
@@ -7539,8 +7608,7 @@
   irVersion: 40
   version: 0.23.2
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: run seed to get CI to green by @armandobelardo\
+    - summary: "## What's Changed\r\n* fix: run seed to get CI to green by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/3463\r\n* (feature, go): Add support\
         \ for extra properties by @amckinney in https://github.com/fern-api/fern/pull/3462\r\
         \n* fix: try ignoring the .mock folder, whos diff doesn't matter by @armandobelardo\
@@ -7571,8 +7639,7 @@
   irVersion: 40
   version: 0.23.1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: run seed to get CI to green by @armandobelardo\
+    - summary: "## What's Changed\r\n* fix: run seed to get CI to green by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/3463\r\n* (feature, go): Add support\
         \ for extra properties by @amckinney in https://github.com/fern-api/fern/pull/3462\r\
         \n* fix: try ignoring the .mock folder, whos diff doesn't matter by @armandobelardo\
@@ -7596,8 +7663,7 @@
   irVersion: 40
   version: 0.23.1-rc5
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: run seed to get CI to green by @armandobelardo\
+    - summary: "## What's Changed\r\n* fix: run seed to get CI to green by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/3463\r\n* (feature, go): Add support\
         \ for extra properties by @amckinney in https://github.com/fern-api/fern/pull/3462\r\
         \n* fix: try ignoring the .mock folder, whos diff doesn't matter by @armandobelardo\
@@ -7616,8 +7682,7 @@
   irVersion: 40
   version: 0.23.1-rc4
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: run seed to get CI to green by @armandobelardo\
+    - summary: "## What's Changed\r\n* fix: run seed to get CI to green by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/3463\r\n* (feature, go): Add support\
         \ for extra properties by @amckinney in https://github.com/fern-api/fern/pull/3462\r\
         \n* fix: try ignoring the .mock folder, whos diff doesn't matter by @armandobelardo\
@@ -7629,8 +7694,7 @@
   irVersion: 40
   version: 0.23.1-rc1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: run seed to get CI to green by @armandobelardo\
+    - summary: "## What's Changed\r\n* fix: run seed to get CI to green by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/3463\r\n* (feature, go): Add support\
         \ for extra properties by @amckinney in https://github.com/fern-api/fern/pull/3462\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.23.0...0.23.1-rc0"
@@ -7639,8 +7703,7 @@
   irVersion: 40
   version: 0.23.1-rc0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feat): add `format` to the `x-fern-streaming`\
+    - summary: "## What's Changed\r\n* (feat): add `format` to the `x-fern-streaming`\
         \ extension to support sse by @dsinghvi in https://github.com/fern-api/fern/pull/3407\r\
         \n* Revert \"(fix): inline discriminated union props\" by @dsinghvi in https://github.com/fern-api/fern/pull/3408\r\
         \n* (fix): python generator imports `json` when deserializing server sent events\
@@ -7706,8 +7769,7 @@
   irVersion: 40
   version: 0.23.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* improvement, oas: do not require schema to be\
+    - summary: "## What's Changed\r\n* improvement, oas: do not require schema to be\
         \ present to parse response objects by @armandobelardo in https://github.com/fern-api/fern/pull/3438\r\
         \n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.23.0-rc5...0.23.0-rc6"
       type: chore
@@ -7715,8 +7777,7 @@
   irVersion: 39
   version: 0.23.0-rc6
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feat): add `format` to the `x-fern-streaming`\
+    - summary: "## What's Changed\r\n* (feat): add `format` to the `x-fern-streaming`\
         \ extension to support sse by @dsinghvi in https://github.com/fern-api/fern/pull/3407\r\
         \n* Revert \"(fix): inline discriminated union props\" by @dsinghvi in https://github.com/fern-api/fern/pull/3408\r\
         \n* (fix): python generator imports `json` when deserializing server sent events\
@@ -7756,8 +7817,7 @@
   irVersion: 39
   version: 0.23.0-rc5
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feat): add `format` to the `x-fern-streaming`\
+    - summary: "## What's Changed\r\n* (feat): add `format` to the `x-fern-streaming`\
         \ extension to support sse by @dsinghvi in https://github.com/fern-api/fern/pull/3407\r\
         \n* Revert \"(fix): inline discriminated union props\" by @dsinghvi in https://github.com/fern-api/fern/pull/3408\r\
         \n* (fix): python generator imports `json` when deserializing server sent events\
@@ -7795,8 +7855,7 @@
   irVersion: 39
   version: 0.23.0-rc4
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (chore, docs): document automated registry publishing)\
+    - summary: "## What's Changed\r\n* (chore, docs): document automated registry publishing)\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/3379\r\n* (feature):\
         \ Add allowExtraFields configuration to TypeScript generators by @amckinney\
         \ in https://github.com/fern-api/fern/pull/3368\r\n* fix: address parsed_json\
@@ -7829,8 +7888,7 @@
   irVersion: 38
   version: 0.22.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* improvements: misc ruby QOL changes by @armandobelardo\
+    - summary: "## What's Changed\r\n* improvements: misc ruby QOL changes by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/3349\r\n* fix readme links to images\
         \ that were moved from /docs/images by @harry-humanloop in https://github.com/fern-api/fern/pull/3355\r\
         \n* additional ruby fixes to the 0.5.0 overhaul by @armandobelardo in https://github.com/fern-api/fern/pull/3359\r\
@@ -7855,8 +7913,7 @@
   irVersion: 37
   version: 0.21.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): code blocks are valid by @dsinghvi in\
+    - summary: "## What's Changed\r\n* (fix): code blocks are valid by @dsinghvi in\
         \ https://github.com/fern-api/fern/pull/3337\r\n* improvement, ruby: add and\
         \ run rake to run dummy test for build errors by @armandobelardo in https://github.com/fern-api/fern/pull/3330\r\
         \n* add api origin to generators config by @armandobelardo in https://github.com/fern-api/fern/pull/3336\r\
@@ -7885,8 +7942,7 @@
   irVersion: 37
   version: 0.20.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* revert: python generator version 0.13.2 by @armandobelardo\
+    - summary: "## What's Changed\r\n* revert: python generator version 0.13.2 by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/3316\r\n* break: release python generator\
         \ 1.x by @armandobelardo in https://github.com/fern-api/fern/pull/3312\r\n*\
         \ fix: force pydantic.v1 only if pydantic v2, this is needed due to a p\u2026\
@@ -7913,8 +7969,7 @@
   irVersion: 37
   version: 0.19.31
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): send auth prefix to docs by @dsinghvi\
+    - summary: "## What's Changed\r\n* (fix): send auth prefix to docs by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/3314\r\n\r\n\r\n**Full Changelog**:\
         \ https://github.com/fern-api/fern/compare/0.19.29...0.19.30"
       type: chore
@@ -7922,8 +7977,7 @@
   irVersion: 37
   version: 0.19.30
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feature): Add retainOriginalCasing option to\
+    - summary: "## What's Changed\r\n* (feature): Add retainOriginalCasing option to\
         \ TypeScript generators by @amckinney in https://github.com/fern-api/fern/pull/3310\r\
         \n* (feature): Implement pagination by @amckinney in https://github.com/fern-api/fern/pull/3304\r\
         \n* fix: revert to one ci file in python by @armandobelardo in https://github.com/fern-api/fern/pull/3237\r\
@@ -7951,8 +8005,7 @@
   irVersion: 37
   version: 0.19.27
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): fern docs use horizontal tabs by @dsinghvi\
+    - summary: "## What's Changed\r\n* (fix): fern docs use horizontal tabs by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/3307\r\n\r\n\r\n**Full Changelog**:\
         \ https://github.com/fern-api/fern/compare/0.19.25...0.19.26"
       type: chore
@@ -7960,8 +8013,7 @@
   irVersion: 37
   version: 0.19.26
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* improvement: allow header auth extension to specify\
+    - summary: "## What's Changed\r\n* improvement: allow header auth extension to specify\
         \ auth prefix by @armandobelardo in https://github.com/fern-api/fern/pull/3303\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.19.24...0.19.25"
       type: chore
@@ -7969,8 +8021,7 @@
   irVersion: 37
   version: 0.19.25
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): allow specifying license in publish metadata\
+    - summary: "## What's Changed\r\n* (fix): allow specifying license in publish metadata\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/3292\r\n\r\n\r\n**Full\
         \ Changelog**: https://github.com/fern-api/fern/compare/0.19.22...0.19.24"
       type: chore
@@ -7984,8 +8035,7 @@
   irVersion: 37
   version: 0.19.24-rc3
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* chore(docs): alphabetize docs components in the\
+    - summary: "## What's Changed\r\n* chore(docs): alphabetize docs components in the\
         \ navigation sidebar by @abvthecity in https://github.com/fern-api/fern/pull/3278\r\
         \n* fix: generate examples for multipart-form by @abvthecity in https://github.com/fern-api/fern/pull/3253\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.19.23...0.19.24-rc2"
@@ -7994,8 +8044,7 @@
   irVersion: 37
   version: 0.19.24-rc2
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* [(fix): openapi importer ignores duplicate enum\
+    - summary: "## What's Changed\r\n* [(fix): openapi importer ignores duplicate enum\
         \ names](https://github.com/fern-api/fern/commit/6473f3269e31ad896aecc70c03149094ecd9679c)\
         \ by @dsinghvi\r\n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.19.23...0.19.24-rc1"
       type: chore
@@ -8003,8 +8052,7 @@
   irVersion: 37
   version: 0.19.24-rc1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* chore(docs): alphabetize docs components in the\
+    - summary: "## What's Changed\r\n* chore(docs): alphabetize docs components in the\
         \ navigation sidebar by @abvthecity in https://github.com/fern-api/fern/pull/3278\r\
         \n* fix: generate examples for multipart-form by @abvthecity in https://github.com/fern-api/fern/pull/3253\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.19.23...0.19.24-rc0"
@@ -8013,8 +8061,7 @@
   irVersion: 37
   version: 0.19.24-rc0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (chore): introduce  to plumb through display\
+    - summary: "## What's Changed\r\n* (chore): introduce  to plumb through display\
         \ name by @dsinghvi in https://github.com/fern-api/fern/pull/3290\r\n\r\n\r\n\
         **Full Changelog**: https://github.com/fern-api/fern/compare/0.19.22...0.19.23"
       type: chore
@@ -8022,8 +8069,7 @@
   irVersion: 37
   version: 0.19.23
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): use display names for services by @dsinghvi\
+    - summary: "## What's Changed\r\n* (fix): use display names for services by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/3289\r\n\r\n\r\n**Full Changelog**:\
         \ https://github.com/fern-api/fern/compare/0.19.21...0.19.22"
       type: chore
@@ -8031,8 +8077,7 @@
   irVersion: 37
   version: 0.19.22
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feat: API navigation overrides by @abvthecity\
+    - summary: "## What's Changed\r\n* feat: API navigation overrides by @abvthecity\
         \ in https://github.com/fern-api/fern/pull/3205\r\n\r\n\r\n**Full Changelog**:\
         \ https://github.com/fern-api/fern/compare/0.19.20...0.19.21"
       type: chore
@@ -8040,8 +8085,7 @@
   irVersion: 37
   version: 0.19.21
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* improvement, python: add __version__ variable\
+    - summary: "## What's Changed\r\n* improvement, python: add __version__ variable\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/3262\r\n* (docs):\
         \ update fern cli commands docs by @minaelee in https://github.com/fern-api/fern/pull/3215\r\
         \n* build(deps-dev): bump eslint-plugin-react from 7.31.10 to 7.34.1 by @dependabot\
@@ -8068,8 +8112,7 @@
   irVersion: 37
   version: 0.19.20
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): docs for `optionalImplementation` use\
+    - summary: "## What's Changed\r\n* (fix): docs for `optionalImplementation` use\
         \ the right key by @dsinghvi in https://github.com/fern-api/fern/pull/3254\r\
         \n* (fix): support schema references in OpenAPI that aren't just Schema Ids\
         \ by @omarrida in https://github.com/fern-api/fern/pull/3259\r\n\r\n\r\n**Full\
@@ -8079,8 +8122,7 @@
   irVersion: 37
   version: 0.19.19
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: update python defaults to be the user provided\
+    - summary: "## What's Changed\r\n* fix: update python defaults to be the user provided\
         \ number and not th\u2026 by @armandobelardo in https://github.com/fern-api/fern/pull/3248\r\
         \n* fix depth check to prevent max call stack exceeded issue by @omarrida in\
         \ https://github.com/fern-api/fern/pull/3247\r\n\r\n\r\n**Full Changelog**:\
@@ -8090,8 +8132,7 @@
   irVersion: 37
   version: 0.19.18
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): fix typo in writing license by @armandobelardo\
+    - summary: "## What's Changed\r\n* (fix): fix typo in writing license by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/3245\r\n* (internal): consolidate\
         \ GeneratorNotificationService implementations by @omarrida in https://github.com/fern-api/fern/pull/3235\r\
         \n* (feature): merge x-codeSamples with x-fern-examples by @abvthecity in https://github.com/fern-api/fern/pull/3246\r\
@@ -8101,8 +8142,7 @@
   irVersion: 37
   version: 0.19.17
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (docs): document full slug override in front\
+    - summary: "## What's Changed\r\n* (docs): document full slug override in front\
         \ matter by @minaelee in https://github.com/fern-api/fern/pull/3219\r\n* fix:\
         \ create a pom config for publishing by @armandobelardo in https://github.com/fern-api/fern/pull/3243\r\
         \n* \U0001F926: update final sonatype reference to allow staging url by @armandobelardo\
@@ -8113,8 +8153,7 @@
   irVersion: 37
   version: 0.19.16
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix, java: make gpg publish script executable\
+    - summary: "## What's Changed\r\n* fix, java: make gpg publish script executable\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/3236\r\n* (docs):\
         \ update links due to recent docs changes by @minaelee in https://github.com/fern-api/fern/pull/3233\r\
         \n* fix: java publishing - wrap the multiline secret in quotes to perserv\u2026\
@@ -8189,8 +8228,7 @@
   irVersion: 37
   version: 0.19.14-rc0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: tab slug override should be passed to FDR\
+    - summary: "## What's Changed\r\n* fix: tab slug override should be passed to FDR\
         \ by @abvthecity in https://github.com/fern-api/fern/pull/3198\r\n* fix: python\
         \ retry wrapper leverages the right types by @armandobelardo in https://github.com/fern-api/fern/pull/3204\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.19.12...0.19.13"
@@ -8199,8 +8237,7 @@
   irVersion: 37
   version: 0.19.13
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): unit tests for python now run successfully\
+    - summary: "## What's Changed\r\n* (fix): unit tests for python now run successfully\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/3187\r\n* (improvement):\
         \ allow x-fern-sdk-group-name to be a list by @mscolnick in https://github.com/fern-api/fern/pull/3196\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.19.11...0.19.12"
@@ -8209,8 +8246,7 @@
   irVersion: 37
   version: 0.19.12
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* chore: bump versions of public python sdk to\
+    - summary: "## What's Changed\r\n* chore: bump versions of public python sdk to\
         \ produce unit tests by @armandobelardo in https://github.com/fern-api/fern/pull/3179\r\
         \n* fix: small fix for python sdk gen by @armandobelardo in https://github.com/fern-api/fern/pull/3181\r\
         \n* chore: remove webpack from ts generators by @mscolnick in https://github.com/fern-api/fern/pull/3180\r\
@@ -8223,8 +8259,7 @@
   irVersion: 37
   version: 0.19.11
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: add in envvar scanning for more than bearer\
+    - summary: "## What's Changed\r\n* fix: add in envvar scanning for more than bearer\
         \ auth by @armandobelardo in https://github.com/fern-api/fern/pull/3176\r\n\
         * fixing unit tests by @armandobelardo in https://github.com/fern-api/fern/pull/3168\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.19.9...0.19.10"
@@ -8233,8 +8268,7 @@
   irVersion: 37
   version: 0.19.10
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): make sure that deep object query params\
+    - summary: "## What's Changed\r\n* (fix): make sure that deep object query params\
         \ are reverse migrated t\u2026 by @dsinghvi in https://github.com/fern-api/fern/pull/3172\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.19.8...0.19.9"
       type: chore
@@ -8242,8 +8276,7 @@
   irVersion: 37
   version: 0.19.9
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: run seed for ruby-seed by @armandobelardo\
+    - summary: "## What's Changed\r\n* fix: run seed for ruby-seed by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/3167\r\n* (fix): getReferencedMarkdownFiles\
         \ should ignore http/https links by @abvthecity in https://github.com/fern-api/fern/pull/3169\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.19.7...0.19.8"
@@ -8252,8 +8285,7 @@
   irVersion: 37
   version: 0.19.8
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feat: init c# playground by @armandobelardo in\
+    - summary: "## What's Changed\r\n* feat: init c# playground by @armandobelardo in\
         \ https://github.com/fern-api/fern/pull/3142\r\n* build(deps-dev): bump eslint-plugin-tailwindcss\
         \ from 3.13.0 to 3.13.1 by @dependabot in https://github.com/fern-api/fern/pull/2946\r\
         \n* (chore): consolidate configuration into single package by @dsinghvi in https://github.com/fern-api/fern/pull/3141\r\
@@ -8281,8 +8313,7 @@
   irVersion: 37
   version: 0.19.7
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): parse frontmatter before registering docs\
+    - summary: "## What's Changed\r\n* (fix): parse frontmatter before registering docs\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/3140\r\n\r\n\r\n**Full\
         \ Changelog**: https://github.com/fern-api/fern/compare/0.19.5...0.19.6"
       type: chore
@@ -8290,8 +8321,7 @@
   irVersion: 37
   version: 0.19.6
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feat, cli): add autogenerated examples for the\
+    - summary: "## What's Changed\r\n* (feat, cli): add autogenerated examples for the\
         \ fern definition by @armandobelardo in https://github.com/fern-api/fern/pull/3114\r\
         \n* (fix, cli): don't require a schema to exist under `application/octet-stream`\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/3137\r\n\r\n\r\
@@ -8301,8 +8331,7 @@
   irVersion: 37
   version: 0.19.5
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feat, python: allow extra fields not specified\
+    - summary: "## What's Changed\r\n* feat, python: allow extra fields not specified\
         \ in model to come through by @armandobelardo in https://github.com/fern-api/fern/pull/3131\r\
         \n* (fix): `x-fern-streaming` wont duplicate referenced requests causing collision\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/3136\r\n\r\n\r\n**Full\
@@ -8312,8 +8341,7 @@
   irVersion: 36
   version: 0.19.4
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, typescript): SDK generator appropriately\
+    - summary: "## What's Changed\r\n* (fix, typescript): SDK generator appropriately\
         \ imports `node-fetch` by @dsinghvi in https://github.com/fern-api/fern/pull/3130\r\
         \n* fix: accent-primary regression (and move color validation to fern check)\
         \ by @abvthecity in https://github.com/fern-api/fern/pull/3132\r\n\r\n\r\n**Full\
@@ -8323,8 +8351,7 @@
   irVersion: 36
   version: 0.19.3
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): OpenAPI importer reads `deprecated: true`\
+    - summary: "## What's Changed\r\n* (fix): OpenAPI importer reads `deprecated: true`\
         \ on operation objects by @dsinghvi in https://github.com/fern-api/fern/pull/3129\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.19.1...0.19.2"
       type: chore
@@ -8332,8 +8359,7 @@
   irVersion: 36
   version: 0.19.2
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): detect file object in OpenAPI and ignore\
+    - summary: "## What's Changed\r\n* (fix): detect file object in OpenAPI and ignore\
         \ content type by @dsinghvi in https://github.com/fern-api/fern/pull/3128\r\n\
         \r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.19.0...0.19.1"
       type: chore
@@ -8341,8 +8367,7 @@
   irVersion: 36
   version: 0.19.1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, typescript): serialize optional deep object\
+    - summary: "## What's Changed\r\n* (fix, typescript): serialize optional deep object\
         \ query params correctly in the TypeScript SDK  by @dsinghvi in https://github.com/fern-api/fern/pull/3071\r\
         \n* fix, ruby: Ensure the name passed into the `X-Fern-SDK-Name` header is the\
         \ name of the gem, not the client class by @armandobelardo in https://github.com/fern-api/fern/pull/3073\r\
@@ -8409,8 +8434,7 @@
   irVersion: 36
   version: 0.19.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): `mergeWith` actually merges with incoming\
+    - summary: "## What's Changed\r\n* (fix): `mergeWith` actually merges with incoming\
         \ spec by @dsinghvi in https://github.com/fern-api/fern/pull/3124\r\n\r\n\r\n\
         **Full Changelog**: https://github.com/fern-api/fern/compare/0.19.0-rc8...0.19.0-rc9"
       type: chore
@@ -8418,8 +8442,7 @@
   irVersion: 36
   version: 0.19.0-rc9
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (improvement, python): add additional reserved\
+    - summary: "## What's Changed\r\n* (improvement, python): add additional reserved\
         \ words to python by @armandobelardo in https://github.com/fern-api/fern/pull/3116\r\
         \n* (chore): fix our tests by @dsinghvi in https://github.com/fern-api/fern/pull/3119\r\
         \n* (fix): `fern generate --docs` doesn't reupload duplicate files preventing\
@@ -8433,8 +8456,7 @@
   irVersion: 36
   version: 0.19.0-rc8
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* chore: stop checking equality when merging files\
+    - summary: "## What's Changed\r\n* chore: stop checking equality when merging files\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/3112\r\n\r\n\r\
         \n**Full Changelog**: https://github.com/fern-api/fern/compare/0.19.0-rc6...0.19.0-rc7"
       type: chore
@@ -8442,8 +8464,7 @@
   irVersion: 36
   version: 0.19.0-rc7
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix, python): use docstrings instead of descriptions\
+    - summary: "## What's Changed\r\n* (fix, python): use docstrings instead of descriptions\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/3108\r\n* (feature,\
         \ go): Supports simpler unions by @amckinney in https://github.com/fern-api/fern/pull/3111\r\
         \n* (fix, cli): strip trailing slash from environments list by @abvthecity in\
@@ -8487,8 +8508,7 @@
   irVersion: 36
   version: 0.19.0-rc6
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (chore, go): Release fern-go-sdk 0.17.0 by @amckinney\
+    - summary: "## What's Changed\r\n* (chore, go): Release fern-go-sdk 0.17.0 by @amckinney\
         \ in https://github.com/fern-api/fern/pull/3066\r\n* (feature, go): supports\
         \ multiple files in upload by @amckinney in https://github.com/fern-api/fern/pull/3070\r\
         \n* (feature, ts): deep object query parameter serialization  by @dsinghvi in\
@@ -8500,8 +8520,7 @@
   irVersion: 36
   version: 0.18.5
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): OpenAPI/AsyncAPI importer handles invalid\
+    - summary: "## What's Changed\r\n* (fix): OpenAPI/AsyncAPI importer handles invalid\
         \ datetime examples by @dsinghvi in https://github.com/fern-api/fern/pull/3056\r\
         \n* (fix): ensure we apply audience-based filtering to examples as well by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/3043\r\n* (feat, fern): allow headers\
@@ -8515,8 +8534,7 @@
   irVersion: 36
   version: 0.18.4
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n*  (fix, java): leverage callTimeout instead of\
+    - summary: "## What's Changed\r\n*  (fix, java): leverage callTimeout instead of\
         \ readTimeout for RequestOptions timeout configuration by @armandobelardo in\
         \ https://github.com/fern-api/fern/pull/3031\r\n* (fix, java): Address NPE for\
         \ RequestOptions with new timeout feature by @armandobelardo in https://github.com/fern-api/fern/pull/3053\r\
@@ -8546,8 +8564,7 @@
   irVersion: 35
   version: 0.18.3
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feature, python): introduce feature flag to\
+    - summary: "## What's Changed\r\n* (feature, python): introduce feature flag to\
         \ simplify imports in python and remove the nested `resources` directory by\
         \ @dsinghvi in https://github.com/fern-api/fern/pull/3029\r\n* (chore, internal):\
         \ move `openapi-ir` to use local typescript sdk codegen by @dsinghvi in https://github.com/fern-api/fern/pull/3033\r\
@@ -8562,8 +8579,7 @@
   irVersion: 34
   version: 0.18.2
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* docs: define fern as a toolkit by @dannysheridan\
+    - summary: "## What's Changed\r\n* docs: define fern as a toolkit by @dannysheridan\
         \ in https://github.com/fern-api/fern/pull/2974\r\n* (feature): introduce websocket\
         \ channel into fern definition by @dsinghvi in https://github.com/fern-api/fern/pull/2975\r\
         \n* (fix): `fern write-overrides` uses summary to generate method name if no\
@@ -8625,8 +8641,7 @@
   irVersion: 34
   version: 0.18.1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (chore, ruby): release the ruby generators to\
+    - summary: "## What's Changed\r\n* (chore, ruby): release the ruby generators to\
         \ include IR compatibility fix by @armandobelardo in https://github.com/fern-api/fern/pull/2995\r\
         \n* (cli, fix): `x-fern-webhook` respects sdk method and group name by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/2996\r\n* (cli, feature): IR generation\
@@ -8642,8 +8657,7 @@
   irVersion: 33
   version: 0.18.1-rc2
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): handle `optional` multipart file upload\
+    - summary: "## What's Changed\r\n* (fix): handle `optional` multipart file upload\
         \ parameters by @armandobelardo in https://github.com/fern-api/fern/pull/2964\r\
         \n* (break): sever base paths are no longer pre-pended to endpoint URLs in OpenAPI\
         \ Parser by @dsinghvi in https://github.com/fern-api/fern/pull/2972\r\n\r\n\r\
@@ -8653,8 +8667,7 @@
   irVersion: 33
   version: 0.18.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (typescript): typescript generator forwards runtime\
+    - summary: "## What's Changed\r\n* (typescript): typescript generator forwards runtime\
         \ information via `X-Fern-Runtime` header by @dsinghvi in https://github.com/fern-api/fern/pull/2962\r\
         \n* (python): Remove literals from the function signature by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/2952\r\n* (fix): TypeScript SDK generator\
@@ -8668,8 +8681,7 @@
   irVersion: 33
   version: 0.17.10
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (internal): initialize csharp AST by @dsinghvi\
+    - summary: "## What's Changed\r\n* (internal): initialize csharp AST by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/2938\r\n* (feature): go generator\
         \ supports whitelabelling by @dsinghvi in https://github.com/fern-api/fern/pull/2953\r\
         \n* (feature): OpenAPI importer handles extending undiscriminated unions if\
@@ -8680,8 +8692,7 @@
   irVersion: 33
   version: 0.17.9
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feature): support whitelabeling SDKs  by @dsinghvi\
+    - summary: "## What's Changed\r\n* (feature): support whitelabeling SDKs  by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/2928\r\n* (feature): css + js + measure\
         \ img size by @abvthecity in https://github.com/fern-api/fern/pull/2872\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.17.7...0.17.8"
@@ -8690,16 +8701,14 @@
   irVersion: 33
   version: 0.17.8
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): read nuget output mode\r\n\r\n\r\n**Full\
+    - summary: "## What's Changed\r\n* (fix): read nuget output mode\r\n\r\n\r\n**Full\
         \ Changelog**: https://github.com/fern-api/fern/compare/0.17.3...0.17.5"
       type: chore
   createdAt: "2024-02-09"
   irVersion: 33
   version: 0.17.7
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): only opt in go and ruby to capitalize\
+    - summary: "## What's Changed\r\n* (fix): only opt in go and ruby to capitalize\
         \ initialisms by @dsinghvi in https://github.com/fern-api/fern/pull/2925\r\n\
         \r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.17.3...0.17.4"
       type: chore
@@ -8707,8 +8716,7 @@
   irVersion: 33
   version: 0.17.4
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* improvement: add better numbering support for\
+    - summary: "## What's Changed\r\n* improvement: add better numbering support for\
         \ snakecasing when smartCasing is enabled by @armandobelardo in https://github.com/fern-api/fern/pull/2921\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.17.1...0.17.3"
       type: chore
@@ -8716,8 +8724,7 @@
   irVersion: 33
   version: 0.17.3
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): misc improvements to OpenAPI example generation\
+    - summary: "## What's Changed\r\n* (fix): misc improvements to OpenAPI example generation\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/2916\r\n\r\n\r\n**Full\
         \ Changelog**: https://github.com/fern-api/fern/compare/0.17.1...0.17.2"
       type: chore
@@ -8725,8 +8732,7 @@
   irVersion: 33
   version: 0.17.2
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): OpenAPI overrides replaces list of primitives\
+    - summary: "## What's Changed\r\n* (fix): OpenAPI overrides replaces list of primitives\
         \ but merges list of objects by @dsinghvi in https://github.com/fern-api/fern/pull/2910\r\
         \n* (fix): OpenAPI overrides replaces list of primitives but merges list of\
         \ objects by @dsinghvi in https://github.com/fern-api/fern/pull/2910\r\n* (fix):\
@@ -8737,8 +8743,7 @@
   irVersion: 33
   version: 0.17.1
 - changelogEntry:
-    - summary:
-        "- **break**: The OpenAPI importer now considers the `title` field when\
+    - summary: "- **break**: The OpenAPI importer now considers the `title` field when\
         \ generating a schema name. It only considers this field if there is no whitespace\
         \ and only contains alphabetic characters. We're constantly trying to improve\
         \ Fern to generate as idiomatic code as possible and naming schemas correctly\
@@ -8751,8 +8756,7 @@
   irVersion: 33
   version: 0.17.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feature): additional layout options for docs\
+    - summary: "## What's Changed\r\n* (feature): additional layout options for docs\
         \ by @abvthecity in https://github.com/fern-api/fern/pull/2781\r\n* (feature):\
         \ `x-fern-examples` extension in OpenAPI operation by @abvthecity in https://github.com/fern-api/fern/pull/2856\r\
         \n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.43...0.16.44-rc0\r\
@@ -8792,8 +8796,7 @@
   irVersion: 32
   version: 0.16.43
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* improvement: TypeScript SDK steps in quickstart\
+    - summary: "## What's Changed\r\n* improvement: TypeScript SDK steps in quickstart\
         \ by @dannysheridan in https://github.com/fern-api/fern/pull/2829\r\n* fix:\
         \ increase python generator recursion depth to allow for deeply nested examples\
         \ by @armandobelardo  in https://github.com/fern-api/fern/pull/2825\r\n* fix:\
@@ -8810,8 +8813,7 @@
   irVersion: 32
   version: 0.16.42
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (feature): OpenAPI importer supports format `json-string`\
+    - summary: "## What's Changed\r\n* (feature): OpenAPI importer supports format `json-string`\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/2827\r\n  ```yaml\r\n\
         \  MySchema: \r\n    type: string\r\n    format: json-string # <---- OpenAPI\
         \ importer handles this\r\n  ```\r\n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.40...0.16.41"
@@ -8820,8 +8822,7 @@
   irVersion: 32
   version: 0.16.41
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): add a `disable-example` flag for generators\
+    - summary: "## What's Changed\r\n* (fix): add a `disable-example` flag for generators\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/2826\r\n  ```yaml\r\n\
         \  generators: \r\n    - name: ...\r\n       version: ...\r\n       disable-examples:\
         \ true # A temporary workaround while we iron out example deserialization bugs\
@@ -8831,8 +8832,7 @@
   irVersion: 32
   version: 0.16.40
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (release): support scanning env variable for\
+    - summary: "## What's Changed\r\n* (release): support scanning env variable for\
         \ auth in python sdk generator 0.8.1  by @dsinghvi in https://github.com/fern-api/fern/pull/2811\r\
         \n* (feature): introduce nuget output location by @dsinghvi in https://github.com/fern-api/fern/pull/2812\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.38...0.16.39"
@@ -8841,8 +8841,7 @@
   irVersion: 32
   version: 0.16.39
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): OpenAPI importer uses the `value` field\
+    - summary: "## What's Changed\r\n* (fix): OpenAPI importer uses the `value` field\
         \ when looking at `examples` by @dsinghvi in https://github.com/fern-api/fern/pull/2803\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.37...0.16.38"
       type: chore
@@ -8850,8 +8849,7 @@
   irVersion: 32
   version: 0.16.38
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* (fix): Allow Ruby generator to work on IRv32\
+    - summary: "## What's Changed\r\n* (fix): Allow Ruby generator to work on IRv32\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/2668\r\n* (chore):\
         \ Go generators use IRv32 by @amckinney in https://github.com/fern-api/fern/pull/2672\r\
         \n* (fix): python sdk sends enum value for inlined requests by @dsinghvi in\
@@ -8867,8 +8865,7 @@
   irVersion: 32
   version: 0.16.37
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feature: CLI supports running Ruby sdk + model\
+    - summary: "## What's Changed\r\n* feature: CLI supports running Ruby sdk + model\
         \ generator by @armandobelardo in https://github.com/fern-api/fern/pull/2570\r\
         \n* fix: OpenAPI importer adds variables accordingly by @dsinghvi in https://github.com/fern-api/fern/pull/2667\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.35...0.16.36"
@@ -8877,8 +8874,7 @@
   irVersion: 32
   version: 0.16.36
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: OpenAPI importer supports union examples\
+    - summary: "## What's Changed\r\n* fix: OpenAPI importer supports union examples\
         \  by @dsinghvi in https://github.com/fern-api/fern/pull/2653\r\n\r\n\r\n**Full\
         \ Changelog**: https://github.com/fern-api/fern/compare/0.16.34...0.16.35"
       type: chore
@@ -8886,8 +8882,7 @@
   irVersion: 32
   version: 0.16.35
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: OpenAPI importer supports generating examples\
+    - summary: "## What's Changed\r\n* fix: OpenAPI importer supports generating examples\
         \ for `unknown` by @dsinghvi in https://github.com/fern-api/fern/pull/2624\r\
         \n* fix: auto generation of primitive examples by @dsinghvi in https://github.com/fern-api/fern/pull/2625\r\
         \n* fix: misc fixes to OpenAPI example generation by @dsinghvi in https://github.com/fern-api/fern/pull/2630\r\
@@ -8911,8 +8906,7 @@
   irVersion: 32
   version: 0.16.34
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feature: add `fern mock` command by @amckinney\
+    - summary: "## What's Changed\r\n* feature: add `fern mock` command by @amckinney\
         \ in https://github.com/fern-api/fern/pull/2618\r\n* feature: OpenAPI importer\
         \ looks at `examples` property by @dsinghvi in https://github.com/fern-api/fern/pull/2621\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.32...0.16.33"
@@ -8921,8 +8915,7 @@
   irVersion: 32
   version: 0.16.33
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: OpenAPI importer handles converting boolean\
+    - summary: "## What's Changed\r\n* fix: OpenAPI importer handles converting boolean\
         \ enums  @dsinghvi in https://github.com/fern-api/fern/pull/2616\r\n\r\n\r\n\
         **Full Changelog**: https://github.com/fern-api/fern/compare/0.16.31...0.16.32"
       type: chore
@@ -8930,8 +8923,7 @@
   irVersion: 32
   version: 0.16.32
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: OpenAPI importer visits nested `allOf` when\
+    - summary: "## What's Changed\r\n* fix: OpenAPI importer visits nested `allOf` when\
         \ inlined by @dsinghvi in https://github.com/fern-api/fern/pull/2615\r\n\r\n\
         \r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.30...0.16.31"
       type: chore
@@ -8939,8 +8931,7 @@
   irVersion: 32
   version: 0.16.31
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feature: allow specifying OpenAPI overrides in\
+    - summary: "## What's Changed\r\n* feature: allow specifying OpenAPI overrides in\
         \ generators.yml by @dsinghvi in https://github.com/fern-api/fern/pull/2613\r\
         \n  ```yaml\r\n  # generators.yml \r\n  openapi: <path to openapi> \r\n  openapi-overrides:\
         \ <path to openapi overrides> \r\n  ```\r\n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.29...0.16.30"
@@ -8949,8 +8940,7 @@
   irVersion: 32
   version: 0.16.30
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: OpenAPI importer supports reading `x-fern-sdk-return-value`\
+    - summary: "## What's Changed\r\n* fix: OpenAPI importer supports reading `x-fern-sdk-return-value`\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/2610\r\n\r\n\r\n**Full\
         \ Changelog**: https://github.com/fern-api/fern/compare/0.16.28...0.16.29"
       type: chore
@@ -8958,8 +8948,7 @@
   irVersion: 32
   version: 0.16.29
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: OpenAPI importer adds common server path\
+    - summary: "## What's Changed\r\n* fix: OpenAPI importer adds common server path\
         \ to endpoint path by @dsinghvi in https://github.com/fern-api/fern/pull/2603\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.27...0.16.28"
       type: chore
@@ -8967,8 +8956,7 @@
   irVersion: 32
   version: 0.16.28
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* test: Add test for file upload with query params\
+    - summary: "## What's Changed\r\n* test: Add test for file upload with query params\
         \ by @amckinney in https://github.com/fern-api/fern/pull/2441\r\n* test: Replace\
         \ /bin/bash with /bin/sh by @amckinney in https://github.com/fern-api/fern/pull/2595\r\
         \n* docs: update quickstart.mdx by @minaelee in https://github.com/fern-api/fern/pull/2596\r\
@@ -8980,8 +8968,7 @@
   irVersion: 32
   version: 0.16.27
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: OpenAPI importer creates inline request\
+    - summary: "## What's Changed\r\n* fix: OpenAPI importer creates inline request\
         \ schemas for singular allOf by @dsinghvi in https://github.com/fern-api/fern/pull/2591\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.24...0.16.25"
       type: chore
@@ -8989,8 +8976,7 @@
   irVersion: 32
   version: 0.16.25
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: OpenAPI converter uses literals when anyOf\
+    - summary: "## What's Changed\r\n* fix: OpenAPI converter uses literals when anyOf\
         \ has inlined enums  by @dsinghvi in https://github.com/fern-api/fern/pull/2589\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.23...0.16.24"
       type: chore
@@ -8998,8 +8984,7 @@
   irVersion: 32
   version: 0.16.24
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: make `generators.yml` optional if no generators\
+    - summary: "## What's Changed\r\n* fix: make `generators.yml` optional if no generators\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/2585\r\n\r\n## New Contributors\r\
         \n* @minaelee made their first contribution in https://github.com/fern-api/fern/pull/2567\r\
         \n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.22...0.16.23"
@@ -9008,8 +8993,7 @@
   irVersion: 32
   version: 0.16.23
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: handle error declaration conflicts in OpenAPI\
+    - summary: "## What's Changed\r\n* fix: handle error declaration conflicts in OpenAPI\
         \ importer by @dsinghvi in https://github.com/fern-api/fern/pull/2550\r\n\r\n\
         \r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.21...0.16.22"
       type: chore
@@ -9017,8 +9001,7 @@
   irVersion: 32
   version: 0.16.22
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: OpenAPI importer handles null `anyOf` with\
+    - summary: "## What's Changed\r\n* fix: OpenAPI importer handles null `anyOf` with\
         \ more than 3 variants by @dsinghvi in https://github.com/fern-api/fern/pull/2549\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.20...0.16.21"
       type: chore
@@ -9026,8 +9009,7 @@
   irVersion: 32
   version: 0.16.21
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feature: `push` mode for GitHub repository by\
+    - summary: "## What's Changed\r\n* feature: `push` mode for GitHub repository by\
         \ @dsinghvi in https://github.com/fern-api/fern/pull/2546\r\n  ```yaml\r\n \
         \ # generators.yml\r\n  - name: fernapi/fern-python-sdk\r\n    ...\r\n    github:\
         \ \r\n      mode: push\r\n      repository: owner/repo\r\n      branch: # optional\
@@ -9044,8 +9026,7 @@
   irVersion: 32
   version: 0.16.19
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feature: openapi importer generates oauth 2 scopes\
+    - summary: "## What's Changed\r\n* feature: openapi importer generates oauth 2 scopes\
         \ enum by @dsinghvi in https://github.com/fern-api/fern/pull/2540\r\n\r\n\r\n\
         **Full Changelog**: https://github.com/fern-api/fern/compare/0.16.16...0.16.17"
       type: chore
@@ -9053,8 +9034,7 @@
   irVersion: 32
   version: 0.16.17
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: respect audiences on inlined request bodies\
+    - summary: "## What's Changed\r\n* fix: respect audiences on inlined request bodies\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/2535\r\n\r\n\r\n**Full\
         \ Changelog**: https://github.com/fern-api/fern/compare/0.16.15...0.16.16"
       type: chore
@@ -9062,8 +9042,7 @@
   irVersion: 32
   version: 0.16.16
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: unknown types should be treated as optional\
+    - summary: "## What's Changed\r\n* fix: unknown types should be treated as optional\
         \ when validating examples by @dsinghvi in https://github.com/fern-api/fern/pull/2532\r\
         \n* fix: `write-definition` writes to hidden folder by @dsinghvi in https://github.com/fern-api/fern/pull/2533\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.14...0.16.15"
@@ -9072,8 +9051,7 @@
   irVersion: 32
   version: 0.16.15
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feature: `fern write-definition` writes out api\
+    - summary: "## What's Changed\r\n* feature: `fern write-definition` writes out api\
         \ dependencies by @dsinghvi in https://github.com/fern-api/fern/pull/2531\r\n\
         \r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.13...0.16.14"
       type: chore
@@ -9081,8 +9059,7 @@
   irVersion: 32
   version: 0.16.14
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feature: support property level audiences by\
+    - summary: "## What's Changed\r\n* feature: support property level audiences by\
         \ @dsinghvi in https://github.com/fern-api/fern/pull/2526\r\n* feature: openapi\
         \ importer supports importing property level audiences by @dsinghvi in https://github.com/fern-api/fern/pull/2528\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.12...0.16.13"
@@ -9091,8 +9068,7 @@
   irVersion: 32
   version: 0.16.13
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* internal: seed accepts path to api directory\
+    - summary: "## What's Changed\r\n* internal: seed accepts path to api directory\
         \ for custom fixture by @dsinghvi in https://github.com/fern-api/fern/pull/2516\r\
         \n* fix: fern python generators rely on ir v31 by @dsinghvi in https://github.com/fern-api/fern/pull/2517\r\
         \n* feature: run prettier on doc strings by @dsinghvi in https://github.com/fern-api/fern/pull/2508\r\
@@ -9110,8 +9086,7 @@
   irVersion: 32
   version: 0.16.12
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: OpenAPI importer properly escapes examples\
+    - summary: "## What's Changed\r\n* fix: OpenAPI importer properly escapes examples\
         \ that start with $ sign by @dsinghvi in https://github.com/fern-api/fern/pull/2509\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.10...0.16.11"
       type: chore
@@ -9119,8 +9094,7 @@
   irVersion: 32
   version: 0.16.11
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* document: x-fern-server-name extension by @dannysheridan\
+    - summary: "## What's Changed\r\n* document: x-fern-server-name extension by @dannysheridan\
         \ in https://github.com/fern-api/fern/pull/2504\r\n* feature: add x-fern-parameter-name\
         \ extension by @amckinney in https://github.com/fern-api/fern/pull/2489\r\n\
         * chore: seed exits 1 if tests fail  by @dsinghvi in https://github.com/fern-api/fern/pull/2505\r\
@@ -9132,8 +9106,7 @@
   irVersion: 32
   version: 0.16.10
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: improve `fern check` only logging errors\
+    - summary: "## What's Changed\r\n* fix: improve `fern check` only logging errors\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/2501\r\n\r\n\r\n**Full\
         \ Changelog**: https://github.com/fern-api/fern/compare/0.16.8...0.16.9"
       type: chore
@@ -9141,8 +9114,7 @@
   irVersion: 32
   version: 0.16.9
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* chore: run ci on forked PRs for contributors\
+    - summary: "## What's Changed\r\n* chore: run ci on forked PRs for contributors\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/2494\r\n* internal:\
         \ seed only runs one container per script for all fixtures by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/2492\r\n* fix: typo in docs starter\
@@ -9157,8 +9129,7 @@
   irVersion: 32
   version: 0.16.8
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: openapi importer correctly imports across\
+    - summary: "## What's Changed\r\n* fix: openapi importer correctly imports across\
         \ nested fern definition files by @dsinghvi in https://github.com/fern-api/fern/pull/2491\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.6...0.16.7"
       type: chore
@@ -9166,8 +9137,7 @@
   irVersion: 32
   version: 0.16.7
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: openapi importer properly detects json response\
+    - summary: "## What's Changed\r\n* fix: openapi importer properly detects json response\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/2487\r\n\r\n\r\n**Full\
         \ Changelog**: https://github.com/fern-api/fern/compare/0.16.5...0.16.6"
       type: chore
@@ -9175,8 +9145,7 @@
   irVersion: 32
   version: 0.16.6
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: OpenAPI importer detects all possible `application/json`\
+    - summary: "## What's Changed\r\n* fix: OpenAPI importer detects all possible `application/json`\
         \ request and response content types by @dsinghvi in https://github.com/fern-api/fern/pull/2486\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.4...0.16.5"
       type: chore
@@ -9184,8 +9153,7 @@
   irVersion: 32
   version: 0.16.5
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* internal: enable typescript code snippets in\
+    - summary: "## What's Changed\r\n* internal: enable typescript code snippets in\
         \ fern docs by @dsinghvi in https://github.com/fern-api/fern/pull/2473\r\n*\
         \ internal: `generators.yml` in public-api by @dsinghvi in https://github.com/fern-api/fern/pull/2475\r\
         \n* document: API-wide global configs in api.yml by @dannysheridan in https://github.com/fern-api/fern/pull/2478\r\
@@ -9198,8 +9166,7 @@
   irVersion: 32
   version: 0.16.4
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* improvement: openapi importer enum name generator\
+    - summary: "## What's Changed\r\n* improvement: openapi importer enum name generator\
         \ for like `>`, `<` , `<=`, `>=` by @dsinghvi in https://github.com/fern-api/fern/pull/2471\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.2...0.16.3"
       type: chore
@@ -9207,8 +9174,7 @@
   irVersion: 32
   version: 0.16.3
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* docs: show example of list by @dannysheridan\
+    - summary: "## What's Changed\r\n* docs: show example of list by @dannysheridan\
         \ in https://github.com/fern-api/fern/pull/2464\r\n* docs: improve cli descriptions\
         \ by @dannysheridan in https://github.com/fern-api/fern/pull/2466\r\n* fix:\
         \ openapi importer enum generation is valid @dsinghvi in https://github.com/fern-api/fern/pull/2468\r\
@@ -9221,8 +9187,7 @@
   irVersion: 32
   version: 0.16.2
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* test: introduce a test definition for optional\
+    - summary: "## What's Changed\r\n* test: introduce a test definition for optional\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/2460\r\n* fix: aliases\
         \ with `x-fern-sdk-group-name` are stored in the right file by @dsinghvi in\
         \ https://github.com/fern-api/fern/pull/2461\r\n\r\n\r\n**Full Changelog**:\
@@ -9232,8 +9197,7 @@
   irVersion: 32
   version: 0.16.1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* docs: add docs quickstart by @dannysheridan in\
+    - summary: "## What's Changed\r\n* docs: add docs quickstart by @dannysheridan in\
         \ https://github.com/fern-api/fern/pull/2456\r\n* docs: fix callout spacing\
         \ by @dannysheridan in https://github.com/fern-api/fern/pull/2457\r\n* docs:\
         \ example provided for path parameter by @dannysheridan in https://github.com/fern-api/fern/pull/2458\r\
@@ -9245,8 +9209,7 @@
   irVersion: 32
   version: 0.16.0
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: overrides from `x-fern-overrides-filepath`\
+    - summary: "## What's Changed\r\n* fix: overrides from `x-fern-overrides-filepath`\
         \ file win on tie by @dsinghvi in https://github.com/fern-api/fern/pull/2455\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.15.17...0.15.18"
       type: chore
@@ -9254,8 +9217,7 @@
   irVersion: 32
   version: 0.15.18
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feature: support overlaying extensions using\
+    - summary: "## What's Changed\r\n* feature: support overlaying extensions using\
         \ `x-fern-overrides-filepath` by @dsinghvi in https://github.com/fern-api/fern/pull/2452\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.15.16...0.15.17"
       type: chore
@@ -9263,8 +9225,7 @@
   irVersion: 32
   version: 0.15.17
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* docs: Add screenshots to availability page by\
+    - summary: "## What's Changed\r\n* docs: Add screenshots to availability page by\
         \ @dannysheridan in https://github.com/fern-api/fern/pull/2448\r\n* feature:\
         \ OpenAPI supports `application/pdf` content-type by @amckinney in https://github.com/fern-api/fern/pull/2450\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.15.15...0.15.16"
@@ -9273,8 +9234,7 @@
   irVersion: 32
   version: 0.15.16
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: validate responses that are imported correctly\
+    - summary: "## What's Changed\r\n* fix: validate responses that are imported correctly\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/2447\r\n\r\n\r\n**Full\
         \ Changelog**: https://github.com/fern-api/fern/compare/0.15.14...0.15.15"
       type: chore
@@ -9288,8 +9248,7 @@
   irVersion: 32
   version: 0.15.14
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feature: OpenAPI importer supports `audio/mpeg`\
+    - summary: "## What's Changed\r\n* feature: OpenAPI importer supports `audio/mpeg`\
         \ content type by @dsinghvi in https://github.com/fern-api/fern/pull/2446\r\n\
         \r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.15.12...0.15.13"
       type: chore
@@ -9297,8 +9256,7 @@
   irVersion: 32
   version: 0.15.13
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* internal: seed supports configurable output mode\
+    - summary: "## What's Changed\r\n* internal: seed supports configurable output mode\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/2430\r\n* internal:\
         \ add examples to literal-headers test definition by @amckinney in https://github.com/fern-api/fern/pull/2437\r\
         \n* internal: seed fixtures are dynamic by @amckinney in https://github.com/fern-api/fern/pull/2440\r\
@@ -9311,8 +9269,7 @@
   irVersion: 32
   version: 0.15.12
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feature: use terminal link to render clickable\
+    - summary: "## What's Changed\r\n* feature: use terminal link to render clickable\
         \ docs URL by @dannysheridan in https://github.com/fern-api/fern/pull/2391\r\
         \n* docs: Explain how SDKs and Docs use audiences by @dannysheridan in https://github.com/fern-api/fern/pull/2411\r\
         \n* feature: send property level availability information to docs by @dsinghvi\
@@ -9327,8 +9284,7 @@
   irVersion: 32
   version: 0.15.11
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* seed: generators can be tested with different\
+    - summary: "## What's Changed\r\n* seed: generators can be tested with different\
         \ output versions by @amckinney in https://github.com/fern-api/fern/pull/2401\r\
         \n* seed: support optional compile commands by @amckinney in https://github.com/fern-api/fern/pull/2409\r\
         \n* fix: example properties for imported types are properly serialized by @dsinghvi\
@@ -9339,8 +9295,7 @@
   irVersion: 31
   version: 0.15.10
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: properly convert examples of imported types\
+    - summary: "## What's Changed\r\n* fix: properly convert examples of imported types\
         \  by @dsinghvi in https://github.com/fern-api/fern/pull/2404\r\n\r\n\r\n**Full\
         \ Changelog**: https://github.com/fern-api/fern/compare/0.15.8...0.15.9"
       type: chore
@@ -9348,8 +9303,7 @@
   irVersion: 31
   version: 0.15.9
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: see docker logs when running `fern generate\
+    - summary: "## What's Changed\r\n* fix: see docker logs when running `fern generate\
         \ --local` by @dsinghvi in https://github.com/fern-api/fern/pull/2400\r\n\r\n\
         \r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.15.7...0.15.8"
       type: chore
@@ -9357,8 +9311,7 @@
   irVersion: 31
   version: 0.15.8
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: compress fhir definition by having types\
+    - summary: "## What's Changed\r\n* fix: compress fhir definition by having types\
         \ extend `BaseResource`  by @dsinghvi in https://github.com/fern-api/fern/pull/2387\r\
         \n* docs: availability in Fern Definition by @dannysheridan in https://github.com/fern-api/fern/pull/2395\r\
         \n* fix: OpenAPI importer generates non-conflicting names for multipart file\
@@ -9369,8 +9322,7 @@
   irVersion: 31
   version: 0.15.7
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* docs: how to control display order of your API\
+    - summary: "## What's Changed\r\n* docs: how to control display order of your API\
         \ reference by @dsinghvi in https://github.com/fern-api/fern/pull/2366\r\n*\
         \ docs: .NET server code generator for C# by @dannysheridan in https://github.com/fern-api/fern/pull/2354\r\
         \n* docs: improve fern's readme.md by @dannysheridan in https://github.com/fern-api/fern/pull/2370\r\
@@ -9388,8 +9340,7 @@
   irVersion: 31
   version: 0.15.6
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: forward along global headers when registering\
+    - summary: "## What's Changed\r\n* fix: forward along global headers when registering\
         \ docs by @dsinghvi in https://github.com/fern-api/fern/pull/2358\r\n\r\n\r\n\
         **Full Changelog**: https://github.com/fern-api/fern/compare/0.15.4...0.15.5"
       type: chore
@@ -9397,8 +9348,7 @@
   irVersion: 31
   version: 0.15.5
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* chore: use correct URL for preview server by\
+    - summary: "## What's Changed\r\n* chore: use correct URL for preview server by\
         \ @dsinghvi in https://github.com/fern-api/fern/pull/2322\r\n* fix: docs preview\
         \ server no longer has cors requirement by @dsinghvi in https://github.com/fern-api/fern/pull/2323\r\
         \n* Add test def for optional enum query param by @davidkonigsberg in https://github.com/fern-api/fern/pull/2317\r\
@@ -9420,8 +9370,7 @@
   irVersion: 31
   version: 0.15.4
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: migrate from registry-node to fdr-sdk by\
+    - summary: "## What's Changed\r\n* fix: migrate from registry-node to fdr-sdk by\
         \ @dsinghvi in https://github.com/fern-api/fern/pull/2313\r\n* build(deps):\
         \ bump @redocly/openapi-core from 1.4.0 to 1.4.1 by @dependabot in https://github.com/fern-api/fern/pull/2312\r\
         \n* build(deps): bump @fern-api/venus-api-sdk from 0.0.20-7-g6ea8dc4 to 0.0.36\
@@ -9438,8 +9387,7 @@
   irVersion: 31
   version: 0.15.3
 - changelogEntry:
-    - summary:
-        "- **fix**: running `fern generate --local` with a `.fernignore` works
+    - summary: "- **fix**: running `fern generate --local` with a `.fernignore` works
         in Github Actions (@dsinghvi)"
       type: chore
   createdAt: "2023-11-20"
@@ -9476,8 +9424,7 @@
   irVersion: 30
   version: 0.15.2-rc0
 - changelogEntry:
-    - summary:
-        "_It's been forever since we released a non release candidate!_\r\n\r\
+    - summary: "_It's been forever since we released a non release candidate!_\r\n\r\
         \n**Break**\r\n- The file structure of the Fern folder has now changed. If you\
         \ have a single API, your definition can live directly at the top-level. If\
         \ you have multiple, they will need to live in an apis folder. When you run\
@@ -9487,8 +9434,7 @@
   irVersion: 30
   version: 0.15.1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feature: introduce `fern token` command to generate\
+    - summary: "## What's Changed\r\n* feature: introduce `fern token` command to generate\
         \ `FERN_TOKEN` by @dsinghvi in https://github.com/fern-api/fern/pull/2295\r\n\
         \r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.15.0-rc87...0.15.0-rc88"
       type: chore
@@ -9496,8 +9442,7 @@
   irVersion: 30
   version: 0.15.0-rc88
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: non .fernignored files are deleted on successive\
+    - summary: "## What's Changed\r\n* fix: non .fernignored files are deleted on successive\
         \ regeneration by @dsinghvi in https://github.com/fern-api/fern/pull/2294\r\n\
         \r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.15.0-rc84...0.15.0-rc85"
       type: chore
@@ -9505,8 +9450,7 @@
   irVersion: 30
   version: 0.15.0-rc87
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: `fern generate --local` no longer fails\
+    - summary: "## What's Changed\r\n* fix: `fern generate --local` no longer fails\
         \ if `.fernignore` is present and there are no new changes by @dsinghvi in https://github.com/fern-api/fern/pull/2291\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.15.0-rc83...0.15.0-rc84"
       type: chore
@@ -9514,8 +9458,7 @@
   irVersion: 30
   version: 0.15.0-rc84
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: default to service availability if endpoint\
+    - summary: "## What's Changed\r\n* fix: default to service availability if endpoint\
         \ availability is not present by @dsinghvi in https://github.com/fern-api/fern/pull/2290\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.15.0-rc82...0.15.0-rc83"
       type: chore
@@ -9523,8 +9466,7 @@
   irVersion: 30
   version: 0.15.0-rc83
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* feature: introduce `x-fern-type` extension to\
+    - summary: "## What's Changed\r\n* feature: introduce `x-fern-type` extension to\
         \ the OpenAPI spec by @dsinghvi in https://github.com/fern-api/fern/pull/2289\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.15.0-rc81...0.15.0-rc82"
       type: chore
@@ -9532,8 +9474,7 @@
   irVersion: 30
   version: 0.15.0-rc82
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* **Internal**: Add fern-python generator versions\
+    - summary: "## What's Changed\r\n* **Internal**: Add fern-python generator versions\
         \ for IRv30 by @amckinney in https://github.com/fern-api/fern/pull/2283\r\n\
         * **Internal**: Fix fern-java-model maven coordinates by @amckinney in https://github.com/fern-api/fern/pull/2284\r\
         \n* **Internal**: Generate fern-api/ir-go repository by @amckinney in https://github.com/fern-api/fern/pull/2285\r\
@@ -9544,8 +9485,7 @@
   irVersion: 30
   version: 0.15.0-rc81
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: don't compare root api files if dependency\
+    - summary: "## What's Changed\r\n* fix: don't compare root api files if dependency\
         \ has no endpoints by @dsinghvi in https://github.com/fern-api/fern/pull/2282\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.15.0-rc79...0.15.0-rc80"
       type: chore
@@ -9553,8 +9493,7 @@
   irVersion: 30
   version: 0.15.0-rc80
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* internal: Add more granular test definitions\
+    - summary: "## What's Changed\r\n* internal: Add more granular test definitions\
         \ by @amckinney in https://github.com/fern-api/fern/pull/2277\r\n* feature:\
         \ update fhir.yml and setup workflow for registration by @dsinghvi in https://github.com/fern-api/fern/pull/2280\r\
         \n* fix: register union base properties in docs by @dsinghvi in https://github.com/fern-api/fern/pull/2281\r\
@@ -9564,16 +9503,14 @@
   irVersion: 30
   version: 0.15.0-rc79
 - changelogEntry:
-    - summary:
-        "- **feature**: mark `in-development` endpoints as `beta` in the generated
+    - summary: "- **feature**: mark `in-development` endpoints as `beta` in the generated
         docs"
       type: chore
   createdAt: "2023-11-14"
   irVersion: 29
   version: 0.15.0-rc75
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* **internal** Introduce IR version 30 for example\
+    - summary: "## What's Changed\r\n* **internal** Introduce IR version 30 for example\
         \ @amckinney in https://github.com/fern-api/fern/pull/2273\r\n\r\n\r\n**Full\
         \ Changelog**: https://github.com/fern-api/fern/compare/0.15.0-rc76...0.15.0-rc77"
       type: chore
@@ -9581,8 +9518,7 @@
   irVersion: 30
   version: 0.15.0-rc77
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* fix: OpenAPI importer handles parsing server\
+    - summary: "## What's Changed\r\n* fix: OpenAPI importer handles parsing server\
         \ variables by @dsinghvi in https://github.com/fern-api/fern/pull/2275\r\n\r\
         \n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.15.0-rc75...0.15.0-rc76"
       type: chore
@@ -9632,8 +9568,7 @@
   irVersion: 27
   version: 0.15.0-rc67
 - changelogEntry:
-    - summary:
-        "- **fix**: OpenAPI importer always uses tags to organize endpoints if
+    - summary: "- **fix**: OpenAPI importer always uses tags to organize endpoints if
         present (@dsinghvi)"
       type: chore
   createdAt: "2023-11-03"
@@ -9658,8 +9593,7 @@
   irVersion: 27
   version: 0.15.0-rc63
 - changelogEntry:
-    - summary:
-        "- OpenAPI importer skips example generation if `allOf` examples are
+    - summary: "- OpenAPI importer skips example generation if `allOf` examples are
         undefined (@dsinghvi)"
       type: chore
   createdAt: "2023-11-01"
@@ -9690,24 +9624,21 @@
   irVersion: 27
   version: 0.15.0-rc56
 - changelogEntry:
-    - summary:
-        "- **fix**: OpenAPI parser handles converting discriminated unions that
+    - summary: "- **fix**: OpenAPI parser handles converting discriminated unions that
         contain`allOf` references with the discriminant (@dsinghvi)"
       type: chore
   createdAt: "2023-10-30"
   irVersion: 27
   version: 0.15.0-rc55
 - changelogEntry:
-    - summary:
-        "- **feature**: OpenAPI importer supports resolving multi-file references
+    - summary: "- **feature**: OpenAPI importer supports resolving multi-file references
         (@dsinghvi)"
       type: chore
   createdAt: "2023-10-30"
   irVersion: 27
   version: 0.15.0-rc54
 - changelogEntry:
-    - summary:
-        "- **feature**: OpenAPI importer supports `x-fern-header-variable-name`
+    - summary: "- **feature**: OpenAPI importer supports `x-fern-header-variable-name`
         to customize the header name in the SDK"
       type: chore
   createdAt: "2023-10-28"
@@ -9720,16 +9651,14 @@
   irVersion: 27
   version: 0.15.0-rc52
 - changelogEntry:
-    - summary:
-        "- **No user facing changes** - Seed testing CLI doesn't require generator
+    - summary: "- **No user facing changes** - Seed testing CLI doesn't require generator
         languages to support testing OpenAPI/Postman generators"
       type: chore
   createdAt: "2023-10-27"
   irVersion: 27
   version: 0.15.0-rc51
 - changelogEntry:
-    - summary:
-        "- Not a user facing change: IR for `property-response` uses correct
+    - summary: "- Not a user facing change: IR for `property-response` uses correct
         typeId (@dsinghvi)"
       type: chore
   createdAt: "2023-10-26"
@@ -9742,8 +9671,7 @@
   irVersion: 27
   version: 0.15.0-rc49
 - changelogEntry:
-    - summary:
-        "- Upgrade Go generator IR version (@amckinney) \r\n- `response-property`\
+    - summary: "- Upgrade Go generator IR version (@amckinney) \r\n- `response-property`\
         \ validation rules now handle aliases (@amckinney) "
       type: chore
   createdAt: "2023-10-25"
@@ -9762,8 +9690,7 @@
   irVersion: 27
   version: 0.15.0-rc46
 - changelogEntry:
-    - summary:
-        "- **fix**: OpenAPI importer removes global headers from example generation
+    - summary: "- **fix**: OpenAPI importer removes global headers from example generation
         (@dsinghvi) "
       type: chore
   createdAt: "2023-10-20"
@@ -9830,8 +9757,7 @@
   irVersion: 26
   version: 0.15.0-rc35
 - changelogEntry:
-    - summary:
-        "- Fix: OpenAPI importer scans const fields when detecting discriminated
+    - summary: "- Fix: OpenAPI importer scans const fields when detecting discriminated
         unions (@dsinghvi) "
       type: chore
   createdAt: "2023-10-06"
@@ -9862,16 +9788,14 @@
   irVersion: 26
   version: 0.15.0-rc30
 - changelogEntry:
-    - summary:
-        "- `--local` mode of the Fern CLI now correctly copies over generated
+    - summary: "- `--local` mode of the Fern CLI now correctly copies over generated
         typescript code (@dsinghvi) "
       type: chore
   createdAt: "2023-09-30"
   irVersion: 26
   version: 0.15.0-rc29
 - changelogEntry:
-    - summary:
-        "- Bump generator versions to the latest (@amckinney) \r\n- Send undiscriminated\
+    - summary: "- Bump generator versions to the latest (@amckinney) \r\n- Send undiscriminated\
         \ union type names to docs generation (@dsinghvi) "
       type: chore
   createdAt: "2023-09-29"
@@ -9884,8 +9808,7 @@
   irVersion: 26
   version: 0.15.0-rc27
 - changelogEntry:
-    - summary:
-        "- `fern generate --docs` will no longer fail because of network timeout
+    - summary: "- `fern generate --docs` will no longer fail because of network timeout
         issues (@dsinghvi)"
       type: chore
   createdAt: "2023-09-25"
@@ -9898,8 +9821,7 @@
   irVersion: 26
   version: 0.15.0-rc25
 - changelogEntry:
-    - summary:
-        "- `fern generate --docs` runs validation on the the docs configuration
+    - summary: "- `fern generate --docs` runs validation on the the docs configuration
         (@dsinghvi) "
       type: chore
   createdAt: "2023-09-20"
@@ -9918,8 +9840,7 @@
   irVersion: 26
   version: 0.15.0-rc22
 - changelogEntry:
-    - summary:
-        "- Only set GA availability if explicitly defined in the API Definition
+    - summary: "- Only set GA availability if explicitly defined in the API Definition
         (@dsinghvi) "
       type: chore
   createdAt: "2023-09-17"
@@ -9938,8 +9859,7 @@
   irVersion: 26
   version: 0.15.0-rc19
 - changelogEntry:
-    - summary:
-        "- CLI now requires that versioned navbars live in new files (@dsinghvi)\
+    - summary: "- CLI now requires that versioned navbars live in new files (@dsinghvi)\
         \ \r\n- CLI supports sending availability (@dsinghvi) \r\n- CLI has new validation\
         \ rules for mdx + filepaths (@dsinghvi) "
       type: chore
@@ -9953,8 +9873,7 @@
   irVersion: 25
   version: 0.15.0-rc17
 - changelogEntry:
-    - summary:
-        "- Fix and make sure CLI adheres to `--api` flag when filtering API workspaces
+    - summary: "- Fix and make sure CLI adheres to `--api` flag when filtering API workspaces
         (@dsinghvi) "
       type: chore
   createdAt: "2023-09-09"
@@ -9967,8 +9886,7 @@
   irVersion: 25
   version: 0.15.0-rc15
 - changelogEntry:
-    - summary:
-        "- Support specifying instance when running docs generation `fern generate
+    - summary: "- Support specifying instance when running docs generation `fern generate
         --docs --instance <url>`"
       type: chore
   createdAt: "2023-09-06"
@@ -9987,8 +9905,7 @@
   irVersion: 25
   version: 0.15.0-rc12
 - changelogEntry:
-    - summary:
-        "- Latest java generators depend on IR v25 to support text/plain responses
+    - summary: "- Latest java generators depend on IR v25 to support text/plain responses
         (@dsinghvi) "
       type: chore
   createdAt: "2023-09-05"
@@ -10007,8 +9924,7 @@
   irVersion: 25
   version: 0.15.0-rc8
 - changelogEntry:
-    - summary:
-        "- OpenAPI importer supports reading `application/octet-stream` requests
+    - summary: "- OpenAPI importer supports reading `application/octet-stream` requests
         (@dsinghvi) "
       type: chore
   createdAt: "2023-09-04"
@@ -10027,16 +9943,14 @@
   irVersion: 24
   version: 0.15.0-rc6
 - changelogEntry:
-    - summary:
-        "- Support reading `default` key in OpenAPI to account for headers with
+    - summary: "- Support reading `default` key in OpenAPI to account for headers with
         literal value (@dsinghvi) "
       type: chore
   createdAt: "2023-08-30"
   irVersion: 24
   version: 0.15.0-rc5
 - changelogEntry:
-    - summary:
-        "- fern.config.json version is set to `*` which allows easier integration\
+    - summary: "- fern.config.json version is set to `*` which allows easier integration\
         \ with pnpm (@zachkirsch) \r\n- OpenAPI importer properly reads discriminated\
         \ unions so that discriminants are stripped from subtypes (@dsinghvi) "
       type: chore
@@ -10056,16 +9970,14 @@
   irVersion: 24
   version: 0.15.0-rc2
 - changelogEntry:
-    - summary:
-        "- Update discriminated union detection to handle referenced schemas
+    - summary: "- Update discriminated union detection to handle referenced schemas
         (@dsinghvi) "
       type: chore
   createdAt: "2023-08-18"
   irVersion: 23
   version: 0.15.0-rc1
 - changelogEntry:
-    - summary:
-        "- **Break**: The fern directory now has a top-level `apis` directory
+    - summary: "- **Break**: The fern directory now has a top-level `apis` directory
         to handle apis and docs no longer live within an api definition"
       type: chore
   createdAt: "2023-08-16"
@@ -10084,24 +9996,21 @@
   irVersion: 23
   version: 0.14.4-rc1
 - changelogEntry:
-    - summary:
-        CLI handles property names that start with numbers for code generation
+    - summary: CLI handles property names that start with numbers for code generation
         (@dsinghvi)
       type: chore
   createdAt: "2023-08-11"
   irVersion: 23
   version: 0.14.4-rc0
 - changelogEntry:
-    - summary:
-        "- When `docs` is missing, the CLI should nudge the user to run `fern
+    - summary: "- When `docs` is missing, the CLI should nudge the user to run `fern
         add docs` (@dannysheridan) "
       type: chore
   createdAt: "2023-08-08"
   irVersion: 23
   version: 0.14.3
 - changelogEntry:
-    - summary:
-        "- When running `fern init --openapi <openapi>` the OpenAPI generator
+    - summary: "- When running `fern init --openapi <openapi>` the OpenAPI generator
         wont be included (@dannysheridan) "
       type: chore
   createdAt: "2023-08-08"
@@ -10138,24 +10047,21 @@
   irVersion: 22
   version: 0.13.0-rc2
 - changelogEntry:
-    - summary:
-        "- OpenAPI generator only includes current package as part of generated
+    - summary: "- OpenAPI generator only includes current package as part of generated
         name (@dsinghvi) "
       type: chore
   createdAt: "2023-08-02"
   irVersion: 22
   version: 0.13.0-rc1
 - changelogEntry:
-    - summary:
-        "- OpenAPI oneOf subtypes have generated names based on unique properties
+    - summary: "- OpenAPI oneOf subtypes have generated names based on unique properties
         (@dsinghvi) "
       type: chore
   createdAt: "2023-08-02"
   irVersion: 22
   version: 0.13.0-rc0
 - changelogEntry:
-    - summary:
-        "- OpenAPI importer converts `date-times` appropriately. Before this
+    - summary: "- OpenAPI importer converts `date-times` appropriately. Before this
         release, datetimes would be converted as strings. (@dsinghvi)"
       type: chore
   createdAt: "2023-08-02"
@@ -10168,8 +10074,7 @@
   irVersion: 22
   version: 0.11.12
 - changelogEntry:
-    - summary:
-        "* Add `ServiceTypeReferenceInfo` to IR so that generators can recognize\
+    - summary: "* Add `ServiceTypeReferenceInfo` to IR so that generators can recognize\
         \ what types are referenced from exactly one service (@amckinney).\r\n```yaml\r\
         \n  ServiceTypeReferenceInfo:\r\n    properties:\r\n      typesReferencedOnlyByService:\r\
         \n        docs: \"Types referenced by exactly one service.\"\r\n        type:\
@@ -10181,8 +10086,7 @@
   irVersion: 22
   version: 0.11.12-rc2
 - changelogEntry:
-    - summary:
-        "- Specify license in generators.yml (@amckinney) \r\n```yaml\r\ngroups:\
+    - summary: "- Specify license in generators.yml (@amckinney) \r\n```yaml\r\ngroups:\
         \ \r\n  publish: \r\n    - name: fernapi/fern-go-sdk\r\n      version: 0.0.1\r\
         \n      github: \r\n        repository: my-org/my-repo\r\n        license: MIT\
         \ # <------- or Apache-2.0\r\n```"
@@ -10191,8 +10095,7 @@
   irVersion: 22
   version: 0.11.12-rc0
 - changelogEntry:
-    - summary:
-        "- Support `x-fern-ignore` OpenAPI extension. This extensions configures\
+    - summary: "- Support `x-fern-ignore` OpenAPI extension. This extensions configures\
         \ fern to ignore certain endpoints when generating SDKs. (@dsinghvi) \r\n  ```yaml\r\
         \n  paths: \r\n    my/endpoint/path: \r\n      get: \r\n        x-fern-ignore:\
         \ true # <------- fern will skip this endpoint\r\n  ```"
@@ -10201,16 +10104,14 @@
   irVersion: 22
   version: 0.11.12-rc1
 - changelogEntry:
-    - summary:
-        "- OpenAPI importer handles converting numbers formatted as time-delta
+    - summary: "- OpenAPI importer handles converting numbers formatted as time-delta
         (@dsinghvi)"
       type: chore
   createdAt: "2023-07-28"
   irVersion: 22
   version: 0.11.11
 - changelogEntry:
-    - summary:
-        "- OpenAPI importer handles converting servers with `staging` and `production`\
+    - summary: "- OpenAPI importer handles converting servers with `staging` and `production`\
         \ descriptions (@dsinghvi) \r\n- Generators are upgraded in fern init (@dannysheridan)\
         \ \r\n- Documentation markdown paths are validated (@zachkirsch)"
       type: chore
@@ -10326,8 +10227,7 @@
   irVersion: 22
   version: 0.11.6-rc0
 - changelogEntry:
-    - summary:
-        "- Fixes https://github.com/fern-api/fern/issues/1880 (no longer forced
+    - summary: "- Fixes https://github.com/fern-api/fern/issues/1880 (no longer forced
         to define auth if endpoints don't require auth)"
       type: chore
   createdAt: "2023-07-10"
@@ -10406,8 +10306,7 @@
   irVersion: 20
   version: 0.11.3-rc2
 - changelogEntry:
-    - summary:
-        "- Support reading `x-fern-audiences` extension so that OpenAPI spec
+    - summary: "- Support reading `x-fern-audiences` extension so that OpenAPI spec
         users can leverage fern audiences"
       type: chore
   createdAt: "2023-06-28"
@@ -10480,8 +10379,7 @@
   irVersion: 20
   version: 0.10.25-rc0
 - changelogEntry:
-    - summary:
-        "- Fixes https://github.com/fern-api/fern/issues/1765 so OpenAPI specs
+    - summary: "- Fixes https://github.com/fern-api/fern/issues/1765 so OpenAPI specs
         are not required to have `operationId` or `x-fern-sdk-method-name` "
       type: chore
   createdAt: "2023-06-13"
@@ -10692,8 +10590,7 @@
   irVersion: 20
   version: 0.10.1
 - changelogEntry:
-    - summary:
-        "- The docs `domain` must be a full domain ending in `docs.buildwithfern.com`\r\
+    - summary: "- The docs `domain` must be a full domain ending in `docs.buildwithfern.com`\r\
         \n- `docs.yml` now supports custom-domains so that docs can redirect from a\
         \ custom url"
       type: chore
@@ -11811,8 +11708,7 @@
   irVersion: 12
   version: 0.5.1
 - changelogEntry:
-    - summary:
-        "## What's Changed\r\n* Support http streams in responses by @zachkirsch\
+    - summary: "## What's Changed\r\n* Support http streams in responses by @zachkirsch\
         \ in https://github.com/fern-api/fern/pull/1365\r\n* fix: introduce undiscriminated\
         \ unions by @dsinghvi in https://github.com/fern-api/fern/pull/1367\r\n* Add\
         \ release blocker for undiscriminated unions by @zachkirsch in https://github.com/fern-api/fern/pull/1369\r\

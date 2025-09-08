@@ -1,25 +1,26 @@
+# frozen_string_literal: true
 
 module Seed
   module ReqWithHeaders
     class Client
-      # @option client [Seed::Internal::Http::RawClient]
-      #
       # @return [Seed::ReqWithHeaders::Client]
-      def initialize(client)
+      def initialize(client:)
         @client = client
       end
 
       # @return [untyped]
       def get_with_custom_header(request_options: {}, **params)
-        _request = params
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          method: "POST",
+          path: "/test-headers/custom-header",
+          body: params
+        )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return
-        else
-          raise _response.body
-        end
-      end
+        return if _response.code >= "200" && _response.code < "300"
 
+        raise _response.body
+      end
     end
   end
 end

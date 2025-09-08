@@ -46,10 +46,12 @@ export interface SdkContext extends BaseContext {
     includeSerdeLayer: boolean;
     retainOriginalCasing: boolean;
     generateOAuthClients: boolean;
+    enableInlineTypes: boolean;
     inlineFileProperties: boolean;
     omitUndefined: boolean;
     neverThrowErrors: boolean;
     importsManager: ImportsManager;
     exportsManager: ExportsManager;
     authProvider: AuthProviderContext;
+    exportAllRequestsAtRoot: boolean;
 }

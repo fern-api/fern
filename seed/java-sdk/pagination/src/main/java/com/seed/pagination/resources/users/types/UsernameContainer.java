@@ -91,7 +91,9 @@ public final class UsernameContainer {
         }
 
         public Builder addAllResults(List<String> results) {
-            this.results.addAll(results);
+            if (results != null) {
+                this.results.addAll(results);
+            }
             return this;
         }
 

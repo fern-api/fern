@@ -36,7 +36,13 @@ export class ReferencedEndpointRequest extends EndpointRequest {
 
     public getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined {
         return {
-            requestBodyReference: this.getParameterName()
+            requestBodyReference: ruby.codeblock((writer) => {
+                if (this.requestBodyShape.type === "named") {
+                    writer.write(`${this.context.getReferenceToTypeId(this.requestBodyShape.typeId)}.new(params).to_h`);
+                } else {
+                    writer.write(`params`);
+                }
+            })
         };
     }
 

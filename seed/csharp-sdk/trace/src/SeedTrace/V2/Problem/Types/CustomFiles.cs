@@ -185,7 +185,7 @@ public record CustomFiles
                     ),
                 "custom" => json.GetProperty("value")
                     .Deserialize<Dictionary<Language, Files>>(options)
-                    ?? throw new JsonException("Failed to deserialize Dictionary<Language, Files>"),
+                ?? throw new JsonException("Failed to deserialize Dictionary<Language, Files>"),
                 _ => json.Deserialize<object?>(options),
             };
             return new CustomFiles(discriminator, value);

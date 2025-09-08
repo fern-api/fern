@@ -319,10 +319,10 @@ public record WorkspaceSubmissionStatus
             {
                 "stopped" => new { },
                 "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
+                ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
                 "running" => json.GetProperty("value")
                     .Deserialize<SeedTrace.RunningSubmissionState>(options)
-                    ?? throw new JsonException(
+                ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.RunningSubmissionState"
                     ),
                 "ran" => json.Deserialize<SeedTrace.WorkspaceRunDetails>(options)

@@ -1,7 +1,7 @@
 import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
 import { BaseContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
-import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { ModuleDeclarationStructure, PropertySignatureStructure, ts } from "ts-morph";
 
 export declare namespace SamePropertiesAsObjectSingleUnionTypeGenerator {
     export interface Init {

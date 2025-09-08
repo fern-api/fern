@@ -16,11 +16,12 @@ import (
 type RawClient struct {
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
+	options *core.RequestOptions
 }
 
 func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -28,7 +29,6 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
@@ -49,7 +49,7 @@ func (r *RawClient) Post(
 	)
 	endpointURL := baseURL
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -78,7 +78,7 @@ func (r *RawClient) Post(
 		}
 	}
 	if request.MaybeInteger != nil {
-		if err := writer.WriteField("maybe_integer", fmt.Sprintf("%v", request.MaybeInteger)); err != nil {
+		if err := writer.WriteField("maybe_integer", fmt.Sprintf("%v", *request.MaybeInteger)); err != nil {
 			return nil, err
 		}
 	}
@@ -161,7 +161,7 @@ func (r *RawClient) JustFile(
 	)
 	endpointURL := baseURL + "/just-file"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -216,7 +216,7 @@ func (r *RawClient) JustFileWithQueryParams(
 		endpointURL += "?" + queryParams.Encode()
 	}
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -265,7 +265,7 @@ func (r *RawClient) WithContentType(
 	)
 	endpointURL := baseURL + "/with-content-type"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -325,7 +325,7 @@ func (r *RawClient) WithFormEncoding(
 	)
 	endpointURL := baseURL + "/with-form-encoding"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -383,7 +383,7 @@ func (r *RawClient) WithFormEncodedContainers(
 	)
 	endpointURL := baseURL
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -412,7 +412,7 @@ func (r *RawClient) WithFormEncodedContainers(
 		}
 	}
 	if request.MaybeInteger != nil {
-		if err := writer.WriteField("maybe_integer", fmt.Sprintf("%v", request.MaybeInteger)); err != nil {
+		if err := writer.WriteField("maybe_integer", fmt.Sprintf("%v", *request.MaybeInteger)); err != nil {
 			return nil, err
 		}
 	}
@@ -501,7 +501,7 @@ func (r *RawClient) OptionalArgs(
 	)
 	endpointURL := baseURL + "/optional-args"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -557,7 +557,7 @@ func (r *RawClient) WithInlineType(
 	)
 	endpointURL := baseURL + "/inline-type"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -609,7 +609,7 @@ func (r *RawClient) Simple(
 	)
 	endpointURL := baseURL + "/snippet"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	raw, err := r.caller.Call(

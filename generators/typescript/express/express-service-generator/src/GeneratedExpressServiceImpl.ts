@@ -4,7 +4,6 @@ import {
     HttpRequestBody,
     HttpResponseBody,
     HttpService,
-    JsonResponse,
     Package,
     PathParameter
 } from "@fern-fern/ir-sdk/api";

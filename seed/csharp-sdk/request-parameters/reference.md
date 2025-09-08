@@ -16,6 +16,7 @@
 await client.User.CreateUsernameAsync(
     new CreateUsernameRequest
     {
+        Tags = new List<string>() { "tags", "tags" },
         Username = "username",
         Password = "password",
         Name = "test",
@@ -36,6 +37,57 @@ await client.User.CreateUsernameAsync(
 <dd>
 
 **request:** `CreateUsernameRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.User.<a href="/src/SeedRequestParameters/User/UserClient.cs">CreateUsernameWithReferencedTypeAsync</a>(CreateUsernameReferencedRequest { ... })</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.User.CreateUsernameWithReferencedTypeAsync(
+    new CreateUsernameReferencedRequest
+    {
+        Tags = new List<string>() { "tags", "tags" },
+        Body = new CreateUsernameBody
+        {
+            Username = "username",
+            Password = "password",
+            Name = "test",
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreateUsernameReferencedRequest` 
     
 </dd>
 </dl>

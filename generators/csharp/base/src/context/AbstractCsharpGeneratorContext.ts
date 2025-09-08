@@ -189,6 +189,14 @@ export abstract class AbstractCsharpGeneratorContext<
         );
     }
 
+    public shouldUseFullyQualifiedNamespaces(): boolean {
+        return this.customConfig["experimental-fully-qualified-namespaces"] ?? false;
+    }
+
+    public shouldUseDotnetFormat(): boolean {
+        return this.customConfig["experimental-dotnet-format"] ?? false;
+    }
+
     public generateNewAdditionalProperties(): boolean {
         return (
             this.customConfig["additional-properties"] ??
@@ -296,14 +304,14 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public getJsonConverterAttributeReference(): csharp.ClassReference {
         return csharp.classReference({
-            namespace: "System.Text.Json",
+            namespace: "System.Text.Json.Serialization",
             name: "JsonConverter"
         });
     }
 
     public getJsonConverterClassReference(typeToConvert: csharp.Type): csharp.ClassReference {
         return csharp.classReference({
-            namespace: "System.Text.Json",
+            namespace: "System.Text.Json.Serialization",
             name: "JsonConverter",
             generics: [typeToConvert]
         });

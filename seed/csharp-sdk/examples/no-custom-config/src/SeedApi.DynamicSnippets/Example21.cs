@@ -15,7 +15,7 @@ public class Example21
 
         await client.Service.RefreshTokenAsync(
             new RefreshTokenRequest{
-                Ttl = 1
+                Ttl = 420
             }
         );
     }

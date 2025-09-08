@@ -1,5 +1,4 @@
 import { AstNode } from "./AstNode";
-import { Expression } from "./Expression";
 import { Writer } from "./Writer";
 
 export declare namespace Pattern {

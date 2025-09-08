@@ -1,6 +1,6 @@
 /* eslint-disable jest/no-disabled-tests */
 
-import { AbsoluteFilePath, getDirectoryContents, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { cp, readFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";

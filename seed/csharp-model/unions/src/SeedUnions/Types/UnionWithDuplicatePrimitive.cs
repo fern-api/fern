@@ -279,9 +279,9 @@ public record UnionWithDuplicatePrimitive
                 "integer1" => json.GetProperty("value").Deserialize<int>(options),
                 "integer2" => json.GetProperty("value").Deserialize<int>(options),
                 "string1" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 "string2" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
             return new UnionWithDuplicatePrimitive(discriminator, value);

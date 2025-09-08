@@ -1408,6 +1408,151 @@
                                 },
                                 "docs": null
                             }
+                        },
+                        {
+                            "example": {
+                                "id": "e4bffb46",
+                                "url": "/service",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "unknown",
+                                        "unknown": {
+                                            "key": "value"
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "key": "value"
+                                    }
+                                },
+                                "response": {
+                                    "type": "error",
+                                    "body": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    },
+                                    "error": {
+                                        "name": {
+                                            "originalName": "NotFoundError",
+                                            "camelCase": {
+                                                "unsafeName": "notFoundError",
+                                                "safeName": "notFoundError"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "not_found_error",
+                                                "safeName": "not_found_error"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "NOT_FOUND_ERROR",
+                                                "safeName": "NOT_FOUND_ERROR"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "NotFoundError",
+                                                "safeName": "NotFoundError"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "folder",
+                                                    "camelCase": {
+                                                        "unsafeName": "folder",
+                                                        "safeName": "folder"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "folder",
+                                                        "safeName": "folder"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "FOLDER",
+                                                        "safeName": "FOLDER"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Folder",
+                                                        "safeName": "Folder"
+                                                    }
+                                                },
+                                                {
+                                                    "originalName": "service",
+                                                    "camelCase": {
+                                                        "unsafeName": "service",
+                                                        "safeName": "service"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "service",
+                                                        "safeName": "service"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "SERVICE",
+                                                        "safeName": "SERVICE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Service",
+                                                        "safeName": "Service"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [
+                                                {
+                                                    "originalName": "folder",
+                                                    "camelCase": {
+                                                        "unsafeName": "folder",
+                                                        "safeName": "folder"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "folder",
+                                                        "safeName": "folder"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "FOLDER",
+                                                        "safeName": "FOLDER"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Folder",
+                                                        "safeName": "Folder"
+                                                    }
+                                                }
+                                            ],
+                                            "file": {
+                                                "originalName": "service",
+                                                "camelCase": {
+                                                    "unsafeName": "service",
+                                                    "safeName": "service"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "service",
+                                                    "safeName": "service"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SERVICE",
+                                                    "safeName": "SERVICE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Service",
+                                                    "safeName": "Service"
+                                                }
+                                            }
+                                        },
+                                        "errorId": "error_folder/service:NotFoundError"
+                                    }
+                                },
+                                "docs": null
+                            }
                         }
                     ],
                     "pagination": null,

@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -7,12 +7,12 @@ pub struct UserClient {
 }
 
 impl UserClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn get_user(&self, user_id: &String, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn get_user(&self, user_id: &String, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("users/{}", user_id),
@@ -22,7 +22,7 @@ impl UserClient {
         ).await
     }
 
-    pub async fn create_user(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<User, ClientError> {
+    pub async fn create_user(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<User, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "users",

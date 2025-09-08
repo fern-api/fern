@@ -68,6 +68,9 @@ export class EndpointMethodGenerator {
 
         endpoint.headers.forEach((header) => {
             const swiftType = this.sdkGeneratorContext.getSwiftTypeForTypeReference(header.valueType);
+            if (swiftType.unwrappedType !== "string") {
+                return;
+            }
             params.push(
                 swift.functionParameter({
                     argumentLabel: header.name.name.camelCase.unsafeName,
@@ -105,11 +108,16 @@ export class EndpointMethodGenerator {
                     })
                 );
             } else if (endpoint.requestBody.type === "inlinedRequestBody") {
+                const fullyQualifiedRequestTypeSymbolName =
+                    this.sdkGeneratorContext.project.symbolRegistry.getFullyQualifiedRequestTypeSymbolOrThrow(
+                        endpoint.id,
+                        endpoint.requestBody.name.pascalCase.unsafeName
+                    );
                 params.push(
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: swift.Type.custom(endpoint.requestBody.name.pascalCase.unsafeName),
+                        type: swift.Type.custom(fullyQualifiedRequestTypeSymbolName),
                         docsContent: endpoint.requestBody.docs
                     })
                 );
@@ -175,7 +183,7 @@ export class EndpointMethodGenerator {
             // TODO(kafkas): Handle multi-url environments
             swift.functionArgument({
                 label: "path",
-                value: swift.Expression.rawStringValue(formatEndpointPathForSwift(endpoint))
+                value: swift.Expression.stringLiteral(formatEndpointPathForSwift(endpoint))
             })
         ];
 
@@ -188,15 +196,22 @@ export class EndpointMethodGenerator {
             );
         }
 
-        if (endpoint.headers.length > 0) {
+        const validHeaders = endpoint.headers.filter(
+            (header) =>
+                this.sdkGeneratorContext.getSwiftTypeForTypeReference(header.valueType).unwrappedType === "string"
+        );
+
+        if (validHeaders.length > 0) {
             arguments_.push(
                 swift.functionArgument({
                     label: "headers",
                     value: swift.Expression.dictionaryLiteral({
-                        entries: endpoint.headers.map((header) => [
-                            swift.Expression.rawStringValue(header.name.name.originalName),
-                            swift.Expression.reference(header.name.name.camelCase.unsafeName)
-                        ]),
+                        entries: validHeaders.map((header) => {
+                            return [
+                                swift.Expression.stringLiteral(header.name.wireValue),
+                                swift.Expression.reference(header.name.name.camelCase.unsafeName)
+                            ];
+                        }),
                         multiline: true
                     })
                 })
@@ -209,7 +224,7 @@ export class EndpointMethodGenerator {
                     label: "queryParams",
                     value: swift.Expression.dictionaryLiteral({
                         entries: endpoint.queryParameters.map((queryParam) => {
-                            const key = swift.Expression.rawStringValue(queryParam.name.name.originalName);
+                            const key = swift.Expression.stringLiteral(queryParam.name.name.originalName);
                             const swiftType = this.sdkGeneratorContext.getSwiftTypeForTypeReference(
                                 queryParam.valueType
                             );

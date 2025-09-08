@@ -6,6 +6,7 @@ module Seed
       module Types
         module ErrorCode
           extend Seed::Internal::Types::Enum
+
           INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR"
           UNAUTHORIZED = "UNAUTHORIZED"
           FORBIDDEN = "FORBIDDEN"
@@ -16,7 +17,8 @@ module Seed
           NOT_IMPLEMENTED = "NOT_IMPLEMENTED"
           BAD_GATEWAY = "BAD_GATEWAY"
           SERVICE_UNAVAILABLE = "SERVICE_UNAVAILABLE"
-          UNKNOWN = "Unknown"end
+          UNKNOWN = "Unknown"
+        end
       end
     end
   end

@@ -15,7 +15,7 @@ export declare namespace User {
         /** Override the X-API-Version header */
         xApiVersion: "1.0.0" | "2.0.0" | "latest";
         /** Additional headers to include in requests. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 
     export interface RequestOptions {
@@ -28,7 +28,7 @@ export declare namespace User {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** Override the X-API-Version header */
         xApiVersion?: "1.0.0" | "2.0.0" | "latest";
     }
@@ -59,7 +59,7 @@ export class User {
         userId: SeedVersion.UserId,
         requestOptions?: User.RequestOptions,
     ): Promise<core.WithRawResponse<SeedVersion.User>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ "X-API-Version": requestOptions?.xApiVersion }),
             requestOptions?.headers,

@@ -235,7 +235,7 @@ public record SubmissionStatusForTestCase
                     ),
                 "gradedV2" => json.GetProperty("value")
                     .Deserialize<SeedTrace.TestCaseGrade>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.TestCaseGrade"),
+                ?? throw new JsonException("Failed to deserialize SeedTrace.TestCaseGrade"),
                 "traced" => json.Deserialize<SeedTrace.TracedTestCase>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.TracedTestCase"),
                 _ => json.Deserialize<object?>(options),

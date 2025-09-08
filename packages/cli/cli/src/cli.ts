@@ -9,7 +9,7 @@ import {
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
-import { ContainerRunner } from "@fern-api/core-utils";
+import { ContainerRunner, haveSameNullishness, undefinedIfNullish, undefinedIfSomeNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
 import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
@@ -20,7 +20,6 @@ import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
-
 import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "../../init/src/utils/loadOpenApiFromUrl";
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
@@ -72,6 +71,12 @@ async function runCli() {
         setGlobalDispatcher(
             new Agent({ connect: { timeout: 2147483647 }, bodyTimeout: 0, headersTimeout: 2147483647 })
         );
+    }
+
+    if (process.env.HTTP_PROXY != null) {
+        const { setGlobalDispatcher, ProxyAgent } = await import("undici");
+        const proxyAgent = new ProxyAgent(process.env.HTTP_PROXY);
+        setGlobalDispatcher(proxyAgent);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -355,19 +360,40 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     string: true,
                     description: "The previous version of the API (e.g. 1.1.0)"
                 })
+                .option("from-generator-version", {
+                    string: true,
+                    description: "The previous version of the generator (e.g. 1.1.0)"
+                })
+                .option("to-generator-version", {
+                    string: true,
+                    description: "The next version of the generator (e.g. 1.1.0)"
+                })
                 .option("quiet", {
                     boolean: true,
                     default: false,
                     alias: "q",
                     description: "Whether to suppress output written to stderr"
+                })
+                .middleware((argv) => {
+                    if (!haveSameNullishness(argv.fromGeneratorVersion, argv.toGeneratorVersion)) {
+                        throw new Error(
+                            "Both --from-generator-version and --to-generator-version must be provided together, or neither should be provided"
+                        );
+                    }
                 }),
         async (argv) => {
-            const fromVersion = argv.fromVersion != null ? argv.fromVersion : undefined;
+            const fromVersion = undefinedIfNullish(argv.fromVersion);
+            const generatorVersions = undefinedIfSomeNullish({
+                from: argv.fromGeneratorVersion,
+                to: argv.toGeneratorVersion
+            });
+
             const result = await diff({
                 context: cliContext,
                 from: argv.from,
                 to: argv.to,
-                fromVersion
+                fromVersion,
+                generatorVersions
             });
             if (fromVersion != null) {
                 // If the user specified the --from-version flag, we write the full

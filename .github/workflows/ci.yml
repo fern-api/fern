@@ -16,6 +16,18 @@ env:
   TURBO_TEAM: "buildwithfern"
 
 jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Compile
+        run: pnpm compile
+
   depcheck:
     runs-on: ubuntu-latest
     steps:
@@ -27,7 +39,7 @@ jobs:
 
       - name: Check dependencies
         run: pnpm depcheck
-  
+
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -48,6 +60,9 @@ jobs:
       - name: Format
         run: pnpm format:check
 
+      - name: Format YAML
+        run: pnpm format:yaml:check
+
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 
@@ -60,8 +75,8 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: lint:biome
-        run: pnpm lint:biome
+      - name: check:biome
+        run: pnpm check:biome
 
   test:
     if: github.repository == 'fern-api/fern'
@@ -259,7 +274,7 @@ jobs:
       typescript: ${{ steps.filter.outputs.typescript }}
     steps:
       - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v2
+      - uses: dorny/paths-filter@v3
         id: filter
         with:
           filters: |

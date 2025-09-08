@@ -272,9 +272,9 @@ public record DiscriminatedLiteral
             var value = discriminator switch
             {
                 "customName" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 "defaultName" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 "george" => json.GetProperty("value").Deserialize<bool>(options),
                 "literalGeorge" => json.GetProperty("value").Deserialize<bool>(options),
                 _ => json.Deserialize<object?>(options),

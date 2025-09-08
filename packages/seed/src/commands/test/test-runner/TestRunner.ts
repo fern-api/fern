@@ -55,6 +55,7 @@ export declare namespace TestRunner {
         readme: generatorsYml.ReadmeSchema | undefined;
         shouldGenerateDynamicSnippetTests: boolean | undefined;
         inspect: boolean | undefined;
+        license?: unknown;
     }
 
     type TestResult = TestSuccess | TestFailure;
@@ -141,8 +142,8 @@ export abstract class TestRunner {
             const customConfig =
                 this.generator.workspaceConfig.defaultCustomConfig != null || configuration?.customConfig != null
                     ? {
-                          ...(this.generator.workspaceConfig.defaultCustomConfig ?? {}),
-                          ...((configuration?.customConfig as Record<string, unknown>) ?? {})
+                          ...this.generator.workspaceConfig.defaultCustomConfig,
+                          ...(configuration?.customConfig as Record<string, unknown>)
                       }
                     : undefined;
             const publishConfig = configuration?.publishConfig;
@@ -150,6 +151,22 @@ export abstract class TestRunner {
             const irVersion = this.generator.workspaceConfig.irVersion;
             const publishMetadata = configuration?.publishMetadata ?? undefined;
             const readme = configuration?.readmeConfig ?? undefined;
+            let license = configuration?.license ?? undefined;
+
+            // Convert relative license path to absolute for seed tests
+            if (license != null && typeof license === "object" && "custom" in license) {
+                const licenseObj = license as { custom: string };
+                const licensePath = licenseObj.custom;
+
+                // Make the license path absolute
+                const absoluteLicensePath = path.isAbsolute(licensePath)
+                    ? licensePath
+                    : path.join(absolutePathToApiDefinition.toString(), licensePath);
+
+                // Update license with absolute path
+                license = { custom: absoluteLicensePath };
+            }
+
             const fernWorkspace = await (
                 await convertGeneratorWorkspaceToFernWorkspace({
                     absolutePathToAPIDefinition: absolutePathToApiDefinition,
@@ -195,7 +212,8 @@ export abstract class TestRunner {
                     publishMetadata,
                     readme,
                     shouldGenerateDynamicSnippetTests: workspaceShouldGenerateDynamicSnippetTests(this.generator),
-                    inspect
+                    inspect,
+                    license
                 });
 
                 generationStopwatch.stop();
@@ -224,7 +242,11 @@ export abstract class TestRunner {
             const scriptStopwatch = new Stopwatch();
             scriptStopwatch.start();
 
-            const scriptResponse = await this.scriptRunner.run({ taskContext, outputDir, id });
+            const scriptResponse = await this.scriptRunner.run({
+                taskContext,
+                outputDir,
+                id
+            });
 
             scriptStopwatch.stop();
             metrics.compileTime = scriptStopwatch.duration();

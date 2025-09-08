@@ -4,28 +4,12 @@ on:
   push:
     branches:
       - main
-    paths:
-      - '.github/workflows/seed.yml'
-      - 'packages/seed/**'
-      - 'packages/ir-sdk/fern/apis/**'
-      - 'packages/cli/generation/ir-generator/**'
-      - 'test-definitions/**'
-      - 'test-definitions-openapi/**'
-      - 'generators/**'
-      - 'seed/**'
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
     branches:
       - main
-    paths:
-      - '.github/workflows/seed.yml'
-      - 'packages/seed/**'
-      - 'packages/ir-sdk/fern/apis/**'
-      - 'packages/cli/generation/ir-generator/**'
-      - 'test-definitions/**'
-      - 'test-definitions-openapi/**'
-      - 'generators/**'
-      - 'seed/**'
   workflow_call:
+  workflow_dispatch:
 
 # Cancel previous workflows on previous push
 concurrency:
@@ -38,7 +22,7 @@ jobs:
     outputs:
       seed: ${{ steps.filter.outputs.seed }}
       ruby: ${{ steps.filter.outputs.ruby }}
-      ruby-v2: ${{ steps.filter.outputs.ruby }}
+      ruby-v2: ${{ steps.filter.outputs.ruby-v2 }}
       openapi: ${{ steps.filter.outputs.openapi }}
       python: ${{ steps.filter.outputs.python }}
       postman: ${{ steps.filter.outputs.postman }}
@@ -47,6 +31,7 @@ jobs:
       go: ${{ steps.filter.outputs.go }}
       csharp: ${{ steps.filter.outputs.csharp }}
       php: ${{ steps.filter.outputs.php }}
+      swift: ${{ steps.filter.outputs.swift }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -66,6 +51,7 @@ jobs:
               - 'seed/ruby-model/**'
             ruby-v2:
               - 'generators/ruby-v2/**'
+              - 'seed/ruby-sdk-v2/**'
             openapi:
               - 'generators/openapi/**'
               - 'seed/openapi/**'
@@ -100,6 +86,9 @@ jobs:
               - 'generators/php/**'
               - 'seed/php-sdk/**'
               - 'seed/php-model/**'
+            swift:
+              - 'generators/swift/**'
+              - 'seed/swift-sdk/**'
       - name: retry-on-failure
         if: failure() && steps.filter.outcome == 'failure' && fromJSON(github.run_attempt) < 3
         env:
@@ -107,11 +96,11 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_DEBUG: api
         run: gh workflow run rerun.yml -F run_id=${{ github.run_id }}
-        
+
   ruby-model:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: ${{ ((needs.changes.outputs.ruby == 'true' || needs.changes.outputs.seed == 'true') && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -125,7 +114,11 @@ jobs:
   ruby-sdk:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{
+        ((needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -139,7 +132,11 @@ jobs:
   ruby-sdk-v2:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{
+        ((needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -153,7 +150,11 @@ jobs:
   pydantic-model:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{
+        ((needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -167,7 +168,11 @@ jobs:
   python-sdk:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{
+        ((needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -181,7 +186,11 @@ jobs:
   fastapi:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{
+        ((needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -195,7 +204,11 @@ jobs:
   openapi:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{
+        ((needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -209,7 +222,11 @@ jobs:
   postman:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{
+        ((needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -223,7 +240,11 @@ jobs:
   java-sdk:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{
+        ((needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -237,7 +258,11 @@ jobs:
   java-model:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{
+        ((needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -251,7 +276,11 @@ jobs:
   java-spring:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{
+        ((needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -265,7 +294,12 @@ jobs:
   typescript-sdk:
     runs-on: Seed
     needs: changes
-    if: ${{ (needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true') && github.repository == 'fern-api/fern' }}
+    if: >-
+      ${{
+        (((needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch')
+        && github.repository == 'fern-api/fern'
+      }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -279,7 +313,11 @@ jobs:
   typescript-express:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{
+        ((needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -293,7 +331,11 @@ jobs:
   go-fiber:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{
+        ((needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -307,7 +349,11 @@ jobs:
   go-model:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{
+        ((needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -321,7 +367,11 @@ jobs:
   go-sdk:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{
+        ((needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -335,7 +385,11 @@ jobs:
   csharp-model:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{
+        ((needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -349,7 +403,11 @@ jobs:
   csharp-sdk:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{
+        ((needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -363,7 +421,11 @@ jobs:
   php-model:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{
+        ((needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -377,7 +439,11 @@ jobs:
   php-sdk:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{
+        ((needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -387,3 +453,21 @@ jobs:
         with:
           generator-name: php-sdk
           generator-path: generators/php
+
+  swift-sdk:
+    runs-on: Seed
+    needs: changes
+    if: >-
+      ${{
+        ((needs.changes.outputs.swift == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: swift-sdk
+          generator-path: generators/swift

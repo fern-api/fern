@@ -1,5 +1,6 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 api:
   specs:
     - openapi: ../query-parameters-openapi/openapi.yml
-      settings: 
+      settings:
         object-query-parameters: true

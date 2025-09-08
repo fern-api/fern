@@ -1,9 +1,4 @@
 {
-  "ignores": [
-    "@fern-api/base-generator"
-  ],
-  "ignore-patterns": [
-    "lib",
-    "dist"
-  ]
+  "ignores": ["@fern-api/base-generator"],
+  "ignore-patterns": ["lib", "dist"]
 }

@@ -16,8 +16,9 @@ public class Example19
             }
         );
 
-        await client.Endpoints.Object.GetAndReturnNestedWithOptionalFieldAsync(
-            new NestedObjectWithOptionalField{
+        await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsync(
+            "string",
+            new NestedObjectWithRequiredField{
                 String = "string",
                 NestedObject = new ObjectWithOptionalField{
                     String = "string",

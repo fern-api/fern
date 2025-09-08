@@ -2,7 +2,7 @@
 
 module <%= gem_namespace %>
   module Internal
-    module Multipart
+    module JSON
       # @api private
       class Request < <%= gem_namespace %>::Internal::Http::BaseRequest
         attr_reader :body

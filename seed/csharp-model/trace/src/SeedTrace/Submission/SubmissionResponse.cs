@@ -362,15 +362,13 @@ public record SubmissionResponse
             {
                 "serverInitialized" => new { },
                 "problemInitialized" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 "workspaceInitialized" => new { },
                 "serverErrored" => json.Deserialize<SeedTrace.ExceptionInfo>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionInfo"),
                 "codeExecutionUpdate" => json.GetProperty("value")
                     .Deserialize<SeedTrace.CodeExecutionUpdate>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.CodeExecutionUpdate"
-                    ),
+                ?? throw new JsonException("Failed to deserialize SeedTrace.CodeExecutionUpdate"),
                 "terminated" => json.Deserialize<SeedTrace.TerminatedResponse>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.TerminatedResponse"

@@ -35,7 +35,7 @@ class DummyClient:
     @typing.overload
     def generate(
         self, *, stream: typing.Literal[True], num_events: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Iterator[StreamResponse]:
+    ) -> typing.Iterator[typing.Iterator[StreamResponse]]:
         """
         Parameters
         ----------
@@ -66,7 +66,7 @@ class DummyClient:
     @typing.overload
     def generate(
         self, *, stream: typing.Literal[False], num_events: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> RegularResponse:
+    ) -> typing.Iterator[RegularResponse]:
         """
         Parameters
         ----------
@@ -94,7 +94,7 @@ class DummyClient:
 
     def generate(
         self, *, stream: bool, num_events: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Union[typing.Iterator[StreamResponse], RegularResponse]:
+    ) -> typing.Iterator[typing.Union[typing.Iterator[StreamResponse], RegularResponse]]:
         """
         Parameters
         ----------
@@ -198,7 +198,7 @@ class AsyncDummyClient:
     @typing.overload
     async def generate(
         self, *, stream: typing.Literal[True], num_events: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.AsyncIterator[StreamResponse]:
+    ) -> typing.AsyncIterator[typing.AsyncIterator[StreamResponse]]:
         """
         Parameters
         ----------
@@ -237,7 +237,7 @@ class AsyncDummyClient:
     @typing.overload
     async def generate(
         self, *, stream: typing.Literal[False], num_events: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> RegularResponse:
+    ) -> typing.AsyncIterator[RegularResponse]:
         """
         Parameters
         ----------
@@ -273,7 +273,7 @@ class AsyncDummyClient:
 
     async def generate(
         self, *, stream: bool, num_events: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Union[typing.AsyncIterator[StreamResponse], RegularResponse]:
+    ) -> typing.AsyncIterator[typing.Union[typing.AsyncIterator[StreamResponse], RegularResponse]]:
         """
         Parameters
         ----------

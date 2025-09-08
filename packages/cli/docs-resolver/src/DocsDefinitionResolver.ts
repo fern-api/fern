@@ -27,7 +27,6 @@ import utc from "dayjs/plugin/utc";
 import { readFile, stat } from "fs/promises";
 import matter from "gray-matter";
 import { kebabCase } from "lodash-es";
-import urlJoin from "url-join";
 
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ApiReferenceNodeConverterLatest } from "./ApiReferenceNodeConverterLatest";
@@ -113,6 +112,8 @@ export class DocsDefinitionResolver {
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
     private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean> = new Map();
+    private markdownFilesToTags: Map<AbsoluteFilePath, string[]> = new Map();
+    private rawMarkdownFiles: Record<RelativeFilePath, string> = {};
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
         this._parsedDocsConfig = await parseDocsConfiguration({
             rawDocsConfiguration: this.docsWorkspace.config,
@@ -120,6 +121,11 @@ export class DocsDefinitionResolver {
             absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
             absoluteFilepathToDocsConfig: this.docsWorkspace.absoluteFilepathToDocsConfig
         });
+
+        // Store raw markdown content before any processing
+        for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
+            this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = markdown;
+        }
 
         // track all changelog markdown files in parsedDocsConfig.pages
         const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
@@ -143,6 +149,8 @@ export class DocsDefinitionResolver {
                         fernWorkspace.changelog?.files.forEach((file) => {
                             const relativePath = relative(this.docsWorkspace.absoluteFilePath, file.absoluteFilepath);
                             this.parsedDocsConfig.pages[relativePath] = file.contents;
+                            // Also store the raw content for changelog files
+                            this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = file.contents;
                         });
                     }
                 },
@@ -157,6 +165,9 @@ export class DocsDefinitionResolver {
 
         // create a map of markdown files to their noindex values
         this.markdownFilesToNoIndex = await this.getMarkdownFilesToNoIndex(this.parsedDocsConfig.pages);
+
+        // create a map of markdown files to their tags
+        this.markdownFilesToTags = await this.getMarkdownFilesToTags(this.parsedDocsConfig.pages);
 
         // replaces all instances of <Markdown src="path/to/file.md" /> with the content of the referenced markdown file
         // this should happen before we parse image paths, as the referenced markdown files may contain images.
@@ -244,9 +255,11 @@ export class DocsDefinitionResolver {
 
         Object.entries(this.parsedDocsConfig.pages).forEach(([relativePageFilepath, markdown]) => {
             const url = createEditThisPageUrl(this.editThisPage, relativePageFilepath);
+            const rawMarkdown = this.rawMarkdownFiles[RelativeFilePath.of(relativePageFilepath)];
             pages[DocsV1Write.PageId(relativePageFilepath)] = {
                 markdown,
-                editThisPageUrl: url ? DocsV1Write.Url(url) : undefined
+                editThisPageUrl: url ? DocsV1Write.Url(url) : undefined,
+                rawMarkdown: rawMarkdown
             };
         });
 
@@ -343,6 +356,33 @@ export class DocsDefinitionResolver {
             }
         }
         return mdxFilePathToNoIndex;
+    }
+
+    /**
+     * Creates a map of markdown files to their tags specified in the frontmatter
+     * @param pages - the pages to check
+     * @returns a map of markdown files to their tags
+     */
+    private async getMarkdownFilesToTags(
+        pages: Record<RelativeFilePath, string>
+    ): Promise<Map<AbsoluteFilePath, string[]>> {
+        const mdxFilePathToTags = new Map<AbsoluteFilePath, string[]>();
+        for (const [relativePath, markdown] of Object.entries(pages)) {
+            const frontmatter = matter(markdown);
+            const tags = frontmatter.data.tags;
+            if (typeof tags === "string") {
+                mdxFilePathToTags.set(
+                    this.resolveFilepath(relativePath),
+                    tags
+                        .split(",")
+                        .map((item) => item.trim())
+                        .filter((item) => item.length > 0)
+                );
+            } else if (Array.isArray(tags)) {
+                mdxFilePathToTags.set(this.resolveFilepath(relativePath), tags);
+            }
+        }
+        return mdxFilePathToTags;
     }
 
     /**
@@ -809,6 +849,7 @@ export class DocsDefinitionResolver {
                 this.taskContext,
                 this.markdownFilesToFullSlugs,
                 this.markdownFilesToNoIndex,
+                this.markdownFilesToTags,
                 this.#idgen,
                 hideChildren
             );
@@ -838,6 +879,7 @@ export class DocsDefinitionResolver {
                 this.taskContext,
                 this.markdownFilesToFullSlugs,
                 this.markdownFilesToNoIndex,
+                this.markdownFilesToTags,
                 this.#idgen,
                 hideChildren
             );
@@ -880,7 +922,11 @@ export class DocsDefinitionResolver {
                 generationLanguage: undefined,
                 keywords: undefined,
                 smartCasing: false,
-                exampleGeneration: { disabled: false, skipAutogenerationIfManualExamplesExist: true },
+                exampleGeneration: {
+                    disabled: false,
+                    skipAutogenerationIfManualExamplesExist: true,
+                    skipErrorAutogenerationIfManualErrorExamplesExist: true
+                },
                 readme: undefined,
                 version: undefined,
                 packageName: undefined,
@@ -911,6 +957,7 @@ export class DocsDefinitionResolver {
             this.taskContext,
             this.markdownFilesToFullSlugs,
             this.markdownFilesToNoIndex,
+            this.markdownFilesToTags,
             this.#idgen,
             workspace,
             hideChildren
@@ -926,6 +973,7 @@ export class DocsDefinitionResolver {
         const changelogResolver = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
             this.markdownFilesToNoIndex,
+            this.markdownFilesToTags,
             item.changelog,
             this.docsWorkspace,
             this.#idgen
@@ -1051,6 +1099,7 @@ export class DocsDefinitionResolver {
         const changelogResolver = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
             this.markdownFilesToNoIndex,
+            this.markdownFilesToTags,
             changelog,
             this.docsWorkspace,
             this.#idgen

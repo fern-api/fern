@@ -110,7 +110,9 @@ public final class VoidFunctionDefinitionThatTakesActualResult {
 
     @java.lang.Override
     public _FinalStage addAllAdditionalParameters(List<Parameter> additionalParameters) {
-      this.additionalParameters.addAll(additionalParameters);
+      if (additionalParameters != null) {
+        this.additionalParameters.addAll(additionalParameters);
+      }
       return this;
     }
 

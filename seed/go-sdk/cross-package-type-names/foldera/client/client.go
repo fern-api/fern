@@ -6,22 +6,20 @@ import (
 	core "github.com/cross-package-type-names/fern/core"
 	service "github.com/cross-package-type-names/fern/foldera/service"
 	internal "github.com/cross-package-type-names/fern/internal"
-	option "github.com/cross-package-type-names/fern/option"
-	http "net/http"
 )
 
 type Client struct {
 	Service *service.Client
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
-func NewClient(opts ...option.RequestOption) *Client {
-	options := core.NewRequestOptions(opts...)
+func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
-		Service: service.NewClient(opts...),
+		Service: service.NewClient(options),
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -29,6 +27,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }

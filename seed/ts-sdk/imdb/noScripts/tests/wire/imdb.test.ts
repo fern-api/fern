@@ -4,6 +4,7 @@
 
 import { mockServerPool } from "../mock-server/MockServerPool";
 import { SeedApiClient } from "../../src/Client";
+import * as SeedApi from "../../src/api/index";
 
 describe("Imdb", () => {
     
@@ -18,15 +19,19 @@ describe("Imdb", () => {
                 .respondWith()
             .statusCode(200).jsonBody(rawResponseBody)
                 .build();
-            
-        const response = await client.imdb.createMovie({
+
+        
+                    
+                            const response = await client.imdb.createMovie({
     title: "title",
     rating: 1.1
 });
-        expect(response).toEqual("string");
+                            expect(response).toEqual("string");
+                          
+                
     });
           
-    test("getMovie", async () => {
+    test("getMovie (76cc5edf)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ "token" : "test" , "environment" : server.baseUrl });
         
@@ -36,13 +41,34 @@ describe("Imdb", () => {
             .get("/movies/movieId").respondWith()
             .statusCode(200).jsonBody(rawResponseBody)
                 .build();
-            
-        const response = await client.imdb.getMovie("movieId");
-        expect(response).toEqual({
+
+        
+                    
+                            const response = await client.imdb.getMovie("movieId");
+                            expect(response).toEqual({
     id: "id",
     title: "title",
     rating: 1.1
 });
+                          
+                
+    });
+          
+    test("getMovie (55e58aac)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ "token" : "test" , "environment" : server.baseUrl });
+        
+        const rawResponseBody = "string";
+        server
+            .mockEndpoint()
+            .get("/movies/movieId").respondWith()
+            .statusCode(404).jsonBody(rawResponseBody)
+                .build();
+
+        
+            await expect(async () => {
+                return await client.imdb.getMovie("movieId")
+            }).rejects.toThrow(new SeedApi.MovieDoesNotExistError("string"));
     });
           
 });

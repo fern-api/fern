@@ -1,7 +1,7 @@
 import { HttpHeader, PathParameter, QueryParameter, WebSocketMessage, WebSocketMessageBody } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { Converters } from "@fern-api/v3-importer-commons";
-import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
+import { OpenAPIV3 } from "openapi-types";
 import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter";
 import { ParameterConverter } from "../../converters/ParameterConverter";
 import { DisplayNameExtension } from "../../extensions/x-fern-display-name";

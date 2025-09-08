@@ -11,7 +11,7 @@ export declare namespace Realtime {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 
     export interface ConnectArgs {
@@ -45,9 +45,7 @@ export class Realtime {
             _queryParams["temperature"] = temperature.toString();
         }
 
-        let _headers: Record<string, string> = {
-            ...headers,
-        };
+        let _headers: Record<string, unknown> = { ...headers };
         const socket = new core.ReconnectingWebSocket({
             url: core.url.join(
                 (await core.Supplier.get(this._options["baseUrl"])) ??

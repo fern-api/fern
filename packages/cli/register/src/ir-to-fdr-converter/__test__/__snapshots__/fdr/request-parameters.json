@@ -54,6 +54,43 @@
           }
         ]
       }
+    },
+    "type_user:CreateUsernameBody": {
+      "name": "CreateUsernameBody",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "username",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "password",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "default": "test"
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {
@@ -80,7 +117,20 @@
               }
             ]
           },
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "key": "tags",
+              "type": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "type": {
@@ -129,7 +179,91 @@
             {
               "path": "/user/username",
               "pathParameters": {},
-              "queryParameters": {},
+              "queryParameters": {
+                "tags": [
+                  "tags",
+                  "tags"
+                ]
+              },
+              "headers": {},
+              "requestBody": {
+                "username": "username",
+                "password": "password",
+                "name": "test"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "username": "username",
+                  "password": "password",
+                  "name": "test"
+                }
+              },
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "createUsernameWithReferencedType",
+          "originalEndpointId": "endpoint_user.createUsernameWithReferencedType",
+          "name": "Create Username With Referenced Type",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/user"
+              },
+              {
+                "type": "literal",
+                "value": "/username-referenced"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "key": "tags",
+              "type": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_user:CreateUsernameBody"
+                }
+              }
+            }
+          },
+          "requestsV2": {},
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/user/username-referenced",
+              "pathParameters": {},
+              "queryParameters": {
+                "tags": [
+                  "tags",
+                  "tags"
+                ]
+              },
               "headers": {},
               "requestBody": {
                 "username": "username",
@@ -426,7 +560,8 @@
       "websockets": [],
       "types": [
         "type_user:User",
-        "type_user:NestedUser"
+        "type_user:NestedUser",
+        "type_user:CreateUsernameBody"
       ],
       "subpackages": []
     }

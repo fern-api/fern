@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
+import { ObjectPropertyAccess } from "./ObjectPropertyAccess";
 import { DeclaredTypeName } from "./DeclaredTypeName";
 
 export const ExampleObjectProperty: core.serialization.ObjectSchema<
@@ -14,6 +15,7 @@ export const ExampleObjectProperty: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     name: NameAndWireValue,
     value: core.serialization.lazyObject(() => serializers.ExampleTypeReference),
+    propertyAccess: ObjectPropertyAccess.optional(),
     originalTypeDeclaration: DeclaredTypeName,
 });
 
@@ -21,6 +23,7 @@ export declare namespace ExampleObjectProperty {
     export interface Raw {
         name: NameAndWireValue.Raw;
         value: serializers.ExampleTypeReference.Raw;
+        propertyAccess?: ObjectPropertyAccess.Raw | null;
         originalTypeDeclaration: DeclaredTypeName.Raw;
     }
 }

@@ -194,9 +194,9 @@ class UniversalBaseModel(pydantic.BaseModel):
                 **kwargs_with_defaults_exclude_unset_include_fields
             )
 
-        return convert_and_respect_annotation_metadata(
+        return typing.cast(typing.Dict[str, typing.Any], convert_and_respect_annotation_metadata(
             object_=dict_dump, annotation=self.__class__, direction="write"
-        )
+        ))
 
 
 def deep_union_pydantic_dicts(

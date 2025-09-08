@@ -1,5 +1,4 @@
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import urlJoin from "url-join";
 import { RootClientGenerator } from "../../root-client/RootClientGenerator";

@@ -36,9 +36,9 @@ types:
     examples:
       - name: Red
         value: "red"
-  
-  EnumWithSpecialCharacters: 
-    enum: 
+
+  EnumWithSpecialCharacters:
+    enum:
       - value: "\\$bla"
         name: bla
       - value: "\\$yo"

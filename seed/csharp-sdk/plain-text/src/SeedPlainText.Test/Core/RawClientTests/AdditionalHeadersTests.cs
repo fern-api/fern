@@ -94,8 +94,9 @@ public class AdditionalHeadersTests
             Assert.That(content, Is.EqualTo("Success"));
             Assert.That(_server.LogEntries.Count, Is.EqualTo(1));
             var headers =
-                _server.LogEntries[0].RequestMessage.Headers
-                ?? throw new Exception("Headers are null");
+                _server.LogEntries[0].RequestMessage.Headers ?? throw new Exception(
+                    "Headers are null"
+                );
 
             Assert.That(headers, Contains.Key("client_multiple"));
             Assert.That(headers!["client_multiple"][0], Does.Contain("client_additional_headers1"));

@@ -47,4 +47,6 @@ export interface SdkCustomConfig {
     useDefaultRequestParameterValues: boolean | undefined;
     packageManager: "pnpm" | "yarn";
     generateReadWriteOnlyTypes: boolean;
+    flattenRequestParameters: boolean | undefined;
+    exportAllRequestsAtRoot: boolean | undefined;
 }

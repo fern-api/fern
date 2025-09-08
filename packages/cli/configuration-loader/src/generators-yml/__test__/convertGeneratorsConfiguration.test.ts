@@ -1,6 +1,5 @@
 /* eslint-disable jest/no-conditional-expect */
 
-import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";

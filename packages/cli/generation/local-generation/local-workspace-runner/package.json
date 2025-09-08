@@ -21,9 +21,7 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -53,10 +51,12 @@
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/php-dynamic-snippets": "workspace:*",
     "@fern-api/python-dynamic-snippets": "workspace:*",
+    "@fern-api/ruby-dynamic-snippets": "workspace:*",
     "@fern-api/sdk": "0.12.3",
+    "@fern-api/swift-dynamic-snippets": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/typescript-dynamic-snippets": "workspace:*",
-    "@fern-api/venus-api-sdk": "0.14.3-1-g14981f0",
+    "@fern-api/venus-api-sdk": "0.17.3-3-gf696595",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@fern-fern/generator-exec-sdk": "^0.0.1045",

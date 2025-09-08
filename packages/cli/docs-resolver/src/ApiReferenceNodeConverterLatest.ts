@@ -1,6 +1,6 @@
 import { docsYml } from "@fern-api/configuration-loader";
 import { isNonNullish } from "@fern-api/core-utils";
-import { APIV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
@@ -46,6 +46,7 @@ export class ApiReferenceNodeConverterLatest {
         private taskContext: TaskContext,
         private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string>,
         private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean>,
+        private markdownFilesToTags: Map<AbsoluteFilePath, string[]>,
         idgen: NodeIdGenerator,
         private hideChildren?: boolean
     ) {
@@ -91,6 +92,7 @@ export class ApiReferenceNodeConverterLatest {
         const changelogNodeConverter = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
             this.markdownFilesToNoIndex,
+            this.markdownFilesToTags,
             this.workspace?.changelog?.files.map((file) => file.absoluteFilepath),
             this.docsWorkspace,
             this.#idgen

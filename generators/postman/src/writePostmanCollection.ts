@@ -11,7 +11,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { FernPostmanClient } from "@fern-fern/postman-sdk";
 import * as PostmanParsing from "@fern-fern/postman-sdk/serialization";
-import { readFile, writeFile } from "fs/promises";
+import { writeFile } from "fs/promises";
 import { startCase } from "lodash";
 import path from "path";
 
