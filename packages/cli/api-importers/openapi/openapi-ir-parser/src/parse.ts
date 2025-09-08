@@ -364,6 +364,7 @@ function merge(
             } else {
                 // Preserve grouped server structure for buildEnvironments.ts
                 // Cast to any then to Server to preserve all properties
+                // biome-ignore lint/suspicious/noExplicitAny: Required to preserve grouped server metadata through type system
                 return s as any as Server;
             }
         }),
