@@ -18,7 +18,7 @@ describe("BasicAuth", () => {
         expect(response).toEqual(true);
     });
 
-    test("getWithBasicAuth (93582a4e)", async () => {
+    test("getWithBasicAuth (135b91bb)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthClient({ username: "test", password: "test", environment: server.baseUrl });
 
@@ -54,7 +54,7 @@ describe("BasicAuth", () => {
         expect(response).toEqual(true);
     });
 
-    test("postWithBasicAuth (97a6b3dd)", async () => {
+    test("postWithBasicAuth (8264039e)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthClient({ username: "test", password: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
@@ -90,6 +90,6 @@ describe("BasicAuth", () => {
             return await client.basicAuth.postWithBasicAuth({
                 key: "value",
             });
-        }).rejects.toThrow(SeedBasicAuth.BadRequest());
+        }).rejects.toThrow(new SeedBasicAuth.BadRequest());
     });
 });

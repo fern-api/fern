@@ -18,7 +18,7 @@ describe("CustomAuth", () => {
         expect(response).toEqual(true);
     });
 
-    test("getWithCustomAuth (93582a4e)", async () => {
+    test("getWithCustomAuth (135b91bb)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedCustomAuthClient({ customAuthScheme: "test", environment: server.baseUrl });
 
@@ -54,7 +54,7 @@ describe("CustomAuth", () => {
         expect(response).toEqual(true);
     });
 
-    test("postWithCustomAuth (97a6b3dd)", async () => {
+    test("postWithCustomAuth (8264039e)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedCustomAuthClient({ customAuthScheme: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
@@ -90,6 +90,6 @@ describe("CustomAuth", () => {
             return await client.customAuth.postWithCustomAuth({
                 key: "value",
             });
-        }).rejects.toThrow(SeedCustomAuth.BadRequest());
+        }).rejects.toThrow(new SeedCustomAuth.BadRequest());
     });
 });
