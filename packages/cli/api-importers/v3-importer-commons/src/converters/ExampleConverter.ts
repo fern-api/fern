@@ -362,13 +362,16 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             };
         }
 
-        const resolvedDefault = this.context.isReferenceObject(this.schema)
+        const resolvedSchema: OpenAPIV3_1.SchemaObject | undefined = this.context.isReferenceObject(this.schema)
             ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                   schemaOrReference: this.schema,
                   breadcrumbs: this.breadcrumbs,
                   skipErrorCollector: true
-              })?.default
-            : this.schema.default;
+              })
+            : this.schema;
+
+        const resolvedDefault = resolvedSchema?.default;
+
         if (typeof resolvedDefault === "number") {
             return {
                 isValid: true,
@@ -382,7 +385,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             isValid: false,
             coerced: false,
             validExample: this.adjustNumberToConstraints(
-                this.maybeResolveSchemaExample<number>(this.schema) ?? this.EXAMPLE_NUMBER
+                this.maybeResolveSchemaExample<number>(this.schema) ?? this.EXAMPLE_NUMBER,
+                resolvedSchema
             ),
             errors: [
                 {
@@ -396,15 +400,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     /**
      * Adjusts a number to respect the min/max constraints defined in the schema
      */
-    private adjustNumberToConstraints(number: number): number {
-        const schemaObj = this.context.isReferenceObject(this.schema)
-            ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
-                  schemaOrReference: this.schema,
-                  breadcrumbs: this.breadcrumbs,
-                  skipErrorCollector: true
-              })
-            : this.schema;
-
+    private adjustNumberToConstraints(number: number, schemaObj?: OpenAPIV3_1.SchemaObject): number {
         if (schemaObj == null) {
             this.context.logger.debug(
                 "[ExampleConverter.adjustNumberToConstraints] Schema object is null, returning original number",
