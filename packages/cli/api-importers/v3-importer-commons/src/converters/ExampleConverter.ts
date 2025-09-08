@@ -417,7 +417,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if (exclusiveMinimum != null) {
             if (typeof exclusiveMinimum === "boolean") {
                 // Boolean true means minimum is exclusive
-                lowerBound = minimum != null ? minimum + Math.max(Number.EPSILON, Math.abs(minimum) * 1e-10) : undefined;
+                lowerBound =
+                    minimum != null ? minimum + Math.max(Number.EPSILON, Math.abs(minimum) * 1e-10) : undefined;
             } else {
                 // Number value is the exclusive minimum
                 lowerBound = exclusiveMinimum + Math.max(Number.EPSILON, Math.abs(exclusiveMinimum) * 1e-10);
@@ -431,7 +432,10 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if (exclusiveMaximum != null) {
             if (typeof exclusiveMaximum === "boolean") {
                 // Boolean true means maximum is exclusive
-                upperBound = maximum != null ? maximum - Math.max(Number.EPSILON, Math.abs(maximum) * Number.EPSILON) : undefined;
+                upperBound =
+                    maximum != null
+                        ? maximum - Math.max(Number.EPSILON, Math.abs(maximum) * Number.EPSILON)
+                        : undefined;
             } else {
                 // Number value is the exclusive maximum
                 upperBound = exclusiveMaximum - Math.max(Number.EPSILON, Math.abs(exclusiveMaximum) * Number.EPSILON);
@@ -447,7 +451,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         }
         // If only lower bound exists and number is below it, adjust upwards
         else if (lowerBound !== undefined && number < lowerBound) {
-            const effectiveUpper = Math.max(lowerBound + 10, lowerBound * 1.1);
+            const effectiveUpper = lowerBound + Math.abs(lowerBound * 0.1);
             number = lowerBound + Math.random() * (effectiveUpper - lowerBound);
         }
         // If only upper bound exists and number is above it, adjust downwards
