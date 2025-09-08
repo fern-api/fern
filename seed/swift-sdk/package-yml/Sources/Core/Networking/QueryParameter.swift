@@ -10,6 +10,7 @@ enum QueryParameter {
     case float(Float)
     case double(Double)
     case date(Date)
+    case calendarDate(CalendarDate)
     case stringArray([String])
     case uuid(UUID)
     case unknown(Any)
@@ -34,6 +35,8 @@ enum QueryParameter {
             return String(value)
         case .date(let value):
             return value.ISO8601Format()
+        case .calendarDate(let value):
+            return value.description
         case .stringArray(let values):
             return values.joined(separator: ",")
         case .uuid(let value):
