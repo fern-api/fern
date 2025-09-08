@@ -381,7 +381,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         return {
             isValid: false,
             coerced: false,
-            validExample: this.maybeResolveSchemaExample<number>(this.schema) ?? this.EXAMPLE_NUMBER,
+            validExample: this.adjustNumberToConstraints(
+                this.maybeResolveSchemaExample<number>(this.schema) ?? this.EXAMPLE_NUMBER
+            ),
             errors: [
                 {
                     message: `Example is not a number: ${JSON.stringify(this.example, null, 2)}`,
@@ -389,6 +391,77 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 }
             ]
         };
+    }
+
+    /**
+     * Adjusts a number to respect the min/max constraints defined in the schema
+     */
+    private adjustNumberToConstraints(number: number): number {
+        const schemaObj = this.context.isReferenceObject(this.schema)
+            ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                  schemaOrReference: this.schema,
+                  breadcrumbs: this.breadcrumbs,
+                  skipErrorCollector: true
+              })
+            : this.schema;
+
+        if (schemaObj == null) {
+            this.context.logger.debug(
+                "[ExampleConverter.adjustNumberToConstraints] Schema object is null, returning original number",
+                "number:",
+                number.toString()
+            );
+            return number;
+        }
+
+        const { minimum, maximum, exclusiveMinimum, exclusiveMaximum } = schemaObj;
+
+        // Calculate lower bound
+        let lowerBound: number | undefined = undefined;
+        if (exclusiveMinimum != null) {
+            if (typeof exclusiveMinimum === "boolean") {
+                // Boolean true means minimum is exclusive
+                lowerBound = minimum != null ? minimum + Number.EPSILON : undefined;
+            } else {
+                // Number value is the exclusive minimum
+                lowerBound = exclusiveMinimum + Number.EPSILON;
+            }
+        } else if (minimum != null) {
+            lowerBound = minimum;
+        }
+
+        // Calculate upper bound
+        let upperBound: number | undefined = undefined;
+        if (exclusiveMaximum != null) {
+            if (typeof exclusiveMaximum === "boolean") {
+                // Boolean true means maximum is exclusive
+                upperBound = maximum != null ? maximum - Number.EPSILON : undefined;
+            } else {
+                // Number value is the exclusive maximum
+                upperBound = exclusiveMaximum - Number.EPSILON;
+            }
+        } else if (maximum != null) {
+            upperBound = maximum;
+        }
+
+        if (lowerBound !== undefined && upperBound !== undefined) {
+            if (number < lowerBound || number > upperBound) {
+                number = lowerBound + Math.random() * (upperBound - lowerBound);
+            }
+        }
+        // If only lower bound exists and number is below it, adjust upwards
+        else if (lowerBound !== undefined && number < lowerBound) {
+            const effectiveUpper = lowerBound * 1.1;
+            number = lowerBound + Math.random() * (effectiveUpper - lowerBound);
+        }
+        // If only upper bound exists and number is above it, adjust downwards
+        else if (upperBound !== undefined && number > upperBound) {
+            const effectiveLower = upperBound * 0.9;
+            number = upperBound - Math.random() * (upperBound - effectiveLower);
+        }
+
+        const rounded = Number(number.toPrecision(3));
+        return rounded;
     }
 
     private convertString(): ExampleConverter.Output {
