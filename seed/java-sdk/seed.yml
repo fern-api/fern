@@ -125,6 +125,15 @@ fixtures:
         wrapped-aliases: false
         enable-forward-compatible-enums: true
       outputFolder: enable-forward-compatible-enums
+  java-nullable-named-request-types:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        enable-inline-types: true
+        client-class-name: Foo
+        inline-path-parameters: true
+        enable-forward-compatible-enums: true
+      outputFolder: found-custom-config
   imdb:
     - customConfig:
         disable-required-property-builder-checks: true
@@ -235,6 +244,8 @@ allowedFailures:
   - java-inline-types
   - java-inline-types:no-wrapped-aliases
   - java-pagination-deep-cursor-path
+  - java-nullable-named-request-types:no-custom-config
+  - java-nullable-named-request-types:found-custom-config
   - literal
   - literals-unions
   - nullable-optional:with-nullable-annotation
