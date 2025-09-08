@@ -5,7 +5,6 @@
     {
       "url": "https://api.val.town",
       "description": "Production",
-      "name": "Production",
       "type": "single"
     }
   ],

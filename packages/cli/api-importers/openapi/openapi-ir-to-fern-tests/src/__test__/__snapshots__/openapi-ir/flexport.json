@@ -5,7 +5,6 @@
     {
       "url": "https://api.flexport.com",
       "description": "Flexport API",
-      "name": "Flexport API",
       "type": "single"
     }
   ],

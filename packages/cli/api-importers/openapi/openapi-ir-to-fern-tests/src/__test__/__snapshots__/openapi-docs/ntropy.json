@@ -11091,10 +11091,10 @@ types:
           "type": "string",
         },
       },
-      "default-environment": "Production server (uses live data).",
+      "default-environment": "Default",
       "display-name": "Ntropy Transaction API",
       "environments": {
-        "Production server (uses live data).": "https://api.ntropy.com",
+        "Default": "https://api.ntropy.com",
       },
       "error-discrimination": {
         "strategy": "status-code",
@@ -11107,8 +11107,8 @@ error-discrimination:
   strategy: status-code
 display-name: Ntropy Transaction API
 environments:
-  Production server (uses live data).: https://api.ntropy.com
-default-environment: Production server (uses live data).
+  Default: https://api.ntropy.com
+default-environment: Default
 auth-schemes:
   APIKeyHeader:
     header: X-Api-Key

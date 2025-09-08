@@ -788,12 +788,10 @@ types:
           "scheme": "bearer",
         },
       },
-      "default-environment": "The production API server",
+      "default-environment": "Default",
       "display-name": "Intercom API",
       "environments": {
-        "The australian API server": "https://api.au.intercom.io",
-        "The european API server": "https://api.eu.intercom.io",
-        "The production API server": "https://api.intercom.io",
+        "Default": "https://api.intercom.io",
       },
       "error-discrimination": {
         "strategy": "status-code",
@@ -815,10 +813,8 @@ error-discrimination:
   strategy: status-code
 display-name: Intercom API
 environments:
-  The production API server: https://api.intercom.io
-  The european API server: https://api.eu.intercom.io
-  The australian API server: https://api.au.intercom.io
-default-environment: The production API server
+  Default: https://api.intercom.io
+default-environment: Default
 imports:
   root: __package__.yml
 headers:

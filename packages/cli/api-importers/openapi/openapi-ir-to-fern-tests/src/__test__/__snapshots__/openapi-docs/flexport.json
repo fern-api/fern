@@ -29348,10 +29348,10 @@ docs: Endpoints relating to ShipmentLeg objects
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "default-environment": "Flexport API",
+      "default-environment": "Default",
       "display-name": "Flexport API",
       "environments": {
-        "Flexport API": "https://api.flexport.com",
+        "Default": "https://api.flexport.com",
       },
       "error-discrimination": {
         "strategy": "status-code",
@@ -29364,8 +29364,8 @@ error-discrimination:
   strategy: status-code
 display-name: Flexport API
 environments:
-  Flexport API: https://api.flexport.com
-default-environment: Flexport API
+  Default: https://api.flexport.com
+default-environment: Default
 ",
   },
 }

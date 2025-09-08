@@ -5,7 +5,6 @@
     {
       "url": "https://upload.uploadcare.com",
       "description": "Production server",
-      "name": "Production server",
       "type": "single"
     }
   ],

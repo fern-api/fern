@@ -368,7 +368,9 @@ export function generateIr({
                 return [key, { summary: value.summary ?? undefined, description: value.description ?? undefined }];
             })
         ),
-        servers: (openApi.servers ?? []).map((server) => convertServer(server)),
+        servers: (openApi.servers ?? []).map((server) =>
+            convertServer(server, { groupMultiApiEnvironments: options.groupMultiApiEnvironments })
+        ),
         websocketServers: [],
         tags: {
             tagsById: Object.fromEntries(

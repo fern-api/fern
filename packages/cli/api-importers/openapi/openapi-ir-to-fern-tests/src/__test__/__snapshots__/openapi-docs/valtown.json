@@ -5756,10 +5756,10 @@ docs: |-
           "scheme": "bearer",
         },
       },
-      "default-environment": "Production",
+      "default-environment": "Default",
       "display-name": "Val Town API",
       "environments": {
-        "Production": "https://api.val.town",
+        "Default": "https://api.val.town",
       },
       "error-discrimination": {
         "strategy": "status-code",
@@ -5772,8 +5772,8 @@ error-discrimination:
   strategy: status-code
 display-name: Val Town API
 environments:
-  Production: https://api.val.town
-default-environment: Production
+  Default: https://api.val.town
+default-environment: Default
 auth-schemes:
   BearerAuthScheme:
     scheme: bearer

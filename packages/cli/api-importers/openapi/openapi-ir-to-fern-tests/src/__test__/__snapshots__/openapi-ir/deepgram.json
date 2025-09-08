@@ -5,7 +5,6 @@
     {
       "url": "https://api.deepgram.com",
       "description": "Deepgram Production API",
-      "name": "Deepgram Production API",
       "type": "single"
     }
   ],

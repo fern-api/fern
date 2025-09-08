@@ -8029,11 +8029,11 @@ types:
           "type": "string",
         },
       },
-      "default-environment": "AssemblyAI API",
+      "default-environment": "Default",
       "default-url": "Base",
       "display-name": "AssemblyAI API",
       "environments": {
-        "AssemblyAI API": {
+        "Default": {
           "urls": {
             "API": "wss://api.assemblyai.com/v2/realtime/ws",
             "Base": "https://api.assemblyai.com",
@@ -8051,11 +8051,11 @@ error-discrimination:
   strategy: status-code
 display-name: AssemblyAI API
 environments:
-  AssemblyAI API:
+  Default:
     urls:
       Base: https://api.assemblyai.com
       API: wss://api.assemblyai.com/v2/realtime/ws
-default-environment: AssemblyAI API
+default-environment: Default
 default-url: Base
 auth-schemes:
   ApiKey:

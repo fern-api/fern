@@ -4,11 +4,14 @@ import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 
-export function convertServer(server: OpenAPIV3.ServerObject): Server {
+export function convertServer(
+    server: OpenAPIV3.ServerObject,
+    options?: { groupMultiApiEnvironments?: boolean }
+): Server {
     return {
         url: getServerUrl({ url: server.url, variables: server.variables ?? {} }),
         description: server.description,
-        name: getServerName(server),
+        name: getServerName(server, options),
         audiences: getExtension<string[]>(server, FernOpenAPIExtension.AUDIENCES)
     };
 }
@@ -33,7 +36,10 @@ function getServerUrl({
     return url;
 }
 
-function getServerName(server: OpenAPIV3.ServerObject): string | undefined {
+function getServerName(
+    server: OpenAPIV3.ServerObject,
+    options?: { groupMultiApiEnvironments?: boolean }
+): string | undefined {
     const name = getExtension<string>(server, [
         FernOpenAPIExtension.SERVER_NAME_V1,
         FernOpenAPIExtension.SERVER_NAME_V2
@@ -43,9 +49,8 @@ function getServerName(server: OpenAPIV3.ServerObject): string | undefined {
         return name;
     }
 
-    // Use the description as the server name if it exists
-    // This handles common environment names like PRD, SBX, STG, etc.
-    if (server.description != null && server.description.trim() !== "") {
+    // Only use the description as the server name when multi-API environment grouping is enabled
+    if (options?.groupMultiApiEnvironments && server.description != null && server.description.trim() !== "") {
         // Normalize common environment names
         const desc = server.description.toLowerCase();
         if (desc === "production" || desc === "prd") {

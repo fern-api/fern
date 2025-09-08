@@ -4,7 +4,6 @@
     {
       "url": "https://api.hookdeck.com/2023-01-01",
       "description": "Production API",
-      "name": "Production API",
       "type": "single"
     }
   ],

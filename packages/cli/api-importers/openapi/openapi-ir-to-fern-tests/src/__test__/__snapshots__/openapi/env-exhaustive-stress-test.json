@@ -460,10 +460,10 @@
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "default-environment": "prod",
+      "default-environment": "Default",
       "display-name": "Test API",
       "environments": {
-        "prod": "https://eta.spscommerce.com",
+        "Default": "https://alpha.spscommerce.com",
       },
       "error-discrimination": {
         "strategy": "status-code",
@@ -476,8 +476,8 @@ error-discrimination:
   strategy: status-code
 display-name: Test API
 environments:
-  prod: https://eta.spscommerce.com
-default-environment: prod
+  Default: https://alpha.spscommerce.com
+default-environment: Default
 ",
   },
 }
