@@ -61,6 +61,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
 
         if (context.config.writeUnitTests) {
             context.logger.info("Generating Wiremock tests");
+            // await context.project.writeSharedTestFiles();
             await this.generateWiremockTests(context);
         }
 
@@ -198,18 +199,19 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         });
 
         for (const endpoint of Object.values(dynamicIr.endpoints)) {
-            for (const endpointExample of endpoint.examples ?? []) {
-                const wiremockTestFilename =
-                    endpoint.declaration.name.snakeCase.safeName + "_" + endpointExample.id + "_test.go";
-                const wiremockTestContent = dynamicSnippetsGenerator.generateSync(
-                    convertDynamicEndpointSnippetRequest(endpointExample),
-                    { config: { outputWiremockTests: true } }
-                ).snippet;
-
-                context.project.addRawFiles(
-                    new File(wiremockTestFilename, RelativeFilePath.of("./tests"), wiremockTestContent)
-                );
+            const endpointExample = endpoint.examples?.[0];
+            if (endpointExample == null) {
+                continue;
             }
+            const wiremockTestFilename = endpoint.declaration.name.snakeCase.safeName + "_test.go";
+            const wiremockTestContent = dynamicSnippetsGenerator.generateSync(
+                convertDynamicEndpointSnippetRequest(endpointExample),
+                { config: { outputWiremockTests: true } }
+            ).snippet;
+
+            context.project.addRawFiles(
+                new File(wiremockTestFilename, RelativeFilePath.of("./test"), wiremockTestContent)
+            );
         }
     }
 
