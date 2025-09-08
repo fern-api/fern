@@ -21,12 +21,18 @@ export class EndpointSnippetsGenerator {
 
     private readonly context: SdkGeneratorContext;
     private readonly snippetsCache: Map<string, EndpointSnippets> = new Map();
+    private snippetsCacheInitialized: boolean = false;
 
     constructor({ context }: { context: SdkGeneratorContext }) {
         this.context = context;
+        this.snippetsCacheInitialized = false;
     }
 
     public async populateSnippetsCache(): Promise<void> {
+        if (this.snippetsCacheInitialized) {
+            return;
+        }
+
         const endpointSnippetsById = new Map<string, EndpointSnippets>();
         const dynamicIr = this.context.ir.dynamic;
 
@@ -96,6 +102,8 @@ export class EndpointSnippetsGenerator {
         endpointSnippetsById.forEach((value, key) => {
             this.snippetsCache.set(key, value);
         });
+
+        this.snippetsCacheInitialized = true;
     }
 
     public getSnippetsForEndpoint(endpointId: string): EndpointSnippets | undefined {
