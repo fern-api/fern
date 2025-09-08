@@ -94,6 +94,6 @@ export class Writer extends AbstractWriter {
         if (split[0] == null) {
             return s;
         }
-        return split[0].replace(INVALID_GO_IDENTIFIER_TOKEN, "");
+        return split.map((part) => part.replace(INVALID_GO_IDENTIFIER_TOKEN, "")).join("");
     }
 }

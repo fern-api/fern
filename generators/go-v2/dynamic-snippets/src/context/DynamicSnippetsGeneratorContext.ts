@@ -77,6 +77,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
     }
 
+    public getTestingTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: "T",
+            importPath: "testing"
+        });
+    }
+
     public getNewStringsReaderFunctionInvocation(s: string): go.FuncInvocation {
         return go.invokeFunc({
             func: go.typeReference({
@@ -136,5 +143,25 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             name: `Environments.${this.getTypeName(name)}`,
             importPath: this.rootImportPath
         });
+    }
+
+    public static chainMethods(
+        baseFunc: go.FuncInvocation,
+        ...methods: Omit<go.MethodInvocation.Args, "on">[]
+    ): go.MethodInvocation {
+        if (methods.length === 0) {
+            throw new Error("Must have methods to chain");
+        }
+
+        let current: go.AstNode = baseFunc;
+        for (const method of methods) {
+            current = go.invokeMethod({
+                on: current,
+                method: method.method,
+                arguments_: method.arguments_,
+                multiline: method.multiline
+            });
+        }
+        return current as go.MethodInvocation;
     }
 }

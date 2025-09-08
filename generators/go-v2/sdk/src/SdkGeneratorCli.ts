@@ -59,6 +59,11 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
 
         await context.snippetGenerator.populateSnippetsCache();
 
+        if (context.config.writeUnitTests) {
+            context.logger.info("Generating Wiremock tests");
+            await this.generateWiremockTests(context);
+        }
+
         if (this.shouldGenerateReadme(context)) {
             try {
                 const endpointSnippets = this.generateSnippets({ context });
@@ -179,6 +184,33 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         }
 
         return endpointSnippets;
+    }
+
+    private async generateWiremockTests(context: SdkGeneratorContext): Promise<void> {
+        const dynamicIr = context.ir.dynamic;
+        if (dynamicIr == null) {
+            throw new Error("Cannot generate wiremock tests without dynamic IR");
+        }
+
+        const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
+            ir: convertIr(dynamicIr),
+            config: context.config
+        });
+
+        for (const endpoint of Object.values(dynamicIr.endpoints)) {
+            for (const endpointExample of endpoint.examples ?? []) {
+                const wiremockTestFilename =
+                    endpoint.declaration.name.snakeCase.safeName + "_" + endpointExample.id + "_test.go";
+                const wiremockTestContent = dynamicSnippetsGenerator.generateSync(
+                    convertDynamicEndpointSnippetRequest(endpointExample),
+                    { config: { outputWiremockTests: true } }
+                ).snippet;
+
+                context.project.addRawFiles(
+                    new File(wiremockTestFilename, RelativeFilePath.of("./tests"), wiremockTestContent)
+                );
+            }
+        }
     }
 
     private async generateReadme({
