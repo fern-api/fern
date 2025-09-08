@@ -7,7 +7,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     branches:
-      - main
+      - mallinson/always-run-tests-workflow
   workflow_call:
   workflow_dispatch:
 
@@ -39,7 +39,6 @@ jobs:
         with:
           filters: |
             seed:
-              - '.github/workflows/seed.yml'
               - 'packages/seed/**'
               - 'packages/ir-sdk/fern/apis/**'
               - 'packages/cli/generation/ir-generator/**'
