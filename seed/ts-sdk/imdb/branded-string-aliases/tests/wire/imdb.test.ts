@@ -28,7 +28,7 @@ describe("Imdb", () => {
         expect(response).toEqual(SeedApi.MovieId("string"));
     });
 
-    test("getMovie (cedc5a8a)", async () => {
+    test("getMovie (76cc5edf)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ token: "test", environment: server.baseUrl });
 
