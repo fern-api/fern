@@ -451,7 +451,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         }
         // If only lower bound exists and number is below it, adjust upwards
         else if (lowerBound !== undefined && number < lowerBound) {
-            const effectiveUpper = lowerBound * 1.1;
+            const effectiveUpper = Math.max(lowerBound + 10, lowerBound * 1.1);
             number = lowerBound + Math.random() * (effectiveUpper - lowerBound);
         }
         // If only upper bound exists and number is above it, adjust downwards
