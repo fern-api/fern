@@ -72,12 +72,12 @@ public enum UnionWithTime: Codable, Hashable, Sendable {
 
     public struct Date: Codable, Hashable, Sendable {
         public let type: String = "date"
-        public let value: Date
+        public let value: CalendarDate
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            value: Date,
+            value: CalendarDate,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.value = value
@@ -86,7 +86,7 @@ public enum UnionWithTime: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.value = try container.decode(Date.self, forKey: .value)
+            self.value = try container.decode(CalendarDate.self, forKey: .value)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
