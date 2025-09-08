@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "cdb676f",
+            "example_identifier": "5038bc87",
             "id": {
                 "method": "GET",
                 "path": "/wallets",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "cd09ec9e",
+            "example_identifier": "a3c02a6a",
             "id": {
                 "method": "GET",
                 "path": "/wallets/{walletId}",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "8d6a754b",
+            "example_identifier": "6358fef8",
             "id": {
                 "method": "GET",
                 "path": "/wallets/{walletId}/balance",
@@ -92,7 +92,7 @@
             }
         },
         {
-            "example_identifier": "7d9bbbb9",
+            "example_identifier": "6853aa39",
             "id": {
                 "method": "GET",
                 "path": "/accounts",
@@ -118,7 +118,7 @@
             }
         },
         {
-            "example_identifier": "909944a7",
+            "example_identifier": "ab268fab",
             "id": {
                 "method": "GET",
                 "path": "/transactions",
@@ -144,7 +144,7 @@
             }
         },
         {
-            "example_identifier": "dae0a098",
+            "example_identifier": "b0992a51",
             "id": {
                 "method": "GET",
                 "path": "/transactions/{transactionId}",
@@ -170,7 +170,7 @@
             }
         },
         {
-            "example_identifier": "642d42b5",
+            "example_identifier": "1dfc7142",
             "id": {
                 "method": "POST",
                 "path": "/payments",
@@ -196,7 +196,7 @@
             }
         },
         {
-            "example_identifier": "559cdbe7",
+            "example_identifier": "e897d280",
             "id": {
                 "method": "POST",
                 "path": "/payments/{paymentId}/refund",
@@ -222,7 +222,7 @@
             }
         },
         {
-            "example_identifier": "cf2c5d5",
+            "example_identifier": "2b64590b",
             "id": {
                 "method": "GET",
                 "path": "/refunds",

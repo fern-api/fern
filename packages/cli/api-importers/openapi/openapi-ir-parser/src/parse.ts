@@ -358,7 +358,16 @@ function merge(
         title: ir1.title ?? ir2.title,
         description: ir1.description ?? ir2.description,
         basePath: ir1.basePath ?? ir2.basePath,
-        servers: mergedServers.map((s) => (s.type === "single" ? s : (s as unknown as Server))),
+        servers: mergedServers.map((s) => {
+            if (s.type === "single") {
+                // Strip the temporary type field from single servers
+                const { type, ...serverWithoutType } = s;
+                return serverWithoutType;
+            } else {
+                // For grouped servers, cast to Server type
+                return s as unknown as Server;
+            }
+        }),
         websocketServers: [...ir1.websocketServers, ...ir2.websocketServers],
         tags: {
             tagsById: {
