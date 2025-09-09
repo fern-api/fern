@@ -106,7 +106,7 @@ function convertDynamicAuth(auth: IrVersions.V59.dynamic.Auth | undefined): IrVe
         oauth: (value) => IrVersions.V58.dynamic.Auth.oauth(value),
         inferred: () => undefined,
         _other: () => undefined
-    })
+    });
 }
 
 function convertDynamicExamples(
