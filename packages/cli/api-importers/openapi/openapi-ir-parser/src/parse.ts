@@ -278,7 +278,7 @@ function merge(
 ): OpenApiIntermediateRepresentation {
     // Only perform multi-API environment grouping if the feature flag is enabled
     const shouldGroupEnvironments = options?.groupMultiApiEnvironments === true;
-    
+
     // When flag is disabled, use the original simple merge behavior
     if (!shouldGroupEnvironments) {
         return {
@@ -310,14 +310,19 @@ function merge(
                 ...ir1.variables,
                 ...ir2.variables
             },
-            nonRequestReferencedSchemas: new Set([...ir1.nonRequestReferencedSchemas, ...ir2.nonRequestReferencedSchemas]),
+            nonRequestReferencedSchemas: new Set([
+                ...ir1.nonRequestReferencedSchemas,
+                ...ir2.nonRequestReferencedSchemas
+            ]),
             securitySchemes: {
                 ...ir1.securitySchemes,
                 ...ir2.securitySchemes
             },
             globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
             idempotencyHeaders:
-                ir1.idempotencyHeaders != null ? [...ir1.idempotencyHeaders, ...(ir2.idempotencyHeaders ?? [])] : undefined,
+                ir1.idempotencyHeaders != null
+                    ? [...ir1.idempotencyHeaders, ...(ir2.idempotencyHeaders ?? [])]
+                    : undefined,
             groups: {
                 ...ir1.groups,
                 ...ir2.groups
@@ -446,8 +451,7 @@ function merge(
                 ...ir1.securitySchemes,
                 ...ir2.securitySchemes
             },
-            globalHeaders:
-                ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
+            globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
             idempotencyHeaders:
                 ir1.idempotencyHeaders != null
                     ? [...ir1.idempotencyHeaders, ...(ir2.idempotencyHeaders ?? [])]

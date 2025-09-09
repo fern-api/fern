@@ -389,8 +389,10 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                         }
                     }
 
-                    // Include websocket servers
-                    Object.assign(urls, extractUrlsFromEnvironmentSchema(websocketServersWithName));
+                    // Include websocket servers when we have multi-API grouping
+                    if (hasWebsocketServersWithName) {
+                        Object.assign(urls, extractUrlsFromEnvironmentSchema(websocketServersWithName));
+                    }
 
                     if (Object.keys(urls).length > 1) {
                         context.builder.addEnvironment({

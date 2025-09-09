@@ -326,7 +326,7 @@ export function parseAsyncAPIV2({
                 messages,
                 servers: (channel.servers?.map((serverId) => servers[serverId]) ?? Object.values(servers))
                     .filter((server): server is ServerContext => server != null && server.name != null)
-                    .map(server => ({
+                    .map((server) => ({
                         ...server,
                         name: server.name as string
                     })),
@@ -342,7 +342,7 @@ export function parseAsyncAPIV2({
     return {
         groupedSchemas: getSchemas(context.namespace, schemas),
         channels: parsedChannels != null ? parsedChannels : undefined,
-        servers: Object.values(servers).map(server => ({
+        servers: Object.values(servers).map((server) => ({
             ...server,
             name: server.name as string
         })),

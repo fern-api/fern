@@ -341,7 +341,7 @@ export function parseAsyncAPIV3({
                 servers: (
                     channel.servers?.map((serverRef) => getServerNameFromServerRef(servers, serverRef)) ??
                     Object.values(servers)
-                ).map(server => ({
+                ).map((server) => ({
                     ...server,
                     name: server.name as string
                 })),
@@ -358,7 +358,7 @@ export function parseAsyncAPIV3({
     return {
         groupedSchemas: getSchemas(context.namespace, schemas),
         channels: parsedChannels,
-        servers: Object.values(servers).map(server => ({
+        servers: Object.values(servers).map((server) => ({
             ...server,
             name: server.name as string
         })),
