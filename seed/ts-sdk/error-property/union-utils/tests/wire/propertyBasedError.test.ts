@@ -24,7 +24,7 @@ describe("PropertyBasedError", () => {
         expect(response).toEqual("string");
     });
 
-    test("ThrowError (3382c84f)", async () => {
+    test("ThrowError (8baa99fe)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorPropertyClient({ environment: server.baseUrl });
 
