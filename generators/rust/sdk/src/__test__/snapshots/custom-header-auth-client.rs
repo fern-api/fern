@@ -1,11 +1,11 @@
 use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 
-pub struct UserClient {
+pub struct Client {
     pub http_client: HttpClient,
 }
 
-impl UserClient {
+impl Client {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })

@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/definitions/RefundResponseStatus"
+    },
+    "refundedAmount": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "id",
+    "status",
+    "refundedAmount"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "RefundResponseStatus": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "completed",
+        "failed"
+      ]
+    }
+  }
+}
