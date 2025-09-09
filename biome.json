@@ -167,14 +167,7 @@
     ]
   },
   "javascript": {
-    "globals": [
-      "expect",
-      "describe",
-      "it",
-      "beforeEach",
-      "test",
-      "beforeAll"
-    ],
+    "globals": ["expect", "describe", "it", "beforeEach", "test", "beforeAll"],
     "formatter": {
       "jsxQuoteStyle": "double",
       "quoteProperties": "asNeeded",
@@ -211,9 +204,7 @@
       }
     },
     {
-      "includes": [
-        "packages/cli/init/src/__test__/initializeWithMintlify.test.ts"
-      ],
+      "includes": ["packages/cli/init/src/__test__/initializeWithMintlify.test.ts"],
       "linter": {
         "rules": {
           "suspicious": {
@@ -253,12 +244,7 @@
       }
     },
     {
-      "includes": [
-        "*.ts",
-        "*.tsx",
-        "*.mts",
-        "*.cts"
-      ],
+      "includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
       "linter": {
         "rules": {
           "complexity": {
@@ -292,12 +278,7 @@
       }
     },
     {
-      "includes": [
-        "*.ts",
-        "*.tsx",
-        "*.mts",
-        "*.cts"
-      ],
+      "includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
       "linter": {
         "rules": {
           "complexity": {
@@ -331,12 +312,7 @@
       }
     },
     {
-      "includes": [
-        "*.ts",
-        "*.tsx",
-        "*.mts",
-        "*.cts"
-      ],
+      "includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
       "linter": {
         "rules": {
           "complexity": {
@@ -370,12 +346,7 @@
       }
     },
     {
-      "includes": [
-        "**/*.json",
-        "**/*.md",
-        "**/*.css",
-        "**/*.mdx"
-      ],
+      "includes": ["**/*.json", "**/*.md", "**/*.css", "**/*.mdx"],
       "formatter": {
         "indentStyle": "space",
         "indentWidth": 2
