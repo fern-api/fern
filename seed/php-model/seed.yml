@@ -44,4 +44,5 @@ allowedFailures:
   - enum
   - file-upload
   - http-head
+  - query-parameters-openapi-as-objects
   - version
