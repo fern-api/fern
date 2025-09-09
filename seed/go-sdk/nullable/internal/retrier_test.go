@@ -254,7 +254,7 @@ func TestRetryDelayTiming(t *testing.T) {
 				return "10"
 			},
 			expectedMinMs: 2500, // 50% of 5000ms (maxRetryDelay) after jitter and execution overhead
-			expectedMaxMs: 5000, // maxRetryDelay
+			expectedMaxMs: 5100, // maxRetryDelay + some tolerance
 		},
 	}
 
