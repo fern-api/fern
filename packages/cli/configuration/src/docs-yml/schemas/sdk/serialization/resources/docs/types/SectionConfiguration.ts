@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { Availability } from "./Availability";
 import { WithPermissions } from "./WithPermissions";
 import { WithFeatureFlags } from "./WithFeatureFlags";
 
@@ -21,6 +22,7 @@ export const SectionConfiguration: core.serialization.ObjectSchema<
         icon: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
         skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
+        availability: Availability.optional(),
     })
     .extend(WithPermissions)
     .extend(WithFeatureFlags);
@@ -35,5 +37,6 @@ export declare namespace SectionConfiguration {
         icon?: string | null;
         hidden?: boolean | null;
         "skip-slug"?: boolean | null;
+        availability?: Availability.Raw | null;
     }
 }

@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { Availability } from "./Availability";
 import { WithPermissions } from "./WithPermissions";
 import { WithFeatureFlags } from "./WithFeatureFlags";
 
@@ -19,6 +20,7 @@ export const PageConfiguration: core.serialization.ObjectSchema<
         icon: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
         noindex: core.serialization.boolean().optional(),
+        availability: Availability.optional(),
     })
     .extend(WithPermissions)
     .extend(WithFeatureFlags);
@@ -31,5 +33,6 @@ export declare namespace PageConfiguration {
         icon?: string | null;
         hidden?: boolean | null;
         noindex?: boolean | null;
+        availability?: Availability.Raw | null;
     }
 }

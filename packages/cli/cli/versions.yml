@@ -5,6 +5,14 @@
       type: feat
   irVersion: 59
   createdAt: "2025-09-09"
+  version: 0.74.0
+  
+- changelogEntry:
+    - summary: |
+        Introduces a global configuration in the `docs.yml` file to set the visibility of navigation links and feedback.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-09"
   version: 0.73.0
 
 - changelogEntry:
