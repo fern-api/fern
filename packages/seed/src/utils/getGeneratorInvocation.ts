@@ -34,12 +34,14 @@ export async function getGeneratorInvocation({
     readme: generatorsYml.ReadmeSchema | undefined;
     license?: unknown;
 }): Promise<generatorsYml.GeneratorInvocation> {
-    const raw =
+    const raw: generatorsYml.GeneratorInvocationSchema | undefined =
         license != null
             ? {
+                  name: docker.name,
+                  version: docker.version,
                   github: {
                       repository: "fern",
-                      license
+                      license: license as generatorsYml.GithubLicenseSchema
                   }
               }
             : undefined;
