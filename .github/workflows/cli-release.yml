@@ -22,11 +22,18 @@ jobs:
     outputs:
       version: ${{ steps.get_version.outputs.VERSION }}
     steps:
-      - name: Checkout code
+      - name: Checkout action only
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+
+      - name: Checkout code
+        uses: ./.github/actions/sparse-checkout
         with:
           ref: main
           fetch-depth: 2
+          include: source
 
       - name: Install
         uses: ./.github/actions/install

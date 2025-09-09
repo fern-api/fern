@@ -19,8 +19,16 @@ jobs:
   compile:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout action only
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+
+      - name: Checkout repo
+        uses: ./.github/actions/sparse-checkout
+        with:
+          include: source
 
       - name: Install
         uses: ./.github/actions/install
@@ -31,8 +39,16 @@ jobs:
   depcheck:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout action only
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+
+      - name: Checkout repo
+        uses: ./.github/actions/sparse-checkout
+        with:
+          include: source
 
       - name: Install
         uses: ./.github/actions/install
@@ -43,8 +59,16 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout action only
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+
+      - name: Checkout repo
+        uses: ./.github/actions/sparse-checkout
+        with:
+          include: source
 
       - name: Install
         uses: ./.github/actions/install
@@ -69,8 +93,16 @@ jobs:
   biome:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout action only
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+
+      - name: Checkout repo
+        uses: ./.github/actions/sparse-checkout
+        with:
+          include: source
 
       - name: Install
         uses: ./.github/actions/install
@@ -82,8 +114,18 @@ jobs:
     if: github.repository == 'fern-api/fern'
     runs-on: Test
     steps:
-      - name: Checkout repo
+      - name: Checkout action only
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+
+      - name: Checkout repo
+        uses: ./.github/actions/sparse-checkout
+        with:
+          include: |
+            source
+            snapshots
 
       - name: Install
         uses: ./.github/actions/install
@@ -110,8 +152,18 @@ jobs:
     if: github.repository == 'fern-api/fern'
     runs-on: Test
     steps:
-      - name: Checkout repo
+      - name: Checkout action only
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+
+      - name: Checkout repo
+        uses: ./.github/actions/sparse-checkout
+        with:
+          include: |
+            source
+            snapshots
 
       - name: Install
         uses: ./.github/actions/install
@@ -142,8 +194,16 @@ jobs:
     if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout action only
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+
+      - name: Checkout repo
+        uses: ./.github/actions/sparse-checkout
+        with:
+          include: source
 
       - name: Install
         uses: ./.github/actions/install
@@ -164,8 +224,16 @@ jobs:
     if: ${{ github.repository == 'fern-api/fern' }}
     runs-on: windows-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout action only
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+
+      - name: Checkout repo
+        uses: ./.github/actions/sparse-checkout
+        with:
+          include: source
 
       - name: Install
         uses: ./.github/actions/install
@@ -200,8 +268,16 @@ jobs:
     if: ${{ github.repository == 'fern-api/fern' }}
     runs-on: windows-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout action only
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+
+      - name: Checkout repo
+        uses: ./.github/actions/sparse-checkout
+        with:
+          include: source
 
       - name: Install
         uses: ./.github/actions/install
@@ -241,8 +317,16 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern' }}
     runs-on: windows-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout action only
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+
+      - name: Checkout repo
+        uses: ./.github/actions/sparse-checkout
+        with:
+          include: source
 
       - name: Install
         uses: ./.github/actions/install
@@ -287,7 +371,9 @@ jobs:
     if: ${{ needs.changes.outputs.typescript == 'true' }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: ./.github/actions/sparse-checkout
+        with:
+          include: source
 
       - name: Install
         uses: ./.github/actions/install
@@ -308,8 +394,16 @@ jobs:
     needs: ts-generator-changes
     if: ${{ needs.changes.outputs.typescript == 'true' }}
     steps:
-      - name: Checkout repo
+      - name: Checkout action only
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+
+      - name: Checkout repo
+        uses: ./.github/actions/sparse-checkout
+        with:
+          include: source
 
       - name: Run cloudflare startup test
         run: ./scripts/cloudflare-startup-test.sh
@@ -322,8 +416,16 @@ jobs:
     needs: ts-generator-changes
     if: ${{ needs.changes.outputs.typescript == 'true' }}
     steps:
-      - name: Checkout repo
+      - name: Checkout action only
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+
+      - name: Checkout repo
+        uses: ./.github/actions/sparse-checkout
+        with:
+          include: source
 
       - name: Run browser startup test
         run: ./scripts/browser-startup-test.sh

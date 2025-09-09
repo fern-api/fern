@@ -12,7 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: ./.github/actions/sparse-checkout
+        with:
+          include: source
 
       - name: Install
         uses: ./.github/actions/install
