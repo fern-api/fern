@@ -5,7 +5,7 @@
     "**/.turbo": true,
     "**/.nx": true,
     "**/.yarn": true,
-    "**/__snapshots__/**": true,
+    "snapshots/**": true,
     "**/__test__/**/fixtures": true,
     "**/__test__/**/output": true,
     "**/build": true,

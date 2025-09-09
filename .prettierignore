@@ -18,7 +18,7 @@ seed/
 .git/
 .husky/
 .turbo/
-__snapshots__/
+snapshots/
 *.tempate.*
 *.template.*
 
