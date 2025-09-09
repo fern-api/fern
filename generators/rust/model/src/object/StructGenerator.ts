@@ -43,7 +43,7 @@ export class StructGenerator {
     }
 
     private getFilename(): string {
-        return this.typeDeclaration.name.name.snakeCase.unsafeName + ".rs";
+        return this.context.getUniqueFilenameForType(this.typeDeclaration);
     }
 
     private getFileDirectory(): RelativeFilePath {
@@ -67,7 +67,8 @@ export class StructGenerator {
         // Add imports for custom named types referenced in fields FIRST
         const customTypes = this.getCustomTypesUsedInFields();
         customTypes.forEach((typeName) => {
-            const moduleNameEscaped = this.context.escapeRustKeyword(typeName.snakeCase.unsafeName);
+            const modulePath = this.context.getModulePathForType(typeName.snakeCase.unsafeName);
+            const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
             writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
         });
 
@@ -75,7 +76,8 @@ export class StructGenerator {
         if (this.objectTypeDeclaration.extends.length > 0) {
             this.objectTypeDeclaration.extends.forEach((parentType) => {
                 const parentTypeName = parentType.name.pascalCase.unsafeName;
-                const moduleNameEscaped = this.context.escapeRustKeyword(parentType.name.snakeCase.unsafeName);
+                const modulePath = this.context.getModulePathForType(parentType.name.snakeCase.unsafeName);
+                const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
                 writer.writeLine(`use crate::${moduleNameEscaped}::${parentTypeName};`);
             });
         }
