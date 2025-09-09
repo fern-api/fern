@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { csharp, System } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
@@ -10,14 +10,14 @@ export class BaseExceptionGenerator extends FileGenerator<CSharpFile, SdkCustomC
         const class_ = csharp.class_({
             ...this.context.getBaseExceptionClassReference(),
             access: csharp.Access.Public,
-            parentClassReference: csharp.classReference({ name: "Exception", namespace: "System" }),
+            parentClassReference: System.Exception,
             primaryConstructor: {
                 parameters: [
                     csharp.parameter({ name: "message", type: csharp.Type.string() }),
                     csharp.parameter({
                         name: "innerException",
                         type: csharp.Type.optional(
-                            csharp.Type.reference(csharp.classReference({ name: "Exception", namespace: "System" }))
+                            csharp.Type.reference(System.Exception)
                         ),
                         initializer: "null"
                     })

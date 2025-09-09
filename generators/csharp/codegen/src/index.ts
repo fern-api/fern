@@ -1,7 +1,7 @@
 export * as dependencies from "./ast/dependencies";
 export { AbstractCsharpGeneratorContext } from "./context/AbstractCsharpGeneratorContext";
 export * as csharp from "./csharp";
-export { convertReadOnlyPrimitiveTypes, VALID_READ_ONLY_MEMORY_TYPES } from "./csharp";
+export { convertReadOnlyPrimitiveTypes, System, VALID_READ_ONLY_MEMORY_TYPES } from "./csharp";
 export { BaseCsharpCustomConfigSchema, validateReadOnlyMemoryTypes } from "./custom-config";
 export { precalculate } from "./project/precalculate";
 export { CsharpProtobufTypeMapper } from "./proto/CsharpProtobufTypeMapper";

@@ -130,27 +130,16 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public getJsonElementClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            namespace: "System.Text.Json",
-            name: "JsonElement"
-        });
+        return System.Text.Json.JsonElement;
     }
 
     public getJsonElementType(): csharp.Type {
-        return csharp.Type.reference(
-            csharp.classReference({
-                namespace: "System.Text.Json",
-                name: "JsonElement"
-            })
-        );
+        return csharp.Type.reference(System.Text.Json.JsonElement);
     }
 
     public getJsonExtensionDataAttribute(): csharp.Annotation {
         return csharp.annotation({
-            reference: csharp.classReference({
-                name: "JsonExtensionData",
-                namespace: "System.Text.Json.Serialization"
-            })
+            reference: System.Text.Json.Serialization.JsonExtensionData
         });
     }
 
@@ -164,10 +153,7 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public getSerializableAttribute(): csharp.Annotation {
         return csharp.annotation({
-            reference: csharp.classReference({
-                name: "Serializable",
-                namespace: "System"
-            })
+            reference: System.Serializable
         });
     }
 
@@ -293,32 +279,19 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public getJsonNodeClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            namespace: "System.Text.Json.Nodes",
-            name: "JsonNode"
-        });
+        return System.Text.Json.Nodes.JsonNode;
     }
 
     public getJsonObjClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            namespace: "System.Text.Json.Nodes",
-            name: "JsonObject"
-        });
+        return System.Text.Json.Nodes.JsonObject;
     }
 
     public getJsonConverterAttributeReference(): csharp.ClassReference {
-        return csharp.classReference({
-            namespace: "System.Text.Json.Serialization",
-            name: "JsonConverter"
-        });
+        return System.Text.Json.Serialization.JsonConverter();
     }
 
     public getJsonConverterClassReference(typeToConvert: csharp.Type): csharp.ClassReference {
-        return csharp.classReference({
-            namespace: "System.Text.Json.Serialization",
-            name: "JsonConverter",
-            generics: [typeToConvert]
-        });
+      return System.Text.Json.Serialization.JsonConverter(typeToConvert);
     }
 
     public createJsonAccessAttribute(propertyAccess: ObjectPropertyAccess): csharp.Annotation {
@@ -344,25 +317,8 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public createJsonPropertyNameAttribute(name: string): csharp.Annotation {
         return csharp.annotation({
-            reference: csharp.classReference({
-                namespace: "System.Text.Json.Serialization",
-                name: "JsonPropertyName"
-            }),
+            reference: System.Text.Json.Serialization.JsonPropertyName,
             argument: `"${name}"`
-        });
-    }
-
-    public getJsonExceptionClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            namespace: "System.Text.Json",
-            name: "JsonException"
-        });
-    }
-
-    public getSystemEnumClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: "Enum",
-            namespace: "System"
         });
     }
 
@@ -420,12 +376,7 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public getJsonIgnoreAnnotation(): csharp.Annotation {
-        return csharp.annotation({
-            reference: csharp.classReference({
-                name: "JsonIgnore",
-                namespace: "System.Text.Json.Serialization"
-            })
-        });
+        return csharp.annotation({ reference: System.Text.Json.Serialization.JsonIgnore });
     }
 
     public getPascalCaseSafeName(name: Name): string {
@@ -444,16 +395,9 @@ export abstract class AbstractCsharpGeneratorContext<
         return this.ir.types[typeId];
     }
 
-    public getEnumerableClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: "Enumerable",
-            namespace: "System.Linq"
-        });
-    }
-
     public getEnumerableEmptyKeyValuePairsInitializer(): csharp.MethodInvocation {
         return csharp.invokeMethod({
-            on: this.getEnumerableClassReference(),
+            on: System.Linq.Enumerable,
             method: "Empty",
             generics: [
                 csharp.Type.reference(
@@ -474,11 +418,7 @@ export abstract class AbstractCsharpGeneratorContext<
         key: csharp.Type;
         value: csharp.Type;
     }): csharp.ClassReference {
-        return csharp.classReference({
-            name: "KeyValuePair",
-            namespace: "System.Collections.Generic",
-            generics: [key, value]
-        });
+        return System.Collections.Generic.KeyValuePair(key,value)
     }
 
     public getAdditionalPropertiesClassReference(genericType?: csharp.Type): csharp.ClassReference {
@@ -499,19 +439,10 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public getIJsonOnDeserializedInterfaceReference(): csharp.ClassReference {
       return System.Text.Json.Serialization.IJsonOnDeserialized;
-      /*
-        return csharp.classReference({
-            name: "IJsonOnDeserialized",
-            namespace: "System.Text.Json.Serialization"
-        });
-      */
     }
 
     public getIJsonOnSerializingInterfaceReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: "IJsonOnSerializing",
-            namespace: "System.Text.Json.Serialization"
-        });
+        return System.Text.Json.Serialization.IJsonOnSerializing;
     }
 
     public getAsUndiscriminatedUnionTypeDeclaration(

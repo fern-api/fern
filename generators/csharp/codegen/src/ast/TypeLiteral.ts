@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import { csharp } from "..";
+import { csharp,System } from "..";
 import { ClassInstantiation } from "./ClassInstantiation";
 import { type ClassReference } from "./ClassReference";
 import { AstNode, Writer } from "./core";
@@ -250,10 +250,8 @@ export class TypeLiteral extends AstNode {
     private writeDateTime({ writer, value }: { writer: Writer; value: string }): void {
         writer.write(`DateTime.Parse("${value}", null, `);
         writer.writeNode(
-            csharp.classReference({
-                name: "DateTimeStyles",
-                namespace: "System.Globalization"
-            })
+            System.Globalization.DateTimeStyles
+           
         );
         writer.write(".AdjustToUniversal)");
     }

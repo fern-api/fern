@@ -15,7 +15,7 @@
  */
 
 import { ClassReference } from "../ast/ClassReference";
-import { builtIns, System } from "./builtIn";
+import { builtIns, NUnit, System } from "./builtIn";
 
 /**
  * Represents a type entry in the type registry for serialization purposes.
@@ -147,7 +147,7 @@ export class NameRegistry {
         this.trackType(System.Serializable);
         this.trackType(System.String);
         this.trackType(System.Runtime.Serialization.EnumMember);
-        this.trackType(System.Collections.Generic.KeyValuePair);
+        this.trackType(System.Collections.Generic.KeyValuePair(System.String, System.String));
         this.trackType(System.Collections.Generic.List(System.String));
         this.trackType(System.Collections.Generic.IAsyncEnumerable(System.String));
         this.trackType(System.Collections.Generic.HashSet(System.String));
@@ -168,14 +168,15 @@ export class NameRegistry {
         this.trackType(System.Text.Json.Serialization.JsonPropertyName);
         this.trackType(System.Text.Json.Serialization.JsonExtensionData);
         this.trackType(System.Text.Json.Serialization.JsonIgnore);
-        this.trackType(System.Text.Json.Serialization.JsonConverter);
+        this.trackType(System.Text.Json.Serialization.JsonConverter());
         this.trackType(System.Threading.CancellationToken);
         this.trackType(System.Threading.Tasks.Task());
         this.trackType(System.Net.Http.HttpMethod);
         this.trackType(System.Collections.Generic.IEnumerable(System.String));
         this.trackType(System.TimeSpan);
         this.trackType(System.Net.Http.HttpClient);
-
+        this.trackType(NUnit.Framework.TestFixture);
+        this.trackType(NUnit.Framework.Test);
     }
 
     /**

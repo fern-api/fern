@@ -1,6 +1,6 @@
 import { Arguments } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { csharp } from "@fern-api/csharp-codegen";
+import { csharp, System } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
@@ -380,7 +380,7 @@ export class RawClient {
                 assertNever(irMethod);
         }
         return csharp.codeblock((writer) => {
-            writer.writeNode(csharp.classReference({ name: "HttpMethod", namespace: "System.Net.Http" }));
+            writer.writeNode(System.Net.Http.HttpMethod);
             writer.write(`.${method}`);
         });
     }

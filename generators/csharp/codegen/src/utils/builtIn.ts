@@ -501,10 +501,11 @@ export const System = {
                     generics: [elementType]
                 });
             },
-            get KeyValuePair() {
+            KeyValuePair(keyType: ClassReference | TypeParameter | Type, valueType: ClassReference | TypeParameter | Type) {
                 return classReference({
                     name: "KeyValuePair",
-                    namespace: "System.Collections.Generic"
+                    namespace: "System.Collections.Generic",
+                    generics: [keyType, valueType]
                 });
             },
             List(elementType: ClassReference | TypeParameter | Type) {
@@ -564,6 +565,12 @@ export const System = {
                 return classReference({
                     name: "HttpMethod",
                     namespace: "System.Net.Http"
+                });
+            },
+            get HttpResponseHeaders() {
+                return classReference({
+                    namespace: "System.Net.Http.Headers",
+                    name: "HttpResponseHeaders"
                 });
             }
         } as const
@@ -663,10 +670,11 @@ export const System = {
                         name: "JsonExtensionData"
                     });
                 },
-                get JsonConverter() {
+                JsonConverter(typeToConvert?: ClassReference | TypeParameter | Type) {
                     return classReference({
                         namespace: "System.Text.Json.Serialization",
-                        name: "JsonConverter"
+                        name: "JsonConverter",
+                        generics: typeToConvert ? [typeToConvert] : undefined
                     });
                 },
                 get JsonIgnore() {
@@ -702,4 +710,22 @@ export const System = {
             }
         } as const
     } as const
+} as const;
+
+export const NUnit = {
+  Framework: {
+    get TestFixture() {
+      return classReference({
+          namespace: "NUnit.Framework",
+          name: "TestFixture"
+        });
+    },
+    get Test() {
+      return classReference({
+        namespace: "NUnit.Framework",
+        name: "Test"
+      });
+    }
+
+  } as const,
 } as const;

@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { csharp } from "@fern-api/csharp-codegen";
+import { csharp, System } from "@fern-api/csharp-codegen";
 
 import { HttpHeader, Literal } from "@fern-fern/ir-sdk/api";
 
@@ -34,12 +34,7 @@ export class BaseOptionsGenerator {
     }
 
     public getHttpClientField({ optional, includeInitializer }: OptionArgs): csharp.Field {
-        const type = csharp.Type.reference(
-            csharp.classReference({
-                name: "HttpClient",
-                namespace: "System.Net.Http"
-            })
-        );
+        const type = csharp.Type.reference(System.Net.Http.HttpClient);
         return csharp.field({
             access: csharp.Access.Public,
             name: "HttpClient",
@@ -84,12 +79,7 @@ export class BaseOptionsGenerator {
     }
 
     public getTimeoutField({ optional, includeInitializer }: OptionArgs): csharp.Field {
-        const type = csharp.Types.reference(
-            csharp.classReference({
-                name: "TimeSpan",
-                namespace: "System"
-            })
-        );
+        const type = csharp.Types.reference(System.TimeSpan)
         return csharp.field({
             access: csharp.Access.Public,
             name: "Timeout",
@@ -109,19 +99,10 @@ export class BaseOptionsGenerator {
         includeInitializer: boolean;
     }): csharp.Field {
         const type = csharp.Type.reference(
-            csharp.classReference({
-                name: "IEnumerable",
-                namespace: "System.Collections.Generic",
-                generics: [
-                    csharp.Type.reference(
-                        this.context.getKeyValuePairsClassReference({
-                            key: csharp.Type.string(),
-                            value: csharp.Type.string().toOptionalIfNotAlready()
-                        })
-                    )
-                ]
-            })
-        );
+          System.Collections.Generic.IEnumerable(csharp.Type.reference(this.context.getKeyValuePairsClassReference({
+            key: csharp.Type.string(),
+            value: csharp.Type.string().toOptionalIfNotAlready()
+        }))));
         return csharp.field({
             access: csharp.Access.Public,
             name: "AdditionalHeaders",

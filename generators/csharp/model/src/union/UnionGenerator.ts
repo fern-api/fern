@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp, escapeForCSharpString } from "@fern-api/csharp-codegen";
+import { csharp, escapeForCSharpString, System } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -521,7 +521,9 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
     private getUnionTypeClassReference(type: FernIr.SingleUnionType): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.classReference.namespace,
-            name: `${this.classReference.name}.${this.getUnionTypeClassName(type)}`
+            // name: `${this.classReference.name}.${this.getUnionTypeClassName(type)}`
+            name: this.getUnionTypeClassName(type),
+            enclosingType: this.classReference
         });
     }
 
@@ -586,12 +588,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     csharp.parameter({
                         ref: true,
                         name: "reader",
-                        type: csharp.Type.reference(
-                            csharp.classReference({
-                                name: "Utf8JsonReader",
-                                namespace: "System.Text.Json"
-                            })
-                        )
+                        type: csharp.Type.reference(System.Text.Json.Utf8JsonReader)
                     }),
                     csharp.parameter({
                         name: "typeToConvert",
@@ -599,12 +596,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     }),
                     csharp.parameter({
                         name: "options",
-                        type: csharp.Type.reference(
-                            csharp.classReference({
-                                name: "JsonSerializerOptions",
-                                namespace: "System.Text.Json"
-                            })
-                        )
+                        type: csharp.Type.reference(System.Text.Json.JsonSerializerOptions)
                     })
                 ],
                 body: csharp.codeblock((writer) => {
@@ -740,12 +732,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                 parameters: [
                     csharp.parameter({
                         name: "writer",
-                        type: csharp.Type.reference(
-                            csharp.classReference({
-                                name: "Utf8JsonWriter",
-                                namespace: "System.Text.Json"
-                            })
-                        )
+                        type: csharp.Type.reference(System.Text.Json.Utf8JsonWriter)
                     }),
                     csharp.parameter({
                         name: "value",
@@ -753,12 +740,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     }),
                     csharp.parameter({
                         name: "options",
-                        type: csharp.Type.reference(
-                            csharp.classReference({
-                                name: "JsonSerializerOptions",
-                                namespace: "System.Text.Json"
-                            })
-                        )
+                        type: csharp.Type.reference(System.Text.Json.JsonSerializerOptions)
                     })
                 ],
                 body: csharp.codeblock((writer) => {

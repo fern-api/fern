@@ -3,7 +3,7 @@ import {
     FernGeneratorExec,
     Options
 } from "@fern-api/browser-compatible-base-generator";
-import { BaseCsharpCustomConfigSchema, csharp, nameRegistry } from "@fern-api/csharp-codegen";
+import { BaseCsharpCustomConfigSchema, csharp, nameRegistry, System } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { camelCase, upperFirst } from "lodash-es";
 
@@ -171,17 +171,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getMemoryStreamClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: "MemoryStream",
-            namespace: "System.IO"
-        });
+      return System.IO.MemoryStream;
     }
 
     public getEncodingUtf8ClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: "Encoding.UTF8",
-            namespace: "System.Text"
-        });
+        return System.Text.Encoding_UTF8;
     }
 
     public getNamespace(fernFilepath: FernIr.FernFilepath, suffix?: string): string {

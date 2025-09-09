@@ -1,6 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { csharp } from "@fern-api/csharp-codegen";
-
+import { csharp,System } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     CursorPagination,
@@ -258,7 +257,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.dedent();
                 writer.writeLine("}");
                 writer.writeLine("catch (");
-                writer.writeNode(this.context.getJsonExceptionClassReference());
+                writer.writeNode(System.Text.Json.JsonException);
                 writer.writeLine(")");
                 writer.writeLine("{");
                 writer.indent();
@@ -446,7 +445,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.dedent();
                     writer.writeLine("}");
                     writer.write("catch (");
-                    writer.writeNode(this.context.getJsonExceptionClassReference());
+                    writer.writeNode(System.Text.Json.JsonException);
                     writer.writeLine(" e)");
                     writer.writeLine("{");
                     writer.indent();

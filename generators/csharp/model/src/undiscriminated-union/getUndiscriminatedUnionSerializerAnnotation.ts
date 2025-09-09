@@ -1,5 +1,5 @@
 import { AbstractCsharpGeneratorContext } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { csharp, System } from "@fern-api/csharp-codegen";
 
 import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
@@ -21,10 +21,7 @@ export function getUndiscriminatedUnionSerializerAnnotation({
 }): csharp.Annotation {
     if (isList) {
         return csharp.annotation({
-            reference: csharp.classReference({
-                name: "JsonConverter",
-                namespace: "System.Text.Json.Serialization"
-            }),
+            reference: System.Text.Json.Serialization.JsonConverter(),
             argument: csharp.codeblock((writer) => {
                 writer.write("typeof(");
 
@@ -37,10 +34,7 @@ export function getUndiscriminatedUnionSerializerAnnotation({
         });
     }
     return csharp.annotation({
-        reference: csharp.classReference({
-            name: "JsonConverter",
-            namespace: "System.Text.Json.Serialization"
-        }),
+        reference: System.Text.Json.Serialization.JsonConverter(),
         argument: csharp.codeblock((writer) => {
             writer.write("typeof(");
             const oneOfSerializer = getOneOfSerializer({ context, undiscriminatedUnionDeclaration });

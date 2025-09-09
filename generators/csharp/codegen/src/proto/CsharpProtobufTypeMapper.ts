@@ -9,7 +9,7 @@ import {
     PrimitiveType,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { csharp } from "../";
+import { csharp, System } from "../";
 import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { EXTERNAL_PROTO_TIMESTAMP_CLASS_REFERENCE } from "./constants";
@@ -623,10 +623,7 @@ class ToProtoPropertyMapper {
 
 class FromProtoPropertyMapper {
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
-    private readonly enumerableClassReference = csharp.classReference({
-        namespace: "System.Linq",
-        name: "Enumerable"
-    });
+    private readonly enumerableClassReference = System.Linq.Enumerable;
 
     constructor({ context }: { context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema> }) {
         this.context = context;

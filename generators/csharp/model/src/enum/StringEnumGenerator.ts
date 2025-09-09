@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { csharp, System } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { EnumTypeDeclaration, NameAndWireValue, TypeDeclaration } from "@fern-fern/ir-sdk/api";
@@ -34,10 +34,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
 
     protected doGenerate(): CSharpFile {
         const serializerAnnotation = csharp.annotation({
-            reference: csharp.classReference({
-                name: "JsonConverter",
-                namespace: "System.Text.Json.Serialization"
-            }),
+            reference: System.Text.Json.Serialization.JsonConverter(),
             argument: csharp.codeblock((writer) => {
                 writer.write("typeof(");
                 writer.writeNode(

@@ -1,6 +1,6 @@
 import { AbstractFormatter, GeneratorNotificationService, NopFormatter } from "@fern-api/base-generator";
 import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { csharp, System } from "@fern-api/csharp-codegen";
 import { CsharpFormatter } from "@fern-api/csharp-formatter";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -328,18 +328,8 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return RelativeFilePath.of([...fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/"));
     }
 
-    public getJsonExceptionClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            namespace: "System.Text.Json",
-            name: "JsonException"
-        });
-    }
-
     public getHttpResponseHeadersReference(): csharp.ClassReference {
-        return csharp.classReference({
-            namespace: "System.Net.Http.Headers",
-            name: "HttpResponseHeaders"
-        });
+        return csharp.classReference(System.Net.Http.HttpResponseHeaders);
     }
 
     public getExceptionHandlerClassReference(): csharp.ClassReference {
@@ -501,10 +491,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getCancellationTokenClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: "CancellationToken",
-            namespace: "System.Threading"
-        });
+          return csharp.classReference(System.Threading.CancellationToken);
     }
 
     public getCancellationTokenParameterName(): string {

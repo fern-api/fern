@@ -1,5 +1,5 @@
 import { File } from "@fern-api/base-generator";
-import { csharp } from "@fern-api/csharp-codegen";
+import { csharp, System } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 
@@ -33,10 +33,7 @@ export class PrebuiltUtilities {
     // TODO: write json serializers code to the main file
     public enumConverterAnnotation(): csharp.Annotation {
         return csharp.annotation({
-            reference: csharp.classReference({
-                name: "JsonConverter",
-                namespace: "System.Text.Json.Serialization"
-            }),
+            reference: System.Text.Json.Serialization.JsonConverter(),
             argument: csharp.annotation({
                 reference: csharp.classReference({
                     name: "typeof",
@@ -52,10 +49,7 @@ export class PrebuiltUtilities {
 
     public stringEnumConverterAnnotation(): csharp.Annotation {
         return csharp.annotation({
-            reference: csharp.classReference({
-                name: "JsonConverter",
-                namespace: "System.Text.Json.Serialization"
-            }),
+            reference: System.Text.Json.Serialization.JsonConverter(),
             argument: csharp.annotation({
                 reference: csharp.classReference({
                     name: "typeof",
@@ -71,10 +65,7 @@ export class PrebuiltUtilities {
 
     public oneOfConverterAnnotation(): csharp.Annotation {
         return csharp.annotation({
-            reference: csharp.classReference({
-                name: "JsonConverter",
-                namespace: "System.Text.Json.Serialization"
-            }),
+            reference: System.Text.Json.Serialization.JsonConverter(),
             argument: csharp.annotation({
                 reference: csharp.classReference({
                     name: "typeof",
