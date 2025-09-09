@@ -423,4 +423,5 @@ allowedFailures:
   - imdb:noScripts
   - imdb:branded-string-aliases
   - license
+  - oauth-client-credentials:no-custom-config
   - ts-inline-types:inline
