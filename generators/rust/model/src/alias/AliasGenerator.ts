@@ -32,7 +32,7 @@ export class AliasGenerator {
     }
 
     private getFilename(): string {
-        return this.typeDeclaration.name.name.snakeCase.unsafeName + ".rs";
+        return this.context.getUniqueFilenameForType(this.typeDeclaration);
     }
 
     private getFileDirectory(): RelativeFilePath {
@@ -65,7 +65,8 @@ export class AliasGenerator {
         // Add imports for custom named types FIRST
         const customTypes = this.getCustomTypesUsedInAlias();
         customTypes.forEach((typeName) => {
-            const moduleNameEscaped = this.context.escapeRustKeyword(typeName.snakeCase.unsafeName);
+            const modulePath = this.context.getModulePathForType(typeName.snakeCase.unsafeName);
+            const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
             writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
         });
 

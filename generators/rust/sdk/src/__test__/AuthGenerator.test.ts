@@ -286,7 +286,23 @@ function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext 
         getClientName: () => "TestClient",
         customConfig: { generateExamples: false },
         getHttpServiceOrThrow: (serviceId: string) => ir.services[serviceId as keyof typeof ir.services],
-        getSubpackageOrThrow: (subpackageId: string) => ir.subpackages[subpackageId as keyof typeof ir.subpackages]
+        getSubpackageOrThrow: (subpackageId: string) => ir.subpackages[subpackageId as keyof typeof ir.subpackages],
+        // Add the centralized methods that SubClientGenerator expects
+        getUniqueFilenameForSubpackage: (subpackage: {
+            fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> };
+        }) => {
+            const pathParts = subpackage.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+            return `${pathParts.join("_")}.rs`;
+        },
+        getUniqueClientNameForSubpackage: (subpackage: {
+            fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
+        }) => {
+            const pathParts = subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
+            return pathParts.join("") + "Client";
+        },
+        configManager: {
+            escapeRustKeyword: (name: string) => name // Simple mock implementation
+        }
     } as SdkGeneratorContext;
 }
 

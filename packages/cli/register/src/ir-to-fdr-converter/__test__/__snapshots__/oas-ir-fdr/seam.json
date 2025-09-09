@@ -53032,7 +53032,7 @@
                     "accessory_keypad": {
                       "is_connected": true,
                       "battery": {
-                        "level": 1.1
+                        "level": 0.5
                       }
                     },
                     "name": "string",
@@ -53040,9 +53040,9 @@
                     "manufacturer": "string",
                     "image_url": "string",
                     "image_alt_text": "string",
-                    "battery_level": 1.1,
+                    "battery_level": 0.5,
                     "battery": {
-                      "level": 1.1,
+                      "level": 0.5,
                       "status": "critical"
                     },
                     "online_access_codes_enabled": true,
@@ -53096,7 +53096,7 @@
                       "accessory_keypad": {
                         "is_connected": true,
                         "battery": {
-                          "level": 1.1
+                          "level": 0.5
                         }
                       },
                       "name": "string",
@@ -53104,9 +53104,9 @@
                       "manufacturer": "string",
                       "image_url": "string",
                       "image_alt_text": "string",
-                      "battery_level": 1.1,
+                      "battery_level": 0.5,
                       "battery": {
-                        "level": 1.1,
+                        "level": 0.5,
                         "status": "critical"
                       },
                       "online_access_codes_enabled": true,
@@ -53649,7 +53649,7 @@
                       "accessory_keypad": {
                         "is_connected": true,
                         "battery": {
-                          "level": 1.1
+                          "level": 0.5
                         }
                       },
                       "name": "string",
@@ -53657,9 +53657,9 @@
                       "manufacturer": "string",
                       "image_url": "string",
                       "image_alt_text": "string",
-                      "battery_level": 1.1,
+                      "battery_level": 0.5,
                       "battery": {
-                        "level": 1.1,
+                        "level": 0.5,
                         "status": "critical"
                       },
                       "online_access_codes_enabled": true,
@@ -53715,7 +53715,7 @@
                         "accessory_keypad": {
                           "is_connected": true,
                           "battery": {
-                            "level": 1.1
+                            "level": 0.5
                           }
                         },
                         "name": "string",
@@ -53723,9 +53723,9 @@
                         "manufacturer": "string",
                         "image_url": "string",
                         "image_alt_text": "string",
-                        "battery_level": 1.1,
+                        "battery_level": 0.5,
                         "battery": {
-                          "level": 1.1,
+                          "level": 0.5,
                           "status": "critical"
                         },
                         "online_access_codes_enabled": true,
