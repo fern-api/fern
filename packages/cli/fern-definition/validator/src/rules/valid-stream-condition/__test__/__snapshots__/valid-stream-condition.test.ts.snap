@@ -1,0 +1,105 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`valid-stream-condition > simple 1`] = `
+[
+  {
+    "message": "stream-condition can only be used if both response and response-stream are specified.",
+    "nodePath": [
+      "service",
+      "endpoints",
+      "streamConditionButNoResponse",
+      "stream-condition",
+    ],
+    "relativeFilepath": "simple.yml",
+    "severity": "fatal",
+  },
+  {
+    "message": "stream-condition must be specified when both response and response-stream are specified.",
+    "nodePath": [
+      "service",
+      "endpoints",
+      "responsesButNoStreamCondition",
+      "stream-condition",
+    ],
+    "relativeFilepath": "simple.yml",
+    "severity": "fatal",
+  },
+  {
+    "message": "Please specify path to a valid property (e.g. $request.stream)",
+    "nodePath": [
+      "service",
+      "endpoints",
+      "invalidStreamCondition",
+      "stream-condition",
+    ],
+    "relativeFilepath": "simple.yml",
+    "severity": "fatal",
+  },
+  {
+    "message": "Property "$request.stream" does not exist on the request.",
+    "nodePath": [
+      "service",
+      "endpoints",
+      "missingRequestBody",
+      "stream-condition",
+    ],
+    "relativeFilepath": "simple.yml",
+    "severity": "fatal",
+  },
+  {
+    "message": "Property "$request.stream" does not exist on the request.",
+    "nodePath": [
+      "service",
+      "endpoints",
+      "missingPropertyStreamCondition",
+      "stream-condition",
+    ],
+    "relativeFilepath": "simple.yml",
+    "severity": "fatal",
+  },
+  {
+    "message": "Property "$request.stream" does not exist on the request.",
+    "nodePath": [
+      "service",
+      "endpoints",
+      "nonBooleanStreamCondition",
+      "stream-condition",
+    ],
+    "relativeFilepath": "simple.yml",
+    "severity": "fatal",
+  },
+  {
+    "message": "Please specify path to a valid property (e.g. $request.stream)",
+    "nodePath": [
+      "service",
+      "endpoints",
+      "validQueryParam",
+      "stream-condition",
+    ],
+    "relativeFilepath": "simple.yml",
+    "severity": "fatal",
+  },
+  {
+    "message": "Please specify path to a valid property (e.g. $request.stream)",
+    "nodePath": [
+      "service",
+      "endpoints",
+      "missingQueryParam",
+      "stream-condition",
+    ],
+    "relativeFilepath": "simple.yml",
+    "severity": "fatal",
+  },
+  {
+    "message": "Please specify path to a valid property (e.g. $request.stream)",
+    "nodePath": [
+      "service",
+      "endpoints",
+      "nonBooleanQueryParam",
+      "stream-condition",
+    ],
+    "relativeFilepath": "simple.yml",
+    "severity": "fatal",
+  },
+]
+`;
