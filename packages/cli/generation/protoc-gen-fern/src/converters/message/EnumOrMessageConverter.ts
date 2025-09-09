@@ -2,11 +2,10 @@ import { DescriptorProto, EnumDescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import { FernIr, TypeId } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v3-importer-commons";
-
+import { getAvailability } from "../../commons/availability";
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { EnumConverter } from "./EnumConverter";
 import { MessageConverter } from "./MessageConverter";
-import { getAvailability } from "../../commons/availability";
 
 export declare namespace EnumOrMessageConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
@@ -75,7 +74,7 @@ export class EnumOrMessageConverter extends AbstractConverter<
                             availability: getAvailability(this.schema.options)
                         }),
                         audiences: this.audiences,
-                        propertiesByAudience: {},
+                        propertiesByAudience: {}
                     },
                     inlinedTypes: {}
                 };

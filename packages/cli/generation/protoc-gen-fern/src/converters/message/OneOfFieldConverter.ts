@@ -2,11 +2,10 @@ import { FieldDescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import { Availability, Type, TypeId, UndiscriminatedUnionMember } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v3-importer-commons";
-
+import { getAvailability, ProtoAvailabilityOptions } from "../../commons/availability";
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { EnumOrMessageConverter } from "./EnumOrMessageConverter";
 import { FieldConverter } from "./FieldConverter";
-import { ProtoAvailabilityOptions, getAvailability } from "../../commons/availability";
 
 export declare namespace OneOfFieldConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
@@ -66,7 +65,7 @@ export class OneOfFieldConverter extends AbstractConverter<ProtofileConverterCon
 
     private getProtoAvailabilityOptions(): ProtoAvailabilityOptions | undefined {
         return {
-            deprecated: this.oneOfFields.every(field => field.options?.deprecated)
-        }
+            deprecated: this.oneOfFields.every((field) => field.options?.deprecated)
+        };
     }
 }
