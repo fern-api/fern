@@ -3021,7 +3021,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -3049,7 +3050,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "INTEGER"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -3080,7 +3082,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -3178,7 +3181,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -3206,7 +3210,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -3403,7 +3408,8 @@
                                 "typeReference": {
                                     "type": "primitive",
                                     "value": "STRING"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -3431,7 +3437,8 @@
                                 "typeReference": {
                                     "type": "primitive",
                                     "value": "STRING"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -3462,7 +3469,8 @@
                                         "type": "string",
                                         "value": "https://api.example.com"
                                     }
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -3493,7 +3501,8 @@
                                         "type": "string",
                                         "value": "client_credentials"
                                     }
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -3524,7 +3533,8 @@
                                         "type": "primitive",
                                         "value": "STRING"
                                     }
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },

@@ -1378,7 +1378,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:Operand"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -1409,7 +1410,8 @@
                                 "type": "named",
                                 "value": "type_:Operand"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -1437,7 +1439,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ColorOrOperand"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -1468,7 +1471,8 @@
                                 "type": "named",
                                 "value": "type_:ColorOrOperand"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "body": null,
@@ -1650,7 +1654,8 @@
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_:Operand"
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -1681,7 +1686,8 @@
                                     "type": "named",
                                     "value": "type_:Operand"
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -1709,7 +1715,8 @@
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_:ColorOrOperand"
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -1740,7 +1747,8 @@
                                     "type": "named",
                                     "value": "type_:ColorOrOperand"
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ]
                 },
@@ -1853,7 +1861,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:Operand"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -1881,7 +1890,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ColorOrOperand"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "body": null
@@ -2055,7 +2065,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:Operand"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -2086,7 +2097,8 @@
                                 "type": "named",
                                 "value": "type_:Operand"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -2114,7 +2126,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ColorOrOperand"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -2145,7 +2158,8 @@
                                 "type": "named",
                                 "value": "type_:ColorOrOperand"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "headers": [],
@@ -2327,7 +2341,8 @@
                                 "type": "named",
                                 "value": "type_:Operand"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -2361,7 +2376,8 @@
                                     "value": "type_:Operand"
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -2392,7 +2408,8 @@
                                 "type": "named",
                                 "value": "type_:ColorOrOperand"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -2426,7 +2443,8 @@
                                     "value": "type_:ColorOrOperand"
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "headers": [],
