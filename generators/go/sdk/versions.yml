@@ -1,7 +1,8 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 1.7.1
+- version: 1.8.0
   changelogEntry:
-    - summary: Retries now check `Retry-After` and `X-RateLimit-Reset` before defaulting to exponential backoff.
+    - summary: |
+        Retries now check `Retry-After` and `X-RateLimit-Reset` before defaulting to exponential backoff.
       type: feat
   createdAt: "2025-09-09"
   irVersion: 59
