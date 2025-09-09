@@ -3,24 +3,90 @@
  */
 package com.seed.trace.resources.commons.types;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Language {
-    JAVA("JAVA"),
+public final class Language {
+    public static final Language JAVASCRIPT = new Language(Value.JAVASCRIPT, "JAVASCRIPT");
 
-    JAVASCRIPT("JAVASCRIPT"),
+    public static final Language PYTHON = new Language(Value.PYTHON, "PYTHON");
 
-    PYTHON("PYTHON");
+    public static final Language JAVA = new Language(Value.JAVA, "JAVA");
 
-    private final String value;
+    private final Value value;
 
-    Language(String value) {
+    private final String string;
+
+    Language(Value value, String string) {
         this.value = value;
+        this.string = string;
     }
 
-    @JsonValue
+    public Value getEnumValue() {
+        return value;
+    }
+
     @java.lang.Override
+    @JsonValue
     public String toString() {
-        return this.value;
+        return this.string;
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        return (this == other) || (other instanceof Language && this.string.equals(((Language) other).string));
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return this.string.hashCode();
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        switch (value) {
+            case JAVASCRIPT:
+                return visitor.visitJavascript();
+            case PYTHON:
+                return visitor.visitPython();
+            case JAVA:
+                return visitor.visitJava();
+            case UNKNOWN:
+            default:
+                return visitor.visitUnknown(string);
+        }
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static Language valueOf(String value) {
+        switch (value) {
+            case "JAVASCRIPT":
+                return JAVASCRIPT;
+            case "PYTHON":
+                return PYTHON;
+            case "JAVA":
+                return JAVA;
+            default:
+                return new Language(Value.UNKNOWN, value);
+        }
+    }
+
+    public enum Value {
+        JAVA,
+
+        JAVASCRIPT,
+
+        PYTHON,
+
+        UNKNOWN
+    }
+
+    public interface Visitor<T> {
+        T visitJava();
+
+        T visitJavascript();
+
+        T visitPython();
+
+        T visitUnknown(String unknownType);
     }
 }

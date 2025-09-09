@@ -3,24 +3,90 @@
  */
 package com.seed.multiLineDocs.types;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Operand {
-    GREATER_THAN(">"),
+public final class Operand {
+    public static final Operand LESS_THAN = new Operand(Value.LESS_THAN, "less_than");
 
-    EQUAL_TO("="),
+    public static final Operand EQUAL_TO = new Operand(Value.EQUAL_TO, "=");
 
-    LESS_THAN("less_than");
+    public static final Operand GREATER_THAN = new Operand(Value.GREATER_THAN, ">");
 
-    private final String value;
+    private final Value value;
 
-    Operand(String value) {
+    private final String string;
+
+    Operand(Value value, String string) {
         this.value = value;
+        this.string = string;
     }
 
-    @JsonValue
+    public Value getEnumValue() {
+        return value;
+    }
+
     @java.lang.Override
+    @JsonValue
     public String toString() {
-        return this.value;
+        return this.string;
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        return (this == other) || (other instanceof Operand && this.string.equals(((Operand) other).string));
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return this.string.hashCode();
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        switch (value) {
+            case LESS_THAN:
+                return visitor.visitLessThan();
+            case EQUAL_TO:
+                return visitor.visitEqualTo();
+            case GREATER_THAN:
+                return visitor.visitGreaterThan();
+            case UNKNOWN:
+            default:
+                return visitor.visitUnknown(string);
+        }
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static Operand valueOf(String value) {
+        switch (value) {
+            case "less_than":
+                return LESS_THAN;
+            case "=":
+                return EQUAL_TO;
+            case ">":
+                return GREATER_THAN;
+            default:
+                return new Operand(Value.UNKNOWN, value);
+        }
+    }
+
+    public enum Value {
+        GREATER_THAN,
+
+        EQUAL_TO,
+
+        LESS_THAN,
+
+        UNKNOWN
+    }
+
+    public interface Visitor<T> {
+        T visitGreaterThan();
+
+        T visitEqualTo();
+
+        T visitLessThan();
+
+        T visitUnknown(String unknownType);
     }
 }
