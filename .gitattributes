@@ -3,3 +3,27 @@ seed/** linguist-generated=true
 seed/**/seed.yml linguist-generated=false
 seed/**/.mock linguist-generated=true
 packages/ir-sdk/src/sdk/** linguist-generated=true
+snapshots/cli/api-importers/v3-importer/baseline-sdks/webflow.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-sdks/deel.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-sdks/hookdeck.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-sdks/intercom.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-sdks/webflow.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-sdks/nft.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-sdks/only-include-referenced-schemas.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-sdks/permit.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-sdks/aries.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/baseline-docs/webflow.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/baseline-docs/belvo.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/baseline-docs/rightbrain.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-sdks/flagright.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-sdks/paradex.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-sdks/openapi-filter.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-sdks/seam.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-sdks/devrev.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-sdks/belvo.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-sdks/flexport.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-docs/webflow.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-sdks/squidex.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-sdks/deepgram.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-sdks/merge.json filter=lfs diff=lfs merge=lfs -text
+snapshots/cli/api-importers/v3-importer/v3-sdks/rightbrain.json filter=lfs diff=lfs merge=lfs -text
