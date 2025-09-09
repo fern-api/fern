@@ -4,73 +4,61 @@
     {
       "url": "https://fintech.api.example.com",
       "description": "PRD",
-      "name": "PRD",
       "type": "single"
     },
     {
       "url": "https://fintech-sbx.api.example.com",
       "description": "SBX",
-      "name": "SBX",
       "type": "single"
     },
     {
       "url": "https://fintech-stg.api.example.com",
       "description": "STG",
-      "name": "STG",
       "type": "single"
     },
     {
       "url": "https://fintech-prf.api.example.com",
       "description": "PRF",
-      "name": "PRF",
       "type": "single"
     },
     {
       "url": "https://fintech-e2e.api.example.com",
       "description": "E2E",
-      "name": "E2E",
       "type": "single"
     },
     {
       "url": "https://fintech-qal.api.example.com",
       "description": "QAL",
-      "name": "QAL",
       "type": "single"
     },
     {
       "url": "https://payments.api.example.com",
       "description": "PRD",
-      "name": "PRD",
       "type": "single"
     },
     {
       "url": "https://payments-sbx.api.example.com",
       "description": "SBX",
-      "name": "SBX",
       "type": "single"
     },
     {
       "url": "https://payments-stg.api.example.com",
       "description": "STG",
-      "name": "STG",
       "type": "single"
     },
     {
       "url": "https://payments-prf.api.example.com",
       "description": "PRF",
-      "name": "PRF",
       "type": "single"
     },
     {
       "url": "https://payments-e2e.api.example.com",
       "description": "E2E",
-      "name": "E2E",
       "type": "single"
     },
     {
       "url": "https://payments-qal.api.example.com",
       "description": "QAL",
-      "name": "QAL",
       "type": "single"
     }
   ],

@@ -10,11 +10,11 @@
   ],
   "websocketServers": [
     {
-      "name": "public",
+      "name": "Default",
       "url": "wss://api.deepgram.com"
     },
     {
-      "name": "agent",
+      "name": "Default",
       "url": "wss://agent.deepgram.com"
     }
   ],
@@ -22652,7 +22652,7 @@
       ],
       "servers": [
         {
-          "name": "public",
+          "name": "Default",
           "url": "wss://api.deepgram.com"
         }
       ],
@@ -25073,7 +25073,7 @@
       ],
       "servers": [
         {
-          "name": "public",
+          "name": "Default",
           "url": "wss://api.deepgram.com"
         }
       ],
@@ -26937,7 +26937,7 @@
       ],
       "servers": [
         {
-          "name": "agent",
+          "name": "Default",
           "url": "wss://agent.deepgram.com"
         }
       ],

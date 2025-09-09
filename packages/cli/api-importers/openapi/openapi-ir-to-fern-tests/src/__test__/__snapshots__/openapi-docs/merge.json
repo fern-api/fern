@@ -22288,11 +22288,10 @@ service:
           "type": "string",
         },
       },
-      "default-environment": "Production",
+      "default-environment": "Default",
       "display-name": "Merge HRIS API",
       "environments": {
-        "Production": "https://api.merge.dev/api/hris/v1",
-        "Sandbox": "https://api-sandbox.merge.dev/api/hris/v1",
+        "Default": "https://api.merge.dev/api/hris/v1",
       },
       "error-discrimination": {
         "strategy": "status-code",
@@ -22312,9 +22311,8 @@ error-discrimination:
   strategy: status-code
 display-name: Merge HRIS API
 environments:
-  Production: https://api.merge.dev/api/hris/v1
-  Sandbox: https://api-sandbox.merge.dev/api/hris/v1
-default-environment: Production
+  Default: https://api.merge.dev/api/hris/v1
+default-environment: Default
 headers:
   X-Account-Token:
     type: optional<string>

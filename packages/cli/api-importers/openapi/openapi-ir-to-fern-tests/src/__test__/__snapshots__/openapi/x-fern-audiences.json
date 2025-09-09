@@ -113,20 +113,14 @@ types:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "default-environment": "production",
+      "default-environment": "Default",
       "display-name": "Test extension `x-fern-audiences`",
       "environments": {
-        "production": {
+        "Default": {
           "audiences": [
             "public",
           ],
           "url": "https://api.com",
-        },
-        "sandbox": {
-          "audiences": [
-            "private",
-          ],
-          "url": "https://private.api.com",
         },
       },
       "error-discrimination": {
@@ -140,15 +134,11 @@ error-discrimination:
   strategy: status-code
 display-name: Test extension `x-fern-audiences`
 environments:
-  production:
+  Default:
     url: https://api.com
     audiences:
       - public
-  sandbox:
-    url: https://private.api.com
-    audiences:
-      - private
-default-environment: production
+default-environment: Default
 ",
   },
 }

@@ -3,7 +3,6 @@
   "servers": [
     {
       "url": "https://api.com",
-      "name": "production",
       "audiences": [
         "public"
       ],
@@ -11,7 +10,6 @@
     },
     {
       "url": "https://private.api.com",
-      "name": "sandbox",
       "audiences": [
         "private"
       ],

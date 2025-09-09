@@ -57,7 +57,8 @@ export function parseAsyncAPIV2({
     const servers: Record<string, ServerContext> = {};
     for (const [serverId, server] of Object.entries(document.servers ?? {})) {
         servers[serverId] = {
-            name: serverId,
+            // Only use serverId as name when multi-API environment grouping is enabled
+            name: context.options.groupMultiApiEnvironments ? serverId : undefined,
             url: constructServerUrl(server.protocol, server.url)
         };
     }
@@ -323,9 +324,12 @@ export function parseAsyncAPIV2({
                     getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_SDK_GROUP_NAME) ?? channelPath
                 ]),
                 messages,
-                servers: (channel.servers?.map((serverId) => servers[serverId]) ?? Object.values(servers)).filter(
-                    (server): server is ServerContext => server != null
-                ),
+                servers: (channel.servers?.map((serverId) => servers[serverId]) ?? Object.values(servers))
+                    .filter((server): server is ServerContext => server != null)
+                    .map(server => ({
+                        ...server,
+                        name: server.name ?? "Default"
+                    })),
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
                 path,
                 description: channel.description,
@@ -338,7 +342,10 @@ export function parseAsyncAPIV2({
     return {
         groupedSchemas: getSchemas(context.namespace, schemas),
         channels: parsedChannels != null ? parsedChannels : undefined,
-        servers: Object.values(servers),
+        servers: Object.values(servers).map(server => ({
+            ...server,
+            name: server.name ?? "Default"
+        })),
         basePath: getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH)
     };
 }

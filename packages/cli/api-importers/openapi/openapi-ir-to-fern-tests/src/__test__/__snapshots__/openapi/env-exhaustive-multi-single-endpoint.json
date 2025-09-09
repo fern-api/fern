@@ -30,7 +30,6 @@
               "source": {
                 "openapi": "../openapi2.yml",
               },
-              "url": "Debug",
             },
           },
           "source": {
@@ -52,7 +51,6 @@
         docs: A response
         type: string
         status-code: 200
-      url: Debug
       examples:
         - response:
             body: string
@@ -64,44 +62,24 @@
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "default-environment": "Prod",
-      "default-url": "Base",
+      "default-environment": "Default",
       "display-name": "Test API",
       "environments": {
-        "Dev": {
-          "urls": {
-            "Base": "http://dev2.api.com",
-            "Debug": "http://debug2.api.com",
-          },
-        },
-        "Prod": {
-          "urls": {
-            "Base": "http://prod2.api.com",
-            "Debug": "http://debug2.api.com",
-          },
-        },
+        "Default": "http://prod.api.com",
       },
       "error-discrimination": {
         "strategy": "status-code",
       },
       "name": "api",
     },
-    "defaultUrl": "Base",
+    "defaultUrl": undefined,
     "rawContents": "name: api
 error-discrimination:
   strategy: status-code
 display-name: Test API
 environments:
-  Prod:
-    urls:
-      Base: http://prod2.api.com
-      Debug: http://debug2.api.com
-  Dev:
-    urls:
-      Base: http://dev2.api.com
-      Debug: http://debug2.api.com
-default-environment: Prod
-default-url: Base
+  Default: http://prod.api.com
+default-environment: Default
 ",
   },
 }

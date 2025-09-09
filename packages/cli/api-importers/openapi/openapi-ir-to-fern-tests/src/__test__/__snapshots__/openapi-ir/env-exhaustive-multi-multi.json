@@ -3,40 +3,36 @@
   "servers": [
     {
       "url": "http://prod.api.com",
-      "name": "Prod",
       "type": "single"
     },
     {
       "url": "http://dev.api.com",
-      "name": "Dev",
       "type": "single"
     },
     {
       "url": "http://prod2.api.com",
-      "name": "Prod",
       "type": "single"
     },
     {
       "url": "http://dev2.api.com",
-      "name": "Dev",
       "type": "single"
     }
   ],
   "websocketServers": [
     {
-      "name": "websocket",
+      "name": "Default",
       "url": "wss://api.async.com"
     },
     {
-      "name": "websocket2",
+      "name": "Default",
       "url": "wss://api2.async.com"
     },
     {
-      "name": "betawebsocket",
+      "name": "Default",
       "url": "wss://api.async2.com"
     },
     {
-      "name": "betawebsocket2",
+      "name": "Default",
       "url": "wss://api2.async2.com"
     }
   ],
@@ -80,8 +76,7 @@
       "errors": {},
       "servers": [
         {
-          "url": "http://debug.api.com",
-          "name": "Debug"
+          "url": "http://debug.api.com"
         }
       ],
       "authed": false,
@@ -146,8 +141,7 @@
       "errors": {},
       "servers": [
         {
-          "url": "http://debug2.api.com",
-          "name": "Debug"
+          "url": "http://debug2.api.com"
         }
       ],
       "authed": false,
@@ -206,7 +200,7 @@
       ],
       "servers": [
         {
-          "name": "websocket",
+          "name": "Default",
           "url": "wss://api.async.com"
         }
       ],
@@ -260,7 +254,7 @@
       ],
       "servers": [
         {
-          "name": "websocket2",
+          "name": "Default",
           "url": "wss://api2.async.com"
         }
       ],
@@ -314,7 +308,7 @@
       ],
       "servers": [
         {
-          "name": "betawebsocket",
+          "name": "Default",
           "url": "wss://api.async2.com"
         }
       ],
@@ -368,7 +362,7 @@
       ],
       "servers": [
         {
-          "name": "betawebsocket2",
+          "name": "Default",
           "url": "wss://api2.async2.com"
         }
       ],

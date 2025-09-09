@@ -5,7 +5,6 @@
     {
       "url": "https://api.vellum.ai",
       "description": "Default Server",
-      "name": "Default",
       "type": "single"
     }
   ],
@@ -1233,8 +1232,7 @@
       "errors": {},
       "servers": [
         {
-          "url": "https://predict.vellum.ai",
-          "name": "Predict"
+          "url": "https://predict.vellum.ai"
         }
       ],
       "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nExecutes a deployed Workflow and streams back its results.",
@@ -1599,8 +1597,7 @@
       },
       "servers": [
         {
-          "url": "https://predict.vellum.ai",
-          "name": "Predict"
+          "url": "https://predict.vellum.ai"
         }
       ],
       "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nGenerate a completion using a previously defined deployment.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
@@ -1907,8 +1904,7 @@
       },
       "servers": [
         {
-          "url": "https://predict.vellum.ai",
-          "name": "Predict"
+          "url": "https://predict.vellum.ai"
         }
       ],
       "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nGenerate a stream of completions using a previously defined deployment.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
@@ -3538,8 +3534,7 @@
       },
       "servers": [
         {
-          "url": "https://predict.vellum.ai",
-          "name": "Predict"
+          "url": "https://predict.vellum.ai"
         }
       ],
       "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nPerform a search against a document index.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
@@ -3760,8 +3755,7 @@
       },
       "servers": [
         {
-          "url": "https://predict.vellum.ai",
-          "name": "Predict"
+          "url": "https://predict.vellum.ai"
         }
       ],
       "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nUsed to submit feedback regarding the quality of previously generated completions.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
@@ -4323,8 +4317,7 @@
       },
       "servers": [
         {
-          "url": "https://documents.vellum.ai",
-          "name": "Documents"
+          "url": "https://documents.vellum.ai"
         }
       ],
       "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nUpload a document to be indexed and used for search.\n\n**Note:** Uses a base url of `https://documents.vellum.ai`.",

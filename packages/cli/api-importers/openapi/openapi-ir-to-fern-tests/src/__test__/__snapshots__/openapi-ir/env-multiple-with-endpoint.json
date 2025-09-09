@@ -3,12 +3,10 @@
   "servers": [
     {
       "url": "http://prod.api.com",
-      "name": "Prod",
       "type": "single"
     },
     {
       "url": "http://dev.api.com",
-      "name": "Dev",
       "type": "single"
     }
   ],
@@ -47,8 +45,7 @@
       "errors": {},
       "servers": [
         {
-          "url": "http://debug.api.com",
-          "name": "Debug"
+          "url": "http://debug.api.com"
         }
       ],
       "authed": false,

@@ -9,7 +9,7 @@
   ],
   "websocketServers": [
     {
-      "name": "prod",
+      "name": "Default",
       "url": "wss://api.hume.ai/v0/evi"
     }
   ],
@@ -1202,7 +1202,7 @@
       ],
       "servers": [
         {
-          "name": "prod",
+          "name": "Default",
           "url": "wss://api.hume.ai/v0/evi"
         }
       ],

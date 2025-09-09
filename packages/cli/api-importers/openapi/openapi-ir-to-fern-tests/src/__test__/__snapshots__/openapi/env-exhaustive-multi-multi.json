@@ -36,7 +36,7 @@
               "source": {
                 "openapi": "../openapi1.yml",
               },
-              "url": "Debug",
+              "url": undefined,
             },
           },
           "source": {
@@ -58,7 +58,6 @@
         docs: A response
         type: string
         status-code: 200
-      url: Debug
       examples:
         - response:
             body: string
@@ -94,7 +93,7 @@
               "source": {
                 "openapi": "../openapi2.yml",
               },
-              "url": "Debug",
+              "url": undefined,
             },
           },
           "source": {
@@ -116,7 +115,6 @@
         docs: A response
         type: string
         status-code: 200
-      url: Debug
       examples:
         - response:
             body: string
@@ -146,12 +144,12 @@
             },
           },
           "path": "/test",
-          "url": "websocket",
+          "url": "Default",
         },
       },
       "rawContents": "channel:
   path: /test
-  url: websocket
+  url: Default
   auth: false
   messages:
     testChannel_sendMessage:
@@ -185,12 +183,12 @@
             },
           },
           "path": "/test2",
-          "url": "websocket2",
+          "url": "Default",
         },
       },
       "rawContents": "channel:
   path: /test2
-  url: websocket2
+  url: Default
   auth: false
   messages:
     testChannel2_sendMessage:
@@ -224,12 +222,12 @@
             },
           },
           "path": "/test",
-          "url": "betawebsocket",
+          "url": "Default",
         },
       },
       "rawContents": "channel:
   path: /test
-  url: betawebsocket
+  url: Default
   auth: false
   messages:
     testChannels_sendMessage:
@@ -263,12 +261,12 @@
             },
           },
           "path": "/test2",
-          "url": "betawebsocket2",
+          "url": "Default",
         },
       },
       "rawContents": "channel:
   path: /test2
-  url: betawebsocket2
+  url: Default
   auth: false
   messages:
     testChannels2_sendMessage:
@@ -284,20 +282,14 @@
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "default-environment": "Prod",
+      "default-environment": "Default",
       "default-url": "Base",
       "display-name": "Test API",
       "environments": {
-        "Dev": {
+        "Default": {
           "urls": {
-            "Base": "http://dev2.api.com",
-            "Debug": "http://debug2.api.com",
-          },
-        },
-        "Prod": {
-          "urls": {
-            "Base": "http://prod2.api.com",
-            "Debug": "http://debug2.api.com",
+            "Base": "http://prod.api.com",
+            "Default": "wss://api2.async2.com",
           },
         },
       },
@@ -312,15 +304,11 @@ error-discrimination:
   strategy: status-code
 display-name: Test API
 environments:
-  Prod:
+  Default:
     urls:
-      Base: http://prod2.api.com
-      Debug: http://debug2.api.com
-  Dev:
-    urls:
-      Base: http://dev2.api.com
-      Debug: http://debug2.api.com
-default-environment: Prod
+      Base: http://prod.api.com
+      Default: wss://api2.async2.com
+default-environment: Default
 default-url: Base
 ",
   },

@@ -3,12 +3,10 @@
   "servers": [
     {
       "url": "http://prod.api.com",
-      "name": "Prod",
       "type": "single"
     },
     {
       "url": "http://dev.api.com",
-      "name": "Dev",
       "type": "single"
     }
   ],

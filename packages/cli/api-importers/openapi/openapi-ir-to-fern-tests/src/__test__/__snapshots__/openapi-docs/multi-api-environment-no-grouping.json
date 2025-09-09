@@ -784,15 +784,10 @@ types:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "default-environment": "PRD",
+      "default-environment": "Default",
       "display-name": "Fintech API",
       "environments": {
-        "E2E": "https://payments-e2e.api.example.com",
-        "PRD": "https://payments.api.example.com",
-        "PRF": "https://payments-prf.api.example.com",
-        "QAL": "https://payments-qal.api.example.com",
-        "SBX": "https://payments-sbx.api.example.com",
-        "STG": "https://payments-stg.api.example.com",
+        "Default": "https://fintech.api.example.com",
       },
       "error-discrimination": {
         "strategy": "status-code",
@@ -805,13 +800,8 @@ error-discrimination:
   strategy: status-code
 display-name: Fintech API
 environments:
-  PRD: https://payments.api.example.com
-  SBX: https://payments-sbx.api.example.com
-  STG: https://payments-stg.api.example.com
-  PRF: https://payments-prf.api.example.com
-  E2E: https://payments-e2e.api.example.com
-  QAL: https://payments-qal.api.example.com
-default-environment: PRD
+  Default: https://fintech.api.example.com
+default-environment: Default
 ",
   },
 }

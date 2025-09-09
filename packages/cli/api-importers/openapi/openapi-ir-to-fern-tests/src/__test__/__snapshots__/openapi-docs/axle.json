@@ -1546,11 +1546,10 @@ service:
           "type": "string",
         },
       },
-      "default-environment": "Production",
+      "default-environment": "Default",
       "display-name": "Axle API",
       "environments": {
-        "Production": "https://api.axle.insure",
-        "Sandbox": "https://sandbox.axle.insure",
+        "Default": "https://api.axle.insure",
       },
       "error-discrimination": {
         "strategy": "status-code",
@@ -1575,9 +1574,8 @@ error-discrimination:
   strategy: status-code
 display-name: Axle API
 environments:
-  Production: https://api.axle.insure
-  Sandbox: https://sandbox.axle.insure
-default-environment: Production
+  Default: https://api.axle.insure
+default-environment: Default
 headers:
   x-client-id:
     type: string

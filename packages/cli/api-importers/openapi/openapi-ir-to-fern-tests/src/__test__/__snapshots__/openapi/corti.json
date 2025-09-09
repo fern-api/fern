@@ -7607,7 +7607,7 @@ service:
               "type": "string",
             },
           },
-          "url": "beta-eu",
+          "url": "Default",
         },
         "imports": {
           "streamRoot": "__package__.yml",
@@ -7615,7 +7615,7 @@ service:
       },
       "rawContents": "channel:
   path: /audio-bridge/v2/interactions/{id}/streams
-  url: beta-eu
+  url: Default
   auth: false
   docs: >-
     Channel for streaming real-time audio, transcripts, and fact updates during

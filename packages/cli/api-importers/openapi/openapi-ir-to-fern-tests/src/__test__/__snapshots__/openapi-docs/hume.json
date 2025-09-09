@@ -3995,7 +3995,7 @@ There are three ways to obtain the Chat Group ID:
               "type": "optional<boolean>",
             },
           },
-          "url": "prod",
+          "url": "Default",
         },
         "imports": {
           "root": "__package__.yml",
@@ -4081,7 +4081,7 @@ There are three ways to obtain the Chat Group ID:
       },
       "rawContents": "channel:
   path: /chat
-  url: prod
+  url: Default
   auth: false
   docs: Chat with Empathic Voice Interface (EVI)
   query-parameters:
@@ -4405,7 +4405,7 @@ imports:
         "Default": {
           "urls": {
             "Base": "https://api.hume.ai",
-            "prod": "wss://api.hume.ai/v0/evi",
+            "Default": "wss://api.hume.ai/v0/evi",
           },
         },
       },
@@ -4423,7 +4423,7 @@ environments:
   Default:
     urls:
       Base: https://api.hume.ai
-      prod: wss://api.hume.ai/v0/evi
+      Default: wss://api.hume.ai/v0/evi
 default-environment: Default
 default-url: Base
 auth-schemes:

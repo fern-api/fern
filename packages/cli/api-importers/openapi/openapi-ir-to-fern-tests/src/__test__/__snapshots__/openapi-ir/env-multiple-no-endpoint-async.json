@@ -3,22 +3,20 @@
   "servers": [
     {
       "url": "http://prod.api.com",
-      "name": "Prod",
       "type": "single"
     },
     {
       "url": "http://dev.api.com",
-      "name": "Dev",
       "type": "single"
     }
   ],
   "websocketServers": [
     {
-      "name": "websocket",
+      "name": "Default",
       "url": "wss://api.async.com"
     },
     {
-      "name": "websocket2",
+      "name": "Default",
       "url": "wss://api2.async.com"
     }
   ],
@@ -111,7 +109,7 @@
       ],
       "servers": [
         {
-          "name": "websocket",
+          "name": "Default",
           "url": "wss://api.async.com"
         }
       ],
@@ -165,7 +163,7 @@
       ],
       "servers": [
         {
-          "name": "websocket2",
+          "name": "Default",
           "url": "wss://api2.async.com"
         }
       ],

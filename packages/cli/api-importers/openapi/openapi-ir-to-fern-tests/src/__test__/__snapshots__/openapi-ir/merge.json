@@ -5,13 +5,11 @@
     {
       "url": "https://api.merge.dev/api/hris/v1",
       "description": "Production",
-      "name": "Production",
       "type": "single"
     },
     {
       "url": "https://api-sandbox.merge.dev/api/hris/v1",
       "description": "Sandbox",
-      "name": "Sandbox",
       "type": "single"
     }
   ],
