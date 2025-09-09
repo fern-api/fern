@@ -1,0 +1,26 @@
+Example Corporation Software Development Kit License Agreement
+
+IMPORTANT: THIS SOFTWARE IS PROVIDED UNDER THE FOLLOWING LICENSE AGREEMENT.
+BY USING THIS SOFTWARE, YOU AGREE TO BE BOUND BY THE TERMS OF THIS AGREEMENT.
+
+Copyright (c) 2024 Example Corporation. All Rights Reserved.
+
+This is a proprietary software license. The software and associated documentation
+are the exclusive property of Example Corporation and are protected by copyright
+and other intellectual property laws.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to use
+the Software subject to the following conditions:
+
+1. The Software may only be used in connection with Example Corporation services.
+2. Redistribution of the Software in any form is prohibited.
+3. Modification of the Software is prohibited without express written permission.
+4. This license may be revoked by Example Corporation at any time.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+EXAMPLE CORPORATION BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

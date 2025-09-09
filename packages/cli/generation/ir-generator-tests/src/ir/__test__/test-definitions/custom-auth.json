@@ -692,6 +692,271 @@
                                 },
                                 "docs": null
                             }
+                        },
+                        {
+                            "example": {
+                                "id": "3b27c39d",
+                                "url": "/custom-auth",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "error",
+                                    "body": {
+                                        "shape": {
+                                            "type": "named",
+                                            "shape": {
+                                                "type": "object",
+                                                "properties": [
+                                                    {
+                                                        "name": {
+                                                            "name": {
+                                                                "originalName": "message",
+                                                                "camelCase": {
+                                                                    "unsafeName": "message",
+                                                                    "safeName": "message"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "message",
+                                                                    "safeName": "message"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "MESSAGE",
+                                                                    "safeName": "MESSAGE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Message",
+                                                                    "safeName": "Message"
+                                                                }
+                                                            },
+                                                            "wireValue": "message"
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "name": {
+                                                                "originalName": "UnauthorizedRequestErrorBody",
+                                                                "camelCase": {
+                                                                    "unsafeName": "unauthorizedRequestErrorBody",
+                                                                    "safeName": "unauthorizedRequestErrorBody"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "unauthorized_request_error_body",
+                                                                    "safeName": "unauthorized_request_error_body"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "UNAUTHORIZED_REQUEST_ERROR_BODY",
+                                                                    "safeName": "UNAUTHORIZED_REQUEST_ERROR_BODY"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "UnauthorizedRequestErrorBody",
+                                                                    "safeName": "UnauthorizedRequestErrorBody"
+                                                                }
+                                                            },
+                                                            "fernFilepath": {
+                                                                "allParts": [
+                                                                    {
+                                                                        "originalName": "errors",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "errors",
+                                                                            "safeName": "errors"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "errors",
+                                                                            "safeName": "errors"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "ERRORS",
+                                                                            "safeName": "ERRORS"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Errors",
+                                                                            "safeName": "Errors"
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "packagePath": [],
+                                                                "file": {
+                                                                    "originalName": "errors",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "errors",
+                                                                        "safeName": "errors"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "errors",
+                                                                        "safeName": "errors"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "ERRORS",
+                                                                        "safeName": "ERRORS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Errors",
+                                                                        "safeName": "Errors"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "displayName": null,
+                                                            "typeId": "type_errors:UnauthorizedRequestErrorBody"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "string",
+                                                                    "string": {
+                                                                        "original": "message"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "message"
+                                                        },
+                                                        "propertyAccess": null
+                                                    }
+                                                ]
+                                            },
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "UnauthorizedRequestErrorBody",
+                                                    "camelCase": {
+                                                        "unsafeName": "unauthorizedRequestErrorBody",
+                                                        "safeName": "unauthorizedRequestErrorBody"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "unauthorized_request_error_body",
+                                                        "safeName": "unauthorized_request_error_body"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "UNAUTHORIZED_REQUEST_ERROR_BODY",
+                                                        "safeName": "UNAUTHORIZED_REQUEST_ERROR_BODY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "UnauthorizedRequestErrorBody",
+                                                        "safeName": "UnauthorizedRequestErrorBody"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [
+                                                        {
+                                                            "originalName": "errors",
+                                                            "camelCase": {
+                                                                "unsafeName": "errors",
+                                                                "safeName": "errors"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "errors",
+                                                                "safeName": "errors"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "ERRORS",
+                                                                "safeName": "ERRORS"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Errors",
+                                                                "safeName": "Errors"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "packagePath": [],
+                                                    "file": {
+                                                        "originalName": "errors",
+                                                        "camelCase": {
+                                                            "unsafeName": "errors",
+                                                            "safeName": "errors"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "errors",
+                                                            "safeName": "errors"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "ERRORS",
+                                                            "safeName": "ERRORS"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Errors",
+                                                            "safeName": "Errors"
+                                                        }
+                                                    }
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_errors:UnauthorizedRequestErrorBody"
+                                            }
+                                        },
+                                        "jsonExample": {
+                                            "message": "message"
+                                        }
+                                    },
+                                    "error": {
+                                        "name": {
+                                            "originalName": "UnauthorizedRequest",
+                                            "camelCase": {
+                                                "unsafeName": "unauthorizedRequest",
+                                                "safeName": "unauthorizedRequest"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "unauthorized_request",
+                                                "safeName": "unauthorized_request"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "UNAUTHORIZED_REQUEST",
+                                                "safeName": "UNAUTHORIZED_REQUEST"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "UnauthorizedRequest",
+                                                "safeName": "UnauthorizedRequest"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "errors",
+                                                    "camelCase": {
+                                                        "unsafeName": "errors",
+                                                        "safeName": "errors"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "errors",
+                                                        "safeName": "errors"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "ERRORS",
+                                                        "safeName": "ERRORS"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Errors",
+                                                        "safeName": "Errors"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [],
+                                            "file": {
+                                                "originalName": "errors",
+                                                "camelCase": {
+                                                    "unsafeName": "errors",
+                                                    "safeName": "errors"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "errors",
+                                                    "safeName": "errors"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "ERRORS",
+                                                    "safeName": "ERRORS"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Errors",
+                                                    "safeName": "Errors"
+                                                }
+                                            }
+                                        },
+                                        "errorId": "error_errors:UnauthorizedRequest"
+                                    }
+                                },
+                                "docs": null
+                            }
                         }
                     ],
                     "pagination": null,
@@ -985,6 +1250,377 @@
                                             },
                                             "jsonExample": true
                                         }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        },
+                        {
+                            "example": {
+                                "id": "ccffdc34",
+                                "url": "/custom-auth",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "unknown",
+                                        "unknown": {
+                                            "key": "value"
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "key": "value"
+                                    }
+                                },
+                                "response": {
+                                    "type": "error",
+                                    "body": {
+                                        "shape": {
+                                            "type": "named",
+                                            "shape": {
+                                                "type": "object",
+                                                "properties": [
+                                                    {
+                                                        "name": {
+                                                            "name": {
+                                                                "originalName": "message",
+                                                                "camelCase": {
+                                                                    "unsafeName": "message",
+                                                                    "safeName": "message"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "message",
+                                                                    "safeName": "message"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "MESSAGE",
+                                                                    "safeName": "MESSAGE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Message",
+                                                                    "safeName": "Message"
+                                                                }
+                                                            },
+                                                            "wireValue": "message"
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "name": {
+                                                                "originalName": "UnauthorizedRequestErrorBody",
+                                                                "camelCase": {
+                                                                    "unsafeName": "unauthorizedRequestErrorBody",
+                                                                    "safeName": "unauthorizedRequestErrorBody"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "unauthorized_request_error_body",
+                                                                    "safeName": "unauthorized_request_error_body"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "UNAUTHORIZED_REQUEST_ERROR_BODY",
+                                                                    "safeName": "UNAUTHORIZED_REQUEST_ERROR_BODY"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "UnauthorizedRequestErrorBody",
+                                                                    "safeName": "UnauthorizedRequestErrorBody"
+                                                                }
+                                                            },
+                                                            "fernFilepath": {
+                                                                "allParts": [
+                                                                    {
+                                                                        "originalName": "errors",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "errors",
+                                                                            "safeName": "errors"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "errors",
+                                                                            "safeName": "errors"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "ERRORS",
+                                                                            "safeName": "ERRORS"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Errors",
+                                                                            "safeName": "Errors"
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "packagePath": [],
+                                                                "file": {
+                                                                    "originalName": "errors",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "errors",
+                                                                        "safeName": "errors"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "errors",
+                                                                        "safeName": "errors"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "ERRORS",
+                                                                        "safeName": "ERRORS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Errors",
+                                                                        "safeName": "Errors"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "displayName": null,
+                                                            "typeId": "type_errors:UnauthorizedRequestErrorBody"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "string",
+                                                                    "string": {
+                                                                        "original": "message"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "message"
+                                                        },
+                                                        "propertyAccess": null
+                                                    }
+                                                ]
+                                            },
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "UnauthorizedRequestErrorBody",
+                                                    "camelCase": {
+                                                        "unsafeName": "unauthorizedRequestErrorBody",
+                                                        "safeName": "unauthorizedRequestErrorBody"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "unauthorized_request_error_body",
+                                                        "safeName": "unauthorized_request_error_body"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "UNAUTHORIZED_REQUEST_ERROR_BODY",
+                                                        "safeName": "UNAUTHORIZED_REQUEST_ERROR_BODY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "UnauthorizedRequestErrorBody",
+                                                        "safeName": "UnauthorizedRequestErrorBody"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [
+                                                        {
+                                                            "originalName": "errors",
+                                                            "camelCase": {
+                                                                "unsafeName": "errors",
+                                                                "safeName": "errors"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "errors",
+                                                                "safeName": "errors"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "ERRORS",
+                                                                "safeName": "ERRORS"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Errors",
+                                                                "safeName": "Errors"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "packagePath": [],
+                                                    "file": {
+                                                        "originalName": "errors",
+                                                        "camelCase": {
+                                                            "unsafeName": "errors",
+                                                            "safeName": "errors"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "errors",
+                                                            "safeName": "errors"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "ERRORS",
+                                                            "safeName": "ERRORS"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Errors",
+                                                            "safeName": "Errors"
+                                                        }
+                                                    }
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_errors:UnauthorizedRequestErrorBody"
+                                            }
+                                        },
+                                        "jsonExample": {
+                                            "message": "message"
+                                        }
+                                    },
+                                    "error": {
+                                        "name": {
+                                            "originalName": "UnauthorizedRequest",
+                                            "camelCase": {
+                                                "unsafeName": "unauthorizedRequest",
+                                                "safeName": "unauthorizedRequest"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "unauthorized_request",
+                                                "safeName": "unauthorized_request"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "UNAUTHORIZED_REQUEST",
+                                                "safeName": "UNAUTHORIZED_REQUEST"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "UnauthorizedRequest",
+                                                "safeName": "UnauthorizedRequest"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "errors",
+                                                    "camelCase": {
+                                                        "unsafeName": "errors",
+                                                        "safeName": "errors"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "errors",
+                                                        "safeName": "errors"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "ERRORS",
+                                                        "safeName": "ERRORS"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Errors",
+                                                        "safeName": "Errors"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [],
+                                            "file": {
+                                                "originalName": "errors",
+                                                "camelCase": {
+                                                    "unsafeName": "errors",
+                                                    "safeName": "errors"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "errors",
+                                                    "safeName": "errors"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "ERRORS",
+                                                    "safeName": "ERRORS"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Errors",
+                                                    "safeName": "Errors"
+                                                }
+                                            }
+                                        },
+                                        "errorId": "error_errors:UnauthorizedRequest"
+                                    }
+                                },
+                                "docs": null
+                            }
+                        },
+                        {
+                            "example": {
+                                "id": "6989d55e",
+                                "url": "/custom-auth",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "unknown",
+                                        "unknown": {
+                                            "key": "value"
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "key": "value"
+                                    }
+                                },
+                                "response": {
+                                    "type": "error",
+                                    "body": null,
+                                    "error": {
+                                        "name": {
+                                            "originalName": "BadRequest",
+                                            "camelCase": {
+                                                "unsafeName": "badRequest",
+                                                "safeName": "badRequest"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "bad_request",
+                                                "safeName": "bad_request"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "BAD_REQUEST",
+                                                "safeName": "BAD_REQUEST"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "BadRequest",
+                                                "safeName": "BadRequest"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "errors",
+                                                    "camelCase": {
+                                                        "unsafeName": "errors",
+                                                        "safeName": "errors"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "errors",
+                                                        "safeName": "errors"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "ERRORS",
+                                                        "safeName": "ERRORS"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Errors",
+                                                        "safeName": "Errors"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [],
+                                            "file": {
+                                                "originalName": "errors",
+                                                "camelCase": {
+                                                    "unsafeName": "errors",
+                                                    "safeName": "errors"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "errors",
+                                                    "safeName": "errors"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "ERRORS",
+                                                    "safeName": "ERRORS"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Errors",
+                                                    "safeName": "Errors"
+                                                }
+                                            }
+                                        },
+                                        "errorId": "error_errors:BadRequest"
                                     }
                                 },
                                 "docs": null

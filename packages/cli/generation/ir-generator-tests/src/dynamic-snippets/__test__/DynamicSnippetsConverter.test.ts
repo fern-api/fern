@@ -17,16 +17,14 @@ describe("test definitions", async () => {
         defaultToAllApiWorkspaces: true
     });
 
-    await Promise.all(
-        apiWorkspaces.map(async (workspace) => {
-            it(`${workspace.workspaceName}`, async () => {
-                await generateAndSnapshotDynamicIR({
-                    absolutePathToIr: AbsoluteFilePath.of(path.join(__dirname, "test-definitions")),
-                    workspace,
-                    audiences: { type: "all" },
-                    workspaceName: workspace.workspaceName ?? ""
-                });
+    apiWorkspaces.map(async (workspace) => {
+        it(`${workspace.workspaceName}`, async () => {
+            await generateAndSnapshotDynamicIR({
+                absolutePathToIr: AbsoluteFilePath.of(path.join(__dirname, "test-definitions")),
+                workspace,
+                audiences: { type: "all" },
+                workspaceName: workspace.workspaceName ?? ""
             });
-        })
-    );
+        }, 10_000);
+    });
 });

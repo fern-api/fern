@@ -87,8 +87,8 @@ describe("fdr", async () => {
                 context: createMockTaskContext()
             });
 
-            it(workspace.workspaceName ?? "", () => {
-                expect(JSON.stringify(fdr, undefined, 2)).toMatchFileSnapshot(
+            it(workspace.workspaceName ?? "", async () => {
+                await expect(JSON.stringify(fdr, undefined, 2)).toMatchFileSnapshot(
                     `./__snapshots__/fdr/${
                         workspace.workspaceName ?? workspace.absoluteFilePath.split("/").reverse()[1]
                     }.json`

@@ -1,7 +1,9 @@
 import { assertNever } from "@fern-api/core-utils";
 import {
     AuthScheme,
+    ErrorDeclaration,
     ExampleEndpointCall,
+    ExampleEndpointErrorResponse,
     ExampleRequestBody,
     ExampleResponse,
     ExampleTypeReference,
@@ -17,6 +19,7 @@ import {
     DependencyType,
     ExportedFilePath,
     getExampleEndpointCalls,
+    getExampleEndpointCallsForTests,
     getParameterNameForRootExamplePathParameter,
     getParameterNameForRootPathParameter,
     getTextOfTsNode,
@@ -186,13 +189,25 @@ export class JestTestGenerator {
     }
 
     private addDependencies(): void {
-        this.dependencyManager.addDependency("jest", "^29.7.0", { type: DependencyType.DEV });
-        this.dependencyManager.addDependency("@jest/globals", "^29.7.0", { type: DependencyType.DEV });
-        this.dependencyManager.addDependency("@types/jest", "^29.5.14", { type: DependencyType.DEV });
-        this.dependencyManager.addDependency("ts-jest", "^29.3.4", { type: DependencyType.DEV });
-        this.dependencyManager.addDependency("jest-environment-jsdom", "^29.7.0", { type: DependencyType.DEV });
+        this.dependencyManager.addDependency("jest", "^29.7.0", {
+            type: DependencyType.DEV
+        });
+        this.dependencyManager.addDependency("@jest/globals", "^29.7.0", {
+            type: DependencyType.DEV
+        });
+        this.dependencyManager.addDependency("@types/jest", "^29.5.14", {
+            type: DependencyType.DEV
+        });
+        this.dependencyManager.addDependency("ts-jest", "^29.3.4", {
+            type: DependencyType.DEV
+        });
+        this.dependencyManager.addDependency("jest-environment-jsdom", "^29.7.0", {
+            type: DependencyType.DEV
+        });
         if (this.generateWireTests) {
-            this.dependencyManager.addDependency("msw", "^2.8.4", { type: DependencyType.DEV });
+            this.dependencyManager.addDependency("msw", "^2.8.4", {
+                type: DependencyType.DEV
+            });
         }
     }
 
@@ -256,7 +271,9 @@ describe("test", () => {
     public createWireTestDirectory(): void {
         const wireTestPath = `${this.relativeTestPath}/wire`;
         this.rootDirectory.createDirectory(wireTestPath);
-        this.rootDirectory.createSourceFile(`${wireTestPath}/.gitkeep`, "", { overwrite: true });
+        this.rootDirectory.createSourceFile(`${wireTestPath}/.gitkeep`, "", {
+            overwrite: true
+        });
     }
 
     public getMockAuthFilepath(): ExportedFilePath {
@@ -325,7 +342,10 @@ describe("test", () => {
 
         const rawRequestBody = this.getRequestExample(example.request);
         const rawResponseBody = this.getResponseExample(example.response);
-        const responseStatusCode = getExampleResponseStatusCode(example.response);
+        const responseStatusCode = getExampleResponseStatusCode({
+            response: example.response,
+            ir: this.ir
+        });
 
         return code`
 export function mockAuth(server: MockServer) {
@@ -536,7 +556,9 @@ export function mockAuth(server: MockServer) {
             },
             this.relativeTestPath
         );
-        const refToClientType = context.sdkClientClass.getReferenceToClientClass({ isRoot: true });
+        const refToClientType = context.sdkClientClass.getReferenceToClientClass({
+            isRoot: true
+        });
 
         const baseOptions: Record<string, Code> = {};
         if (this.ir.variables.length > 0) {
@@ -586,7 +608,9 @@ export function mockAuth(server: MockServer) {
 
         const tests = service.endpoints
             .filter((e) => this.shouldBuildTest(e))
-            .map((endpoint) => this.buildTest(endpoint, serviceGenerator, context, refToClientType, baseOptions))
+            .map((endpoint) =>
+                this.buildEndpointTests(endpoint, serviceGenerator, context, refToClientType, baseOptions)
+            )
             .filter((test) => test != null);
 
         if (tests.length === 0) {
@@ -600,22 +624,56 @@ describe("${serviceName}", () => {
 `;
     }
 
-    private buildTest(
+    private buildEndpointTests(
         endpoint: HttpEndpoint,
         serviceGenerator: GeneratedSdkClientClass,
         context: SdkContext,
         importStatement: Reference,
         baseOptions: Record<string, Code>
-    ): Code | undefined {
-        const options: Record<string, Code> = { ...baseOptions };
-        const successfulExamples = getExampleEndpointCalls(endpoint).filter(
-            (example) => example.response.type === "ok"
-        );
-        const example = successfulExamples[0];
-        if (!example) {
-            return;
+    ): Code[] {
+        let examples = getExampleEndpointCallsForTests(endpoint);
+        if (this.neverThrowErrors) {
+            // remove error examples because we don't have time to implement them properly right now
+            examples = examples.filter((example) => example.response.type === "ok");
         }
+        if (examples.length === 0) {
+            return [];
+        }
+        const hasMultipleExamples = examples.length > 1;
 
+        return examples
+            .flatMap((example) =>
+                this.buildExampleTest({
+                    endpoint,
+                    example,
+                    hasMultipleExamples,
+                    context,
+                    serviceGenerator,
+                    importStatement,
+                    baseOptions
+                })
+            )
+            .filter((test) => test != null) as Code[];
+    }
+
+    private buildExampleTest({
+        endpoint,
+        example,
+        hasMultipleExamples,
+        serviceGenerator,
+        context,
+        importStatement,
+        baseOptions
+    }: {
+        endpoint: HttpEndpoint;
+        example: ExampleEndpointCall;
+        hasMultipleExamples: boolean;
+        serviceGenerator: GeneratedSdkClientClass;
+        context: SdkContext;
+        importStatement: Reference;
+        baseOptions: Record<string, Code>;
+    }): Code | undefined {
+        const options: Record<string, Code> = { ...baseOptions };
         const generatedEndpoint = serviceGenerator.getEndpoint({
             endpointId: endpoint.id,
             context
@@ -637,14 +695,16 @@ describe("${serviceName}", () => {
             return;
         }
 
-        if (example.response.type !== "ok") {
-            throw new Error("Only successful responses are supported");
-        }
-
         const rawRequestBody = this.getRequestExample(example.request);
         const rawResponseBody = this.getResponseExample(example.response);
-        const responseStatusCode = getExampleResponseStatusCode(example.response);
-        const expected = getExpectedResponseBody({
+        const responseStatusCode = getExampleResponseStatusCode({
+            response: example.response,
+            ir: this.ir
+        });
+
+        const willThrowError = responseStatusCode >= 400 && this.neverThrowErrors === false;
+
+        const expected = getExpected({
             response: example.response,
             context,
             neverThrowErrors: this.neverThrowErrors
@@ -712,7 +772,7 @@ describe("${serviceName}", () => {
         const paginationBlock =
             endpoint.pagination !== undefined
                 ? code`
-				const expected = ${expected}
+                const expected = ${expected}
                 const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
                 expect(${expectedName}.${paginationPropertyName}).toEqual(${pageName}.data);
                 ${
@@ -724,11 +784,16 @@ describe("${serviceName}", () => {
                         `
                         : ""
                 }
-				`
+                `
                 : "";
 
+        let testName = endpoint.name.originalName;
+        if (hasMultipleExamples) {
+            testName += ` (${example.name?.originalName ?? example.id})`;
+        }
+
         return code`
-    test("${endpoint.name.originalName}", async () => {
+    test("${testName}", async () => {
         const server = mockServerPool.createServer();${mockAuthSnippet ? mockAuthSnippet : ""}
         const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${literalOf(options)});
         ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
@@ -755,16 +820,21 @@ describe("${serviceName}", () => {
             }.build();
 
         ${
-            isHeadersResponse
-                ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+            willThrowError
+                ? code`
+            await expect(async () => {
+                return ${getTextOfTsNode(generatedExample.endpointInvocation)}
+            }).rejects.toThrow(${literalOf(expected)});`
+                : isHeadersResponse
+                  ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
         expect(headers).toBeInstanceOf(Headers);`
-                : code`
+                  : code`
                     ${
                         endpoint.pagination !== undefined
                             ? paginationBlock
                             : code`
-                        	const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
-                         	expect(response).toEqual(${expected});
+                            const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                            expect(response).toEqual(${expected});
                           `
                     }
                 `
@@ -780,7 +850,10 @@ describe("${serviceName}", () => {
     }
 
     private getPaginationPropertyName(pagination: Pagination, context: SdkContext): string {
-        return this.getName({ name: pagination.results.property.name.name, context });
+        return this.getName({
+            name: pagination.results.property.name.name,
+            context
+        });
     }
 
     private getName({ name, context }: { name: Name; context: SdkContext }): string {
@@ -819,7 +892,6 @@ describe("${serviceName}", () => {
             default:
                 assertNever(requestType);
         }
-
         const responseType = endpoint.response?.body?.type ?? "undefined";
         switch (responseType) {
             case "fileDownload":
@@ -893,6 +965,7 @@ describe("${serviceName}", () => {
                 if (!value.body) {
                     return undefined;
                 }
+
                 return createRawJsonExample(value.body);
             },
             _other: () => {
@@ -1038,17 +1111,26 @@ describe("${serviceName}", () => {
     }
 }
 
-function getExampleResponseStatusCode(response: ExampleResponse): number {
+function getExampleResponseStatusCode({
+    response,
+    ir
+}: {
+    response: ExampleResponse;
+    ir: IntermediateRepresentation;
+}): number {
     return response._visit({
         ok: () => 200,
-        error: () => 500,
+        error: (exampleError) => {
+            const error = getExampleErrorDeclarationOrThrow({ exampleError, ir });
+            return error.statusCode;
+        },
         _other: () => {
             throw new Error("Unsupported response type");
         }
     });
 }
 
-function getExpectedResponseBody({
+function getExpected({
     response,
     context,
     neverThrowErrors
@@ -1057,9 +1139,9 @@ function getExpectedResponseBody({
     context: SdkContext;
     neverThrowErrors: boolean;
 }): Code {
-    const result = response._visit({
+    return response._visit({
         ok: (response) => {
-            return response._visit({
+            const result = response._visit({
                 body: (value) => {
                     if (!value) {
                         return code`undefined`;
@@ -1079,21 +1161,47 @@ function getExpectedResponseBody({
                     throw new Error("Unsupported response type");
                 }
             });
+            if (neverThrowErrors) {
+                return code`{
+                    body: ${result},
+                    ok: true,
+                    headers: expect.any(Object),
+                    rawResponse: expect.any(Object),
+                }`;
+            }
+            return result;
         },
-        error: () => {
-            throw new Error("Error response not supported in wire tests");
+        error: (value) => {
+            const errorReference = context.sdkError
+                .getReferenceToError(value.error)
+                .getTypeNode({ isForSnippet: true });
+
+            const body = value.body
+                ? getTextOfTsNode(
+                      context.type.getGeneratedExample(value.body).build(context, {
+                          isForSnippet: true
+                      })
+                  )
+                : "";
+            const error = code`new ${getTextOfTsNode(errorReference)}(${body})`;
+            return error;
         },
         _other: () => {
             throw new Error("Unsupported response type");
         }
     });
-    if (neverThrowErrors) {
-        return code`{
-            body: ${result},
-            ok: true,
-            headers: expect.any(Object),
-            rawResponse: expect.any(Object),
-        }`;
+}
+
+function getExampleErrorDeclarationOrThrow({
+    exampleError,
+    ir
+}: {
+    exampleError: ExampleEndpointErrorResponse;
+    ir: IntermediateRepresentation;
+}): ErrorDeclaration {
+    const error = ir.errors[exampleError.error.errorId];
+    if (!error) {
+        throw new Error(`Error with ID ${exampleError.error.errorId} not found in IR`);
     }
-    return result;
+    return error;
 }

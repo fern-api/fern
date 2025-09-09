@@ -1,8 +1,9 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { assertNever, noop } from "@fern-api/core-utils";
+import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { assertNever, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractSwiftGeneratorCli, SwiftFile } from "@fern-api/swift-base";
+import { AbstractSwiftGeneratorCli } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
+import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
 import {
     AliasGenerator,
     DiscriminatedUnionGenerator,
@@ -22,6 +23,8 @@ import {
 } from "./generators";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
+import { convertIr } from "./utils/convertIr";
 
 export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -66,18 +69,67 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        this.generateRootFiles(context);
         await this.generateSourceFiles(context);
+        await this.generateRootFiles(context);
         await context.project.persist();
     }
 
-    private generateRootFiles(context: SdkGeneratorContext): void {
-        const files: SwiftFile[] = [];
-        const packageSwiftGenerator = new PackageSwiftGenerator({
+    private async generateRootFiles(context: SdkGeneratorContext): Promise<void> {
+        this.generatePackageSwiftFile(context);
+        await this.generateReadme(context);
+    }
+
+    private generatePackageSwiftFile(context: SdkGeneratorContext): void {
+        const generator = new PackageSwiftGenerator({
             sdkGeneratorContext: context
         });
-        files.push(packageSwiftGenerator.generate());
-        context.project.addRootFiles(...files);
+        const file = generator.generate();
+        context.project.addRootFiles(file);
+    }
+
+    private async generateReadme(context: SdkGeneratorContext): Promise<void> {
+        try {
+            const content = await context.generatorAgent.generateReadme({
+                context,
+                endpointSnippets: this.generateSnippets(context)
+            });
+            context.project.addRootFiles(new File("README.md", RelativeFilePath.of(""), content));
+        } catch (e) {
+            throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
+        }
+    }
+
+    private generateSnippets(context: SdkGeneratorContext) {
+        const endpointSnippets: FernGeneratorExec.Endpoint[] = [];
+        const dynamicIr = context.ir.dynamic;
+        if (!dynamicIr) {
+            throw new Error("Cannot generate dynamic snippets without dynamic IR");
+        }
+        const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
+            ir: convertIr(dynamicIr),
+            config: context.config
+        });
+        for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
+            const method = endpoint.location.method;
+            const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
+            for (const endpointExample of endpoint.examples ?? []) {
+                const generatedSnippet = dynamicSnippetsGenerator.generateSync(
+                    convertDynamicEndpointSnippetRequest(endpointExample)
+                );
+                endpointSnippets.push({
+                    exampleIdentifier: endpointExample.id,
+                    id: {
+                        method,
+                        path,
+                        identifierOverride: endpointId
+                    },
+                    snippet: FernGeneratorExec.EndpointSnippet.typescript({
+                        client: generatedSnippet.snippet
+                    })
+                });
+            }
+        }
+        return endpointSnippets;
     }
 
     private async generateSourceFiles(context: SdkGeneratorContext): Promise<void> {

@@ -4,7 +4,7 @@ import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { AliasTypeDeclaration, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import { generateRustTypeForTypeReference } from "../converters";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { isChronoType, isCollectionType, isDateTimeType, isUnknownType, isUuidType } from "../utils/primitiveTypeUtils";
+import { isChronoType, isCollectionType, isUnknownType, isUuidType } from "../utils/primitiveTypeUtils";
 
 export class AliasGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -32,7 +32,7 @@ export class AliasGenerator {
     }
 
     private getFilename(): string {
-        return this.typeDeclaration.name.name.snakeCase.unsafeName + ".rs";
+        return this.context.getUniqueFilenameForType(this.typeDeclaration);
     }
 
     private getFileDirectory(): RelativeFilePath {
@@ -65,7 +65,8 @@ export class AliasGenerator {
         // Add imports for custom named types FIRST
         const customTypes = this.getCustomTypesUsedInAlias();
         customTypes.forEach((typeName) => {
-            const moduleNameEscaped = this.context.escapeRustKeyword(typeName.snakeCase.unsafeName);
+            const modulePath = this.context.getModulePathForType(typeName.snakeCase.unsafeName);
+            const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
             writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
         });
 
@@ -107,12 +108,8 @@ export class AliasGenerator {
         const derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
         attributes.push(Attribute.derive(derives));
 
-        // Add additional serde attributes for special types
-        const innerType = this.aliasTypeDeclaration.aliasOf;
-        if (isDateTimeType(innerType)) {
-            // For datetime newtypes, we might want custom serialization
-            attributes.push(Attribute.serde.with("chrono::serde::ts_seconds"));
-        }
+        // DateTime aliases will use default RFC 3339 string serialization
+        // No special serde handling needed for datetime aliases
 
         return attributes;
     }

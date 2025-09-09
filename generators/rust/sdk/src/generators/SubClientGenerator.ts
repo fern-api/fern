@@ -1,16 +1,16 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { rust, UseStatement } from "@fern-api/rust-codegen";
-import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
+import { generateRustTypeForTypeReference, isDateTimeType } from "@fern-api/rust-model";
 
 import {
-    ApiAuth,
     CursorPagination,
     HttpEndpoint,
     HttpService,
     OffsetPagination,
     Pagination,
     PrimitiveTypeV1,
+    QueryParameter,
     ResponseProperty,
     Subpackage,
     TypeReference
@@ -29,13 +29,11 @@ export class SubClientGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly subpackage: Subpackage;
     private readonly service?: HttpService;
-    private readonly auth: ApiAuth;
 
     constructor(context: SdkGeneratorContext, subpackage: Subpackage) {
         this.context = context;
         this.subpackage = subpackage;
         this.service = subpackage.service ? this.context.getHttpServiceOrThrow(subpackage.service) : undefined;
-        this.auth = context.ir.auth;
     }
 
     // =============================================================================
@@ -43,7 +41,8 @@ export class SubClientGenerator {
     // =============================================================================
 
     public generate(): RustFile {
-        const filename = `${this.subpackage.name.snakeCase.safeName}.rs`;
+        // Use centralized method to create unique filenames to prevent collisions
+        const filename = this.context.getUniqueFilenameForSubpackage(this.subpackage);
         const endpoints = this.service?.endpoints || [];
 
         const rustClient = rust.client({
@@ -57,7 +56,6 @@ export class SubClientGenerator {
             useStatements: this.generateImports(),
             rawDeclarations: [rustClient.toString()]
         });
-
         return new RustFile({
             filename,
             directory: RelativeFilePath.of("src/client"),
@@ -70,7 +68,8 @@ export class SubClientGenerator {
     // =============================================================================
 
     private get subClientName(): string {
-        return this.subpackage.name.pascalCase.safeName + "Client";
+        // Use centralized method to create unique client names to prevent collisions
+        return this.context.getUniqueClientNameForSubpackage(this.subpackage);
     }
 
     private generateImports(): UseStatement[] {
@@ -80,7 +79,7 @@ export class SubClientGenerator {
         const imports = [
             new UseStatement({
                 path: "crate",
-                items: ["ClientConfig", "ClientError", "HttpClient", "RequestOptions"]
+                items: ["ClientConfig", "ApiError", "HttpClient", "RequestOptions"]
             }),
             new UseStatement({
                 path: "reqwest",
@@ -133,7 +132,7 @@ export class SubClientGenerator {
 
     private generateConstructor(): rust.Client.SimpleMethod {
         const selfType = rust.Type.reference(rust.reference({ name: "Self" }));
-        const errorType = rust.Type.reference(rust.reference({ name: "ClientError" }));
+        const errorType = rust.Type.reference(rust.reference({ name: "ApiError" }));
         const returnType = rust.Type.result(selfType, errorType);
 
         // Use simple parameter signature with just config
@@ -149,6 +148,26 @@ export class SubClientGenerator {
             isAsync: false,
             body: constructorBody
         };
+    }
+
+    // =============================================================================
+    // CAPABILITY DETECTION
+    // =============================================================================
+
+    private hasTypes(context: SdkGeneratorContext): boolean {
+        return Object.keys(context.ir.types).length > 0;
+    }
+
+    private hasPaginatedEndpoints(): boolean {
+        const endpoints = this.service?.endpoints || [];
+        return endpoints.some((endpoint) => endpoint.pagination != null);
+    }
+
+    private hasHashMapInQueryParams(): boolean {
+        const endpoints = this.service?.endpoints || [];
+        return endpoints.some((endpoint) =>
+            endpoint.queryParameters.some((queryParam) => this.isCollectionType(queryParam.valueType))
+        );
     }
 
     // =============================================================================
@@ -177,11 +196,10 @@ export class SubClientGenerator {
         const httpMethod = this.getHttpMethod(endpoint);
         const pathExpression = this.getPathExpression(endpoint);
         const requestBody = this.getRequestBody(endpoint, params);
-        // Remove this line as we're now handling query params separately
 
         const returnType = rust.Type.result(
             this.getReturnType(endpoint),
-            rust.Type.reference(rust.reference({ name: "ClientError" }))
+            rust.Type.reference(rust.reference({ name: "ApiError" }))
         );
 
         return {
@@ -250,10 +268,13 @@ export class SubClientGenerator {
 
     private addQueryParameters(endpoint: HttpEndpoint, params: EndpointParameter[]): void {
         endpoint.queryParameters.forEach((queryParam) => {
+            // Check if the type is already optional from the IR
+            const isAlreadyOptional = this.isOptionalContainerType(queryParam.valueType);
+
             params.push({
                 name: queryParam.name.name.snakeCase.safeName,
                 type: generateRustTypeForTypeReference(queryParam.valueType),
-                optional: true,
+                optional: !isAlreadyOptional, // Only wrap in Option if not already optional
                 isRef: false
             });
         });
@@ -285,57 +306,188 @@ export class SubClientGenerator {
     }
 
     // =============================================================================
-    // TYPE AND REFERENCE UTILITIES
+    // QUERY PARAMETER BUILDING
     // =============================================================================
 
-    private shouldPassByReference(typeRef: TypeReference): boolean {
-        return TypeReference._visit(typeRef, {
-            primitive: (primitiveType) => {
-                return PrimitiveTypeV1._visit(primitiveType.v1, {
-                    string: () => true,
-                    boolean: () => false,
-                    integer: () => false,
-                    uint: () => false,
-                    uint64: () => false,
-                    long: () => false,
-                    float: () => false,
-                    double: () => false,
-                    bigInteger: () => true, // BigInt is large, pass by reference
-                    date: () => true,
-                    dateTime: () => true,
-                    base64: () => true, // Base64 strings are typically large
-                    uuid: () => true,
-                    _other: () => true
-                });
-            },
-            named: () => true, // User-defined types usually passed by reference
-            container: () => true, // Collections passed by reference
-            unknown: () => true,
-            _other: () => true
-        });
-    }
-
-    private getReturnType(endpoint: HttpEndpoint): rust.Type {
-        if (endpoint.response?.body) {
-            return endpoint.response.body._visit({
-                json: (jsonResponse) => {
-                    if (jsonResponse.responseBodyType) {
-                        return generateRustTypeForTypeReference(jsonResponse.responseBodyType);
-                    }
-                    return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
-                },
-                fileDownload: () => rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8)),
-                text: () => rust.Type.primitive(rust.PrimitiveType.String),
-                bytes: () => rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8)),
-                streaming: () => {
-                    return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
-                },
-                streamParameter: () => rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" })),
-                _other: () => rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }))
-            });
+    private buildQueryParameters(endpoint: HttpEndpoint): string {
+        const queryParams = endpoint.queryParameters;
+        if (queryParams.length === 0) {
+            return "None";
         }
 
-        return rust.Type.tuple([]);
+        // Check if this endpoint would benefit from enhanced query parameter handling
+        const shouldUseEnhancedBuilder = this.shouldUseEnhancedQueryBuilder(endpoint);
+
+        if (shouldUseEnhancedBuilder) {
+            return this.buildEnhancedQueryParameters(endpoint);
+        }
+
+        return this.buildQueryParameterStatements(queryParams);
+    }
+
+    private buildQueryParametersWithoutPagination(endpoint: HttpEndpoint, paginationConfig: Pagination): string {
+        const queryParams = endpoint.queryParameters;
+        if (queryParams.length === 0) {
+            return "None";
+        }
+
+        // Get pagination param names to exclude
+        const paginationParamNames = this.extractPaginationParameterNames(paginationConfig);
+
+        // Filter out pagination parameters
+        const filteredParams = queryParams.filter((param) => !paginationParamNames.has(param.name.wireValue));
+
+        if (filteredParams.length === 0) {
+            return "None";
+        }
+
+        return this.buildQueryParameterStatements(filteredParams);
+    }
+
+    private buildQueryParameterStatements(queryParams: QueryParameter[]): string {
+        const queryParamStatements = queryParams.map((queryParam) => {
+            const paramName = queryParam.name.name.snakeCase.safeName;
+            const wireValue = queryParam.name.wireValue;
+            const pattern = `Some(value)`;
+
+            // Handle different types properly for query parameters
+            let valueExpression: string;
+            if (this.isStringType(queryParam.valueType)) {
+                valueExpression = "value.clone()";
+            } else if (this.isDateTimeTypeRecursive(queryParam.valueType)) {
+                valueExpression = "value.to_rfc3339()";
+            } else if (this.isComplexType(queryParam.valueType)) {
+                valueExpression = "serde_json::to_string(&value).unwrap_or_default()";
+            } else {
+                valueExpression = "value.to_string()";
+            }
+
+            return `if let ${pattern} = ${paramName} {
+                query_params.push(("${wireValue}".to_string(), ${valueExpression}));
+            }`;
+        });
+
+        return `{
+            let mut query_params = Vec::new();
+            ${queryParamStatements.join("\n            ")}
+            Some(query_params)
+        }`;
+    }
+
+    private extractPaginationParameterNames(paginationConfig: Pagination): Set<string> {
+        const paginationParamNames = new Set<string>();
+        if (paginationConfig) {
+            paginationConfig._visit({
+                cursor: (cursor) => {
+                    cursor.page.property._visit({
+                        query: (query) => {
+                            paginationParamNames.add(query.name.wireValue);
+                        },
+                        body: (body) => {
+                            paginationParamNames.add(body.name.wireValue);
+                        },
+                        _other: () => {
+                            /* no-op */
+                        }
+                    });
+                },
+                offset: (offset) => {
+                    offset.page.property._visit({
+                        query: (query) => {
+                            paginationParamNames.add(query.name.wireValue);
+                        },
+                        body: (body) => {
+                            paginationParamNames.add(body.name.wireValue);
+                        },
+                        _other: () => {
+                            /* no-op */
+                        }
+                    });
+                    if (offset.step) {
+                        offset.step.property._visit({
+                            query: (query) => {
+                                paginationParamNames.add(query.name.wireValue);
+                            },
+                            body: (body) => {
+                                paginationParamNames.add(body.name.wireValue);
+                            },
+                            _other: () => {
+                                /* no-op */
+                            }
+                        });
+                    }
+                },
+                custom: () => {
+                    /* no-op */
+                },
+                _other: () => {
+                    /* no-op */
+                }
+            });
+        }
+        return paginationParamNames;
+    }
+
+    private shouldUseEnhancedQueryBuilder(endpoint: HttpEndpoint): boolean {
+        const queryParams = endpoint.queryParameters;
+
+        // Use enhanced builder if:
+        // 1. There's a parameter named "query" (structured query string)
+        // 2. There are many query parameters (>5) suggesting complex filtering
+        // 3. There's a mix of sort parameters (sortBy, sortOrder) indicating advanced querying
+        return (
+            queryParams.some(
+                (param) =>
+                    param.name.wireValue === "query" || // Structured query parameter
+                    param.name.wireValue === "filter" || // Generic filter parameter
+                    param.name.wireValue.includes("sort") // Sort-related parameters
+            ) || queryParams.length > 5
+        ); // Many parameters suggest complex usage
+    }
+
+    private buildEnhancedQueryParameters(endpoint: HttpEndpoint): string {
+        const queryParams = endpoint.queryParameters;
+        const statements: string[] = [];
+
+        queryParams.forEach((param) => {
+            const paramName = param.name.name.snakeCase.safeName;
+            const wireValue = param.name.wireValue;
+            const pattern = `Some(value)`;
+
+            if (wireValue === "query" && this.isStringType(param.valueType)) {
+                // Handle structured query strings with fallback
+                statements.push(`
+            if let ${pattern} = ${paramName} {
+                // Try to parse as structured query, fall back to simple if it fails
+                if let Err(_) = query_builder.add_structured_query(&value) {
+                    query_builder.add_simple("${wireValue}", &value);
+                }
+            }`);
+            } else {
+                // Handle regular parameters
+                let valueExpression: string;
+                if (this.isStringType(param.valueType)) {
+                    valueExpression = "&value";
+                } else if (this.isDateTimeTypeRecursive(param.valueType)) {
+                    valueExpression = "&value.to_rfc3339()";
+                } else if (this.isComplexType(param.valueType)) {
+                    valueExpression = "&serde_json::to_string(&value).unwrap_or_default()";
+                } else {
+                    valueExpression = "&value.to_string()";
+                }
+
+                statements.push(`
+            if let ${pattern} = ${paramName} {
+                query_builder.add_simple("${wireValue}", ${valueExpression});
+            }`);
+            }
+        });
+
+        return `{
+            let mut query_builder = crate::QueryParameterBuilder::new();${statements.join("")}
+            let params = query_builder.build();
+            if params.is_empty() { None } else { Some(params) }
+        }`;
     }
 
     // =============================================================================
@@ -407,123 +559,158 @@ export class SubClientGenerator {
         return "None";
     }
 
-    private buildQueryParameters(endpoint: HttpEndpoint): string {
-        const queryParams = endpoint.queryParameters;
-        if (queryParams.length === 0) {
-            return "None";
-        }
-
-        // Generate code to build Vec<(String, String)> with query parameters
-        const queryParamStatements = queryParams.map((queryParam) => {
-            const paramName = queryParam.name.name.snakeCase.safeName;
-            const wireValue = queryParam.name.wireValue;
-            const isOptionalType = this.isOptionalContainerType(queryParam.valueType);
-            const pattern = isOptionalType ? `Some(Some(value))` : `Some(value)`;
-            const valueExpression = this.isComplexType(queryParam.valueType)
-                ? "serde_json::to_string(&value).unwrap_or_default()"
-                : "value.to_string()";
-
-            return `if let ${pattern} = ${paramName} {
-                query_params.push(("${wireValue}".to_string(), ${valueExpression}));
-            }`;
-        });
-
-        return `{
-            let mut query_params = Vec::new();
-            ${queryParamStatements.join("\n            ")}
-            Some(query_params)
-        }`;
-    }
-
-    private buildQueryParametersWithoutPagination(endpoint: HttpEndpoint, paginationConfig: Pagination): string {
-        const queryParams = endpoint.queryParameters;
-        if (queryParams.length === 0) {
-            return "None";
-        }
-
-        // Get pagination param names to exclude
-        const paginationParamNames = new Set<string>();
-        if (paginationConfig) {
-            paginationConfig._visit({
-                cursor: (cursor) => {
-                    cursor.page.property._visit({
-                        query: (query) => {
-                            paginationParamNames.add(query.name.wireValue);
-                        },
-                        body: (body) => {
-                            paginationParamNames.add(body.name.wireValue);
-                        },
-                        _other: () => {
-                            /* no-op */
-                        }
-                    });
-                },
-                offset: (offset) => {
-                    offset.page.property._visit({
-                        query: (query) => {
-                            paginationParamNames.add(query.name.wireValue);
-                        },
-                        body: (body) => {
-                            paginationParamNames.add(body.name.wireValue);
-                        },
-                        _other: () => {
-                            /* no-op */
-                        }
-                    });
-                    if (offset.step) {
-                        offset.step.property._visit({
-                            query: (query) => {
-                                paginationParamNames.add(query.name.wireValue);
-                            },
-                            body: (body) => {
-                                paginationParamNames.add(body.name.wireValue);
-                            },
-                            _other: () => {
-                                /* no-op */
-                            }
-                        });
+    private getReturnType(endpoint: HttpEndpoint): rust.Type {
+        if (endpoint.response?.body) {
+            return endpoint.response.body._visit({
+                json: (jsonResponse) => {
+                    if (jsonResponse.responseBodyType) {
+                        return generateRustTypeForTypeReference(jsonResponse.responseBodyType);
                     }
+                    return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
                 },
-                custom: () => {
-                    /* no-op */
+                fileDownload: () => rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8)),
+                text: () => rust.Type.primitive(rust.PrimitiveType.String),
+                bytes: () => rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8)),
+                streaming: () => {
+                    return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
                 },
-                _other: () => {
-                    /* no-op */
-                }
+                streamParameter: () => rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" })),
+                _other: () => rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }))
             });
         }
 
-        // Filter out pagination parameters
-        const filteredParams = queryParams.filter((param) => !paginationParamNames.has(param.name.wireValue));
-
-        if (filteredParams.length === 0) {
-            return "None";
-        }
-
-        // Generate code to build Vec<(String, String)> with non-pagination query parameters
-        const queryParamStatements = filteredParams.map((queryParam) => {
-            const paramName = queryParam.name.name.snakeCase.safeName;
-            const wireValue = queryParam.name.wireValue;
-            const isOptionalType = this.isOptionalContainerType(queryParam.valueType);
-            const pattern = isOptionalType ? `Some(Some(value))` : `Some(value)`;
-            const valueExpression = this.isComplexType(queryParam.valueType)
-                ? "serde_json::to_string(&value).unwrap_or_default()"
-                : "value.to_string()";
-
-            return `if let ${pattern} = ${paramName} {
-                query_params.push(("${wireValue}".to_string(), ${valueExpression}));
-            }`;
-        });
-
-        return `{
-            let mut query_params = Vec::new();
-            ${queryParamStatements.join("\n            ")}
-            Some(query_params)
-        }`;
+        return rust.Type.tuple([]);
     }
 
     // =============================================================================
-    // PAGINATION METHODS
+    // TYPE UTILITIES
+    // =============================================================================
+
+    private shouldPassByReference(typeRef: TypeReference): boolean {
+        return TypeReference._visit(typeRef, {
+            primitive: (primitiveType) => {
+                return PrimitiveTypeV1._visit(primitiveType.v1, {
+                    string: () => true,
+                    boolean: () => false,
+                    integer: () => false,
+                    uint: () => false,
+                    uint64: () => false,
+                    long: () => false,
+                    float: () => false,
+                    double: () => false,
+                    bigInteger: () => true, // BigInt is large, pass by reference
+                    date: () => true,
+                    dateTime: () => true,
+                    base64: () => true, // Base64 strings are typically large
+                    uuid: () => true,
+                    _other: () => true
+                });
+            },
+            named: () => true, // User-defined types usually passed by reference
+            container: () => true, // Collections passed by reference
+            unknown: () => true,
+            _other: () => true
+        });
+    }
+
+    private isCollectionType(typeRef: TypeReference): boolean {
+        return TypeReference._visit(typeRef, {
+            primitive: () => false,
+            named: () => false,
+            container: (container) => {
+                return container._visit({
+                    map: () => true,
+                    set: () => true,
+                    list: () => false,
+                    optional: (innerType) => this.isCollectionType(innerType),
+                    nullable: (innerType) => this.isCollectionType(innerType),
+                    literal: () => false,
+                    _other: () => false
+                });
+            },
+            unknown: () => false,
+            _other: () => false
+        });
+    }
+
+    private isComplexType(typeRef: TypeReference): boolean {
+        return TypeReference._visit(typeRef, {
+            primitive: () => false,
+            named: () => true,
+            container: () => true,
+            unknown: () => true,
+            _other: () => true
+        });
+    }
+
+    private isStringType(typeRef: TypeReference): boolean {
+        return TypeReference._visit(typeRef, {
+            primitive: (primitive) => {
+                return primitive.v1 === PrimitiveTypeV1.String;
+            },
+            named: () => false,
+            container: (container) => {
+                // Check if it's an optional string
+                return container._visit({
+                    optional: (innerType) => this.isStringType(innerType),
+                    nullable: (innerType) => this.isStringType(innerType),
+                    list: () => false,
+                    set: () => false,
+                    map: () => false,
+                    literal: () => false,
+                    _other: () => false
+                });
+            },
+            unknown: () => false,
+            _other: () => false
+        });
+    }
+
+    private isDateTimeTypeRecursive(typeRef: TypeReference): boolean {
+        return TypeReference._visit(typeRef, {
+            primitive: (primitive) => {
+                return isDateTimeType(typeRef);
+            },
+            named: () => false,
+            container: (container) => {
+                // Check if it's an optional DateTime
+                return container._visit({
+                    optional: (innerType) => this.isDateTimeTypeRecursive(innerType),
+                    nullable: (innerType) => this.isDateTimeTypeRecursive(innerType),
+                    list: () => false,
+                    set: () => false,
+                    map: () => false,
+                    literal: () => false,
+                    _other: () => false
+                });
+            },
+            unknown: () => false,
+            _other: () => false
+        });
+    }
+
+    private isOptionalContainerType(typeRef: TypeReference): boolean {
+        return TypeReference._visit(typeRef, {
+            primitive: () => false,
+            named: () => false,
+            container: (container) => {
+                return container._visit({
+                    optional: () => true,
+                    nullable: () => true,
+                    list: () => false,
+                    set: () => false,
+                    map: () => false,
+                    literal: () => false,
+                    _other: () => false
+                });
+            },
+            unknown: () => false,
+            _other: () => false
+        });
+    }
+
+    // =============================================================================
+    // PAGINATION SUPPORT
     // =============================================================================
 
     private generatePaginatedMethods(endpoint: HttpEndpoint): rust.Client.SimpleMethod[] {
@@ -560,7 +747,7 @@ export class SubClientGenerator {
                     genericArgs: [itemType]
                 })
             ),
-            rust.Type.reference(rust.reference({ name: "ClientError" }))
+            rust.Type.reference(rust.reference({ name: "ApiError" }))
         );
 
         // Generate pagination logic based on pagination type
@@ -574,76 +761,6 @@ export class SubClientGenerator {
             body: paginationLogic
         };
     }
-
-    private hasTypes(context: SdkGeneratorContext): boolean {
-        return Object.keys(context.ir.types).length > 0;
-    }
-
-    private hasPaginatedEndpoints(): boolean {
-        const endpoints = this.service?.endpoints || [];
-        return endpoints.some((endpoint) => endpoint.pagination != null);
-    }
-
-    private hasHashMapInQueryParams(): boolean {
-        const endpoints = this.service?.endpoints || [];
-        return endpoints.some((endpoint) =>
-            endpoint.queryParameters.some((queryParam) => this.isCollectionType(queryParam.valueType))
-        );
-    }
-
-    private isCollectionType(typeRef: TypeReference): boolean {
-        return TypeReference._visit(typeRef, {
-            primitive: () => false,
-            named: () => false,
-            container: (container) => {
-                return container._visit({
-                    map: () => true,
-                    set: () => true,
-                    list: () => false,
-                    optional: (innerType) => this.isCollectionType(innerType),
-                    nullable: (innerType) => this.isCollectionType(innerType),
-                    literal: () => false,
-                    _other: () => false
-                });
-            },
-            unknown: () => false,
-            _other: () => false
-        });
-    }
-
-    private isComplexType(typeRef: TypeReference): boolean {
-        return TypeReference._visit(typeRef, {
-            primitive: () => false,
-            named: () => true,
-            container: () => true,
-            unknown: () => true,
-            _other: () => true
-        });
-    }
-
-    private isOptionalContainerType(typeRef: TypeReference): boolean {
-        return TypeReference._visit(typeRef, {
-            primitive: () => false,
-            named: () => false,
-            container: (container) => {
-                return container._visit({
-                    optional: () => true,
-                    nullable: () => true,
-                    list: () => false,
-                    set: () => false,
-                    map: () => false,
-                    literal: () => false,
-                    _other: () => false
-                });
-            },
-            unknown: () => false,
-            _other: () => false
-        });
-    }
-
-    // =============================================================================
-    // PAGINATION HELPER METHODS
-    // =============================================================================
 
     private generatePaginationLogic(
         endpoint: HttpEndpoint,
@@ -842,7 +959,7 @@ export class SubClientGenerator {
     }
 
     // =============================================================================
-    // CLOSURE HELPER METHODS
+    // PAGINATION UTILITIES
     // =============================================================================
 
     private generateCapturedVariableCloningForAsyncMove(params: EndpointParameter[]): string {
@@ -864,7 +981,7 @@ export class SubClientGenerator {
             .forEach((param) => {
                 const originalRef = param.name;
                 const asyncRef = `${param.name}_for_async`;
-                result = result.replace(new RegExp(`\\b${originalRef}\\b`, "g"), asyncRef);
+                result = result.replace(new RegExp(`\\\\b${originalRef}\\\\b`, "g"), asyncRef);
             });
 
         return result;
@@ -879,7 +996,7 @@ export class SubClientGenerator {
             .forEach((param) => {
                 const originalRef = param.name;
                 const asyncRef = `${param.name}_for_async`;
-                result = result.replace(new RegExp(`\\b${originalRef}\\b`, "g"), asyncRef);
+                result = result.replace(new RegExp(`\\\\b${originalRef}\\\\b`, "g"), asyncRef);
             });
 
         return result;

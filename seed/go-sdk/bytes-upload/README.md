@@ -24,6 +24,7 @@ func do() {
     client := client.NewClient()
     client.Service.Upload(
         context.TODO(),
+        nil,
     )
 }
 ```

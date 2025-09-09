@@ -10,7 +10,6 @@ import {
     extractNamedTypesFromTypeReference,
     getInnerTypeFromOptional,
     isCollectionType,
-    isDateTimeOnlyType,
     isDateTimeType,
     isOptionalType,
     isUnknownType,
@@ -44,7 +43,7 @@ export class StructGenerator {
     }
 
     private getFilename(): string {
-        return this.typeDeclaration.name.name.snakeCase.unsafeName + ".rs";
+        return this.context.getUniqueFilenameForType(this.typeDeclaration);
     }
 
     private getFileDirectory(): RelativeFilePath {
@@ -68,7 +67,8 @@ export class StructGenerator {
         // Add imports for custom named types referenced in fields FIRST
         const customTypes = this.getCustomTypesUsedInFields();
         customTypes.forEach((typeName) => {
-            const moduleNameEscaped = this.context.escapeRustKeyword(typeName.snakeCase.unsafeName);
+            const modulePath = this.context.getModulePathForType(typeName.snakeCase.unsafeName);
+            const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
             writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
         });
 
@@ -76,7 +76,8 @@ export class StructGenerator {
         if (this.objectTypeDeclaration.extends.length > 0) {
             this.objectTypeDeclaration.extends.forEach((parentType) => {
                 const parentTypeName = parentType.name.pascalCase.unsafeName;
-                const moduleNameEscaped = this.context.escapeRustKeyword(parentType.name.snakeCase.unsafeName);
+                const modulePath = this.context.getModulePathForType(parentType.name.snakeCase.unsafeName);
+                const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
                 writer.writeLine(`use crate::${moduleNameEscaped}::${parentTypeName};`);
             });
         }
@@ -191,23 +192,11 @@ export class StructGenerator {
             attributes.push(Attribute.serde.rename(property.name.wireValue));
         }
 
-        // Add special serde handling for datetime fields
-        const isOptional = isOptionalType(property.valueType);
-        const innerType = isOptional ? getInnerTypeFromOptional(property.valueType) : property.valueType;
-
-        if (isDateTimeOnlyType(innerType)) {
-            // DateTime<Utc> fields need chrono serializers
-            if (isOptional) {
-                // Optional DateTime<Utc> needs ts_seconds_option
-                attributes.push(Attribute.serde.with("chrono::serde::ts_seconds_option"));
-            } else {
-                // Non-optional DateTime<Utc> needs ts_seconds
-                attributes.push(Attribute.serde.with("chrono::serde::ts_seconds"));
-            }
-        }
-        // Note: NaiveDate (date type) fields don't need any special serializer
+        // DateTime fields will use default RFC 3339 string serialization
+        // No special serde handling needed for datetime fields
 
         // Add skip_serializing_if for optional fields to omit null values
+        const isOptional = isOptionalType(property.valueType);
         if (isOptional) {
             attributes.push(Attribute.serde.skipSerializingIf('"Option::is_none"'));
         }

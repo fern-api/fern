@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "1e021788",
+            "example_identifier": "6ad26e4d",
             "id": {
                 "method": "POST",
                 "path": "/",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "39e6831f",
+            "example_identifier": "a6f9156a",
             "id": {
                 "method": "GET",
                 "path": "/file/notification/{notificationId}",
@@ -79,7 +79,20 @@
             }
         },
         {
-            "example_identifier": "1a3e6a55",
+            "example_identifier": "8cc83a71",
+            "id": {
+                "method": "GET",
+                "path": "/file/{filename}",
+                "identifier_override": "endpoint_file/service.getFile"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            \"filename\",\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"X-File-API-Version\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            \"filename\",\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"X-File-API-Version\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "27f18200",
             "id": {
                 "method": "GET",
                 "path": "/file/{filename}",
@@ -170,7 +183,7 @@
             }
         },
         {
-            "example_identifier": "d2151a6e",
+            "example_identifier": "5934a200",
             "id": {
                 "method": "GET",
                 "path": "/movie/{movieId}",
@@ -196,7 +209,7 @@
             }
         },
         {
-            "example_identifier": "efc869c9",
+            "example_identifier": "eaefd913",
             "id": {
                 "method": "POST",
                 "path": "/movie",
@@ -235,7 +248,7 @@
             }
         },
         {
-            "example_identifier": "8ebb3aaf",
+            "example_identifier": "a78166c3",
             "id": {
                 "method": "POST",
                 "path": "/big-entity",
@@ -274,7 +287,7 @@
             }
         },
         {
-            "example_identifier": "79633759",
+            "example_identifier": "a888c024",
             "id": {
                 "method": "POST",
                 "path": "/refresh-token",

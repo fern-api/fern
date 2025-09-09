@@ -10,6 +10,12 @@ pub enum ApiError {
     Network(reqwest::Error),
     #[error("Serialization error: {0}")]
     Serialization(serde_json::Error),
+    #[error("Configuration error: {0}")]
+    Configuration(String),
+    #[error("Invalid header value")]
+    InvalidHeader,
+    #[error("Could not clone request for retry")]
+    RequestClone,
 }
 
 impl ApiError {

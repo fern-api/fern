@@ -25,3 +25,15 @@ await client.imdb.getMovie("movieId");
 ```
 
 
+```typescript
+import { SeedApiClient } from "@fern/imdb";
+
+const client = new SeedApiClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.imdb.getMovie("movieId");
+
+```
+
+

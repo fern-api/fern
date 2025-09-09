@@ -1,3 +1,68 @@
+- version: 3.0.0
+  changelogEntry:
+    - summary: |
+        The SDK generator now defaults to forward-compatible enums, providing resilience against new enum variants 
+        added on the backend. This is a breaking change that affects the structure of generated enum types.
+
+        To revert to the previous behavior with traditional Java enums, add the following configuration to your 
+        `generators.yml` file:
+        ```yaml
+        generators:
+          - name: fernapi/fern-java-sdk
+            config:
+              enable-forward-compatible-enums: false
+        ```
+      type: break
+    - summary: |
+        Forward-compatible enums are now enabled by default. Generated SDKs will no longer throw errors when 
+        encountering unknown enum variants, instead handling them gracefully with an UNKNOWN value. This is 
+        particularly important for:
+        - Mobile applications that cannot be easily updated
+        - Maintaining backward compatibility when backend adds new enum values
+        - Arrays of enum values where new variants previously caused client failures
+
+        With forward-compatible enums, the generated code changes from traditional Java enums to class-based 
+        enums that support unknown values through a visitor pattern.
+      type: feat
+  createdAt: "2025-09-09"
+  irVersion: 59
+
+- version: 2.43.3
+  changelogEntry:
+    - summary: |
+        Bugfix to make sure that the Java SDK compiles when header based versioning with defaults is enabled.
+      type: fix
+  createdAt: "2025-09-03"
+  irVersion: 59
+
+- version: 2.43.2
+  changelogEntry:
+    - summary: |
+        Fix custom license name extraction in build.gradle to display actual license names from LICENSE files
+        instead of toString() representations. The generator now reads the first line of custom LICENSE files
+        and displays it as the license name.
+      type: fix
+  createdAt: "2025-09-03"
+  irVersion: 59
+
+- version: 2.43.1
+  changelogEntry:
+    - summary: |
+        Fix Maven Central signing configuration to correctly use 3-parameter useInMemoryPgpKeys() method.
+        The signing block was incorrectly using MAVEN_SIGNATURE_SECRET_KEY as the key ID parameter
+        instead of MAVEN_SIGNATURE_KID, causing Sonatype Central validation failures during deployment.
+      type: fix
+  createdAt: "2025-09-02"
+  irVersion: 59
+
+- version: 2.43.0
+  changelogEntry:
+    - summary: |
+        Add support for the `apiName` and `disabledFeatures` readme config options.
+      type: feat
+  createdAt: "2025-08-29"
+  irVersion: 59
+
 - version: 2.42.1
   changelogEntry:
     - summary: |

@@ -280,10 +280,25 @@ function getOverridableRootHeaders({
                         );
                     }
                 } else {
-                    value = ts.factory.createPropertyAccessChain(
+                    const originalExpr = ts.factory.createPropertyAccessChain(
                         ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
                         ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                         getOptionKeyForHeader(header)
+                    );
+
+                    // Add nullish coalescing with this._options.{header}
+                    value = ts.factory.createBinaryExpression(
+                        originalExpr,
+                        ts.SyntaxKind.QuestionQuestionToken,
+                        ts.factory.createPropertyAccessChain(
+                            ts.factory.createPropertyAccessChain(
+                                ts.factory.createThis(),
+                                undefined,
+                                GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                            ts.factory.createIdentifier(getOptionKeyForHeader(header))
+                        )
                     );
                 }
 

@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -7,12 +7,12 @@ pub struct ServiceClient {
 }
 
 impl ServiceClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn get_resource(&self, resource_id: &String, options: Option<RequestOptions>) -> Result<Resource, ClientError> {
+    pub async fn get_resource(&self, resource_id: &String, options: Option<RequestOptions>) -> Result<Resource, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("/resource/{}", resource_id),
@@ -22,7 +22,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn list_resources(&self, page_limit: Option<i32>, before_date: Option<chrono::NaiveDate>, options: Option<RequestOptions>) -> Result<Vec<Resource>, ClientError> {
+    pub async fn list_resources(&self, page_limit: Option<i32>, before_date: Option<chrono::NaiveDate>, options: Option<RequestOptions>) -> Result<Vec<Resource>, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             "/resource",
@@ -33,7 +33,7 @@ impl ServiceClient {
                 query_params.push(("page_limit".to_string(), value.to_string()));
             }
             if let Some(value) = before_date {
-                query_params.push(("beforeDate".to_string(), value.to_string()));
+                query_params.push(("beforeDate".to_string(), value.to_rfc3339()));
             }
             Some(query_params)
         },

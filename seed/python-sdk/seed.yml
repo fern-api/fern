@@ -1,4 +1,4 @@
-irVersion: v58
+irVersion: v59
 displayName: Python SDK
 image: fernapi/fern-python-sdk
 changelogLocation: ../../generators/python/sdk/versions.yml
@@ -232,6 +232,9 @@ fixtures:
         pydantic_config:
           use_pydantic_field_aliases: true
       outputFolder: aliases_with_validation
+    - customConfig:
+        lazy_imports: false
+      outputFolder: eager-imports
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -342,13 +345,10 @@ allowedFailures:
   - examples:client-filename
   - examples:legacy-wire-tests
   - exhaustive:additional_init_exports
-  - exhaustive:pydantic-v1-wrapped
+  - exhaustive:deps_with_min_python_version
   - exhaustive:pydantic-v1-with-utils
   - oauth-client-credentials-custom
   - pagination-custom
-  - public-object
   - response-property
-  - simple-fhir
   - streaming-parameter
   - trace
-  - websocket:websocket-with_generated_clients

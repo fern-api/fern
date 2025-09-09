@@ -10409,6 +10409,7 @@ channel:
                 "body": "bytes",
                 "content-type": "audio/*",
                 "docs": "Transcribe an audio file",
+                "name": "ListenRequest",
                 "query-parameters": {
                   "callback": {
                     "docs": "URL to which we'll make the callback request",
@@ -11294,6 +11295,7 @@ service:
           version:
             type: optional<ListenRequestVersionOrString>
             docs: Version of an AI model to use
+        name: ListenRequest
         docs: Transcribe an audio file
       response:
         docs: Successful transcription

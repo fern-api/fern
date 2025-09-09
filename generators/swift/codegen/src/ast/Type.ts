@@ -435,6 +435,9 @@ export class Type extends AstNode {
     }
 
     public static optional(valueType: Type): Type {
+        if (valueType.internalType.type === "optional") {
+            return valueType;
+        }
         return new this({ type: "optional", valueType });
     }
 

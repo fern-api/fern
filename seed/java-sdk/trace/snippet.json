@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "33193996",
+            "example_identifier": "7a809c80",
             "id": {
                 "method": "POST",
                 "path": "/admin/store-test-submission-status-v2/{submissionId}",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "9b7b70f6",
+            "example_identifier": "7d982038",
             "id": {
                 "method": "POST",
                 "path": "/admin/store-workspace-submission-status-v2/{submissionId}",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "f4efab8",
+            "example_identifier": "8155f7c3",
             "id": {
                 "method": "POST",
                 "path": "/admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "3e1cb2d1",
+            "example_identifier": "196aaed1",
             "id": {
                 "method": "POST",
                 "path": "/admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
@@ -92,7 +92,7 @@
             }
         },
         {
-            "example_identifier": "f1baed56",
+            "example_identifier": "fc203467",
             "id": {
                 "method": "POST",
                 "path": "/admin/store-workspace-trace/submission/{submissionId}",
@@ -105,7 +105,7 @@
             }
         },
         {
-            "example_identifier": "3e8e25ba",
+            "example_identifier": "e7106e52",
             "id": {
                 "method": "POST",
                 "path": "/admin/store-workspace-trace-v2/submission/{submissionId}",
@@ -144,7 +144,7 @@
             }
         },
         {
-            "example_identifier": "c1293f06",
+            "example_identifier": "78d58f8e",
             "id": {
                 "method": "GET",
                 "path": "/migration-info/all",
@@ -157,7 +157,7 @@
             }
         },
         {
-            "example_identifier": "e6281a66",
+            "example_identifier": "31956b02",
             "id": {
                 "method": "POST",
                 "path": "/v2/playlist/{serviceParam}/create",
@@ -170,7 +170,7 @@
             }
         },
         {
-            "example_identifier": "513457ef",
+            "example_identifier": "9b58e8f3",
             "id": {
                 "method": "GET",
                 "path": "/v2/playlist/{serviceParam}/all",
@@ -183,7 +183,7 @@
             }
         },
         {
-            "example_identifier": "c5db3399",
+            "example_identifier": "11bcd5f5",
             "id": {
                 "method": "GET",
                 "path": "/v2/playlist/{serviceParam}/{playlistId}",
@@ -196,7 +196,46 @@
             }
         },
         {
-            "example_identifier": "56f82548",
+            "example_identifier": "a02dc709",
+            "id": {
+                "method": "GET",
+                "path": "/v2/playlist/{serviceParam}/{playlistId}",
+                "identifier_override": "endpoint_playlist.getPlaylist"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.playlist().getPlaylist(1, \"playlistId\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.playlist().getPlaylist(1, \"playlistId\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "560124c6",
+            "id": {
+                "method": "GET",
+                "path": "/v2/playlist/{serviceParam}/{playlistId}",
+                "identifier_override": "endpoint_playlist.getPlaylist"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.playlist().getPlaylist(1, \"playlistId\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.playlist().getPlaylist(1, \"playlistId\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "44610b90",
+            "id": {
+                "method": "PUT",
+                "path": "/v2/playlist/{serviceParam}/{playlistId}",
+                "identifier_override": "endpoint_playlist.updatePlaylist"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\nimport com.seed.trace.resources.playlist.types.UpdatePlaylistRequest;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.playlist().updatePlaylist(\n            1,\n            \"playlistId\",\n            Optional.of(\n                UpdatePlaylistRequest\n                    .builder()\n                    .name(\"name\")\n                    .problems(\n                        new ArrayList<String>(\n                            Arrays.asList(\"problems\", \"problems\")\n                        )\n                    )\n                    .build()\n            )\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\nimport com.seed.trace.resources.playlist.types.UpdatePlaylistRequest;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.playlist().updatePlaylist(\n            1,\n            \"playlistId\",\n            Optional.of(\n                UpdatePlaylistRequest\n                    .builder()\n                    .name(\"name\")\n                    .problems(\n                        new ArrayList<String>(\n                            Arrays.asList(\"problems\", \"problems\")\n                        )\n                    )\n                    .build()\n            )\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "e2f31be5",
             "id": {
                 "method": "PUT",
                 "path": "/v2/playlist/{serviceParam}/{playlistId}",
@@ -222,7 +261,7 @@
             }
         },
         {
-            "example_identifier": "25ed3be1",
+            "example_identifier": "3132e467",
             "id": {
                 "method": "POST",
                 "path": "/problem-crud/create",
@@ -235,7 +274,7 @@
             }
         },
         {
-            "example_identifier": "19531378",
+            "example_identifier": "6d1217bb",
             "id": {
                 "method": "POST",
                 "path": "/problem-crud/update/{problemId}",
@@ -261,7 +300,7 @@
             }
         },
         {
-            "example_identifier": "683e08de",
+            "example_identifier": "fb7a3343",
             "id": {
                 "method": "POST",
                 "path": "/problem-crud/default-starter-files",
@@ -274,7 +313,7 @@
             }
         },
         {
-            "example_identifier": "ef1d3f76",
+            "example_identifier": "dce8b168",
             "id": {
                 "method": "POST",
                 "path": "/sessions/create-session/{language}",
@@ -287,7 +326,7 @@
             }
         },
         {
-            "example_identifier": "7a44cf4c",
+            "example_identifier": "d8f37d46",
             "id": {
                 "method": "GET",
                 "path": "/sessions/{sessionId}",
@@ -313,7 +352,7 @@
             }
         },
         {
-            "example_identifier": "3a83398c",
+            "example_identifier": "5787513",
             "id": {
                 "method": "GET",
                 "path": "/sessions/execution-sessions-state",
@@ -352,7 +391,7 @@
             }
         },
         {
-            "example_identifier": "54b106a5",
+            "example_identifier": "e9c37829",
             "id": {
                 "method": "GET",
                 "path": "/problems-v2/lightweight-problem-info",
@@ -365,7 +404,7 @@
             }
         },
         {
-            "example_identifier": "9dd78ee1",
+            "example_identifier": "9aace0bb",
             "id": {
                 "method": "GET",
                 "path": "/problems-v2/problem-info",
@@ -378,7 +417,7 @@
             }
         },
         {
-            "example_identifier": "cd0d69f6",
+            "example_identifier": "643a54b5",
             "id": {
                 "method": "GET",
                 "path": "/problems-v2/problem-info/{problemId}",
@@ -391,7 +430,7 @@
             }
         },
         {
-            "example_identifier": "d99e2ba0",
+            "example_identifier": "69aaa17",
             "id": {
                 "method": "GET",
                 "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
@@ -404,7 +443,7 @@
             }
         },
         {
-            "example_identifier": "69acf92d",
+            "example_identifier": "863c6ca1",
             "id": {
                 "method": "GET",
                 "path": "/problems-v2/lightweight-problem-info",
@@ -417,7 +456,7 @@
             }
         },
         {
-            "example_identifier": "5cdcd5",
+            "example_identifier": "4a943941",
             "id": {
                 "method": "GET",
                 "path": "/problems-v2/problem-info",
@@ -430,7 +469,7 @@
             }
         },
         {
-            "example_identifier": "2c7651ce",
+            "example_identifier": "2815ce91",
             "id": {
                 "method": "GET",
                 "path": "/problems-v2/problem-info/{problemId}",
@@ -443,7 +482,7 @@
             }
         },
         {
-            "example_identifier": "5a643018",
+            "example_identifier": "39f94483",
             "id": {
                 "method": "GET",
                 "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",

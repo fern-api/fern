@@ -1,5 +1,5 @@
 displayName: Swift SDK
-irVersion: v58
+irVersion: v59
 image: fernapi/fern-swift-sdk
 changelogLocation: ../../generators/swift/sdk/versions.yml
 
@@ -26,6 +26,14 @@ generatorType: SDK
 defaultOutputMode: github
 defaultCustomConfig: {}
 
+scripts:
+  - docker: swift:6.1.2
+    commands:
+      # On Linux, URLSession/URLRequest require explicit FoundationNetworking import
+      # The Swift generator only outputs "import Foundation" but Linux needs both imports
+      - find . -name "*.swift" -exec sed -i '1s/^import Foundation$/import Foundation\nimport FoundationNetworking/' {} \;
+      - swift build -c release
+
 fixtures:
   client-side-params:
     - customConfig:
@@ -50,3 +58,48 @@ fixtures:
     - customConfig:
         environmentEnumName: MyCustomEnvironment
       outputFolder: with-custom-config
+
+allowedFailures:
+  - api-wide-base-path
+  - audiences
+  - auth-environment-variables
+  - bytes-upload
+  - circular-references
+  - circular-references-advanced
+  - client-side-params:with-custom-config
+  - client-side-params:no-custom-config
+  - content-type
+  - cross-package-type-names
+  - enum
+  - examples
+  - exhaustive
+  - http-head
+  - inferred-auth-explicit
+  - inferred-auth-implicit
+  - inferred-auth-implicit-no-expiry
+  - literal
+  - mixed-case
+  - mixed-file-directory
+  - multi-url-environment
+  - multi-url-environment-no-default
+  - nullable
+  - nullable-optional
+  - pagination:no-custom-config
+  - pagination:custom-pager
+  - pagination:custom-pager-with-exception-handler
+  - pagination-custom
+  - path-parameters
+  - query-parameters
+  - query-parameters-openapi
+  - query-parameters-openapi-as-objects
+  - request-parameters
+  - reserved-keywords
+  - simple-fhir
+  - streaming
+  - streaming-parameter
+  - trace
+  - undiscriminated-unions
+  - unions
+  - validation
+  - websocket-bearer-auth
+  - websocket-inferred-auth

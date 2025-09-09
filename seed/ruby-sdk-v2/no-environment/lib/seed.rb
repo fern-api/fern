@@ -31,3 +31,4 @@ require_relative "seed/internal/types/unknown"
 # Client Types
 require_relative "seed/client"
 require_relative "seed/dummy/client"
+require_relative "../README.md"

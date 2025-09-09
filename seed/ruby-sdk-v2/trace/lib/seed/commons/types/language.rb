@@ -8,7 +8,8 @@ module Seed
 
         JAVA = "JAVA"
         JAVASCRIPT = "JAVASCRIPT"
-        PYTHON = "PYTHON"end
+        PYTHON = "PYTHON"
+      end
     end
   end
 end

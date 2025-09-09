@@ -86,6 +86,7 @@ it.skip("converts to api reference node", async () => {
         context,
         new Map(),
         new Map(),
+        new Map(),
         NodeIdGenerator.init(),
         apiWorkspace
     ).get();

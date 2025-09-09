@@ -197,8 +197,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         moduleDeclarations.push(new ModuleDeclaration({ name: "api_client_builder", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "http_client", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "request_options", isPublic: true }));
-        moduleDeclarations.push(new ModuleDeclaration({ name: "client_error", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "pagination", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "query_parameter_builder", isPublic: true }));
 
         if (this.hasEnvironments(context)) {
             moduleDeclarations.push(new ModuleDeclaration({ name: "environment", isPublic: true }));
@@ -228,7 +228,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         useStatements.push(
             new UseStatement({
                 path: "client",
-                items: clientExports,
+                items: ["*"],
                 isPublic: true
             })
         );
@@ -259,8 +259,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                 isPublic: true
             })
         );
-        useStatements.push(new UseStatement({ path: "client_error", items: ["*"], isPublic: true }));
         useStatements.push(new UseStatement({ path: "pagination", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "query_parameter_builder", items: ["*"], isPublic: true }));
 
         return new Module({
             moduleDeclarations,
@@ -274,17 +274,27 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const useStatements: UseStatement[] = [];
         const rawDeclarations: string[] = [];
 
+        // Use a Set to track unique module names and prevent duplicates
+        const uniqueModuleNames = new Set<string>();
+
         for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
-            const rawModuleName = typeDeclaration.name.name.snakeCase.unsafeName;
+            // Use centralized method to get unique filename and extract module name from it
+            const filename = context.getUniqueFilenameForType(typeDeclaration);
+            const rawModuleName = filename.replace(".rs", ""); // Remove .rs extension
             const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
-            moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
-            useStatements.push(
-                new UseStatement({
-                    path: escapedModuleName,
-                    items: ["*"],
-                    isPublic: true
-                })
-            );
+
+            // Only add if we haven't seen this module name before
+            if (!uniqueModuleNames.has(escapedModuleName)) {
+                uniqueModuleNames.add(escapedModuleName);
+                moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
+                useStatements.push(
+                    new UseStatement({
+                        path: escapedModuleName,
+                        items: ["*"],
+                        isPublic: true
+                    })
+                );
+            }
         }
 
         return new Module({

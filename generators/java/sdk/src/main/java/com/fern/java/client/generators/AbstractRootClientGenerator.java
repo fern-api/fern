@@ -21,6 +21,7 @@ import com.fern.ir.model.auth.BasicAuthScheme;
 import com.fern.ir.model.auth.BearerAuthScheme;
 import com.fern.ir.model.auth.EnvironmentVariable;
 import com.fern.ir.model.auth.HeaderAuthScheme;
+import com.fern.ir.model.auth.InferredAuthScheme;
 import com.fern.ir.model.auth.OAuthClientCredentials;
 import com.fern.ir.model.auth.OAuthConfiguration;
 import com.fern.ir.model.auth.OAuthScheme;
@@ -692,6 +693,11 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         @Override
         public Void visitOauth(OAuthScheme oauth) {
             return oauth.getConfiguration().visit(new OAuthSchemeHandler());
+        }
+
+        @Override
+        public Void visitInferred(InferredAuthScheme inferred) {
+            throw new UnsupportedOperationException("Inferred auth schemes are not supported");
         }
 
         public class OAuthSchemeHandler implements OAuthConfiguration.Visitor<Void> {

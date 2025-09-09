@@ -2,6 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 
+import { SDKRequirements } from "../../requirements";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
 export declare namespace PackageSwiftGenerator {
@@ -22,7 +23,7 @@ export class PackageSwiftGenerator {
             filename: "Package.swift",
             directory: RelativeFilePath.of(""),
             contents: [
-                swift.comment({ content: "swift-tools-version: 5.7" }),
+                swift.comment({ content: `swift-tools-version: ${SDKRequirements.minSwiftVersion}` }),
                 swift.LineBreak.single(),
                 swift.Statement.import("PackageDescription"),
                 swift.LineBreak.single(),
@@ -33,7 +34,7 @@ export class PackageSwiftGenerator {
                         arguments_: [
                             swift.functionArgument({
                                 label: "name",
-                                value: swift.Expression.rawStringValue(this.sdkGeneratorContext.packageName)
+                                value: swift.Expression.stringLiteral(this.sdkGeneratorContext.packageName)
                             }),
                             swift.functionArgument({
                                 label: "platforms",
@@ -43,7 +44,9 @@ export class PackageSwiftGenerator {
                                             methodName: "iOS",
                                             arguments_: [
                                                 swift.functionArgument({
-                                                    value: swift.Expression.enumCaseShorthand("v15")
+                                                    value: swift.Expression.enumCaseShorthand(
+                                                        `v${SDKRequirements.minIOSVersion}`
+                                                    )
                                                 })
                                             ]
                                         }),
@@ -51,7 +54,9 @@ export class PackageSwiftGenerator {
                                             methodName: "macOS",
                                             arguments_: [
                                                 swift.functionArgument({
-                                                    value: swift.Expression.enumCaseShorthand("v12")
+                                                    value: swift.Expression.enumCaseShorthand(
+                                                        `v${SDKRequirements.minMacOSVersion}`
+                                                    )
                                                 })
                                             ]
                                         }),
@@ -59,7 +64,9 @@ export class PackageSwiftGenerator {
                                             methodName: "tvOS",
                                             arguments_: [
                                                 swift.functionArgument({
-                                                    value: swift.Expression.enumCaseShorthand("v15")
+                                                    value: swift.Expression.enumCaseShorthand(
+                                                        `v${SDKRequirements.minTVOSVersion}`
+                                                    )
                                                 })
                                             ]
                                         }),
@@ -67,7 +74,9 @@ export class PackageSwiftGenerator {
                                             methodName: "watchOS",
                                             arguments_: [
                                                 swift.functionArgument({
-                                                    value: swift.Expression.enumCaseShorthand("v8")
+                                                    value: swift.Expression.enumCaseShorthand(
+                                                        `v${SDKRequirements.minWatchOSVersion}`
+                                                    )
                                                 })
                                             ]
                                         })
@@ -84,7 +93,7 @@ export class PackageSwiftGenerator {
                                             arguments_: [
                                                 swift.functionArgument({
                                                     label: "name",
-                                                    value: swift.Expression.rawStringValue(
+                                                    value: swift.Expression.stringLiteral(
                                                         this.sdkGeneratorContext.libraryName
                                                     )
                                                 }),
@@ -92,7 +101,7 @@ export class PackageSwiftGenerator {
                                                     label: "targets",
                                                     value: swift.Expression.arrayLiteral({
                                                         elements: [
-                                                            swift.Expression.rawStringValue(
+                                                            swift.Expression.stringLiteral(
                                                                 this.sdkGeneratorContext.targetName
                                                             )
                                                         ]
@@ -120,13 +129,13 @@ export class PackageSwiftGenerator {
                                             arguments_: [
                                                 swift.functionArgument({
                                                     label: "name",
-                                                    value: swift.Expression.rawStringValue(
+                                                    value: swift.Expression.stringLiteral(
                                                         this.sdkGeneratorContext.targetName
                                                     )
                                                 }),
                                                 swift.functionArgument({
                                                     label: "path",
-                                                    value: swift.Expression.rawStringValue("Sources")
+                                                    value: swift.Expression.stringLiteral("Sources")
                                                 })
                                             ],
                                             multiline: true

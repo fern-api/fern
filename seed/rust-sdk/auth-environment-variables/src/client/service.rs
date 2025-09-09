@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 
 pub struct ServiceClient {
@@ -6,12 +6,12 @@ pub struct ServiceClient {
 }
 
 impl ServiceClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn get_with_api_key(&self, options: Option<RequestOptions>) -> Result<String, ClientError> {
+    pub async fn get_with_api_key(&self, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             "apiKey",
@@ -21,7 +21,7 @@ impl ServiceClient {
         ).await
     }
 
-    pub async fn get_with_header(&self, options: Option<RequestOptions>) -> Result<String, ClientError> {
+    pub async fn get_with_header(&self, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client.execute_request(
             Method::GET,
             "apiKeyInHeader",

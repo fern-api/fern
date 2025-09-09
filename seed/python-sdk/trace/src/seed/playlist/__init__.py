@@ -2,16 +2,51 @@
 
 # isort: skip_file
 
-from .types import (
-    Playlist,
-    PlaylistCreateRequest,
-    PlaylistId,
-    PlaylistIdNotFoundErrorBody,
-    PlaylistIdNotFoundErrorBody_PlaylistId,
-    ReservedKeywordEnum,
-    UpdatePlaylistRequest,
-)
-from .errors import PlaylistIdNotFoundError, UnauthorizedError
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .types import (
+        Playlist,
+        PlaylistCreateRequest,
+        PlaylistId,
+        PlaylistIdNotFoundErrorBody,
+        PlaylistIdNotFoundErrorBody_PlaylistId,
+        ReservedKeywordEnum,
+        UpdatePlaylistRequest,
+    )
+    from .errors import PlaylistIdNotFoundError, UnauthorizedError
+_dynamic_imports: typing.Dict[str, str] = {
+    "Playlist": ".types",
+    "PlaylistCreateRequest": ".types",
+    "PlaylistId": ".types",
+    "PlaylistIdNotFoundError": ".errors",
+    "PlaylistIdNotFoundErrorBody": ".types",
+    "PlaylistIdNotFoundErrorBody_PlaylistId": ".types",
+    "ReservedKeywordEnum": ".types",
+    "UnauthorizedError": ".errors",
+    "UpdatePlaylistRequest": ".types",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "Playlist",

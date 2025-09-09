@@ -79,7 +79,7 @@ export class RootClientGenerator {
         return [
             new UseStatement({
                 path: "crate",
-                items: ["ClientConfig", "ClientError"]
+                items: ["ClientConfig", "ApiError"]
             })
         ];
     }
@@ -123,7 +123,7 @@ export class RootClientGenerator {
 
         const configType = rust.Type.reference(rust.reference({ name: "ClientConfig" }));
         const selfType = rust.Type.reference(rust.reference({ name: "Self" }));
-        const errorType = rust.Type.reference(rust.reference({ name: "ClientError" }));
+        const errorType = rust.Type.reference(rust.reference({ name: "ApiError" }));
         const returnType = rust.Type.result(selfType, errorType);
 
         return {

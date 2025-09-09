@@ -51,7 +51,11 @@ function addSchemas({
         // HACKHACK: Skip self-referencing schemas. I'm not sure if this is the right way to do this.
         if (isRawAliasDefinition(typeDeclaration.schema)) {
             const aliasType = getTypeFromTypeReference(typeDeclaration.schema);
-            if (aliasType === (typeDeclaration.name ?? id) || aliasType === `optional<${typeDeclaration.name ?? id}>`) {
+            if (
+                aliasType === (typeDeclaration.name ?? id) ||
+                aliasType === `optional<${typeDeclaration.name ?? id}>` ||
+                aliasType === `optional<nullable<${typeDeclaration.name ?? id}>>`
+            ) {
                 continue;
             }
         }

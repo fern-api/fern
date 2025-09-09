@@ -433,8 +433,6 @@ function convertHeaders({
                         workspace
                     })
                 });
-            } else {
-                throw new Error(`Heder ${wireKey} does not exist`);
             }
         }
     }

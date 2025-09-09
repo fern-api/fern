@@ -1,6 +1,7 @@
 import { CodeBlock as CommonCodeBlock } from "@fern-api/browser-compatible-base-generator";
 import { noop } from "@fern-api/core-utils";
 import { AstNode, Writer } from "./core";
+import { LineBreak } from "./LineBreak";
 import { Statement } from "./Statement";
 
 export declare namespace CodeBlock {
@@ -30,7 +31,7 @@ export class CodeBlock extends AstNode {
         return new CodeBlock(noop);
     }
 
-    public static withStatements(statements: Statement[]): CodeBlock {
+    public static withStatements(statements: (Statement | LineBreak)[]): CodeBlock {
         return new CodeBlock((writer) => {
             statements.forEach((statement) => {
                 statement.write(writer);

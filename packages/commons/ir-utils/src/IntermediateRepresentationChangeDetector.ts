@@ -30,6 +30,7 @@ import {
     TypeDeclaration,
     TypeReference
 } from "@fern-api/ir-sdk";
+import { isMarkedUnstable } from "./utils/availabilityUtils";
 
 export namespace IntermediateRepresentationChangeDetector {
     export type Result = {
@@ -134,9 +135,16 @@ export class IntermediateRepresentationChangeDetector {
         to: Record<string, TypeDeclaration>;
     }): void {
         for (const [typeId, fromType] of Object.entries(from)) {
+            if (isMarkedUnstable(fromType.availability)) {
+                continue;
+            }
             const toType = to[typeId];
             if (!toType) {
                 this.errors.add(`Type "${typeId}" was removed.`);
+                continue;
+            }
+            if (isMarkedUnstable(toType.availability)) {
+                this.errors.add(`Type "${typeId}" was moved from stable to unstable availability status.`);
                 continue;
             }
             if (
@@ -215,9 +223,20 @@ export class IntermediateRepresentationChangeDetector {
         to: Record<string, HttpService>;
     }): void {
         for (const [serviceId, fromService] of Object.entries(from)) {
+            if (
+                isMarkedUnstable(fromService.availability) ||
+                (fromService.endpoints?.every((endpoint) => isMarkedUnstable(endpoint.availability)) ?? false)
+            ) {
+                continue;
+            }
+
             const toService = to[serviceId];
             if (!toService) {
                 this.errors.add(`Service "${serviceId}" was removed.`);
+                continue;
+            }
+            if (isMarkedUnstable(toService.availability)) {
+                this.errors.add(`Service "${serviceId}" was moved from stable to unstable availability status.`);
                 continue;
             }
             this.checkServiceBreakingChanges({
@@ -237,9 +256,16 @@ export class IntermediateRepresentationChangeDetector {
         const fromEndpoints = Object.fromEntries(from.endpoints.map((endpoint) => [endpoint.id, endpoint]));
         const toEndpoints = Object.fromEntries(to.endpoints.map((endpoint) => [endpoint.id, endpoint]));
         for (const [endpointId, fromEndpoint] of Object.entries(fromEndpoints)) {
+            if (isMarkedUnstable(fromEndpoint.availability)) {
+                continue;
+            }
             const toEndpoint = toEndpoints[endpointId];
             if (!toEndpoint) {
                 this.errors.add(`Endpoint "${endpointId}" was removed.`);
+                continue;
+            }
+            if (isMarkedUnstable(toEndpoint.availability)) {
+                this.errors.add(`Endpoint "${endpointId}" was moved from stable to unstable availability status.`);
                 continue;
             }
             this.checkEndpointBreakingChanges({ id: endpointId, from: fromEndpoint, to: toEndpoint });
@@ -599,6 +625,9 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private areTypeDeclarationsCompatible({ from, to }: { from: TypeDeclaration; to: TypeDeclaration }): boolean {
+        if (isMarkedUnstable(from.availability)) {
+            return true;
+        }
         return (
             this.areDeclaredTypeNamesCompatible({
                 from: from.name,

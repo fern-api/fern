@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -7,12 +7,12 @@ pub struct ProblemClient {
 }
 
 impl ProblemClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         let http_client = HttpClient::new(config)?;
         Ok(Self { http_client })
     }
 
-    pub async fn create_problem(&self, request: &CreateProblemRequest, options: Option<RequestOptions>) -> Result<CreateProblemResponse, ClientError> {
+    pub async fn create_problem(&self, request: &CreateProblemRequest, options: Option<RequestOptions>) -> Result<CreateProblemResponse, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/problem-crud/create",
@@ -22,7 +22,7 @@ impl ProblemClient {
         ).await
     }
 
-    pub async fn update_problem(&self, problem_id: &ProblemId, request: &CreateProblemRequest, options: Option<RequestOptions>) -> Result<UpdateProblemResponse, ClientError> {
+    pub async fn update_problem(&self, problem_id: &ProblemId, request: &CreateProblemRequest, options: Option<RequestOptions>) -> Result<UpdateProblemResponse, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             &format!("/problem-crud/update/{}", problem_id.0),
@@ -32,7 +32,7 @@ impl ProblemClient {
         ).await
     }
 
-    pub async fn delete_problem(&self, problem_id: &ProblemId, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn delete_problem(&self, problem_id: &ProblemId, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::DELETE,
             &format!("/problem-crud/delete/{}", problem_id.0),
@@ -42,7 +42,7 @@ impl ProblemClient {
         ).await
     }
 
-    pub async fn get_default_starter_files(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<GetDefaultStarterFilesResponse, ClientError> {
+    pub async fn get_default_starter_files(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<GetDefaultStarterFilesResponse, ApiError> {
         self.http_client.execute_request(
             Method::POST,
             "/problem-crud/default-starter-files",
