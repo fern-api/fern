@@ -176,9 +176,45 @@ export function precalculate(context: AbstractCsharpGeneratorContext<BaseCsharpC
         }
     }
 
+    nameRegistry.trackType(context.getRawClientClassReference());
+    nameRegistry.trackType(context.getRequestOptionsClassReference());
+    nameRegistry.trackType(context.getJsonRequestClassReference());
+    nameRegistry.trackType(context.getVersionClassReference());
+    
     // subpackages
     Object.entries(context.ir.subpackages).forEach(([_, subpackage]) => {
-      // context.getSubpackageClassReference(subpackage);
+      // generate the subpackage class reference and use canonicalization to ensure 
+      // that it doesn't conflict with any previously generated types or namespaces 
+      nameRegistry.canonicalizeName(context.getSubpackageClassReference(subpackage));
+      if(subpackage.service) {
+        const service = context.getHttpServiceOrThrow(subpackage.service);
+        for( const endpoint of service.endpoints) {
+
+          endpoint.sdkRequest?.shape._visit({
+            wrapper: (wrapper) => {
+              if(wrapper.wrapperName && subpackage.service) {
+                const requestWrapperReference = context.getRequestWrapperReference(subpackage.service, wrapper.wrapperName);
+                const canonicalizedRequestWrapperReference = nameRegistry.canonicalizeName(requestWrapperReference);
+                console.log(`REQWRAP1: for ${subpackage.service}::${endpoint.name.originalName} -> ${requestWrapperReference.namespace}.${requestWrapperReference.name} => ${canonicalizedRequestWrapperReference.namespace}.${canonicalizedRequestWrapperReference.name}`)
+              }
+            },
+            justRequestBody: (value) => {
+              // console.log(`REQBODY: for ${subpackage.service}::${endpoint.name.originalName}::${value.requestBodyType.type}`)
+            },
+            _other: (value) => {
+              // console.log(`OTHER: for ${subpackage.service}::${endpoint.name.originalName}::${value.type}`)
+            }
+          })
+
+          const requestWrapperReference = context.getRequestWrapperReference(subpackage.service, endpoint.name);
+          const canonicalizedRequestWrapperReference = nameRegistry.canonicalizeName(requestWrapperReference);
+          console.log(`REQWRAP: for ${subpackage.service}::${endpoint.name.originalName} -> ${requestWrapperReference.namespace}.${requestWrapperReference.name} => ${canonicalizedRequestWrapperReference.namespace}.${canonicalizedRequestWrapperReference.name}`)
+          // nameRegistry.canonicalizeName(context.getRequestWrapperReference(subpackage.service, endpoint.name))
+        }
+      }
+    
+
+    
     });
     freezeClassReferences();
 }

@@ -1,3 +1,4 @@
+import { fail } from "node:assert";
 import { AbstractFormatter, GeneratorNotificationService, NopFormatter } from "@fern-api/base-generator";
 import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-base";
 import { csharp, System } from "@fern-api/csharp-codegen";
@@ -12,7 +13,6 @@ import {
     HttpEndpoint,
     HttpService,
     IntermediateRepresentation,
-    Name,
     NameAndWireValue,
     OAuthScheme,
     ProtobufService,
@@ -24,20 +24,15 @@ import {
     WellKnownProtobufType
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
-
 import { CsharpGeneratorAgent } from "./CsharpGeneratorAgent";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsGenerator";
 import { GrpcClientInfo } from "./grpc/GrpcClientInfo";
-import { CLIENT_OPTIONS_CLASS_NAME } from "./options/ClientOptionsGenerator";
-import { IDEMPOTENT_REQUEST_OPTIONS_CLASS_NAME } from "./options/IdempotentRequestOptionsGenerator";
 import {
-    IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
     IDEMPOTENT_REQUEST_OPTIONS_PARAMETER_NAME
 } from "./options/IdempotentRequestOptionsInterfaceGenerator";
-import { REQUEST_OPTIONS_CLASS_NAME } from "./options/RequestOptionsGenerator";
+
 import {
-    REQUEST_OPTIONS_INTERFACE_NAME,
     REQUEST_OPTIONS_PARAMETER_NAME
 } from "./options/RequestOptionsInterfaceGenerator";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
@@ -88,25 +83,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return csharp.Type.optional(csharp.Type.object());
     }
 
-    /**
-     * Returns the service with the given id
-     * @param serviceId
-     * @returns
-     */
-    public getHttpServiceOrThrow(serviceId: ServiceId): HttpService {
-        const service = this.ir.services[serviceId];
-        if (service == null) {
-            throw new Error(`Service with id ${serviceId} not found`);
-        }
-        return service;
-    }
+  
 
     public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {
-        const subpackage = this.ir.subpackages[subpackageId];
-        if (subpackage == null) {
-            throw new Error(`Subpackage with id ${subpackageId} not found`);
-        }
-        return subpackage;
+        return this.ir.subpackages[subpackageId] || fail(`Subpackage with id ${subpackageId} not found`);
     }
 
     /**
@@ -310,10 +290,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return exampleEndpointCall;
     }
 
-    public getNamespaceForServiceId(serviceId: ServiceId): string {
-        const service = this.getHttpServiceOrThrow(serviceId);
-        return this.getNamespaceFromFernFilepath(service.name.fernFilepath);
-    }
+
 
     public getDirectoryForSubpackage(subpackage: Subpackage): string {
         return this.getDirectoryForFernFilepath(subpackage.fernFilepath);
@@ -346,12 +323,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         });
     }
 
-    public getSubpackageClassReference(subpackage: Subpackage): csharp.ClassReference {
-        return csharp.classReference({
-            name: `${subpackage.name.pascalCase.unsafeName}Client`,
-            namespace: this.getNamespaceFromFernFilepath(subpackage.fernFilepath)
-        });
-    }
+
 
     public getSubpackageForServiceId(serviceId: ServiceId): Subpackage | undefined {
         return Object.values(this.ir.subpackages).find((subpackage) => subpackage.service === serviceId);
@@ -370,9 +342,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return this.getSubpackageClassReference(subpackage);
     }
 
-    private getComputedClientName(): string {
-        return `${upperFirst(camelCase(this.config.organization))}${this.ir.apiName.pascalCase.unsafeName}`;
-    }
+
 
     public getRootClientClassName(): string {
         return this.customConfig["client-class-name"] ?? `${this.getComputedClientName()}Client`;
@@ -435,17 +405,6 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return "Headers";
     }
 
-    public getRawClientClassName(): string {
-        return "RawClient";
-    }
-
-    public getRawClientClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: this.getRawClientClassName(),
-            namespace: this.getCoreNamespace()
-        });
-    }
-
     public getRawGrpcClientClassName(): string {
         return "RawGrpcClient";
     }
@@ -491,7 +450,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getCancellationTokenClassReference(): csharp.ClassReference {
-          return csharp.classReference(System.Threading.CancellationToken);
+        return csharp.classReference(System.Threading.CancellationToken);
     }
 
     public getCancellationTokenParameterName(): string {
@@ -514,72 +473,9 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         };
     }
 
-    private getClientPrefix(): string {
-        return (
-            this.customConfig["exported-client-class-name"] ??
-            this.customConfig["client-class-name"] ??
-            this.getComputedClientName()
-        );
-    }
+   
 
-    private getEnvironmentClassName(): string {
-        return this.customConfig["environment-class-name"] ?? `${this.getClientPrefix()}Environment`;
-    }
-
-    public getEnvironmentsClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: this.getEnvironmentClassName(),
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getNamespaceForPublicCoreClasses(): string {
-        return (this.customConfig["root-namespace-for-core-classes"] ?? true)
-            ? this.getNamespace()
-            : this.getCoreNamespace();
-    }
-
-    public getBaseMockServerTestClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: "BaseMockServerTest",
-            namespace: this.getMockServerTestNamespace()
-        });
-    }
-
-    public getClientOptionsClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: CLIENT_OPTIONS_CLASS_NAME,
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getRequestOptionsClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: REQUEST_OPTIONS_CLASS_NAME,
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getRequestOptionsInterfaceReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: REQUEST_OPTIONS_INTERFACE_NAME,
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getIdempotentRequestOptionsClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: IDEMPOTENT_REQUEST_OPTIONS_CLASS_NAME,
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getIdempotentRequestOptionsInterfaceClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
-            namespace: this.getCoreNamespace()
-        });
-    }
+  
 
     public getRequestOptionsParameterName(): string {
         return REQUEST_OPTIONS_PARAMETER_NAME;
@@ -589,15 +485,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return IDEMPOTENT_REQUEST_OPTIONS_PARAMETER_NAME;
     }
 
-    public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): csharp.ClassReference {
-        const service = this.getHttpServiceOrThrow(serviceId);
-        RelativeFilePath.of([...service.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/"));
-        return csharp.classReference({
-            name: requestName.pascalCase.safeName,
-            namespace: this.getNamespaceForServiceId(serviceId)
-        });
-    }
-
+  
     public getEndpointMethodName(endpoint: HttpEndpoint): string {
         return `${endpoint.name.pascalCase.safeName}Async`;
     }

@@ -87,11 +87,7 @@ const seen = new Map<string, number>();
 export function classReference(args: ClassReference.Args): ClassReference {
     if (frozen) {
         // check if the class reference is already known
-        const fullyQualifiedName = nameRegistry.normalizeClassReference({
-            name: args.name,
-            namespace: args.namespace,
-            enclosingType: args.enclosingType
-        });
+        const fullyQualifiedName = nameRegistry.fullyQualifiedNameOf(args);
         if (
           //!seen.has(fullyQualifiedName) && 
           !nameRegistry.isRegistered(fullyQualifiedName)) {
@@ -101,7 +97,7 @@ export function classReference(args: ClassReference.Args): ClassReference {
             console.log( `${fullyQualifiedName} -\n${stacktrace().map(each => `   ${each.fn} - ${each.path}:${each.position}`).join("\n")}`);
         }
     }
-    return new ClassReference(args);
+    return nameRegistry.resolveType(new ClassReference(args));
 }
 
 export function instantiateClass(args: ClassInstantiation.Args): ClassInstantiation {

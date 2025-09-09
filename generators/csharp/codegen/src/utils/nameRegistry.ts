@@ -231,7 +231,7 @@ export class NameRegistry {
      *
      * @internal
      */
-    public normalizeClassReference(classReference: {
+    public fullyQualifiedNameOf(classReference: {
         name: string;
         namespace: string;
         enclosingType?: ClassReference;
@@ -257,7 +257,7 @@ export class NameRegistry {
      */
     public trackType(classReference: ClassReference): ClassReference {
         const { name, namespace, enclosingType } = classReference;
-        const fullyQualifiedName = this.normalizeClassReference({ name, namespace, enclosingType });
+        const fullyQualifiedName = this.fullyQualifiedNameOf(classReference);
 
         if (!this.typeRegistry.has(fullyQualifiedName)) {
             // Register the type in the main registry
@@ -325,7 +325,7 @@ export class NameRegistry {
      * ```
      */
     public resolveType(classReference: ClassReference): ClassReference {
-        const classRef = this.typeRegistry.get(this.normalizeClassReference(classReference));
+        const classRef = this.typeRegistry.get(this.fullyQualifiedNameOf(classReference));
 
         return classRef
             ? new ClassReference({
@@ -452,7 +452,7 @@ export class NameRegistry {
      * ```
      */
     public canonicalizeName(classReference: ClassReference): ClassReference {
-        const key = this.normalizeClassReference(classReference);
+        const key = this.fullyQualifiedNameOf(classReference);
 
         // If the type is already registered, return the canonical version
         if (this.typeRegistry.has(key)) {
@@ -471,7 +471,7 @@ export class NameRegistry {
 
         // Ensure no conflicts with existing types or namespaces
         conflictResolution: while (true) {
-            const fullyQualifiedName = this.normalizeClassReference({ name, namespace, enclosingType });
+            const fullyQualifiedName = this.fullyQualifiedNameOf({ name, namespace, enclosingType });
             let fqNamespace = "";
             const parts = namespace.split(".");
 
@@ -529,7 +529,8 @@ export class NameRegistry {
             generics: classReference.generics,
             global: classReference.global
         });
-
+        // forward the 'original' type to the new remapped type
+        this.typeRegistry.set(key, remapped);
         this.trackType(remapped);
         return remapped;
     }

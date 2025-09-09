@@ -37,9 +37,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         super(context);
         this.wrapper = wrapper;
         this.serviceId = serviceId;
-        this.classReference = this.context
-            .getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName)
-            .canonicalize();
+        this.classReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
+
         this.endpoint = endpoint;
         this.exampleGenerator = new ExampleGenerator(context);
     }

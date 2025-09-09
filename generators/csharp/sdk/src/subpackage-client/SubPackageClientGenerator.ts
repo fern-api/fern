@@ -30,7 +30,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
 
     constructor({ subpackage, context, serviceId, service }: SubClientGenerator.Args) {
         super(context);
-        this.classReference = this.context.getSubpackageClassReference(subpackage).canonicalize();
+        this.classReference = this.context.getSubpackageClassReference(subpackage);
         this.subpackage = subpackage;
         this.rawClient = new RawClient(context);
         this.service = service;

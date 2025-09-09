@@ -303,10 +303,6 @@ export class ClassReference extends AstNode {
     public resolveNamespace(): string {
         return nameRegistry.resolveNamespace(this.namespace);
     }
-
-    public canonicalize(): ClassReference {
-        return nameRegistry.canonicalizeName(this);
-    }
 }
 
 export const OneOfClassReference = new ClassReference({

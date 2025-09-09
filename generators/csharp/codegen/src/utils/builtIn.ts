@@ -7,10 +7,9 @@
  *
  */
 
-import { type ClassReference } from "../ast/ClassReference";
+import { ClassReference } from "../ast/ClassReference";
 import { type Type } from "../ast/Type";
 import { type TypeParameter } from "../ast/TypeParameter";
-import { classReference } from "../csharp";
 
 /**
  * Type definition for built-in type mappings
@@ -418,7 +417,7 @@ export const builtIns: BuiltInTypeMap = {
  */
 export const System = {
     get Enum() {
-        return classReference({
+        return new ClassReference({
             name: "Enum",
             namespace: "System"
         });
@@ -433,28 +432,28 @@ export const System = {
      * @returns A class reference object for System.Exception
      */
     get Exception() {
-        return classReference({
+        return new ClassReference({
             name: "Exception",
             namespace: "System"
         });
     },
 
     get Serializable() {
-        return classReference({
+        return new ClassReference({
             name: "Serializable",
             namespace: "System"
         });
     },
 
     get String() {
-        return classReference({
+        return new ClassReference({
             name: "String",
             namespace: "System"
         });
     },
 
     get TimeSpan() {
-        return classReference({
+        return new ClassReference({
             name: "TimeSpan",
             namespace: "System"
         });
@@ -477,7 +476,7 @@ export const System = {
              * @returns A class reference object for System.Runtime.Serialization.EnumMember
              */
             get EnumMember() {
-                return classReference({
+                return new ClassReference({
                     name: "EnumMember",
                     namespace: "System.Runtime.Serialization"
                 });
@@ -488,35 +487,35 @@ export const System = {
     Collections: {
         Generic: {
             IAsyncEnumerable(elementType: ClassReference | TypeParameter | Type) {
-                return classReference({
+                return new ClassReference({
                     name: "IAsyncEnumerable",
                     namespace: "System.Collections.Generic",
                     generics: [elementType]
                 });
             },
             IEnumerable(elementType: ClassReference | TypeParameter | Type) {
-                return classReference({
+                return new ClassReference({
                     name: "IEnumerable",
                     namespace: "System.Collections.Generic",
                     generics: [elementType]
                 });
             },
             KeyValuePair(keyType: ClassReference | TypeParameter | Type, valueType: ClassReference | TypeParameter | Type) {
-                return classReference({
+                return new ClassReference({
                     name: "KeyValuePair",
                     namespace: "System.Collections.Generic",
                     generics: [keyType, valueType]
                 });
             },
             List(elementType: ClassReference | TypeParameter | Type) {
-                return classReference({
+                return new ClassReference({
                     name: "List",
                     namespace: "System.Collections.Generic",
                     generics: [elementType]
                 });
             },
             HashSet(elementType: ClassReference | TypeParameter | Type) {
-                return classReference({
+                return new ClassReference({
                     name: "HashSet",
                     namespace: "System.Collections.Generic",
                     generics: [elementType]
@@ -526,7 +525,7 @@ export const System = {
                 keyType: ClassReference | TypeParameter | Type,
                 valueType: ClassReference | TypeParameter | Type
             ) {
-                return classReference({
+                return new ClassReference({
                     name: "Dictionary",
                     namespace: "System.Collections.Generic",
                     generics: [keyType, valueType]
@@ -537,7 +536,7 @@ export const System = {
 
     Globalization: {
         get DateTimeStyles() {
-            return classReference({
+            return new ClassReference({
                 name: "DateTimeStyles",
                 namespace: "System.Globalization"
             });
@@ -546,7 +545,7 @@ export const System = {
 
     Linq: {
         get Enumerable() {
-            return classReference({
+            return new ClassReference({
                 name: "Enumerable",
                 namespace: "System.Linq"
             });
@@ -556,19 +555,19 @@ export const System = {
     Net: {
         Http: {
             get HttpClient() {
-                return classReference({
+                return new ClassReference({
                     name: "HttpClient",
                     namespace: "System.Net.Http"
                 });
             },
             get HttpMethod() {
-                return classReference({
+                return new ClassReference({
                     name: "HttpMethod",
                     namespace: "System.Net.Http"
                 });
             },
             get HttpResponseHeaders() {
-                return classReference({
+                return new ClassReference({
                     namespace: "System.Net.Http.Headers",
                     name: "HttpResponseHeaders"
                 });
@@ -578,7 +577,7 @@ export const System = {
 
     IO: {
         get MemoryStream() {
-            return classReference({
+            return new ClassReference({
                 namespace: "System.IO",
                 name: "MemoryStream"
             });
@@ -587,13 +586,13 @@ export const System = {
 
     Text: {
         get Encoding() {
-            return classReference({
+            return new ClassReference({
                 namespace: "System.Text",
                 name: "Encoding"
             });
         },
         get Encoding_UTF8() {
-            return classReference({
+            return new ClassReference({
                 namespace: "System.Text",
                 enclosingType: System.Text.Encoding,
                 name: "UTF8"
@@ -601,44 +600,44 @@ export const System = {
         },
         Json: {
             get JsonElement() {
-                return classReference({
+                return new ClassReference({
                     namespace: "System.Text.Json",
                     name: "JsonElement"
                 });
             },
             get JsonException() {
-                return classReference({
+                return new ClassReference({
                     namespace: "System.Text.Json",
                     name: "JsonException"
                 });
             },
             get Utf8JsonReader() {
-                return classReference({
+                return new ClassReference({
                     namespace: "System.Text.Json",
                     name: "Utf8JsonReader"
                 });
             },
             get JsonSerializerOptions() {
-                return classReference({
+                return new ClassReference({
                     namespace: "System.Text.Json",
                     name: "JsonSerializerOptions"
                 });
             },
             get Utf8JsonWriter() {
-                return classReference({
+                return new ClassReference({
                     namespace: "System.Text.Json",
                     name: "Utf8JsonWriter"
                 });
             },
             Nodes: {
                 get JsonNode() {
-                    return classReference({
+                    return new ClassReference({
                         namespace: "System.Text.Json.Nodes",
                         name: "JsonNode"
                     });
                 },
                 get JsonObject() {
-                  return classReference({
+                  return new ClassReference({
                       namespace: "System.Text.Json.Nodes",
                       name: "JsonObject"
                   });
@@ -647,44 +646,44 @@ export const System = {
             
             Serialization: {
                 get IJsonOnDeserialized() {
-                    return classReference({
+                    return new ClassReference({
                         namespace: "System.Text.Json.Serialization",
                         name: "IJsonOnDeserialized"
                     });
                 },
                 get IJsonOnSerializing() {
-                    return classReference({
+                    return new ClassReference({
                         namespace: "System.Text.Json.Serialization",
                         name: "IJsonOnSerializing"
                     });
                 },
                 get JsonOnDeserializedAttribute() {
-                    return classReference({
+                    return new ClassReference({
                         namespace: "System.Text.Json.Serialization",
                         name: "JsonOnDeserializedAttribute"
                     });
                 },
                 get JsonExtensionData() {
-                    return classReference({
+                    return new ClassReference({
                         namespace: "System.Text.Json.Serialization",
                         name: "JsonExtensionData"
                     });
                 },
                 JsonConverter(typeToConvert?: ClassReference | TypeParameter | Type) {
-                    return classReference({
+                    return new ClassReference({
                         namespace: "System.Text.Json.Serialization",
                         name: "JsonConverter",
                         generics: typeToConvert ? [typeToConvert] : undefined
                     });
                 },
                 get JsonIgnore() {
-                    return classReference({
+                    return new ClassReference({
                         namespace: "System.Text.Json.Serialization",
                         name: "JsonIgnore"
                     });
                 },
                 get JsonPropertyName() {
-                    return classReference({
+                    return new ClassReference({
                         namespace: "System.Text.Json.Serialization",
                         name: "JsonPropertyName"
                     });
@@ -695,14 +694,14 @@ export const System = {
 
     Threading: {
       get CancellationToken() {
-        return classReference({
+        return new ClassReference({
             namespace: "System.Threading",
             name: "CancellationToken"
         });
     },
         Tasks: {
             Task(ofType?: ClassReference | TypeParameter | Type)   {
-                return classReference({
+                return new ClassReference({
                     namespace: "System.Threading.Tasks",
                     name: "Task",
                     generics: ofType ? [ofType] : undefined
@@ -715,13 +714,13 @@ export const System = {
 export const NUnit = {
   Framework: {
     get TestFixture() {
-      return classReference({
+      return new ClassReference({
           namespace: "NUnit.Framework",
           name: "TestFixture"
         });
     },
     get Test() {
-      return classReference({
+      return new ClassReference({
         namespace: "NUnit.Framework",
         name: "Test"
       });

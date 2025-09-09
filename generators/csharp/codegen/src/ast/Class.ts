@@ -23,8 +23,8 @@ export class Class extends AstNode {
         RecordStruct: "record struct"
     } as const;
     public static readonly Access = Access;
-    public readonly name: string;
-    public readonly namespace: string;
+    // public readonly name: string;
+    // public readonly namespace: string;
     public readonly access: Access;
     public readonly static_: boolean;
     public readonly abstract_: boolean;
@@ -34,7 +34,7 @@ export class Class extends AstNode {
     public readonly reference: ClassReference;
     public readonly parentClassReference: AstNode | undefined;
     public readonly interfaceReferences: ClassReference[];
-    public readonly enclosingType: ClassReference | undefined;
+    // public readonly enclosingType: ClassReference | undefined;
     public readonly type: Class.ClassType;
     public readonly summary: string | undefined;
     private readonly doc: XmlDocBlock;
@@ -77,15 +77,15 @@ export class Class extends AstNode {
             })
         );
 
-        this.name = name;
-        this.namespace = namespace;
+        // this.name = name;
+        // this.namespace = namespace;
         this.access = access;
         this.static_ = static_ ?? false;
         this.abstract_ = abstract_ ?? false;
         this.sealed = sealed ?? false;
         this.readonly = readonly ?? false;
         this.partial = partial ?? false;
-        this.enclosingType = enclosingType;
+        //this.enclosingType = enclosingType;
         this.type = type ?? Class.ClassType.Class;
         this.summary = summary;
         this.doc = XmlDocBlock.of(doc ?? { summary });
@@ -93,6 +93,16 @@ export class Class extends AstNode {
         this.interfaceReferences = interfaceReferences ?? [];
         this.annotations = annotations ?? [];
         this.primaryConstructor = primaryConstructor;
+    }
+
+    public get name() {
+      return this.reference.name;
+    }
+    public get namespace() {
+      return this.reference.namespace;
+    }
+    public get enclosingType() {
+      return this.reference.enclosingType;
     }
 
     public get isNestedClass(): boolean {

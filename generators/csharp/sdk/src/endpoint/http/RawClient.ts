@@ -194,10 +194,7 @@ export class RawClient {
                 return {
                     requestReference: csharp.instantiateClass({
                         arguments_: args,
-                        classReference: csharp.classReference({
-                            name: "JsonRequest",
-                            namespace: this.context.getCoreNamespace()
-                        })
+                        classReference: this.context.getJsonRequestClassReference()
                     })
                 };
         }

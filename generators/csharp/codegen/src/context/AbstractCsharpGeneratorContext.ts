@@ -3,11 +3,14 @@ import { assertNever } from "@fern-api/core-utils";
 import {
     FernFilepath,
     HttpHeader,
+    HttpService,
     IntermediateRepresentation,
     Name,
     ObjectPropertyAccess,
     PrimitiveType,
     PrimitiveTypeV1,
+    ServiceId,
+    Subpackage,
     TypeDeclaration,
     TypeId,
     TypeReference,
@@ -30,7 +33,16 @@ export const ONE_OF_SERIALIZER_CLASS_NAME = "OneOfSerializer";
 export const QUERY_STRING_CONVERTER_CLASS_NAME = "QueryStringConverter";
 export const STRING_ENUM_SERIALIZER_CLASS_NAME = "StringEnumSerializer";
 export const VALUE_CONVERT_CLASS_NAME = "ValueConvert";
+export const IDEMPOTENT_REQUEST_OPTIONS_CLASS_NAME = "IdempotentRequestOptions";
+export const IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME = "IIdempotentRequestOptions";
+export const CLIENT_OPTIONS_CLASS_NAME = "ClientOptions";
+export const GLOBAL_TEST_SETUP_NAME = "GlobalTestSetup";
+export const EXCEPTION_HANDLER_MEMBER_NAME = "ExceptionHandler";
+export const REQUEST_OPTIONS_CLASS_NAME = "RequestOptions";
+export const REQUEST_OPTIONS_INTERFACE_NAME = "IRequestOptions";
 
+
+import { fail } from "node:assert";
 import { csharp } from "..";
 import { CsharpProtobufTypeMapper } from "../proto/CsharpProtobufTypeMapper";
 import { ProtobufResolver } from "../proto/ProtobufResolver";
@@ -291,7 +303,7 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public getJsonConverterClassReference(typeToConvert: csharp.Type): csharp.ClassReference {
-      return System.Text.Json.Serialization.JsonConverter(typeToConvert);
+        return System.Text.Json.Serialization.JsonConverter(typeToConvert);
     }
 
     public createJsonAccessAttribute(propertyAccess: ObjectPropertyAccess): csharp.Annotation {
@@ -384,15 +396,7 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
-        const typeDeclaration = this.getTypeDeclaration(typeId);
-        if (typeDeclaration == null) {
-            throw new Error(`Type declaration with id ${typeId} not found`);
-        }
-        return typeDeclaration;
-    }
-
-    public getTypeDeclaration(typeId: TypeId): TypeDeclaration | undefined {
-        return this.ir.types[typeId];
+        return this.ir.types[typeId] || fail(`Type declaration with id ${typeId} not found`);
     }
 
     public getEnumerableEmptyKeyValuePairsInitializer(): csharp.MethodInvocation {
@@ -418,7 +422,7 @@ export abstract class AbstractCsharpGeneratorContext<
         key: csharp.Type;
         value: csharp.Type;
     }): csharp.ClassReference {
-        return System.Collections.Generic.KeyValuePair(key,value)
+        return System.Collections.Generic.KeyValuePair(key, value);
     }
 
     public getAdditionalPropertiesClassReference(genericType?: csharp.Type): csharp.ClassReference {
@@ -438,7 +442,7 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public getIJsonOnDeserializedInterfaceReference(): csharp.ClassReference {
-      return System.Text.Json.Serialization.IJsonOnDeserialized;
+        return System.Text.Json.Serialization.IJsonOnDeserialized;
     }
 
     public getIJsonOnSerializingInterfaceReference(): csharp.ClassReference {
@@ -768,6 +772,131 @@ export abstract class AbstractCsharpGeneratorContext<
     public abstract getNamespaceForTypeId(typeId: TypeId): string;
 
     public abstract getExtraDependencies(): Record<string, string>;
+
+    public getSubpackageClassReference(subpackage: Subpackage): csharp.ClassReference {
+        return csharp.classReference({
+            name: `${subpackage.name.pascalCase.unsafeName}Client`,
+            namespace: this.getNamespaceFromFernFilepath(subpackage.fernFilepath)
+        });
+    }
+
+    public getRawClientClassName(): string {
+        return "RawClient";
+    }
+
+    public getRawClientClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getRawClientClassName(),
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    /**
+     * Returns the service with the given id
+     * @param serviceId
+     * @returns
+     */
+    public getHttpServiceOrThrow(serviceId: ServiceId): HttpService {
+        return this.ir.services[serviceId] || fail(`Service with id ${serviceId} not found`);
+    }
+
+    protected getComputedClientName(): string {
+      return `${upperFirst(camelCase(this.config.organization))}${this.ir.apiName.pascalCase.unsafeName}`;
+  }
+
+    protected getClientPrefix(): string {
+      return (
+          this.customConfig["exported-client-class-name"] ??
+          this.customConfig["client-class-name"] ??
+          this.getComputedClientName()
+      );
+  }
+
+    protected getEnvironmentClassName(): string {
+      return this.customConfig["environment-class-name"] ?? `${this.getClientPrefix()}Environment`;
+  }
+
+    public getEnvironmentsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getEnvironmentClassName(),
+            namespace: this.getNamespaceForPublicCoreClasses()
+        });
+    }
+
+    public getNamespaceForPublicCoreClasses(): string {
+        return (this.customConfig["root-namespace-for-core-classes"] ?? true)
+            ? this.getNamespace()
+            : this.getCoreNamespace();
+    }
+
+    public getBaseMockServerTestClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "BaseMockServerTest",
+            namespace: this.getMockServerTestNamespace()
+        });
+    }
+
+    public getClientOptionsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: CLIENT_OPTIONS_CLASS_NAME,
+            namespace: this.getNamespaceForPublicCoreClasses()
+        });
+    }
+
+    public getRequestOptionsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: REQUEST_OPTIONS_CLASS_NAME,
+            namespace: this.getNamespaceForPublicCoreClasses()
+        });
+    }
+
+    public getRequestOptionsInterfaceReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: REQUEST_OPTIONS_INTERFACE_NAME,
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getIdempotentRequestOptionsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: IDEMPOTENT_REQUEST_OPTIONS_CLASS_NAME,
+            namespace: this.getNamespaceForPublicCoreClasses()
+        });
+    }
+
+    public getIdempotentRequestOptionsInterfaceClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getJsonRequestClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "JsonRequest",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getNamespaceForServiceId(serviceId: ServiceId): string {
+      const service = this.getHttpServiceOrThrow(serviceId);
+      return this.getNamespaceFromFernFilepath(service.name.fernFilepath);
+    }
+
+    public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): csharp.ClassReference {
+      // const service = this.getHttpServiceOrThrow(serviceId);
+      // RelativeFilePath.of([...service.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/"));
+      const cr =  csharp.classReference({
+        name: requestName.pascalCase.safeName,
+        namespace: this.getNamespaceForServiceId(serviceId)
+    });
+      console.log(`grwr: ${serviceId}::${requestName.originalName} -> ${cr.namespace}.${cr.name}`);
+      return csharp.classReference({
+          name: requestName.pascalCase.safeName,
+          namespace: this.getNamespaceForServiceId(serviceId)
+      });
+  }
+
 }
 
 function stripNonAlphanumeric(str: string): string {
