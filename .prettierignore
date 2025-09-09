@@ -19,6 +19,7 @@ seed/
 .husky/
 .turbo/
 snapshots/
+*.snap
 *.tempate.*
 *.template.*
 

@@ -18,6 +18,7 @@
     ".git",
     ".vscode",
     "snapshots/**",
+    "*.snap",
     "**/__test__/**/fixtures",
     "**/__test__/**/output",
     "**/__test__/**/outputs",

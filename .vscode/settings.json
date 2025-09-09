@@ -6,6 +6,7 @@
     "**/.nx": true,
     "**/.yarn": true,
     "snapshots/**": true,
+    "*.snap": true,
     "**/__test__/**/fixtures": true,
     "**/__test__/**/output": true,
     "**/build": true,
