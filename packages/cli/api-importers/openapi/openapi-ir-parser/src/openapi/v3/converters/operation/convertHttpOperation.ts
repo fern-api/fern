@@ -265,7 +265,9 @@ export function convertHttpOperation({
         servers:
             serverName != null
                 ? [{ name: serverName, url: undefined, audiences: undefined }]
-                : (operation.servers ?? []).map((server) => convertServer(server)),
+                : (operation.servers ?? []).map((server) =>
+                      convertServer(server, { groupMultiApiEnvironments: context.options.groupMultiApiEnvironments })
+                  ),
         description: operation.description,
         authed: isEndpointAuthed(operation, document),
         availability,

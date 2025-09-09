@@ -1,0 +1,1768 @@
+{
+  "title": "Fintech API",
+  "servers": [
+    {
+      "type": "grouped",
+      "name": "PRD",
+      "description": "PRD environment",
+      "urls": {
+        "fintech": {
+          "url": "https://fintech.api.example.com"
+        },
+        "payments": {
+          "url": "https://payments.api.example.com"
+        }
+      }
+    },
+    {
+      "type": "grouped",
+      "name": "SBX",
+      "description": "SBX environment",
+      "urls": {
+        "fintech": {
+          "url": "https://fintech-sbx.api.example.com"
+        },
+        "payments": {
+          "url": "https://payments-sbx.api.example.com"
+        }
+      }
+    },
+    {
+      "type": "grouped",
+      "name": "STG",
+      "description": "STG environment",
+      "urls": {
+        "fintech": {
+          "url": "https://fintech-stg.api.example.com"
+        },
+        "payments": {
+          "url": "https://payments-stg.api.example.com"
+        }
+      }
+    },
+    {
+      "type": "grouped",
+      "name": "PRF",
+      "description": "PRF environment",
+      "urls": {
+        "fintech": {
+          "url": "https://fintech-prf.api.example.com"
+        },
+        "payments": {
+          "url": "https://payments-prf.api.example.com"
+        }
+      }
+    },
+    {
+      "type": "grouped",
+      "name": "E2E",
+      "description": "E2E environment",
+      "urls": {
+        "fintech": {
+          "url": "https://fintech-e2e.api.example.com"
+        },
+        "payments": {
+          "url": "https://payments-e2e.api.example.com"
+        }
+      }
+    },
+    {
+      "type": "grouped",
+      "name": "QAL",
+      "description": "QAL environment",
+      "urls": {
+        "fintech": {
+          "url": "https://fintech-qal.api.example.com"
+        },
+        "payments": {
+          "url": "https://payments-qal.api.example.com"
+        }
+      }
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "List wallets",
+      "audiences": [],
+      "operationId": "listWallets",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListWalletsRequest",
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "value": {
+            "generatedName": "ListWalletsResponseItem",
+            "schema": "Wallet",
+            "source": {
+              "file": "../fintech-api.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "generatedName": "ListWalletsResponse",
+          "groupName": [],
+          "type": "array"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../fintech-api.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "GET",
+      "path": "/wallets",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "balance": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
+                    },
+                    "currency": {
+                      "value": {
+                        "value": "currency",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "createdAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../fintech-api.yml",
+        "type": "openapi"
+      },
+      "__apiName": "fintech",
+      "servers": [
+        {
+          "name": "fintech"
+        }
+      ]
+    },
+    {
+      "summary": "Get wallet by ID",
+      "audiences": [],
+      "operationId": "getWallet",
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "walletId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetWalletRequestWalletId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../fintech-api.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetWalletRequest",
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "generatedName": "GetWalletResponse",
+          "schema": "Wallet",
+          "source": {
+            "file": "../fintech-api.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../fintech-api.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "GET",
+      "path": "/wallets/{walletId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "walletId",
+              "value": {
+                "value": {
+                  "value": "walletId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "balance": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
+                },
+                "currency": {
+                  "value": {
+                    "value": "currency",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../fintech-api.yml",
+        "type": "openapi"
+      },
+      "__apiName": "fintech",
+      "servers": [
+        {
+          "name": "fintech"
+        }
+      ]
+    },
+    {
+      "summary": "Get wallet balance",
+      "audiences": [],
+      "operationId": "getWalletBalance",
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "walletId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetWalletBalanceRequestWalletId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../fintech-api.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetWalletBalanceRequest",
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "generatedName": "GetWalletBalanceResponse",
+          "schema": "Balance",
+          "source": {
+            "file": "../fintech-api.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../fintech-api.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "GET",
+      "path": "/wallets/{walletId}/balance",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "walletId",
+              "value": {
+                "value": {
+                  "value": "walletId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "available": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
+                },
+                "pending": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
+                },
+                "currency": {
+                  "value": {
+                    "value": "currency",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../fintech-api.yml",
+        "type": "openapi"
+      },
+      "__apiName": "fintech",
+      "servers": [
+        {
+          "name": "fintech"
+        }
+      ]
+    },
+    {
+      "summary": "List accounts",
+      "audiences": [],
+      "operationId": "listAccounts",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListAccountsRequest",
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "value": {
+            "generatedName": "ListAccountsResponseItem",
+            "schema": "Account",
+            "source": {
+              "file": "../fintech-api.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "generatedName": "ListAccountsResponse",
+          "groupName": [],
+          "type": "array"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../fintech-api.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "GET",
+      "path": "/accounts",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "name": {
+                      "value": {
+                        "value": "name",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "type": {
+                      "value": "checking",
+                      "type": "enum"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../fintech-api.yml",
+        "type": "openapi"
+      },
+      "__apiName": "fintech",
+      "servers": [
+        {
+          "name": "fintech"
+        }
+      ]
+    },
+    {
+      "summary": "List transactions",
+      "audiences": [],
+      "operationId": "listTransactions",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListTransactionsRequest",
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "value": {
+            "generatedName": "ListTransactionsResponseItem",
+            "schema": "Transaction",
+            "source": {
+              "file": "../payments-api.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "generatedName": "ListTransactionsResponse",
+          "groupName": [],
+          "type": "array"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../payments-api.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "GET",
+      "path": "/transactions",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "amount": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
+                    },
+                    "currency": {
+                      "value": {
+                        "value": "currency",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "status": {
+                      "value": "pending",
+                      "type": "enum"
+                    },
+                    "timestamp": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../payments-api.yml",
+        "type": "openapi"
+      },
+      "__apiName": "payments",
+      "servers": [
+        {
+          "name": "payments"
+        }
+      ]
+    },
+    {
+      "summary": "Get transaction by ID",
+      "audiences": [],
+      "operationId": "getTransaction",
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "transactionId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetTransactionRequestTransactionId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../payments-api.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetTransactionRequest",
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "generatedName": "GetTransactionResponse",
+          "schema": "Transaction",
+          "source": {
+            "file": "../payments-api.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../payments-api.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "GET",
+      "path": "/transactions/{transactionId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "transactionId",
+              "value": {
+                "value": {
+                  "value": "transactionId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "amount": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
+                },
+                "currency": {
+                  "value": {
+                    "value": "currency",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "status": {
+                  "value": "pending",
+                  "type": "enum"
+                },
+                "timestamp": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../payments-api.yml",
+        "type": "openapi"
+      },
+      "__apiName": "payments",
+      "servers": [
+        {
+          "name": "payments"
+        }
+      ]
+    },
+    {
+      "summary": "Create a payment",
+      "audiences": [],
+      "operationId": "createPayment",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreatePaymentRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreatePaymentRequest",
+          "schema": "PaymentRequest",
+          "source": {
+            "file": "../payments-api.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../payments-api.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "generatedName": "CreatePaymentResponse",
+          "schema": "PaymentResponse",
+          "source": {
+            "file": "../payments-api.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../payments-api.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "POST",
+      "path": "/payments",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "amount": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              },
+              "currency": {
+                "value": {
+                  "value": "currency",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "recipient": {
+                "value": {
+                  "value": "recipient",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "status": {
+                  "value": "accepted",
+                  "type": "enum"
+                },
+                "message": {
+                  "value": {
+                    "value": "message",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../payments-api.yml",
+        "type": "openapi"
+      },
+      "__apiName": "payments",
+      "servers": [
+        {
+          "name": "payments"
+        }
+      ]
+    },
+    {
+      "summary": "Refund a payment",
+      "audiences": [],
+      "operationId": "refundPayment",
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "paymentId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "RefundPaymentRequestPaymentId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../payments-api.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "RefundPaymentRequest",
+      "request": {
+        "schema": {
+          "generatedName": "RefundPaymentRequest",
+          "schema": "RefundRequest",
+          "source": {
+            "file": "../payments-api.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../payments-api.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "generatedName": "RefundPaymentResponse",
+          "schema": "RefundResponse",
+          "source": {
+            "file": "../payments-api.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../payments-api.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "POST",
+      "path": "/payments/{paymentId}/refund",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "paymentId",
+              "value": {
+                "value": {
+                  "value": "paymentId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "amount": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "status": {
+                  "value": "pending",
+                  "type": "enum"
+                },
+                "refundedAmount": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../payments-api.yml",
+        "type": "openapi"
+      },
+      "__apiName": "payments",
+      "servers": [
+        {
+          "name": "payments"
+        }
+      ]
+    },
+    {
+      "summary": "List all refunds",
+      "audiences": [],
+      "operationId": "listRefunds",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListRefundsRequest",
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "value": {
+            "generatedName": "ListRefundsResponseItem",
+            "schema": "Refund",
+            "source": {
+              "file": "../payments-api.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "generatedName": "ListRefundsResponse",
+          "groupName": [],
+          "type": "array"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../payments-api.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "GET",
+      "path": "/refunds",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "paymentId": {
+                      "value": {
+                        "value": "paymentId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "amount": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
+                    },
+                    "status": {
+                      "value": "pending",
+                      "type": "enum"
+                    },
+                    "createdAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../payments-api.yml",
+        "type": "openapi"
+      },
+      "__apiName": "payments",
+      "servers": [
+        {
+          "name": "payments"
+        }
+      ]
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Wallet": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "walletId",
+            "key": "id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "WalletId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "walletBalance",
+            "key": "balance",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "WalletBalance",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "walletCurrency",
+            "key": "currency",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "WalletCurrency",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "walletCreatedAt",
+            "key": "createdAt",
+            "schema": {
+              "schema": {
+                "type": "datetime"
+              },
+              "generatedName": "WalletCreatedAt",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Wallet",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../fintech-api.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Balance": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "balanceAvailable",
+            "key": "available",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "BalanceAvailable",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "balancePending",
+            "key": "pending",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "BalancePending",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "balanceCurrency",
+            "key": "currency",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "BalanceCurrency",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Balance",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../fintech-api.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Account": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "accountId",
+            "key": "id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "AccountId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "accountName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "AccountName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "accountType",
+            "key": "type",
+            "schema": {
+              "generatedName": "AccountType",
+              "values": [
+                {
+                  "generatedName": "checking",
+                  "value": "checking",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "savings",
+                  "value": "savings",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "credit",
+                  "value": "credit",
+                  "casing": {}
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../fintech-api.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Account",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../fintech-api.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Transaction": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "transactionId",
+            "key": "id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "TransactionId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "transactionAmount",
+            "key": "amount",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "TransactionAmount",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "transactionCurrency",
+            "key": "currency",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "TransactionCurrency",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "transactionStatus",
+            "key": "status",
+            "schema": {
+              "generatedName": "TransactionStatus",
+              "values": [
+                {
+                  "generatedName": "pending",
+                  "value": "pending",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "completed",
+                  "value": "completed",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "failed",
+                  "value": "failed",
+                  "casing": {}
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../payments-api.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "transactionTimestamp",
+            "key": "timestamp",
+            "schema": {
+              "schema": {
+                "type": "datetime"
+              },
+              "generatedName": "TransactionTimestamp",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Transaction",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../payments-api.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "PaymentRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "paymentRequestAmount",
+            "key": "amount",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "PaymentRequestAmount",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "paymentRequestCurrency",
+            "key": "currency",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PaymentRequestCurrency",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "paymentRequestRecipient",
+            "key": "recipient",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PaymentRequestRecipient",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "paymentRequestDescription",
+            "key": "description",
+            "schema": {
+              "generatedName": "paymentRequestDescription",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PaymentRequestDescription",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "PaymentRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../payments-api.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "PaymentResponse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "paymentResponseId",
+            "key": "id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PaymentResponseId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "paymentResponseStatus",
+            "key": "status",
+            "schema": {
+              "generatedName": "PaymentResponseStatus",
+              "values": [
+                {
+                  "generatedName": "accepted",
+                  "value": "accepted",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "rejected",
+                  "value": "rejected",
+                  "casing": {}
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../payments-api.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "paymentResponseMessage",
+            "key": "message",
+            "schema": {
+              "generatedName": "paymentResponseMessage",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PaymentResponseMessage",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "PaymentResponse",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../payments-api.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "RefundRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "refundRequestAmount",
+            "key": "amount",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "RefundRequestAmount",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "refundRequestReason",
+            "key": "reason",
+            "schema": {
+              "generatedName": "refundRequestReason",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "RefundRequestReason",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "RefundRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../payments-api.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "RefundResponse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "refundResponseId",
+            "key": "id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "RefundResponseId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "refundResponseStatus",
+            "key": "status",
+            "schema": {
+              "generatedName": "RefundResponseStatus",
+              "values": [
+                {
+                  "generatedName": "pending",
+                  "value": "pending",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "completed",
+                  "value": "completed",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "failed",
+                  "value": "failed",
+                  "casing": {}
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../payments-api.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "refundResponseRefundedAmount",
+            "key": "refundedAmount",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "RefundResponseRefundedAmount",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "RefundResponse",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../payments-api.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Refund": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "refundId",
+            "key": "id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "RefundId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "refundPaymentId",
+            "key": "paymentId",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "RefundPaymentId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "refundAmount",
+            "key": "amount",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "RefundAmount",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "refundStatus",
+            "key": "status",
+            "schema": {
+              "generatedName": "RefundStatus",
+              "values": [
+                {
+                  "generatedName": "pending",
+                  "value": "pending",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "completed",
+                  "value": "completed",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "failed",
+                  "value": "failed",
+                  "casing": {}
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../payments-api.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "refundCreatedAt",
+            "key": "createdAt",
+            "schema": {
+              "schema": {
+                "type": "datetime"
+              },
+              "generatedName": "RefundCreatedAt",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Refund",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../payments-api.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
