@@ -29,6 +29,9 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Checkout repo # CHRISM - is this an issue to push to the action level?
+      uses: actions/checkout@v4
+
     - name: Check for changes
       id: check-for-changes
       uses: tj-actions/changed-files@v46
