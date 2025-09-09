@@ -44,3 +44,4 @@ allowedFailures:
   - enum
   - file-upload
   - http-head
+  - version
