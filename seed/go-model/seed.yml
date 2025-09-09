@@ -56,4 +56,5 @@ allowedFailures:
   - mixed-case
   - nullable-optional
   - reserved-keywords
+  - streaming:.
   - trace

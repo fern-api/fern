@@ -3,30 +3,128 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum ExecutionSessionStatus {
-    CREATING_CONTAINER("CREATING_CONTAINER"),
+public final class ExecutionSessionStatus {
+    public static final ExecutionSessionStatus LIVE_CONTAINER =
+            new ExecutionSessionStatus(Value.LIVE_CONTAINER, "LIVE_CONTAINER");
 
-    PROVISIONING_CONTAINER("PROVISIONING_CONTAINER"),
+    public static final ExecutionSessionStatus PENDING_CONTAINER =
+            new ExecutionSessionStatus(Value.PENDING_CONTAINER, "PENDING_CONTAINER");
 
-    PENDING_CONTAINER("PENDING_CONTAINER"),
+    public static final ExecutionSessionStatus CREATING_CONTAINER =
+            new ExecutionSessionStatus(Value.CREATING_CONTAINER, "CREATING_CONTAINER");
 
-    RUNNING_CONTAINER("RUNNING_CONTAINER"),
+    public static final ExecutionSessionStatus PROVISIONING_CONTAINER =
+            new ExecutionSessionStatus(Value.PROVISIONING_CONTAINER, "PROVISIONING_CONTAINER");
 
-    LIVE_CONTAINER("LIVE_CONTAINER"),
+    public static final ExecutionSessionStatus RUNNING_CONTAINER =
+            new ExecutionSessionStatus(Value.RUNNING_CONTAINER, "RUNNING_CONTAINER");
 
-    FAILED_TO_LAUNCH("FAILED_TO_LAUNCH");
+    public static final ExecutionSessionStatus FAILED_TO_LAUNCH =
+            new ExecutionSessionStatus(Value.FAILED_TO_LAUNCH, "FAILED_TO_LAUNCH");
 
-    private final String value;
+    private final Value value;
 
-    ExecutionSessionStatus(String value) {
+    private final String string;
+
+    ExecutionSessionStatus(Value value, String string) {
         this.value = value;
+        this.string = string;
     }
 
-    @JsonValue
+    public Value getEnumValue() {
+        return value;
+    }
+
     @java.lang.Override
+    @JsonValue
     public String toString() {
-        return this.value;
+        return this.string;
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        return (this == other)
+                || (other instanceof ExecutionSessionStatus
+                        && this.string.equals(((ExecutionSessionStatus) other).string));
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return this.string.hashCode();
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        switch (value) {
+            case LIVE_CONTAINER:
+                return visitor.visitLiveContainer();
+            case PENDING_CONTAINER:
+                return visitor.visitPendingContainer();
+            case CREATING_CONTAINER:
+                return visitor.visitCreatingContainer();
+            case PROVISIONING_CONTAINER:
+                return visitor.visitProvisioningContainer();
+            case RUNNING_CONTAINER:
+                return visitor.visitRunningContainer();
+            case FAILED_TO_LAUNCH:
+                return visitor.visitFailedToLaunch();
+            case UNKNOWN:
+            default:
+                return visitor.visitUnknown(string);
+        }
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static ExecutionSessionStatus valueOf(String value) {
+        switch (value) {
+            case "LIVE_CONTAINER":
+                return LIVE_CONTAINER;
+            case "PENDING_CONTAINER":
+                return PENDING_CONTAINER;
+            case "CREATING_CONTAINER":
+                return CREATING_CONTAINER;
+            case "PROVISIONING_CONTAINER":
+                return PROVISIONING_CONTAINER;
+            case "RUNNING_CONTAINER":
+                return RUNNING_CONTAINER;
+            case "FAILED_TO_LAUNCH":
+                return FAILED_TO_LAUNCH;
+            default:
+                return new ExecutionSessionStatus(Value.UNKNOWN, value);
+        }
+    }
+
+    public enum Value {
+        CREATING_CONTAINER,
+
+        PROVISIONING_CONTAINER,
+
+        PENDING_CONTAINER,
+
+        RUNNING_CONTAINER,
+
+        LIVE_CONTAINER,
+
+        FAILED_TO_LAUNCH,
+
+        UNKNOWN
+    }
+
+    public interface Visitor<T> {
+        T visitCreatingContainer();
+
+        T visitProvisioningContainer();
+
+        T visitPendingContainer();
+
+        T visitRunningContainer();
+
+        T visitLiveContainer();
+
+        T visitFailedToLaunch();
+
+        T visitUnknown(String unknownType);
     }
 }

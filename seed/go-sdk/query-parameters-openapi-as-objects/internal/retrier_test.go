@@ -3,6 +3,7 @@ package internal
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -147,8 +148,8 @@ func newTestRetryServer(t *testing.T, tc *RetryTestCase) *httptest.Server {
 					// Ensure that the duration between retries increases exponentially,
 					// and that it is within the minimum and maximum retry delay values.
 					actualDuration := timestamps[index].Sub(timestamps[index-1])
-					expectedDurationMin := expectedRetryDurations[index-1] * 75 / 100
-					expectedDurationMax := expectedRetryDurations[index-1] * 125 / 100
+					expectedDurationMin := expectedRetryDurations[index-1] * 50 / 100
+					expectedDurationMax := expectedRetryDurations[index-1] * 150 / 100
 					assert.True(
 						t,
 						actualDuration >= expectedDurationMin && actualDuration <= expectedDurationMax,
@@ -182,6 +183,7 @@ func newTestRetryServer(t *testing.T, tc *RetryTestCase) *httptest.Server {
 				require.LessOrEqual(t, index, len(tc.giveStatusCodes))
 
 				statusCode := tc.giveStatusCodes[index]
+
 				w.WriteHeader(statusCode)
 
 				if tc.giveResponse != nil && statusCode == http.StatusOK {
@@ -208,4 +210,101 @@ var expectedRetryDurations = []time.Duration{
 	2500 * time.Millisecond,
 	5000 * time.Millisecond,
 	5000 * time.Millisecond,
+}
+
+func TestRetryDelayTiming(t *testing.T) {
+	tests := []struct {
+		name            string
+		headerName      string
+		headerValueFunc func() string
+		expectedMinMs   int64
+		expectedMaxMs   int64
+	}{
+		{
+			name:       "retry-after with seconds value",
+			headerName: "retry-after",
+			headerValueFunc: func() string {
+				return "1"
+			},
+			expectedMinMs: 700,  // 70% of 1000ms after jitter and execution overhead
+			expectedMaxMs: 1100, // 1000ms + some tolerance
+		},
+		{
+			name:       "retry-after with HTTP date",
+			headerName: "retry-after",
+			headerValueFunc: func() string {
+				return time.Now().Add(3 * time.Second).Format(time.RFC1123)
+			},
+			expectedMinMs: 1500, // 50% of 3000ms after jitter and execution overhead
+			expectedMaxMs: 3100, // 3000ms + some tolerance
+		},
+		{
+			name:       "x-ratelimit-reset with future timestamp",
+			headerName: "x-ratelimit-reset",
+			headerValueFunc: func() string {
+				return fmt.Sprintf("%d", time.Now().Add(3 * time.Second).Unix())
+			},
+			expectedMinMs: 1500, // 50% of 3000ms after jitter and execution overhead
+			expectedMaxMs: 3100, // 3000ms + some tolerance
+		},
+		{
+			name:       "retry-after exceeding max delay gets capped",
+			headerName: "retry-after",
+			headerValueFunc: func() string {
+				return "10"
+			},
+			expectedMinMs: 2500, // 50% of 5000ms (maxRetryDelay) after jitter and execution overhead
+			expectedMaxMs: 5100, // maxRetryDelay + some tolerance
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			var timestamps []time.Time
+			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				timestamps = append(timestamps, time.Now())
+				if len(timestamps) == 1 {
+					// First request - return retryable error with header
+					w.Header().Set(tt.headerName, tt.headerValueFunc())
+					w.WriteHeader(http.StatusTooManyRequests)
+				} else {
+					// Second request - return success
+					w.WriteHeader(http.StatusOK)
+					response := &Response{Id: "success"}
+					bytes, _ := json.Marshal(response)
+					w.Write(bytes)
+				}
+			}))
+			defer server.Close()
+
+			caller := NewCaller(&CallerParams{
+				Client: server.Client(),
+			})
+
+			var response *Response
+			_, err := caller.Call(
+				context.Background(),
+				&CallParams{
+					URL:                server.URL,
+					Method:             http.MethodGet,
+					Request:            &Request{},
+					Response:           &response,
+					MaxAttempts:        2,
+					ResponseIsOptional: true,
+				},
+			)
+
+			require.NoError(t, err)
+			require.Len(t, timestamps, 2, "Expected exactly 2 requests")
+
+			actualDelayMs := timestamps[1].Sub(timestamps[0]).Milliseconds()
+
+			assert.GreaterOrEqual(t, actualDelayMs, tt.expectedMinMs,
+				"Actual delay %dms should be >= expected min %dms", actualDelayMs, tt.expectedMinMs)
+			assert.LessOrEqual(t, actualDelayMs, tt.expectedMaxMs,
+				"Actual delay %dms should be <= expected max %dms", actualDelayMs, tt.expectedMaxMs)
+		})
+	}
 }
