@@ -2,8 +2,7 @@
   "title": "Squidex API",
   "servers": [
     {
-      "url": "https://localhost:5001",
-      "type": "single"
+      "url": "https://localhost:5001"
     }
   ],
   "websocketServers": [],

@@ -30,7 +30,7 @@
               "source": {
                 "openapi": "../openapi.yml",
               },
-              "url": undefined,
+              "url": "Debug",
             },
           },
           "source": {
@@ -52,6 +52,7 @@
         docs: A response
         type: string
         status-code: 200
+      url: Debug
       examples:
         - response:
             body: string
@@ -141,13 +142,14 @@
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "default-environment": "Default",
+      "default-environment": "Prod",
       "default-url": "Base",
       "display-name": "Test API",
       "environments": {
-        "Default": {
+        "Prod": {
           "urls": {
             "Base": "http://prod.api.com",
+            "Debug": "http://debug.api.com",
             "Default": "wss://api2.async.com",
           },
         },
@@ -163,11 +165,12 @@ error-discrimination:
   strategy: status-code
 display-name: Test API
 environments:
-  Default:
+  Prod:
     urls:
       Base: http://prod.api.com
+      Debug: http://debug.api.com
       Default: wss://api2.async.com
-default-environment: Default
+default-environment: Prod
 default-url: Base
 ",
   },

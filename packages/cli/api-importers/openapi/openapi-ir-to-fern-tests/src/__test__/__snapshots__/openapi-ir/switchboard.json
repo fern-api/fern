@@ -2,8 +2,7 @@
   "title": "Browser Control API",
   "servers": [
     {
-      "url": "https://api.airtop.ai/v1",
-      "type": "single"
+      "url": "https://api.airtop.ai/v1"
     }
   ],
   "websocketServers": [],

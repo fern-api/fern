@@ -2,8 +2,7 @@
   "title": "Vectara REST API v2",
   "servers": [
     {
-      "url": "https://api.streamingtest.io",
-      "type": "single"
+      "url": "https://api.streamingtest.io"
     }
   ],
   "websocketServers": [],

@@ -24484,28 +24484,28 @@
     }
   },
   "environments": {
-    "defaultEnvironment": "Production",
+    "defaultEnvironment": "Default",
     "environments": {
       "environments": [
         {
-          "id": "Production",
+          "id": "Default",
           "name": {
-            "originalName": "Production",
+            "originalName": "Default",
             "camelCase": {
-              "unsafeName": "production",
-              "safeName": "production"
+              "unsafeName": "default",
+              "safeName": "default"
             },
             "snakeCase": {
-              "unsafeName": "production",
-              "safeName": "production"
+              "unsafeName": "default",
+              "safeName": "default"
             },
             "screamingSnakeCase": {
-              "unsafeName": "PRODUCTION",
-              "safeName": "PRODUCTION"
+              "unsafeName": "DEFAULT",
+              "safeName": "DEFAULT"
             },
             "pascalCase": {
-              "unsafeName": "Production",
-              "safeName": "Production"
+              "unsafeName": "Default",
+              "safeName": "Default"
             }
           },
           "url": "https://api.val.town"
@@ -40426,28 +40426,28 @@
     },
     "pathParameters": [],
     "environments": {
-      "defaultEnvironment": "Production",
+      "defaultEnvironment": "Default",
       "environments": {
         "environments": [
           {
-            "id": "Production",
+            "id": "Default",
             "name": {
-              "originalName": "Production",
+              "originalName": "Default",
               "camelCase": {
-                "unsafeName": "production",
-                "safeName": "production"
+                "unsafeName": "default",
+                "safeName": "default"
               },
               "snakeCase": {
-                "unsafeName": "production",
-                "safeName": "production"
+                "unsafeName": "default",
+                "safeName": "default"
               },
               "screamingSnakeCase": {
-                "unsafeName": "PRODUCTION",
-                "safeName": "PRODUCTION"
+                "unsafeName": "DEFAULT",
+                "safeName": "DEFAULT"
               },
               "pascalCase": {
-                "unsafeName": "Production",
-                "safeName": "Production"
+                "unsafeName": "Default",
+                "safeName": "Default"
               }
             },
             "url": "https://api.val.town"

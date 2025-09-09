@@ -1607,28 +1607,28 @@
     }
   },
   "environments": {
-    "defaultEnvironment": "Test API",
+    "defaultEnvironment": "Default",
     "environments": {
       "environments": [
         {
-          "id": "Test API",
+          "id": "Default",
           "name": {
-            "originalName": "Test API",
+            "originalName": "Default",
             "camelCase": {
-              "unsafeName": "testAPI",
-              "safeName": "testAPI"
+              "unsafeName": "default",
+              "safeName": "default"
             },
             "snakeCase": {
-              "unsafeName": "test_api",
-              "safeName": "test_api"
+              "unsafeName": "default",
+              "safeName": "default"
             },
             "screamingSnakeCase": {
-              "unsafeName": "TEST_API",
-              "safeName": "TEST_API"
+              "unsafeName": "DEFAULT",
+              "safeName": "DEFAULT"
             },
             "pascalCase": {
-              "unsafeName": "TestAPI",
-              "safeName": "TestAPI"
+              "unsafeName": "Default",
+              "safeName": "Default"
             }
           },
           "url": "https://api.test.com"
@@ -1954,28 +1954,28 @@
     },
     "pathParameters": [],
     "environments": {
-      "defaultEnvironment": "Test API",
+      "defaultEnvironment": "Default",
       "environments": {
         "environments": [
           {
-            "id": "Test API",
+            "id": "Default",
             "name": {
-              "originalName": "Test API",
+              "originalName": "Default",
               "camelCase": {
-                "unsafeName": "testAPI",
-                "safeName": "testAPI"
+                "unsafeName": "default",
+                "safeName": "default"
               },
               "snakeCase": {
-                "unsafeName": "test_api",
-                "safeName": "test_api"
+                "unsafeName": "default",
+                "safeName": "default"
               },
               "screamingSnakeCase": {
-                "unsafeName": "TEST_API",
-                "safeName": "TEST_API"
+                "unsafeName": "DEFAULT",
+                "safeName": "DEFAULT"
               },
               "pascalCase": {
-                "unsafeName": "TestAPI",
-                "safeName": "TestAPI"
+                "unsafeName": "Default",
+                "safeName": "Default"
               }
             },
             "url": "https://api.test.com"

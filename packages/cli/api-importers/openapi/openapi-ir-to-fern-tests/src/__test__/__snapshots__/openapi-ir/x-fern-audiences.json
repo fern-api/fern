@@ -3,17 +3,17 @@
   "servers": [
     {
       "url": "https://api.com",
+      "name": "production",
       "audiences": [
         "public"
-      ],
-      "type": "single"
+      ]
     },
     {
       "url": "https://private.api.com",
+      "name": "sandbox",
       "audiences": [
         "private"
-      ],
-      "type": "single"
+      ]
     }
   ],
   "websocketServers": [],

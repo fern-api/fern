@@ -40,11 +40,6 @@ function getServerName(
     server: OpenAPIV3.ServerObject,
     options?: { groupMultiApiEnvironments?: boolean }
 ): string | undefined {
-    // Only return server names when multi-API environment grouping is enabled
-    if (!options?.groupMultiApiEnvironments) {
-        return undefined;
-    }
-
     const name = getExtension<string>(server, [
         FernOpenAPIExtension.SERVER_NAME_V1,
         FernOpenAPIExtension.SERVER_NAME_V2
@@ -54,8 +49,8 @@ function getServerName(
         return name;
     }
 
-    // Use the description as the server name
-    if (server.description != null && server.description.trim() !== "") {
+    // Only use the description as the server name when multi-API environment grouping is enabled
+    if (options?.groupMultiApiEnvironments && server.description != null && server.description.trim() !== "") {
         // Normalize common environment names
         const desc = server.description.toLowerCase();
         if (desc === "production" || desc === "prd") {

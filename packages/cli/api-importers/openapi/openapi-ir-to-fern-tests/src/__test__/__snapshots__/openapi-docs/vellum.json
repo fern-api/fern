@@ -370,6 +370,7 @@ Executes a deployed Workflow and streams back its results.",
               "source": {
                 "openapi": "../openapi.yml",
               },
+              "url": "Predict",
             },
             "generate": {
               "auth": true,
@@ -467,6 +468,7 @@ Generate a completion using a previously defined deployment.
               "source": {
                 "openapi": "../openapi.yml",
               },
+              "url": "Predict",
             },
             "generate-stream": {
               "auth": true,
@@ -564,6 +566,7 @@ Generate a stream of completions using a previously defined deployment.
               "source": {
                 "openapi": "../openapi.yml",
               },
+              "url": "Predict",
             },
             "search": {
               "auth": true,
@@ -656,6 +659,7 @@ Perform a search against a document index.
               "source": {
                 "openapi": "../openapi.yml",
               },
+              "url": "Predict",
             },
             "submit-completion-actuals": {
               "auth": true,
@@ -719,6 +723,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "source": {
                 "openapi": "../openapi.yml",
               },
+              "url": "Predict",
             },
           },
           "source": {
@@ -2829,6 +2834,7 @@ Used to submit feedback regarding the quality of previously generated completion
         docs: ''
         type: WorkflowStreamEvent
         format: json
+      url: Predict
       examples:
         - request:
             inputs:
@@ -2902,6 +2908,7 @@ Used to submit feedback regarding the quality of previously generated completion
         docs: ''
         type: GenerateResponse
         status-code: 200
+      url: Predict
       errors:
         - GenerateRequestBadRequestError
         - GenerateRequestForbiddenError
@@ -2970,6 +2977,7 @@ Used to submit feedback regarding the quality of previously generated completion
         docs: ''
         type: GenerateStreamResponse
         format: json
+      url: Predict
       errors:
         - GenerateStreamRequestBadRequestError
         - GenerateStreamRequestForbiddenError
@@ -3038,6 +3046,7 @@ Used to submit feedback regarding the quality of previously generated completion
         docs: ''
         type: SearchResponse
         status-code: 200
+      url: Predict
       errors:
         - SearchRequestBadRequestError
         - SearchRequestNotFoundError
@@ -3094,6 +3103,7 @@ Used to submit feedback regarding the quality of previously generated completion
                 completions
               type: list<SubmitCompletionActualRequest>
         content-type: application/json
+      url: Predict
       errors:
         - SubmitCompletionActualsRequestBadRequestError
         - SubmitCompletionActualsRequestNotFoundError
@@ -5189,6 +5199,7 @@ Upload a document to be indexed and used for search.
               "source": {
                 "openapi": "../openapi.yml",
               },
+              "url": "Documents",
             },
           },
           "source": {
@@ -5307,6 +5318,7 @@ service:
         docs: ''
         type: root.UploadDocumentResponse
         status-code: 201
+      url: Documents
       errors:
         - root.DocumentsUploadRequestBadRequestError
         - root.DocumentsUploadRequestNotFoundError
@@ -6467,23 +6479,35 @@ service:
         },
       },
       "default-environment": "Default",
+      "default-url": "Base",
       "display-name": "Vellum Client API",
       "environments": {
-        "Default": "https://api.vellum.ai",
+        "Default": {
+          "urls": {
+            "Base": "https://api.vellum.ai",
+            "Documents": "https://documents.vellum.ai",
+            "Predict": "https://predict.vellum.ai",
+          },
+        },
       },
       "error-discrimination": {
         "strategy": "status-code",
       },
       "name": "api",
     },
-    "defaultUrl": undefined,
+    "defaultUrl": "Base",
     "rawContents": "name: api
 error-discrimination:
   strategy: status-code
 display-name: Vellum Client API
 environments:
-  Default: https://api.vellum.ai
+  Default:
+    urls:
+      Base: https://api.vellum.ai
+      Predict: https://predict.vellum.ai
+      Documents: https://documents.vellum.ai
 default-environment: Default
+default-url: Base
 auth-schemes:
   apiKeyAuth:
     header: X_API_KEY

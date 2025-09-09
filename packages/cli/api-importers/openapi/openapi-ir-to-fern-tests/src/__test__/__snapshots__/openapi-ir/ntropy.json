@@ -3,8 +3,7 @@
   "servers": [
     {
       "url": "https://api.ntropy.com",
-      "description": "Production server (uses live data).",
-      "type": "single"
+      "description": "Production server (uses live data)."
     }
   ],
   "websocketServers": [],

@@ -3,8 +3,7 @@
   "description": "",
   "servers": [
     {
-      "url": "https://sandbox.api.flagright.com",
-      "type": "single"
+      "url": "https://sandbox.api.flagright.com"
     }
   ],
   "websocketServers": [],

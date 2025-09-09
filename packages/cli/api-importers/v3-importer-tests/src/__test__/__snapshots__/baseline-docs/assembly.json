@@ -44540,7 +44540,7 @@
     }
   },
   "environments": {
-    "defaultEnvironment": "AssemblyAI API",
+    "defaultEnvironment": "Default",
     "environments": {
       "baseUrls": [
         {
@@ -44566,53 +44566,53 @@
           }
         },
         {
-          "id": "API",
+          "id": "Default",
           "name": {
-            "originalName": "API",
+            "originalName": "Default",
             "camelCase": {
-              "unsafeName": "api",
-              "safeName": "api"
+              "unsafeName": "default",
+              "safeName": "default"
             },
             "snakeCase": {
-              "unsafeName": "api",
-              "safeName": "api"
+              "unsafeName": "default",
+              "safeName": "default"
             },
             "screamingSnakeCase": {
-              "unsafeName": "API",
-              "safeName": "API"
+              "unsafeName": "DEFAULT",
+              "safeName": "DEFAULT"
             },
             "pascalCase": {
-              "unsafeName": "API",
-              "safeName": "API"
+              "unsafeName": "Default",
+              "safeName": "Default"
             }
           }
         }
       ],
       "environments": [
         {
-          "id": "AssemblyAI API",
+          "id": "Default",
           "name": {
-            "originalName": "AssemblyAI API",
+            "originalName": "Default",
             "camelCase": {
-              "unsafeName": "assemblyAiAPI",
-              "safeName": "assemblyAiAPI"
+              "unsafeName": "default",
+              "safeName": "default"
             },
             "snakeCase": {
-              "unsafeName": "assembly_ai_api",
-              "safeName": "assembly_ai_api"
+              "unsafeName": "default",
+              "safeName": "default"
             },
             "screamingSnakeCase": {
-              "unsafeName": "ASSEMBLY_AI_API",
-              "safeName": "ASSEMBLY_AI_API"
+              "unsafeName": "DEFAULT",
+              "safeName": "DEFAULT"
             },
             "pascalCase": {
-              "unsafeName": "AssemblyAiAPI",
-              "safeName": "AssemblyAiAPI"
+              "unsafeName": "Default",
+              "safeName": "Default"
             }
           },
           "urls": {
             "Base": "https://api.assemblyai.com",
-            "API": "wss://api.assemblyai.com/v2/realtime/ws"
+            "Default": "wss://api.assemblyai.com/v2/realtime/ws"
           }
         }
       ],
@@ -44725,7 +44725,7 @@
           }
         ]
       },
-      "baseUrl": "API",
+      "baseUrl": "Default",
       "auth": false,
       "name": {
         "originalName": "userId",
@@ -62701,7 +62701,7 @@
     },
     "pathParameters": [],
     "environments": {
-      "defaultEnvironment": "AssemblyAI API",
+      "defaultEnvironment": "Default",
       "environments": {
         "baseUrls": [
           {
@@ -62727,53 +62727,53 @@
             }
           },
           {
-            "id": "API",
+            "id": "Default",
             "name": {
-              "originalName": "API",
+              "originalName": "Default",
               "camelCase": {
-                "unsafeName": "api",
-                "safeName": "api"
+                "unsafeName": "default",
+                "safeName": "default"
               },
               "snakeCase": {
-                "unsafeName": "api",
-                "safeName": "api"
+                "unsafeName": "default",
+                "safeName": "default"
               },
               "screamingSnakeCase": {
-                "unsafeName": "API",
-                "safeName": "API"
+                "unsafeName": "DEFAULT",
+                "safeName": "DEFAULT"
               },
               "pascalCase": {
-                "unsafeName": "API",
-                "safeName": "API"
+                "unsafeName": "Default",
+                "safeName": "Default"
               }
             }
           }
         ],
         "environments": [
           {
-            "id": "AssemblyAI API",
+            "id": "Default",
             "name": {
-              "originalName": "AssemblyAI API",
+              "originalName": "Default",
               "camelCase": {
-                "unsafeName": "assemblyAiAPI",
-                "safeName": "assemblyAiAPI"
+                "unsafeName": "default",
+                "safeName": "default"
               },
               "snakeCase": {
-                "unsafeName": "assembly_ai_api",
-                "safeName": "assembly_ai_api"
+                "unsafeName": "default",
+                "safeName": "default"
               },
               "screamingSnakeCase": {
-                "unsafeName": "ASSEMBLY_AI_API",
-                "safeName": "ASSEMBLY_AI_API"
+                "unsafeName": "DEFAULT",
+                "safeName": "DEFAULT"
               },
               "pascalCase": {
-                "unsafeName": "AssemblyAiAPI",
-                "safeName": "AssemblyAiAPI"
+                "unsafeName": "Default",
+                "safeName": "Default"
               }
             },
             "urls": {
               "Base": "https://api.assemblyai.com",
-              "API": "wss://api.assemblyai.com/v2/realtime/ws"
+              "Default": "wss://api.assemblyai.com/v2/realtime/ws"
             }
           }
         ],

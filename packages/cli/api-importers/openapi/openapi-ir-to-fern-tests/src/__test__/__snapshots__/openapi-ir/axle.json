@@ -4,12 +4,12 @@
     {
       "url": "https://api.axle.insure",
       "description": "Production",
-      "type": "single"
+      "name": "Production"
     },
     {
       "url": "https://sandbox.axle.insure",
       "description": "Sandbox",
-      "type": "single"
+      "name": "Sandbox"
     }
   ],
   "websocketServers": [],

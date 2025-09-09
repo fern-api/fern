@@ -3,19 +3,19 @@
   "servers": [
     {
       "url": "http://prod.api.com",
-      "type": "single"
+      "name": "Prod"
     },
     {
       "url": "http://dev.api.com",
-      "type": "single"
+      "name": "Dev"
     },
     {
       "url": "http://prod2.api.com",
-      "type": "single"
+      "name": "Prod"
     },
     {
       "url": "http://dev2.api.com",
-      "type": "single"
+      "name": "Dev"
     }
   ],
   "websocketServers": [],

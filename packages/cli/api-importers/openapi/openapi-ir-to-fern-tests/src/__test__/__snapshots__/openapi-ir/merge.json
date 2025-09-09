@@ -5,12 +5,12 @@
     {
       "url": "https://api.merge.dev/api/hris/v1",
       "description": "Production",
-      "type": "single"
+      "name": "Production"
     },
     {
       "url": "https://api-sandbox.merge.dev/api/hris/v1",
       "description": "Sandbox",
-      "type": "single"
+      "name": "Sandbox"
     }
   ],
   "websocketServers": [],

@@ -77286,10 +77286,12 @@ docs: >-
           "scheme": "basic",
         },
       },
-      "default-environment": "Default",
+      "default-environment": "Production",
       "display-name": "Belvo API Docs",
       "environments": {
-        "Default": "https://api.belvo.com",
+        "Development": "https://development.belvo.com",
+        "Production": "https://api.belvo.com",
+        "Sandbox": "https://sandbox.belvo.com",
       },
       "error-discrimination": {
         "strategy": "status-code",
@@ -77302,8 +77304,10 @@ error-discrimination:
   strategy: status-code
 display-name: Belvo API Docs
 environments:
-  Default: https://api.belvo.com
-default-environment: Default
+  Production: https://api.belvo.com
+  Sandbox: https://sandbox.belvo.com
+  Development: https://development.belvo.com
+default-environment: Production
 auth-schemes:
   BasicAuthScheme:
     scheme: basic

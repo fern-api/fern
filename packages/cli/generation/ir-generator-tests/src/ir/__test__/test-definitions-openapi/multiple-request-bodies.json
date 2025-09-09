@@ -2212,29 +2212,29 @@
         }
     },
     "environments": {
-        "defaultEnvironment": "Production server",
+        "defaultEnvironment": "Default",
         "environments": {
             "type": "singleBaseUrl",
             "environments": [
                 {
-                    "id": "Production server",
+                    "id": "Default",
                     "name": {
-                        "originalName": "Production server",
+                        "originalName": "Default",
                         "camelCase": {
-                            "unsafeName": "productionServer",
-                            "safeName": "productionServer"
+                            "unsafeName": "default",
+                            "safeName": "default"
                         },
                         "snakeCase": {
-                            "unsafeName": "production_server",
-                            "safeName": "production_server"
+                            "unsafeName": "default",
+                            "safeName": "default"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "PRODUCTION_SERVER",
-                            "safeName": "PRODUCTION_SERVER"
+                            "unsafeName": "DEFAULT",
+                            "safeName": "DEFAULT"
                         },
                         "pascalCase": {
-                            "unsafeName": "ProductionServer",
-                            "safeName": "ProductionServer"
+                            "unsafeName": "Default",
+                            "safeName": "Default"
                         }
                     },
                     "url": "https://api.example.com/v1",
@@ -2824,29 +2824,29 @@
         },
         "pathParameters": [],
         "environments": {
-            "defaultEnvironment": "Production server",
+            "defaultEnvironment": "Default",
             "environments": {
                 "type": "singleBaseUrl",
                 "environments": [
                     {
-                        "id": "Production server",
+                        "id": "Default",
                         "name": {
-                            "originalName": "Production server",
+                            "originalName": "Default",
                             "camelCase": {
-                                "unsafeName": "productionServer",
-                                "safeName": "productionServer"
+                                "unsafeName": "default",
+                                "safeName": "default"
                             },
                             "snakeCase": {
-                                "unsafeName": "production_server",
-                                "safeName": "production_server"
+                                "unsafeName": "default",
+                                "safeName": "default"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "PRODUCTION_SERVER",
-                                "safeName": "PRODUCTION_SERVER"
+                                "unsafeName": "DEFAULT",
+                                "safeName": "DEFAULT"
                             },
                             "pascalCase": {
-                                "unsafeName": "ProductionServer",
-                                "safeName": "ProductionServer"
+                                "unsafeName": "Default",
+                                "safeName": "Default"
                             }
                         },
                         "url": "https://api.example.com/v1",

@@ -3,8 +3,7 @@
   "description": "API for retrieving user information and authentication tokens",
   "servers": [
     {
-      "url": "https://a.com",
-      "type": "single"
+      "url": "https://a.com"
     }
   ],
   "websocketServers": [],

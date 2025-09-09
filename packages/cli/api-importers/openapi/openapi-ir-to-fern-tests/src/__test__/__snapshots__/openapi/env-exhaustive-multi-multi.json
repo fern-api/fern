@@ -36,7 +36,7 @@
               "source": {
                 "openapi": "../openapi1.yml",
               },
-              "url": undefined,
+              "url": "Debug",
             },
           },
           "source": {
@@ -58,6 +58,7 @@
         docs: A response
         type: string
         status-code: 200
+      url: Debug
       examples:
         - response:
             body: string
@@ -93,7 +94,7 @@
               "source": {
                 "openapi": "../openapi2.yml",
               },
-              "url": undefined,
+              "url": "Debug",
             },
           },
           "source": {
@@ -115,6 +116,7 @@
         docs: A response
         type: string
         status-code: 200
+      url: Debug
       examples:
         - response:
             body: string
@@ -282,14 +284,20 @@
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "default-environment": "Default",
+      "default-environment": "Prod",
       "default-url": "Base",
       "display-name": "Test API",
       "environments": {
-        "Default": {
+        "Dev": {
           "urls": {
-            "Base": "http://prod.api.com",
-            "Default": "wss://api2.async2.com",
+            "Base": "http://dev2.api.com",
+            "Debug": "http://debug2.api.com",
+          },
+        },
+        "Prod": {
+          "urls": {
+            "Base": "http://prod2.api.com",
+            "Debug": "http://debug2.api.com",
           },
         },
       },
@@ -304,11 +312,15 @@ error-discrimination:
   strategy: status-code
 display-name: Test API
 environments:
-  Default:
+  Prod:
     urls:
-      Base: http://prod.api.com
-      Default: wss://api2.async2.com
-default-environment: Default
+      Base: http://prod2.api.com
+      Debug: http://debug2.api.com
+  Dev:
+    urls:
+      Base: http://dev2.api.com
+      Debug: http://debug2.api.com
+default-environment: Prod
 default-url: Base
 ",
   },

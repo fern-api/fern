@@ -4,8 +4,7 @@
   "servers": [
     {
       "url": "https://api.flexport.com",
-      "description": "Flexport API",
-      "type": "single"
+      "description": "Flexport API"
     }
   ],
   "websocketServers": [],

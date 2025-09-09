@@ -258,7 +258,7 @@
         "head": "/test",
         "parts": []
       },
-      "baseUrl": "websocket",
+      "baseUrl": "Default",
       "auth": false,
       "name": {
         "originalName": "testChannel",
@@ -336,7 +336,7 @@
         "head": "/test2",
         "parts": []
       },
-      "baseUrl": "websocket2",
+      "baseUrl": "Default",
       "auth": false,
       "name": {
         "originalName": "testChannel2",

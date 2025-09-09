@@ -62,10 +62,11 @@
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "default-environment": "Default",
+      "default-environment": "Prod",
       "display-name": "Test API",
       "environments": {
-        "Default": "http://prod.api.com",
+        "Dev": "http://dev.api.com",
+        "Prod": "http://prod.api.com",
       },
       "error-discrimination": {
         "strategy": "status-code",
@@ -78,8 +79,9 @@ error-discrimination:
   strategy: status-code
 display-name: Test API
 environments:
-  Default: http://prod.api.com
-default-environment: Default
+  Prod: http://prod.api.com
+  Dev: http://dev.api.com
+default-environment: Prod
 ",
   },
 }

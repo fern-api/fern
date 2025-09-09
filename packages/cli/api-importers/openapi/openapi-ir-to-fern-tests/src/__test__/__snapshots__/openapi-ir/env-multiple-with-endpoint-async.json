@@ -3,11 +3,11 @@
   "servers": [
     {
       "url": "http://prod.api.com",
-      "type": "single"
+      "name": "Prod"
     },
     {
       "url": "http://dev.api.com",
-      "type": "single"
+      "name": "Dev"
     }
   ],
   "websocketServers": [
@@ -54,7 +54,8 @@
       "errors": {},
       "servers": [
         {
-          "url": "http://debug.api.com"
+          "url": "http://debug.api.com",
+          "name": "Debug"
         }
       ],
       "authed": false,

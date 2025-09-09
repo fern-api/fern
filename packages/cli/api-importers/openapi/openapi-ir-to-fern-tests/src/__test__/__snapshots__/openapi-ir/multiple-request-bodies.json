@@ -3,8 +3,7 @@
   "servers": [
     {
       "url": "https://api.example.com/v1",
-      "description": "Production server",
-      "type": "single"
+      "description": "Production server"
     }
   ],
   "websocketServers": [],

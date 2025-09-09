@@ -4,62 +4,62 @@
     {
       "url": "https://fintech.api.example.com",
       "description": "PRD",
-      "type": "single"
+      "name": "PRD"
     },
     {
       "url": "https://fintech-sbx.api.example.com",
       "description": "SBX",
-      "type": "single"
+      "name": "SBX"
     },
     {
       "url": "https://fintech-stg.api.example.com",
       "description": "STG",
-      "type": "single"
+      "name": "STG"
     },
     {
       "url": "https://fintech-prf.api.example.com",
       "description": "PRF",
-      "type": "single"
+      "name": "PRF"
     },
     {
       "url": "https://fintech-e2e.api.example.com",
       "description": "E2E",
-      "type": "single"
+      "name": "E2E"
     },
     {
       "url": "https://fintech-qal.api.example.com",
       "description": "QAL",
-      "type": "single"
+      "name": "QAL"
     },
     {
       "url": "https://payments.api.example.com",
       "description": "PRD",
-      "type": "single"
+      "name": "PRD"
     },
     {
       "url": "https://payments-sbx.api.example.com",
       "description": "SBX",
-      "type": "single"
+      "name": "SBX"
     },
     {
       "url": "https://payments-stg.api.example.com",
       "description": "STG",
-      "type": "single"
+      "name": "STG"
     },
     {
       "url": "https://payments-prf.api.example.com",
       "description": "PRF",
-      "type": "single"
+      "name": "PRF"
     },
     {
       "url": "https://payments-e2e.api.example.com",
       "description": "E2E",
-      "type": "single"
+      "name": "E2E"
     },
     {
       "url": "https://payments-qal.api.example.com",
       "description": "QAL",
-      "type": "single"
+      "name": "QAL"
     }
   ],
   "websocketServers": [],

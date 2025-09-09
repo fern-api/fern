@@ -2,8 +2,7 @@
   "title": "Default Content Type",
   "servers": [
     {
-      "url": "https://ai.com",
-      "type": "single"
+      "url": "https://ai.com"
     }
   ],
   "websocketServers": [],

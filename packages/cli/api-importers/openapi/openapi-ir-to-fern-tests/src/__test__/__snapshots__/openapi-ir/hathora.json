@@ -2,12 +2,10 @@
   "title": "Hathora Cloud API",
   "servers": [
     {
-      "url": "https://api.hathora.dev",
-      "type": "single"
+      "url": "https://api.hathora.dev"
     },
     {
-      "url": "/",
-      "type": "single"
+      "url": "/"
     }
   ],
   "websocketServers": [],

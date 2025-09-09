@@ -22197,24 +22197,24 @@
           }
         },
         {
-          "id": "prod",
+          "id": "Default",
           "name": {
-            "originalName": "prod",
+            "originalName": "Default",
             "camelCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
+              "unsafeName": "default",
+              "safeName": "default"
             },
             "snakeCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
+              "unsafeName": "default",
+              "safeName": "default"
             },
             "screamingSnakeCase": {
-              "unsafeName": "PROD",
-              "safeName": "PROD"
+              "unsafeName": "DEFAULT",
+              "safeName": "DEFAULT"
             },
             "pascalCase": {
-              "unsafeName": "Prod",
-              "safeName": "Prod"
+              "unsafeName": "Default",
+              "safeName": "Default"
             }
           }
         }
@@ -22243,7 +22243,7 @@
           },
           "urls": {
             "Base": "https://api.hume.ai",
-            "prod": "wss://api.hume.ai/v0/evi"
+            "Default": "wss://api.hume.ai/v0/evi"
           }
         }
       ],
@@ -22367,7 +22367,7 @@
         "head": "/chat",
         "parts": []
       },
-      "baseUrl": "prod",
+      "baseUrl": "Default",
       "auth": false,
       "name": {
         "originalName": "chat",
@@ -37774,24 +37774,24 @@
             }
           },
           {
-            "id": "prod",
+            "id": "Default",
             "name": {
-              "originalName": "prod",
+              "originalName": "Default",
               "camelCase": {
-                "unsafeName": "prod",
-                "safeName": "prod"
+                "unsafeName": "default",
+                "safeName": "default"
               },
               "snakeCase": {
-                "unsafeName": "prod",
-                "safeName": "prod"
+                "unsafeName": "default",
+                "safeName": "default"
               },
               "screamingSnakeCase": {
-                "unsafeName": "PROD",
-                "safeName": "PROD"
+                "unsafeName": "DEFAULT",
+                "safeName": "DEFAULT"
               },
               "pascalCase": {
-                "unsafeName": "Prod",
-                "safeName": "Prod"
+                "unsafeName": "Default",
+                "safeName": "Default"
               }
             }
           }
@@ -37820,7 +37820,7 @@
             },
             "urls": {
               "Base": "https://api.hume.ai",
-              "prod": "wss://api.hume.ai/v0/evi"
+              "Default": "wss://api.hume.ai/v0/evi"
             }
           }
         ],

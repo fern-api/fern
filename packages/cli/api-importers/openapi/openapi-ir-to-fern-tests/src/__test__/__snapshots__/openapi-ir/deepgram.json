@@ -4,8 +4,7 @@
   "servers": [
     {
       "url": "https://api.deepgram.com",
-      "description": "Deepgram Production API",
-      "type": "single"
+      "description": "Deepgram Production API"
     }
   ],
   "websocketServers": [

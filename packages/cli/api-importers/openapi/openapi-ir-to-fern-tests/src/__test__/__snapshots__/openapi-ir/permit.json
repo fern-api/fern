@@ -3,8 +3,7 @@
   "description": "\nAuthorization as a service\n",
   "servers": [
     {
-      "url": "https://api.permit.io",
-      "type": "single"
+      "url": "https://api.permit.io"
     }
   ],
   "websocketServers": [],

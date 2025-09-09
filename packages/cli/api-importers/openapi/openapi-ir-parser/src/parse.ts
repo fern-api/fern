@@ -278,14 +278,58 @@ function merge(
 ): OpenApiIntermediateRepresentation {
     // Only perform multi-API environment grouping if the feature flag is enabled
     const shouldGroupEnvironments = options?.groupMultiApiEnvironments === true;
-    const hasMultipleApis = shouldGroupEnvironments && detectMultipleBaseUrls(ir1.servers, ir2.servers);
+    
+    // When flag is disabled, use the original simple merge behavior
+    if (!shouldGroupEnvironments) {
+        return {
+            apiVersion: ir1.apiVersion ?? ir2.apiVersion,
+            title: ir1.title ?? ir2.title,
+            description: ir1.description ?? ir2.description,
+            basePath: ir1.basePath ?? ir2.basePath,
+            servers: [...ir1.servers, ...ir2.servers],
+            websocketServers: [...ir1.websocketServers, ...ir2.websocketServers],
+            tags: {
+                tagsById: {
+                    ...ir1.tags.tagsById,
+                    ...ir2.tags.tagsById
+                },
+                orderedTagIds:
+                    ir1.tags.orderedTagIds == null && ir2.tags.orderedTagIds == null
+                        ? undefined
+                        : [...(ir1.tags.orderedTagIds ?? []), ...(ir2.tags.orderedTagIds ?? [])]
+            },
+            hasEndpointsMarkedInternal: ir1.hasEndpointsMarkedInternal || ir2.hasEndpointsMarkedInternal,
+            endpoints: [...ir1.endpoints, ...ir2.endpoints],
+            webhooks: [...ir1.webhooks, ...ir2.webhooks],
+            channels: {
+                ...ir1.channels,
+                ...ir2.channels
+            },
+            groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas),
+            variables: {
+                ...ir1.variables,
+                ...ir2.variables
+            },
+            nonRequestReferencedSchemas: new Set([...ir1.nonRequestReferencedSchemas, ...ir2.nonRequestReferencedSchemas]),
+            securitySchemes: {
+                ...ir1.securitySchemes,
+                ...ir2.securitySchemes
+            },
+            globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
+            idempotencyHeaders:
+                ir1.idempotencyHeaders != null ? [...ir1.idempotencyHeaders, ...(ir2.idempotencyHeaders ?? [])] : undefined,
+            groups: {
+                ...ir1.groups,
+                ...ir2.groups
+            }
+        };
+    }
 
-    let mergedServers: MergedServer[] = [];
-    let mergedEndpoints: TypedEndpoint[] = ir1.endpoints
-        .map((e) => ({ ...e, type: "standard" as const }))
-        .concat(ir2.endpoints.map((e) => ({ ...e, type: "standard" as const })));
-
+    // Only do complex merging when flag is enabled
+    const hasMultipleApis = detectMultipleBaseUrls(ir1.servers, ir2.servers);
     if (hasMultipleApis) {
+        let mergedServers: MergedServer[] = [];
+        let mergedEndpoints: TypedEndpoint[] = [];
         const api1Name = extractApiNameFromServers(ir1.servers);
         const api2Name = extractApiNameFromServers(ir2.servers);
 
@@ -347,27 +391,81 @@ function merge(
         }));
 
         mergedEndpoints = [...ir1EndpointsWithApiTag, ...ir2EndpointsWithApiTag];
-    } else {
-        mergedServers = ir1.servers
-            .map((s) => ({ ...s, type: "single" as const }))
-            .concat(ir2.servers.map((s) => ({ ...s, type: "single" as const })));
+
+        // Return with grouped servers and endpoints
+        return {
+            apiVersion: ir1.apiVersion ?? ir2.apiVersion,
+            title: ir1.title ?? ir2.title,
+            description: ir1.description ?? ir2.description,
+            basePath: ir1.basePath ?? ir2.basePath,
+            servers: mergedServers.map((s) => {
+                if (s.type === "single") {
+                    return s;
+                } else {
+                    // Preserve grouped server structure for buildEnvironments.ts
+                    // Cast to any then to Server to preserve all properties
+                    // biome-ignore lint/suspicious/noExplicitAny: Required to preserve grouped server metadata through type system
+                    return s as any as Server;
+                }
+            }),
+            websocketServers: [...ir1.websocketServers, ...ir2.websocketServers],
+            tags: {
+                tagsById: {
+                    ...ir1.tags.tagsById,
+                    ...ir2.tags.tagsById
+                },
+                orderedTagIds:
+                    ir1.tags.orderedTagIds == null && ir2.tags.orderedTagIds == null
+                        ? undefined
+                        : [...(ir1.tags.orderedTagIds ?? []), ...(ir2.tags.orderedTagIds ?? [])]
+            },
+            hasEndpointsMarkedInternal: ir1.hasEndpointsMarkedInternal || ir2.hasEndpointsMarkedInternal,
+            endpoints: mergedEndpoints.map((e) => {
+                if (e.type === "multi-api") {
+                    const { type, apiName, servers, ...endpoint } = e;
+                    return { ...endpoint, __apiName: apiName, servers } as unknown as Endpoint;
+                }
+                const { type, ...endpoint } = e;
+                return endpoint;
+            }),
+            webhooks: [...ir1.webhooks, ...ir2.webhooks],
+            channels: {
+                ...ir1.channels,
+                ...ir2.channels
+            },
+            groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas),
+            variables: {
+                ...ir1.variables,
+                ...ir2.variables
+            },
+            nonRequestReferencedSchemas: new Set([
+                ...ir1.nonRequestReferencedSchemas,
+                ...ir2.nonRequestReferencedSchemas
+            ]),
+            securitySchemes: {
+                ...ir1.securitySchemes,
+                ...ir2.securitySchemes
+            },
+            globalHeaders:
+                ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
+            idempotencyHeaders:
+                ir1.idempotencyHeaders != null
+                    ? [...ir1.idempotencyHeaders, ...(ir2.idempotencyHeaders ?? [])]
+                    : undefined,
+            groups: {
+                ...ir1.groups,
+                ...ir2.groups
+            }
+        };
     }
 
+    // When not grouping, just concatenate without modification
     return {
         apiVersion: ir1.apiVersion ?? ir2.apiVersion,
         title: ir1.title ?? ir2.title,
         description: ir1.description ?? ir2.description,
         basePath: ir1.basePath ?? ir2.basePath,
-        servers: mergedServers.map((s) => {
-            if (s.type === "single") {
-                return s;
-            } else {
-                // Preserve grouped server structure for buildEnvironments.ts
-                // Cast to any then to Server to preserve all properties
-                // biome-ignore lint/suspicious/noExplicitAny: Required to preserve grouped server metadata through type system
-                return s as any as Server;
-            }
-        }),
+        servers: [...ir1.servers, ...ir2.servers],
         websocketServers: [...ir1.websocketServers, ...ir2.websocketServers],
         tags: {
             tagsById: {
@@ -380,14 +478,7 @@ function merge(
                     : [...(ir1.tags.orderedTagIds ?? []), ...(ir2.tags.orderedTagIds ?? [])]
         },
         hasEndpointsMarkedInternal: ir1.hasEndpointsMarkedInternal || ir2.hasEndpointsMarkedInternal,
-        endpoints: mergedEndpoints.map((e) => {
-            if (e.type === "multi-api") {
-                const { type, apiName, servers, ...endpoint } = e;
-                return { ...endpoint, __apiName: apiName, servers } as unknown as Endpoint;
-            }
-            const { type, ...endpoint } = e;
-            return endpoint;
-        }),
+        endpoints: [...ir1.endpoints, ...ir2.endpoints],
         webhooks: [...ir1.webhooks, ...ir2.webhooks],
         channels: {
             ...ir1.channels,
