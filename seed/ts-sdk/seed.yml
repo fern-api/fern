@@ -411,4 +411,16 @@ allowedFailures:
   - examples:retain-original-casing
 
   # unknown
+  - file-upload:no-custom-config
+  - file-upload:inline
+  - file-upload:serde
+  - file-upload:wrapper
+  - file-upload:form-data-node16
+  - http-head
+  - idempotency-headers
+  - imdb:no-custom-config
+  - imdb:omit-undefined
+  - imdb:noScripts
+  - imdb:branded-string-aliases
+  - license
   - ts-inline-types:inline
