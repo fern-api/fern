@@ -65,6 +65,12 @@ export interface ParseOpenAPIOptions {
      * If true, preserve the oneOf structure when there is only one schema in the oneOf array.
      */
     preserveSingleSchemaOneOf: boolean;
+
+    /**
+     * If true, automatically group multiple APIs with matching environments into unified environments with multiple base URLs.
+     * This is useful for organizations with multiple APIs deployed to the same set of environments.
+     */
+    groupMultiApiEnvironments: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -91,7 +97,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     additionalPropertiesDefaultsTo: false,
     typeDatesAsStrings: true,
     preserveSingleSchemaOneOf: false,
-    inlineAllOfSchemas: false
+    inlineAllOfSchemas: false,
+    groupMultiApiEnvironments: false
 };
 
 export function getParseOptions({
@@ -176,6 +183,10 @@ export function getParseOptions({
         inlineAllOfSchemas:
             overrides?.inlineAllOfSchemas ??
             options?.inlineAllOfSchemas ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.inlineAllOfSchemas
+            DEFAULT_PARSE_OPENAPI_SETTINGS.inlineAllOfSchemas,
+        groupMultiApiEnvironments:
+            overrides?.groupMultiApiEnvironments ??
+            options?.groupMultiApiEnvironments ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.groupMultiApiEnvironments
     };
 }

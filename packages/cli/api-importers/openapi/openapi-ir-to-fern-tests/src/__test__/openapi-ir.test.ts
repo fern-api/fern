@@ -49,7 +49,9 @@ describe("openapi-ir-in-memory", async () => {
         "multiple-specs",
         "env-exhaustive-stress-test",
         "env-exhaustive-multi-multi",
-        "additionalProperties"
+        "additionalProperties",
+        "multi-api-environment-grouping",
+        "multi-api-environment-no-grouping"
     ]);
     for (const fixture of await readdir(FIXTURES_DIR, { withFileTypes: true })) {
         if (
