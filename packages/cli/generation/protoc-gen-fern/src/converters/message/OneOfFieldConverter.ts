@@ -1,11 +1,12 @@
 import { FieldDescriptorProto } from "@bufbuild/protobuf/wkt";
 
-import { Type, TypeId, UndiscriminatedUnionMember } from "@fern-api/ir-sdk";
+import { Availability, Type, TypeId, UndiscriminatedUnionMember } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v3-importer-commons";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { EnumOrMessageConverter } from "./EnumOrMessageConverter";
 import { FieldConverter } from "./FieldConverter";
+import { ProtoAvailabilityOptions, getAvailability } from "../../commons/availability";
 
 export declare namespace OneOfFieldConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
@@ -17,6 +18,7 @@ export declare namespace OneOfFieldConverter {
         type: Type;
         referencedTypes: Set<TypeId>;
         inlinedTypes: Record<TypeId, EnumOrMessageConverter.ConvertedSchema>;
+        availability: Availability | undefined;
     }
 }
 
@@ -57,7 +59,14 @@ export class OneOfFieldConverter extends AbstractConverter<ProtofileConverterCon
                 members: unionTypes
             }),
             referencedTypes: new Set<TypeId>(),
-            inlinedTypes: {}
+            inlinedTypes: {},
+            availability: getAvailability(this.getProtoAvailabilityOptions())
         };
+    }
+
+    private getProtoAvailabilityOptions(): ProtoAvailabilityOptions | undefined {
+        return {
+            deprecated: this.oneOfFields.every(field => field.options?.deprecated)
+        }
     }
 }

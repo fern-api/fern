@@ -8,6 +8,7 @@ import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { ArrayFieldConverter } from "./ArrayFieldConverter";
 import { EnumOrMessageConverter } from "./EnumOrMessageConverter";
 import { PrimitiveFieldConverter } from "./PrimitiveFieldConverter";
+import { getAvailability } from "../../commons/availability";
 
 export declare namespace FieldConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
@@ -53,7 +54,8 @@ export class FieldConverter extends AbstractConverter<ProtofileConverterContext,
                     type: this.wrapAsOptional
                         ? this.wrapInOptional(convertedArrayField.typeReference)
                         : convertedArrayField.typeReference,
-                    inlinedTypes: convertedArrayField.inlinedTypes
+                    inlinedTypes: convertedArrayField.inlinedTypes,
+                    availability: getAvailability(this.field.options)
                 };
             }
         }
@@ -69,7 +71,8 @@ export class FieldConverter extends AbstractConverter<ProtofileConverterContext,
             if (convertedType != null) {
                 return {
                     type: this.wrapAsOptional ? this.wrapInOptional(convertedType) : convertedType,
-                    inlinedTypes: {}
+                    inlinedTypes: {},
+                    availability: getAvailability(this.field.options)
                 };
             }
         }
@@ -86,7 +89,8 @@ export class FieldConverter extends AbstractConverter<ProtofileConverterContext,
             if (typeReference.ok) {
                 return {
                     type: this.wrapAsOptional ? this.wrapInOptional(typeReference.reference) : typeReference.reference,
-                    inlinedTypes: {}
+                    inlinedTypes: {},
+                    availability: getAvailability(this.field.options)
                 };
             }
         }
