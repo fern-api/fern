@@ -5815,7 +5815,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -5846,7 +5847,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -5909,7 +5911,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -5940,7 +5943,8 @@
                                 "type": "named",
                                 "value": "type_:PostRootRequestBarInnerBar"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -6003,7 +6007,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -6034,7 +6039,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -6097,7 +6103,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -6128,7 +6135,8 @@
                                 "type": "named",
                                 "value": "type_:PostRootResponseBarInnerBar"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -6191,7 +6199,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -6222,7 +6231,8 @@
                                 "type": "named",
                                 "value": "type_:PostRootResponseBar"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -6337,7 +6347,8 @@
                                 "type": "primitive",
                                 "value": "INTEGER"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -6368,7 +6379,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -6406,7 +6418,8 @@
                                     "value": "type_:Schema1InlineUnionMapValue"
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -6566,7 +6579,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -6629,7 +6643,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -6731,7 +6746,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -6794,7 +6810,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -6896,7 +6913,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -6927,7 +6945,8 @@
                                 "type": "primitive",
                                 "value": "INTEGER"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -6958,7 +6977,8 @@
                                 "type": "named",
                                 "value": "type_:Schema2TestEnum"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -6989,7 +7009,8 @@
                                 "type": "named",
                                 "value": "type_:Schema2TestDiscriminatedUnion"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -7020,7 +7041,8 @@
                                 "type": "named",
                                 "value": "type_:Schema2TestUnion"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -7257,7 +7279,8 @@
                                         "type": "primitive",
                                         "value": "STRING"
                                     }
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -7288,7 +7311,8 @@
                                         "type": "named",
                                         "value": "type_:PostRootRequestBar"
                                     }
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },

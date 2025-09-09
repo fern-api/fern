@@ -99,10 +99,14 @@ function convertDynamicAuth(auth: IrVersions.V59.dynamic.Auth | undefined): IrVe
     if (auth == null) {
         return auth as IrVersions.V58.dynamic.Auth | undefined;
     }
-    if (auth.type === "inferred") {
-        return undefined;
-    }
-    return auth as IrVersions.V58.dynamic.Auth;
+    return auth._visit<IrVersions.V58.dynamic.Auth | undefined>({
+        basic: (value) => IrVersions.V58.dynamic.Auth.basic(value),
+        bearer: (value) => IrVersions.V58.dynamic.Auth.bearer(value),
+        header: (value) => IrVersions.V58.dynamic.Auth.header(value),
+        oauth: (value) => IrVersions.V58.dynamic.Auth.oauth(value),
+        inferred: () => undefined,
+        _other: () => undefined
+    })
 }
 
 function convertDynamicExamples(

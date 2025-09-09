@@ -106,6 +106,7 @@ exports[`generateDynamicIR > go 1`] = `
             },
             "wireValue": "message",
           },
+          "propertyAccess": undefined,
           "typeReference": {
             "_visit": [Function],
             "type": "optional",
