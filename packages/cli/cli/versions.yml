@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        If OpenAPI schema parsing throws an exception then coerce the schema to unknown to unblock SDK generation.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-09"
+  version: 0.74.1
+
+- changelogEntry:
+    - summary: |
         Add readonly/writeonly data to dynamic IR.
       type: feat
   irVersion: 59
