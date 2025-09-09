@@ -7,4 +7,5 @@ import * as FernIr from "../../../../../index";
 export interface NamedParameter {
     name: FernIr.NameAndWireValue;
     typeReference: FernIr.dynamic.TypeReference;
+    propertyAccess: FernIr.ObjectPropertyAccess | undefined;
 }

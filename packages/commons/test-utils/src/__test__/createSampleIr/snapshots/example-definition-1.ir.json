@@ -150,6 +150,7 @@
               },
               "wireValue": "id",
             },
+            "propertyAccess": undefined,
             "typeReference": {
               "_visit": [Function],
               "type": "primitive",
@@ -179,6 +180,7 @@
               },
               "wireValue": "userId",
             },
+            "propertyAccess": undefined,
             "typeReference": {
               "_visit": [Function],
               "type": "primitive",
@@ -208,6 +210,7 @@
               },
               "wireValue": "items",
             },
+            "propertyAccess": undefined,
             "typeReference": {
               "_visit": [Function],
               "type": "list",
@@ -241,6 +244,7 @@
               },
               "wireValue": "total",
             },
+            "propertyAccess": undefined,
             "typeReference": {
               "_visit": [Function],
               "type": "primitive",
@@ -270,6 +274,7 @@
               },
               "wireValue": "createdAt",
             },
+            "propertyAccess": undefined,
             "typeReference": {
               "_visit": [Function],
               "type": "primitive",
@@ -299,6 +304,7 @@
               },
               "wireValue": "status",
             },
+            "propertyAccess": undefined,
             "typeReference": {
               "_visit": [Function],
               "type": "named",
@@ -399,6 +405,7 @@
               },
               "wireValue": "productId",
             },
+            "propertyAccess": undefined,
             "typeReference": {
               "_visit": [Function],
               "type": "primitive",
@@ -428,6 +435,7 @@
               },
               "wireValue": "quantity",
             },
+            "propertyAccess": undefined,
             "typeReference": {
               "_visit": [Function],
               "type": "primitive",
@@ -457,6 +465,7 @@
               },
               "wireValue": "unitPrice",
             },
+            "propertyAccess": undefined,
             "typeReference": {
               "_visit": [Function],
               "type": "primitive",

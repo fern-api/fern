@@ -5,6 +5,14 @@
       type: feat
   irVersion: 59
   createdAt: "2025-09-09"
+  version: 0.75.0
+
+- changelogEntry:
+    - summary: |
+        Add readonly/writeonly data to dynamic IR.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-09"
   version: 0.74.0
 
 - changelogEntry:

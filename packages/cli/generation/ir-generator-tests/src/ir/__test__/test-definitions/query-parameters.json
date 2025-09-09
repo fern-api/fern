@@ -4525,7 +4525,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -4556,7 +4557,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -4654,7 +4656,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -4682,7 +4685,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_user:User"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -4854,7 +4858,8 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "INTEGER"
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -4882,7 +4887,8 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "UUID"
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -4910,7 +4916,8 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "DATE"
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -4938,7 +4945,8 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "DATE_TIME"
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -4966,7 +4974,8 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "BASE_64"
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -4994,7 +5003,8 @@
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_user:User"
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -5025,7 +5035,8 @@
                                     "type": "named",
                                     "value": "type_user:User"
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -5056,7 +5067,8 @@
                                     "type": "primitive",
                                     "value": "DATE_TIME"
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -5091,7 +5103,8 @@
                                     "type": "primitive",
                                     "value": "STRING"
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -5122,7 +5135,8 @@
                                     "type": "primitive",
                                     "value": "STRING"
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -5150,7 +5164,8 @@
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_user:NestedUser"
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -5181,7 +5196,8 @@
                                     "type": "named",
                                     "value": "type_user:User"
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -5212,7 +5228,8 @@
                                     "type": "named",
                                     "value": "type_user:User"
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -5243,7 +5260,8 @@
                                     "type": "primitive",
                                     "value": "STRING"
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "headers": [],

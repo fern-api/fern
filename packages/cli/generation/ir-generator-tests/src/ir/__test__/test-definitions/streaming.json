@@ -2289,7 +2289,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -2320,7 +2321,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -2499,7 +2501,8 @@
                                         "type": "boolean",
                                         "value": true
                                     }
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -2527,7 +2530,8 @@
                                 "typeReference": {
                                     "type": "primitive",
                                     "value": "INTEGER"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -2712,7 +2716,8 @@
                                         "type": "boolean",
                                         "value": false
                                     }
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -2740,7 +2745,8 @@
                                 "typeReference": {
                                     "type": "primitive",
                                     "value": "INTEGER"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },

@@ -97,7 +97,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -198,7 +199,8 @@
                             "type": "named",
                             "value": "type_deep-cursor-path:D"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -296,7 +298,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_deep-cursor-path:C"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -397,7 +400,8 @@
                             "type": "named",
                             "value": "type_deep-cursor-path:B"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -498,7 +502,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -529,7 +534,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -630,7 +636,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -661,7 +668,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -759,7 +767,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_deep-cursor-path:IndirectionRequired"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -860,7 +869,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -961,7 +971,8 @@
                             "type": "named",
                             "value": "type_deep-cursor-path:InlineD"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -1059,7 +1070,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_deep-cursor-path:InlineC"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -1160,7 +1172,8 @@
                             "type": "named",
                             "value": "type_deep-cursor-path:InlineB"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
