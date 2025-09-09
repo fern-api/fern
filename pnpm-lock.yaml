@@ -3206,8 +3206,8 @@ importers:
   generators/typescript/playground/browser:
     dependencies:
       form-data:
-        specifier: 4.0.1
-        version: 4.0.1
+        specifier: 4.0.4
+        version: 4.0.4
       js-base64:
         specifier: ^3.7.6
         version: 3.7.8
@@ -6410,8 +6410,8 @@ importers:
         specifier: ^4.2.1
         version: 4.2.1
       form-data:
-        specifier: 4.0.1
-        version: 4.0.1
+        specifier: 4.0.4
+        version: 4.0.4
       image-size:
         specifier: ^1.2.1
         version: 1.2.1
@@ -16101,7 +16101,7 @@ snapshots:
 
   '@fern-fern/fdr-cjs-sdk@0.139.14-10599d7fd':
     dependencies:
-      form-data: 4.0.1
+      form-data: 4.0.4
       formdata-node: 6.0.3
       js-base64: 3.7.7
       node-fetch: 2.7.0
@@ -16172,7 +16172,7 @@ snapshots:
 
   '@fern-fern/generators-sdk@0.114.0-5745f9e74':
     dependencies:
-      form-data: 4.0.1
+      form-data: 4.0.4
       formdata-node: 6.0.3
       js-base64: 3.7.2
       node-fetch: 2.7.0
@@ -16332,7 +16332,7 @@ snapshots:
 
   '@fern-fern/ir-v57-sdk@0.0.2':
     dependencies:
-      form-data: 4.0.1
+      form-data: 4.0.4
       formdata-node: 6.0.3
       node-fetch: 2.7.0
       qs: 6.14.0
@@ -16342,7 +16342,7 @@ snapshots:
 
   '@fern-fern/ir-v58-sdk@0.0.2':
     dependencies:
-      form-data: 4.0.1
+      form-data: 4.0.4
       formdata-node: 6.0.3
       node-fetch: 2.7.0
       qs: 6.14.0
@@ -17057,7 +17057,7 @@ snapshots:
   '@types/node-fetch@2.6.9':
     dependencies:
       '@types/node': 18.15.3
-      form-data: 4.0.1
+      form-data: 4.0.4
 
   '@types/node@18.15.3': {}
 
