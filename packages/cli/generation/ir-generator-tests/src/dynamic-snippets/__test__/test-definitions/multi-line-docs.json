@@ -191,7 +191,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -219,7 +220,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -250,7 +252,8 @@
                             "type": "primitive",
                             "value": "INTEGER"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -357,7 +360,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "body": null
@@ -535,7 +539,8 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "STRING"
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -566,7 +571,8 @@
                                     "type": "primitive",
                                     "value": "INTEGER"
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ]
                 },

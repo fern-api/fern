@@ -29,6 +29,13 @@ import org.immutables.value.Value;
 @JsonDeserialize(as = ImmutableJavaSdkCustomConfig.class)
 public interface JavaSdkCustomConfig extends ICustomConfig {
 
+    @Override
+    @Value.Default
+    @JsonProperty("enable-forward-compatible-enums")
+    default Boolean enableForwardCompatibleEnum() {
+        return true;
+    }
+
     @JsonProperty("client-class-name")
     Optional<String> clientClassName();
 

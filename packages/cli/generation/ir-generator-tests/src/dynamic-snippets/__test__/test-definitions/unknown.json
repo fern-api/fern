@@ -163,7 +163,8 @@
                     },
                     "typeReference": {
                         "type": "unknown"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false

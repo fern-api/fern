@@ -3,22 +3,80 @@
  */
 package com.seed._enum.types;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Color {
-    RED("red"),
+public final class Color {
+    public static final Color RED = new Color(Value.RED, "red");
 
-    BLUE("blue");
+    public static final Color BLUE = new Color(Value.BLUE, "blue");
 
-    private final String value;
+    private final Value value;
 
-    Color(String value) {
+    private final String string;
+
+    Color(Value value, String string) {
         this.value = value;
+        this.string = string;
     }
 
-    @JsonValue
+    public Value getEnumValue() {
+        return value;
+    }
+
     @java.lang.Override
+    @JsonValue
     public String toString() {
-        return this.value;
+        return this.string;
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        return (this == other) || (other instanceof Color && this.string.equals(((Color) other).string));
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return this.string.hashCode();
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        switch (value) {
+            case RED:
+                return visitor.visitRed();
+            case BLUE:
+                return visitor.visitBlue();
+            case UNKNOWN:
+            default:
+                return visitor.visitUnknown(string);
+        }
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static Color valueOf(String value) {
+        switch (value) {
+            case "red":
+                return RED;
+            case "blue":
+                return BLUE;
+            default:
+                return new Color(Value.UNKNOWN, value);
+        }
+    }
+
+    public enum Value {
+        RED,
+
+        BLUE,
+
+        UNKNOWN
+    }
+
+    public interface Visitor<T> {
+        T visitRed();
+
+        T visitBlue();
+
+        T visitUnknown(String unknownType);
     }
 }

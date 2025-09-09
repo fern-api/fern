@@ -32472,7 +32472,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -32503,7 +32504,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -32683,7 +32685,8 @@
                 "type": "list"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -32869,7 +32872,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -32990,7 +32994,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -33021,7 +33026,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -33114,7 +33120,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -33145,7 +33152,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -38021,7 +38029,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -38052,7 +38061,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -38521,7 +38531,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "additionalProperties": false,
@@ -43473,7 +43484,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -46900,7 +46912,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -47080,7 +47093,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {

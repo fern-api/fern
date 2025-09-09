@@ -7,7 +7,7 @@ import { SeedExhaustiveClient } from "../../Client.js";
 import * as SeedExhaustive from "../../api/index.js";
 
 describe("InlinedRequests", () => {
-    test("postWithObjectBodyandResponse (5a1d0f30)", async () => {
+    test("postWithObjectBodyandResponse (36a333c6)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = {
@@ -93,7 +93,7 @@ describe("InlinedRequests", () => {
         });
     });
 
-    test("postWithObjectBodyandResponse (c70fbba8)", async () => {
+    test("postWithObjectBodyandResponse (7586df6c)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = {

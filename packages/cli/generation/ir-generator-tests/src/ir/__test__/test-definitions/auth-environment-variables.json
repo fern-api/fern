@@ -659,7 +659,8 @@
                 "typeReference": {
                     "type": "primitive",
                     "value": "STRING"
-                }
+                },
+                "propertyAccess": null
             },
             {
                 "name": {
@@ -690,7 +691,8 @@
                         "type": "string",
                         "value": "01-01-2000"
                     }
-                }
+                },
+                "propertyAccess": null
             }
         ],
         "endpoints": {
@@ -723,7 +725,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 },
                 "declaration": {
@@ -833,7 +836,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 },
                 "declaration": {
@@ -999,7 +1003,8 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "STRING"
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "body": null,

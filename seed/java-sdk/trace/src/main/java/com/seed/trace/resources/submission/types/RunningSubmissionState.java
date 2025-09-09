@@ -3,28 +3,117 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum RunningSubmissionState {
-    QUEUEING_SUBMISSION("QUEUEING_SUBMISSION"),
+public final class RunningSubmissionState {
+    public static final RunningSubmissionState RUNNING_SUBMISSION =
+            new RunningSubmissionState(Value.RUNNING_SUBMISSION, "RUNNING_SUBMISSION");
 
-    KILLING_HISTORICAL_SUBMISSIONS("KILLING_HISTORICAL_SUBMISSIONS"),
+    public static final RunningSubmissionState KILLING_HISTORICAL_SUBMISSIONS =
+            new RunningSubmissionState(Value.KILLING_HISTORICAL_SUBMISSIONS, "KILLING_HISTORICAL_SUBMISSIONS");
 
-    WRITING_SUBMISSION_TO_FILE("WRITING_SUBMISSION_TO_FILE"),
+    public static final RunningSubmissionState COMPILING_SUBMISSION =
+            new RunningSubmissionState(Value.COMPILING_SUBMISSION, "COMPILING_SUBMISSION");
 
-    COMPILING_SUBMISSION("COMPILING_SUBMISSION"),
+    public static final RunningSubmissionState QUEUEING_SUBMISSION =
+            new RunningSubmissionState(Value.QUEUEING_SUBMISSION, "QUEUEING_SUBMISSION");
 
-    RUNNING_SUBMISSION("RUNNING_SUBMISSION");
+    public static final RunningSubmissionState WRITING_SUBMISSION_TO_FILE =
+            new RunningSubmissionState(Value.WRITING_SUBMISSION_TO_FILE, "WRITING_SUBMISSION_TO_FILE");
 
-    private final String value;
+    private final Value value;
 
-    RunningSubmissionState(String value) {
+    private final String string;
+
+    RunningSubmissionState(Value value, String string) {
         this.value = value;
+        this.string = string;
     }
 
-    @JsonValue
+    public Value getEnumValue() {
+        return value;
+    }
+
     @java.lang.Override
+    @JsonValue
     public String toString() {
-        return this.value;
+        return this.string;
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        return (this == other)
+                || (other instanceof RunningSubmissionState
+                        && this.string.equals(((RunningSubmissionState) other).string));
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return this.string.hashCode();
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        switch (value) {
+            case RUNNING_SUBMISSION:
+                return visitor.visitRunningSubmission();
+            case KILLING_HISTORICAL_SUBMISSIONS:
+                return visitor.visitKillingHistoricalSubmissions();
+            case COMPILING_SUBMISSION:
+                return visitor.visitCompilingSubmission();
+            case QUEUEING_SUBMISSION:
+                return visitor.visitQueueingSubmission();
+            case WRITING_SUBMISSION_TO_FILE:
+                return visitor.visitWritingSubmissionToFile();
+            case UNKNOWN:
+            default:
+                return visitor.visitUnknown(string);
+        }
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static RunningSubmissionState valueOf(String value) {
+        switch (value) {
+            case "RUNNING_SUBMISSION":
+                return RUNNING_SUBMISSION;
+            case "KILLING_HISTORICAL_SUBMISSIONS":
+                return KILLING_HISTORICAL_SUBMISSIONS;
+            case "COMPILING_SUBMISSION":
+                return COMPILING_SUBMISSION;
+            case "QUEUEING_SUBMISSION":
+                return QUEUEING_SUBMISSION;
+            case "WRITING_SUBMISSION_TO_FILE":
+                return WRITING_SUBMISSION_TO_FILE;
+            default:
+                return new RunningSubmissionState(Value.UNKNOWN, value);
+        }
+    }
+
+    public enum Value {
+        QUEUEING_SUBMISSION,
+
+        KILLING_HISTORICAL_SUBMISSIONS,
+
+        WRITING_SUBMISSION_TO_FILE,
+
+        COMPILING_SUBMISSION,
+
+        RUNNING_SUBMISSION,
+
+        UNKNOWN
+    }
+
+    public interface Visitor<T> {
+        T visitQueueingSubmission();
+
+        T visitKillingHistoricalSubmissions();
+
+        T visitWritingSubmissionToFile();
+
+        T visitCompilingSubmission();
+
+        T visitRunningSubmission();
+
+        T visitUnknown(String unknownType);
     }
 }

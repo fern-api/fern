@@ -350,7 +350,8 @@
                         "type": "string",
                         "value": "1.0.0"
                     }
-                }
+                },
+                "propertyAccess": null
             }
         ],
         "endpoints": {
