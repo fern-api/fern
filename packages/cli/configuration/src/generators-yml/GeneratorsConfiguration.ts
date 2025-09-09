@@ -73,6 +73,7 @@ export interface APIDefinitionSettings {
     typeDatesAsStrings: boolean | undefined;
     preserveSingleSchemaOneOf: boolean | undefined;
     inlineAllOfSchemas: boolean | undefined;
+    groupMultiApiEnvironments: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {

@@ -1022,7 +1022,8 @@ export class DocsDefinitionResolver {
             pageId,
             authed: undefined,
             noindex: item.noindex || this.markdownFilesToNoIndex.get(item.absolutePath),
-            featureFlags: item.featureFlags
+            featureFlags: item.featureFlags,
+            availability: item.availability
         };
     }
 
@@ -1062,7 +1063,8 @@ export class DocsDefinitionResolver {
             authed: undefined,
             pointsTo: undefined,
             noindex,
-            featureFlags: item.featureFlags
+            featureFlags: item.featureFlags,
+            availability: item.availability
         };
     }
 

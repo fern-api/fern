@@ -32,6 +32,7 @@ jobs:
       csharp: ${{ steps.filter.outputs.csharp }}
       php: ${{ steps.filter.outputs.php }}
       swift: ${{ steps.filter.outputs.swift }}
+      rust: ${{ steps.filter.outputs.rust }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -39,6 +40,8 @@ jobs:
         with:
           filters: |
             seed:
+              - '.github/actions/cached-seed/action.yaml'
+              - '.github/actions/install/action.yaml'
               - '.github/workflows/seed.yml'
               - 'packages/seed/**'
               - 'packages/ir-sdk/fern/apis/**'
@@ -89,6 +92,9 @@ jobs:
             swift:
               - 'generators/swift/**'
               - 'seed/swift-sdk/**'
+            rust:
+              - 'generators/rust/**'
+              - 'seed/rust-sdk/**'
       - name: retry-on-failure
         if: failure() && steps.filter.outcome == 'failure' && fromJSON(github.run_attempt) < 3
         env:
@@ -471,3 +477,21 @@ jobs:
         with:
           generator-name: swift-sdk
           generator-path: generators/swift
+
+  rust-sdk:
+    runs-on: Seed
+    needs: changes
+    if: >-
+      ${{
+        ((needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: rust-sdk
+          generator-path: generators/rust

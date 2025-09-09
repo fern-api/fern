@@ -7,6 +7,7 @@ import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { AudienceId } from "./AudienceId";
 import { SnippetsConfiguration } from "./SnippetsConfiguration";
+import { Availability } from "./Availability";
 import { PlaygroundSettings } from "./PlaygroundSettings";
 import { WithPermissions } from "./WithPermissions";
 import { WithFeatureFlags } from "./WithFeatureFlags";
@@ -27,6 +28,7 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
         icon: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
+        availability: Availability.optional(),
         skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
         alphabetized: core.serialization.boolean().optional(),
         flattened: core.serialization.boolean().optional(),
@@ -49,6 +51,7 @@ export declare namespace ApiReferenceConfiguration {
         icon?: string | null;
         slug?: string | null;
         hidden?: boolean | null;
+        availability?: Availability.Raw | null;
         "skip-slug"?: boolean | null;
         alphabetized?: boolean | null;
         flattened?: boolean | null;

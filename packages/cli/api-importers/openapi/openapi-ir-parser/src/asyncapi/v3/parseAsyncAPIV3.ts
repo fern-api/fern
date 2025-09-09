@@ -135,6 +135,7 @@ export function parseAsyncAPIV3({
     const servers: Record<string, ServerContext> = {};
     for (const [serverId, server] of Object.entries(document.servers ?? {})) {
         servers[serverId] = {
+            // Always preserve server names from AsyncAPI spec
             name: serverId,
             url: constructServerUrl(server.protocol, server.host)
         };
@@ -337,9 +338,13 @@ export function parseAsyncAPIV3({
                 ]),
                 messages,
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
-                servers:
+                servers: (
                     channel.servers?.map((serverRef) => getServerNameFromServerRef(servers, serverRef)) ??
-                    Object.values(servers),
+                    Object.values(servers)
+                ).map((server) => ({
+                    ...server,
+                    name: server.name as string
+                })),
                 // TODO (Eden): This can be a LOT more complicated than this. See the link below for more details:
                 // https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelObject
                 path: channel.address?.split("?")[0] ?? transformToValidPath(channelPath),
@@ -353,7 +358,10 @@ export function parseAsyncAPIV3({
     return {
         groupedSchemas: getSchemas(context.namespace, schemas),
         channels: parsedChannels,
-        servers: Object.values(servers),
+        servers: Object.values(servers).map((server) => ({
+            ...server,
+            name: server.name as string
+        })),
         basePath: getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH)
     };
 }

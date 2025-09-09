@@ -17,6 +17,7 @@ export * from "./CustomDomain";
 export * from "./EditThisPageConfig";
 export * from "./GithubEditThisPageConfig";
 export * from "./VersionConfig";
+export * from "./Availability";
 export * from "./VersionAvailability";
 export * from "./VersionFileConfig";
 export * from "./NavigationConfig";

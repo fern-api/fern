@@ -1,0 +1,10 @@
+// service_
+"/wallets"
+"/wallets/\(walletID)"
+"/wallets/\(walletID)/balance"
+"/accounts"
+"/transactions"
+"/transactions/\(transactionID)"
+"/payments"
+"/payments/\(paymentID)/refund"
+"/refunds"

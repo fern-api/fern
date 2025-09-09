@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/definitions/AccountType"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "AccountType": {
+      "type": "string",
+      "enum": [
+        "checking",
+        "savings",
+        "credit"
+      ]
+    }
+  }
+}

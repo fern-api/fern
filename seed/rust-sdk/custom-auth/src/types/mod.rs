@@ -1,4 +1,4 @@
-pub mod unauthorized_request_error_body;
+pub mod errors_unauthorized_request_error_body;
 
-pub use unauthorized_request_error_body::{*};
+pub use errors_unauthorized_request_error_body::{*};
 

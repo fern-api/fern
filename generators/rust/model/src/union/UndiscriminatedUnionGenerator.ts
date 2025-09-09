@@ -36,7 +36,7 @@ export class UndiscriminatedUnionGenerator {
     }
 
     public generate(): RustFile {
-        const filename = `${this.typeDeclaration.name.name.snakeCase.unsafeName}.rs`;
+        const filename = this.context.getUniqueFilenameForType(this.typeDeclaration);
 
         const writer = new rust.Writer();
 
@@ -58,7 +58,8 @@ export class UndiscriminatedUnionGenerator {
         // Add imports for variant types FIRST
         const variantTypes = this.getVariantTypesUsedInUnion();
         variantTypes.forEach((typeName) => {
-            const moduleNameEscaped = this.context.escapeRustKeyword(typeName.snakeCase.unsafeName);
+            const modulePath = this.context.getModulePathForType(typeName.snakeCase.unsafeName);
+            const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
             writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
         });
 
