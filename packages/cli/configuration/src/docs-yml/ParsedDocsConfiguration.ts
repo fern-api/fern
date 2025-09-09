@@ -3,7 +3,14 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 
 import { Audiences } from "../commons";
-import { AiChatConfig, DocsInstance, ExperimentalConfig, PlaygroundSettings, VersionAvailability } from "./schemas";
+import {
+    AiChatConfig,
+    Availability,
+    DocsInstance,
+    ExperimentalConfig,
+    PlaygroundSettings,
+    VersionAvailability
+} from "./schemas";
 // TODO: Update this import
 import { AnnouncementConfig } from "./schemas/sdk/api/resources/docs/types/AnnouncementConfig";
 
@@ -230,6 +237,7 @@ export declare namespace DocsNavigationItem {
         slug: string | undefined;
         hidden: boolean | undefined;
         noindex: boolean | undefined;
+        availability: Availability | undefined;
     }
 
     export interface Section
@@ -244,6 +252,7 @@ export declare namespace DocsNavigationItem {
         hidden: boolean | undefined;
         skipUrlSlug: boolean | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
+        availability: Availability | undefined;
     }
 
     export interface ApiSection
@@ -255,6 +264,7 @@ export declare namespace DocsNavigationItem {
         apiName: string | undefined;
         openrpc: string | undefined;
         audiences: Audiences;
+        availability: Availability | undefined;
         showErrors: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;

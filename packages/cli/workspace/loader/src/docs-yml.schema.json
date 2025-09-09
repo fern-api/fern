@@ -928,6 +928,17 @@
       ],
       "additionalProperties": false
     },
+    "docs.Availability": {
+      "type": "string",
+      "enum": [
+        "stable",
+        "generally-available",
+        "in-development",
+        "pre-release",
+        "deprecated",
+        "beta"
+      ]
+    },
     "docs.PageConfiguration": {
       "type": "object",
       "properties": {
@@ -1001,6 +1012,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "availability": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Availability"
             },
             {
               "type": "null"
@@ -1110,6 +1131,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "availability": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Availability"
             },
             {
               "type": "null"
@@ -1824,6 +1855,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "availability": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Availability"
             },
             {
               "type": "null"
@@ -3355,6 +3396,26 @@
           ]
         },
         "disable-header": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hide-nav-links": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hide-feedback": {
           "oneOf": [
             {
               "type": "boolean"
