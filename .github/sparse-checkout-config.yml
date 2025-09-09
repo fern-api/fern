@@ -1,0 +1,21 @@
+source:
+  - .github
+  - .husky
+  - .vscode
+  - docker
+  - fern
+  - generators
+  - guides  
+  - packages
+  - scripts
+  - shared
+  - test-definitions
+  - test-definitions-openapi
+  - test-fixtures
+  - windows
+
+seed:
+  - seed
+
+snapshots:
+  - snapshots

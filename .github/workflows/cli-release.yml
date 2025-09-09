@@ -22,14 +22,8 @@ jobs:
     outputs:
       version: ${{ steps.get_version.outputs.VERSION }}
     steps:
-      - name: Checkout action only
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            .github
-
       - name: Checkout code
-        uses: ./.github/actions/sparse-checkout
+        uses: fern-api/sparse-checkout@main
         with:
           ref: main
           fetch-depth: 2
