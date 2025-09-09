@@ -49,14 +49,21 @@ function getServerName(
         return name;
     }
 
-    // Only use the description as the server name when multi-API environment grouping is enabled
+    // Always preserve the original logic for basic environment names
+    if (server.description?.toLowerCase() === "production") {
+        return "Production";
+    }
+    if (server.description?.toLowerCase() === "sandbox") {
+        return "Sandbox";
+    }
+
+    // Additional environment name handling only when multi-API environment grouping is enabled
     if (options?.groupMultiApiEnvironments && server.description != null && server.description.trim() !== "") {
-        // Normalize common environment names
         const desc = server.description.toLowerCase();
-        if (desc === "production" || desc === "prd") {
+        if (desc === "prd") {
             return "Production";
         }
-        if (desc === "sandbox" || desc === "sbx") {
+        if (desc === "sbx") {
             return "Sandbox";
         }
         if (desc === "staging" || desc === "stg") {

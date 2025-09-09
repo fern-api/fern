@@ -389,6 +389,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                         }
                     }
 
+                    // Include websocket servers
+                    Object.assign(urls, extractUrlsFromEnvironmentSchema(websocketServersWithName));
+
                     if (Object.keys(urls).length > 1) {
                         context.builder.addEnvironment({
                             name: envName,
@@ -414,10 +417,29 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
             } else {
                 let firstEnvironment = true;
                 for (const [name, schema] of Object.entries(topLevelServersWithName)) {
-                    context.builder.addEnvironment({
-                        name,
-                        schema
-                    });
+                    if (hasWebsocketServersWithName || Object.keys(endpointLevelServersWithName).length > 0) {
+                        const baseUrl =
+                            typeof schema === "string"
+                                ? schema
+                                : isRawMultipleBaseUrlsEnvironment(schema)
+                                  ? Object.values(schema.urls)[0]
+                                  : schema.url;
+                        context.builder.addEnvironment({
+                            name,
+                            schema: {
+                                urls: {
+                                    ...{ [DEFAULT_URL_NAME]: baseUrl ?? "" },
+                                    ...extractUrlsFromEnvironmentSchema(endpointLevelServersWithName),
+                                    ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
+                                }
+                            }
+                        });
+                    } else {
+                        context.builder.addEnvironment({
+                            name,
+                            schema
+                        });
+                    }
                     if (firstEnvironment) {
                         context.builder.setDefaultEnvironment(name);
                         firstEnvironment = false;

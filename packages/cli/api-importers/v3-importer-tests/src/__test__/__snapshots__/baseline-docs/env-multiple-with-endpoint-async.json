@@ -183,6 +183,50 @@
               "safeName": "Debug"
             }
           }
+        },
+        {
+          "id": "websocket",
+          "name": {
+            "originalName": "websocket",
+            "camelCase": {
+              "unsafeName": "websocket",
+              "safeName": "websocket"
+            },
+            "snakeCase": {
+              "unsafeName": "websocket",
+              "safeName": "websocket"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "WEBSOCKET",
+              "safeName": "WEBSOCKET"
+            },
+            "pascalCase": {
+              "unsafeName": "Websocket",
+              "safeName": "Websocket"
+            }
+          }
+        },
+        {
+          "id": "websocket2",
+          "name": {
+            "originalName": "websocket2",
+            "camelCase": {
+              "unsafeName": "websocket2",
+              "safeName": "websocket2"
+            },
+            "snakeCase": {
+              "unsafeName": "websocket2",
+              "safeName": "websocket2"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "WEBSOCKET2",
+              "safeName": "WEBSOCKET2"
+            },
+            "pascalCase": {
+              "unsafeName": "Websocket2",
+              "safeName": "Websocket2"
+            }
+          }
         }
       ],
       "environments": [
@@ -209,7 +253,9 @@
           },
           "urls": {
             "Base": "http://prod.api.com",
-            "Debug": "http://debug.api.com"
+            "Debug": "http://debug.api.com",
+            "websocket": "wss://api.async.com",
+            "websocket2": "wss://api2.async.com"
           }
         },
         {
@@ -235,7 +281,9 @@
           },
           "urls": {
             "Base": "http://dev.api.com",
-            "Debug": "http://debug.api.com"
+            "Debug": "http://debug.api.com",
+            "websocket": "wss://api.async.com",
+            "websocket2": "wss://api2.async.com"
           }
         }
       ],
@@ -503,6 +551,50 @@
                 "safeName": "Debug"
               }
             }
+          },
+          {
+            "id": "websocket",
+            "name": {
+              "originalName": "websocket",
+              "camelCase": {
+                "unsafeName": "websocket",
+                "safeName": "websocket"
+              },
+              "snakeCase": {
+                "unsafeName": "websocket",
+                "safeName": "websocket"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "WEBSOCKET",
+                "safeName": "WEBSOCKET"
+              },
+              "pascalCase": {
+                "unsafeName": "Websocket",
+                "safeName": "Websocket"
+              }
+            }
+          },
+          {
+            "id": "websocket2",
+            "name": {
+              "originalName": "websocket2",
+              "camelCase": {
+                "unsafeName": "websocket2",
+                "safeName": "websocket2"
+              },
+              "snakeCase": {
+                "unsafeName": "websocket2",
+                "safeName": "websocket2"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "WEBSOCKET2",
+                "safeName": "WEBSOCKET2"
+              },
+              "pascalCase": {
+                "unsafeName": "Websocket2",
+                "safeName": "Websocket2"
+              }
+            }
           }
         ],
         "environments": [
@@ -529,7 +621,9 @@
             },
             "urls": {
               "Base": "http://prod.api.com",
-              "Debug": "http://debug.api.com"
+              "Debug": "http://debug.api.com",
+              "websocket": "wss://api.async.com",
+              "websocket2": "wss://api2.async.com"
             }
           },
           {
@@ -555,7 +649,9 @@
             },
             "urls": {
               "Base": "http://dev.api.com",
-              "Debug": "http://debug.api.com"
+              "Debug": "http://debug.api.com",
+              "websocket": "wss://api.async.com",
+              "websocket2": "wss://api2.async.com"
             }
           }
         ],

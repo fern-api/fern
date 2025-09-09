@@ -4,7 +4,8 @@
   "servers": [
     {
       "url": "https://api.val.town",
-      "description": "Production"
+      "description": "Production",
+      "name": "Production"
     }
   ],
   "websocketServers": [],
