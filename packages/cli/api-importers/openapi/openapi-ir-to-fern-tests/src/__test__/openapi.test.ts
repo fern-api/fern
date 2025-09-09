@@ -32,7 +32,7 @@ describe("openapi-ir-to-fern", async () => {
                 absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH")
             });
 
-            await expect(definition).toMatchFileSnapshot(`./__snapshots__/openapi/${fixture.name}.json`);
+            await expect(definition).toMatchFileSnapshot(`../../../../../../../snapshots/cli/api-importers/openapi-ir-to-fern/openapi/${fixture.name}.json`);
         }, 90_000);
     }
 });

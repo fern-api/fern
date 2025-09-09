@@ -40,8 +40,7 @@ describe("ir", () => {
                 // biome-ignore lint/suspicious/noMisplacedAssertion: allow
                 await expect(
                     JSON.stringify(await workspace.workspace.getDefinition({ context }), undefined, 2)
-                ).toMatchFileSnapshot(`__snapshots__/${fixture.name}.json`);
-            },
+                ).toMatchFileSnapshot(`../../../../../../snapshots/cli/api-importers/conjure-to-fern/${fixture.name}.json`);            },
             90_000
         );
     }

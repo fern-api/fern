@@ -35,7 +35,7 @@ describe("openapi-ir", async () => {
             if (workspace.workspace instanceof OSSWorkspace) {
                 const openApiIr = await (workspace.workspace as OSSWorkspace).getOpenAPIIr({ context });
                 await expect(JSON.stringify(openApiIr, undefined, 2)).toMatchFileSnapshot(
-                    `./__snapshots__/openapi-ir/${fixture.name}.json`
+                    `../../../../../../../snapshots/cli/api-importers/openapi-ir-to-fern/openapi-ir/${fixture.name}.json`
                 );
             }
         }, 90_000);
@@ -60,7 +60,7 @@ describe("openapi-ir-in-memory", async () => {
             continue;
         }
         it(fixture.name, async () => {
-            const snapshotFilepath = `./__snapshots__/openapi-ir-in-memory/${fixture.name}.json`;
+            const snapshotFilepath = `../../../../../../../snapshots/cli/api-importers/openapi-ir-to-fern/openapi-ir-in-memory/${fixture.name}.json`;
             if (shouldSkipInMemory(fixture.name)) {
                 await expect("Skipped; Swagger 2.0 is not supported in-memory").toMatchFileSnapshot(snapshotFilepath);
                 return;

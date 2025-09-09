@@ -36,7 +36,7 @@ describe("openapi-ir-to-fern docs", async () => {
                 { enableUniqueErrorsPerEndpoint: true, preserveSchemaIds: true }
             );
 
-            await expect(definition).toMatchFileSnapshot(`./__snapshots__/openapi-docs/${fixture.name}.json`);
+            await expect(definition).toMatchFileSnapshot(`../../../../../../../snapshots/cli/api-importers/openapi-ir-to-fern/openapi-docs/${fixture.name}.json`);
         }, 90_000);
     }
 });
