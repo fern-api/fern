@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for translating deprecated flags in protobuf to availability status in fern-ir.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-09"
+  version: 0.74.0
+
+- changelogEntry:
+    - summary: |
         Introduces a global configuration in the `docs.yml` file to set the visibility of navigation links and feedback.
       type: feat
   irVersion: 59
