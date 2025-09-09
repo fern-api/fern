@@ -91,6 +91,7 @@ runs:
       id: validate
       shell: bash
       run: |
+        # Validate results
         # Split the input string into an array
         IFS=',' read -ra FOLDERS <<< "${{ inputs.validation-exclude-paths }}"
 
@@ -107,7 +108,9 @@ runs:
         # Remove trailing space
         EXCLUDE_STRING=$(echo "$EXCLUDE_STRING" | sed 's/[[:space:]]*$//')
 
-        echo "Built git diff exclude string as: $EXCLUDE_STRING"
+        echo "exclude_string=$EXCLUDE_STRING" >> $GITHUB_OUTPUT
+        echo "Built git diff exclude string as: "
+        echo "$EXCLUDE_STRING"
 
         if git --no-pager diff --exit-code -- $EXCLUDE_STRING; then
           echo "Results are valid, saving to cache if not already."
