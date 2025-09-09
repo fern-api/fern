@@ -1411,7 +1411,8 @@
                                 "typeReference": {
                                     "type": "primitive",
                                     "value": "INTEGER"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -1439,7 +1440,8 @@
                                 "typeReference": {
                                     "type": "named",
                                     "value": "type_payment:Currency"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -1573,7 +1575,8 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "STRING"
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "body": null

@@ -1479,7 +1479,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -1572,7 +1573,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           },
           {
             "name": {
@@ -1603,7 +1605,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -1947,7 +1950,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -1978,7 +1982,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -2009,7 +2014,8 @@
                 "type": "named"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           }
         ],
         "additionalProperties": false,

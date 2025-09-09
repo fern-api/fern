@@ -5214,7 +5214,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_imdb:MovieId"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -5242,7 +5243,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -5270,7 +5272,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "DOUBLE"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -5301,7 +5304,8 @@
                                 "type": "named",
                                 "value": "type_imdb:Cast"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -5399,7 +5403,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -5427,7 +5432,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "DOUBLE"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -5572,7 +5578,8 @@
                                 "typeReference": {
                                     "type": "named",
                                     "value": "type_imdb:Name"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -5627,7 +5634,8 @@
                                 "typeReference": {
                                     "type": "named",
                                     "value": "type_imdb:Name"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     }
@@ -5797,7 +5805,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -5990,7 +5999,8 @@
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_imdb:MovieId"
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "body": null
