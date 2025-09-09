@@ -49,7 +49,7 @@ describe("openapi-v2-baseline-sdks", async () => {
                         sourceResolver: new SourceResolverImpl(context, fernWorkspace)
                     });
                     await expect(JSON.stringify(intermediateRepresentation, undefined, 2)).toMatchFileSnapshot(
-                        `./__snapshots__/baseline-sdks/${fixture.name}.json`
+                        `../../../../../../snapshots/cli/api-importers/v3-importer/baseline-sdks/${fixture.name}.json`
                     );
                 } catch (error) {
                     console.warn(`Test Failed: Error processing fixture ${fixture.name}:`, error);

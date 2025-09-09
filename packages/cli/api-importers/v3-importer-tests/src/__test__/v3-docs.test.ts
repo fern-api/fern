@@ -37,7 +37,7 @@ describe("openapi-v2-docs", async () => {
                     generateV1Examples: false
                 });
                 await expect(JSON.stringify(intermediateRepresentation, undefined, 2)).toMatchFileSnapshot(
-                    `./__snapshots__/v3-docs/${fixture.name}.json`
+                    `../../../../../../snapshots/cli/api-importers/v3-importer/v3-docs/${fixture.name}.json`
                 );
             }
         }, 90_000);
