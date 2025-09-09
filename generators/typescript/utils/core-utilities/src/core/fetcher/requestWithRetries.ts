@@ -10,8 +10,8 @@ function addJitter(delay: number): number {
 }
 
 function getRetryDelayFromHeaders(response: Response, retryAttempt: number): number {
-    // Check for retry-after header first (RFC 7231)
-    const retryAfter = response.headers.get("retry-after");
+    // Check for Retry-After header first (RFC 7231)
+    const retryAfter = response.headers.get("Retry-After");
     if (retryAfter) {
         // Parse as number of seconds...
         const retryAfterSeconds = parseInt(retryAfter, 10);
@@ -28,8 +28,8 @@ function getRetryDelayFromHeaders(response: Response, retryAttempt: number): num
         }
     }
 
-    // Then check for industry-standard x-ratelimit-reset header
-    const rateLimitReset = response.headers.get("x-ratelimit-reset");
+    // Then check for industry-standard X-RateLimit-Reset header
+    const rateLimitReset = response.headers.get("X-RateLimit-Reset");
     if (rateLimitReset) {
         const resetTime = parseInt(rateLimitReset, 10);
         if (!isNaN(resetTime)) {
