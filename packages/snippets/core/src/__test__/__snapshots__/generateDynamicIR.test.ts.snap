@@ -1,0 +1,125 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`generateDynamicIR > go 1`] = `
+{
+  "endpoints": {
+    "endpoint_.getTestData": {
+      "auth": undefined,
+      "declaration": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "getTestData",
+            "unsafeName": "getTestData",
+          },
+          "originalName": "getTestData",
+          "pascalCase": {
+            "safeName": "GetTestData",
+            "unsafeName": "GetTestData",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_TEST_DATA",
+            "unsafeName": "GET_TEST_DATA",
+          },
+          "snakeCase": {
+            "safeName": "get_test_data",
+            "unsafeName": "get_test_data",
+          },
+        },
+      },
+      "examples": [],
+      "location": {
+        "method": "GET",
+        "path": "/testdata",
+      },
+      "request": {
+        "_visit": [Function],
+        "body": undefined,
+        "pathParameters": [],
+        "type": "body",
+      },
+      "response": {
+        "_visit": [Function],
+        "type": "json",
+      },
+    },
+  },
+  "environments": undefined,
+  "generatorConfig": undefined,
+  "headers": [],
+  "pathParameters": [],
+  "types": {
+    "type_:GetTestDataResponse": {
+      "_visit": [Function],
+      "additionalProperties": false,
+      "declaration": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "getTestDataResponse",
+            "unsafeName": "getTestDataResponse",
+          },
+          "originalName": "GetTestDataResponse",
+          "pascalCase": {
+            "safeName": "GetTestDataResponse",
+            "unsafeName": "GetTestDataResponse",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_TEST_DATA_RESPONSE",
+            "unsafeName": "GET_TEST_DATA_RESPONSE",
+          },
+          "snakeCase": {
+            "safeName": "get_test_data_response",
+            "unsafeName": "get_test_data_response",
+          },
+        },
+      },
+      "properties": [
+        {
+          "name": {
+            "name": {
+              "camelCase": {
+                "safeName": "message",
+                "unsafeName": "message",
+              },
+              "originalName": "message",
+              "pascalCase": {
+                "safeName": "Message",
+                "unsafeName": "Message",
+              },
+              "screamingSnakeCase": {
+                "safeName": "MESSAGE",
+                "unsafeName": "MESSAGE",
+              },
+              "snakeCase": {
+                "safeName": "message",
+                "unsafeName": "message",
+              },
+            },
+            "wireValue": "message",
+          },
+          "typeReference": {
+            "_visit": [Function],
+            "type": "optional",
+            "value": {
+              "_visit": [Function],
+              "type": "primitive",
+              "value": "STRING",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+  },
+  "version": "1.0.0",
+}
+`;

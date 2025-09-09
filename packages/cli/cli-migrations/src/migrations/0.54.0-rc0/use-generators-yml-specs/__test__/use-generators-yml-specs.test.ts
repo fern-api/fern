@@ -45,7 +45,7 @@ describe("use-generators-yml-specs", () => {
                     "utf-8"
                 );
                 await expect(content).toMatchFileSnapshot(
-                    `../../../../../../../snapshots/single-workspace/${fixture}/generators.yml`
+                    `../../../../../../../../snapshots/cli/cli-migrations/single-workspace/${fixture}/generators.yml`
                 );
             });
         }
