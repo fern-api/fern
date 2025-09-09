@@ -1,0 +1,533 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:NullableObject": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "NullableObject",
+                    "camelCase": {
+                        "unsafeName": "nullableObject",
+                        "safeName": "nullableObject"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nullable_object",
+                        "safeName": "nullable_object"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NULLABLE_OBJECT",
+                        "safeName": "NULLABLE_OBJECT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NullableObject",
+                        "safeName": "NullableObject"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        },
+                        "wireValue": "id"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        },
+                        "wireValue": "name"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "age",
+                            "camelCase": {
+                                "unsafeName": "age",
+                                "safeName": "age"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "age",
+                                "safeName": "age"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AGE",
+                                "safeName": "AGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Age",
+                                "safeName": "Age"
+                            }
+                        },
+                        "wireValue": "age"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        }
+                    }
+                }
+            ],
+            "additionalProperties": false
+        },
+        "type_:ResponseBody": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ResponseBody",
+                    "camelCase": {
+                        "unsafeName": "responseBody",
+                        "safeName": "responseBody"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "response_body",
+                        "safeName": "response_body"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "RESPONSE_BODY",
+                        "safeName": "RESPONSE_BODY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ResponseBody",
+                        "safeName": "ResponseBody"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "success",
+                            "camelCase": {
+                                "unsafeName": "success",
+                                "safeName": "success"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "success",
+                                "safeName": "success"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SUCCESS",
+                                "safeName": "SUCCESS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Success",
+                                "safeName": "Success"
+                            }
+                        },
+                        "wireValue": "success"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "BOOLEAN"
+                        }
+                    }
+                }
+            ],
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_.postWithNullableNamedRequestBodyType": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "postWithNullableNamedRequestBodyType",
+                    "camelCase": {
+                        "unsafeName": "postWithNullableNamedRequestBodyType",
+                        "safeName": "postWithNullableNamedRequestBodyType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "post_with_nullable_named_request_body_type",
+                        "safeName": "post_with_nullable_named_request_body_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "POST_WITH_NULLABLE_NAMED_REQUEST_BODY_TYPE",
+                        "safeName": "POST_WITH_NULLABLE_NAMED_REQUEST_BODY_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PostWithNullableNamedRequestBodyType",
+                        "safeName": "PostWithNullableNamedRequestBodyType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/postWithNullableNamedRequestBodyType/{id}"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "PostWithNullableNamedRequestBodyTypeRequest",
+                        "camelCase": {
+                            "unsafeName": "postWithNullableNamedRequestBodyTypeRequest",
+                            "safeName": "postWithNullableNamedRequestBodyTypeRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "post_with_nullable_named_request_body_type_request",
+                            "safeName": "post_with_nullable_named_request_body_type_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "POST_WITH_NULLABLE_NAMED_REQUEST_BODY_TYPE_REQUEST",
+                            "safeName": "POST_WITH_NULLABLE_NAMED_REQUEST_BODY_TYPE_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "PostWithNullableNamedRequestBodyTypeRequest",
+                            "safeName": "PostWithNullableNamedRequestBodyTypeRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "id",
+                                "camelCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                }
+                            },
+                            "wireValue": "id"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    }
+                ],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "referenced",
+                    "bodyKey": {
+                        "originalName": "body",
+                        "camelCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BODY",
+                            "safeName": "BODY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Body",
+                            "safeName": "Body"
+                        }
+                    },
+                    "bodyType": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "optional",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:NullableObject"
+                            }
+                        }
+                    }
+                },
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.postWithNonNullableNamedRequestBodyType": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "postWithNonNullableNamedRequestBodyType",
+                    "camelCase": {
+                        "unsafeName": "postWithNonNullableNamedRequestBodyType",
+                        "safeName": "postWithNonNullableNamedRequestBodyType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "post_with_non_nullable_named_request_body_type",
+                        "safeName": "post_with_non_nullable_named_request_body_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "POST_WITH_NON_NULLABLE_NAMED_REQUEST_BODY_TYPE",
+                        "safeName": "POST_WITH_NON_NULLABLE_NAMED_REQUEST_BODY_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PostWithNonNullableNamedRequestBodyType",
+                        "safeName": "PostWithNonNullableNamedRequestBodyType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/postWithNonNullableNamedRequestBodyType/{id}"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "NonNullableObject",
+                        "camelCase": {
+                            "unsafeName": "nonNullableObject",
+                            "safeName": "nonNullableObject"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "non_nullable_object",
+                            "safeName": "non_nullable_object"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NON_NULLABLE_OBJECT",
+                            "safeName": "NON_NULLABLE_OBJECT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "NonNullableObject",
+                            "safeName": "NonNullableObject"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "id",
+                                "camelCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                }
+                            },
+                            "wireValue": "id"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    }
+                ],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "nonNullableObjectId",
+                                    "camelCase": {
+                                        "unsafeName": "nonNullableObjectID",
+                                        "safeName": "nonNullableObjectID"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "non_nullable_object_id",
+                                        "safeName": "non_nullable_object_id"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "NON_NULLABLE_OBJECT_ID",
+                                        "safeName": "NON_NULLABLE_OBJECT_ID"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "NonNullableObjectID",
+                                        "safeName": "NonNullableObjectID"
+                                    }
+                                },
+                                "wireValue": "id"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            }
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "name",
+                                    "camelCase": {
+                                        "unsafeName": "name",
+                                        "safeName": "name"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "name",
+                                        "safeName": "name"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "NAME",
+                                        "safeName": "NAME"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Name",
+                                        "safeName": "Name"
+                                    }
+                                },
+                                "wireValue": "name"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            }
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "age",
+                                    "camelCase": {
+                                        "unsafeName": "age",
+                                        "safeName": "age"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "age",
+                                        "safeName": "age"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "AGE",
+                                        "safeName": "AGE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Age",
+                                        "safeName": "Age"
+                                    }
+                                },
+                                "wireValue": "age"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "INTEGER"
+                                }
+                            }
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
+}
