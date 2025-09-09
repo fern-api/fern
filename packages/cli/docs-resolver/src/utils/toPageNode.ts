@@ -42,6 +42,6 @@ export function toPageNode({
         viewers: page.viewers,
         orphaned: page.orphaned,
         featureFlags: page.featureFlags,
-        availability: page.availability,
+        availability: page.availability
     };
 }

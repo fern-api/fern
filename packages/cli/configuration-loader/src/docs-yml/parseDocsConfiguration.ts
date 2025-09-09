@@ -314,7 +314,7 @@ function convertLayoutConfig(
                 : CjsFdrSdk.docs.v1.commons.HeaderPosition.Fixed,
         disableHeader: layout.disableHeader ?? false,
         hideNavLinks: layout.hideNavLinks ?? false,
-        hideFeedback: layout.hideFeedback ?? false,
+        hideFeedback: layout.hideFeedback ?? false
     };
 }
 
@@ -749,7 +749,7 @@ async function convertNavigationItem({
             viewers: parseRoles(rawConfig.viewers),
             orphaned: rawConfig.orphaned,
             featureFlags: convertFeatureFlag(rawConfig.featureFlag),
-            availability: rawConfig.availability,
+            availability: rawConfig.availability
         };
     }
     if (isRawApiSectionConfig(rawConfig)) {

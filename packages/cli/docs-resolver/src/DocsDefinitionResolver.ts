@@ -1023,7 +1023,7 @@ export class DocsDefinitionResolver {
             authed: undefined,
             noindex: item.noindex || this.markdownFilesToNoIndex.get(item.absolutePath),
             featureFlags: item.featureFlags,
-            availability: item.availability,
+            availability: item.availability
         };
     }
 
@@ -1064,7 +1064,7 @@ export class DocsDefinitionResolver {
             pointsTo: undefined,
             noindex,
             featureFlags: item.featureFlags,
-            availability: item.availability,
+            availability: item.availability
         };
     }
 

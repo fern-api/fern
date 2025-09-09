@@ -3,7 +3,14 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 
 import { Audiences } from "../commons";
-import { AiChatConfig, Availability, DocsInstance, ExperimentalConfig, PlaygroundSettings, VersionAvailability } from "./schemas";
+import {
+    AiChatConfig,
+    Availability,
+    DocsInstance,
+    ExperimentalConfig,
+    PlaygroundSettings,
+    VersionAvailability
+} from "./schemas";
 // TODO: Update this import
 import { AnnouncementConfig } from "./schemas/sdk/api/resources/docs/types/AnnouncementConfig";
 
