@@ -5,7 +5,7 @@ source:
   - docker
   - fern
   - generators
-  - guides  
+  - guides
   - packages
   - scripts
   - shared
