@@ -32,7 +32,7 @@ public interface ICustomConfig {
     @Value.Default
     @JsonProperty("enable-forward-compatible-enums")
     default Boolean enableForwardCompatibleEnum() {
-        return true;
+        return false;
     }
 
     @Value.Default
