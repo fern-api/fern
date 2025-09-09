@@ -3,24 +3,90 @@
  */
 package com.seed.version.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum ApiVersion {
-    _1_0_0("1.0.0"),
+public final class ApiVersion {
+    public static final ApiVersion _1_0_0 = new ApiVersion(Value._1_0_0, "1.0.0");
 
-    _2_0_0("2.0.0"),
+    public static final ApiVersion LATEST = new ApiVersion(Value.LATEST, "latest");
 
-    LATEST("latest");
+    public static final ApiVersion _2_0_0 = new ApiVersion(Value._2_0_0, "2.0.0");
 
-    private final String value;
+    private final Value value;
 
-    ApiVersion(String value) {
+    private final String string;
+
+    ApiVersion(Value value, String string) {
         this.value = value;
+        this.string = string;
     }
 
-    @JsonValue
+    public Value getEnumValue() {
+        return value;
+    }
+
     @java.lang.Override
+    @JsonValue
     public String toString() {
-        return this.value;
+        return this.string;
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        return (this == other) || (other instanceof ApiVersion && this.string.equals(((ApiVersion) other).string));
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return this.string.hashCode();
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        switch (value) {
+            case _1_0_0:
+                return visitor.visit_100();
+            case LATEST:
+                return visitor.visitLatest();
+            case _2_0_0:
+                return visitor.visit_200();
+            case UNKNOWN:
+            default:
+                return visitor.visitUnknown(string);
+        }
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static ApiVersion valueOf(String value) {
+        switch (value) {
+            case "1.0.0":
+                return _1_0_0;
+            case "latest":
+                return LATEST;
+            case "2.0.0":
+                return _2_0_0;
+            default:
+                return new ApiVersion(Value.UNKNOWN, value);
+        }
+    }
+
+    public enum Value {
+        _1_0_0,
+
+        _2_0_0,
+
+        LATEST,
+
+        UNKNOWN
+    }
+
+    public interface Visitor<T> {
+        T visit_100();
+
+        T visit_200();
+
+        T visitLatest();
+
+        T visitUnknown(String unknownType);
     }
 }

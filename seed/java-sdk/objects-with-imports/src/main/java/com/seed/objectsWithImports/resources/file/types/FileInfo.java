@@ -3,22 +3,80 @@
  */
 package com.seed.objectsWithImports.resources.file.types;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum FileInfo {
-    REGULAR("REGULAR"),
+public final class FileInfo {
+    public static final FileInfo REGULAR = new FileInfo(Value.REGULAR, "REGULAR");
 
-    DIRECTORY("DIRECTORY");
+    public static final FileInfo DIRECTORY = new FileInfo(Value.DIRECTORY, "DIRECTORY");
 
-    private final String value;
+    private final Value value;
 
-    FileInfo(String value) {
+    private final String string;
+
+    FileInfo(Value value, String string) {
         this.value = value;
+        this.string = string;
     }
 
-    @JsonValue
+    public Value getEnumValue() {
+        return value;
+    }
+
     @java.lang.Override
+    @JsonValue
     public String toString() {
-        return this.value;
+        return this.string;
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        return (this == other) || (other instanceof FileInfo && this.string.equals(((FileInfo) other).string));
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return this.string.hashCode();
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        switch (value) {
+            case REGULAR:
+                return visitor.visitRegular();
+            case DIRECTORY:
+                return visitor.visitDirectory();
+            case UNKNOWN:
+            default:
+                return visitor.visitUnknown(string);
+        }
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static FileInfo valueOf(String value) {
+        switch (value) {
+            case "REGULAR":
+                return REGULAR;
+            case "DIRECTORY":
+                return DIRECTORY;
+            default:
+                return new FileInfo(Value.UNKNOWN, value);
+        }
+    }
+
+    public enum Value {
+        REGULAR,
+
+        DIRECTORY,
+
+        UNKNOWN
+    }
+
+    public interface Visitor<T> {
+        T visitRegular();
+
+        T visitDirectory();
+
+        T visitUnknown(String unknownType);
     }
 }

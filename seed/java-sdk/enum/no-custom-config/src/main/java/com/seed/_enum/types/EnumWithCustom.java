@@ -3,22 +3,81 @@
  */
 package com.seed._enum.types;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum EnumWithCustom {
-    SAFE("safe"),
+public final class EnumWithCustom {
+    public static final EnumWithCustom SAFE = new EnumWithCustom(Value.SAFE, "safe");
 
-    CUSTOM("Custom");
+    public static final EnumWithCustom CUSTOM = new EnumWithCustom(Value.CUSTOM, "Custom");
 
-    private final String value;
+    private final Value value;
 
-    EnumWithCustom(String value) {
+    private final String string;
+
+    EnumWithCustom(Value value, String string) {
         this.value = value;
+        this.string = string;
     }
 
-    @JsonValue
+    public Value getEnumValue() {
+        return value;
+    }
+
     @java.lang.Override
+    @JsonValue
     public String toString() {
-        return this.value;
+        return this.string;
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        return (this == other)
+                || (other instanceof EnumWithCustom && this.string.equals(((EnumWithCustom) other).string));
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return this.string.hashCode();
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        switch (value) {
+            case SAFE:
+                return visitor.visitSafe();
+            case CUSTOM:
+                return visitor.visitCustom();
+            case UNKNOWN:
+            default:
+                return visitor.visitUnknown(string);
+        }
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static EnumWithCustom valueOf(String value) {
+        switch (value) {
+            case "safe":
+                return SAFE;
+            case "Custom":
+                return CUSTOM;
+            default:
+                return new EnumWithCustom(Value.UNKNOWN, value);
+        }
+    }
+
+    public enum Value {
+        SAFE,
+
+        CUSTOM,
+
+        UNKNOWN
+    }
+
+    public interface Visitor<T> {
+        T visitSafe();
+
+        T visitCustom();
+
+        T visitUnknown(String unknownType);
     }
 }
