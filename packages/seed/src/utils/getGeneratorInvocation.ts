@@ -34,7 +34,7 @@ export async function getGeneratorInvocation({
     readme: generatorsYml.ReadmeSchema | undefined;
     license?: unknown;
 }): Promise<generatorsYml.GeneratorInvocation> {
-    const raw: generatorsYml.GeneratorInvocationSchema | undefined =
+    const raw =
         license != null
             ? {
                   name: docker.name,
