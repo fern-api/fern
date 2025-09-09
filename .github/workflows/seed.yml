@@ -20,88 +20,187 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      seed: ${{ steps.filter.outputs.seed }}
-      ruby: ${{ steps.filter.outputs.ruby }}
-      ruby-v2: ${{ steps.filter.outputs.ruby-v2 }}
-      openapi: ${{ steps.filter.outputs.openapi }}
-      python: ${{ steps.filter.outputs.python }}
-      postman: ${{ steps.filter.outputs.postman }}
-      java: ${{ steps.filter.outputs.java }}
-      typescript: ${{ steps.filter.outputs.typescript }}
-      go: ${{ steps.filter.outputs.go }}
-      csharp: ${{ steps.filter.outputs.csharp }}
-      php: ${{ steps.filter.outputs.php }}
-      swift: ${{ steps.filter.outputs.swift }}
-      rust: ${{ steps.filter.outputs.rust }}
+      seed: ${{ steps.seed-changes.outputs.any_changed }}
+      ruby: ${{ steps.ruby-changes.outputs.any_changed }}
+      ruby-v2: ${{ steps.ruby-v2-changes.outputs.any_changed }}
+      openapi: ${{ steps.openapi-changes.outputs.any_changed }}
+      python: ${{ steps.python-changes.outputs.any_changed }}
+      postman: ${{ steps.postman-changes.outputs.any_changed }}
+      java: ${{ steps.java-changes.outputs.any_changed }}
+      typescript: ${{ steps.typescript-changes.outputs.typescript }}
+      go: ${{ steps.go-changes.outputs.go }}
+      csharp: ${{ steps.csharp-changes.outputs.csharp }}
+      php: ${{ steps.php-changes.outputs.php }}
+      swift: ${{ steps.swift-changes.outputs.swift }}
+      rust: ${{ steps.rust-changes.outputs.rust }}
     steps:
       - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v3
-        id: filter
+      - uses: ./github/actions/check-for-changed-files
+        id: seed-changes
         with:
-          filters: |
-            seed:
-              - '.github/actions/cached-seed/action.yaml'
-              - '.github/actions/install/action.yaml'
-              - '.github/workflows/seed.yml'
-              - 'packages/seed/**'
-              - 'packages/ir-sdk/fern/apis/**'
-              - 'packages/cli/generation/ir-generator/**'
-              - 'test-definitions/**'
-              - 'test-definitions-openapi/**'
-            ruby:
-              - 'generators/ruby/**'
-              - 'seed/ruby-sdk/**'
-              - 'seed/ruby-model/**'
-            ruby-v2:
-              - 'generators/ruby-v2/**'
-              - 'seed/ruby-sdk-v2/**'
-            openapi:
-              - 'generators/openapi/**'
-              - 'seed/openapi/**'
-            python:
-              - 'generators/python/**'
-              - 'seed/pydantic/**'
-              - 'seed/pydantic-v2/**'
-              - 'seed/python-sdk/**'
-              - 'seed/fastapi/**'
-            postman:
-              - 'generators/postman/**'
-              - 'seed/postman/**'
-            java:
-              - 'generators/java/**'
-              - 'seed/java-sdk/**'
-              - 'seed/java-model/**'
-              - 'seed/java-spring/**'
+          files: |
+            .github/actions/cached-seed/action.yaml
+            .github/actions/install/action.yaml
+            .github/workflows/seed.yml
+            packages/seed/**
+            packages/ir-sdk/fern/apis/**
+            packages/cli/generation/ir-generator/**
+            test-definitions/**
+            test-definitions-openapi/**
+      - uses: ./.github/actions/check-for-changed-files
+        id: ruby-changes
+        with:
+          files: |
+            generators/ruby/**
+            seed/ruby-sdk/**
+            seed/ruby-model/**
+      - uses: ./.github/actions/check-for-changed-files
+        id: ruby-v2-changes
+        with:
+          files: |
+            generators/ruby-v2/**
+            seed/ruby-sdk-v2/**
+      - uses: ./.github/actions/check-for-changed-files
+        id: openapi-changes
+        with:
+          files: |
+              generators/openapi/**
+              seed/openapi/**
+      - uses: ./.github/actions/check-for-changed-files
+        id: python-changes
+        with:
+          files: |
+            generators/python/**
+            seed/pydantic/**
+            seed/pydantic-v2/**
+            seed/python-sdk/**
+            seed/fastapi/**
+      - uses: ./.github/actions/check-for-changed-files
+        id: postman-changes
+        with:
+          files: |
+            generators/postman/**
+            seed/postman/**
+      - uses: ./.github/actions/check-for-changed-files
+        id: java-changes
+        with:
+          files: |
+            generators/java/**
+            seed/java-sdk/**
+            seed/java-model/**
+            seed/java-spring/**
+      - uses: ./.github/actions/check-for-changed-files
+        id: typescript-changes
+        with:
+          files: |
             typescript:
-              - 'generators/typescript/**'
-              - 'seed/ts-sdk/**'
-              - 'seed/ts-express/**'
-            go:
-              - 'generators/go/**'
-              - 'seed/go-sdk/**'
-              - 'seed/go-model/**'
-              - 'seed/go-fiber/**'
-            csharp:
-              - 'generators/csharp/**'
-              - 'seed/csharp-sdk/**'
-              - 'seed/csharp-model/**'
-            php:
-              - 'generators/php/**'
-              - 'seed/php-sdk/**'
-              - 'seed/php-model/**'
-            swift:
-              - 'generators/swift/**'
-              - 'seed/swift-sdk/**'
-            rust:
-              - 'generators/rust/**'
-              - 'seed/rust-sdk/**'
-      - name: retry-on-failure
-        if: failure() && steps.filter.outcome == 'failure' && fromJSON(github.run_attempt) < 3
-        env:
-          GH_REPO: ${{ github.repository }}
-          GH_TOKEN: ${{ github.token }}
-          GH_DEBUG: api
-        run: gh workflow run rerun.yml -F run_id=${{ github.run_id }}
+              generators/typescript/**
+              seed/ts-sdk/**
+              seed/ts-express/**
+      - uses: ./.github/actions/check-for-changed-files
+        id: go-changes
+        with:
+          files: |
+            generators/go/**
+            seed/go-sdk/**
+            seed/go-model/**
+            seed/go-fiber/**
+      - uses: ./.github/actions/check-for-changed-files
+        id: csharp-changes
+        with:
+          files: |
+            generators/csharp/**
+            seed/csharp-sdk/**
+            seed/csharp-model/**
+      - uses: ./.github/actions/check-for-changed-files
+        id: php-changes
+        with:
+          files: |
+            generators/php/**
+            seed/php-sdk/**
+            seed/php-model/**
+      - uses: ./.github/actions/check-for-changed-files
+        id: swift-changes
+        with:
+          files: |
+            generators/swift/**
+            seed/swift-sdk/**
+      - uses: ./.github/actions/check-for-changed-files
+        id: rust-changes
+        with:
+          files: |
+            generators/rust/**
+            seed/rust-sdk/**
+      
+      # - uses: dorny/paths-filter@v3
+      #   id: filter
+      #   with:
+      #     filters: |
+      #       seed:
+      #         - '.github/actions/cached-seed/action.yaml'
+      #         - '.github/actions/install/action.yaml'
+      #         - '.github/workflows/seed.yml'
+      #         - 'packages/seed/**'
+      #         - 'packages/ir-sdk/fern/apis/**'
+      #         - 'packages/cli/generation/ir-generator/**'
+      #         - 'test-definitions/**'
+      #         - 'test-definitions-openapi/**'
+      #       ruby:
+      #         - 'generators/ruby/**'
+      #         - 'seed/ruby-sdk/**'
+      #         - 'seed/ruby-model/**'
+      #       ruby-v2:
+      #         - 'generators/ruby-v2/**'
+      #         - 'seed/ruby-sdk-v2/**'
+      #       openapi:
+      #         - 'generators/openapi/**'
+      #         - 'seed/openapi/**'
+      #       python:
+      #         - 'generators/python/**'
+      #         - 'seed/pydantic/**'
+      #         - 'seed/pydantic-v2/**'
+      #         - 'seed/python-sdk/**'
+      #         - 'seed/fastapi/**'
+      #       postman:
+      #         - 'generators/postman/**'
+      #         - 'seed/postman/**'
+      #       java:
+      #         - 'generators/java/**'
+      #         - 'seed/java-sdk/**'
+      #         - 'seed/java-model/**'
+      #         - 'seed/java-spring/**'
+      #       typescript:
+      #         - 'generators/typescript/**'
+      #         - 'seed/ts-sdk/**'
+      #         - 'seed/ts-express/**'
+      #       go:
+      #         - 'generators/go/**'
+      #         - 'seed/go-sdk/**'
+      #         - 'seed/go-model/**'
+      #         - 'seed/go-fiber/**'
+      #       csharp:
+      #         - 'generators/csharp/**'
+      #         - 'seed/csharp-sdk/**'
+      #         - 'seed/csharp-model/**'
+      #       php:
+      #         - 'generators/php/**'
+      #         - 'seed/php-sdk/**'
+      #         - 'seed/php-model/**'
+      #       swift:
+      #         - 'generators/swift/**'
+      #         - 'seed/swift-sdk/**'
+      #       rust:
+      #         - 'generators/rust/**'
+      #         - 'seed/rust-sdk/**'
+   
+      # CHRISM - need to retry on failure???
+      # - name: retry-on-failure
+      #   if: failure() && steps.filter.outcome == 'failure' && fromJSON(github.run_attempt) < 3
+      #   env:
+      #     GH_REPO: ${{ github.repository }}
+      #     GH_TOKEN: ${{ github.token }}
+      #     GH_DEBUG: api
+      #   run: gh workflow run rerun.yml -F run_id=${{ github.run_id }}
 
   ruby-model:
     runs-on: Seed
