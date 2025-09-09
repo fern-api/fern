@@ -204,6 +204,7 @@ jobs:
           generator-path: generators/ruby-v2
           validate-git-diff: false
           allow-unexpected-failures: true
+          validation-exclude-paths: "seed/*/.mock/*,seed/**/Gemfile.lock"
 
       - name: Create Pull Request
         id: cpr

@@ -1,0 +1,22 @@
+name: Example Action with Array Parameter
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-new-action:
+    runs-on: Seed
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: ruby-sdk-v2
+          generator-path: generators/ruby-v2
+          validate-git-diff: false
+          allow-unexpected-failures: true
+          validation-exclude-paths: "seed/*/.mock/*,seed/**/Gemfile.lock"
