@@ -1,6 +1,6 @@
-pub mod package;
-pub mod record;
+pub mod package_package;
+pub mod package_record;
 
-pub use package::{*};
-pub use record::{*};
+pub use package_package::{*};
+pub use package_record::{*};
 

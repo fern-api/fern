@@ -1,4 +1,4 @@
-pub mod foo;
+pub mod a_d_types_foo;
 
-pub use foo::{*};
+pub use a_d_types_foo::{*};
 
