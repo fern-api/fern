@@ -6810,7 +6810,8 @@
                                 "type": "named",
                                 "value": "type_union:MetadataUnion"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -6911,7 +6912,8 @@
                                 "type": "named",
                                 "value": "type_union:MyUnion"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -7547,7 +7549,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -7581,7 +7584,8 @@
                             "value": {
                                 "type": "unknown"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false

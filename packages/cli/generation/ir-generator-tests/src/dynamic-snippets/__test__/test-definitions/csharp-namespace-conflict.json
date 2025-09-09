@@ -352,7 +352,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_a/aa:A"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -380,7 +381,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_a/aa:B"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -480,7 +482,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_a/aa:A"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -508,7 +511,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_a/aa:B"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -606,7 +610,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false

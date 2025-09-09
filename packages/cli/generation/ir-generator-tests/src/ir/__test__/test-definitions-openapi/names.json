@@ -3397,7 +3397,8 @@
                                 "type": "primitive",
                                 "value": "FLOAT"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -3428,7 +3429,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -3459,7 +3461,8 @@
                                 "type": "named",
                                 "value": "type_infra/telemetry:TelemetryData"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -3599,7 +3602,8 @@
                                 "type": "primitive",
                                 "value": "FLOAT"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -3630,7 +3634,8 @@
                                 "type": "primitive",
                                 "value": "FLOAT"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -3661,7 +3666,8 @@
                                 "type": "primitive",
                                 "value": "FLOAT"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -3857,7 +3863,8 @@
                                     "type": "primitive",
                                     "value": "BOOLEAN"
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "headers": [],
