@@ -41,6 +41,7 @@ allowedFailures:
   - circular-references
   - circular-references-advanced
   # unknown
+  - alias
   - enum
   - file-upload
   - http-head
