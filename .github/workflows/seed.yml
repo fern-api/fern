@@ -152,6 +152,7 @@ jobs:
         with:
           generator-name: ruby-sdk-v2
           generator-path: generators/ruby-v2
+          validation-exclude-paths: "seed/*/.mock/*,seed/**/Gemfile.lock"
 
   pydantic-model:
     runs-on: Seed
@@ -188,6 +189,7 @@ jobs:
         with:
           generator-name: python-sdk
           generator-path: generators/python
+          validation-exclude-paths: "seed/*/.mock/*,seed/**/poetry.lock"
 
   fastapi:
     runs-on: Seed
@@ -387,6 +389,9 @@ jobs:
         with:
           generator-name: go-sdk
           generator-path: generators/go generators/go-v2
+          # TODO FER-6487: package.go is not a lockfile, but it is a generated file that is not deterministic
+          # Once that file is made deterministic, we can remove this exclude path
+          validation-exclude-paths: "seed/*/.mock/*,seed/go-sdk/reserved-keywords/package.go"
 
   csharp-model:
     runs-on: Seed
