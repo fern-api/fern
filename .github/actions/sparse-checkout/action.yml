@@ -27,6 +27,7 @@ runs:
 
         # Initialize arrays for each category
         declare -a source_dirs=(
+          ".github"
           ".husky"
           ".vscode"
           "docker"
