@@ -18876,7 +18876,10 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
             },
             "propertyAccess": null,
             "v2Examples": null,
-            "availability": null,
+            "availability": {
+              "status": "DEPRECATED",
+              "message": "DEPRECATED"
+            },
             "docs": null
           },
           {
@@ -19977,7 +19980,10 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
             },
             "propertyAccess": null,
             "v2Examples": null,
-            "availability": null,
+            "availability": {
+              "status": "DEPRECATED",
+              "message": "DEPRECATED"
+            },
             "docs": null
           },
           {
@@ -22487,7 +22493,10 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
             },
             "propertyAccess": null,
             "v2Examples": null,
-            "availability": null,
+            "availability": {
+              "status": "DEPRECATED",
+              "message": "DEPRECATED"
+            },
             "docs": null
           },
           {
@@ -61320,7 +61329,10 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
             },
             "propertyAccess": null,
             "v2Examples": null,
-            "availability": null,
+            "availability": {
+              "status": "DEPRECATED",
+              "message": "DEPRECATED"
+            },
             "docs": "DEPRECATED: Human readable display name for this Task, should be short (<100 chars)."
           },
           {
