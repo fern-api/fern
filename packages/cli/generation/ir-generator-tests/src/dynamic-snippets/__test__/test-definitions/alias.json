@@ -89,7 +89,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_:TypeId"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -117,7 +118,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -219,7 +221,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:TypeId"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "body": null

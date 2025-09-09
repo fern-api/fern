@@ -5164,7 +5164,8 @@
                                 "type": "named",
                                 "value": "type_folder-b/common:Foo"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -5304,7 +5305,8 @@
                                 "type": "named",
                                 "value": "type_folder-c/common:Foo"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -5441,7 +5443,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "UUID"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -5581,7 +5584,8 @@
                                 "type": "named",
                                 "value": "type_folder-b/common:Foo"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -5679,7 +5683,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_commons:Imported"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -6163,7 +6168,8 @@
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_foo:OptionalString"
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "headers": [],
@@ -6199,7 +6205,8 @@
                                         "type": "primitive",
                                         "value": "STRING"
                                     }
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -6230,7 +6237,8 @@
                                         "type": "primitive",
                                         "value": "INTEGER"
                                     }
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },

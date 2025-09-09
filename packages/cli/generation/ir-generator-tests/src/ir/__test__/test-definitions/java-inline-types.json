@@ -13859,7 +13859,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -13887,7 +13888,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -13947,7 +13949,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -14007,7 +14010,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -14035,7 +14039,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:RootType1InlineType1"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -14070,7 +14075,8 @@
                                 "type": "named",
                                 "value": "type_:RootType1FooMapValue"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -14101,7 +14107,8 @@
                                 "type": "named",
                                 "value": "type_:RootType1FooListItem"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -14132,7 +14139,8 @@
                                 "type": "named",
                                 "value": "type_:RootType1FooSetItem"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -14160,7 +14168,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ReferenceType"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -14220,7 +14229,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -14248,7 +14258,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ReferenceType"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -14308,7 +14319,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -14336,7 +14348,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ReferenceType"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -14396,7 +14409,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -14424,7 +14438,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ReferenceType"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -14484,7 +14499,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -14512,7 +14528,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:RootType1InlineType1NestedInlineType1"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -14540,7 +14557,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ReferenceType"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -14600,7 +14618,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -14628,7 +14647,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -14656,7 +14676,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:InlineEnum1"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -14684,7 +14705,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ReferenceType"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -14878,7 +14900,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -14906,7 +14929,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:DiscriminatedUnion1InlineType1InlineType1"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -14934,7 +14958,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ReferenceType"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -14994,7 +15019,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -15022,7 +15048,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ReferenceType"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -15082,7 +15109,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -15110,7 +15138,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ReferenceType"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -15250,7 +15279,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -15278,7 +15308,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:UndiscriminatedUnion1InlineType1InlineType1"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -15306,7 +15337,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ReferenceType"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -15366,7 +15398,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -15394,7 +15427,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ReferenceType"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -15454,7 +15488,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -15482,7 +15517,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ReferenceType"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -15795,7 +15831,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -15823,7 +15860,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -15851,7 +15889,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ReferenceType"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -15911,7 +15950,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -15939,7 +15979,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ReferenceType"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -15999,7 +16040,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -16027,7 +16069,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ReferenceType"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -16239,7 +16282,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -16267,7 +16311,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ReferenceType"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -16327,7 +16372,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -16355,7 +16401,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ReferenceType"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -16415,7 +16462,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -16443,7 +16491,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:ReferenceType"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -16503,7 +16552,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -16611,7 +16661,8 @@
                                 "typeReference": {
                                     "type": "named",
                                     "value": "type_:AliasProperty"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -16667,7 +16718,8 @@
                                 "typeReference": {
                                     "type": "named",
                                     "value": "type_:AliasProperty"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     }
@@ -16786,7 +16838,8 @@
                                 "typeReference": {
                                     "type": "named",
                                     "value": "type_:AliasProperty"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     }
@@ -16901,7 +16954,8 @@
                                 "typeReference": {
                                     "type": "named",
                                     "value": "type_:AliasProperty"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     }
@@ -17016,7 +17070,8 @@
                                 "typeReference": {
                                     "type": "named",
                                     "value": "type_:AliasProperty"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     }
@@ -17234,7 +17289,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:AliasProperty"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -17301,7 +17357,8 @@
                                 "type": "named",
                                 "value": "type_:AliasProperty"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -17368,7 +17425,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -17435,7 +17493,8 @@
                                 "type": "named",
                                 "value": "type_:OtherAliasProperty"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -17498,7 +17557,8 @@
                                 "type": "named",
                                 "value": "type_:AliasProperty"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -17561,7 +17621,8 @@
                                 "type": "named",
                                 "value": "type_:AliasProperty"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -17753,7 +17814,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -17813,7 +17875,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -17873,7 +17936,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -17933,7 +17997,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -17993,7 +18058,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -18093,7 +18159,8 @@
                                 "typeReference": {
                                     "type": "named",
                                     "value": "type_:RequestTypeInlineType1"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -18121,7 +18188,8 @@
                                 "typeReference": {
                                     "type": "primitive",
                                     "value": "STRING"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -18227,7 +18295,8 @@
                                 "typeReference": {
                                     "type": "named",
                                     "value": "type_:DiscriminatedUnion1"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -18255,7 +18324,8 @@
                                 "typeReference": {
                                     "type": "primitive",
                                     "value": "STRING"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -18361,7 +18431,8 @@
                                 "typeReference": {
                                     "type": "named",
                                     "value": "type_:UndiscriminatedUnion1"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -18389,7 +18460,8 @@
                                 "typeReference": {
                                     "type": "primitive",
                                     "value": "STRING"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },

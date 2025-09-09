@@ -84,4 +84,8 @@ export interface LayoutConfig {
      * and a 1px border will separate the sidebar from the content.
      */
     disableHeader?: boolean;
+    /** If `hide-nav-links` is set to true, the navbar links will not be rendered. This can be overridden for a specific page using the frontmatter. */
+    hideNavLinks?: boolean;
+    /** If `hide-feedback` is set to true, the feedback button will not be rendered. This can be overridden for a specific page using the frontmatter. */
+    hideFeedback?: boolean;
 }

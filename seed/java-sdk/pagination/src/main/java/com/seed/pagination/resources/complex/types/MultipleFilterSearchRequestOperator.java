@@ -3,22 +3,84 @@
  */
 package com.seed.pagination.resources.complex.types;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum MultipleFilterSearchRequestOperator {
-    AND("AND"),
+public final class MultipleFilterSearchRequestOperator {
+    public static final MultipleFilterSearchRequestOperator AND =
+            new MultipleFilterSearchRequestOperator(Value.AND, "AND");
 
-    OR("OR");
+    public static final MultipleFilterSearchRequestOperator OR =
+            new MultipleFilterSearchRequestOperator(Value.OR, "OR");
 
-    private final String value;
+    private final Value value;
 
-    MultipleFilterSearchRequestOperator(String value) {
+    private final String string;
+
+    MultipleFilterSearchRequestOperator(Value value, String string) {
         this.value = value;
+        this.string = string;
     }
 
-    @JsonValue
+    public Value getEnumValue() {
+        return value;
+    }
+
     @java.lang.Override
+    @JsonValue
     public String toString() {
-        return this.value;
+        return this.string;
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        return (this == other)
+                || (other instanceof MultipleFilterSearchRequestOperator
+                        && this.string.equals(((MultipleFilterSearchRequestOperator) other).string));
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return this.string.hashCode();
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        switch (value) {
+            case AND:
+                return visitor.visitAnd();
+            case OR:
+                return visitor.visitOr();
+            case UNKNOWN:
+            default:
+                return visitor.visitUnknown(string);
+        }
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static MultipleFilterSearchRequestOperator valueOf(String value) {
+        switch (value) {
+            case "AND":
+                return AND;
+            case "OR":
+                return OR;
+            default:
+                return new MultipleFilterSearchRequestOperator(Value.UNKNOWN, value);
+        }
+    }
+
+    public enum Value {
+        AND,
+
+        OR,
+
+        UNKNOWN
+    }
+
+    public interface Visitor<T> {
+        T visitAnd();
+
+        T visitOr();
+
+        T visitUnknown(String unknownType);
     }
 }

@@ -2514,7 +2514,8 @@
                                 "type": "named",
                                 "value": "type_a:A"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -2574,7 +2575,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -2672,7 +2674,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -2847,7 +2850,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_ast:TorU"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -2945,7 +2949,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_ast:T"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false

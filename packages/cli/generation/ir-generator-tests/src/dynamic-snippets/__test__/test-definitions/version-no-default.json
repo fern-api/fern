@@ -165,7 +165,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_user:UserId"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -193,7 +194,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -300,7 +302,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_user:UserId"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "body": null

@@ -1,6 +1,6 @@
-pub mod r#type;
+pub mod type_;
 pub mod name;
 
-pub use r#type::{*};
+pub use type_::{*};
 pub use name::{*};
 

@@ -1110,7 +1110,8 @@
                                 "type": "string",
                                 "value": "failure"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": true
@@ -1208,7 +1209,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": true
@@ -1387,7 +1389,8 @@
                                         "type": "string",
                                         "value": "CreateUserRequest"
                                     }
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -1418,7 +1421,8 @@
                                         "type": "string",
                                         "value": "v1"
                                     }
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -1446,7 +1450,8 @@
                                 "typeReference": {
                                     "type": "primitive",
                                     "value": "STRING"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },

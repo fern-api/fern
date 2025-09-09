@@ -39644,7 +39644,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:Type"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -39672,7 +39673,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -39700,7 +39702,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -40119,7 +40122,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -40157,7 +40161,8 @@
                                     "value": "STRING"
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -40188,7 +40193,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -40844,7 +40850,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_types:MovieId"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -40875,7 +40882,8 @@
                                 "type": "named",
                                 "value": "type_types:MovieId"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -40903,7 +40911,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -40931,7 +40940,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -40959,7 +40969,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "DOUBLE"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -40990,7 +41001,8 @@
                                 "type": "string",
                                 "value": "movie"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -41018,7 +41030,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_commons/types:Tag"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -41049,7 +41062,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -41083,7 +41097,8 @@
                             "value": {
                                 "type": "unknown"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -41111,7 +41126,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "LONG"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -41290,7 +41306,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -41318,7 +41335,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -41416,7 +41434,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -41444,7 +41463,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -41542,7 +41562,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -41570,7 +41591,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -41668,7 +41690,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_types:MovieId"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -41699,7 +41722,8 @@
                                 "type": "named",
                                 "value": "type_types:MovieId"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -41727,7 +41751,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -41755,7 +41780,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -41783,7 +41809,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "DOUBLE"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -41814,7 +41841,8 @@
                                 "type": "string",
                                 "value": "movie"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -41842,7 +41870,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_commons/types:Tag"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -41873,7 +41902,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -41907,7 +41937,8 @@
                             "value": {
                                 "type": "unknown"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -41935,7 +41966,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "LONG"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -41966,7 +41998,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -42064,7 +42097,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "UUID"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -42092,7 +42126,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "DATE"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -42120,7 +42155,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "DATE_TIME"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -42218,7 +42254,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -42246,7 +42283,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -42344,7 +42382,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -42378,7 +42417,8 @@
                                     "value": "type_types:File"
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -42412,7 +42452,8 @@
                                     "value": "type_types:Directory"
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -42510,7 +42551,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -42544,7 +42586,8 @@
                                     "value": "type_types:Node"
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -42578,7 +42621,8 @@
                                     "value": "type_types:Tree"
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -42682,7 +42726,8 @@
                                     "value": "type_types:Node"
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -42838,7 +42883,8 @@
                                         "type": "primitive",
                                         "value": "STRING"
                                     }
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -42869,7 +42915,8 @@
                                         "type": "primitive",
                                         "value": "STRING"
                                     }
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -42935,7 +42982,8 @@
                                         "type": "primitive",
                                         "value": "STRING"
                                     }
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -42966,7 +43014,8 @@
                                         "type": "primitive",
                                         "value": "STRING"
                                     }
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     }
@@ -43209,7 +43258,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -43237,7 +43287,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -43265,7 +43316,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -43498,7 +43550,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -43526,7 +43579,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_types:MigrationStatus"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -43623,7 +43677,8 @@
                         },
                         "typeReference": {
                             "type": "unknown"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -43720,7 +43775,8 @@
                         },
                         "typeReference": {
                             "type": "unknown"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -43751,7 +43807,8 @@
                                 "type": "named",
                                 "value": "type_:Identifier"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -43849,7 +43906,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:Type"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -44098,7 +44156,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:Type"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -44126,7 +44185,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -44227,7 +44287,8 @@
                                 "type": "named",
                                 "value": "type_types:CastMember"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -44258,7 +44319,8 @@
                                 "type": "named",
                                 "value": "type_types:ExtendedMovie"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -44289,7 +44351,8 @@
                                 "type": "named",
                                 "value": "type_types:Entity"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -44320,7 +44383,8 @@
                                 "type": "named",
                                 "value": "type_types:Metadata"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -44351,7 +44415,8 @@
                                 "type": "named",
                                 "value": "type_commons/types:Metadata"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -44382,7 +44447,8 @@
                                 "type": "named",
                                 "value": "type_commons/types:EventInfo"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -44413,7 +44479,8 @@
                                 "type": "named",
                                 "value": "type_commons/types:Data"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -44444,7 +44511,8 @@
                                 "type": "named",
                                 "value": "type_types:Migration"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -44475,7 +44543,8 @@
                                 "type": "named",
                                 "value": "type_types:Exception"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -44506,7 +44575,8 @@
                                 "type": "named",
                                 "value": "type_types:Test"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -44537,7 +44607,8 @@
                                 "type": "named",
                                 "value": "type_types:Node"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -44568,7 +44639,8 @@
                                 "type": "named",
                                 "value": "type_types:Directory"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -44599,7 +44671,8 @@
                                 "type": "named",
                                 "value": "type_types:Moment"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -44697,7 +44770,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -44795,7 +44869,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "INTEGER"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -45138,7 +45213,8 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "STRING"
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "body": null
@@ -45410,7 +45486,8 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "STRING"
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "queryParameters": [],
@@ -45441,7 +45518,8 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "STRING"
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "body": null,
@@ -45614,7 +45692,8 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "STRING"
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "body": null
@@ -45884,7 +45963,8 @@
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_types:MovieId"
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "body": null
@@ -46189,7 +46269,8 @@
                                     "type": "primitive",
                                     "value": "BOOLEAN"
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -46223,7 +46304,8 @@
                                         "value": "STRING"
                                     }
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "headers": [
@@ -46253,7 +46335,8 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "STRING"
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "body": null,
