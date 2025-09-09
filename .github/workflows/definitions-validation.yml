@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: fern-api/sparse-checkout@main
+        uses: fern-api/sparse-checkout@v1
         with:
           include: source
 

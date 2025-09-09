@@ -13,7 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: fern-api/sparse-checkout@v1
+        with:
+          include: source
 
       - name: Set up JDK
         uses: actions/setup-java@v2
@@ -29,7 +31,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: fern-api/sparse-checkout@v1
+        with:
+          include: source
 
       - name: Set up JDK
         uses: actions/setup-java@v2
@@ -47,7 +51,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: fern-api/sparse-checkout@v1
+        with:
+          include: source
 
       - name: Set up JDK
         uses: actions/setup-java@v2

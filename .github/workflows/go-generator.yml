@@ -13,7 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: fern-api/sparse-checkout@v1
+        with:
+          include: source
 
       - name: Compile
         working-directory: ./generators/go
@@ -23,7 +25,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: fern-api/sparse-checkout@v1
+        with:
+          include: source
 
       - name: Run Tests
         working-directory: ./generators/go

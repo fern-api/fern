@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: fern-api/sparse-checkout@main
+        uses: fern-api/sparse-checkout@v1
         with:
           include: source
 
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: fern-api/sparse-checkout@main
+        uses: fern-api/sparse-checkout@v1
         with:
           include: source
 
@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: fern-api/sparse-checkout@main
+        uses: fern-api/sparse-checkout@v1
         with:
           include: source
 
@@ -76,7 +76,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: fern-api/sparse-checkout@main
+        uses: fern-api/sparse-checkout@v1
         with:
           include: source
 
@@ -90,12 +90,7 @@ jobs:
     if: github.repository == 'fern-api/fern'
     runs-on: Test
     steps:
-      - name: Checkout repo
-        uses: fern-api/sparse-checkout@main
-        with:
-          include: |
-            source
-            snapshots
+      - uses: actions/checkout@v4
 
       - name: Install
         uses: ./.github/actions/install
@@ -122,12 +117,7 @@ jobs:
     if: github.repository == 'fern-api/fern'
     runs-on: Test
     steps:
-      - name: Checkout repo
-        uses: fern-api/sparse-checkout@main
-        with:
-          include: |
-            source
-            snapshots
+      - uses: actions/checkout@v4
 
       - name: Install
         uses: ./.github/actions/install
@@ -159,7 +149,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: fern-api/sparse-checkout@main
+        uses: fern-api/sparse-checkout@v1
         with:
           include: source
 
@@ -183,7 +173,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repo
-        uses: fern-api/sparse-checkout@main
+        uses: fern-api/sparse-checkout@v1
         with:
           include: source
 
@@ -221,7 +211,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repo
-        uses: fern-api/sparse-checkout@main
+        uses: fern-api/sparse-checkout@v1
         with:
           include: source
 
@@ -264,7 +254,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repo
-        uses: fern-api/sparse-checkout@main
+        uses: fern-api/sparse-checkout@v1
         with:
           include: source
 
@@ -311,7 +301,7 @@ jobs:
     if: ${{ needs.changes.outputs.typescript == 'true' }}
     steps:
       - name: Checkout repo
-        uses: fern-api/sparse-checkout@main
+        uses: fern-api/sparse-checkout@v1
         with:
           include: source
 
@@ -335,7 +325,7 @@ jobs:
     if: ${{ needs.changes.outputs.typescript == 'true' }}
     steps:
       - name: Checkout repo
-        uses: fern-api/sparse-checkout@main
+        uses: fern-api/sparse-checkout@v1
         with:
           include: source
 
@@ -351,7 +341,7 @@ jobs:
     if: ${{ needs.changes.outputs.typescript == 'true' }}
     steps:
       - name: Checkout repo
-        uses: fern-api/sparse-checkout@main
+        uses: fern-api/sparse-checkout@v1
         with:
           include: source
 

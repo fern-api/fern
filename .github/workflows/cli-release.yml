@@ -23,7 +23,7 @@ jobs:
       version: ${{ steps.get_version.outputs.VERSION }}
     steps:
       - name: Checkout code
-        uses: fern-api/sparse-checkout@main
+        uses: fern-api/sparse-checkout@v1
         with:
           ref: main
           fetch-depth: 2
