@@ -13,6 +13,8 @@ testing "testing"
 uuid "github.com/google/uuid"
 base64 "encoding/base64"
 io "io"
+core "github.com/reserved-keywords/fern/core"
+internal "github.com/reserved-keywords/fern/internal"
 http "net/http"
 time "time"
 assert "github.com/stretchr/testify/assert"
@@ -128,4 +130,3 @@ return value
 }
 return fmt.Sprintf("%#v", r)
 }
-
