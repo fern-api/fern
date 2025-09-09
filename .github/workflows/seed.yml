@@ -189,6 +189,7 @@ jobs:
         with:
           generator-name: python-sdk
           generator-path: generators/python
+          exclude-paths: "seed/*/.mock/*,seed/**/poetry.lock"
 
   fastapi:
     runs-on: Seed
