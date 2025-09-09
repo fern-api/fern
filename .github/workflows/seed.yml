@@ -34,7 +34,6 @@ jobs:
       swift: ${{ steps.swift-changes.outputs.swift }}
       rust: ${{ steps.rust-changes.outputs.rust }}
     steps:
-      - uses: actions/checkout@v4
       - uses: ./github/actions/check-for-changed-files
         id: seed-changes
         with:
