@@ -152,7 +152,6 @@ jobs:
         with:
           generator-name: ruby-sdk-v2
           generator-path: generators/ruby-v2
-          validate-git-diff: true
           validation-exclude-paths: "seed/*/.mock/*,seed/**/Gemfile.lock"
 
   pydantic-model:
