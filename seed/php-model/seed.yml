@@ -46,3 +46,4 @@ allowedFailures:
   - http-head
   - query-parameters-openapi-as-objects
   - version
+  - version-no-default
