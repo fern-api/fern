@@ -80,12 +80,12 @@
             },
           },
           "path": "/test",
-          "url": "Default",
+          "url": "websocket",
         },
       },
       "rawContents": "channel:
   path: /test
-  url: Default
+  url: websocket
   auth: false
   messages:
     testChannel_sendMessage:
@@ -119,12 +119,12 @@
             },
           },
           "path": "/test2",
-          "url": "Default",
+          "url": "websocket2",
         },
       },
       "rawContents": "channel:
   path: /test2
-  url: Default
+  url: websocket2
   auth: false
   messages:
     testChannel2_sendMessage:
@@ -147,7 +147,8 @@
         "Prod": {
           "urls": {
             "Base": "http://prod.api.com",
-            "Default": "wss://api2.async.com",
+            "websocket": "wss://api.async.com",
+            "websocket2": "wss://api2.async.com",
           },
         },
       },
@@ -165,7 +166,8 @@ environments:
   Prod:
     urls:
       Base: http://prod.api.com
-      Default: wss://api2.async.com
+      websocket: wss://api.async.com
+      websocket2: wss://api2.async.com
 default-environment: Prod
 default-url: Base
 ",

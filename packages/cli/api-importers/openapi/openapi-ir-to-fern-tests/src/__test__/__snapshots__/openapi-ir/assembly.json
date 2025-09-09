@@ -9,7 +9,7 @@
   ],
   "websocketServers": [
     {
-      "name": "Default",
+      "name": "API",
       "url": "wss://api.assemblyai.com/v2/realtime/ws"
     }
   ],
@@ -7921,7 +7921,7 @@
       ],
       "servers": [
         {
-          "name": "Default",
+          "name": "API",
           "url": "wss://api.assemblyai.com/v2/realtime/ws"
         }
       ],

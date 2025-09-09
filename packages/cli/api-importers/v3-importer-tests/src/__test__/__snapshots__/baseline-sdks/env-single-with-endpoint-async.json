@@ -185,24 +185,46 @@
           }
         },
         {
-          "id": "Default",
+          "id": "websocket",
           "name": {
-            "originalName": "Default",
+            "originalName": "websocket",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default"
+              "unsafeName": "websocket",
+              "safeName": "websocket"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default"
+              "unsafeName": "websocket",
+              "safeName": "websocket"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "WEBSOCKET",
+              "safeName": "WEBSOCKET"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "Websocket",
+              "safeName": "Websocket"
+            }
+          }
+        },
+        {
+          "id": "websocket2",
+          "name": {
+            "originalName": "websocket2",
+            "camelCase": {
+              "unsafeName": "websocket2",
+              "safeName": "websocket2"
+            },
+            "snakeCase": {
+              "unsafeName": "websocket2",
+              "safeName": "websocket2"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "WEBSOCKET2",
+              "safeName": "WEBSOCKET2"
+            },
+            "pascalCase": {
+              "unsafeName": "Websocket2",
+              "safeName": "Websocket2"
             }
           }
         }
@@ -232,7 +254,8 @@
           "urls": {
             "Base": "http://prod.api.com",
             "Debug": "http://debug.api.com",
-            "Default": "wss://api2.async.com"
+            "websocket": "wss://api.async.com",
+            "websocket2": "wss://api2.async.com"
           }
         }
       ],
@@ -255,7 +278,7 @@
         "head": "/test",
         "parts": []
       },
-      "baseUrl": "Default",
+      "baseUrl": "websocket",
       "auth": false,
       "name": {
         "originalName": "testChannel",
@@ -333,7 +356,7 @@
         "head": "/test2",
         "parts": []
       },
-      "baseUrl": "Default",
+      "baseUrl": "websocket2",
       "auth": false,
       "name": {
         "originalName": "testChannel2",
@@ -502,24 +525,46 @@
             }
           },
           {
-            "id": "Default",
+            "id": "websocket",
             "name": {
-              "originalName": "Default",
+              "originalName": "websocket",
               "camelCase": {
-                "unsafeName": "default",
-                "safeName": "default"
+                "unsafeName": "websocket",
+                "safeName": "websocket"
               },
               "snakeCase": {
-                "unsafeName": "default",
-                "safeName": "default"
+                "unsafeName": "websocket",
+                "safeName": "websocket"
               },
               "screamingSnakeCase": {
-                "unsafeName": "DEFAULT",
-                "safeName": "DEFAULT"
+                "unsafeName": "WEBSOCKET",
+                "safeName": "WEBSOCKET"
               },
               "pascalCase": {
-                "unsafeName": "Default",
-                "safeName": "Default"
+                "unsafeName": "Websocket",
+                "safeName": "Websocket"
+              }
+            }
+          },
+          {
+            "id": "websocket2",
+            "name": {
+              "originalName": "websocket2",
+              "camelCase": {
+                "unsafeName": "websocket2",
+                "safeName": "websocket2"
+              },
+              "snakeCase": {
+                "unsafeName": "websocket2",
+                "safeName": "websocket2"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "WEBSOCKET2",
+                "safeName": "WEBSOCKET2"
+              },
+              "pascalCase": {
+                "unsafeName": "Websocket2",
+                "safeName": "Websocket2"
               }
             }
           }
@@ -549,7 +594,8 @@
             "urls": {
               "Base": "http://prod.api.com",
               "Debug": "http://debug.api.com",
-              "Default": "wss://api2.async.com"
+              "websocket": "wss://api.async.com",
+              "websocket2": "wss://api2.async.com"
             }
           }
         ],

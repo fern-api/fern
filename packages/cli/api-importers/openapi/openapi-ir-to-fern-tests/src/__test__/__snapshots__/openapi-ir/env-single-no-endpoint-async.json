@@ -8,11 +8,11 @@
   ],
   "websocketServers": [
     {
-      "name": "Default",
+      "name": "websocket",
       "url": "wss://api.async.com"
     },
     {
-      "name": "Default",
+      "name": "websocket2",
       "url": "wss://api2.async.com"
     }
   ],
@@ -105,7 +105,7 @@
       ],
       "servers": [
         {
-          "name": "Default",
+          "name": "websocket",
           "url": "wss://api.async.com"
         }
       ],
@@ -159,7 +159,7 @@
       ],
       "servers": [
         {
-          "name": "Default",
+          "name": "websocket2",
           "url": "wss://api2.async.com"
         }
       ],

@@ -135,8 +135,8 @@ export function parseAsyncAPIV3({
     const servers: Record<string, ServerContext> = {};
     for (const [serverId, server] of Object.entries(document.servers ?? {})) {
         servers[serverId] = {
-            // Only use serverId as name when multi-API environment grouping is enabled
-            name: context.options.groupMultiApiEnvironments ? serverId : undefined,
+            // Always preserve server names from AsyncAPI spec
+            name: serverId,
             url: constructServerUrl(server.protocol, server.host)
         };
     }
@@ -343,7 +343,7 @@ export function parseAsyncAPIV3({
                     Object.values(servers)
                 ).map(server => ({
                     ...server,
-                    name: server.name ?? "Default"
+                    name: server.name as string
                 })),
                 // TODO (Eden): This can be a LOT more complicated than this. See the link below for more details:
                 // https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelObject
@@ -360,7 +360,7 @@ export function parseAsyncAPIV3({
         channels: parsedChannels,
         servers: Object.values(servers).map(server => ({
             ...server,
-            name: server.name ?? "Default"
+            name: server.name as string
         })),
         basePath: getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH)
     };

@@ -2017,7 +2017,7 @@ errors:
             },
           },
           "path": "/agent",
-          "url": "Default",
+          "url": "agent",
         },
         "types": {
           "AgentAudioDone": {
@@ -2557,7 +2557,7 @@ errors:
       },
       "rawContents": "channel:
   path: /agent
-  url: Default
+  url: agent
   auth: false
   docs: Deepgram Voice Agent WebSocket
   headers:
@@ -3251,7 +3251,7 @@ types:
               "type": "string",
             },
           },
-          "url": "Default",
+          "url": "public",
         },
         "types": {
           "ControlMessageResponse": {
@@ -4450,7 +4450,7 @@ types:
       openapi: ../asyncapi.yml
 channel:
   path: /v1/listen
-  url: Default
+  url: public
   auth: false
   docs: Deepgram Speech to Text WebSocket
   query-parameters:
@@ -9941,7 +9941,7 @@ docs: Manage your projects
               "type": "SpeakSampleRate",
             },
           },
-          "url": "Default",
+          "url": "public",
         },
         "types": {
           "ControlMessagesResponse": {
@@ -10322,7 +10322,7 @@ docs: Manage your projects
       openapi: ../asyncapi.yml
 channel:
   path: /v1/speak
-  url: Default
+  url: public
   auth: false
   docs: Deepgram Text to Speech WebSocket
   query-parameters:
@@ -11892,7 +11892,8 @@ docs: Transform text to speech
         "Default": {
           "urls": {
             "Base": "https://api.deepgram.com",
-            "Default": "wss://agent.deepgram.com",
+            "agent": "wss://agent.deepgram.com",
+            "public": "wss://api.deepgram.com",
           },
         },
       },
@@ -11910,7 +11911,8 @@ environments:
   Default:
     urls:
       Base: https://api.deepgram.com
-      Default: wss://agent.deepgram.com
+      public: wss://api.deepgram.com
+      agent: wss://agent.deepgram.com
 default-environment: Default
 default-url: Base
 auth-schemes:

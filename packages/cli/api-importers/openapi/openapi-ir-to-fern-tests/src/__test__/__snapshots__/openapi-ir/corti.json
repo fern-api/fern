@@ -7,15 +7,15 @@
   ],
   "websocketServers": [
     {
-      "name": "Default",
+      "name": "beta-eu",
       "url": "wss://api.beta-eu.corti.app"
     },
     {
-      "name": "Default",
+      "name": "eu",
       "url": "wss://api.eu.corti.app"
     },
     {
-      "name": "Default",
+      "name": "us",
       "url": "wss://api.us.corti.app"
     }
   ],
@@ -8573,15 +8573,15 @@
       ],
       "servers": [
         {
-          "name": "Default",
+          "name": "beta-eu",
           "url": "wss://api.beta-eu.corti.app"
         },
         {
-          "name": "Default",
+          "name": "eu",
           "url": "wss://api.eu.corti.app"
         },
         {
-          "name": "Default",
+          "name": "us",
           "url": "wss://api.us.corti.app"
         }
       ],

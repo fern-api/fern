@@ -7909,7 +7909,7 @@ The parameter should map to a JSON encoded list of strings.
               "type": "optional<string>",
             },
           },
-          "url": "Default",
+          "url": "API",
         },
         "imports": {
           "root": "__package__.yml",
@@ -7948,7 +7948,7 @@ The parameter should map to a JSON encoded list of strings.
       },
       "rawContents": "channel:
   path: /{userId}
-  url: Default
+  url: API
   auth: false
   path-parameters:
     userId:
@@ -8035,8 +8035,8 @@ types:
       "environments": {
         "Default": {
           "urls": {
+            "API": "wss://api.assemblyai.com/v2/realtime/ws",
             "Base": "https://api.assemblyai.com",
-            "Default": "wss://api.assemblyai.com/v2/realtime/ws",
           },
         },
       },
@@ -8054,7 +8054,7 @@ environments:
   Default:
     urls:
       Base: https://api.assemblyai.com
-      Default: wss://api.assemblyai.com/v2/realtime/ws
+      API: wss://api.assemblyai.com/v2/realtime/ws
 default-environment: Default
 default-url: Base
 auth-schemes:

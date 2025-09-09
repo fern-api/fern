@@ -57,8 +57,8 @@ export function parseAsyncAPIV2({
     const servers: Record<string, ServerContext> = {};
     for (const [serverId, server] of Object.entries(document.servers ?? {})) {
         servers[serverId] = {
-            // Only use serverId as name when multi-API environment grouping is enabled
-            name: context.options.groupMultiApiEnvironments ? serverId : undefined,
+            // Always preserve server names from AsyncAPI spec
+            name: serverId,
             url: constructServerUrl(server.protocol, server.url)
         };
     }
@@ -325,10 +325,10 @@ export function parseAsyncAPIV2({
                 ]),
                 messages,
                 servers: (channel.servers?.map((serverId) => servers[serverId]) ?? Object.values(servers))
-                    .filter((server): server is ServerContext => server != null)
+                    .filter((server): server is ServerContext => server != null && server.name != null)
                     .map(server => ({
                         ...server,
-                        name: server.name ?? "Default"
+                        name: server.name as string
                     })),
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
                 path,
@@ -344,7 +344,7 @@ export function parseAsyncAPIV2({
         channels: parsedChannels != null ? parsedChannels : undefined,
         servers: Object.values(servers).map(server => ({
             ...server,
-            name: server.name ?? "Default"
+            name: server.name as string
         })),
         basePath: getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH)
     };

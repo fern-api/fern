@@ -418,7 +418,7 @@
         "head": "/test",
         "parts": []
       },
-      "baseUrl": "Default",
+      "baseUrl": "websocket",
       "auth": false,
       "name": {
         "originalName": "testChannel",
@@ -496,7 +496,7 @@
         "head": "/test2",
         "parts": []
       },
-      "baseUrl": "Default",
+      "baseUrl": "websocket2",
       "auth": false,
       "name": {
         "originalName": "testChannel2",
@@ -574,7 +574,7 @@
         "head": "/test",
         "parts": []
       },
-      "baseUrl": "Default",
+      "baseUrl": "betawebsocket",
       "auth": false,
       "name": {
         "originalName": "testChannels",
@@ -652,7 +652,7 @@
         "head": "/test2",
         "parts": []
       },
-      "baseUrl": "Default",
+      "baseUrl": "betawebsocket2",
       "auth": false,
       "name": {
         "originalName": "testChannels2",

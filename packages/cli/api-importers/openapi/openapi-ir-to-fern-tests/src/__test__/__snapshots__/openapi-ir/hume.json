@@ -8,7 +8,7 @@
   ],
   "websocketServers": [
     {
-      "name": "Default",
+      "name": "prod",
       "url": "wss://api.hume.ai/v0/evi"
     }
   ],
@@ -1201,7 +1201,7 @@
       ],
       "servers": [
         {
-          "name": "Default",
+          "name": "prod",
           "url": "wss://api.hume.ai/v0/evi"
         }
       ],
