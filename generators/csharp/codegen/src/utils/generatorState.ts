@@ -1,4 +1,4 @@
-import { loadTypeRegistry, saveTypeRegistry, TypeRegistryInfo } from "./canonicalization";
+import { nameRegistry, type TypeRegistryInfo } from "./nameRegistry";
 
 /**
  * Represents the persistent state of a code generator, containing information
@@ -32,7 +32,7 @@ export async function saveGeneratorState(pathToState: string): Promise<void> {
         const { writeFile } = await import("fs/promises");
 
         const stateData: GeneratorState = {
-            typeRegistry: saveTypeRegistry()
+            typeRegistry: nameRegistry.saveTypeRegistry()
         };
         await writeFile(pathToState, JSON.stringify(stateData), "utf-8");
     } catch (error) {
@@ -49,7 +49,7 @@ export async function saveGeneratorState(pathToState: string): Promise<void> {
  */
 export function restoreGeneratorState(state: GeneratorState): void {
     try {
-        loadTypeRegistry(state.typeRegistry);
+        nameRegistry.loadTypeRegistry(state.typeRegistry);
     } catch (error) {
         // Silently fail if we can't restore the generator state
         // This allows the generator to continue with a fresh type registry

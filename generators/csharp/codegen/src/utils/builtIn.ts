@@ -1,14 +1,15 @@
 /**
- * @fileoverview Built-in .NET type information for C# code generation
+ * @file Built-in .NET type information for C# code generation
  *
  * This module provides comprehensive mappings of built-in .NET types organized by namespace.
  * It serves as a reference for the C# code generator to identify and properly handle
  * built-in types without generating unnecessary wrapper code.
  *
- * @author Fern Code Generator
- * @version 1.0.0
  */
 
+import { type ClassReference } from "../ast/ClassReference";
+import { type Type } from "../ast/Type";
+import { type TypeParameter } from "../ast/TypeParameter";
 import { classReference } from "../csharp";
 
 /**
@@ -250,6 +251,7 @@ export const builtIns: BuiltInTypeMap = {
     "System.Collections.Generic": [
         "ByteEqualityComparer",
         "CollectionExtensions",
+        "IEnumerable",
         "KeyNotFoundException",
         "KeyValuePair",
         "NonRandomizedStringEqualityComparer",
@@ -305,8 +307,11 @@ export const builtIns: BuiltInTypeMap = {
     // Language Integrated Query (LINQ) functionality
     "System.Linq": ["Enumerable"],
 
-    // HTTP client functionality (currently empty - may be populated as needed)
-    "System.Net.Http": [],
+    // HTTP client functionality
+    "System.Net.Http": [
+        "HttpClient",
+        "HttpMethod"
+    ],
 
     // Threading and synchronization primitives
     "System.Threading": [
@@ -411,8 +416,14 @@ export const builtIns: BuiltInTypeMap = {
  * const exceptionClass = System.Exception;
  * ```
  */
-// biome-ignore lint/complexity/noStaticOnlyClass: taking advantage of static properties.
-export class System {
+export const System = {
+    get Enum() {
+        return classReference({
+            name: "Enum",
+            namespace: "System"
+        });
+    },
+
     /**
      * Gets a class reference to System.Exception.
      *
@@ -421,10 +432,274 @@ export class System {
      *
      * @returns A class reference object for System.Exception
      */
-    static get Exception() {
+    get Exception() {
         return classReference({
             name: "Exception",
             namespace: "System"
         });
-    }
-}
+    },
+
+    get Serializable() {
+        return classReference({
+            name: "Serializable",
+            namespace: "System"
+        });
+    },
+
+    get String() {
+        return classReference({
+            name: "String",
+            namespace: "System"
+        });
+    },
+
+    get TimeSpan() {
+        return classReference({
+            name: "TimeSpan",
+            namespace: "System"
+        });
+    },
+
+    /**
+     * Nested static class for Runtime-related types.
+     *
+     * This provides access to System.Runtime namespace types
+     * in a hierarchical structure.
+     */
+    Runtime: {
+        /**
+         * Nested object for Serialization-related types.
+         */
+        Serialization: {
+            /**
+             * Gets a class reference to System.Runtime.Serialization.EnumMember.
+             *
+             * @returns A class reference object for System.Runtime.Serialization.EnumMember
+             */
+            get EnumMember() {
+                return classReference({
+                    name: "EnumMember",
+                    namespace: "System.Runtime.Serialization"
+                });
+            }
+        } as const
+    } as const,
+
+    Collections: {
+        Generic: {
+            IAsyncEnumerable(elementType: ClassReference | TypeParameter | Type) {
+                return classReference({
+                    name: "IAsyncEnumerable",
+                    namespace: "System.Collections.Generic",
+                    generics: [elementType]
+                });
+            },
+            IEnumerable(elementType: ClassReference | TypeParameter | Type) {
+                return classReference({
+                    name: "IEnumerable",
+                    namespace: "System.Collections.Generic",
+                    generics: [elementType]
+                });
+            },
+            get KeyValuePair() {
+                return classReference({
+                    name: "KeyValuePair",
+                    namespace: "System.Collections.Generic"
+                });
+            },
+            List(elementType: ClassReference | TypeParameter | Type) {
+                return classReference({
+                    name: "List",
+                    namespace: "System.Collections.Generic",
+                    generics: [elementType]
+                });
+            },
+            HashSet(elementType: ClassReference | TypeParameter | Type) {
+                return classReference({
+                    name: "HashSet",
+                    namespace: "System.Collections.Generic",
+                    generics: [elementType]
+                });
+            },
+            Dictionary(
+                keyType: ClassReference | TypeParameter | Type,
+                valueType: ClassReference | TypeParameter | Type
+            ) {
+                return classReference({
+                    name: "Dictionary",
+                    namespace: "System.Collections.Generic",
+                    generics: [keyType, valueType]
+                });
+            }
+        } as const
+    } as const,
+
+    Globalization: {
+        get DateTimeStyles() {
+            return classReference({
+                name: "DateTimeStyles",
+                namespace: "System.Globalization"
+            });
+        }
+    } as const,
+
+    Linq: {
+        get Enumerable() {
+            return classReference({
+                name: "Enumerable",
+                namespace: "System.Linq"
+            });
+        }
+    } as const,
+
+    Net: {
+        Http: {
+            get HttpClient() {
+                return classReference({
+                    name: "HttpClient",
+                    namespace: "System.Net.Http"
+                });
+            },
+            get HttpMethod() {
+                return classReference({
+                    name: "HttpMethod",
+                    namespace: "System.Net.Http"
+                });
+            }
+        } as const
+    } as const,
+
+    IO: {
+        get MemoryStream() {
+            return classReference({
+                namespace: "System.IO",
+                name: "MemoryStream"
+            });
+        }
+    } as const,
+
+    Text: {
+        get Encoding() {
+            return classReference({
+                namespace: "System.Text",
+                name: "Encoding"
+            });
+        },
+        get Encoding_UTF8() {
+            return classReference({
+                namespace: "System.Text",
+                enclosingType: System.Text.Encoding,
+                name: "UTF8"
+            });
+        },
+        Json: {
+            get JsonElement() {
+                return classReference({
+                    namespace: "System.Text.Json",
+                    name: "JsonElement"
+                });
+            },
+            get JsonException() {
+                return classReference({
+                    namespace: "System.Text.Json",
+                    name: "JsonException"
+                });
+            },
+            get Utf8JsonReader() {
+                return classReference({
+                    namespace: "System.Text.Json",
+                    name: "Utf8JsonReader"
+                });
+            },
+            get JsonSerializerOptions() {
+                return classReference({
+                    namespace: "System.Text.Json",
+                    name: "JsonSerializerOptions"
+                });
+            },
+            get Utf8JsonWriter() {
+                return classReference({
+                    namespace: "System.Text.Json",
+                    name: "Utf8JsonWriter"
+                });
+            },
+            Nodes: {
+                get JsonNode() {
+                    return classReference({
+                        namespace: "System.Text.Json.Nodes",
+                        name: "JsonNode"
+                    });
+                },
+                get JsonObject() {
+                  return classReference({
+                      namespace: "System.Text.Json.Nodes",
+                      name: "JsonObject"
+                  });
+              },
+            } as const,
+            
+            Serialization: {
+                get IJsonOnDeserialized() {
+                    return classReference({
+                        namespace: "System.Text.Json.Serialization",
+                        name: "IJsonOnDeserialized"
+                    });
+                },
+                get IJsonOnSerializing() {
+                    return classReference({
+                        namespace: "System.Text.Json.Serialization",
+                        name: "IJsonOnSerializing"
+                    });
+                },
+                get JsonOnDeserializedAttribute() {
+                    return classReference({
+                        namespace: "System.Text.Json.Serialization",
+                        name: "JsonOnDeserializedAttribute"
+                    });
+                },
+                get JsonExtensionData() {
+                    return classReference({
+                        namespace: "System.Text.Json.Serialization",
+                        name: "JsonExtensionData"
+                    });
+                },
+                get JsonConverter() {
+                    return classReference({
+                        namespace: "System.Text.Json.Serialization",
+                        name: "JsonConverter"
+                    });
+                },
+                get JsonIgnore() {
+                    return classReference({
+                        namespace: "System.Text.Json.Serialization",
+                        name: "JsonIgnore"
+                    });
+                },
+                get JsonPropertyName() {
+                    return classReference({
+                        namespace: "System.Text.Json.Serialization",
+                        name: "JsonPropertyName"
+                    });
+                }
+            } as const
+        } as const
+    } as const,
+
+    Threading: {
+      get CancellationToken() {
+        return classReference({
+            namespace: "System.Threading",
+            name: "CancellationToken"
+        });
+    },
+        Tasks: {
+            Task(ofType?: ClassReference | TypeParameter | Type)   {
+                return classReference({
+                    namespace: "System.Threading.Tasks",
+                    name: "Task",
+                    generics: ofType ? [ofType] : undefined
+                });
+            }
+        } as const
+    } as const
+} as const;

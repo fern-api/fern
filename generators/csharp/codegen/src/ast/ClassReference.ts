@@ -1,5 +1,5 @@
 import { csharp } from "..";
-import { canonicalizeName, isAmbiguousTypeName, resolveNamespace } from "../utils/canonicalization";
+import { nameRegistry } from "../utils/nameRegistry";
 import { AstNode } from "./core/AstNode";
 import type { Writer } from "./core/Writer";
 
@@ -14,7 +14,7 @@ export declare namespace ClassReference {
         /* The enclosing type of the C# class */
         enclosingType?: ClassReference;
         /* Any generics used in the class reference */
-        generics?: (csharp.Type | csharp.TypeParameter)[];
+        generics?: (csharp.Type | csharp.TypeParameter | ClassReference)[];
         /* Whether or not the class reference should be fully-qualified */
         fullyQualified?: boolean;
         /* force global:: qualifier */
@@ -27,7 +27,7 @@ export class ClassReference extends AstNode {
     public readonly namespace: string;
     public readonly namespaceAlias: string | undefined;
     public readonly enclosingType: ClassReference | undefined;
-    public readonly generics: (csharp.Type | csharp.TypeParameter)[];
+    public readonly generics: (csharp.Type | csharp.TypeParameter | ClassReference)[];
     public readonly fullyQualified: boolean;
     public readonly global: boolean;
     private readonly namespaceSegments: string[];
@@ -65,7 +65,8 @@ export class ClassReference extends AstNode {
         const scopedName = this.enclosingType ? `${this.enclosingType.name}.${this.name}` : this.name;
 
         // if the name (or the enclosing type name) is ambiguous
-        const isAmbiguous = isAmbiguousTypeName(scopedName) || isAmbiguousTypeName(this.enclosingType?.name);
+        const isAmbiguous =
+            nameRegistry.isAmbiguousTypeName(scopedName) || nameRegistry.isAmbiguousTypeName(this.enclosingType?.name);
 
         // the fully qualified namespace of the type
         const fqNamespace = this.enclosingType?.resolveNamespace() ?? this.resolveNamespace();
@@ -288,7 +289,7 @@ export class ClassReference extends AstNode {
         const allNamespaceSegments = writer.getAllNamespaceSegments();
         return allNamespaceSegments.has(this.name);
     }
-
+    /*
     public toQualified(): ClassReference {
         return new ClassReference({
             name: this.name,
@@ -298,13 +299,13 @@ export class ClassReference extends AstNode {
             fullyQualified: true
         });
     }
-
+*/
     public resolveNamespace(): string {
-        return resolveNamespace(this.namespace);
+        return nameRegistry.resolveNamespace(this.namespace);
     }
 
     public canonicalize(): ClassReference {
-        return canonicalizeName(this);
+        return nameRegistry.canonicalizeName(this);
     }
 }
 

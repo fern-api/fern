@@ -1,5 +1,5 @@
-import { CSharpFile, EXTERNAL_PROTO_STRUCT_CLASS_REFERENCE, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp, EXTERNAL_PROTO_STRUCT_CLASS_REFERENCE } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";

@@ -1,6 +1,6 @@
 import { DiscriminatedUnionTypeInstance, NamedArgument, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { csharp, isKnownIdentifier } from "@fern-api/csharp-codegen";
+import { csharp, nameRegistry } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
@@ -385,8 +385,8 @@ export class DynamicTypeLiteralMapper {
         });
         // if the declaration name or namespace is a known identifier, then we need to fully qualify the type.
         const fullyQualified =
-            isKnownIdentifier(this.context.getClassName(object_.declaration.name)) ||
-            isKnownIdentifier(this.context.getNamespace(object_.declaration.fernFilepath));
+            nameRegistry.isKnownIdentifier(this.context.getClassName(object_.declaration.name)) ||
+            nameRegistry.isKnownIdentifier(this.context.getNamespace(object_.declaration.fernFilepath));
 
         return csharp.TypeLiteral.class_({
             reference: csharp.classReference({

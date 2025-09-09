@@ -1,6 +1,7 @@
+import { csharp } from "..";
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
-import { ClassReference } from "./ClassReference";
+import { type ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -121,7 +122,7 @@ export class Field extends AstNode {
         if (this.jsonPropertyName != null) {
             this.annotations = [
                 new Annotation({
-                    reference: new ClassReference({
+                    reference: csharp.classReference({
                         name: "JsonPropertyName",
                         namespace: "System.Text.Json.Serialization"
                     }),

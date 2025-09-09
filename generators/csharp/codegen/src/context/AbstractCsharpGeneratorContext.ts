@@ -1,29 +1,54 @@
-import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import {
-    AbstractCsharpGeneratorContext as BaseAbstractCsharpGeneratorContext,
-    BaseCsharpCustomConfigSchema,
-} from "@fern-api/csharp-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import {
+    FernFilepath,
+    HttpHeader,
     IntermediateRepresentation,
+    Name,
+    ObjectPropertyAccess,
+    PrimitiveType,
+    PrimitiveTypeV1,
+    TypeDeclaration,
+    TypeId,
+    TypeReference,
+    UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
+import { camelCase, upperFirst } from "lodash-es";
+import { convertReadOnlyPrimitiveTypes, System } from "../csharp";
+import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
+import { nameRegistry } from "../utils/nameRegistry";
 
-import { CsharpProject } from "../project";
+export const COLLECTION_ITEM_SERIALIZER_CLASS_NAME = "CollectionItemSerializer";
+export const CONSTANTS_CLASS_NAME = "Constants";
+export const DATETIME_SERIALIZER_CLASS_NAME = "DateTimeSerializer";
+export const ENUM_SERIALIZER_CLASS_NAME = "EnumSerializer";
+export const FILE_PARAMETER_CLASS_NAME = "FileParameter";
+export const FORM_URL_ENCODER_CLASS_NAME = "FormUrlEncoder";
+export const JSON_ACCESS_ATTRIBUTE_NAME = "JsonAccess";
+export const JSON_UTILS_CLASS_NAME = "JsonUtils";
+export const ONE_OF_SERIALIZER_CLASS_NAME = "OneOfSerializer";
+export const QUERY_STRING_CONVERTER_CLASS_NAME = "QueryStringConverter";
+export const STRING_ENUM_SERIALIZER_CLASS_NAME = "StringEnumSerializer";
+export const VALUE_CONVERT_CLASS_NAME = "ValueConvert";
 
-import { CORE_DIRECTORY_NAME, PUBLIC_CORE_DIRECTORY_NAME } from "../project/CsharpProject";
+import { csharp } from "..";
+import { CsharpProtobufTypeMapper } from "../proto/CsharpProtobufTypeMapper";
+import { ProtobufResolver } from "../proto/ProtobufResolver";
+import { CsharpTypeMapper } from "./CsharpTypeMapper";
+export type Namespace = string;
 
 export abstract class AbstractCsharpGeneratorContext<
     CustomConfig extends BaseCsharpCustomConfigSchema
-> extends BaseAbstractCsharpGeneratorContext<CustomConfig> {
-    //# private namespace: string;
-    public readonly project: CsharpProject;
-    //# public readonly csharpTypeMapper: CsharpTypeMapper;
-    //# public readonly csharpProtobufTypeMapper: CsharpProtobufTypeMapper;
-    //# public readonly protobufResolver: ProtobufResolver;
-    //# public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
-    //# private allNamespaceSegments?: Set<string>;
-    //# private allTypeClassReferences?: Map<string, Set<Namespace>>;
-    //# private readOnlyMemoryTypes: Set<PrimitiveTypeV1>;
+> extends AbstractGeneratorContext {
+    protected namespace: string;
+    // public readonly project: CsharpProject;
+    public readonly csharpTypeMapper: CsharpTypeMapper;
+    public readonly csharpProtobufTypeMapper: CsharpProtobufTypeMapper;
+    public readonly protobufResolver: ProtobufResolver;
+    public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
+    private allNamespaceSegments?: Set<string>;
+    private allTypeClassReferences?: Map<string, Set<Namespace>>;
+    private readOnlyMemoryTypes: Set<PrimitiveTypeV1>;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -31,18 +56,16 @@ export abstract class AbstractCsharpGeneratorContext<
         public readonly customConfig: CustomConfig,
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
-        super(ir, config, customConfig, generatorNotificationService);
-        /*# 
+        super(config, generatorNotificationService);
         this.namespace =
             this.customConfig.namespace ??
             upperFirst(camelCase(`${this.config.organization}_${this.ir.apiName.pascalCase.unsafeName}`));
+        /*# this.project = new CsharpProject({
+         context: this,
+         name: this.namespace
+        });
         #*/
 
-        this.project = new CsharpProject({
-            context: this,
-            name: this.namespace
-        });
-        /*#
         this.csharpTypeMapper = new CsharpTypeMapper(this);
         this.csharpProtobufTypeMapper = new CsharpProtobufTypeMapper(this);
         this.protobufResolver = new ProtobufResolver(this, this.csharpTypeMapper);
@@ -59,9 +82,8 @@ export abstract class AbstractCsharpGeneratorContext<
             downloadFiles: () => undefined,
             _other: () => undefined
         });
-        #*/
     }
-    /*#
+
     public getNamespace(): string {
         return this.namespace;
     }
@@ -421,15 +443,7 @@ export abstract class AbstractCsharpGeneratorContext<
     public getTypeDeclaration(typeId: TypeId): TypeDeclaration | undefined {
         return this.ir.types[typeId];
     }
-#*/
-    public getCoreDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(CORE_DIRECTORY_NAME);
-    }
 
-    public getPublicCoreDirectory(): RelativeFilePath {
-        return join(this.getCoreDirectory(), RelativeFilePath.of(PUBLIC_CORE_DIRECTORY_NAME));
-    }
-    /*#
     public getEnumerableClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: "Enumerable",
@@ -484,10 +498,13 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public getIJsonOnDeserializedInterfaceReference(): csharp.ClassReference {
+      return System.Text.Json.Serialization.IJsonOnDeserialized;
+      /*
         return csharp.classReference({
             name: "IJsonOnDeserialized",
             namespace: "System.Text.Json.Serialization"
         });
+      */
     }
 
     public getIJsonOnSerializingInterfaceReference(): csharp.ClassReference {
@@ -663,7 +680,7 @@ export abstract class AbstractCsharpGeneratorContext<
 
     /**
      * Prints the Type in a simple string format.
-     * /
+     */
     public printType(type: csharp.Type | csharp.TypeParameter): string {
         return type.toString({
             namespace: this.getNamespace(),
@@ -677,7 +694,7 @@ export abstract class AbstractCsharpGeneratorContext<
 
     /**
      * Returns the literal value from a Type Reference (doesn't unbox containers to find a literal).
-     * /
+     */
     public getLiteralInitializerFromTypeReference({
         typeReference
     }: {
@@ -820,7 +837,6 @@ export abstract class AbstractCsharpGeneratorContext<
     public abstract getNamespaceForTypeId(typeId: TypeId): string;
 
     public abstract getExtraDependencies(): Record<string, string>;
-    #*/
 }
 
 function stripNonAlphanumeric(str: string): string {

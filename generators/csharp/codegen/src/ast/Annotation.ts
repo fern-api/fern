@@ -1,4 +1,4 @@
-import { ClassReference } from "./ClassReference";
+import { type ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 

@@ -3,7 +3,7 @@ import {
     FernGeneratorExec,
     Options
 } from "@fern-api/browser-compatible-base-generator";
-import { BaseCsharpCustomConfigSchema, csharp, isKnownIdentifier } from "@fern-api/csharp-codegen";
+import { BaseCsharpCustomConfigSchema, csharp, nameRegistry } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { camelCase, upperFirst } from "lodash-es";
 
@@ -119,7 +119,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getRootClientClassReference(): csharp.ClassReference {
         const fullyQualified =
-            isKnownIdentifier(this.getRootClientClassName()) || isKnownIdentifier(this.getRootNamespace());
+            nameRegistry.isKnownIdentifier(this.getRootClientClassName()) ||
+            nameRegistry.isKnownIdentifier(this.getRootNamespace());
         return csharp.classReference({
             name: this.getRootClientClassName(),
             namespace: this.getRootNamespace(),

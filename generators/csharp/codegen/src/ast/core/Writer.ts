@@ -1,6 +1,6 @@
 import { AbstractWriter } from "@fern-api/browser-compatible-base-generator";
 import { BaseCsharpCustomConfigSchema } from "../../custom-config";
-import type { ClassReference } from "../ClassReference";
+import { type ClassReference } from "../ClassReference";
 
 type Alias = string;
 type Namespace = string;

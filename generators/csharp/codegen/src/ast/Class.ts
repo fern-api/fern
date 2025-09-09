@@ -1,8 +1,9 @@
-import { trackType } from "../utils/canonicalization";
+import { csharp } from "..";
+import { nameRegistry } from "../utils/nameRegistry";
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { ClassInstantiation } from "./ClassInstantiation";
-import { ClassReference } from "./ClassReference";
+import { type ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -68,8 +69,8 @@ export class Class extends AstNode {
         super();
 
         // ensure that we record this type so that we can find conflicts with other types.
-        this.reference = trackType(
-            new ClassReference({
+        this.reference = nameRegistry.trackType(
+            csharp.classReference({
                 name: name,
                 namespace: namespace,
                 enclosingType: enclosingType

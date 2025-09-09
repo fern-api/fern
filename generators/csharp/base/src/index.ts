@@ -8,6 +8,6 @@ export { FileGenerator } from "./FileGenerator";
 export { findDotnetToolPath } from "./findDotNetToolPath";
 export * from "./project";
 export { CsharpProject } from "./project/CsharpProject";
-export { CsharpProtobufTypeMapper } from "./proto/CsharpProtobufTypeMapper";
-export * from "./proto/constants";
+//export { CsharpProtobufTypeMapper } from "./proto/CsharpProtobufTypeMapper";
+// export * from "./proto/constants";
 export { TestFileGenerator } from "./TestFileGenerator";

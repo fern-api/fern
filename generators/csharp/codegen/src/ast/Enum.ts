@@ -1,10 +1,10 @@
 import { csharp } from "..";
+import { System } from "../utils/builtIn";
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
-import { ClassReference } from "./ClassReference";
+import { type ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { ENUM_MEMBER } from "./dependencies/System";
 
 export declare namespace Enum {
     interface Args {
@@ -50,7 +50,7 @@ export class Enum extends AstNode {
 
         this.annotations = annotations ?? [];
 
-        this.reference = new ClassReference({
+        this.reference = csharp.classReference({
             name: this.name,
             namespace: this.namespace
         });
@@ -64,7 +64,7 @@ export class Enum extends AstNode {
         this.fields.push({
             name: field.name,
             value: new Annotation({
-                reference: ENUM_MEMBER,
+                reference: System.Runtime.Serialization.EnumMember,
                 argument: csharp.codeblock((writer) => {
                     writer.write("Value = ");
                     writer.writeNode(csharp.string_({ string: field.value }));

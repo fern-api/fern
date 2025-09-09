@@ -5,7 +5,7 @@ import {
     isNamedArgument
 } from "@fern-api/browser-compatible-base-generator";
 
-import { ClassReference } from "./ClassReference";
+import { type ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 

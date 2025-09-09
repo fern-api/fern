@@ -1,8 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
-
+import { csharp } from "..";
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
-import { ClassReference } from "./ClassReference";
+import { type ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -102,7 +102,7 @@ export class Method extends AstNode {
         if (this.return == null) {
             if (this.isAsync) {
                 writer.writeNode(
-                    new ClassReference({
+                    csharp.classReference({
                         name: "Task",
                         namespace: "System.Threading.Tasks",
                         fullyQualified: true,

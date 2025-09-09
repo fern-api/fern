@@ -1,6 +1,6 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractCsharpGeneratorCli, TestFileGenerator } from "@fern-api/csharp-base";
-import { validateReadOnlyMemoryTypes } from "@fern-api/csharp-codegen";
+import { precalculate, validateReadOnlyMemoryTypes } from "@fern-api/csharp-codegen";
 import {
     generateModels,
     generateTests as generateModelTests,
@@ -106,6 +106,8 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        precalculate(context);
+
         // before generating anything, generate the models first so that we
         // can identify collisions or ambiguities in the generated code.
         const models = generateModels({ context });

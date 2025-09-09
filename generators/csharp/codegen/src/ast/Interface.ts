@@ -1,5 +1,6 @@
+import { csharp } from "..";
 import { Access } from "./Access";
-import { ClassReference } from "./ClassReference";
+import { type ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Field } from "./Field";
@@ -43,7 +44,7 @@ export class Interface extends AstNode {
         this.isNestedInterface = isNestedInterface ?? false;
         this.interfaceReferences = interfaceReferences ?? [];
 
-        this.reference = new ClassReference({
+        this.reference = csharp.classReference({
             name: this.name,
             namespace: this.namespace
         });
