@@ -381,12 +381,14 @@ allowedFailures:
   - error-property
   - error-property:union-utils
   - errors
+  - exhaustive:bundle
   - exhaustive:custom-package-json
   - exhaustive:dev-dependencies
   - exhaustive:never-throw-errors
   - extends
   - file-download:file-download-response-headers
   - file-download:no-custom-config
+  - file-download:stream
   - file-download:wrapper
   - literal
   - mixed-case:no-custom-config
