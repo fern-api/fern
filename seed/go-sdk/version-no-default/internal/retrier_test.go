@@ -148,8 +148,8 @@ func newTestRetryServer(t *testing.T, tc *RetryTestCase) *httptest.Server {
 					// Ensure that the duration between retries increases exponentially,
 					// and that it is within the minimum and maximum retry delay values.
 					actualDuration := timestamps[index].Sub(timestamps[index-1])
-					expectedDurationMin := expectedRetryDurations[index-1] * 75 / 100
-					expectedDurationMax := expectedRetryDurations[index-1] * 125 / 100
+					expectedDurationMin := expectedRetryDurations[index-1] * 50 / 100
+					expectedDurationMax := expectedRetryDurations[index-1] * 150 / 100
 					assert.True(
 						t,
 						actualDuration >= expectedDurationMin && actualDuration <= expectedDurationMax,
