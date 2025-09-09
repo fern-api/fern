@@ -3,22 +3,82 @@
  */
 package com.seed._enum.types;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum EnumWithSpecialCharacters {
-    BLA("\\$bla"),
+public final class EnumWithSpecialCharacters {
+    public static final EnumWithSpecialCharacters YO = new EnumWithSpecialCharacters(Value.YO, "\\$yo");
 
-    YO("\\$yo");
+    public static final EnumWithSpecialCharacters BLA = new EnumWithSpecialCharacters(Value.BLA, "\\$bla");
 
-    private final String value;
+    private final Value value;
 
-    EnumWithSpecialCharacters(String value) {
+    private final String string;
+
+    EnumWithSpecialCharacters(Value value, String string) {
         this.value = value;
+        this.string = string;
     }
 
-    @JsonValue
+    public Value getEnumValue() {
+        return value;
+    }
+
     @java.lang.Override
+    @JsonValue
     public String toString() {
-        return this.value;
+        return this.string;
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        return (this == other)
+                || (other instanceof EnumWithSpecialCharacters
+                        && this.string.equals(((EnumWithSpecialCharacters) other).string));
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return this.string.hashCode();
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        switch (value) {
+            case YO:
+                return visitor.visitYo();
+            case BLA:
+                return visitor.visitBla();
+            case UNKNOWN:
+            default:
+                return visitor.visitUnknown(string);
+        }
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static EnumWithSpecialCharacters valueOf(String value) {
+        switch (value) {
+            case "\\$yo":
+                return YO;
+            case "\\$bla":
+                return BLA;
+            default:
+                return new EnumWithSpecialCharacters(Value.UNKNOWN, value);
+        }
+    }
+
+    public enum Value {
+        BLA,
+
+        YO,
+
+        UNKNOWN
+    }
+
+    public interface Visitor<T> {
+        T visitBla();
+
+        T visitYo();
+
+        T visitUnknown(String unknownType);
     }
 }
