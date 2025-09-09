@@ -60,7 +60,7 @@ describe("convertIRtoJsonSchema", async () => {
                     const json = JSON.stringify(jsonschema, undefined, 2);
                     await expect(json).toMatchFileSnapshot(
                         RelativeFilePath.of(
-                            `./__snapshots__/${workspace.workspaceName}/${typeId.replaceAll(":", "_")}.json`
+                            `../../../../../../snapshots/cli/fern-definition/ir-to-jsonschema/${workspace.workspaceName}/${typeId.replaceAll(":", "_")}.json`
                         )
                     );
                 });

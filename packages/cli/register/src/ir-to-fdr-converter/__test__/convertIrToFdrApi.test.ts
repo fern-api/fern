@@ -89,7 +89,7 @@ describe("fdr", async () => {
 
             it(workspace.workspaceName ?? "", async () => {
                 await expect(JSON.stringify(fdr, undefined, 2)).toMatchFileSnapshot(
-                    `./__snapshots__/fdr/${
+                    `../../../../../../snapshots/cli/register/ir-to-fdr-converter/fdr/${
                         workspace.workspaceName ?? workspace.absoluteFilePath.split("/").reverse()[1]
                     }.json`
                 );
@@ -153,7 +153,7 @@ describe("oas-ir-fdr", async () => {
                 });
 
                 await expect(JSON.stringify(fdr, undefined, 2)).toMatchFileSnapshot(
-                    `./__snapshots__/oas-ir-fdr/${fixture.name}.json`
+                    `../../../../../../snapshots/cli/register/ir-to-fdr-converter/oas-ir-fdr/${fixture.name}.json`
                 );
             }
         }, 90_000);

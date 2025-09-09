@@ -44,7 +44,7 @@ describe("use-generators-yml-specs", () => {
                     join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("./fern/generators.yml")),
                     "utf-8"
                 );
-                await expect(content).toMatchFileSnapshot(`./__snapshots__/single-workspace/${fixture}/generators.yml`);
+                await expect(content).toMatchFileSnapshot(`../../../../../../../snapshots/single-workspace/${fixture}/generators.yml`);
             });
         }
     });
@@ -72,7 +72,7 @@ describe("use-generators-yml-specs", () => {
                         "utf-8"
                     );
                     await expect(content).toMatchFileSnapshot(
-                        `./__snapshots__/multiple-workspaces/${fixture}-${api}/generators.yml`
+                        `../../../../../../../../snapshots/cli/cli-migrations/0.54.0-rc0/use-generators-yml-specs/multiple-workspaces/${fixture}-${api}/generators.yml`
                     );
                 }
             });
