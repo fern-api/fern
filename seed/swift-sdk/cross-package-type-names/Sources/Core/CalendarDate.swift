@@ -69,36 +69,21 @@ public struct CalendarDate: Codable, Hashable, Sendable, CustomStringConvertible
 
     // MARK: - Private Helpers
 
-    /// Validates that the given year, month, and day form a valid calendar date.
+    /// Validates that the given year, month, and day form a valid calendar date using Foundation's Calendar APIs.
     private static func isValidDate(year: Int, month: Int, day: Int) -> Bool {
-        guard year >= 1, year <= 9999,
-            month >= 1, month <= 12,
-            day >= 1
-        else {
+        let calendar = Calendar(identifier: .gregorian)
+        let components = DateComponents(year: year, month: month, day: day)
+
+        guard let date = calendar.date(from: components) else {
             return false
         }
 
-        let daysInMonth: [Int] = [
-            31,  // January
-            isLeapYear(year) ? 29 : 28,  // February
-            31,  // March
-            30,  // April
-            31,  // May
-            30,  // June
-            31,  // July
-            31,  // August
-            30,  // September
-            31,  // October
-            30,  // November
-            31,  // December
-        ]
-
-        return day <= daysInMonth[month - 1]
-    }
-
-    /// Determines if the given year is a leap year
-    private static func isLeapYear(_ year: Int) -> Bool {
-        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)
+        // Ensure the date components match what we created (handles invalid dates like Feb 30)
+        let reconstructedComponents = calendar.dateComponents([.year, .month, .day], from: date)
+        return
+            (reconstructedComponents.year == year
+            && reconstructedComponents.month == month
+            && reconstructedComponents.day == day)
     }
 
     // MARK: - Error Types
