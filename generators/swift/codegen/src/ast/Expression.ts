@@ -111,8 +111,8 @@ type DateLiteral = {
     isoString: string;
 };
 
-type DatetimeLiteral = {
-    type: "datetime-literal";
+type CalendarDateLiteral = {
+    type: "calendar-date-literal";
     isoString: string;
 };
 
@@ -165,7 +165,7 @@ type InternalExpression =
     | NumberLiteral
     | BoolLiteral
     | DateLiteral
-    | DatetimeLiteral
+    | CalendarDateLiteral
     | UUIDLiteral
     | DictionaryLiteral
     | ArrayLiteral
@@ -309,8 +309,8 @@ export class Expression extends AstNode {
             case "date-literal":
                 writer.write(`try! Date("${this.internalExpression.isoString}", strategy: .iso8601)`);
                 break;
-            case "datetime-literal":
-                writer.write(`try! Date("${this.internalExpression.isoString}", strategy: .iso8601)`);
+            case "calendar-date-literal":
+                writer.write(`try! CalendarDate("${this.internalExpression.isoString}")`);
                 break;
             case "uuid-literal":
                 writer.write(`UUID(uuidString: "${this.internalExpression.value}")`);
@@ -457,8 +457,8 @@ export class Expression extends AstNode {
         return new this({ type: "date-literal", isoString: isoStringWithoutFractionalSeconds });
     }
 
-    public static datetimeLiteral(isoString: string): Expression {
-        return new this({ type: "date-literal", isoString });
+    public static calendarDateLiteral(isoString: string): Expression {
+        return new this({ type: "calendar-date-literal", isoString });
     }
 
     public static uuidLiteral(value: string): Expression {

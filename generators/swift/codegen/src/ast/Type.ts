@@ -104,6 +104,10 @@ type ExistentialAny = {
     protocolName: string;
 };
 
+type CalendarDate = {
+    type: "calendar-date";
+};
+
 /**
  * Represents our custom `JSONValue` type.
  */
@@ -120,6 +124,7 @@ type InternalType =
     | Optional
     | Custom
     | ExistentialAny
+    | CalendarDate
     | JsonValue;
 
 export class Type extends AstNode {
@@ -203,6 +208,8 @@ export class Type extends AstNode {
                     that.internalType.type === "existential-any" &&
                     this.internalType.protocolName === that.internalType.protocolName
                 );
+            case "calendar-date":
+                return that.internalType.type === "calendar-date";
             default:
                 assertNever(this.internalType);
         }
@@ -273,6 +280,8 @@ export class Type extends AstNode {
                 return camelCase(type.internalType.name);
             case "existential-any":
                 return `any${upperFirst(type.internalType.protocolName)}`;
+            case "calendar-date":
+                return "calendarDate";
             case "json-value":
                 return "json";
             default:
@@ -353,6 +362,9 @@ export class Type extends AstNode {
             case "existential-any":
                 writer.write("any ");
                 writer.write(this.internalType.protocolName);
+                break;
+            case "calendar-date":
+                writer.write("CalendarDate");
                 break;
             case "json-value":
                 writer.write("JSONValue");
@@ -451,6 +463,10 @@ export class Type extends AstNode {
 
     public static existentialAny(protocolName: string): Type {
         return new this({ type: "existential-any", protocolName });
+    }
+
+    public static calendarDate(): Type {
+        return new this({ type: "calendar-date" });
     }
 
     /**

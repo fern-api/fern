@@ -8,7 +8,7 @@ public struct ObjectWithOptionalField: Codable, Hashable, Sendable {
     public let double: Double?
     public let bool: Bool?
     public let datetime: Date?
-    public let date: Date?
+    public let date: CalendarDate?
     public let uuid: UUID?
     public let base64: String?
     public let list: [String]?
@@ -25,7 +25,7 @@ public struct ObjectWithOptionalField: Codable, Hashable, Sendable {
         double: Double? = nil,
         bool: Bool? = nil,
         datetime: Date? = nil,
-        date: Date? = nil,
+        date: CalendarDate? = nil,
         uuid: UUID? = nil,
         base64: String? = nil,
         list: [String]? = nil,
@@ -58,7 +58,7 @@ public struct ObjectWithOptionalField: Codable, Hashable, Sendable {
         self.double = try container.decodeIfPresent(Double.self, forKey: .double)
         self.bool = try container.decodeIfPresent(Bool.self, forKey: .bool)
         self.datetime = try container.decodeIfPresent(Date.self, forKey: .datetime)
-        self.date = try container.decodeIfPresent(Date.self, forKey: .date)
+        self.date = try container.decodeIfPresent(CalendarDate.self, forKey: .date)
         self.uuid = try container.decodeIfPresent(UUID.self, forKey: .uuid)
         self.base64 = try container.decodeIfPresent(String.self, forKey: .base64)
         self.list = try container.decodeIfPresent([String].self, forKey: .list)
