@@ -163,6 +163,7 @@ types:
       outputMode:
         type: optional<OutputMode>
         docs: Overrides the default output mode
+      license: optional<unknown>
 
   ReadmeConfig:
     properties:

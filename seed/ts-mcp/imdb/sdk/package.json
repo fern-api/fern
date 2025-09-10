@@ -13,7 +13,7 @@
     },
     "dependencies": {
         "url-join": "4.0.1",
-        "form-data": "^4.0.0",
+        "form-data": "^4.0.4",
         "formdata-node": "^6.0.3",
         "node-fetch": "^2.7.0",
         "qs": "^6.13.1",

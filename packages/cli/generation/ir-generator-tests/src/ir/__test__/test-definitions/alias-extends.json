@@ -254,7 +254,8 @@
                                                     }
                                                 },
                                                 "displayName": null
-                                            }
+                                            },
+                                            "propertyAccess": null
                                         }
                                     ]
                                 }
@@ -447,7 +448,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_:Parent"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -708,7 +710,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_:Parent"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -772,7 +775,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_:Child"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -1328,7 +1332,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -1388,7 +1393,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -1416,7 +1422,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -1516,7 +1523,8 @@
                                 "typeReference": {
                                     "type": "primitive",
                                     "value": "STRING"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -1544,7 +1552,8 @@
                                 "typeReference": {
                                     "type": "primitive",
                                     "value": "STRING"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },

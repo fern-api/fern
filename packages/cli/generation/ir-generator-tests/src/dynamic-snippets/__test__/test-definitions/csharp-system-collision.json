@@ -56,7 +56,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -84,7 +85,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_:User"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -144,7 +146,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -175,7 +178,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -203,7 +207,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -231,7 +236,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -259,7 +265,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -290,7 +297,8 @@
                             "type": "string",
                             "value": "USA"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false

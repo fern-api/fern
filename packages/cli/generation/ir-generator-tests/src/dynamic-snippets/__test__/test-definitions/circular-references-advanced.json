@@ -59,7 +59,8 @@
                             "type": "named",
                             "value": "type_a:A"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -119,7 +120,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -217,7 +219,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -546,7 +549,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_ast:Fruit"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -644,7 +648,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_ast:Fruit"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -742,7 +747,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_ast:Animal"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -840,7 +846,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_ast:Animal"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -938,7 +945,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_ast:Animal"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -1039,7 +1047,8 @@
                             "type": "named",
                             "value": "type_ast:Node"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -1212,7 +1221,8 @@
                                 "value": "type_ast:Node"
                             }
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -1898,7 +1908,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_ast:FieldName"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -1926,7 +1937,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_ast:FieldValue"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false

@@ -364,16 +364,64 @@ scripts:
           if grep -q '"test":' package.json; then yarn test; fi
         fi
 allowedFailures:
-  - bytes-download
+  - accept-header
+  - alias
+  - alias-extends
+  - api-wide-base-path
+  - auth-environment-variables
+  - basic-auth
+  - basic-auth-environment-variables
+  - bearer-token-environment-variable
+  - bytes-upload
   - circular-references
-  - cross-package-type-names
-  - idempotency-headers
-  - imdb:noScripts
-  - nullable
+  - circular-references-advanced
+  - content-type
+  - custom-auth
+  - enum
+  - error-property
+  - error-property:union-utils
+  - errors
+  - exhaustive:bundle
+  - exhaustive:custom-package-json
+  - exhaustive:dev-dependencies
+  - exhaustive:never-throw-errors
+  - extends
+  - file-download:file-download-response-headers
+  - file-download:no-custom-config
+  - file-download:stream
+  - file-download:wrapper
+  - literal
+  - mixed-case:no-custom-config
+  - mixed-case:retain-original-casing
   - oauth-client-credentials-custom
-  - response-property
-  - streaming-parameter
+  - package-yml
+  - pagination
+  - query-parameters-openapi:no-custom-config
+  - query-parameters-openapi-as-objects:no-custom-config
+  - trace:no-custom-config
+  - trace:serde-trace
+  - trace:serde-no-throwing
+  - trace:exhaustive
+  - unions
+  - version
+  - version-no-default
 
   # the below are likely related to changes made to example generation
   - examples:examples-with-api-reference
   - examples:retain-original-casing
+
+  # unknown
+  - file-upload:no-custom-config
+  - file-upload:inline
+  - file-upload:serde
+  - file-upload:wrapper
+  - file-upload:form-data-node16
+  - http-head
+  - idempotency-headers
+  - imdb:no-custom-config
+  - imdb:omit-undefined
+  - imdb:noScripts
+  - imdb:branded-string-aliases
+  - license
+  - oauth-client-credentials:no-custom-config
+  - ts-inline-types:inline

@@ -3,24 +3,91 @@
  */
 package com.seed.examples.resources.types.types;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum MigrationStatus {
-    RUNNING("RUNNING"),
+public final class MigrationStatus {
+    public static final MigrationStatus RUNNING = new MigrationStatus(Value.RUNNING, "RUNNING");
 
-    FAILED("FAILED"),
+    public static final MigrationStatus FAILED = new MigrationStatus(Value.FAILED, "FAILED");
 
-    FINISHED("FINISHED");
+    public static final MigrationStatus FINISHED = new MigrationStatus(Value.FINISHED, "FINISHED");
 
-    private final String value;
+    private final Value value;
 
-    MigrationStatus(String value) {
+    private final String string;
+
+    MigrationStatus(Value value, String string) {
         this.value = value;
+        this.string = string;
     }
 
-    @JsonValue
+    public Value getEnumValue() {
+        return value;
+    }
+
     @java.lang.Override
+    @JsonValue
     public String toString() {
-        return this.value;
+        return this.string;
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        return (this == other)
+                || (other instanceof MigrationStatus && this.string.equals(((MigrationStatus) other).string));
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return this.string.hashCode();
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        switch (value) {
+            case RUNNING:
+                return visitor.visitRunning();
+            case FAILED:
+                return visitor.visitFailed();
+            case FINISHED:
+                return visitor.visitFinished();
+            case UNKNOWN:
+            default:
+                return visitor.visitUnknown(string);
+        }
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static MigrationStatus valueOf(String value) {
+        switch (value) {
+            case "RUNNING":
+                return RUNNING;
+            case "FAILED":
+                return FAILED;
+            case "FINISHED":
+                return FINISHED;
+            default:
+                return new MigrationStatus(Value.UNKNOWN, value);
+        }
+    }
+
+    public enum Value {
+        RUNNING,
+
+        FAILED,
+
+        FINISHED,
+
+        UNKNOWN
+    }
+
+    public interface Visitor<T> {
+        T visitRunning();
+
+        T visitFailed();
+
+        T visitFinished();
+
+        T visitUnknown(String unknownType);
     }
 }

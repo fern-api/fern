@@ -3,24 +3,90 @@
  */
 package com.seed.validation.types;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Shape {
-    SQUARE("SQUARE"),
+public final class Shape {
+    public static final Shape TRIANGLE = new Shape(Value.TRIANGLE, "TRIANGLE");
 
-    CIRCLE("CIRCLE"),
+    public static final Shape CIRCLE = new Shape(Value.CIRCLE, "CIRCLE");
 
-    TRIANGLE("TRIANGLE");
+    public static final Shape SQUARE = new Shape(Value.SQUARE, "SQUARE");
 
-    private final String value;
+    private final Value value;
 
-    Shape(String value) {
+    private final String string;
+
+    Shape(Value value, String string) {
         this.value = value;
+        this.string = string;
     }
 
-    @JsonValue
+    public Value getEnumValue() {
+        return value;
+    }
+
     @java.lang.Override
+    @JsonValue
     public String toString() {
-        return this.value;
+        return this.string;
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        return (this == other) || (other instanceof Shape && this.string.equals(((Shape) other).string));
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return this.string.hashCode();
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        switch (value) {
+            case TRIANGLE:
+                return visitor.visitTriangle();
+            case CIRCLE:
+                return visitor.visitCircle();
+            case SQUARE:
+                return visitor.visitSquare();
+            case UNKNOWN:
+            default:
+                return visitor.visitUnknown(string);
+        }
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static Shape valueOf(String value) {
+        switch (value) {
+            case "TRIANGLE":
+                return TRIANGLE;
+            case "CIRCLE":
+                return CIRCLE;
+            case "SQUARE":
+                return SQUARE;
+            default:
+                return new Shape(Value.UNKNOWN, value);
+        }
+    }
+
+    public enum Value {
+        SQUARE,
+
+        CIRCLE,
+
+        TRIANGLE,
+
+        UNKNOWN
+    }
+
+    public interface Visitor<T> {
+        T visitSquare();
+
+        T visitCircle();
+
+        T visitTriangle();
+
+        T visitUnknown(String unknownType);
     }
 }

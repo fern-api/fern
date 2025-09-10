@@ -358,7 +358,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                             AST.ClassInstantiation(
                                 class_=HttpX.CLIENT,
                                 kwargs=[
-                                    ("proxies", AST.Expression('"http://my.test.proxy.example.com"')),
+                                    ("proxy", AST.Expression('"http://my.test.proxy.example.com"')),
                                     ("transport", AST.Expression('httpx.HTTPTransport(local_address="0.0.0.0")')),
                                 ],
                             )

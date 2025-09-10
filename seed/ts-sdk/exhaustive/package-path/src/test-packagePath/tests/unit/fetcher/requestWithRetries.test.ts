@@ -129,4 +129,107 @@ describe("requestWithRetries", () => {
         expect(response1.status).toBe(200);
         expect(response2.status).toBe(200);
     });
+
+    it("should respect retry-after header with seconds value", async () => {
+        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+            process.nextTick(callback);
+            return null as any;
+        });
+
+        mockFetch
+            .mockResolvedValueOnce(
+                new Response("", {
+                    status: 429,
+                    headers: new Headers({ "retry-after": "5" }),
+                }),
+            )
+            .mockResolvedValueOnce(new Response("", { status: 200 }));
+
+        const responsePromise = requestWithRetries(() => mockFetch(), 1);
+        await jest.runAllTimersAsync();
+        const response = await responsePromise;
+
+        expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), 5000); // 5 seconds = 5000ms
+        expect(response.status).toBe(200);
+    });
+
+    it("should respect retry-after header with HTTP date value", async () => {
+        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+            process.nextTick(callback);
+            return null as any;
+        });
+
+        const futureDate = new Date(Date.now() + 3000); // 3 seconds from now
+        mockFetch
+            .mockResolvedValueOnce(
+                new Response("", {
+                    status: 429,
+                    headers: new Headers({ "retry-after": futureDate.toUTCString() }),
+                }),
+            )
+            .mockResolvedValueOnce(new Response("", { status: 200 }));
+
+        const responsePromise = requestWithRetries(() => mockFetch(), 1);
+        await jest.runAllTimersAsync();
+        const response = await responsePromise;
+
+        // Should use the date-based delay (approximately 3000ms, but with jitter)
+        expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), expect.any(Number));
+        const actualDelay = setTimeoutSpy.mock.calls[0][1];
+        expect(actualDelay).toBeGreaterThan(2000);
+        expect(actualDelay).toBeLessThan(4000);
+        expect(response.status).toBe(200);
+    });
+
+    it("should respect x-ratelimit-reset header", async () => {
+        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+            process.nextTick(callback);
+            return null as any;
+        });
+
+        const resetTime = Math.floor((Date.now() + 4000) / 1000); // 4 seconds from now in Unix timestamp
+        mockFetch
+            .mockResolvedValueOnce(
+                new Response("", {
+                    status: 429,
+                    headers: new Headers({ "x-ratelimit-reset": resetTime.toString() }),
+                }),
+            )
+            .mockResolvedValueOnce(new Response("", { status: 200 }));
+
+        const responsePromise = requestWithRetries(() => mockFetch(), 1);
+        await jest.runAllTimersAsync();
+        const response = await responsePromise;
+
+        // Should use the x-ratelimit-reset delay (approximately 4000ms, but with jitter)
+        expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), expect.any(Number));
+        const actualDelay = setTimeoutSpy.mock.calls[0][1];
+        expect(actualDelay).toBeGreaterThan(3000);
+        expect(actualDelay).toBeLessThan(5000);
+        expect(response.status).toBe(200);
+    });
+
+    it("should cap delay at MAX_RETRY_DELAY for large header values", async () => {
+        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+            process.nextTick(callback);
+            return null as any;
+        });
+
+        mockFetch
+            .mockResolvedValueOnce(
+                new Response("", {
+                    status: 429,
+                    headers: new Headers({ "retry-after": "120" }), // 120 seconds = 120000ms > MAX_RETRY_DELAY (60000ms)
+                }),
+            )
+            .mockResolvedValueOnce(new Response("", { status: 200 }));
+
+        const responsePromise = requestWithRetries(() => mockFetch(), 1);
+        await jest.runAllTimersAsync();
+        const response = await responsePromise;
+
+        // Should be capped at MAX_RETRY_DELAY (60000ms) with jitter applied
+        expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), 60000); // Exactly MAX_RETRY_DELAY since jitter with 0.5 random keeps it at 60000
+        expect(response.status).toBe(200);
+    });
 });

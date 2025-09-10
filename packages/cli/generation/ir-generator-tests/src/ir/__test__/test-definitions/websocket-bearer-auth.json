@@ -2275,7 +2275,8 @@
                                                         }
                                                     },
                                                     "displayName": null
-                                                }
+                                                },
+                                                "propertyAccess": null
                                             },
                                             {
                                                 "name": {
@@ -2375,7 +2376,8 @@
                                                         }
                                                     },
                                                     "displayName": null
-                                                }
+                                                },
+                                                "propertyAccess": null
                                             }
                                         ]
                                     }
@@ -2561,7 +2563,8 @@
                                                         }
                                                     },
                                                     "displayName": null
-                                                }
+                                                },
+                                                "propertyAccess": null
                                             },
                                             {
                                                 "name": {
@@ -2661,7 +2664,8 @@
                                                         }
                                                     },
                                                     "displayName": null
-                                                }
+                                                },
+                                                "propertyAccess": null
                                             }
                                         ]
                                     }
@@ -2847,7 +2851,8 @@
                                                         }
                                                     },
                                                     "displayName": null
-                                                }
+                                                },
+                                                "propertyAccess": null
                                             },
                                             {
                                                 "name": {
@@ -2947,7 +2952,8 @@
                                                         }
                                                     },
                                                     "displayName": null
-                                                }
+                                                },
+                                                "propertyAccess": null
                                             }
                                         ]
                                     }
@@ -3133,7 +3139,8 @@
                                                         }
                                                     },
                                                     "displayName": null
-                                                }
+                                                },
+                                                "propertyAccess": null
                                             },
                                             {
                                                 "name": {
@@ -3233,7 +3240,8 @@
                                                         }
                                                     },
                                                     "displayName": null
-                                                }
+                                                },
+                                                "propertyAccess": null
                                             },
                                             {
                                                 "name": {
@@ -3333,7 +3341,8 @@
                                                         }
                                                     },
                                                     "displayName": null
-                                                }
+                                                },
+                                                "propertyAccess": null
                                             }
                                         ]
                                     }
@@ -3497,7 +3506,8 @@
                                                         }
                                                     },
                                                     "jsonExample": "sendText"
-                                                }
+                                                },
+                                                "propertyAccess": null
                                             },
                                             {
                                                 "name": {
@@ -3597,7 +3607,8 @@
                                                         }
                                                     },
                                                     "jsonExample": 1
-                                                }
+                                                },
+                                                "propertyAccess": null
                                             }
                                         ]
                                     },
@@ -3783,7 +3794,8 @@
                                                         }
                                                     },
                                                     "jsonExample": "alpha"
-                                                }
+                                                },
+                                                "propertyAccess": null
                                             },
                                             {
                                                 "name": {
@@ -3883,7 +3895,8 @@
                                                         }
                                                     },
                                                     "jsonExample": 1
-                                                }
+                                                },
+                                                "propertyAccess": null
                                             }
                                         ]
                                     },
@@ -4072,7 +4085,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -4100,7 +4114,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "INTEGER"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -4198,7 +4213,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -4226,7 +4242,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "INTEGER"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -4324,7 +4341,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -4352,7 +4370,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "INTEGER"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -4450,7 +4469,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -4478,7 +4498,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "INTEGER"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -4576,7 +4597,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -4604,7 +4626,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "BOOLEAN"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -4702,7 +4725,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -4730,7 +4754,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "INTEGER"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -4758,7 +4783,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "BOOLEAN"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -4856,7 +4882,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false

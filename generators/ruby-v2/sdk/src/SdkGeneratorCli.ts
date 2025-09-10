@@ -1,4 +1,5 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { AbstractRubyGeneratorCli } from "@fern-api/ruby-base";
 import { DynamicSnippetsGenerator } from "@fern-api/ruby-dynamic-snippets";
@@ -93,6 +94,24 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
 
         await context.snippetGenerator.populateSnippetsCache();
 
+        if (this.shouldGenerateReadme(context)) {
+            try {
+                const endpointSnippets = this.generateSnippets({ context });
+
+                await this.generateReadme({
+                    context,
+                    endpointSnippets
+                });
+                context.logger.debug("Generated readme!");
+            } catch (e) {
+                context.logger.error("Failed to generate README.md");
+                if (e instanceof Error) {
+                    context.logger.debug(e.message);
+                    context.logger.debug(e.stack ?? "");
+                }
+            }
+        }
+
         await context.project.persist();
 
         try {
@@ -123,6 +142,37 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 context.project.addRawFiles(wrappedRequest);
             }
         });
+    }
+    private shouldGenerateReadme(context: SdkGeneratorContext): boolean {
+        const hasSnippetFilepath = context.config.output.snippetFilepath != null;
+        const publishConfig = context.ir.publishConfig;
+        switch (publishConfig?.type) {
+            case "filesystem":
+                return publishConfig.generateFullProject || hasSnippetFilepath;
+            case "github":
+            case "direct":
+            default:
+                return hasSnippetFilepath;
+        }
+    }
+
+    private async generateReadme({
+        context,
+        endpointSnippets
+    }: {
+        context: SdkGeneratorContext;
+        endpointSnippets: Endpoint[];
+    }): Promise<void> {
+        if (endpointSnippets.length === 0) {
+            context.logger.debug("No snippets were produced; skipping README.md generation.");
+            return;
+        }
+
+        context.logger.debug("Has snippets length: ", endpointSnippets.length.toString());
+        const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
+        context.project.addRawFiles(
+            new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
+        );
     }
 
     private generateSnippets({ context }: { context: SdkGeneratorContext }): Endpoint[] {

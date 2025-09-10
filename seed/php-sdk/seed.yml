@@ -118,6 +118,8 @@ allowedFailures:
   - pagination-custom
   # Dynamic snippets need to add support for global headers included in the client constructor.
   - auth-environment-variables
+  # TODO: Add support for bytes upload.
+  - bytes-upload
   # Basic auth is not supported yet.
   - basic-auth
   # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly

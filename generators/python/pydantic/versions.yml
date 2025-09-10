@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 1.6.1
+  changelogEntry:
+    - summary: |
+        Union member self-referencing dependencies are now correctly imported and forward referenced.
+        This fixes compatibility with Pydantic >=2.11.0.
+      type: fix
+  createdAt: "2025-09-05"
+  irVersion: 59
+
 - version: 1.6.0
   changelogEntry:
     - summary: Bumped IR version to 59.

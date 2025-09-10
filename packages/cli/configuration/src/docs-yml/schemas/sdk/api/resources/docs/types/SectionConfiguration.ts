@@ -14,4 +14,5 @@ export interface SectionConfiguration extends FernDocsConfig.WithPermissions, Fe
     icon?: string;
     hidden?: boolean;
     skipSlug?: boolean;
+    availability?: FernDocsConfig.Availability;
 }

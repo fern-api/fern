@@ -4,28 +4,10 @@ on:
   push:
     branches:
       - main
-    paths:
-      - ".github/workflows/seed.yml"
-      - "packages/seed/**"
-      - "packages/ir-sdk/fern/apis/**"
-      - "packages/cli/generation/ir-generator/**"
-      - "test-definitions/**"
-      - "test-definitions-openapi/**"
-      - "generators/**"
-      - "seed/**"
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     branches:
       - main
-    paths:
-      - ".github/workflows/seed.yml"
-      - "packages/seed/**"
-      - "packages/ir-sdk/fern/apis/**"
-      - "packages/cli/generation/ir-generator/**"
-      - "test-definitions/**"
-      - "test-definitions-openapi/**"
-      - "generators/**"
-      - "seed/**"
   workflow_call:
   workflow_dispatch:
 
@@ -50,6 +32,7 @@ jobs:
       csharp: ${{ steps.filter.outputs.csharp }}
       php: ${{ steps.filter.outputs.php }}
       swift: ${{ steps.filter.outputs.swift }}
+      rust: ${{ steps.filter.outputs.rust }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -57,6 +40,8 @@ jobs:
         with:
           filters: |
             seed:
+              - '.github/actions/cached-seed/action.yaml'
+              - '.github/actions/install/action.yaml'
               - '.github/workflows/seed.yml'
               - 'packages/seed/**'
               - 'packages/ir-sdk/fern/apis/**'
@@ -107,6 +92,9 @@ jobs:
             swift:
               - 'generators/swift/**'
               - 'seed/swift-sdk/**'
+            rust:
+              - 'generators/rust/**'
+              - 'seed/rust-sdk/**'
       - name: retry-on-failure
         if: failure() && steps.filter.outcome == 'failure' && fromJSON(github.run_attempt) < 3
         env:
@@ -164,6 +152,7 @@ jobs:
         with:
           generator-name: ruby-sdk-v2
           generator-path: generators/ruby-v2
+          validation-exclude-paths: "seed/*/.mock/*,seed/**/Gemfile.lock"
 
   pydantic-model:
     runs-on: Seed
@@ -200,6 +189,7 @@ jobs:
         with:
           generator-name: python-sdk
           generator-path: generators/python
+          validation-exclude-paths: "seed/*/.mock/*,seed/**/poetry.lock"
 
   fastapi:
     runs-on: Seed
@@ -399,6 +389,9 @@ jobs:
         with:
           generator-name: go-sdk
           generator-path: generators/go generators/go-v2
+          # TODO FER-6487: package.go is not a lockfile, but it is a generated file that is not deterministic
+          # Once that file is made deterministic, we can remove this exclude path
+          validation-exclude-paths: "seed/*/.mock/*,seed/go-sdk/reserved-keywords/package.go"
 
   csharp-model:
     runs-on: Seed
@@ -489,3 +482,21 @@ jobs:
         with:
           generator-name: swift-sdk
           generator-path: generators/swift
+
+  rust-sdk:
+    runs-on: Seed
+    needs: changes
+    if: >-
+      ${{
+        ((needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: rust-sdk
+          generator-path: generators/rust

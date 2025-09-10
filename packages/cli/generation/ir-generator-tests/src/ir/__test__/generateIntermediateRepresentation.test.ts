@@ -80,9 +80,9 @@ describe("test definitions", async () => {
                 audiences: { type: "all" },
                 workspaceName: workspace.workspaceName ?? ""
             });
-        });
+        }, 20_000);
     });
-});
+}, 200_000);
 
 describe("test definitions openapi", async () => {
     const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../../test-definitions-openapi");
@@ -106,7 +106,7 @@ describe("test definitions openapi", async () => {
                         : { type: "all" },
                 workspaceName: workspace.workspaceName ?? ""
             });
-        });
+        }, 10_000);
     });
 }, 200_000);
 

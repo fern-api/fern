@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 default-group: python-sdk
 groups:
   python-sdk:
@@ -7,6 +8,7 @@ groups:
         output:
           location: local-file-system
           path: ../../../sdks/python
+        config: {}
         api:
           settings:
             unions: v1

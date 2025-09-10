@@ -3,22 +3,80 @@
  */
 package com.seed._enum.resources.unknown.types;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Status {
-    KNOWN("Known"),
+public final class Status {
+    public static final Status UNKNOWN = new Status(Value.UNKNOWN, "Unknown");
 
-    UNKNOWN("Unknown");
+    public static final Status KNOWN = new Status(Value.KNOWN, "Known");
 
-    private final String value;
+    private final Value value;
 
-    Status(String value) {
+    private final String string;
+
+    Status(Value value, String string) {
         this.value = value;
+        this.string = string;
     }
 
-    @JsonValue
+    public Value getEnumValue() {
+        return value;
+    }
+
     @java.lang.Override
+    @JsonValue
     public String toString() {
-        return this.value;
+        return this.string;
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        return (this == other) || (other instanceof Status && this.string.equals(((Status) other).string));
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return this.string.hashCode();
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        switch (value) {
+            case UNKNOWN:
+                return visitor.visitUnknown();
+            case KNOWN:
+                return visitor.visitKnown();
+            case _UNKNOWN:
+            default:
+                return visitor.visitUnknown(string);
+        }
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static Status valueOf(String value) {
+        switch (value) {
+            case "Unknown":
+                return UNKNOWN;
+            case "Known":
+                return KNOWN;
+            default:
+                return new Status(Value._UNKNOWN, value);
+        }
+    }
+
+    public enum Value {
+        KNOWN,
+
+        UNKNOWN,
+
+        _UNKNOWN
+    }
+
+    public interface Visitor<T> {
+        T visitKnown();
+
+        T visitUnknown();
+
+        T visitUnknown(String unknownType);
     }
 }
