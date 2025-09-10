@@ -1,6 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add availability to `products.schema.json`
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-10"
+  version: 0.75.3
+
+- changelogEntry:
+    - summary: |
+        Add google sign in, and logout command
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-10"
+  version: 0.75.2
+
+- changelogEntry:
+    - summary: |
         Availability is now inherited by children when set in the `docs.yml` navigation.
       type: fix
   irVersion: 59
