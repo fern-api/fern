@@ -2,7 +2,7 @@ import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
-import { AbstractGoGeneratorContext, FileLocation } from "@fern-api/go-base";
+import { AbstractGoGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/go-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
@@ -57,6 +57,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public getInternalAsIsFiles(): string[] {
         return [];
+    }
+
+    public getInternalTestAsIsFiles(): string[] {
+        return [AsIsFiles.TestMain];
     }
 
     public getClientClassName(subpackage?: Subpackage): string {

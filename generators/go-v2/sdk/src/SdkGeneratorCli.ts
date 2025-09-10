@@ -61,7 +61,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
 
         if (context.config.writeUnitTests) {
             context.logger.info("Generating Wiremock tests");
-            // await context.project.writeSharedTestFiles();
+            await context.project.writeSharedTestFiles();
             await this.generateWiremockTests(context);
         }
 
