@@ -7,14 +7,14 @@ public final class UserClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getUsername(limit: Int, id: UUID, date: Date, deadline: Date, bytes: String, user: User, userList: [User], optionalDeadline: Date? = nil, keyValue: [String: String], optionalString: String? = nil, nestedUser: NestedUser, optionalUser: User? = nil, excludeUser: User, filter: String, requestOptions: RequestOptions? = nil) async throws -> User {
+    public func getUsername(limit: Int, id: UUID, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: [User], optionalDeadline: Date? = nil, keyValue: [String: String], optionalString: String? = nil, nestedUser: NestedUser, optionalUser: User? = nil, excludeUser: User, filter: String, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(
             method: .get,
             path: "/user",
             queryParams: [
                 "limit": .int(limit), 
                 "id": .uuid(id), 
-                "date": .date(date), 
+                "date": .calendarDate(date), 
                 "deadline": .date(deadline), 
                 "bytes": .string(bytes), 
                 "user": .string(user.rawValue), 

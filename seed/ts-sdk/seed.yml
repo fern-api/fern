@@ -387,12 +387,14 @@ allowedFailures:
   - error-property
   - error-property:union-utils
   - errors
+  - exhaustive:bundle
   - exhaustive:custom-package-json
   - exhaustive:dev-dependencies
   - exhaustive:never-throw-errors
   - extends
   - file-download:file-download-response-headers
   - file-download:no-custom-config
+  - file-download:stream
   - file-download:wrapper
   - literal
   - mixed-case:no-custom-config
@@ -415,4 +417,17 @@ allowedFailures:
   - examples:retain-original-casing
 
   # unknown
+  - file-upload:no-custom-config
+  - file-upload:inline
+  - file-upload:serde
+  - file-upload:wrapper
+  - file-upload:form-data-node16
+  - http-head
+  - idempotency-headers
+  - imdb:no-custom-config
+  - imdb:omit-undefined
+  - imdb:noScripts
+  - imdb:branded-string-aliases
+  - license
+  - oauth-client-credentials:no-custom-config
   - ts-inline-types:inline

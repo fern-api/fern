@@ -185,7 +185,7 @@ export abstract class AbstractSwiftGeneratorContext<
                     float: () => swift.Type.float(),
                     double: () => swift.Type.double(),
                     bigInteger: () => swift.Type.string(), // TODO(kafkas): We may need to implement our own value type for this
-                    date: () => swift.Type.date(),
+                    date: () => swift.Type.calendarDate(),
                     dateTime: () => swift.Type.date(),
                     base64: () => swift.Type.string(),
                     uuid: () => swift.Type.uuid(),

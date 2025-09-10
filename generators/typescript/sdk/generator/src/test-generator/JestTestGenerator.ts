@@ -660,10 +660,11 @@ describe("${serviceName}", () => {
         const hasMultipleExamples = examples.length > 1;
 
         return examples
-            .flatMap((example) =>
+            .flatMap((example, exampleIndex) =>
                 this.buildExampleTest({
                     endpoint,
                     example,
+                    exampleIndex,
                     hasMultipleExamples,
                     context,
                     serviceGenerator,
@@ -677,6 +678,7 @@ describe("${serviceName}", () => {
     private buildExampleTest({
         endpoint,
         example,
+        exampleIndex,
         hasMultipleExamples,
         serviceGenerator,
         context,
@@ -685,6 +687,7 @@ describe("${serviceName}", () => {
     }: {
         endpoint: HttpEndpoint;
         example: ExampleEndpointCall;
+        exampleIndex: number;
         hasMultipleExamples: boolean;
         serviceGenerator: GeneratedSdkClientClass;
         context: SdkContext;
@@ -807,7 +810,7 @@ describe("${serviceName}", () => {
 
         let testName = endpoint.name.originalName;
         if (hasMultipleExamples) {
-            testName += ` (${example.name?.originalName ?? example.id})`;
+            testName += ` (${exampleIndex + 1})`;
         }
 
         return code`
