@@ -16,13 +16,13 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func listResources(pageLimit: Int, beforeDate: Date, requestOptions: RequestOptions? = nil) async throws -> [Resource] {
+    public func listResources(pageLimit: Int, beforeDate: CalendarDate, requestOptions: RequestOptions? = nil) async throws -> [Resource] {
         return try await httpClient.performRequest(
             method: .get,
             path: "/resource",
             queryParams: [
                 "page_limit": .int(pageLimit), 
-                "beforeDate": .date(beforeDate)
+                "beforeDate": .calendarDate(beforeDate)
             ],
             requestOptions: requestOptions,
             responseType: [Resource].self

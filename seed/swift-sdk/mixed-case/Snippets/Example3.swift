@@ -6,7 +6,7 @@ private func main() async throws {
 
     try await client.service.listResources(request: .init(
         pageLimit: 1,
-        beforeDate: try! Date("2023-01-15T00:00:00Z", strategy: .iso8601)
+        beforeDate: try! CalendarDate("2023-01-15")
     ))
 }
 
