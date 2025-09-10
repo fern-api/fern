@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for translating deprecated flags in protobuf to availability status in fern-ir.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-10"
+  version: 0.75.0
+
+- changelogEntry:
+    - summary: |
         If OpenAPI schema parsing throws an exception then coerce the schema to unknown to unblock SDK generation.
       type: fix
   irVersion: 59

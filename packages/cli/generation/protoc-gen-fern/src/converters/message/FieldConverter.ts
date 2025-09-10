@@ -2,7 +2,7 @@ import { FieldDescriptorProto, FieldDescriptorProto_Type } from "@bufbuild/proto
 
 import { Availability, ContainerType, TypeReference } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v3-importer-commons";
-
+import { getAvailability } from "../../commons/availability";
 import { PRIMITIVE_TYPES } from "../../commons/ProtobufSettings";
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { ArrayFieldConverter } from "./ArrayFieldConverter";
@@ -53,7 +53,8 @@ export class FieldConverter extends AbstractConverter<ProtofileConverterContext,
                     type: this.wrapAsOptional
                         ? this.wrapInOptional(convertedArrayField.typeReference)
                         : convertedArrayField.typeReference,
-                    inlinedTypes: convertedArrayField.inlinedTypes
+                    inlinedTypes: convertedArrayField.inlinedTypes,
+                    availability: getAvailability(this.field.options)
                 };
             }
         }
@@ -69,7 +70,8 @@ export class FieldConverter extends AbstractConverter<ProtofileConverterContext,
             if (convertedType != null) {
                 return {
                     type: this.wrapAsOptional ? this.wrapInOptional(convertedType) : convertedType,
-                    inlinedTypes: {}
+                    inlinedTypes: {},
+                    availability: getAvailability(this.field.options)
                 };
             }
         }
@@ -86,7 +88,8 @@ export class FieldConverter extends AbstractConverter<ProtofileConverterContext,
             if (typeReference.ok) {
                 return {
                     type: this.wrapAsOptional ? this.wrapInOptional(typeReference.reference) : typeReference.reference,
-                    inlinedTypes: {}
+                    inlinedTypes: {},
+                    availability: getAvailability(this.field.options)
                 };
             }
         }
