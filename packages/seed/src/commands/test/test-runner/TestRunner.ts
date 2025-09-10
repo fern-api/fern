@@ -84,6 +84,21 @@ export declare namespace TestRunner {
     }
 }
 
+const extractLicenseInfo = (license: unknown, absolutePathToApiDefinition: AbsoluteFilePath) => {
+    if (license != null && typeof license === "object" && "custom" in license) {
+        const licenseObj = license as { custom: string };
+        const licensePath = licenseObj.custom;
+
+        // Make the license path absolute
+        return {
+            custom: path.isAbsolute(licensePath)
+                ? licensePath
+                : path.join(absolutePathToApiDefinition.toString(), licensePath)
+        };
+    }
+    return undefined;
+};
+
 export abstract class TestRunner {
     private buildInvocation: Promise<void> | undefined;
     protected readonly generator: GeneratorWorkspace;
@@ -151,21 +166,7 @@ export abstract class TestRunner {
             const irVersion = this.generator.workspaceConfig.irVersion;
             const publishMetadata = configuration?.publishMetadata ?? undefined;
             const readme = configuration?.readmeConfig ?? undefined;
-            let license = configuration?.license ?? undefined;
-
-            // Convert relative license path to absolute for seed tests
-            if (license != null && typeof license === "object" && "custom" in license) {
-                const licenseObj = license as { custom: string };
-                const licensePath = licenseObj.custom;
-
-                // Make the license path absolute
-                const absoluteLicensePath = path.isAbsolute(licensePath)
-                    ? licensePath
-                    : path.join(absolutePathToApiDefinition.toString(), licensePath);
-
-                // Update license with absolute path
-                license = { custom: absoluteLicensePath };
-            }
+            const license = extractLicenseInfo(configuration?.license, absolutePathToApiDefinition);
 
             const fernWorkspace = await (
                 await convertGeneratorWorkspaceToFernWorkspace({
