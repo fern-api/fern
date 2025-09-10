@@ -46,6 +46,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import org.immutables.value.Value;
 import org.slf4j.Logger;
@@ -314,6 +315,10 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             IntermediateRepresentation ir,
             K customConfig) {
         runInDownloadFilesModeHook(generatorExecClient, generatorConfig, ir, customConfig);
+        
+        // Extract Maven coordinate from filesystem publishTarget (similar to Python generator)
+        final AtomicReference<Optional<MavenCoordinate>> maybeMavenCoordinate = new AtomicReference<>(Optional.empty());
+        
         Boolean generateFullProject = ir.getPublishConfig()
                 .map(publishConfig ->
                         publishConfig.visit(new com.fern.ir.model.publish.PublishingConfig.Visitor<Boolean>() {
@@ -329,6 +334,46 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
                             @Override
                             public Boolean visitFilesystem(Filesystem value) {
+                                // Extract Maven coordinate from publishTarget if present
+                                if (value.getGenerateFullProject() && value.getPublishTarget().isPresent()) {
+                                    com.fern.ir.model.publish.PublishTarget target = value.getPublishTarget().get();
+                                    target.visit(new com.fern.ir.model.publish.PublishTarget.Visitor<Void>() {
+                                        @Override
+                                        public Void visitPostman(com.fern.ir.model.publish.PostmanPublishTarget value) {
+                                            return null;
+                                        }
+
+                                        @Override
+                                        public Void visitNpm(com.fern.ir.model.publish.NpmPublishTarget value) {
+                                            return null;
+                                        }
+
+                                        @Override
+                                        public Void visitMaven(com.fern.ir.model.publish.MavenPublishTarget mavenTarget) {
+                                            if (mavenTarget.getCoordinate().isPresent()) {
+                                                String coordinateStr = mavenTarget.getCoordinate().get();
+                                                MavenArtifactAndGroup parsed = MavenCoordinateParser.parse(coordinateStr);
+                                                MavenCoordinate coord = MavenCoordinate.builder()
+                                                    .group(parsed.group())
+                                                    .artifact(parsed.artifact())
+                                                    .version(mavenTarget.getVersion().orElse("0.0.0"))
+                                                    .build();
+                                                maybeMavenCoordinate.set(Optional.of(coord));
+                                            }
+                                            return null;
+                                        }
+
+                                        @Override
+                                        public Void visitPypi(com.fern.ir.model.publish.PypiPublishTarget value) {
+                                            return null;
+                                        }
+
+                                        @Override
+                                        public Void _visitUnknown(Object value) {
+                                            return null;
+                                        }
+                                    });
+                                }
                                 return value.getGenerateFullProject();
                             }
 
@@ -339,7 +384,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                         }))
                 .orElse(false);
         if (generateFullProject) {
-            addRootProjectFiles(Optional.empty(), true, false, generatorConfig);
+            // Pass the extracted Maven coordinate (or empty if none was found) to addRootProjectFiles
+            addRootProjectFiles(maybeMavenCoordinate.get(), true, false, generatorConfig);
         }
         generatedFiles.forEach(
                 generatedFile -> generatedFile.write(outputDirectory, true, customConfig.packagePrefix()));

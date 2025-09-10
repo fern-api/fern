@@ -259,14 +259,16 @@ function getPublishConfig({
                 : undefined;
             
             if (coordinate) {
+                // Use provided version or default to "0.0.0" for local generation
+                const mavenVersion = version ?? "0.0.0";
                 publishTarget = PublishTarget.maven({
                     coordinate,
-                    version,
+                    version: mavenVersion,
                     usernameEnvironmentVariable: "MAVEN_USERNAME",
                     passwordEnvironmentVariable: "MAVEN_PASSWORD",
                     mavenUrlEnvironmentVariable: "MAVEN_PUBLISH_REGISTRY_URL"
                 });
-                context.logger.debug(`Created MavenPublishTarget: coordinate ${coordinate} version ${version}`);
+                context.logger.debug(`Created MavenPublishTarget: coordinate ${coordinate} version ${mavenVersion}`);
             } else if (config && typeof config === "object") {
                 context.logger.debug(
                     "Java generator config provided but could not construct Maven coordinate. " +
