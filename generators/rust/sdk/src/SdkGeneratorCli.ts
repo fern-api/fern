@@ -358,7 +358,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             context.logger.info("Using DynamicSnippetsGenerator for Rust snippet generation");
 
             const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-                ir: convertIr(dynamicIr),
+                ir: convertIr(dynamicIr) as any,
                 config: context.config
             });
 
