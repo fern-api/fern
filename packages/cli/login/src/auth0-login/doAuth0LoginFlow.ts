@@ -129,5 +129,5 @@ function constructAuth0Url({
         audience
     });
     const url = `https://${auth0Domain}/authorize?${queryParams.toString()}`;
-    return url
+    return url;
 }
