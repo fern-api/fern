@@ -626,8 +626,8 @@ export class DynamicSnippetsTestRunner {
                             profile: {
                                 name: "name",
                                 verification: {},
-                                ssn: "ssn",
-                            },
+                                ssn: "ssn"
+                            }
                         }
                     }
                 },
@@ -650,8 +650,8 @@ export class DynamicSnippetsTestRunner {
                             profile: {
                                 name: "name",
                                 verification: {},
-                                ssn: "ssn",
-                            },
+                                ssn: "ssn"
+                            }
                         }
                     }
                 }

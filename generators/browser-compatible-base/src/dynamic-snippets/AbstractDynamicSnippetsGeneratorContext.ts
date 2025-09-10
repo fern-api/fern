@@ -74,7 +74,6 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         values: FernIr.dynamic.Values;
         ignoreMissingParameters?: boolean;
     }): TypeInstance[] {
-        console.log("parameters:", JSON.stringify(parameters, null, 2));
         const instances: TypeInstance[] = [];
         for (const [key, value] of Object.entries(values)) {
             this.errors.scope(key);
