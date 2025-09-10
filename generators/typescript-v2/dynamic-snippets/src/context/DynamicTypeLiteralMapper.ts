@@ -482,6 +482,9 @@ export class DynamicTypeLiteralMapper {
         properties: FernIr.dynamic.NamedParameter[],
         convertOpts?: DynamicTypeLiteralMapper.ConvertOpts
     ): FernIr.dynamic.NamedParameter[] {
+        if (this.context.customConfig?.experimentalGenerateReadWriteOnlyTypes !== true) {
+            return properties;
+        }
         if (typeof convertOpts === "undefined") {
             return properties;
         }
