@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration-loader";
-import { assertNever, isNonNullish } from "@fern-api/core-utils";
+import { isNonNullish } from "@fern-api/core-utils";
 import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
