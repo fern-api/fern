@@ -1,10 +1,8 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp, nameRegistry } from "@fern-api/csharp-codegen";
+import { csharp, GrpcClientInfo, nameRegistry } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-
 import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
 import { RawClient } from "../endpoint/http/RawClient";
-import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 

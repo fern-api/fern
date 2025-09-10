@@ -1,6 +1,5 @@
-import { csharp } from "@fern-api/csharp-codegen";
-
 import { ProtobufService } from "@fern-fern/ir-sdk/api";
+import { csharp } from "../";
 
 /**
  * Information relevant to a particular gRPC client instance instantiated from a gRPC

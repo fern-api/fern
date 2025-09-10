@@ -289,34 +289,8 @@ export class ClassReference extends AstNode {
         const allNamespaceSegments = writer.getAllNamespaceSegments();
         return allNamespaceSegments.has(this.name);
     }
-    /*
-    public toQualified(): ClassReference {
-        return new ClassReference({
-            name: this.name,
-            namespace: this.namespace,
-            namespaceAlias: this.namespaceAlias,
-            generics: this.generics,
-            fullyQualified: true
-        });
-    }
-*/
+    
     public resolveNamespace(): string {
         return nameRegistry.resolveNamespace(this.namespace);
     }
 }
-
-export const OneOfClassReference = new ClassReference({
-    name: "OneOf",
-    namespace: "OneOf"
-});
-
-export const OneOfBaseClassReference = new ClassReference({
-    name: "OneOfBase",
-    namespace: "OneOf"
-});
-
-// TODO: remove this in favor of the one in PrebuiltUtilities
-export const StringEnumClassReference = new ClassReference({
-    name: "StringEnum",
-    namespace: "StringEnum"
-});

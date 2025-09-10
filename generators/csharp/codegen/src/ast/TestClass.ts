@@ -1,4 +1,4 @@
-import { csharp } from "..";
+import { NUnit } from '../utils/builtIn';
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { Class } from "./Class";
@@ -52,9 +52,7 @@ export class TestClass extends AstNode {
             name: this.name,
             namespace: this.namespace,
             annotations: [
-                new Annotation({
-                    reference: csharp.classReference({ name: "TestFixture", namespace: "NUnit.Framework" })
-                })
+                new Annotation({reference: NUnit.Framework.TestFixture})
             ],
             parentClassReference: this.parentClassReference
         });
@@ -67,9 +65,7 @@ export class TestClass extends AstNode {
                     parameters: [],
                     body: testMethod.body,
                     annotations: [
-                        new Annotation({
-                            reference: csharp.classReference({ name: "Test", namespace: "NUnit.Framework" })
-                        })
+                        new Annotation({reference: NUnit.Framework.Test})
                     ]
                 })
             );

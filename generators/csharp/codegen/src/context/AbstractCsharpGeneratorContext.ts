@@ -1,6 +1,7 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import {
+    DeclaredErrorName,
     FernFilepath,
     HttpHeader,
     HttpService,
@@ -9,6 +10,7 @@ import {
     ObjectPropertyAccess,
     PrimitiveType,
     PrimitiveTypeV1,
+    ProtobufService,
     ServiceId,
     Subpackage,
     TypeDeclaration,
@@ -19,6 +21,7 @@ import {
 import { camelCase, upperFirst } from "lodash-es";
 import { convertReadOnlyPrimitiveTypes, System } from "../csharp";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
+import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
 import { nameRegistry } from "../utils/nameRegistry";
 
 export const COLLECTION_ITEM_SERIALIZER_CLASS_NAME = "CollectionItemSerializer";
@@ -41,11 +44,11 @@ export const EXCEPTION_HANDLER_MEMBER_NAME = "ExceptionHandler";
 export const REQUEST_OPTIONS_CLASS_NAME = "RequestOptions";
 export const REQUEST_OPTIONS_INTERFACE_NAME = "IRequestOptions";
 
-
 import { fail } from "node:assert";
 import { csharp } from "..";
 import { CsharpProtobufTypeMapper } from "../proto/CsharpProtobufTypeMapper";
 import { ProtobufResolver } from "../proto/ProtobufResolver";
+import { OneOf } from "../utils/builtIn";
 import { CsharpTypeMapper } from "./CsharpTypeMapper";
 export type Namespace = string;
 
@@ -53,7 +56,6 @@ export abstract class AbstractCsharpGeneratorContext<
     CustomConfig extends BaseCsharpCustomConfigSchema
 > extends AbstractGeneratorContext {
     protected namespace: string;
-    // public readonly project: CsharpProject;
     public readonly csharpTypeMapper: CsharpTypeMapper;
     public readonly csharpProtobufTypeMapper: CsharpProtobufTypeMapper;
     public readonly protobufResolver: ProtobufResolver;
@@ -72,11 +74,6 @@ export abstract class AbstractCsharpGeneratorContext<
         this.namespace =
             this.customConfig.namespace ??
             upperFirst(camelCase(`${this.config.organization}_${this.ir.apiName.pascalCase.unsafeName}`));
-        /*# this.project = new CsharpProject({
-         context: this,
-         name: this.namespace
-        });
-        #*/
 
         this.csharpTypeMapper = new CsharpTypeMapper(this);
         this.csharpProtobufTypeMapper = new CsharpProtobufTypeMapper(this);
@@ -169,6 +166,77 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    public getOauthTokenProviderClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: "OAuthTokenProvider"
+        });
+    }
+
+    public getPagerClassReference({ itemType }: { itemType: csharp.Type }): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: "Pager",
+            generics: [itemType]
+        });
+    }
+
+    public getOffsetPagerClassReference({
+        requestType,
+        requestOptionsType,
+        responseType,
+        offsetType,
+        stepType,
+        itemType
+    }: {
+        requestType: csharp.Type | csharp.TypeParameter;
+        requestOptionsType: csharp.Type | csharp.TypeParameter;
+        responseType: csharp.Type | csharp.TypeParameter;
+        offsetType: csharp.Type | csharp.TypeParameter;
+        stepType: csharp.Type | csharp.TypeParameter;
+        itemType: csharp.Type | csharp.TypeParameter;
+    }): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: "OffsetPager",
+            generics: [requestType, requestOptionsType, responseType, offsetType, stepType, itemType]
+        });
+    }
+
+    public getCursorPagerClassReference({
+        requestType,
+        requestOptionsType,
+        responseType,
+        cursorType,
+        itemType
+    }: {
+        requestType: csharp.Type | csharp.TypeParameter;
+        requestOptionsType: csharp.Type | csharp.TypeParameter;
+        responseType: csharp.Type | csharp.TypeParameter;
+        cursorType: csharp.Type | csharp.TypeParameter;
+        itemType: csharp.Type | csharp.TypeParameter;
+    }): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: "CursorPager",
+            generics: [requestType, requestOptionsType, responseType, cursorType, itemType]
+        });
+    }
+
+    public getExceptionHandlerClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "ExceptionHandler",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getExceptionInterceptorClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "IExceptionInterceptor",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
     public getValueConvertReference(): csharp.ClassReference {
         return csharp.classReference({
             name: VALUE_CONVERT_CLASS_NAME,
@@ -180,6 +248,56 @@ export abstract class AbstractCsharpGeneratorContext<
         return csharp.classReference({
             namespace: this.getPublicCoreNamespace(),
             name: "FileParameter"
+        });
+    }
+
+    public getBaseApiExceptionClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.customConfig["base-api-exception-class-name"] ?? `${this.getClientPrefix()}ApiException`,
+            namespace: this.getNamespaceForPublicCoreClasses()
+        });
+    }
+
+    public getHeadersClassName(): string {
+        return "Headers";
+    }
+
+    public getHeadersClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getHeadersClassName(),
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getRootClientClassName(): string {
+        return this.customConfig["client-class-name"] ?? `${this.getComputedClientName()}Client`;
+    }
+
+    public getRootClientClassNameForSnippets(): string {
+        if (this.customConfig["exported-client-class-name"] != null) {
+            return this.customConfig["exported-client-class-name"];
+        }
+        return this.getRootClientClassName();
+    }
+
+    public getRootClientClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getRootClientClassName(),
+            namespace: this.getNamespace()
+        });
+    }
+
+    public getRootClientClassReferenceForSnippets(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getRootClientClassNameForSnippets(),
+            namespace: this.getNamespace()
+        });
+    }
+
+    public getBaseExceptionClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.customConfig["base-exception-class-name"] ?? `${this.getClientPrefix()}Exception`,
+            namespace: this.getNamespaceForPublicCoreClasses()
         });
     }
 
@@ -373,16 +491,19 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public getOneOfClassReference(generics: csharp.Type[]): csharp.ClassReference {
-        return csharp.classReference({
-            namespace: "OneOf",
-            name: "OneOf",
-            generics
-        });
+        return OneOf.OneOf(generics);
     }
 
     public getProtoConverterClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: "ProtoConverter",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getStringEnumClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "StringEnum",
             namespace: this.getCoreNamespace()
         });
     }
@@ -801,20 +922,20 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     protected getComputedClientName(): string {
-      return `${upperFirst(camelCase(this.config.organization))}${this.ir.apiName.pascalCase.unsafeName}`;
-  }
+        return `${upperFirst(camelCase(this.config.organization))}${this.ir.apiName.pascalCase.unsafeName}`;
+    }
 
     protected getClientPrefix(): string {
-      return (
-          this.customConfig["exported-client-class-name"] ??
-          this.customConfig["client-class-name"] ??
-          this.getComputedClientName()
-      );
-  }
+        return (
+            this.customConfig["exported-client-class-name"] ??
+            this.customConfig["client-class-name"] ??
+            this.getComputedClientName()
+        );
+    }
 
     protected getEnvironmentClassName(): string {
-      return this.customConfig["environment-class-name"] ?? `${this.getClientPrefix()}Environment`;
-  }
+        return this.customConfig["environment-class-name"] ?? `${this.getClientPrefix()}Environment`;
+    }
 
     public getEnvironmentsClassReference(): csharp.ClassReference {
         return csharp.classReference({
@@ -878,25 +999,114 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    public getHttpResponseHeadersReference(): csharp.ClassReference {
+        return System.Net.Http.HttpResponseHeaders;
+    }
+
+    public getSubpackageForServiceId(serviceId: ServiceId): Subpackage | undefined {
+        return Object.values(this.ir.subpackages).find((subpackage) => subpackage.service === serviceId);
+    }
+
+    public getSubpackageForServiceIdOrThrow(serviceId: ServiceId): Subpackage {
+        return (
+            this.getSubpackageForServiceId(serviceId) ||
+            fail(`No example found for subpackage with serviceId ${serviceId}`)
+        );
+    }
+
+    public getSubpackageClassReferenceForServiceIdOrThrow(serviceId: ServiceId): csharp.ClassReference {
+        return this.getSubpackageClassReference(this.getSubpackageForServiceIdOrThrow(serviceId));
+    }
+
     public getNamespaceForServiceId(serviceId: ServiceId): string {
-      const service = this.getHttpServiceOrThrow(serviceId);
-      return this.getNamespaceFromFernFilepath(service.name.fernFilepath);
+        return this.getNamespaceFromFernFilepath(this.getHttpServiceOrThrow(serviceId).name.fernFilepath);
+    }
+
+    public getExceptionClassReference(declaredErrorName: DeclaredErrorName): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getPascalCaseSafeName(declaredErrorName.name),
+            namespace: this.getNamespaceFromFernFilepath(declaredErrorName.fernFilepath)
+        });
+    }
+
+    public getRawGrpcClientClassName(): string {
+        return "RawGrpcClient";
+    }
+
+    public getRawGrpcClientClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getRawGrpcClientClassName(),
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getExtensionsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "Extensions",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getGrpcRequestOptionsName(): string {
+        return "GrpcRequestOptions";
+    }
+
+    public getGrpcCreateCallOptionsMethodName(): string {
+        return "CreateCallOptions";
+    }
+
+    public getGrpcRequestOptionsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getGrpcRequestOptionsName(),
+            namespace: this.getNamespace()
+        });
+    }
+
+    public getGrpcChannelOptionsFieldName(): string {
+        return "GrpcOptions";
+    }
+
+    public getGrpcChannelOptionsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "GrpcChannelOptions",
+            namespace: "Grpc.Net.Client"
+        });
+    }
+
+    public getCancellationTokenClassReference(): csharp.ClassReference {
+        return csharp.classReference(System.Threading.CancellationToken);
     }
 
     public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): csharp.ClassReference {
-      // const service = this.getHttpServiceOrThrow(serviceId);
-      // RelativeFilePath.of([...service.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/"));
-      const cr =  csharp.classReference({
-        name: requestName.pascalCase.safeName,
-        namespace: this.getNamespaceForServiceId(serviceId)
-    });
-      console.log(`grwr: ${serviceId}::${requestName.originalName} -> ${cr.namespace}.${cr.name}`);
-      return csharp.classReference({
-          name: requestName.pascalCase.safeName,
-          namespace: this.getNamespaceForServiceId(serviceId)
-      });
-  }
+        return csharp.classReference({
+            name: requestName.pascalCase.safeName,
+            namespace: this.getNamespaceForServiceId(serviceId)
+        });
+    }
 
+    private getGrpcClientPrivatePropertyName(protobufService: ProtobufService): string {
+        return `_${protobufService.name.camelCase.safeName}`;
+    }
+
+    private getGrpcClientServiceName(protobufService: ProtobufService): string {
+        return protobufService.name.originalName;
+    }
+
+    public getGrpcClientInfoForServiceId(serviceId: ServiceId): GrpcClientInfo | undefined {
+        const protobufService = this.protobufResolver.getProtobufServiceForServiceId(serviceId);
+        if (protobufService == null) {
+            return undefined;
+        }
+        const serviceName = this.getGrpcClientServiceName(protobufService);
+        return {
+            privatePropertyName: this.getGrpcClientPrivatePropertyName(protobufService),
+            classReference: csharp.classReference({
+                name: `${serviceName}.${serviceName}Client`,
+                namespace: this.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufService.file)
+            }),
+            protobufService
+        };
+    }
 }
 
 function stripNonAlphanumeric(str: string): string {

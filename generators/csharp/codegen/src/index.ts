@@ -3,6 +3,7 @@ export { AbstractCsharpGeneratorContext } from "./context/AbstractCsharpGenerato
 export * as csharp from "./csharp";
 export { convertReadOnlyPrimitiveTypes, System, VALID_READ_ONLY_MEMORY_TYPES } from "./csharp";
 export { BaseCsharpCustomConfigSchema, validateReadOnlyMemoryTypes } from "./custom-config";
+export { type GrpcClientInfo } from "./grpc/GrpcClientInfo";
 export { precalculate } from "./project/precalculate";
 export { CsharpProtobufTypeMapper } from "./proto/CsharpProtobufTypeMapper";
 export * from "./proto/constants";

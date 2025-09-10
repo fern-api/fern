@@ -728,3 +728,20 @@ export const NUnit = {
 
   } as const,
 } as const;
+
+export const OneOf = {
+  OneOf(generics?: ClassReference[] | TypeParameter[] | Type[]) {
+    return new ClassReference({
+      namespace: "OneOf",
+      name: "OneOf",
+      generics
+    });
+  },
+  OneOfBase(generics?: ClassReference[] | TypeParameter[] | Type[]) {
+    return new ClassReference({
+      namespace: "OneOf",
+      name: "OneOfBase",
+      generics
+    });
+  }
+} as const;

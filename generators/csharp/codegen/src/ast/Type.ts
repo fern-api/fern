@@ -1,12 +1,9 @@
 import { assertNever } from "@fern-api/core-utils";
 import { PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
 import { cloneDeep } from "lodash-es";
-
+import { OneOf as OneOfNamespace } from "../utils/builtIn";
 import {
     ClassReference,
-    OneOfBaseClassReference,
-    OneOfClassReference,
-    StringEnumClassReference
 } from "./ClassReference";
 import { CoreClassReference } from "./CoreClassReference";
 import { AstNode } from "./core/AstNode";
@@ -315,7 +312,7 @@ export class Type extends AstNode {
                 writer.write(this.internalType.value.name);
                 break;
             case "oneOf":
-                writer.addReference(OneOfClassReference);
+                writer.addReference(OneOfNamespace.OneOf());
                 writer.write("OneOf<");
                 this.internalType.memberValues.forEach((value, index) => {
                     if (index !== 0) {
@@ -326,7 +323,7 @@ export class Type extends AstNode {
                 writer.write(">");
                 break;
             case "oneOfBase":
-                writer.addReference(OneOfBaseClassReference);
+                writer.addReference(OneOfNamespace.OneOfBase());
                 writer.write("OneOfBase<");
                 this.internalType.memberValues.forEach((value, index) => {
                     if (index !== 0) {
@@ -337,7 +334,10 @@ export class Type extends AstNode {
                 writer.write(">");
                 break;
             case "stringEnum":
-                writer.addReference(StringEnumClassReference);
+                // todo: how to get a proper reference to the <namespace>.StringEnum class 
+                // at this point? (it has been working because the .Core namespace is always imported I guess)
+                // writer.addReference(writer.context.getStringEnumClassReference());
+                // formerly writer.addReference(StringEnumClassReference); (from classreference.ts)
                 writer.write("StringEnum<");
                 this.internalType.value.write(writer);
                 writer.write(">");

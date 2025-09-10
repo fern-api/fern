@@ -143,6 +143,7 @@ export class NameRegistry {
         }
 
         // track all the types in the System.* namespace that we use
+        this.trackType(System.Enum);
         this.trackType(System.Exception);
         this.trackType(System.Serializable);
         this.trackType(System.String);
