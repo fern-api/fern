@@ -27,15 +27,17 @@ jobs:
       python: ${{ steps.python-changes.outputs.any_changed }}
       postman: ${{ steps.postman-changes.outputs.any_changed }}
       java: ${{ steps.java-changes.outputs.any_changed }}
-      typescript: ${{ steps.typescript-changes.outputs.typescript }}
-      go: ${{ steps.go-changes.outputs.go }}
-      csharp: ${{ steps.csharp-changes.outputs.csharp }}
-      php: ${{ steps.php-changes.outputs.php }}
-      swift: ${{ steps.swift-changes.outputs.swift }}
-      rust: ${{ steps.rust-changes.outputs.rust }}
+      typescript: ${{ steps.typescript-changes.outputs.any_changed }}
+      go: ${{ steps.go-changes.outputs.any_changed }}
+      csharp: ${{ steps.csharp-changes.outputs.any_changed }}
+      php: ${{ steps.php-changes.outputs.any_changed }}
+      swift: ${{ steps.swift-changes.outputs.any_changed }}
+      rust: ${{ steps.rust-changes.outputs.any_changed }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Check for seed changes
         id: seed-changes
         uses: tj-actions/changed-files@v46
