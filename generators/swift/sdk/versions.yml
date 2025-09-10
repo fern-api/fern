@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.12.3
+  createdAt: "2025-09-09"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Added missing system dependencies (bash, curl, git, zip) to Swift generator Docker image to fix README generation.
+  irVersion: 59
+
 - version: 0.12.2
   createdAt: "2025-09-05"
   changelogEntry:
