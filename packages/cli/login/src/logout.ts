@@ -2,7 +2,7 @@ import { isLoggedIn, removeToken } from "@fern-api/auth";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import open from "open";
-import { AUTH0_CLIENT_ID } from "./constants";
+import { AUTH0_CLIENT_ID, AUTH0_DOMAIN } from "./constants";
 
 export async function logout(context: TaskContext): Promise<void> {
     await context.instrumentPostHogEvent({
