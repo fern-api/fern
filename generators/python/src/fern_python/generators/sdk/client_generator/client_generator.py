@@ -98,10 +98,15 @@ class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
 
     def _get_write_constructor_body(self, *, is_async: bool) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
-            kwargs = [
-                (param.constructor_parameter_name, AST.Expression(param.constructor_parameter_name))
-                for param in self._get_constructor_parameters(is_async=is_async)
-            ]
+            # Avoid repeating parameters by tracking names
+            seen_param_names = set()
+            kwargs = []
+            for param in self._get_constructor_parameters(is_async=is_async):
+                if param.constructor_parameter_name not in seen_param_names:
+                    kwargs.append(
+                        (param.constructor_parameter_name, AST.Expression(param.constructor_parameter_name))
+                    )
+                    seen_param_names.add(param.constructor_parameter_name)
 
             # Initialize the raw client with the client_wrapper
             writer.write_node(
