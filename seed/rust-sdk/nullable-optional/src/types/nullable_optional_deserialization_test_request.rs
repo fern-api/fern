@@ -1,11 +1,11 @@
+use crate::nullable_optional_address::Address;
+use crate::nullable_optional_notification_method::NotificationMethod;
+use crate::nullable_optional_organization::Organization;
+use crate::nullable_optional_search_result::SearchResult;
 use crate::nullable_optional_user_role::UserRole;
 use crate::nullable_optional_user_status::UserStatus;
-use crate::nullable_optional_notification_method::NotificationMethod;
-use crate::nullable_optional_search_result::SearchResult;
-use crate::nullable_optional_address::Address;
-use crate::nullable_optional_organization::Organization;
-use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct DeserializationTestRequest {
