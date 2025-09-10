@@ -42,7 +42,6 @@ package com.example.usage;
 
 import com.seed.pathParameters.SeedPathParametersClient;
 import com.seed.pathParameters.resources.user.types.User;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Example {
@@ -57,9 +56,7 @@ public class Example {
                 .builder()
                 .name("name")
                 .tags(
-                    new ArrayList<String>(
-                        Arrays.asList("tags", "tags")
-                    )
+                    Arrays.asList("tags", "tags")
                 )
                 .build()
         );

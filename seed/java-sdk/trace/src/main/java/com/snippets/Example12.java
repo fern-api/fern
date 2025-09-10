@@ -4,7 +4,6 @@ import com.seed.trace.SeedTraceClient;
 import com.seed.trace.resources.playlist.requests.CreatePlaylistRequest;
 import com.seed.trace.resources.playlist.types.PlaylistCreateRequest;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Example12 {
@@ -25,9 +24,7 @@ public class Example12 {
                         .builder()
                         .name("name")
                         .problems(
-                            new ArrayList<String>(
-                                Arrays.asList("problems", "problems")
-                            )
+                            Arrays.asList("problems", "problems")
                         )
                         .build()
                 )
