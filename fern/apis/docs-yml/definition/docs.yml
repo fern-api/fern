@@ -13,6 +13,8 @@ types:
       - go
       - ruby
       - csharp
+      - php
+      - swift
       - nodets
       - nodejs
       - dotnet
@@ -785,6 +787,8 @@ types:
       java: optional<SnippetLanguageConfiguration>
       ruby: optional<SnippetLanguageConfiguration>
       csharp: optional<SnippetLanguageConfiguration>
+      php: optional<SnippetLanguageConfiguration>
+      swift: optional<SnippetLanguageConfiguration>
 
   ColorsConfiguration:
     properties:

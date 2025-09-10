@@ -33,7 +33,9 @@ export async function generateFdrFromOpenApiWorkspaceV3(
             javaSdk: undefined,
             rubySdk: undefined,
             goSdk: undefined,
-            csharpSdk: undefined
+            csharpSdk: undefined,
+            phpSdk: undefined,
+            swiftSdk: undefined
         },
         playgroundConfig: {
             oauth: true

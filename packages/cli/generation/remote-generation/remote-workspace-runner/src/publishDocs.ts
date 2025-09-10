@@ -47,7 +47,7 @@ export async function publishDocs({
     editThisPage,
     isPrivate = false,
     disableTemplates = false,
-    dynamicSnippets = false
+    disableDynamicSnippets = false
 }: {
     token: FernToken;
     organization: string;
@@ -61,7 +61,7 @@ export async function publishDocs({
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
     isPrivate: boolean | undefined;
     disableTemplates: boolean | undefined;
-    dynamicSnippets: boolean | undefined;
+    disableDynamicSnippets: boolean | undefined;
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
     const authConfig: CjsFdrSdk.docs.v2.write.AuthConfig = isPrivate
@@ -172,7 +172,7 @@ export async function publishDocs({
 
             // create dynamic IR + metadata for each generator language
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
-            if (dynamicSnippets) {
+            if (!disableDynamicSnippets) {
                 dynamicIRsByLanguage = await generateLanguageSpecificDynamicIRs({
                     workspace,
                     organization,
@@ -418,9 +418,10 @@ async function generateLanguageSpecificDynamicIRs({
         go: snippetsConfig.goSdk?.githubRepo,
         csharp: snippetsConfig.csharpSdk?.package,
         ruby: snippetsConfig.rubySdk?.gem,
-        // todo: update when snippet config is supported
-        php: undefined,
-        swift: undefined,
+        php: snippetsConfig.phpSdk?.package,
+        swift: snippetsConfig.swiftSdk?.package,
+
+        // todo: add when available
         rust: undefined
     };
 
