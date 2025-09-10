@@ -1,6 +1,6 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractRustGeneratorCli, RustFile, formatRustCode } from "@fern-api/rust-base";
+import { AbstractRustGeneratorCli, formatRustCode, RustFile } from "@fern-api/rust-base";
 import { Writer } from "@fern-api/rust-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
